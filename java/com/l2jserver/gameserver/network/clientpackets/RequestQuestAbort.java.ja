@@ -1,0 +1,3 @@
+﻿use utf8;
+
+s/\Q"Quest aborted."\E/"クエストを中止しました。"/;

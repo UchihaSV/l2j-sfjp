@@ -1,0 +1,36 @@
+﻿# L2J rev 2370
+
+use utf8;
+
+s{"TvT Event: Event was cancelled\."}
+ {"TvT Event: イベントを中止しました。"} || warn;
+
+s{"TvT Event: Registration opened for "(\s*)\+(.+?)\+ " minute\(s\)\."}
+#{"TvT Event: 参加者募集を開始しました。"}s || warn;					#
+ {"TvT Event: 参加者募集を開始しました。締め切りは " + $2 + "分後です。"$1}s || warn;
+
+s{"TvT Event: Event cancelled due to lack of Participation\."}
+ {"TvT Event: 参加者が不足しているためイベントを中止しました。"} || warn;
+
+# announceToAll(TvTEvent.calculateRewards()) -->> TvTEvent.java.ja
+
+s{"TvT Event: Teleporting back to the registration npc in "(\s*)\+(.+?)\+ " second\(s\)\."}
+ {"TvT Event: " + $2 + " 秒後に登録受付NPCの元へテレポートします。"$1}s || warn;		#
+
+s{"TvT Event: " \+ (.+?) \+ " hour\(s\) until registration is closed!"}
+ {"TvT Event: 参加募集の締切まであと " + $1 + " 時間！"} || warn;
+
+s{"TvT Event: " \+ (.+?) \+ " hour\(s\) until event is finished!"}
+ {"TvT Event: イベント終了まであと " + $1 + " 時間！"} || warn;
+
+s{"TvT Event: " \+ (.+?) \+ " minute\(s\) until registration is closed!"}
+ {"TvT Event: 参加募集の締切まであと " + $1 + " 分！"} || warn;
+
+s{"TvT Event: " \+ (.+?) \+ " minute\(s\) until the event is finished!"}
+ {"TvT Event: イベント終了まであと " + $1 + " 分！"} || warn;
+
+s{"TvT Event: " \+ (.+?) \+ " second\(s\) until registration is closed!"}
+ {"TvT Event: 参加募集の締切まであと " + $1 + " 秒！"} || warn;
+
+s{"TvT Event: " \+ (.+?) \+ " second\(s\) until the event is finished!"}
+ {"TvT Event: イベント終了まであと " + $1 + " 秒！"} || warn;

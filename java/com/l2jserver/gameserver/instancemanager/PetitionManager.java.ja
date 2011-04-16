@@ -1,0 +1,7 @@
+﻿use utf8;
+
+s{new SimpleDateFormat("dd MMM HH:mm z")}
+ {new SimpleDateFormat("MM/dd HH:mm z")};
+
+s{new SimpleDateFormat("EEE dd MMM HH:mm z")}
+ {new SimpleDateFormat("MM/dd(E) HH:mm z")};

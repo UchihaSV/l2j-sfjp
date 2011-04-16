@@ -1,0 +1,4 @@
+﻿use utf8;
+
+s{\("Spawning Raid Boss " \+ raidboss\.getName\(\)\)}
+ {(raidboss.getName() + " が出現しました。")}g;

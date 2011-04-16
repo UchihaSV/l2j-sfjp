@@ -1,0 +1,137 @@
+﻿use utf8;
+
+my $NAME;
+if (0) {
+	$NAME = (__FILE__ =~ m/([^\\\/\:]+$)/)[0];
+	$NAME =~ s/\.ja$//;
+ #	open FILE, '<:encoding(cp932)', ".svn/text-base/$NAME.svn-base" or die $!;
+	open FILE, '<:encoding(cp932)', $NAME or die $!;
+	read FILE, my $text, -s FILE;
+	close FILE;
+	$_ = $text;
+}
+
+s{>the command: "([^<>]+?)" is not implemented yet<}
+ {>コマンド： "$1" は未実装です<}ig;
+
+s{>L2J Community Board<}
+ {>L2J コミュニティ<}g;
+
+s{value=\\"Back\\"}
+ {value=\\"戻る\\"}g;
+
+s{sex = "Male"}
+ {sex = "男性"};
+
+s{sex = "Female"}
+ {sex = "女性"};
+
+s{levelApprox = "low"}
+ {levelApprox = "低い"};
+
+s{levelApprox = "very high"}
+ {levelApprox = "非常に高い"};
+
+s{levelApprox = "high"}
+ {levelApprox = "高い"};
+
+s{levelApprox = "medium"}
+ {levelApprox = "普通"};
+
+s{>Level: "}
+ {>相対レベル: "};
+
+s{>Level: "}
+ {>現在のレベル: "};
+
+s{>Experience: "}
+ {>現在の経験値: "};
+
+s{>Experience needed for level up: "}
+ {>次のLvUPに必要な経験値: "};
+
+s{>Uptime: "([^<>]+?)"h "([^<>]+?)"m "([^<>]+?)"s<}
+ {>プレイ時間： "$1"時間 "$2"分 "$3"秒<};
+
+s{>Clan: "}
+ {>所属血盟: "};
+
+s{value=\\"Send PM\\"}
+ {value=\\"メッセージ送信\\"};
+
+s{>No player with name "([^<>]+?)"<}
+ {>プレイヤー: "$1"はオフラインです。<};
+
+s{"Player not found!<}
+ {"相手が見つかりませんでした。<};
+
+s{"Player is in jail\."}
+ {"相手はGM相談所に居ます。"};
+
+s{"Player is chat banned\."}
+ {"相手はチャットを禁止されています。"};
+
+s{"You can not chat while in jail\."}
+ {"GM相談所ではチャットできません。"};
+
+s{"You are banned from using chat"}
+ {"あなたはチャットを禁止されています。"};
+
+s{"Message Sent<}
+ {"メッセージを送信しました<};
+
+s{Server Restarted:}
+ {サーバー起動日時:}g;
+
+s{"XP Rate: x?"}
+ {"取得経験値倍率: "}g;
+
+s{"SP Rate: x?"}
+ {"取得SP倍率: "}g;
+
+s{"Party XP Rate: x?"}
+ {"PT経験値ボーナス倍率: "}g;
+
+s{"Party SP Rate: x?"}
+ {"PT SPボーナス倍率: "}g;
+
+s{"XP Exponent: "}
+ {"Lv差経験値ボーナス倍率: "}g;
+
+s{"SP Exponent: "}
+ {"Lv差SPボーナス倍率: "}g;
+
+s{"Drop Rate: "}
+ {"ドロップ倍率: "}g;
+
+s{"Spoil Rate: "}
+ {"スポイル倍率: "}g;
+
+s{"Adena Rate: "}
+ {"アデナ倍率: "}g;
+
+#s{" Player\(s\) Online<}
+# {" 名のプレイヤーがオンラインです（GMプレイヤー名は黄色で表記）。<}g;
+
+s{" Player\(s\) Online<}
+ {" 名のプレイヤーがオンラインです。<}g;
+
+s{"\(Yellow names are GM\)<}
+ {"（GMプレイヤー名は黄色で表記）<}g;
+
+s{(getAllVisibleObjectsCount\(\)\s*?\+\s*?)" Object count<}
+ {$1" 体のNPCが存在しています。<}gs;
+
+s{value=\\"Prev\\"}
+ {value=\\"前へ\\"}g;
+
+s{value=\\"Next\\"}
+ {value=\\"次へ\\"}g;
+
+if ($NAME) {
+	if ($_ ne $text) {
+		open FILE, '>:encoding(cp932)', "##ja-test_$NAME";
+		print FILE;
+		close FILE;
+	}
+}

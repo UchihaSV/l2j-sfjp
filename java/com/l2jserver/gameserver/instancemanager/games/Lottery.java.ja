@@ -1,0 +1,4 @@
+﻿use utf8;
+
+s{"Lottery tickets are now available for Lucky Lottery #" \+ getId\(\) \+ "\."}
+ {"第" + getId() + "回幸運の宝くじ発売中"};

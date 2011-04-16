@@ -1,0 +1,48 @@
+﻿# L2J rev 2370
+
+use utf8;
+
+s{"TvT Event Participation"}
+ {"TvT イベント受付"};		# NPC 70010 L2J TvT Event Manager Catrina のタイトル
+
+s{"TvT Event: Event has ended. No team won due to inactivity!"}
+ {"TvT Event: イベントは終了しました。勝者はいません。"};
+
+s{"TvT Event: Event has ended, both teams have tied."}
+ {"TvT Event: イベントは終了しました。結果は引き分けです。"};
+
+s{"TvT Event: Event has ended with both teams tying."}
+ {"TvT Event: イベントは終了しました。結果は引き分けです。"};
+
+s{"TvT Event: Event has ended with both teams tying."}
+ {"TvT Event: イベントは終了しました。結果は引き分けです。"};
+
+s{"TvT Event: Event finish\. Team " \+ (.+?) \+ " won with " \+ (.+?) \+ " kills\."}
+ {"TvT Event: イベントは終了しました。勝者は " + $1 + " で " + $2 + " ポイントを獲得しました。"};
+
+s{"<html><head><title>TvT Event</title></head><body>Your team won the event. Look in your inventory, there should be your reward.</body></html>"}
+ {"<html><head><title>TvT Event</title></head><body>あなたのチームが勝利しました。インベントリに報酬を入れました。</body></html>"};
+
+s{"<html><head><title>TvT Event</title></head><body>Your team won the event. Look in your inventory, there should be your reward.</body></html>"}
+ {"<html><head><title>TvT Event</title></head><body>あなたのチームが勝利しました。インベントリに報酬を入れました。</body></html>"};
+
+s{"<html><head><title>TvT Event</title></head><body>Cursed weapon owners are not allowed to participat\.</body></html>"}
+ {"<html><head><title>TvT Event</title></head><body>呪われた武器の所有者は参加できません。</body></html>"};
+
+s{"<html><head><title>TvT Event</title></head><body>Chaotic players are not allowed to participate.</body></html>"}
+ {"<html><head><title>TvT Event</title></head><body>カオティック プレイヤーは参加できません。</body></html>"};
+
+s{"<html><head><title>TvT Event</title></head><body>Only players from level " \+ (.+?) \+ " to level " \+ (.+?) \+ " are allowed tro participate\.</body></html>"}
+ {"<html><head><title>TvT Event</title></head><body>参加できるのは、キャラクター レベルが " + $1 + " から " + $2 + " のプレイヤーだけです。</body></html>"};
+
+s{"<html><head><title>TvT Event</title></head><body>The event is full! Only " \+ (.+?) \+ " players are allowed per team\.</body></html>"}
+ {"<html><head><title>TvT Event</title></head><body>満員です。1チーム " + $1 + "名までが参加できます。</body></html>"};
+
+s{"<html><head><title>TvT Event</title></head><body>You are on the registration list now\.</body></html>"}
+ {"<html><head><title>TvT Event</title></head><body>参加者名簿に記載しました。</body></html>"};
+
+s{"<html><head><title>TvT Event</title></head><body>You are not longer on the registration list.</body></html>"}
+ {"<html><head><title>TvT Event</title></head><body>参加を取り消しました。</body></html>"};
+
+s{"I have killed " \+ (.+?) \+ "!"}
+ {$1 + " を倒した！"};

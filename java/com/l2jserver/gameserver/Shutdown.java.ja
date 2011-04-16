@@ -1,0 +1,11 @@
+﻿use utf8;
+
+#s/"SIGTERM"/"割込停止"/;
+s/"shutting down"/"停止"/;
+s/"restarting"/"再起動"/;
+s/"aborting"/"取り消し"/;
+
+## public void telnetAbort(String IP)
+## public void abort(L2PcInstance activeChar)
+s{\Q"Server aborts " + MODE_TEXT[_shutdownMode] + " and continues normal operation!"\E}
+ {"サーバ" + MODE_TEXT[_shutdownMode] + " は取り消されました。平常どおり続行します。"}g;

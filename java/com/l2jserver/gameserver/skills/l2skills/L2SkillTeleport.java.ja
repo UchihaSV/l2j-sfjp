@@ -1,0 +1,10 @@
+﻿use utf8;
+
+s{"You may not use an escape skill in a festival\."}
+ {"祭典に参加中は村に帰還できません。"};
+
+s{"You can not escape from jail\."}
+ {"GM相談所からは村に帰還できません。"};
+
+s{"You cannot use escape skills during a duel\."}
+ {"決闘中は村に帰還できません。"};

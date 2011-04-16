@@ -1,0 +1,137 @@
+use utf8;
+# ---------------------------------------------------------------------------
+# Game Server Settings
+# ---------------------------------------------------------------------------
+# This is the server configuration file. Here you can set up the connection information for your server.
+# This was written with the assumption that you are behind a router.
+# Dumbed Down Definitions...
+# LAN (LOCAL area network) - typically consists of computers connected to the same router as you.
+# WAN (WIDE area network) - typically consists of computers OUTSIDE of your router (ie. the internet).
+# x.x.x.x - Format of an IP address. Do not include the x'es into settings. Must be real numbers.
+# ---------------------------------------------------------------------------
+# Networking
+# ---------------------------------------------------------------------------
+
+s{\Q# Where's the Login server this gameserver should connect to}
+   {# ログイン・サーバ～ゲーム・サーバ間の内部通信用アドレス。};
+s{\Q# WARNING: <u><b><font color="red">Please don't change default IPs here if you don't know what are you doing!</font></b></u>}
+   {# 注意: <u><b><font color="red">意味がわからないときは変更しないでデフォルトのままにしてください！</font></b></u>};
+s{\Q# WARNING: <u><b><font color="red">External/Internal IPs are now inside "ipconfig.xml" file.</font></b></u>}
+   {# 注意: <u><b><font color="red">インターネットIP/ローカルIP は "ipconfig.xml" ファイルで設定してください。</font></b></u>};
+# Default: 127.0.0.1
+##LoginHost = 127.0.0.1
+
+s{\Q# TCP port the login server listen to for gameserver connection requests}
+   {# ログイン・サーバ～ゲーム・サーバ間の内部通信用ポート番号。};
+# Default: 9014
+##LoginPort = 9014
+
+s{\Q# Bind address for gameserver. You should not need to change it in most cases.}
+   {# クライアントとの通信用待ち受けアドレス。通常はデフォルトのまま変更する必要はありません。};
+s{\Q# WARNING: <u><b><font color="red">Please don't change default IPs here if you don't know what are you doing!</font></b></u>}
+   {# 注意: <u><b><font color="red">意味がわからないときは変更しないでデフォルトのままにしてください！</font></b></u>};
+s{\Q# WARNING: <u><b><font color="red">External/Internal IPs are now inside "ipconfig.xml" file.</font></b></u>}
+   {# 注意: <u><b><font color="red">インターネットIP/ローカルIP は "ipconfig.xml" ファイルで設定してください。</font></b></u>};
+# Default: * (0.0.0.0)
+##GameserverHostname = *
+
+# Default: 7777
+##GameserverPort = 7777
+
+
+# ---------------------------------------------------------------------------
+# Database
+# ---------------------------------------------------------------------------
+s{\Q# Specify the appropriate driver and url for the database you're using.}
+   {# データ・ベース・ドライバー。};
+# Examples:
+# Driver = com.mysql.jdbc.Driver (default)
+# Driver = org.hsqldb.jdbcDriver
+# Driver = com.microsoft.sqlserver.jdbc.SQLServerDriver
+##Driver = com.mysql.jdbc.Driver
+s{\Q# Database URL}
+   {# データ・ベース接続文字列。};
+# URL = jdbc:mysql://localhost/l2jdb (default)
+# URL = jdbc:hsqldb:hsql://localhost/l2jdb
+# URL = jdbc:sqlserver://localhost/database = l2jdb/user = sa/password = 
+##URL = jdbc:mysql://localhost/l2jdb?useUnicode=true&characterEncoding=UTF-8
+s{\Q# Database user info (default is "root" but it's not recommended)}
+   {# データ・ベースのユーザ名 (デフォルトは "root" ですが、できれば変えておいた方が安全です。)};
+##Login = root
+s{\Q# Database connection password}
+   {# データ・ベースのパスワード};
+##Password = 
+
+# Default: 100
+##MaximumDbConnections = 100
+
+# Default: 0
+##MaximumDbIdleTime = 0
+
+# ---------------------------------------------------------------------------
+# Misc Server Settings
+# ---------------------------------------------------------------------------
+s{\Q# This is the server ID that the Game Server will request.}
+   {# このゲーム・サーバのサーバ ID。};
+s{\Q# Example: 1 = Bartz}
+   {# 例: 1 = バーツ、2 = ジグハルト．．．};
+# Default: 1
+##RequestServerID = 1
+
+s{\Q# True = The Login Server will give an other ID to the server if the requested ID is already reserved.}
+   {# RequestServerID が既に使用されている場合、ログイン・サーバ側で自動的に空きIDを割り当てる。};
+# Default: True
+##AcceptAlternateID = True
+
+s{\Q# Datapack root directory.}
+   {# データの親ディレクトリ};
+s{\Q# Defaults to current directory from which the server is started unless the below line is uncommented.}
+   {# デフォルトはサーバが起動したときのカレント・ディレクトリです。他の場所にしたいときはコメント・アウト#を外して適切なディレクトリに書き換えてください。};
+#DatapackRoot = C:/Work/tmp/DataPack
+
+s{\Q# Define how many players are allowed to play simultaneously on your server.}
+   {# 最大同時接続プレイヤー数。};
+# Default: 100
+##MaximumOnlineUsers = 100
+
+s{\Q# Numbers of protocol revisions that server allows to connect.}
+   {# このサーバのプロトコル・リビジョン。};
+s{\Q# Delimiter is ;}
+   {# 複数記述するときは ; で区切ってください。};
+s{\Q# WARNING: <u><b><font color="red">Changing the protocol revision may result in incompatible communication and many errors in game!</font></b></u>}
+   {# 警告: <u><b><font color="red">指定外のプロトコル・リビジョンに変更すると、ゲーム・クライアントと通信できなくなる可能性があります！</font></b></u>};
+# Default: 216
+##AllowedProtocolRevisions = 216
+
+
+# ---------------------------------------------------------------------------
+# Misc Player Settings
+# ---------------------------------------------------------------------------
+
+s{\Q# Character name template.}
+   {# プレイヤー・キャラクター名の制限。};
+s{\Q# Examples:}
+   {# 例:};
+# CnameTemplate = [A-Z][a-z]{3,3}[A-Za-z0-9]*
+s{\Q# The above setting will allow names with first capital letter, next three small letters,}
+   {# これは頭文字がアルファベット大文字で、次の3文字が小文字で、};
+s{\Q# and any letter (case insensitive) or number, like OmfgWTF1}
+   {# その後は大文字でも小文字でも数字でも、無しでもいいということです。たとえば OmfgWTF1};
+# CnameTemplate = [A-Z][a-z]*
+s{\Q# The above setting will allow names only of letters with first one capital, like Omfgwtf}
+   {# これは頭文字がアルファベット大文字で、2文字目からは小文字のみ許可するということです。たとえば Omfgwtf};
+s{\Q# Default .* (allows any symbol)}
+   {# Default .* (制限なし)};
+##CnameTemplate = .*
+
+s{\Q# This setting restricts names players can give to their pets.}
+   {# ペット名の制限。};
+s{\Q# See CnameTemplate for details}
+   {# プレイヤー・キャラクター名の制限と同じルールです};
+##PetNameTemplate = .*
+
+s{\Q# Maximum number of characters per account.}
+   {# 1つのアカウントで作成できるキャラクター数の制限。};
+s{\Q# Default: 7 (client limit)}
+   {# Default: 7 (クライアントの制限です)};
+##CharMaxNumber = 7

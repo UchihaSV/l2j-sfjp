@@ -1,0 +1,7 @@
+use utf8;
+
+s{\Q"Couldnt register you due other event participation"}
+ {"他のイベントに申し込み中は登録できません。"};	#〓仮
+
+s{\Q"The team is full"}
+ {"定員を超過したため、登録できません。"}g;	#〓仮

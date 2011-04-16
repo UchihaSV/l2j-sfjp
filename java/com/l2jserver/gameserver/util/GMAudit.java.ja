@@ -1,0 +1,4 @@
+﻿use utf8;
+
+s{new SimpleDateFormat\("dd/MM/yyyy H:mm:ss"\)}
+ {new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")};

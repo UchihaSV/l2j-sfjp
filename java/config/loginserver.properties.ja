@@ -1,0 +1,156 @@
+use utf8;
+# ---------------------------------------------------------------------------
+# Login Server Settings
+# ---------------------------------------------------------------------------
+# This is the server configuration file. Here you can set up the connection information for your server.
+# This was written with the assumption that you are behind a router.
+# Dumbed Down Definitions...
+# LAN (LOCAL area network) - typically consists of computers connected to the same router as you.
+# WAN (WIDE area network) - typically consists of computers OUTSIDE of your router (ie. the internet).
+# x.x.x.x - Format of an IP address. Do not include the x'es into settings. Must be real numbers.
+# ---------------------------------------------------------------------------
+# Networking
+# ---------------------------------------------------------------------------
+
+s{\Q# Bind ip of the LoginServer, use * to bind on all available IPs}
+   {# クライアントとの通信用待ち受けアドレス。* は全てのアドレスで待ち受けることを意味します。};
+s{\Q# WARNING: <u><b><font color="red">Please don't change default IPs here if you don't know what are you doing!</font></b></u>}
+   {# 注意: <u><b><font color="red">意味がわからないときは変更しないでデフォルトのままにしてください！</font></b></u>};
+s{\Q# WARNING: <u><b><font color="red">External/Internal IPs are now inside "ipconfig.xml" file.</font></b></u>}
+   {# 注意: <u><b><font color="red">インターネットIP/ローカルIP は "ipconfig.xml" ファイルで設定してください。</font></b></u>};
+# Default: * (0.0.0.0)
+##LoginserverHostname = *
+
+# Default: 2106
+##LoginserverPort = 2106
+
+s{\Q# The address on which login will listen for GameServers, use * to bind on all available IPs}
+   {# ゲーム・サーバとの内部通信用待ち受けアドレス。* は全てのアドレスで待ち受けることを意味します。};
+s{\Q# WARNING: <u><b><font color="red">Please don't change default IPs here if you don't know what are you doing!</font></b></u>}
+   {# WARNING: <u><b><font color="red">意味がわからないときは変更しないでデフォルトのままにしてください！</font></b></u>};
+s{\Q# WARNING: <u><b><font color="red">External/Internal IPs are now inside "ipconfig.xml" file.</font></b></u>}
+   {# WARNING: <u><b><font color="red">インターネットIP/ローカルIP は "ipconfig.xml" ファイルで設定してください。</font></b></u>};
+# Default: * (0.0.0.0)
+##LoginHostname = *
+
+s{\Q# The port on which login will listen for GameServers}
+   {# ゲーム・サーバとの内部通信用待ち受けポート。};
+# Default: 9014
+##LoginPort = 9014
+
+# The delay in minutes after which the login updates the gameservers IP's (usefull when their ip is dynamic)
+# Default: 15
+##IpUpdateTime = 15
+
+
+# ---------------------------------------------------------------------------
+# Security
+# ---------------------------------------------------------------------------
+# Default: True
+##LogLoginController = True
+
+s{\Q# How many times you can provide an invalid account/pass before the IP gets banned.}
+   {# この回数以上アカウント／パスワードが一致しないとき IP アドレスを凍結します。};
+# Default: 10
+##LoginTryBeforeBan = 10
+
+s{\Q# Time you won't be able to login back again after LoginTryBeforeBan tries to login.}
+   {# アカウント／パスワードが一致しないとき IP アドレスを凍結する秒数。};
+s{\Q# Default: 600 (10 minutes)}
+   {# Default: 600 (10 分)};
+##LoginBlockAfterBan = 600
+
+s{\Q# If set to True any GameServer can register on your login's free slots}
+   {# ログイン・サーバ側で自動的にゲーム・サーバIDを割り当てる。};
+# Default: False
+##AcceptNewGameServer = False
+
+s{\Q# Enforce GameGuard authorization from client?}
+   {# クライアントのゲームガード認証を強制。};
+s{\Q# If True, login server will kick client if the client bypassed GameGuard authentication.}
+   {# Trueなら、クライアントがゲームガードを回避してログインしようとした場合、ログイン・サーバ側でキックします。};
+# Default: False
+##ForceGGAuth = False
+
+s{\Q# Flood Protection. All values are in MILISECONDS.}
+   {# Flood Protection. 単位はミリ秒です。};
+# Default: True
+##EnableFloodProtection = True
+
+# Default: 15
+##FastConnectionLimit = 15
+
+# Default: 700
+##NormalConnectionTime = 700
+
+# Default: 350
+##FastConnectionTime = 350
+
+# Default: 50
+##MaxConnectionPerIP = 50
+
+
+# ---------------------------------------------------------------------------
+# Database
+# ---------------------------------------------------------------------------
+s{\Q# Specify the appropriate driver and url for the database you're using.}
+   {# データ・ベース・ドライバー。};
+# Examples:
+# Driver = com.mysql.jdbc.Driver (default)
+# Driver = org.hsqldb.jdbcDriver
+# Driver = com.microsoft.sqlserver.jdbc.SQLServerDriver
+##Driver = com.mysql.jdbc.Driver
+s{\Q# Database URL}
+   {# データ・ベース接続文字列。};
+# URL = jdbc:mysql://localhost/l2jdb (default)
+# URL = jdbc:hsqldb:hsql://localhost/l2jdb
+# URL = jdbc:sqlserver://localhost/database = l2jdb/user = sa/password = 
+##URL = jdbc:mysql://localhost/l2jdb?useUnicode=true&characterEncoding=UTF-8
+s{\Q# Database user info (default is "root" but it's not recommended)}
+   {# データ・ベースのユーザ名 (デフォルトは "root" ですが、できれば変えておいた方が安全です。)};
+##Login = root
+s{\Q# Database connection password}
+   {# データ・ベースのパスワード};
+##Password = 
+
+# Default: 10
+##MaximumDbConnections = 10
+
+# Default: 0
+##MaximumDbIdleTime = 0
+
+
+# ---------------------------------------------------------------------------
+# Misc.
+# ---------------------------------------------------------------------------
+s{\Q# If False, the license (after the login) will not be shown.}
+   {# ライセンスをチャット欄に表示。};
+# Default: True
+##ShowLicence = True
+
+# Default: True
+##AutoCreateAccounts = True
+
+
+# ---------------------------------------------------------------------------
+# Developer Settings
+# ---------------------------------------------------------------------------
+# Default: False
+##Debug = False
+
+# Default: False
+##Assert = False
+
+# Default: False
+##Developer = False
+
+######################################## [L2J_JP]
+s{\Q# Config for Custom Login Rule}
+   {# L2J_JP特別ルール。};
+s{\Q# When 'DenyMultiLoginByIpAddr = true' and userLevel > 0,}
+   {# DenyMultiLoginByIpAddr = true にすると userLevel > 0 のアカウントは};
+s{\Q# It's possible to connect it from same IP address.}
+   {# 同一IPからのログインができなくなります。};
+##DenyMultiLoginByIpAddr = False
+##DenyBannedUserByIpAddr = False
+########################################

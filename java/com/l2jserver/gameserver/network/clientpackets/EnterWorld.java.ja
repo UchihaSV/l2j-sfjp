@@ -1,0 +1,4 @@
+use utf8;
+
+s{\Q"Your Partner has logged in."\E}
+ {"結婚相手がログインしました。"};

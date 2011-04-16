@@ -1,0 +1,42 @@
+﻿use utf8;
+s/"Talking Island Village"/"話せる島の村"/i;	#case 0
+s/"Elven Village"/"エルフの村"/i;		#case 1
+s/"Dark Elven Village"/"ダークエルフの村"/i;	#case 2
+s/"Orc Village"/"オーク村"/i;			#case 3
+s/"Dwarven Village"/"ドワーフ村"/i;		#case 4
+s/"Town of Gludio"/"グルーディオ城の村"/i;	#case 5
+s/"Gludin Village"/"グルーディン村"/i;		#case 6
+s/"Town of Dion"/"ディオン城の村"/i;		#case 7
+s/"Town of Giran"/"ギラン城の村"/i;		#case 8
+s/"Town of Oren"/"オーレン城の村"/i;		#case 9
+s/"Town of Aden"/"アデン城の村"/i;		#case 10
+s/"Hunters Village"/"猟師の村"/i;		#case 11
+s/"Giran Harbor"/"ギラン港"/i;			#case 12
+s/"Heine"/"水上都市ハイネス"/i;			#case 13
+s/"Rune Township"/"ルウン城の村"/i;		#case 14
+s/"Town of Goddard"/"ゴダード城の村"/i;		#case 15
+s/"Town of Schuttgart"/"シュチュッツガルト城の村"/i;	#case 16
+#						#case 17
+s/"Primeval Isle"/"古代の島"/i;			#case 18
+s/"Kamael Village"/"カマエルの村"/i;		#case 19
+s/"South of Wastelands Camp"/"荒地南"/i;	#case 20〓
+s/"Fantasy Island"/"幻想の島"/i;		#case 21
+
+s/"Neutral Zone"/"中立海域"/i;	#case 22〓
+s/"Coliseum"/"コロシアム"/i;	#case 23〓
+s/"GM Consultation service"/"GM相談所"/i;	#case 24〓
+s/"Dimensional Gap"/"次元の狭間"/i;	#case 25〓
+s/"Cemetary of the Empire"/"帝国の墓地"/i;	#case 26〓
+s/"Inside the Steel Citadel"/"鋼鉄の城"/i;	#case 27〓
+#s/"Steel Citadel Resistance"/"鋼鉄の城レジスタンス"/i;	#case 28〓
+s/"Inside Kamaloka"/"カマロカ"/i;	#case 29〓
+s/"Inside Nia Kamaloka"/"ニア カマロカ"/i;	#case 30〓
+s/"Inside Rim Kamaloka"/"リム カマロカ"/i;	#case 31〓
+s/"Keucereus clan association"/"クセルス同盟の連合基地"/i;	#case 32
+s/"Inside the Seed of Infinity"/"不滅の種 内部"/i;	#case 33〓
+s/"Outside the Seed of Infinity"/"不滅の種 外部"/i;	#case 34〓
+s/"Aerial Cleft"/"クラフト"/i;	#case 35〓
+
+s/"Town of Aden"/"アデン城の村"/i;		#default
+
+# 〓 マークは未確認事項
