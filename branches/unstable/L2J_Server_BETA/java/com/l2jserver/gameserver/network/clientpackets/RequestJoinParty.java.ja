@@ -1,0 +1,10 @@
+﻿use utf8;
+
+s{"Player is in Jail"}
+ {"相手はGM相談所に居ます。"};
+
+s{"Player is in offline mode\."}
+ {"相手はオフライン露店中です。"};
+
+s{"You can't invite a player when in Dimensional Rift\."}
+ {"次元の狭間では招待できません。"};

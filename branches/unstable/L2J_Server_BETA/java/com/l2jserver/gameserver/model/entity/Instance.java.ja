@@ -1,0 +1,8 @@
+use utf8;
+
+s{"You were removed from the instance"}
+ {"インスタント ゾーンから退場しました。"};	#〓仮〓
+
+# new CreatureSay(...
+s{\Q"Notice", timeLeft + " seconds left."\E}
+ {"ダンジョン 終了", timeLeft + "秒"}g;	#〓仮〓

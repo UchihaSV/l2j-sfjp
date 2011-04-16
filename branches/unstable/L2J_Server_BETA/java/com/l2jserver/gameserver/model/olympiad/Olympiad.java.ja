@@ -1,0 +1,14 @@
+﻿use utf8;
+
+s{\Q"Olympiad Validation Period has began"\E}
+ {"オリンピアード期間が始まりました。"}g;
+s{\Q"Olympiad Validation Period has ended"\E}
+ {"オリンピアード期間が終了しました。"}g;
+
+s{\Q"You can't join olympiad while participating on TvT Event."\E}
+ {"TvTイベント参加中のプレイヤーは、オリンピアードに参加できません。"};
+
+# olympiad_observe2.htm %state??%
+s!(?<=state = )"Initial State"!"準備中"!;	#〓仮〓
+s!(?<=state = )"Playing"!"<FONT COLOR=FFFF00>対戦中</FONT>"!;	#〓仮〓
+s!(?<=state = )"Standby"!"<FONT COLOR=00FF00>受付済</FONT>"!;	#〓仮〓

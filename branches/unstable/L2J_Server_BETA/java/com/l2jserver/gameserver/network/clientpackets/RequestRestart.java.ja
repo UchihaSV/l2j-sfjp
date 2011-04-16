@@ -1,0 +1,13 @@
+﻿use utf8;
+
+s{\Q"You can not restart while flying."\E}
+ {"飛行中はリスタートできません。"};
+
+s{\Q"Cannot restart while trading"\E}
+ {"アイテム トレード中はリスタートできません。"};
+
+s{\Q"You cannot restart while you are a participant in a festival."\E}
+ {"祭典に参加中はリスタートできません。"};
+
+s{\Q" has been removed from the upcoming festival."\E}
+ {" が祭典から外れました。"};

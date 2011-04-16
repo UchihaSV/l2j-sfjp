@@ -1,0 +1,9 @@
+use utf8;
+
+# DEFAULT_NO_QUEST_MSG =
+s{\Q"<html><body>You are either not on a quest that involves this NPC, or you don't meet this NPC's minimum quest requirements.</body></html>"\E}
+   {"<html><body>クエストを遂行していないか条件が合いません。</body></html>"};
+
+# DEFAULT_ALREADY_COMPLETED_MSG =
+s{\Q"<html><body>This quest has already been completed.</body></html>"}
+   {"<html><body>すでに遂行したクエストです。</body></html>"};

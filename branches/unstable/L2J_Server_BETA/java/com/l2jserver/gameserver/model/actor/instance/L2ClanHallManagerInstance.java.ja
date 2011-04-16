@@ -1,0 +1,57 @@
+﻿use utf8;
+
+## edit_recovery.htm, edit_other.htm
+s!"none"!"非活性化"!g;
+s!>Deactivate<!>非活性化<!g;
+s!>Level (\d+)<!>$1段階<!g;
+s!"</font>Adena /"!"</font>アデナ/"!g;
+s!" Day\)"!"日)"!g;
+s!" Day</font>\)"!"日</font>"!g;
+
+## 支払日
+s!(?<=SimpleDateFormat\()"dd/MM/yyyy HH:mm"!"M/d H"!;
+
+s{"Withdraw the fee for the next time at " *\+ *(.+?)(?=\);)}
+ {$1+"時に次回の使用料を引き出す"}g;
+
+s!"Withdraw the fee for the next time at "!"次回の使用料を引き出す時刻は<br1>"!g;
+
+## "Stage 1" ⇒ "1段階"
+s!"Stage " *\+ *(.+?) *(?=\+)!$1+"段階"!g;	# "Stage "+hoge()+
+s!"Stage " *\+ *(.+?) *(?=\);)!$1+"段階"!g;	# "Stage "+hoge());
+s!"Stage (\d+)"!"$1段階"!g;
+
+## %name% "data/html/clanHallManager/functions-apply.htm"
+s!"Fireplace \(HP Recovery Device\)"!"ペチカ(HP回復施設)"!;
+s!"Carpet \(MP Recovery\)"!"カーペット(MP回復機能)"!;
+s!"Chandelier \(EXP Recovery Device\)"!"シャンデリア(経験値回復施設)"!;
+s!"Magic Equipment \(Item Production Facilities\)"!"魔法の機械(アイテムの生産施設)"!;
+s!"Insignia \(Supplementary Magic\)"!"記章(補助魔法施設)"!;
+s!"Mirror \(Teleportation Device\)"!"鏡(テレポート施設)"!;
+s!"Curtains \(Decoration\)"!"カーテン(装飾)"!;	#〓
+s!"Front Platform \(Decoration\)"!"正面壇(装飾)"!;	#〓
+
+## %use% "○○○.<font color=\"00FFFF\">"+String.valueOf(percent)+"%</font>"
+s{"Provides additional HP recovery for clan members in the clan hall\.(<font.*?</font>)"}
+ {"アジト内の血盟員のHPが "+"$1"+" 追加回復"}; #ペチカ
+
+s{"Provides additional MP recovery for clan members in the clan hall\.(<font.*?</font>)"}
+ {"アジト内の血盟員のMPが "+"$1"+" 追加回復"}; #カーペット
+
+s{"Restores the Exp of any clan member who is resurrected in the clan hall\.(<font.*?</font>)"}
+ {"血盟員がアジトで蘇る場合、経験値 "+"$1"+" 回復"}; #シャンデリア
+
+s{"Allow the purchase of special items at fixed intervals\."}
+ {"一定時間ごとに、特殊なアイテムが買えます。"}; #魔法の機械
+
+s{"Enables the use of supplementary magic\."}
+ {"役立つ補助魔法が利用可能"}; #記章
+
+s{"Teleports clan members in a clan hall to the target (<font.*?</font>) staging area"}
+ {"アジト内の血盟員が "+"$1"+"のエリアにテレポートできます。"}; #鏡〓
+
+s{"These curtains can be used to decorate the clan hall\."}
+ {"カーテンでアジトの飾り付けができます。"}; #カーテン〓
+
+s{"Used to decorate the clan hall\."}
+ {"アジトの飾り付けができます。"}; #正面壇〓

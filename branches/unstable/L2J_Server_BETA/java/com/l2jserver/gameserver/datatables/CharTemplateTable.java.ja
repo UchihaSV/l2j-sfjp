@@ -1,0 +1,140 @@
+﻿use utf8;
+# 英語		カタカナ				#id htm   ｶﾀｶﾅ
+s/"Human Fighter"/"ヒューマン ファイター"/i;		#0 &$247; ﾌｧｲﾀｰ
+s/"Warrior"/"ウォーリアー"/i;				#1 &$248; ｳｫｰﾘｱ
+s/"Gladiator"/"グラディエーター"/i;			#2 &$249; ｸﾞﾗﾃﾞｨｴｰﾀｰ
+s/"Warlord"/"ウォーロード"/i;				#3 &$250; ｳｫｰﾛｰﾄﾞ
+s/"Human Knight"/"ヒューマン ナイト"/i;			#4 &$251; ﾅｲﾄ
+s/"Paladin"/"パラディン"/i;				#5 &$252; ﾊﾟﾗﾃﾞｨﾝ
+s/"Dark Avenger"/"ダークアベンジャー"/i;		#6 &$253; ﾀﾞｰｸ ｱﾍﾞﾝｼﾞｬｰ
+s/"Rogue"/"ローグ"/i;					#7 &$254; ﾛｰｸﾞ
+s/"Treasure Hunter"/"トレジャー ハンター"/i;		#8 &$255; ﾄﾚｼﾞｬｰ ﾊﾝﾀｰ
+s/"Hawkeye"/"ホークアイ"/i;				#9 &$256; ﾎｰｸｱｲ
+s/"Human Mystic"/"ヒューマン　メイジ"/i;		#10 &$257; ﾒｲｼﾞ
+s/"Human Wizard"/"ヒューマン ウィザード"/i;		#11 &$258; ｳｨｻﾞｰﾄﾞ
+s/"Sorceror"/"ソーサラー"/i;				#12 &$259; ｿｰｻﾗｰ
+s/"Necromancer"/"ネクロマンサー"/i;			#13 &$260; ﾈｸﾛﾏﾝｻｰ
+s/"Warlock"/"ウォーロック"/i;				#14 &$261; ｳｫｰﾛｯｸ
+s/"Cleric"/"クレリック"/i;				#15 &$262; ｸﾚﾘｯｸ
+s/"Bishop"/"ビショップ"/i;				#16 &$263; ﾋﾞｼｮｯﾌﾟ
+s/"Prophet"/"プロフィット"/i;				#17 &$264; ﾌﾟﾛﾌｨｯﾄ
+s/"Elven Fighter"/"エルブンファイター"/i;		#18 &$265; ｴﾙｳﾞﾝ ﾌｧｲﾀｰ
+s/"Elven Knight"/"エルブンナイト"/i;			#19 &$266; ｴﾙｳﾞﾝ ﾅｲﾄ
+s/"Temple Knight"/"テンプルナイト"/i;			#20 &$267; ﾃﾝﾌﾟﾙ ﾅｲﾄ
+s/"Swordsinger"/"ソードシンガー"/i;			#21 &$268; ｿｰﾄﾞ ｼﾝｶﾞｰ
+s/"Elven Scout"/"エルブンスカウト"/i;			#22 &$269; ｴﾙｳﾞﾝ ｽｶｳﾄ
+s/"Plainswalker"/"プレインズウォーカー"/i;		#23 &$270; ﾌﾟﾚｲﾝｽﾞ ｳｫｰｶｰ
+s/"Silver Ranger"/"シルバーレンジャー"/i;		#24 &$271; ｼﾙﾊﾞｰ ﾚﾝｼﾞｬｰ
+s/"Elven Mystic"/"エルブンメイジ"/i;			#25 &$272; ｴﾙｳﾞﾝ ﾒｲｼﾞ
+s/"Elven Wizard"/"エルブンウィザード"/i;		#26 &$273; ｴﾙｳﾞﾝ ｳｨｻﾞｰﾄﾞ
+s/"Spellsinger"/"スペルシンガー"/i;			#27 &$274; ｽﾍﾟﾙｼﾝｶﾞｰ
+s/"Elemental Summoner"/"エレメンタルサマナー"/i;	#28 &$275; ｴﾚﾒﾝﾀﾙ ｻﾏﾅｰ
+s/"Elven Oracle"/"オラクル"/i;				#29 &$276; ｵﾗｸﾙ
+s/"Elven Elder"/"エルダー"/i;				#30 &$277; ｴﾙﾀﾞｰ
+s/"Dark Fighter"/"ダークファイター"/i;			#31 &$278; ﾀﾞｰｸﾌｧｲﾀｰ
+s/"Palus Knight"/"パラスナイト"/i;			#32 &$279; ﾊﾟﾗｽ ﾅｲﾄ
+s/"Shillien Knight"/"シリエンナイト"/i;			#33 &$280; ｼﾘｴﾝ ﾅｲﾄ
+s/"Bladedancer"/"ブレードダンサー"/i;			#34 &$281; ﾌﾞﾚｰﾄﾞﾀﾞﾝｻｰ
+s/"Assassin"/"アサシン"/i;				#35 &$282; ｱｻｼﾝ
+s/"Abyss Walker"/"アビスウォーカー"/i;			#36 &$283; ｱﾋﾞｽ ｳｫｰｶｰ
+s/"Phantom Ranger"/"ファントムレンジャー"/i;		#37 &$284; ﾌｧﾝﾄﾑ ﾚﾝｼﾞｬｰ
+s/"Dark Elven Mystic"/"ダーク メイジ"/i;		#38 &$285; ﾀﾞｰｸ ﾒｲｼﾞ
+s/"Dark Elven Wizard"/"ダークウィザード"/i;		#39 &$286; ﾀﾞｰｸ ｳｨｻﾞｰﾄﾞ
+s/"Spellhowler"/"スペルハウラー"/i;			#40 &$287; ｽﾍﾟﾙﾊｳﾗｰ
+s/"Phantom Summoner"/"ファントムサマナー"/i;		#41 &$288; ﾌｧﾝﾄﾑ ｻﾏﾅｰ
+s/"Shillien Oracle"/"シリエンオラクル"/i;		#42 &$289; ｼﾘｴﾝ ｵﾗｸﾙ
+s/"Shillien Elder"/"シリエンエルダー"/i;		#43 &$290; ｼﾘｴﾝ ｴﾙﾀﾞｰ
+s/"Orc Fighter"/"オーク ファイター"/i;			#44 &$291; ｵｰｸ ﾌｧｲﾀｰ
+s/"Orc Raider"/"オークレイダー"/i;			#45 &$292; ｵｰｸ ﾚｲﾀﾞｰ
+s/"Destroyer"/"デストロイヤー"/i;			#46 &$293; ﾃﾞｽﾄﾛｲﾔｰ
+s/"Orc Monk"/"オークモンク"/i;				#47 &$294; ｵｰｸ ﾓﾝｸ
+s/"Tyrant"/"タイラント"/i;				#48 &$295; ﾀｲﾗﾝﾄ
+s/"Orc Mystic"/"オーク メイジ"/i;			#49 &$296; ｵｰｸ ﾒｲｼﾞ
+s/"Orc Shaman"/"オークシャーマン"/i;			#50 &$297; ｵｰｸ ｼｬｰﾏﾝ
+s/"Overlord"/"オーバーロード"/i;			#51 &$298; ｵｰﾊﾞｰﾛｰﾄﾞ
+s/"Warcryer"/"ウォークライヤー"/i;			#52 &$299; ｳｫｰｸﾗｲﾔｰ
+s/"Dwarven Fighter"/"ドワーヴンファイター"/i;		#53 &$300; ﾄﾞﾜｰｳﾞﾝ ﾌｧｲﾀｰ
+s/"Dwarven Scavenger"/"スカベンジャー"/i;		#54 &$301; ｽｶﾍﾞﾝｼﾞｬｰ
+s/"Bounty Hunter"/"バウンティーハンター"/i;		#55 &$302; ﾊﾞｳﾝﾃｨｰ ﾊﾝﾀｰ
+s/"Dwarven Artisan"/"アルティザン"/i;			#56 &$303; ｱﾙﾃｨｻﾞﾝ
+s/"Warsmith"/"ウォースミス"/i;				#57 &$304; ｳｫｰｽﾐｽ
+#"dummyEntry1"
+#"dummyEntry2"
+#"dummyEntry3"
+#"dummyEntry4"
+#"dummyEntry5"
+#"dummyEntry6"
+#"dummyEntry7"
+#"dummyEntry8"
+#"dummyEntry9"
+#"dummyEntry10"
+#"dummyEntry11"
+#"dummyEntry12"
+#"dummyEntry13"
+#"dummyEntry14"
+#"dummyEntry15"
+#"dummyEntry16"
+#"dummyEntry17"
+#"dummyEntry18"
+#"dummyEntry19"
+#"dummyEntry20"
+#"dummyEntry21"
+#"dummyEntry22"
+#"dummyEntry23"
+#"dummyEntry24"
+#"dummyEntry25"
+#"dummyEntry26"
+#"dummyEntry27"
+#"dummyEntry28"
+#"dummyEntry29"
+#"dummyEntry30"
+s/"Duelist"/"デュエリスト"/i;				#88 &$1159; ﾃﾞｭｴﾘｽﾄ
+s/"DreadNought"/"ドレッドノート"/i;			#89 &$1160; ﾄﾞﾚｯﾄﾞﾉｰﾄ
+s/"Phoenix Knight"/"フェニックスナイト"/i;		#90 &$1161; ﾌｪﾆｯｸｽ ﾅｲﾄ
+s/"Hell Knight"/"ヘルナイト"/i;				#91 &$1162; ﾍﾙ ﾅｲﾄ
+s/"Sagittarius"/"サジタリウス"/i;			#92 &$1163; ｻｼﾞﾀﾘｳｽ
+s/"Adventurer"/"アドベンチャラー"/i;			#93 &$1164; ｱﾄﾞﾍﾞﾝﾁｬﾗｰ
+s/"Archmage"/"アークメイジ"/i;				#94 &$1165; ｱｰｸﾒｲｼﾞ
+s/"Soultaker"/"ソウルテイカー"/i;			#95 &$1166; ｿｳﾙﾃｲｶｰ
+s/"Arcana Lord"/"アルカナ ロード"/i;			#96 &$1167; ｱﾙｶﾅ ﾛｰﾄﾞ
+s/"Cardinal"/"カーディナル"/i;				#97 &$1168; ｶｰﾃﾞｨﾅﾙ
+s/"Hierophant"/"ハイエロファント"/i;			#98 &$1169; ﾊｲｴﾛﾌｧﾝﾄ
+s/"Eva Templar"/"エヴァテンプラー"/i;			#99 &$1170; ｴｳﾞｧｽ ﾃﾝﾌﾟﾗｰ
+s/"Sword Muse"/"ソードミューズ"/i;			#100 &$1171; ｿｰﾄﾞ ﾐｭｰｽﾞ
+s/"Wind Rider"/"ウィンドライダー"/i;			#101 &$1172; ｳｨﾝﾄﾞ ﾗｲﾀﾞｰ
+s/"Moonlight Sentinel"/"ムーンライトセンティネル"/i;	#102 &$1173; ﾑｰﾝﾗｲﾄ ｾﾝﾃｨﾈﾙ
+s/"Mystic Muse"/"ミスティック ミューズ"/i;		#103 &$1174; ﾐｽﾃｨｯｸ ﾐｭｰｽﾞ
+s/"Elemental Master"/"エレメンタルマスター"/i;		#104 &$1175; ｴﾚﾒﾝﾀﾙ ﾏｽﾀｰ
+s/"Eva's Saint"/"エヴァス セイント"/i;			#105 &$1176; ｴｳﾞｧｽ ｾｲﾝﾄ
+s/"Shillien Templar"/"シリエン テンプラー"/i;		#106 &$1177; ｼﾘｴﾝ ﾃﾝﾌﾟﾗｰ
+s/"Spectral Dancer"/"スペクトラルダンサー"/i;		#107 &$1178; ｽﾍﾟｸﾄﾗﾙ ﾀﾞﾝｻｰ
+s/"Ghost Hunter"/"ゴースト ハンター"/i;			#108 &$1179; ｺﾞｰｽﾄ ﾊﾝﾀｰ
+s/"Ghost Sentinel"/"ゴースト センティネル"/i;		#109 &$1180; ｺﾞｰｽﾄ ｾﾝﾃｨﾈﾙ
+s/"Storm Screamer"/"ストームスクリーマー"/i;		#110 &$1181; ｽﾄｰﾑ ｽｸﾘｰﾏｰ
+s/"Spectral Master"/"スペクトラルマスター"/i;		#111 &$1182; ｽﾍﾟｸﾄﾗﾙ ﾏｽﾀｰ
+s/"Shillien Saint"/"シリエン セイント"/i;		#112 &$1183; ｼﾘｴﾝ ｾｲﾝﾄ
+s/"Titan"/"タイタン"/i;					#113 &$1184; ﾀｲﾀﾝ
+s/"Grand Khauatari"/"グランド カバタリ"/i;		#114 &$1185; ｸﾞﾗﾝﾄﾞ ｶﾊﾞﾀﾘ
+s/"Dominator"/"ドミネーター"/i;				#115 &$1186; ﾄﾞﾐﾈｰﾀｰ
+s/"Doomcryer"/"ドゥーム クライヤー"/i;			#116 &$1187; ﾄﾞｩｰﾑ ｸﾗｲﾔｰ
+s/"Fortune Seeker"/"フォーチュン シーカー"/i;		#117 &$1188; ﾌｫｰﾁｭﾝ ｼｰｶｰ
+s/"Maestro"/"マエストロ"/i;				#118 &$1189; ﾏｴｽﾄﾛ
+#"dummyEntry31"
+#"dummyEntry32"
+#"dummyEntry33"
+#"dummyEntry34"
+s/"Male Soldier"/"カマエルソルジャー"/i;		#123 &$1561; ｶﾏｴﾙ ｿﾙｼﾞｬｰ
+s/"Female Soldier"/"カマエルソルジャー"/i;		#124 &$1562; ｶﾏｴﾙ ｿﾙｼﾞｬｰ
+s/"Trooper"/"トルーパー"/i;				#125 &$1563; ﾄﾙｰﾊﾟｰ
+s/"Warder"/"ウォーダー"/i;				#126 &$1564; ｳｫｰﾀﾞｰ
+s/"Berserker"/"バーサーカー"/i;				#127 &$1565; ﾊﾞｰｻｰｶｰ
+s/"Male Soulbreaker"/"ソウル ブレーカー"/i;		#128 &$1566; ｿｳﾙ ﾌﾞﾚｰｶｰ
+s/"Female Soulbreaker"/"ソウル ブレーカー"/i;		#129 &$1567; ｿｳﾙ ﾌﾞﾚｰｶｰ
+s/"Female Souldbreaker"/"ソウル ブレーカー"/i;		#129 &$1567; ｿｳﾙ ﾌﾞﾚｰｶｰ##
+s/"Arbalester"/"アヴァレスタ"/i;			#130 &$1568; ｱｳﾞｧﾚｽﾀ
+s/"Doombringer"/"ドゥーム ブリンガー"/i;		#131 &$1569; ﾄﾞｩｰﾑ ﾌﾞﾘﾝｶﾞｰ
+s/"Male Soulhound"/"ソウル ハウンド"/i;			#132 &$1570; ｿｳﾙ ﾊｳﾝﾄﾞ
+s/"Female Soulhound"/"ソウル ハウンド"/i;		#133 &$1571; ｿｳﾙ ﾊｳﾝﾄﾞ
+s/"Trickster"/"トリックスター"/i;			#134 &$1572; ﾄﾘｯｸｽﾀｰ
+s/"Inspector"/"インスペクター"/i;			#135 &$1573; ｲﾝｽﾍﾟｸﾀｰ
+s/"Judicator"/"ジュディケーター"/i;			#136 &$1574; ｼﾞｭﾃﾞｨｹｰﾀｰ

@@ -1,0 +1,39 @@
+﻿use utf8;
+
+my $NAME;
+if (0) {
+	$NAME = (__FILE__ =~ m/([^\\\/\:]+$)/)[0];
+	$NAME =~ s/\.ja$//;
+ #	open FILE, '<:encoding(cp932)', ".svn/text-base/$NAME.svn-base" or die $!;
+	open FILE, '<:encoding(cp932)', $NAME or die $!;
+	read FILE, my $text, -s FILE;
+	close FILE;
+	$_ = $text;
+}
+
+s{>Commande : "([^<>]+?)" pas encore implante<}
+ {>コマンド： "$1" は未実装です<}ig;
+s{>the command: "([^<>]+?)" is not implemented yet<}
+ {>コマンド： "$1" は未実装です<}ig;
+
+s{> CLAN COMMUNITY <}{> \&\$337; <};
+s{>\[GO TO MY CLAN\]<}{>[\&\$802;]<};
+
+s{>\[CLAN ANNOUNCEMENT\]<}{>お知らせ<};
+s{>\[CLAN MAIL\]<}{>メール<};
+s{>\[CLAN NOTICE\]<}{>連絡事項<};
+
+s{>CLAN NAME<}{>\&\$580;<};
+s{>CLAN LEADER<}{>\&\$342;<};
+s{>CLAN LEVEL<}{>\&\$392;<};
+s{>CLAN MEMBERS<}{>\&\$1036;<};
+s{>HOME<}{> \&\$377; <};
+s{>ALLIANCE<}{>\&\$571;<};
+
+if ($NAME) {
+	if ($_ ne $text) {
+		open FILE, '>:encoding(cp932)', "##ja-test_$NAME";
+		print FILE;
+		close FILE;
+	}
+}

@@ -1,0 +1,14 @@
+use utf8;
+
+s{"yyyy-MM-dd HH"}{"yyyy年MM月dd日 HH時"}g;
+s{"yyyy-MM-dd HH:mm"}{"yyyy年MM月dd日 HH時mm分"}g;
+
+s{" was defeated"}{" に立ち向かい勝利を収める。"}g;
+s{" Castle was successfuly taken"}{"の攻城に勝利する。"/*〓*/}g;
+
+s{>victory<}{>勝利<}g;
+s{>loss<}{>敗退<}g;
+s{>draw<}{>引分<}g;
+
+s{(?<="<button value=)\Q\"Prev\"}{\\"戻る\\"}g;
+s{(?<="<button value=)\Q\"Next\"}{\\"次へ\\"}g;

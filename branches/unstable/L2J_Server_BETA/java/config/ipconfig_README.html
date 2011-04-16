@@ -1,0 +1,84 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ipconfig.xml の説明</title>
+</head>
+<body bgcolor=#CCEEFF>
+L2j Server v4.4 Freya (T2.5 セカンドスローン フレヤ)からゲームサーバのアドレスの設定場所が変更になりました。<br>
+<br>
+T2.4まではserver.propertiesで設定していた項目が<br>
+T2.5からはipconfig.xmlになりました。<br>
+<br>
+<table border=1 cellspacing=0>
+<tr><td>T2.4まで server.properties</td><td>T2.5から ipconfig.xml</td></tr>
+<tr><td>ExternalHostname=WAN側アドレス</td><td>&lt;gameserver address="WAN側アドレス"&gt;</td></tr>
+<tr><td>InternalHostname=LAN側アドレス</td><td>&lt;define subnet="LANサブネットマスク" address="LAN側アドレス" /&gt;</td></tr>
+</table>
+<br>
+
+具体的に、わが家の設定をお見せします。<br>
+<br>
+<U>わが家のネットワーク環境：</U><br>
+・無料のダイナミックDNSで<font color=RED>xxxx.ath.cx</font>(仮称)を取得しています。-- これがゲームサーバのWAN側アドレスになります。<br>
+（DNSを取得していないなら、数字のIPアドレスでもOKです）<br>
+コンピュータは<br>
+・サーバ専用機１台       <font color=MAGENTA>192.168.0.200</font> -- これがゲームサーバのLAN側アドレスになります。<br>
+・クライアント専用機１台 192.168.0.201<br>
+<br>
+すると、旧：T2.4までの server.properties ではこうなります。<br>
+<div style="background-color:BLACK;color:WHITE;margin:5 5 5 5;padding:5 5 5 5">
+# ---------------------------------------------------------------------------<br>
+# Game Server Settings<br>
+# ---------------------------------------------------------------------------<br>
+# This is the server configuration file. Here you can set up the connection information for your server.<br>
+# This was written with the assumption that you are behind a router.<br>
+# Dumbed Down Definitions...<br>
+# LAN (LOCAL area network) - typically consists of computers connected to the same router as you.<br>
+# WAN (WIDE area network) - typically consists of computers OUTSIDE of your router (ie. the internet).<br>
+# x.x.x.x - Format of an IP address. Do not include the x'es into settings. Must be real numbers.<br>
+# ---------------------------------------------------------------------------<br>
+# Networking<br>
+# ---------------------------------------------------------------------------<br>
+# This is transmitted to the clients connecting from an external network, so it has to be a public IP or resolvable hostname<br>
+# Common settings...<br>
+# 127.0.0.1 - If you are playing alone on a test server<br>
+# 192.168.x.x - This is if you are on a 192.168.x.x type network (behind a standard consumer router) and want other computers from JUST the internal network to be able to connect<br>
+# x.x.x.x - WAN IP obtained from http://www.whatismyip.com/. This is if you want people outside your internal network to be able to connect to your server.<br>
+# If this IP is resolvable by the Login Server, just leave *.<br>
+# ---------------------------------------------------------------------------<br>
+# Default: *<br>
+<font color=#AAFFFF>ExternalHostname</font> = <font color=RED>xxxx.ath.cx</font><br>
+<br>
+# ---------------------------------------------------------------------------<br>
+# This is transmitted to the client from the same network, so it has to be a local IP or resolvable hostname.<br>
+# This can be the internal IP such as 127.0.0.1 or the computer's IP such as 192.168.x.x.<br>
+# If this IP is resolvable by the Login Server, just leave *.<br>
+# ---------------------------------------------------------------------------<br>
+# Default: *<br>
+<font color=#AAFFFF>InternalHostname</font> = <font color=MAGENTA>192.168.0.200</font><br>
+<br><font color=#AAAAAA>（以下省略）</font>
+</div>
+<br>
+新：T2.5からの ipconfig.xml だとこうなります。<br>
+<div style="background-color:BLACK;color:WHITE;margin:5 5 5 5;padding:5 5 5 5">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;!-- Put old contents of <font color=#AAFFFF>ExternalHostname</font> here, used by default --&gt;<br>
+&lt;gameserver address="<font color=RED>xxxx.ath.cx</font>"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- LAN's, put old contents of <font color=#AAFFFF>InternalHostname</font> here --&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;define subnet="192.168.0.0/24" address="<font color=MAGENTA>192.168.0.200</font>" /&gt;<br>
+&lt;/gameserver&gt;<br>
+</div>
+<br>
+<br>
+<B>&lt;define subnet="10.0.0.0/8" address="10.0.0.0" /&gt;</B> と<br>
+<B>&lt;define subnet="172.16.0.0/19" address="172.16.0.0" /&gt;</B> について。<br>
+元の ipconfig.xml には例としてこの２行も書いてあります。
+ふつう、家庭のパソコン環境では滅多に使わないと思いますから削除してしまってオッケーです。そのまま残しておいても動くみたいですが、几帳面な私は消しました。<br>
+<br>
+<B>&lt;define subnet="127.0.0.0/8" address="127.0.0.1" /&gt;</B> について。<br>
+これはゲームサーバとクライアントを１台のマシンで同時に動かすときの設定です。
+LANインターフェースを備えていないパソコンでゲームするときにはこの行が必要です。
+<br>
+<br>
+以上です。<br>
+2010.10.09 JOJO<br>
+</body></html>

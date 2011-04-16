@@ -1,0 +1,10 @@
+use utf8;
+
+s{\Q<!-- Externalhost here (Internet IP) or Localhost IP for local test -->}
+   {<!-- ここにグローバル・アドレス(インターネット)を設定してください。非公開サーバならローカル・アドレスで構いません。 -->};
+
+s{\Q<!-- Localhost here -->}
+   {<!-- ここは localhost です。書き換えないでください。 -->};
+
+s{\Q<!-- Internalhosts here (LANs IPs) -->}
+   {<!-- ここにローカル・アドレス(LAN)を設定してください。 -->};

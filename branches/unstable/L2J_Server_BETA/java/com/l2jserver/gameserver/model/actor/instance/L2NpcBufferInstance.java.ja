@@ -1,0 +1,4 @@
+use utf8;
+
+s{\Q"You do not have your pet summoned."}
+ {"ペットを召喚していません。"};

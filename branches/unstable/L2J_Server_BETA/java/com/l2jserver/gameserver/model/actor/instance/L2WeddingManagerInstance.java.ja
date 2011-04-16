@@ -1,0 +1,15 @@
+﻿use utf8;
+
+my $E0 = 'Cannot find string resource';
+
+s{"Congratulations you are married!"}
+ {"ご結婚おめでとうございます！"}g ||warn $E0;	#〓意訳
+
+s{\Q"Congratulations to " + player.getName() + " and " + ptarget.getName() + "! They have been married."\E}
+ {player.getName()+"さん、"+ptarget.getName()+"さん、御結婚おめでとうございます！"} ||warn $E0;	#〓意訳 [r4178-]
+
+s{"You declined your partner's marriage request."}
+ {"結婚の申し込みを辞退しました。"} ||warn $E0;	#〓意訳 [r4178-]
+
+s{"Your partner declined your marriage request."}
+ {"パートナーは結婚の申し込みをご辞退なさいました。"} ||warn $E0;	#〓意訳 [r4178-]

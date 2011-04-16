@@ -1,0 +1,61 @@
+﻿use utf8;
+
+## 全部テキトーに訳
+
+## command "open_doors"
+s{>You have <font color=\\"FF9955\\">opened</font> the clan hall door\.}
+ {>アジトの門を<font color=\\"FF9955\\">開きました。</font>};			#CT2
+s{>Outsiders may enter the clan hall while the door is open\.}
+ {>門を開け放していると、血盟員以外のキャラクターが入ってきますので、};	#CT2
+s{Please close it when you've finished your business\.}
+ {用が済んだら門は閉めてください。};									#CT2
+s{value=\\"Close\\"}
+ {value=\\"門を閉じる\\"};
+
+## command "close_doors"
+s{>You have <font color=\\"FF9955\\">closed</font> the clan hall door\.}
+ {>アジトの門を<font color=\\"FF9955\\">閉じました。</font>};	#CT2
+s{>Good day!}
+ {>今日もよい一日でありますように！};							#CT2
+s{value=\\"To Beginning\\"}
+ {value=\\"初期画面\\"};										#CT2
+
+s{(<button value=\\"最初の画面へ\\"[^<>]*?) width=\d+}{$1 width=100}s;
+
+## showMessageWindow(...)
+##  if COND_HALL_OWNER
+s{>Greetings!}
+ {>あ、いらっしゃいませ。};								#CT2
+s{"</font> I am honored to serve your clan\.}
+ {"</font>様の血盟の一員としてお迎えできて光栄です。};	#CT2(**)
+s{>How may i assist you\?}
+ {>何かお困りのことはありませんか。};					#CT2
+s{value=\\"Open Door\\"}
+ {value=\\"門を開く\\"};
+s{value=\\"Close Door\\"}
+ {value=\\"門を閉じる\\"};
+
+##  not COND_HALL_OWNER
+s{>Hello there!}
+ {>こんにちは！};
+s{>This clan hall is owned by }
+ {>このアジトの持ち主は };
+s{" who is the Lord of the "}
+ {"様で、"};
+s{"</font> clan.<br>"}
+ {"</font> 血盟に属していらっしゃいます。<br>"};
+s{"I am sorry, but only the clan members who belong to the "}
+ {"すみませんが、ここは "};
+s{" clan can enter the clan hall\.</body></html>"}
+ {" 血盟のメンバーしか入れません。</body></html>"};
+##  no owner
+s{>Clan hall (.+?) have no owner clan\.}
+ {>このアジト $1 は持ち主がいません。}s;
+
+s{>Clan hall <font color=\"LEVEL\">"}
+ {>◆このアジト「<font color=\"LEVEL\">"};
+s{"</font> have no owner clan\.}
+ {"</font>」は持ち主がいません。◆};
+
+s{>You can rent it at auctioneers\.\.}
+ {>競売管理人を通じて借りることができますよ。};

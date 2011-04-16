@@ -1,0 +1,4 @@
+use utf8;
+
+s/"draw"/"引分"/g;
+s/" won"/" 勝利"/g;

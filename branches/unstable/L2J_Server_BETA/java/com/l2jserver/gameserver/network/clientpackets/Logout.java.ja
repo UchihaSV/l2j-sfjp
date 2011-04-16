@@ -1,0 +1,11 @@
+﻿use utf8;
+
+s{\Q"You can not log out while flying."\E}
+ {"飛行中はログアウトできません。"};
+
+## PvPイベントかな？詳細不明
+#s{"A superior power doesn't allow you to leave the event"}
+# {"〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓"};
+	
+s{\Q"You cannot log out while you are a participant in a festival."\E}
+ {"祭典に参加中はログアウトできません。"};
