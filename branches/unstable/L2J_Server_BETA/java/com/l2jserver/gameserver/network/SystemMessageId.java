@@ -422,7 +422,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 66<br>
-	 * Message: $c1がパーティーに招待しています。参加しますか。
+	 * Message: $c1がパーティに招待しています。参加しますか。
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY;
 	
@@ -656,25 +656,25 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 105<br>
-	 * Message: $c1をパーティーに招待しました。
+	 * Message: $c1をパーティに招待しました。
 	 */
 	public static final SystemMessageId C1_INVITED_TO_PARTY;
 	
 	/**
 	 * ID: 106<br>
-	 * Message: パーティーに参加しました。
+	 * Message: パーティに参加しました。
 	 */
 	public static final SystemMessageId YOU_JOINED_S1_PARTY;
 	
 	/**
 	 * ID: 107<br>
-	 * Message: $c1がパーティーに参加しました。
+	 * Message: $c1がパーティに参加しました。
 	 */
 	public static final SystemMessageId C1_JOINED_PARTY;
 	
 	/**
 	 * ID: 108<br>
-	 * Message: $c1がパーティーから脱退しました。
+	 * Message: $c1がパーティから脱退しました。
 	 */
 	public static final SystemMessageId C1_LEFT_PARTY;
 	
@@ -788,7 +788,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 127<br>
-	 * Message: サーバーとの接続が切断されました。しばらくしてから接続しなおしてみてください。
+	 * Message: サーバーとの接続が切断されました。しばらくしてから再度ご接続ください。
 	 */
 	public static final SystemMessageId DISCONNECTED_FROM_SERVER;
 	
@@ -836,7 +836,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 135<br>
-	 * Message: $c1が応答しなかったため、パーティー招待がキャンセルされました。
+	 * Message: $c1が応答しなかったため、パーティ招待がキャンセルされました。
 	 */
 	public static final SystemMessageId C1_DID_NOT_REPLY_TO_YOUR_INVITE;
 	
@@ -950,13 +950,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 154<br>
-	 * Message: パーティー リーダーだけが招待を使用できます。
+	 * Message: パーティ リーダーだけが招待を使用できます。
 	 */
 	public static final SystemMessageId ONLY_LEADER_CAN_INVITE;
 	
 	/**
 	 * ID: 155<br>
-	 * Message: パーティーが満員になりました。
+	 * Message: パーティが満員になりました。
 	 */
 	public static final SystemMessageId PARTY_FULL;
 	
@@ -986,13 +986,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 160<br>
-	 * Message: $c1はすでにパーティーに所属しているため、招待できません。
+	 * Message: $c1はすでにパーティに所属しているため、招待できません。
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_IN_PARTY;
 	
 	/**
 	 * ID: 161<br>
-	 * Message: パーティーに招待したユーザーがいません。
+	 * Message: パーティに招待したユーザーがいません。
 	 */
 	public static final SystemMessageId INVITED_USER_NOT_ONLINE;
 	
@@ -1136,7 +1136,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 185<br>
-	 * Message: パーティーに招待するユーザーを選択してください。
+	 * Message: パーティに招待するユーザーを選択してください。
 	 */
 	public static final SystemMessageId FIRST_SELECT_USER_TO_INVITE_TO_PARTY;
 	
@@ -1226,25 +1226,25 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 200<br>
-	 * Message: パーティーから脱退しました。
+	 * Message: パーティから脱退しました。
 	 */
 	public static final SystemMessageId YOU_LEFT_PARTY;
 	
 	/**
 	 * ID: 201<br>
-	 * Message: $c1をパーティーから追放しました。
+	 * Message: $c1をパーティから追放しました。
 	 */
 	public static final SystemMessageId C1_WAS_EXPELLED_FROM_PARTY;
 	
 	/**
 	 * ID: 202<br>
-	 * Message: パーティーから追放されました。
+	 * Message: パーティから追放されました。
 	 */
 	public static final SystemMessageId HAVE_BEEN_EXPELLED_FROM_PARTY;
 	
 	/**
 	 * ID: 203<br>
-	 * Message: パーティーが解散されました。
+	 * Message: パーティが解散されました。
 	 */
 	public static final SystemMessageId PARTY_DISPERSED;
 	
@@ -1832,7 +1832,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 305<br>
-	 * Message: パーティーへの参加を拒否されました。
+	 * Message: パーティへの参加を拒否されました。
 	 */
 	public static final SystemMessageId PLAYER_DECLINED;
 	
@@ -3186,13 +3186,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 572<br>
-	 * Message: $c1のパーティー勧誘に応じますか。（アイテム分配：拾った人が所有）
+	 * Message: $c1のパーティ勧誘に応じますか。（アイテム分配：拾った人が所有）
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY_FINDERS_KEEPERS;
 	
 	/**
 	 * ID: 573<br>
-	 * Message: $c1のパーティー勧誘に応じますか。（アイテム分配：パーティーメンバーにランダムで）
+	 * Message: $c1のパーティ勧誘に応じますか。（アイテム分配：パーティ メンバーにランダムで）
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY_RANDOM;
 	
@@ -5462,19 +5462,19 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 967<br>
-	 * Message: $c1のパーティー勧誘に応じますか。（アイテム分配：スポイルを含めランダムに）
+	 * Message: $c1のパーティ勧誘に応じますか。（アイテム分配：スポイルを含めランダムに）
 	 */
 	public static final SystemMessageId C1_PARTY_INVITE_RANDOM_INCLUDING_SPOIL;
 	
 	/**
 	 * ID: 968<br>
-	 * Message: $c1のパーティー勧誘に応じますか。（アイテム分配：順番に取得）
+	 * Message: $c1のパーティ勧誘に応じますか。（アイテム分配：順番に取得）
 	 */
 	public static final SystemMessageId C1_PARTY_INVITE_BY_TURN;
 	
 	/**
 	 * ID: 969<br>
-	 * Message: $c1のパーティー勧誘に応じますか。（アイテム分配：スポイルを含め順番に）
+	 * Message: $c1のパーティ勧誘に応じますか。（アイテム分配：スポイルを含め順番に）
 	 */
 	public static final SystemMessageId C1_PARTY_INVITE_BY_TURN_INCLUDING_SPOIL;
 	
@@ -5840,7 +5840,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1030<br>
-	 * Message: =======<パーティー情報>=======
+	 * Message: =======<パーティ情報>=======
 	 */
 	public static final SystemMessageId PARTY_INFORMATION;
 	
@@ -7942,7 +7942,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1381<br>
-	 * Message: パーティー リーダーが$s1を$s2個獲得しました。
+	 * Message: パーティ リーダーが$s1を$s2個獲得しました。
 	 */
 	public static final SystemMessageId LEADER_OBTAINED_S2_OF_S1;
 	
@@ -7960,7 +7960,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1384<br>
-	 * Message: $c1がパーティー リーダーになりました。
+	 * Message: $c1がパーティ リーダーになりました。
 	 */
 	public static final SystemMessageId C1_HAS_BECOME_A_PARTY_LEADER;
 	
@@ -7984,79 +7984,79 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1388<br>
-	 * Message: パーティー ルームが生成されました。
+	 * Message: パーティ ルームが生成されました。
 	 */
 	public static final SystemMessageId PARTY_ROOM_CREATED;
 	
 	/**
 	 * ID: 1389<br>
-	 * Message: パーティー ルームの情報が修正されました。
+	 * Message: パーティ ルームの情報が修正されました。
 	 */
 	public static final SystemMessageId PARTY_ROOM_REVISED;
 	
 	/**
 	 * ID: 1390<br>
-	 * Message: パーティー ルームに入場できません。
+	 * Message: パーティ ルームに入場できません。
 	 */
 	public static final SystemMessageId PARTY_ROOM_FORBIDDEN;
 	
 	/**
 	 * ID: 1391<br>
-	 * Message: パーティー ルームから退場しました。
+	 * Message: パーティ ルームから退場しました。
 	 */
 	public static final SystemMessageId PARTY_ROOM_EXITED;
 	
 	/**
 	 * ID: 1392<br>
-	 * Message: $c1がパーティー ルームから退場しました。
+	 * Message: $c1がパーティ ルームから退場しました。
 	 */
 	public static final SystemMessageId C1_LEFT_PARTY_ROOM;
 	
 	/**
 	 * ID: 1393<br>
-	 * Message: パーティー ルームから追放されました。
+	 * Message: パーティ ルームから追放されました。
 	 */
 	public static final SystemMessageId OUSTED_FROM_PARTY_ROOM;
 	
 	/**
 	 * ID: 1394<br>
-	 * Message: $c1がパーティー ルームから追放されました。
+	 * Message: $c1がパーティ ルームから追放されました。
 	 */
 	public static final SystemMessageId C1_KICKED_FROM_PARTY_ROOM;
 	
 	/**
 	 * ID: 1395<br>
-	 * Message: パーティー ルームが終了しました。
+	 * Message: パーティ ルームが終了しました。
 	 */
 	public static final SystemMessageId PARTY_ROOM_DISBANDED;
 	
 	/**
 	 * ID: 1396<br>
-	 * Message: パーティーに加入していないか、パーティー リーダーでないと、パーティー ルームのリストを見ることはできません。
+	 * Message: パーティに加入していないか、パーティ リーダーでないと、パーティ ルームのリストを見ることはできません。
 	 */
 	public static final SystemMessageId CANT_VIEW_PARTY_ROOMS;
 	
 	/**
 	 * ID: 1397<br>
-	 * Message: パーティー ルームのルーム リーダーが変更されました。
+	 * Message: パーティ ルームのルーム リーダーが変更されました。
 	 */
 	public static final SystemMessageId PARTY_ROOM_LEADER_CHANGED;
 	
 	/**
 	 * ID: 1398<br>
-	 * Message: パーティー メンバーを募集します。
+	 * Message: パーティ メンバーを募集します。
 	 */
 	public static final SystemMessageId RECRUITING_PARTY_MEMBERS;
 	
 	/**
 	 * ID: 1399<br>
-	 * Message: パーティー リーダーのみ権限を委譲することができます。
+	 * Message: パーティ リーダーのみ権限を委譲することができます。
 	 */
 	public static final SystemMessageId ONLY_A_PARTY_LEADER_CAN_TRANSFER_ONES_RIGHTS_TO_ANOTHER_PLAYER;
 	
 	/**
 	 * ID: 1400<br>
-	 * Message: パーティー リーダーの権限を委譲する対象を選択してください。
+	 * Message: パーティ リーダーの権限を委譲する対象を選択してください。
 	 */
 	public static final SystemMessageId PLEASE_SELECT_THE_PERSON_TO_WHOM_YOU_WOULD_LIKE_TO_TRANSFER_THE_RIGHTS_OF_A_PARTY_LEADER;
 	
@@ -8068,13 +8068,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1402<br>
-	 * Message: パーティー メンバーにのみ権限の委譲が可能です。
+	 * Message: パーティ メンバーにのみ権限の委譲が可能です。
 	 */
 	public static final SystemMessageId YOU_CAN_TRANSFER_RIGHTS_ONLY_TO_ANOTHER_PARTY_MEMBER;
 	
 	/**
 	 * ID: 1403<br>
-	 * Message: パーティー リーダーの権限委譲に失敗しました。
+	 * Message: パーティ リーダーの権限委譲に失敗しました。
 	 */
 	public static final SystemMessageId YOU_HAVE_FAILED_TO_TRANSFER_THE_PARTY_LEADER_RIGHTS;
 	
@@ -8134,7 +8134,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1413<br>
-	 * Message: 条件が合わないため、パーティー ルームに入場できません。
+	 * Message: 条件が合わないため、パーティ ルームに入場できません。
 	 */
 	public static final SystemMessageId CANT_ENTER_PARTY_ROOM;
 	
@@ -9100,7 +9100,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1575<br>
-	 * Message: 連合の結成は血盟レベル5以上の血盟主でありパーティー リーダーのみが可能です。
+	 * Message: 連合の結成は血盟レベル5以上の血盟主でありパーティ リーダーのみが可能です。
 	 */
 	public static final SystemMessageId PET_USE_SPIRITSHOT;
 	
@@ -9154,7 +9154,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1584<br>
-	 * Message: $c1のパーティーを連合から追放しました。
+	 * Message: $c1のパーティを連合から追放しました。
 	 */
 	public static final SystemMessageId C1_PARTY_DISMISSED_FROM_COMMAND_CHANNEL;
 	
@@ -9172,13 +9172,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1587<br>
-	 * Message: $c1のパーティーが連合チャンネルから脱退しました。
+	 * Message: $c1のパーティが連合チャンネルから脱退しました。
 	 */
 	public static final SystemMessageId C1_PARTY_LEFT_COMMAND_CHANNEL;
 	
 	/**
 	 * ID: 1588<br>
-	 * Message: 連合は5つ以上のパーティーが参加した時のみアクティブになります。
+	 * Message: 連合は5つ以上のパーティが参加した時のみアクティブになります。
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_ONLY_AT_LEAST_5_PARTIES;
 	
@@ -9190,7 +9190,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1590<br>
-	 * Message: ===<連合情報（全パーティー数：$s1)>===
+	 * Message: ===<連合情報（全パーティ数：$s1)>===
 	 */
 	public static final SystemMessageId GUILD_INFO_HEADER;
 	
@@ -9214,7 +9214,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1594<br>
-	 * Message: $c1のパーティーはすでに連合に参加しています。
+	 * Message: $c1のパーティはすでに連合に参加しています。
 	 */
 	public static final SystemMessageId C1_ALREADY_MEMBER_OF_COMMAND_CHANNEL;
 	
@@ -9262,7 +9262,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1602<br>
-	 * Message: 連合チャットはパーティー リーダーのみ参加できます。
+	 * Message: 連合チャットはパーティ リーダーのみ参加できます。
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_ONLY_FOR_PARTY_LEADER;
 	
@@ -9316,7 +9316,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1611<br>
-	 * Message: パーティー リーダー： $c1
+	 * Message: パーティ リーダー： $c1
 	 */
 	public static final SystemMessageId PARTY_LEADER_C1;
 	
@@ -9340,7 +9340,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1615<br>
-	 * Message: チャンネルがアクティブ化するまで$s1のパーティーが参加できます。
+	 * Message: チャンネルがアクティブ化するまで$s1のパーティが参加できます。
 	 */
 	public static final SystemMessageId S1_PARTIES_REMAINING_UNTIL_CHANNEL;
 	
@@ -9666,7 +9666,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1674<br>
-	 * Message: ノーブレスのみ使用できるコマンドです。
+	 * Message: 対象がノーブレスの場合、このコマンドは使えません。
 	 */
 	public static final SystemMessageId NOBLESSE_ONLY;
 	
@@ -9720,7 +9720,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1683<br>
-	 * Message: チャンネル脱退はパーティー リーダーのみ実行できます。
+	 * Message: チャンネル脱退はパーティ リーダーのみ実行できます。
 	 */
 	public static final SystemMessageId ONLY_PARTY_LEADER_CAN_LEAVE_CHANNEL;
 	
@@ -9816,7 +9816,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1699<br>
-	 * Message: パーティー メンバーを強制追放できません。
+	 * Message: パーティ メンバーを強制追放できません。
 	 */
 	public static final SystemMessageId CANNOT_DISMISS_PARTY_MEMBER;
 	
@@ -9984,19 +9984,19 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1727<br>
-	 * Message: $c1がパーティー ルームに招待しています。応じますか。
+	 * Message: $s1から$s2パーティー ルームに招待されました。応じますか。
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY_ROOM_CONFIRM;
 	
 	/**
 	 * ID: 1728<br>
-	 * Message: 相手がパーティー マッチの招待に応じませんでした。
+	 * Message: 相手がパーティ マッチの招待に応じませんでした。
 	 */
 	public static final SystemMessageId PARTY_MATCHING_REQUEST_NO_RESPONSE;
 	
 	/**
 	 * ID: 1729<br>
-	 * Message: 連合がテレポート中であるため、連合のパーティーに加入できません。
+	 * Message: 連合がテレポート中であるため、連合のパーティに加入できません。
 	 */
 	public static final SystemMessageId NOT_JOIN_CHANNEL_WHILE_TELEPORTING;
 	
@@ -10272,7 +10272,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1775<br>
-	 * Message: 所属血盟の血盟員$c1が闇の祭典1位パーティーの一員として活躍し、血盟名声値$s2ポイントを手に入れました。
+	 * Message: 所属血盟の血盟員$c1が闇の祭典1位パーティの一員として活躍し、血盟名声値$s2ポイントを手に入れました。
 	 */
 	public static final SystemMessageId CLAN_MEMBER_C1_WAS_IN_HIGHEST_RANKED_PARTY_IN_FESTIVAL_OF_DARKNESS_AND_GAINED_S2_REPUTATION;
 	
@@ -10398,7 +10398,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1796<br>
-	 * Message: お客様のアカウントは不正アカウント盗用や他人に被害を与えるゲーム プレイなどが認められたため、一時的にご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートに直接お問い合わせください。
+	 * Message: お客様のアカウントは、不正アカウント盗用や他人に被害を与えるゲーム プレイなどが認められたため、一時的にご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートに直接お問い合わせください。
 	 */
 	public static final SystemMessageId ILLEGAL_USE17;
 	
@@ -10446,37 +10446,37 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1804<br>
-	 * Message: お客様のアカウントは7日間、ご利用が制限されています。お客様の現金/アカウント取引などの行為が認められたためです。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、現金、アカウント取引などの行為が認められたため、7日間、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
 	 */
 	public static final SystemMessageId ILLEGAL_USE18;
 	
 	/**
 	 * ID: 1805<br>
-	 * Message: お客様のアカウントは30日間、ご利用が制限されています。お客様の現金/アカウント取引などの行為が2回認められたためです。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、現金、アカウント取引などの行為が2度認められたため、30日間、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
 	 */
 	public static final SystemMessageId ILLEGAL_USE19;
 	
 	/**
 	 * ID: 1806<br>
-	 * Message: お客様のアカウントは無期限でご利用が制限されています。お客様の現金/アカウント取引などの行為が3回以上認められたためです。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、現金、アカウント取引などの行為が3度以上認められたため、無期限でご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
 	 */
 	public static final SystemMessageId ILLEGAL_USE20;
 	
 	/**
 	 * ID: 1807<br>
-	 * Message: お客様のアカウントは30日間、ご利用が制限されています。お客様が現金取引を行ったことが認められたためです。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、現金取引の事実が認められたため、30日間、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
 	 */
 	public static final SystemMessageId ILLEGAL_USE21;
 	
 	/**
 	 * ID: 1808<br>
-	 * Message: お客様のアカウントは無期限でご利用が制限されています。お客様が現金/アカウント取引などを行った事実が認められたためです。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、現金、アカウント取引などの行為が2度認められたため、無期限でご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
 	 */
 	public static final SystemMessageId ILLEGAL_USE22;
 	
 	/**
 	 * ID: 1809<br>
-	 * Message: お客様のアカウントはご本人様確認の手続きが必要です。リネージュII 公式サイト（http://lineage2.plaync.jp/）より手続きを行ってください。
+	 * Message: お客様のアカウントは、ご本人様確認の手続きが必要です。リネージュII 公式サイト（http://lineage2.plaync.jp/）より手続きを行ってください。
 	 */
 	public static final SystemMessageId ACCOUNT_MUST_VERIFIED;
 	
@@ -10590,25 +10590,25 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1829<br>
-	 * Message: 連合の最大パーティー数を越えたので、新しいパーティーを加えられません。
+	 * Message: 連合の最大パーティ数を越えたので、新しいパーティを加えられません。
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_FULL;
 	
 	/**
 	 * ID: 1830<br>
-	 * Message: $c1をパーティー ルームへ招待できません。待機者リストを更新してください。
+	 * Message: $c1をパーティ ルームへ招待できません。待機者リストを更新してください。
 	 */
 	public static final SystemMessageId C1_NOT_ALLOWED_INVITE_TO_PARTY_ROOM;
 	
 	/**
 	 * ID: 1831<br>
-	 * Message: $c1はパーティー ルームの条件に合いません。待機者リストを更新してください。
+	 * Message: $c1はパーティ ルームの条件に合いません。待機者リストを更新してください。
 	 */
 	public static final SystemMessageId C1_NOT_MEET_CONDITIONS_FOR_PARTY_ROOM;
 	
 	/**
 	 * ID: 1832<br>
-	 * Message: パーティー ルームへはルームリーダーのみ招待できます。
+	 * Message: パーティ ルームへはルームリーダーのみ招待できます。
 	 */
 	public static final SystemMessageId ONLY_ROOM_LEADER_CAN_INVITE;
 	
@@ -10620,7 +10620,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1834<br>
-	 * Message: パーティー ルームの定員が満員のため、これ以上招待できません。
+	 * Message: パーティ ルームの定員が満員のため、これ以上招待できません。
 	 */
 	public static final SystemMessageId PARTY_ROOM_FULL;
 	
@@ -10830,7 +10830,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1869<br>
-	 * Message: $c1が指揮する連合のマスター パーティーに、アイテム分配の権限が与えられました。
+	 * Message: $c1が指揮する連合のマスター パーティに、アイテム分配の権限が与えられました。
 	 */
 	public static final SystemMessageId C1_GRANTED_MASTER_PARTY_LOOTING_RIGHTS;
 	
@@ -11016,13 +11016,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1900<br>
-	 * Message: $c1がパーティー ルームに入室しました。
+	 * Message: $c1がパーティ ルームに入室しました。
 	 */
 	public static final SystemMessageId C1_ENTERED_PARTY_ROOM;
 	
 	/**
 	 * ID: 1901<br>
-	 * Message: $c1からパーティー ルームに招待されました。
+	 * Message: $s1から$s2パーティー ルームに招待されました。
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY_ROOM;
 	
@@ -11184,7 +11184,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1928<br>
-	 * Message: $c1のパーティーにパーティー同士での決闘を申し込みます。
+	 * Message: $c1のパーティにパーティ同士での決闘を申し込みます。
 	 */
 	public static final SystemMessageId C1_PARTY_HAS_BEEN_CHALLENGED_TO_A_DUEL;
 	
@@ -11214,31 +11214,31 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1933<br>
-	 * Message: $c1のパーティーからのパーティー同士での決闘の申し込みを受け入れました。しばらくすると決闘が始まります。
+	 * Message: $c1のパーティからのパーティ同士での決闘の申し込みを受け入れました。しばらくすると決闘が始まります。
 	 */
 	public static final SystemMessageId YOU_HAVE_ACCEPTED_C1_CHALLENGE_TO_A_PARTY_DUEL_THE_DUEL_WILL_BEGIN_IN_A_FEW_MOMENTS;
 	
 	/**
 	 * ID: 1934<br>
-	 * Message: $c1がパーティー同士での決闘を受け入れました。しばらくすると決闘が始まります。
+	 * Message: $c1がパーティ同士での決闘を受け入れました。しばらくすると決闘が始まります。
 	 */
 	public static final SystemMessageId S1_HAS_ACCEPTED_YOUR_CHALLENGE_TO_DUEL_AGAINST_THEIR_PARTY_THE_DUEL_WILL_BEGIN_IN_A_FEW_MOMENTS;
 	
 	/**
 	 * ID: 1935<br>
-	 * Message: $c1がパーティー同士での決闘を拒否しました。
+	 * Message: $c1がパーティ同士での決闘を拒否しました。
 	 */
 	public static final SystemMessageId C1_HAS_DECLINED_YOUR_CHALLENGE_TO_A_PARTY_DUEL;
 	
 	/**
 	 * ID: 1936<br>
-	 * Message: 相手のパーティーが決闘の申し込みを拒否しました。
+	 * Message: 相手のパーティが決闘の申し込みを拒否しました。
 	 */
 	public static final SystemMessageId THE_OPPOSING_PARTY_HAS_DECLINED_YOUR_CHALLENGE_TO_A_DUEL;
 	
 	/**
 	 * ID: 1937<br>
-	 * Message: 相手がパーティー状態ではないため、パーティー同士での決闘の申し込みができません。
+	 * Message: 相手がパーティ状態ではないため、パーティ同士での決闘の申し込みができません。
 	 */
 	public static final SystemMessageId SINCE_THE_PERSON_YOU_CHALLENGED_IS_NOT_CURRENTLY_IN_A_PARTY_THEY_CANNOT_DUEL_AGAINST_YOUR_PARTY;
 	
@@ -11250,7 +11250,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1939<br>
-	 * Message: $c1のパーティーがパーティー同士での決闘を申し込みました。
+	 * Message: $c1のパーティがパーティ同士での決闘を申し込みました。
 	 */
 	public static final SystemMessageId C1_PARTY_HAS_CHALLENGED_YOUR_PARTY_TO_A_DUEL;
 	
@@ -11268,13 +11268,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1942<br>
-	 * Message: 相手のパーティーが決闘を行える状態ではありません。
+	 * Message: 相手のパーティが決闘を行える状態ではありません。
 	 */
 	public static final SystemMessageId THE_OPPOSING_PARTY_IS_CURRENTLY_UNABLE_TO_ACCEPT_A_CHALLENGE_TO_A_DUEL;
 	
 	/**
 	 * ID: 1943<br>
-	 * Message: 相手のパーティーが決闘を行える場所にいません。
+	 * Message: 相手のパーティが決闘を行える場所にいません。
 	 */
 	public static final SystemMessageId THE_OPPOSING_PARTY_IS_AT_BAD_LOCATION_FOR_A_DUEL;
 	
@@ -11298,7 +11298,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1947<br>
-	 * Message: $c1のパーティーがパーティー同士での決闘を申し込みました。受け入れますか。
+	 * Message: $c1のパーティがパーティ同士での決闘を申し込みました。受け入れますか。
 	 */
 	public static final SystemMessageId C1_CHALLENGED_YOU_TO_A_PARTY_DUEL;
 	
@@ -11322,7 +11322,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1951<br>
-	 * Message: $c1のパーティーが決闘に勝利しました。
+	 * Message: $c1のパーティが決闘に勝利しました。
 	 */
 	public static final SystemMessageId C1_PARTY_HAS_WON_THE_DUEL;
 	
@@ -11340,7 +11340,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1954<br>
-	 * Message: $c1のパーティーが失格となり$s2のパーティーが勝利しました。
+	 * Message: $c1のパーティが失格となり$s2のパーティが勝利しました。
 	 */
 	public static final SystemMessageId SINCE_C1_PARTY_WAS_DISQUALIFIED_S2_PARTY_HAS_WON;
 	
@@ -11352,7 +11352,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1956<br>
-	 * Message: $c1のパーティーが決闘を放棄したため$s2のパーティーが勝利しました。
+	 * Message: $c1のパーティが決闘を放棄したため$s2のパーティが勝利しました。
 	 */
 	public static final SystemMessageId SINCE_C1_PARTY_WITHDREW_FROM_THE_DUEL_S2_PARTY_HAS_WON;
 	
@@ -11826,7 +11826,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2036<br>
-	 * Message: パーティーがロックされているため招待できません。
+	 * Message: パーティがロックされているため招待できません。
 	 */
 	public static final SystemMessageId NO_INVITE_PARTY_LOCKED;
 	
@@ -11862,7 +11862,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2042<br>
-	 * Message: このアカウントは料金未納により、一時的にご利用が制限されている状態です。\n詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、料金未納により一時的にご利用が制限されている状態です。\n詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
 	 */
 	public static final SystemMessageId ILLEGAL_USE23;
 	
@@ -12216,13 +12216,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2101<br>
-	 * Message: 現在パーティー状態ではないため入場できません。
+	 * Message: 現在パーティ状態ではないため入場できません。
 	 */
 	public static final SystemMessageId NOT_IN_PARTY_CANT_ENTER;
 	
 	/**
 	 * ID: 2102<br>
-	 * Message: 該当パーティーが入場定員数を超えたため、入場できません。
+	 * Message: 該当パーティが入場定員数を超えたため、入場できません。
 	 */
 	public static final SystemMessageId PARTY_EXCEEDED_THE_LIMIT_CANT_ENTER;
 	
@@ -12258,7 +12258,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2108<br>
-	 * Message: お客様のアカウントは不正ユーティリティの利用が認められたため10日間、ゲームサービスすべてのご利用が制限されています。今後同様の違反行為が確認された場合、永久に制限されますのでご注意ください。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、不正ユーティリティの利用が認められたため10日間、ゲームサービスすべてのご利用が制限されています。今後同様の違反行為が確認された場合、永久に制限されますのでご注意ください。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
 	 */
 	public static final SystemMessageId ILLEGAL_USE24;
 	
@@ -12462,7 +12462,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2142<br>
-	 * Message: $c1はパーティー メンバーではないため追放できません。
+	 * Message: $c1はパーティ メンバーではないため追放できません。
 	 */
 	public static final SystemMessageId CANT_EXPEL_C1_NOT_A_PARTY_MEMBER;
 	
@@ -12660,7 +12660,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2175<br>
-	 * Message: 変身状態のパーティー メンバーがいるためパーティー同士での決闘ができません。
+	 * Message: 変身状態のパーティ メンバーがいるためパーティ同士での決闘ができません。
 	 */
 	public static final SystemMessageId CANNOT_PARTY_DUEL_WHILE_A_MEMBER_IS_POLYMORPHED;
 	
@@ -12720,7 +12720,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2185<br>
-	 * Message: パーティー リーダーのみが入場することができます。
+	 * Message: パーティ リーダーのみが入場することができます。
 	 */
 	public static final SystemMessageId ONLY_PARTY_LEADER_CAN_ENTER;
 	
@@ -13515,13 +13515,13 @@ public final class SystemMessageId
 
 	/**
 	 * ID: 2441<br>
-	 * Message: チーム競技の申し込みはパーティーリーダーしかできません。
+	 * Message: チーム競技の申し込みはパーティリーダーしかできません。
 	 */
 	public static final SystemMessageId ONLY_PARTY_LEADER_CAN_REQUEST_TEAM_MATCH;
 
 	/**
 	 * ID: 2442<br>
-	 * Message: 条件が合わないため、申し込みできません。チーム競技に参加するためには3人以上のパーティーを作らなければなりません。
+	 * Message: 条件が合わないため、申し込みできません。チーム競技に参加するためには3人以上のパーティを作らなければなりません。
 	 */
 	public static final SystemMessageId PARTY_REQUIREMENTS_NOT_MET;
 
@@ -13599,19 +13599,19 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2448<br>
-	 * Message: キャラクターのバースデイ プレゼントが届きました。各村のゲートキーパーからプレゼントを受け取れます。
+	 * Message: お誕生日おめでとうございます！アレグリアがバースデイ プレゼントをお届けします。
 	 */
 	public static final SystemMessageId YOUR_BIRTHDAY_GIFT_HAS_ARRIVED;
 	
 	/**
 	 * ID: 2449<br>
-	 * Message: 誕生日まであと$s1日です。各村のゲートキーパーからプレゼントを受け取れます。
+	 * Message: 誕生日まであと$s1日です。誕生日になったら、アレグリアが心を込めて準備したプレゼントを郵便でお届けします。
 	 */
 	public static final SystemMessageId THERE_ARE_S1_DAYS_UNTIL_YOUR_CHARACTERS_BIRTHDAY;
 	
 	/**
 	 * ID: 2450<br>
-	 * Message: $c1のキャラクターのバースデイは$s2年$s3月$s4日です。
+	 * Message: $c1の誕生日は$s2年$s3月$s4日です。
 	 */
 	public static final SystemMessageId C1_BIRTHDAY_IS_S3_S4_S2;
 	
@@ -14144,7 +14144,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2978<br>
-	 * Message: 個人商店、または工房中であるため受信できません。
+	 * Message: 個人商店、または工房を開いているため受信できません。
 	 */
 	public static final SystemMessageId CANT_RECEIVE_PRIVATE_STORE;
 	
@@ -14180,7 +14180,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2984<br>
-	 * Message: 個人商店、または工房中であるためキャンセルできません。
+	 * Message: 個人商店、または工房を開いているためキャンセルできません。
 	 */
 	public static final SystemMessageId CANT_CANCEL_PRIVATE_STORE;
 	
@@ -14516,7 +14516,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3168<br>
-	 * Message: $c1はすでにカップル拒否状態のため、新たにパーティーの申し込みはできません。
+	 * Message: $c1はすでにカップル拒否状態のため、新たにパーティの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_SET_TO_REFUSE_PARTY_REQUEST;
 	
@@ -14540,13 +14540,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3255<br>
-	 * Message: Arcane Shield decreased your MP by $1 instead of HP.
+	 * Message: アケイン シールドの影響で、HPの代わりにMPが$s1のダメージを受けました。
 	 */
 	public static final SystemMessageId ARCANE_SHIELD_DECREASED_YOUR_MP_BY_S1_INSTEAD_OF_HP;
 
 	/**
 	 * ID: 3256<br>
-	 * Message: MP became 0 and the Arcane Shield is disappearing.
+	 * Message: MPが0になって、アケイン シールドが消滅します。
 	 */
 	public static final SystemMessageId MP_BECAME_0_ARCANE_SHIELD_DISAPPEARING;
 	
