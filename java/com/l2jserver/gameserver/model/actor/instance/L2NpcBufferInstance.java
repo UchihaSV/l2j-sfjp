@@ -185,22 +185,7 @@ public class L2NpcBufferInstance extends L2Npc
 				skill = SkillTable.getInstance().getInfo(skillId, skillLevel);
 				
 				if (skill != null)
-				//[JOJO]-------------------------------------------------
-				{
-//					if (skill.getSkillType() == L2SkillType.SUMMON)
-//					{
-//						try { Thread.sleep(Math.max(500, player.getCastEndTimeLeftMilli())); } catch (InterruptedException e) { }
-//						player.doCast(skill);
-//					}
-//					else
-//					{
-//						try { Thread.sleep(Math.max(500, this.getCastEndTimeLeftMilli())); } catch (InterruptedException e) { }
-//						this.doCast(skill);
-//					}
-					try { Thread.sleep(Math.max(500, player.getCastEndTimeLeftMilli())); } catch (InterruptedException e) { }
 					skill.getEffects(player, target);
-				}
-				//-------------------------------------------------------
 			}
 			
 			showChatWindow(player, pageVal.get(player.getObjectId()));
