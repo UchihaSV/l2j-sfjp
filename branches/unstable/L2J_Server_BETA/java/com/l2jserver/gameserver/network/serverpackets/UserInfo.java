@@ -362,7 +362,7 @@ public final class UserInfo extends L2GameServerPacket
 		
 		writeD(_activeChar.getClanCrestLargeId());
 		writeC(_activeChar.isNoble() ? 1 : 0); //0x01: symbol on char menu ctrl+I
-		writeC(_activeChar.isHero() || (_activeChar.isGM() && Config.GM_HERO_AURA) || _activeChar.aura ? 1 : 0); //0x01: Hero Aura //[JOJO]
+		writeC(_activeChar.isHero() || (Config.GM_HERO_AURA && _activeChar.isGM()) || _activeChar.aura ? 1 : 0); //0x01: Hero Aura //[JOJO]
 		
 		writeC(_activeChar.isFishing() ? 1 : 0); //Fishing Mode
 		writeD(_activeChar.getFishx()); //fishing x
