@@ -223,7 +223,6 @@ public class L2DatabaseFactory
 			try
 			{
 				con = _source.getConnection();
-				if (Config.DEBUG)	//+[JOJO]
 				if (Server.serverMode == Server.MODE_GAMESERVER)
 					ThreadPoolManager.getInstance().scheduleGeneral(new ConnectionCloser(con, new RuntimeException()), Config.CONNECTION_CLOSE_TIME);
 				else
