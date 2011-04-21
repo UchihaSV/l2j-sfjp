@@ -305,7 +305,7 @@ public enum PlayerClass
 					else
 						subclasses.removeAll(EnumSet.of(maleSoulbreaker));
 				}
-				if (player.getTotalSubClasses() < 2)
+				if (player.getTotalSubClasses() <= 2)
 					subclasses.removeAll(EnumSet.of(inspector));
 			}
 		}
