@@ -310,6 +310,7 @@ public class EnterWorld extends L2GameClientPacket
 		
 		activeChar.checkRecoBonusTask();
 		
+		if (Config.MOD_AURA) activeChar.checkAuraItemEquipped();	//[JOJO]
 		activeChar.broadcastUserInfo();
 		
 		// Send Macro List

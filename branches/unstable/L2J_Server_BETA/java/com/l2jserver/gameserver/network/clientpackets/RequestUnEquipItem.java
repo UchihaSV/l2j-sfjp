@@ -112,6 +112,8 @@ public class RequestUnEquipItem extends L2GameClientPacket
 		
 		activeChar.sendPacket(iu);
 		
+		if (Config.MOD_AURA) activeChar.checkAuraItemEquipped();	//[JOJO]
+		
 		// On retail you don't stop hitting if unequip something. REOMVED: activeChar.abortAttack();
 		activeChar.broadcastUserInfo();
 		

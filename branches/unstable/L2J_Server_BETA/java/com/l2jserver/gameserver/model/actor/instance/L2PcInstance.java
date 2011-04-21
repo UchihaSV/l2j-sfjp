@@ -573,7 +573,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private boolean _noble = false;
 	private boolean _hero = false;
-	public boolean aura = false;	//[JOJO] サンタ帽子
+	public boolean aura = false;	//[JOJO] Config.MOD_AURA
 	public boolean voteServerRestart = false;	//[JOJO] サーバ再起動投票
 	
 	/** The L2FolkInstance corresponding to the last Folk wich one the player talked. */
@@ -2512,6 +2512,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		refreshExpertisePenalty();
 
+		if (Config.MOD_AURA) checkAuraItemEquipped();	//[JOJO]
 		broadcastUserInfo();
 		
 		InventoryUpdate iu = new InventoryUpdate();
@@ -10247,6 +10248,39 @@ public final class L2PcInstance extends L2Playable
 		
 		sendSkillList();
 	}
+	
+	//[JOJO]-------------------------------------------------
+	/**
+	 * 特定のアイテムを装備するだけで英雄オーラを発する.<br>
+	 * これはサンプルです。すきなように書き換えてください.
+	 */
+	private boolean isAuraItem(L2ItemInstance item)
+	{
+//		if (item.getName().startsWith("インフィニティ"))
+//			return true;
+//		switch (item.getItemId())
+//		{
+//			case xxxxx:
+//			case yyyyy:
+//			case zzzzz:
+//				return true;
+//		}
+		return false;
+	}
+	public void checkAuraItemEquipped()
+	{
+		if (Config.MOD_AURA)
+		{
+			for (L2ItemInstance item : getInventory().getItems())
+				if (item != null && item.isEquipped() && isAuraItem(item))
+				{
+					aura = true;
+					return;
+				}
+			aura = false;
+		}
+	}
+	//-------------------------------------------------------
 	
 	public void setIsInOlympiadMode(boolean b)
 	{
