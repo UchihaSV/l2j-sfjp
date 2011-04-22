@@ -67,7 +67,7 @@ public class PetStat extends SummonStat
 		// Sync up exp with current level
 		//if (getExp() > getExpForLevel(getLevel() + 1) || getExp() < getExpForLevel(getLevel())) setExp(Experience.LEVEL[getLevel()]);
 		
-        if (levelIncreased) getActiveChar().broadcastPacket(new SocialAction(getActiveChar().getObjectId(), 15));	// [L2J_JP EDIT]
+        if (levelIncreased) getActiveChar().broadcastPacket(new SocialAction(getActiveChar(), 15));	// [L2J_JP EDIT]
 		//TODO : proper system msg if is any
 		//if (levelIncreased) getActiveChar().getOwner().sendMessage("Your pet has increased it's level.");
 		
