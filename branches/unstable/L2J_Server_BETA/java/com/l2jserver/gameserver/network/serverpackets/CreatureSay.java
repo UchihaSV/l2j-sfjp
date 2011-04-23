@@ -39,6 +39,9 @@ public final class CreatureSay extends L2GameServerPacket
 		_objectId = objectId;
 		_textType = messageType;
 		_charName = charName;
+if (com.l2jserver.Config.PATCH_PROTOCOL_253) {{
+		_msgId = -1;
+}}
 		_text = text;
 	}
 	
@@ -48,6 +51,9 @@ public final class CreatureSay extends L2GameServerPacket
 		_objectId = objectId;
 		_textType = messageType;
 		_charId = charId;
+if (com.l2jserver.Config.PATCH_PROTOCOL_253) {{
+		_msgId = -1;
+}}
 		_text = text;
 	}
 	//-------------------------------------------------------
@@ -70,11 +76,25 @@ public final class CreatureSay extends L2GameServerPacket
 			writeS(_charName);
 		else
 			writeD(_charId);
+if (com.l2jserver.Config.PATCH_PROTOCOL_253) {{
+		writeD(_msgId);
+		if (_msgId == -1)
+			writeS(_text);
+	//	else
+	//	{
+	//		if (_parameters != null)
+	//		{
+	//			for (String s : _parameters)
+	//				writeS(s);
+	//		}
+	//	}
+}} else {{
 		writeD(-1); // High Five NPCString ID
 		if (_text != null)
 			writeS(_text);
 		else
 			writeD(_msgId);
+}}
 	}
 	
 	@Override

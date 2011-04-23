@@ -122,7 +122,7 @@ public class ExShowScreenMessageNPCString extends L2GameServerPacket
 		writeD(_time); // time
 		writeD(_fade ? 1 : 0); // 1 - fade in/out, 0 - no fade
 		writeD(_npcString);
-		if (_npcString == 0)
+		if (_npcString == -1)
 			writeS(_text);
 		else
 		{
