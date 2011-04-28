@@ -1311,7 +1311,8 @@ public class SevenSignsFestival implements SpawnListener
 		if (SevenSigns.getInstance().isSealValidationPeriod())
 			return "<font color=\"FF0000\">This is the Seal Validation period. Festivals will resume next week.</font>";
 		
-		return "<font color=\"FF0000\">The next festival will begin in " + getMinsToNextFestival() + " minute(s).</font>";
+		return "<font color=\"FF0000\">Ÿ‚ÌÕ“Tó•t‚Ü‚Å‚Ìc‚èŠÔ:" + getMinsToNextFestival() + "•ª</font>";
+	//	return "<font color=\"FF0000\">The next festival will begin in " + getMinsToNextFestival() + " minute(s).</font>";
 	}
 	
 	/**
