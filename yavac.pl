@@ -249,6 +249,7 @@ sub PreProcess($$) {
 	$text =~ s!new SimpleDateFormat\("dd/MM/yyyy HH:mm"\)!new SimpleDateFormat("yyyy/MM/dd HH:mm")!;
 	$text =~ s/\\"l2ui_ch3.smallbutton2_down\\"/\\"L2UI_ct1.button_df_down\\"/g;
 	$text =~ s/\\"l2ui_ch3.smallbutton2\\"/\\"L2UI_ct1.button_df\\"/g;
+	$text =~ s/back=\\"l2ui_ct1.button_df\\"/back=\\"L2UI_CT1.Button_DF_Down\\"/gi;
 	$text =~ s/(<button value=[^>]*?height)=(1[56789]\b|\\"1[56789]\\"|2[02]\b|\\"2[02]\\")/$1=21/g;
 
 	$text =~ s/\Qnew StringBuilder()/new StringBuilder(256)/g;
