@@ -126,6 +126,8 @@ public class DecayTaskManager
 									break;
 								case 29001: // Queen Ant
 									delay = 150000;
+								case 29006: // Core
+									delay = 15000;
 									break;
 							}
 						}
