@@ -24,12 +24,12 @@ public final class CreatureSay extends L2GameServerPacket
 {
 	// ddSS
 	private static final String _S__4A_CREATURESAY = "[S] 4A CreatureSay";
-	private int _objectId;
-	private int _textType;
+	private final int _objectId;
+	private final int _textType;
 	private String _charName = null;
 	private int _charId = 0;
 	private String _text = null;
-	private int _msgId = 0;
+	private final int _msgId;
 	
 	/**
 	 * @param _characters
