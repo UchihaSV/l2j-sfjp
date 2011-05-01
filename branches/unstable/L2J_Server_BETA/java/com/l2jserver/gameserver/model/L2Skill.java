@@ -1247,7 +1247,6 @@ public abstract class L2Skill implements IChanceSkillTrigger
 			case SOULSHOT:
 			case SPIRITSHOT:
 			case SPOIL:
-			case MANA_BY_LEVEL:
 			case SWEEP:
 			case PARALYZE:
 			case DRAIN_SOUL:
@@ -1432,6 +1431,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 					case HOT:
 					case HEAL_PERCENT:
 					case MANARECHARGE:
+					case MANA_BY_LEVEL:
 					case MANAHEAL:
 					case NEGATE:
 					case CANCEL_DEBUFF:
