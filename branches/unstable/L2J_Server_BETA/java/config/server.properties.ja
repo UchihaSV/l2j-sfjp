@@ -13,7 +13,7 @@ use utf8;
 # ---------------------------------------------------------------------------
 
 s{\Q# Where's the Login server this gameserver should connect to}
-   {# ログイン・サーバ～ゲーム・サーバ間の内部通信用アドレス。};
+   {# ログイン・サーバ ～ ゲーム・サーバ間の内部通信用アドレス。};
 s{\Q# WARNING: <u><b><font color="red">Please don't change default IPs here if you don't know what are you doing!</font></b></u>}
    {# 注意: <u><b><font color="red">意味がわからないときは変更しないでデフォルトのままにしてください！</font></b></u>};
 s{\Q# WARNING: <u><b><font color="red">External/Internal IPs are now inside "ipconfig.xml" file.</font></b></u>}
@@ -22,7 +22,7 @@ s{\Q# WARNING: <u><b><font color="red">External/Internal IPs are now inside "ipc
 ##LoginHost = 127.0.0.1
 
 s{\Q# TCP port the login server listen to for gameserver connection requests}
-   {# ログイン・サーバ～ゲーム・サーバ間の内部通信用ポート番号。};
+   {# ログイン・サーバ ～ ゲーム・サーバ間の内部通信用ポート番号。};
 # Default: 9014
 ##LoginPort = 9014
 
@@ -44,7 +44,8 @@ s{\Q# WARNING: <u><b><font color="red">External/Internal IPs are now inside "ipc
 # ---------------------------------------------------------------------------
 s{\Q# Specify the appropriate driver and url for the database you're using.}
    {# データ・ベース・ドライバー。};
-# Examples:
+s{\Q# Examples:}
+   {# 例:};
 # Driver = com.mysql.jdbc.Driver (default)
 # Driver = org.hsqldb.jdbcDriver
 # Driver = com.microsoft.sqlserver.jdbc.SQLServerDriver
@@ -133,5 +134,5 @@ s{\Q# See CnameTemplate for details}
 s{\Q# Maximum number of characters per account.}
    {# 1つのアカウントで作成できるキャラクター数の制限。};
 s{\Q# Default: 7 (client limit)}
-   {# Default: 7 (クライアントの制限です)};
+   {# Default: 7 (クライアント側の制限値です)};
 ##CharMaxNumber = 7

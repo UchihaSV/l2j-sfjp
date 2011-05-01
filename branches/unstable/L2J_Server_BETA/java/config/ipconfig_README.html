@@ -10,8 +10,8 @@ T2.5からはipconfig.xmlになりました。<br>
 <br>
 <table border=1 cellspacing=0>
 <tr><td>T2.4まで server.properties</td><td>T2.5から ipconfig.xml</td></tr>
-<tr><td>ExternalHostname=WAN側アドレス</td><td>&lt;gameserver address="WAN側アドレス"&gt;</td></tr>
-<tr><td>InternalHostname=LAN側アドレス</td><td>&lt;define subnet="LANサブネットマスク" address="LAN側アドレス" /&gt;</td></tr>
+<tr><td>ExternalHostname=<font color=RED>WAN側アドレス</font></td><td>&lt;gameserver address="<font color=RED>WAN側アドレス</font>"&gt;</td></tr>
+<tr><td>InternalHostname=<font color=MAGENTA>LAN側アドレス</font></td><td>&lt;define subnet="LANサブネットマスク" address="<font color=MAGENTA>LAN側アドレス</font>" /&gt;</td></tr>
 </table>
 <br>
 
@@ -60,12 +60,15 @@ T2.5からはipconfig.xmlになりました。<br>
 <br>
 新：T2.5からの ipconfig.xml だとこうなります。<br>
 <div style="background-color:BLACK;color:WHITE;margin:5 5 5 5;padding:5 5 5 5">
+
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
-&lt;!-- Put old contents of <font color=#AAFFFF>ExternalHostname</font> here, used by default --&gt;<br>
-&lt;gameserver address="<font color=RED>xxxx.ath.cx</font>"&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- LAN's, put old contents of <font color=#AAFFFF>InternalHostname</font> here --&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;define subnet="192.168.0.0/24" address="<font color=MAGENTA>192.168.0.200</font>" /&gt;<br>
-&lt;/gameserver&gt;<br>
+&lt;!-- <font color=#AAFFFF>Externalhost</font> here (Internet IP) or Localhost IP for local test --&gt;<br>
+&lt;gameserver address="<font color=RED>xxxx.ath.cx</font>" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ipconfig.xsd"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Localhost here --&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;define subnet="127.0.0.0/8" address="127.0.0.1" /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- <font color=#AAFFFF>Internalhosts</font> here (LANs IPs) --&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;define subnet="192.168.0.0/16" address="<font color=MAGENTA>192.168.0.200</font>" /&gt;<br>
+&lt;/gameserver&gt;
 </div>
 <br>
 <br>
@@ -75,10 +78,10 @@ T2.5からはipconfig.xmlになりました。<br>
 ふつう、家庭のパソコン環境では滅多に使わないと思いますから削除してしまってオッケーです。そのまま残しておいても動くみたいですが、几帳面な私は消しました。<br>
 <br>
 <B>&lt;define subnet="127.0.0.0/8" address="127.0.0.1" /&gt;</B> について。<br>
-これはゲームサーバとクライアントを１台のマシンで同時に動かすときの設定です。
-LANインターフェースを備えていないパソコンでゲームするときにはこの行が必要です。
+これはゲームサーバとクライアントを１台のマシンで同時に動かすときに必要です。
+サーバ専用機なら必要ありません。よくわからないときは、いじらずにそのままにしておいてください。
 <br>
 <br>
 以上です。<br>
-2010.10.09 JOJO<br>
+2011.05.01 JOJO<br>
 </body></html>

@@ -95,7 +95,8 @@ s{\Q# Flood Protection. All values are in MILISECONDS.}
 # ---------------------------------------------------------------------------
 s{\Q# Specify the appropriate driver and url for the database you're using.}
    {# データ・ベース・ドライバー。};
-# Examples:
+s{\Q# Examples:}
+   {# 例:};
 # Driver = com.mysql.jdbc.Driver (default)
 # Driver = org.hsqldb.jdbcDriver
 # Driver = com.microsoft.sqlserver.jdbc.SQLServerDriver

@@ -189,6 +189,7 @@
 				<include name="*.xsd" />
 				<include name="*.txt" />
 				<include name="*.ja" />
+				<include name="ipconfig_README.html" />
 				<exclude name="loginserver.properties" />
 				<exclude name="loginserver.properties.ja" />
 			</fileset>
