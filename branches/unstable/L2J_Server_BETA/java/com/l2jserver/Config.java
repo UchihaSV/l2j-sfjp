@@ -1088,7 +1088,6 @@ public final class Config
 	public static final boolean FIX_ATTACKABLE_AI_FACTION_CALL = true;	//[JOJO]同族モンスターをリンクさせる.
 	public static final boolean STRING_INTERN = true;					//[JOJO]
 	public static final boolean MOD_AURA = true;						//[JOJO]英雄とは無関係に英雄オーラを発する.
-	public static final boolean PATCH_PROTOCOL_253 = true;				//[JOJO]日本語版T26 セカンドスローン クロニクルス(プロトコル253)
 	public static final boolean FIX_FOURSEPULCHER_VICTIM_AI = true;		//[JOJO]四大霊廟 ケープゴートAI修正.
 
 	//
@@ -1172,9 +1171,6 @@ public final class Config
 					
 					String[] protocols = serverSettings.getProperty("AllowedProtocolRevisions", "267;268").split(";");
 					PROTOCOL_LIST = new TIntArrayList(protocols.length);
-if (com.l2jserver.Config.PATCH_PROTOCOL_253) {{
-					PROTOCOL_LIST.add(253);
-}} else {{
 					for (String protocol : protocols)
 					{
 						try
@@ -1186,7 +1182,6 @@ if (com.l2jserver.Config.PATCH_PROTOCOL_253) {{
 							_log.info("Wrong config protocol version: "+protocol+". Skipped.");
 						}
 					}
-}}
 					
 				}
 				catch (Exception e)
