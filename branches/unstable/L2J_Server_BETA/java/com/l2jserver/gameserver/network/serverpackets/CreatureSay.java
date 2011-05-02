@@ -24,12 +24,12 @@ public final class CreatureSay extends L2GameServerPacket
 {
 	// ddSS
 	private static final String _S__4A_CREATURESAY = "[S] 4A CreatureSay";
-	private final int _objectId;
-	private final int _textType;
+	private int _objectId;
+	private int _textType;
 	private String _charName = null;
 	private int _charId = 0;
 	private String _text = null;
-	private final int _msgId;
+	private int _msgId = -1;
 	
 	/**
 	 * @param _characters
@@ -39,9 +39,6 @@ public final class CreatureSay extends L2GameServerPacket
 		_objectId = objectId;
 		_textType = messageType;
 		_charName = charName;
-if (com.l2jserver.Config.PATCH_PROTOCOL_253) {{
-		_msgId = -1;
-}}
 		_text = text;
 	}
 	
@@ -51,9 +48,6 @@ if (com.l2jserver.Config.PATCH_PROTOCOL_253) {{
 		_objectId = objectId;
 		_textType = messageType;
 		_charId = charId;
-if (com.l2jserver.Config.PATCH_PROTOCOL_253) {{
-		_msgId = -1;
-}}
 		_text = text;
 	}
 	//-------------------------------------------------------
@@ -76,7 +70,6 @@ if (com.l2jserver.Config.PATCH_PROTOCOL_253) {{
 			writeS(_charName);
 		else
 			writeD(_charId);
-if (com.l2jserver.Config.PATCH_PROTOCOL_253) {{
 		writeD(_msgId);
 		if (_msgId == -1)
 			writeS(_text);
@@ -88,13 +81,6 @@ if (com.l2jserver.Config.PATCH_PROTOCOL_253) {{
 	//				writeS(s);
 	//		}
 	//	}
-}} else {{
-		writeD(-1); // High Five NPCString ID
-		if (_text != null)
-			writeS(_text);
-		else
-			writeD(_msgId);
-}}
 	}
 	
 	@Override
