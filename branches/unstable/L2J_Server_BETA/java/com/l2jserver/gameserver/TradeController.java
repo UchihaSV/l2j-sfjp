@@ -31,8 +31,12 @@ import javolution.util.FastMap;
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.datatables.ItemTable;
+import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.datatables.StringIntern;
 import com.l2jserver.gameserver.model.L2TradeList;
 import com.l2jserver.gameserver.model.L2TradeList.L2TradeItem;
+import com.l2jserver.gameserver.templates.item.L2Item;
+import com.l2jserver.gameserver.util.Util;
 
 /**
  * This class ...
@@ -275,7 +279,44 @@ public class TradeController
 			}
 		}
 		StringIntern.end();
+		checkAllPrice();	//+[JOJO]
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public void checkAllPrice()
+	{
+		for (L2TradeList list : _lists.values())
+		{
+			for (L2TradeItem tradeItem : list.getItems())
+			{
+				L2Item itemTemplate = ItemTable.getInstance().getTemplate(tradeItem.getItemId());
+				long sellPrice = itemTemplate.getReferencePrice() / 2;
+				long buyPrice = tradeItem.getPrice();
+				if (0 < buyPrice && buyPrice < sellPrice)
+				{
+					String npcId = list.getNpcId();
+					String npcName = "";
+					try
+					{
+						npcName = NpcTable.getInstance().getTemplate(Integer.parseInt(npcId)).getName();
+					}
+					catch (NumberFormatException e)
+					{
+						npcId = "";
+						npcName = list.getNpcId();
+					}
+					_log.warning("merchant_buylists ‰¿ŠiÝ’èƒ~ƒX “X:" + list.getListId()
+							+ " NPC:" + npcId + " " + npcName
+							+ " Item:" + tradeItem.getItemId() + " " + itemTemplate.getName()
+							+ " “X“ª‰¿Ši:" + Util.formatAdena(buyPrice)
+							+ " ”„‹p‰¿Ši:" + Util.formatAdena(sellPrice));
+					if (true) tradeItem.setPrice(10000000000L);
+				//	if (true) tradeItem.setPrice(item.getReferencePrice() * 10);
+				}
+			}
+		}
+	}
+	//-------------------------------------------------------
 	
 	public L2TradeList getBuyList(int listId)
 	{
