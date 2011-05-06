@@ -14,6 +14,8 @@
  */
 package com.l2jserver.gameserver;
 
+import static com.l2jserver.gameserver.datatables.StringIntern.intern;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -75,6 +77,7 @@ public class TradeController
 		/*
 		 * Initialize Shop buylist
 		 */
+		StringIntern.begin();
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
@@ -147,7 +150,7 @@ public class TradeController
 					buy1.addItem(item);
 				}
 				
-				buy1.setNpcId(rset1.getString("npc_id"));
+				buy1.setNpcId(intern(rset1.getString("npc_id")));
 				_lists.put(buy1.getListId(), buy1);
 				_nextListId = Math.max(_nextListId, buy1.getListId() + 1);
 				
@@ -271,6 +274,7 @@ public class TradeController
 				L2DatabaseFactory.close(con);
 			}
 		}
+		StringIntern.end();
 	}
 	
 	public L2TradeList getBuyList(int listId)
