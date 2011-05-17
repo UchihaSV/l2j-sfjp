@@ -14,8 +14,6 @@
  */
 package com.l2jserver.gameserver.util;
 
-import java.util.Arrays;
-
 /**
  * @author PowerUser
  *
