@@ -14540,43 +14540,43 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3214<br>
-	 * Message: $s1 was successfully added to your Contact List.
+	 * Message: $s1が受取人リストに登録されました。
 	 */
 	public static final SystemMessageId S1_SUCCESSFULLY_ADDED_TO_CONTACT_LIST;
 	
 	/**
 	 * ID: 3215<br>
-	 * Message: The name $s1% doesn't exist. Please try another name.
+	 * Message: $s1は存在しないユーザーです。正しい名前を入力してください。
 	 */
 	public static final SystemMessageId NAME_S1_NOT_EXIST_TRY_ANOTHER_NAME;
 	
 	/**
 	 * ID: 3216<br>
-	 * Message: The name already exists on the added list.
+	 * Message: すでに受取人リストに登録されている名前です。
 	 */
 	public static final SystemMessageId NAME_ALREADY_EXIST_ON_CONTACT_LIST;
 	
 	/**
 	 * ID: 3217<br>
-	 * Message: The name is not currently registered.
+	 * Message: 現在、名前をリストに登録できません。
 	 */
 	public static final SystemMessageId NAME_NOT_REGISTERED_ON_CONTACT_LIST;
 	
 	/**
 	 * ID: 3219<br>
-	 * Message: $s1 was successfully deleted from your Contact List.
+	 * Message: $s1が受取人リストから削除されました。
 	 */
 	public static final SystemMessageId S1_SUCCESFULLY_DELETED_FROM_CONTACT_LIST;
 	
 	/**
 	 * ID: 3221<br>
-	 * Message: You cannot add your own name.
+	 * Message: 自分の名前を登録することはできません。
 	 */
 	public static final SystemMessageId CANNOT_ADD_YOUR_NAME_ON_CONTACT_LIST;
 	
 	/**
 	 * ID: 3222<br>
-	 * Message: The maximum number of names (100) has been reached. You cannot register any more.
+	 * Message: 名前の登録上限(100人)に達したため、登録できません。
 	 */
 	public static final SystemMessageId CONTACT_LIST_LIMIT_REACHED;
 	
