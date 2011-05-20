@@ -14,11 +14,7 @@
  */
 package com.l2jserver.gameserver.model.entity;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -41,6 +37,7 @@ import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 import com.l2jserver.util.PlayerEventStatus;
+import com.l2jserver.util.Util;
 import com.l2jserver.util.ValueSortMap;
 
 /**
@@ -352,8 +349,9 @@ public class L2Event
 			if (NpcTable.getInstance().getTemplate(_npcId) == null)
 				return "Cannot start event, invalid npc id.";
 			
-			DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("data/events/" + _eventName)));
-			BufferedReader inbr = new BufferedReader(new InputStreamReader(in));
+			BufferedReader inbr = Util.utf8BufferedReader("data/events/" + _eventName);	//[JOJO] UTF-8
+		//	DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("data/events/" + _eventName)));
+		//	BufferedReader inbr = new BufferedReader(new InputStreamReader(in));
 			_eventCreator = inbr.readLine();
 			_eventInfo = inbr.readLine();
 			
