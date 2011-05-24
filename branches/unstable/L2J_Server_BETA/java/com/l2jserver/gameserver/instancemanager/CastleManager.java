@@ -110,9 +110,10 @@ public class CastleManager implements InstanceListManager
 	
 	public final Castle getCastle(String name)
 	{
+		name = name.trim();
 		for (Castle temp : getCastles())
 		{
-			if (temp.getName().equalsIgnoreCase(name.trim()))
+			if (temp.getName().equalsIgnoreCase(name))
 				return temp;
 		}
 		return null;
