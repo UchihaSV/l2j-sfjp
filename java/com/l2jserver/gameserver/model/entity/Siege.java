@@ -1353,7 +1353,7 @@ public class Siege implements Siegable
 			getCastle().getSiegeDate().add(Calendar.DAY_OF_MONTH, 7);
 		
 		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_ANNOUNCED_SIEGE_TIME);
-		sm.addString(getCastle().getName());
+		sm.addFortId(getCastle().getCastleId());	//[JOJO]
 		Announcements.getInstance().announceToAll(sm);
 		
 		_isRegistrationOver = false; // Allow registration for next siege
