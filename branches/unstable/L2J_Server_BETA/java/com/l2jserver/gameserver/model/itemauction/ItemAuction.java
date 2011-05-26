@@ -325,7 +325,9 @@ public final class ItemAuction
 			onPlayerBid(player, bid);
 			updatePlayerBid(bid, false);
 			
-			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SUBMITTED_A_BID).addItemNumber(newBid));
+			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.BID_ON_ITEM_AUCTION));	//+[JOJO]
+			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SUBMITTED_A_BID_S1).addItemName(getItemInfo().getItem()));	//+[JOJO]
+		//	player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SUBMITTED_A_BID).addItemNumber(newBid));	//-[JOJO]
 			return;
 		}
 	}
