@@ -44,6 +44,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2SepulcherMonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2SepulcherNpcInstance;
 import com.l2jserver.gameserver.model.quest.QuestState;
+import com.l2jserver.gameserver.model.zone.type.L2BossZone;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
@@ -234,6 +235,8 @@ public class FourSepulchersManager
 		if (tmp.get(Calendar.MINUTE) < _newCycleMin)
 			tmp.set(Calendar.HOUR, Calendar.getInstance().get(Calendar.HOUR) - 1);
 		tmp.set(Calendar.MINUTE, _newCycleMin);
+		tmp.set(Calendar.SECOND, 0);		//+[JOJO] Å‘å‚P•ª‚ÌŒë·‚ªo‚Ä‚µ‚Ü‚¤‚Ì‚Å
+		tmp.set(Calendar.MILLISECOND, 0);	//+[JOJO]
 		_coolDownTimeEnd = tmp.getTimeInMillis();
 		_entryTimeEnd = _coolDownTimeEnd + Config.FS_TIME_ENTRY * 60000l;
 		_warmUpTimeEnd = _entryTimeEnd + Config.FS_TIME_WARMUP * 60000l;
@@ -245,7 +248,10 @@ public class FourSepulchersManager
 		for (int i = 31921; i <= 31924; i++)
 		{
 			int[] location = _startHallSpawns.get(i);
-			GrandBossManager.getInstance().getZone(location[0],location[1],location[2]).oustAllPlayers();
+			L2BossZone zone;
+			if ((zone = GrandBossManager.getInstance().getZone(location[0],location[1],location[2])) != null)	//+[JOJO]
+				zone.oustAllPlayers();
+		//	GrandBossManager.getInstance().getZone(location[0],location[1],location[2]).oustAllPlayers();	//-[JOJO]
 		}
 		
 		deleteAllMobs();
