@@ -37,9 +37,10 @@ sub start {
 	read FILE,my $text,-s FILE;
 	close FILE;
 
-	my $original = $text;
-
 	my $UPDATE = 0;
+
+	$text =~ s!\bSUBMITTED_A_BID\b!\bSUBMITTED_A_BID_S1\b!g;	# FIX BUG
+
 	#	/**
 	#	 * 3119	<BR>	The couple action was denied.
 	#	 */
