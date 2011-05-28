@@ -1649,6 +1649,8 @@ public class FourSepulchersManager
 					//	_log.info(Calendar.getInstance().getTime() + " Atk announce scheduled to " + min + " minute of this hour.");
 						Calendar inter = Calendar.getInstance();
 						inter.set(Calendar.MINUTE, (int) min);
+						inter.set(Calendar.SECOND, 0);		//+[JOJO] Å‘å‚P•ª‚ÌŒë·‚ªo‚Ä‚µ‚Ü‚¤‚Ì‚Å
+						inter.set(Calendar.MILLISECOND, 0);	//+[JOJO]
 						ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), inter.getTimeInMillis()
 								- Calendar.getInstance().getTimeInMillis());
 						break;
@@ -1693,6 +1695,8 @@ public class FourSepulchersManager
 			if (Calendar.getInstance().get(Calendar.MINUTE) > _newCycleMin && !_firstTimeRun)
 				time.set(Calendar.HOUR, Calendar.getInstance().get(Calendar.HOUR) + 1);
 			time.set(Calendar.MINUTE, _newCycleMin);
+			time.set(Calendar.SECOND, 0);		//+[JOJO] Å‘å‚P•ª‚ÌŒë·‚ªo‚Ä‚µ‚Ü‚¤‚Ì‚Å
+			time.set(Calendar.MILLISECOND, 0);	//+[JOJO]
 			_log.info("FourSepulchersManager: Entry time: " + com.l2jserver.util.Util.dateFormat(time));
 		//	_log.info("FourSepulchersManager: Entry time: " + time.getTime());
 			if (_firstTimeRun)
