@@ -281,10 +281,18 @@ public final class L2AuctioneerInstance extends L2Npc
 				StringBuilder items = new StringBuilder();
 				items.append("<table width=280 border=0><tr>");
 				for (int j = 1; j <= npage; j++)
-					items.append("<td><center><a action=\"bypass -h npc_"+getObjectId()+"_list "+j+"\"> Page "+j+" </a></center></td>");
+				{
+					items.append("<td><center><a action=\"bypass -h npc_")
+					     .append(getObjectId())
+					     .append("_list ")
+					     .append(j)
+					     .append("\"> Page ")
+					     .append(j)
+					     .append(" </a></center></td>");
+				}
 				
-				items.append("</tr></table>" +
-				"<table width=280 border=0>");
+				items.append("</tr></table>"
+					+ "<table width=280 border=0>");
 				
 				for (Auction a : auctions)
 				{
@@ -301,12 +309,24 @@ public final class L2AuctioneerInstance extends L2Npc
 					else
 						i++;
 					
-					items.append("<tr>" +
-					"<td>"+ClanHallManager.getInstance().getClanHallById(a.getItemId()).getLocName()+"</td>" +
-					"<td><a action=\"bypass -h npc_"+getObjectId()+"_bidding "+a.getId()+"\">"+a.getItemName()+"</a></td>" +
-					"<td>"+format.format(a.getEndDate())+"</td>" +
-					"<td>"+formatAdena(a.getStartingBid())+"</td>" +
-					"</tr>");
+					items.append("<tr>"
+					     + "<td>")
+					     .append(ClanHallManager.getInstance().getClanHallById(a.getItemId()).getLocName())
+					     .append("</td>"
+					     + "<td><a action=\"bypass -h npc_")
+					     .append(getObjectId())
+					     .append("_bidding ")
+					     .append(a.getId())
+					     .append("\">")
+					     .append(a.getItemName())
+					     .append("</a></td>"
+					     + "<td>")
+					     .append(format.format(a.getEndDate()))
+					     .append("</td>"
+					     + "<td>")
+					     .append(formatAdena(a.getStartingBid()))
+					     .append("</td>"
+					     + "</tr>");
 				}
 				
 				items.append("</table>");
@@ -340,7 +360,7 @@ public final class L2AuctioneerInstance extends L2Npc
 				for(Bidder b :bidders.values())
 				{
 					biders.append("<tr>" +
-					"<td>"+b.getClanName()+"</td><td>"+b.getName()+"</td><td>"+b.getTimeBid().get(Calendar.YEAR)+"/"+(b.getTimeBid().get(Calendar.MONTH)+1)+"/"+b.getTimeBid().get(Calendar.DATE)+"</td><td>"+Util.formatAdena(b.getBid())+"</td>" +
+					"<td>").append(b.getClanName()).append("</td><td>").append(b.getName()).append("</td><td>").append(b.getTimeBid().get(Calendar.YEAR)).append('/').append((b.getTimeBid().get(Calendar.MONTH)+1)).append('/').append(b.getTimeBid().get(Calendar.DATE)).append("</td><td>").append(Util.formatAdena(b.getBid())).append("</td>" +
 					"</tr>");
 				}
 				String filename = "data/html/auction/AgitBidderList.htm";
