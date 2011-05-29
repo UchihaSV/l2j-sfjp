@@ -303,23 +303,23 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 			{
 				String[] kv = line.split("=", 2);	//[JOJO]
 				String key = kv[0].trim();
-				String value = "";
+				StringBuilder value = new StringBuilder();
 				if (kv.length > 1)
 				{
-					value = kv[1].trim();
+					value.append(kv[1].trim());
 				}
 				
 				while (line.endsWith("\\"))	//[JOJO]
 				{
 					if ((line = lnr.readLine()) == null)
 						break;
-					value += "\r\n"+line;
+					value.append("\r\n").append(line);
 				}
 				
 				String comments = commentBuffer.toString();
 				commentBuffer.setLength(0); //reset
 				
-				cf.addConfigProperty(key, parseValue(value), comments);
+				cf.addConfigProperty(key, parseValue(value.toString()), comments);
 			}
 		}
 		getConfigs().add(cf);

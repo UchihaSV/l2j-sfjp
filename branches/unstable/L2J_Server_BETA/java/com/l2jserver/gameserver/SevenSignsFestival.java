@@ -979,11 +979,12 @@ public class SevenSignsFestival implements SpawnListener
 			rset.close();
 			statement.close();
 			
-			StringBuilder query = new StringBuilder(100).append("SELECT festival_cycle");
+			StringBuilder query = new StringBuilder(100)
+				.append("SELECT festival_cycle");
 			
 			for (int i = 0; i < FESTIVAL_COUNT; i++)
-				
 				query.append(",accumulated_bonus").append(i);
+			
 			query.append(" FROM seven_signs_status WHERE id=0");
 			
 			statement = con.prepareStatement(query.toString());
