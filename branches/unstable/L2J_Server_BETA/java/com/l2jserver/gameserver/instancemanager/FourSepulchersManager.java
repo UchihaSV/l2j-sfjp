@@ -67,7 +67,7 @@ public class FourSepulchersManager
 	private static final int CHAPEL_KEY = 7260;
 	private static final int ANTIQUE_BROOCH = 7262;
 	
-	protected boolean _firstTimeRun;
+ //	protected boolean _firstTimeRun;	//-[JOJO]
 	protected boolean _inEntryTime = false;
 	protected boolean _inWarmUpTime = false;
 	protected boolean _inAttackTime = false;
@@ -137,12 +137,14 @@ public class FourSepulchersManager
 	protected FastList<L2Spawn> _emperorsGraveSpawns;
 	protected FastList<L2Npc> _allMobs = new FastList<L2Npc>();
 	
-	protected long _attackTimeEnd = 0;
-	protected long _coolDownTimeEnd = 0;
-	protected long _entryTimeEnd = 0;
-	protected long _warmUpTimeEnd = 0;
+ //	protected long _attackTimeEnd = 0;	//-[JOJO]
+ //	protected long _coolDownTimeEnd = 0;	//-[JOJO]
+ //	protected long _entryTimeEnd = 0;	//-[JOJO]
+ //	protected long _warmUpTimeEnd = 0;	//-[JOJO]
+	private long _attackTimeStart;	//+[JOJO]
 	
-	protected byte _newCycleMin = 55;
+	private static final int NEW_CYCLE_MINUTE = 55;
+	private static final int OUST_PLAYER_MARGIN_TIME = 60000;
 	
 	private FourSepulchersManager()
 	{
@@ -174,7 +176,6 @@ public class FourSepulchersManager
 		_inAttackTime = false;
 		_inCoolDownTime = false;
 		
-		_firstTimeRun = true;
 		initFixedInfo();
 		loadMysteriousBox();
 		initKeyBoxSpawns();
@@ -185,62 +186,8 @@ public class FourSepulchersManager
 		loadDukeMonsters();
 		loadEmperorsGraveMonsters();
 		spawnManagers();
-		timeSelector();
-	}
-	
-	// phase select on server launch
-	protected void timeSelector()
-	{
-		timeCalculator();
-		long currentTime = Calendar.getInstance().getTimeInMillis();
-		// if current time >= time of entry beginning and if current time < time
-		// of entry beginning + time of entry end
-		if (currentTime >= _coolDownTimeEnd && currentTime < _entryTimeEnd) // entry
-			// time
-			// check
-		{
-			clean();
-			_changeEntryTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeEntryTime(), 0);
-			_log.info("FourSepulchersManager: Beginning in Entry time");
-		}
-		else if (currentTime >= _entryTimeEnd && currentTime < _warmUpTimeEnd) // warmup
-			// time
-			// check
-		{
-			clean();
-			_changeWarmUpTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeWarmUpTime(), 0);
-			_log.info("FourSepulchersManager: Beginning in WarmUp time");
-		}
-		else if (currentTime >= _warmUpTimeEnd && currentTime < _attackTimeEnd) // attack
-			// time
-			// check
-		{
-			clean();
-			_changeAttackTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeAttackTime(), 0);
-			_log.info("FourSepulchersManager: Beginning in Attack time");
-		}
-		else
-			// else cooldown time and without cleanup because it's already
-			// implemented
-		{
-			_changeCoolDownTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeCoolDownTime(), 0);
-			_log.info("FourSepulchersManager: Beginning in Cooldown time");
-		}
-	}
-	
-	// phase end times calculator
-	protected void timeCalculator()
-	{
-		Calendar tmp = Calendar.getInstance();
-		if (tmp.get(Calendar.MINUTE) < _newCycleMin)
-			tmp.set(Calendar.HOUR, Calendar.getInstance().get(Calendar.HOUR) - 1);
-		tmp.set(Calendar.MINUTE, _newCycleMin);
-		tmp.set(Calendar.SECOND, 0);		//+[JOJO] 最大１分の誤差が出てしまうので
-		tmp.set(Calendar.MILLISECOND, 0);	//+[JOJO]
-		_coolDownTimeEnd = tmp.getTimeInMillis();
-		_entryTimeEnd = _coolDownTimeEnd + Config.FS_TIME_ENTRY * 60000l;
-		_warmUpTimeEnd = _entryTimeEnd + Config.FS_TIME_WARMUP * 60000l;
-		_attackTimeEnd = _warmUpTimeEnd + Config.FS_TIME_ATTACK * 60000l;
+		_changeCoolDownTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeCoolDownTime(), 0);	//+[JOJO]
+		_log.info("FourSepulchersManager: Beginning in Cooldown time");	//+[JOJO]
 	}
 	
 	public void clean()
@@ -1383,100 +1330,26 @@ public class FourSepulchersManager
 		}
 	}
 	
-	protected byte minuteSelect(byte min)
-	{
-		if ((double) min % 5 != 0)// if doesn't divides on 5 fully
-		{
-			// mad table for selecting proper minutes...
-			// may be there is a better way to do this
-			switch (min)
-			{
-				case 6:
-				case 7:
-					min = 5;
-					break;
-				case 8:
-				case 9:
-				case 11:
-				case 12:
-					min = 10;
-					break;
-				case 13:
-				case 14:
-				case 16:
-				case 17:
-					min = 15;
-					break;
-				case 18:
-				case 19:
-				case 21:
-				case 22:
-					min = 20;
-					break;
-				case 23:
-				case 24:
-				case 26:
-				case 27:
-					min = 25;
-					break;
-				case 28:
-				case 29:
-				case 31:
-				case 32:
-					min = 30;
-					break;
-				case 33:
-				case 34:
-				case 36:
-				case 37:
-					min = 35;
-					break;
-				case 38:
-				case 39:
-				case 41:
-				case 42:
-					min = 40;
-					break;
-				case 43:
-				case 44:
-				case 46:
-				case 47:
-					min = 45;
-					break;
-				case 48:
-				case 49:
-				case 51:
-				case 52:
-					min = 50;
-					break;
-				case 53:
-				case 54:
-				case 56:
-				case 57:
-					min = 55;
-					break;
-			}
-		}
-		return min;
-	}
-	
-	public void managerSay(byte min)
+	public void managerSay(int min)
 	{
 		// for attack phase, sending message every 5 minutes
 		if (_inAttackTime)
 		{
+			final String msg;
+			
 			if (min < 5)
 				return; // do not shout when < 5 minutes
-			
-			min = minuteSelect(min);
-			
-			String msg = /*TODO:1000455*/"現在" + min + /*TODO:1000456*/"分が経過しました"; // now this is a
-		//	String msg = min + " minute(s) have passed."; // now this is a
-			// proper message^^
-			
-			if (min == 90)
+			min = (min + 2) / 5 * 5;
+			if (min >= Config.FS_TIME_ATTACK)
+			{
 				msg = /*TODO:1000457*/"ゲームが終了しました。間もなく自動テレポートします。";
 			//	msg = "Game over. The teleport will appear momentarily";
+			}
+			else
+			{
+				msg = /*TODO:1000455*/"現在" + min + /*TODO:1000456*/"分が経過しました";
+			//	String msg = min + " minute(s) have passed."; // now this is a proper message^^
+			}
 			
 			for (L2Spawn temp : _managers)
 			{
@@ -1531,25 +1404,14 @@ public class FourSepulchersManager
 			if (_inAttackTime)
 			{
 				Calendar tmp = Calendar.getInstance();
-				tmp.setTimeInMillis(Calendar.getInstance().getTimeInMillis() - _warmUpTimeEnd);
-				if (tmp.get(Calendar.MINUTE) + 5 < Config.FS_TIME_ATTACK)
-				{
-					managerSay((byte) tmp.get(Calendar.MINUTE)); // byte
-					// because
-					// minute
-					// cannot be
-					// more than
-					// 59
+				tmp.setTimeInMillis(Calendar.getInstance().getTimeInMillis() - _attackTimeStart);
+				int min = tmp.get(Calendar.MINUTE);
+				managerSay(min);
+				if (min + 5 <= Config.FS_TIME_ATTACK)
 					ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), 5 * 60000);
-				}
-				// attack time ending chat
-				else if (tmp.get(Calendar.MINUTE) + 5 >= Config.FS_TIME_ATTACK)
-				{
-					managerSay((byte) 90); // sending a unique id :D
-				}
 			}
 			else if (_inEntryTime)
-				managerSay((byte) 0);
+				managerSay(0);
 		}
 	}
 	
@@ -1563,19 +1425,7 @@ public class FourSepulchersManager
 			_inAttackTime = false;
 			_inCoolDownTime = false;
 			
-			long interval = 0;
-			// if this is first launch - search time when entry time will be
-			// ended:
-			// counting difference between time when entry time ends and current
-			// time
-			// and then launching change time task
-			if (_firstTimeRun)
-				interval = _entryTimeEnd - Calendar.getInstance().getTimeInMillis();
-			else
-				interval = Config.FS_TIME_ENTRY * 60000l; // else use stupid
-			// method
-			
-			// launching saying process...
+			long interval = Config.FS_TIME_ENTRY * 60000l;
 			ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), 0);
 			_changeWarmUpTimeTask = ThreadPoolManager.getInstance().scheduleEffect(new ChangeWarmUpTime(), interval);
 			if (_changeEntryTimeTask != null)
@@ -1597,15 +1447,7 @@ public class FourSepulchersManager
 			_inAttackTime = false;
 			_inCoolDownTime = false;
 			
-			long interval = 0;
-			// searching time when warmup time will be ended:
-			// counting difference between time when warmup time ends and
-			// current time
-			// and then launching change time task
-			if (_firstTimeRun)
-				interval = _warmUpTimeEnd - Calendar.getInstance().getTimeInMillis();
-			else
-				interval = Config.FS_TIME_WARMUP * 60000l;
+			long interval = Config.FS_TIME_WARMUP * 60000l;
 			_changeAttackTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeAttackTime(), interval);
 			
 			if (_changeWarmUpTimeTask != null)
@@ -1633,43 +1475,13 @@ public class FourSepulchersManager
 			spawnMysteriousBox(31923);
 			spawnMysteriousBox(31924);
 			
-			if (!_firstTimeRun)
-			{
-				_warmUpTimeEnd = Calendar.getInstance().getTimeInMillis();
-			}
+			_attackTimeStart = Calendar.getInstance().getTimeInMillis();
 			
-			long interval = 0;
 			// say task
-			if (_firstTimeRun)
-			{
-				for (double min = Calendar.getInstance().get(Calendar.MINUTE); min < _newCycleMin; min++)
-				{
-					// looking for next shout time....
-					if (min % 5 == 0)// check if min can be divided by 5
-					{
-						_log.info(com.l2jserver.util.Util.dateFormat() + " Atk announce scheduled to " + min + " minute of this hour.");
-					//	_log.info(Calendar.getInstance().getTime() + " Atk announce scheduled to " + min + " minute of this hour.");
-						Calendar inter = Calendar.getInstance();
-						inter.set(Calendar.MINUTE, (int) min);
-						inter.set(Calendar.SECOND, 0);		//+[JOJO] 最大１分の誤差が出てしまうので
-						inter.set(Calendar.MILLISECOND, 0);	//+[JOJO]
-						ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), inter.getTimeInMillis()
-								- Calendar.getInstance().getTimeInMillis());
-						break;
-					}
-				}
-			}
-			else
-				ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), 5 * 60400);
-			// searching time when attack time will be ended:
-			// counting difference between time when attack time ends and
-			// current time
-			// and then launching change time task
-			if (_firstTimeRun)
-				interval = _attackTimeEnd - Calendar.getInstance().getTimeInMillis();
-			else
-				interval = Config.FS_TIME_ATTACK * 60000l;
-			_changeCoolDownTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeCoolDownTime(), interval);
+			ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), 5 * 60400);
+			
+			long interval = Config.FS_TIME_ATTACK * 60000l;
+			_changeCoolDownTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeCoolDownTime(), interval + OUST_PLAYER_MARGIN_TIME);
 			
 			if (_changeAttackTimeTask != null)
 			{
@@ -1692,18 +1504,14 @@ public class FourSepulchersManager
 			clean();
 			
 			Calendar time = Calendar.getInstance();
-			// one hour = 55th min to 55 min of next hour, so we check for this,
-			// also check for first launch
-			if (Calendar.getInstance().get(Calendar.MINUTE) > _newCycleMin && !_firstTimeRun)
+			// one hour = 55th min to 55 min of next hour
+			if (Calendar.getInstance().get(Calendar.MINUTE) > NEW_CYCLE_MINUTE)
 				time.set(Calendar.HOUR, Calendar.getInstance().get(Calendar.HOUR) + 1);
-			time.set(Calendar.MINUTE, _newCycleMin);
+			time.set(Calendar.MINUTE, NEW_CYCLE_MINUTE);
 			time.set(Calendar.SECOND, 0);		//+[JOJO] 最大１分の誤差が出てしまうので
 			time.set(Calendar.MILLISECOND, 0);	//+[JOJO]
 			_log.info("FourSepulchersManager: Entry time: " + com.l2jserver.util.Util.dateFormat(time));
 		//	_log.info("FourSepulchersManager: Entry time: " + time.getTime());
-			if (_firstTimeRun)
-				_firstTimeRun = false; // cooldown phase ends event hour, so it
-			// will be not first run
 			
 			long interval = time.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
 			_changeEntryTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeEntryTime(), interval);
