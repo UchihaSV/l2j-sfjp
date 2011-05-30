@@ -1224,8 +1224,7 @@ public class Castle
 			if (_production != null)
 			{
 				int count = 0;
-				StringBuilder query = new StringBuilder()
-					.append("INSERT INTO castle_manor_production VALUES ");
+				StringBuilder query = new StringBuilder().append("INSERT INTO castle_manor_production VALUES ");
 				String values[] = new String[_production.size()];
 				for (SeedProduction s : _production)
 				{
@@ -1236,9 +1235,8 @@ public class Castle
 				{
 					query.append(values[0]);
 					for (int i = 1; i < values.length; i++)
-					{
 						query.append(",").append(values[i]);
-					}
+					
 					statement = con.prepareStatement(query.toString());
 					statement.execute();
 					statement.close();
@@ -1248,7 +1246,7 @@ public class Castle
 			if (_productionNext != null)
 			{
 				int count = 0;
-				String query = "INSERT INTO castle_manor_production VALUES ";
+				StringBuilder query = new StringBuilder().append("INSERT INTO castle_manor_production VALUES ");
 				String values[] = new String[_productionNext.size()];
 				for (SeedProduction s : _productionNext)
 				{
@@ -1257,12 +1255,11 @@ public class Castle
 				}
 				if (values.length > 0)
 				{
-					query += values[0];
+					query.append(values[0]);
 					for (int i = 1; i < values.length; i++)
-					{
-						query += "," + values[i];
-					}
-					statement = con.prepareStatement(query);
+						query.append(",").append(values[i]);
+					
+					statement = con.prepareStatement(query.toString());
 					statement.execute();
 					statement.close();
 				}
@@ -1299,8 +1296,7 @@ public class Castle
 			if (prod != null)
 			{
 				int count = 0;
-				StringBuilder query = new StringBuilder()
-					.append("INSERT INTO castle_manor_production VALUES ");
+				StringBuilder query = new StringBuilder().append("INSERT INTO castle_manor_production VALUES ");
 				String values[] = new String[prod.size()];
 				for (SeedProduction s : prod)
 				{
@@ -1311,9 +1307,8 @@ public class Castle
 				{
 					query.append(values[0]);
 					for (int i = 1; i < values.length; i++)
-					{
 						query.append(",").append(values[i]);
-					}
+					
 					statement = con.prepareStatement(query.toString());
 					statement.execute();
 					statement.close();
@@ -1346,8 +1341,7 @@ public class Castle
 			if (_procure != null && _procure.size() > 0)
 			{
 				int count = 0;
-				StringBuilder query = new StringBuilder()
-					.append("INSERT INTO castle_manor_procure VALUES ");
+				StringBuilder query = new StringBuilder().append("INSERT INTO castle_manor_procure VALUES ");
 				String values[] = new String[_procure.size()];
 				for (CropProcure cp : _procure)
 				{
@@ -1358,9 +1352,8 @@ public class Castle
 				{
 					query.append(values[0]);
 					for (int i = 1; i < values.length; i++)
-					{
 						query.append(",").append(values[i]);
-					}
+					
 					statement = con.prepareStatement(query.toString());
 					statement.execute();
 					statement.close();
@@ -1369,7 +1362,7 @@ public class Castle
 			if (_procureNext != null && _procureNext.size() > 0)
 			{
 				int count = 0;
-				String query = "INSERT INTO castle_manor_procure VALUES ";
+				StringBuilder query = new StringBuilder().append("INSERT INTO castle_manor_procure VALUES ");
 				String values[] = new String[_procureNext.size()];
 				for (CropProcure cp : _procureNext)
 				{
@@ -1378,12 +1371,11 @@ public class Castle
 				}
 				if (values.length > 0)
 				{
-					query += values[0];
+					query.append(values[0]);
 					for (int i = 1; i < values.length; i++)
-					{
-						query += "," + values[i];
-					}
-					statement = con.prepareStatement(query);
+						query.append(",").append(values[i]);
+					
+					statement = con.prepareStatement(query.toString());
 					statement.execute();
 					statement.close();
 				}
@@ -1420,8 +1412,7 @@ public class Castle
 			if (proc != null && proc.size() > 0)
 			{
 				int count = 0;
-				StringBuilder query = new StringBuilder()
-					.append("INSERT INTO castle_manor_procure VALUES ");
+				StringBuilder query = new StringBuilder().append("INSERT INTO castle_manor_procure VALUES ");
 				String values[] = new String[proc.size()];
 				
 				for (CropProcure cp : proc)
@@ -1433,9 +1424,8 @@ public class Castle
 				{
 					query.append(values[0]);
 					for (int i = 1; i < values.length; i++)
-					{
 						query.append(",").append(values[i]);
-					}
+					
 					statement = con.prepareStatement(query.toString());
 					statement.execute();
 					statement.close();
