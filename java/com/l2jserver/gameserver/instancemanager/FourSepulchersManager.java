@@ -198,7 +198,7 @@ public class FourSepulchersManager
 			L2BossZone zone;
 			if ((zone = GrandBossManager.getInstance().getZone(location[0],location[1],location[2])) != null)	//+[JOJO]
 				zone.oustAllPlayers();
-			else if (GrandBossManager.getInstance().getZones() != null)
+			else if (GrandBossManager.getInstance().getZones().size() > 0)
 				throw new RuntimeException();
 		//	GrandBossManager.getInstance().getZone(location[0],location[1],location[2]).oustAllPlayers();	//-[JOJO]
 		}
