@@ -516,6 +516,8 @@ public class GameServer
 		LogManager.getLogManager().readConfiguration(is);
 		is.close(); is = null;
 		
+		System.out.println(com.l2jserver.util.Util.dateFormat());
+		
 		// Initialize config
 		Config.load();
 		printSection("Database");
