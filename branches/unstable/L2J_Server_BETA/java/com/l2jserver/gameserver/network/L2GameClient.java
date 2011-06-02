@@ -50,6 +50,7 @@ import com.l2jserver.gameserver.model.entity.TvTEvent;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.ServerClose;
+import com.l2jserver.gameserver.security.SecondaryPasswordAuth;
 import com.l2jserver.gameserver.util.FloodProtectors;
 import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
@@ -79,6 +80,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 	private SessionKey _sessionId;
 	private L2PcInstance _activeChar;
 	private final ReentrantLock _activeCharLock = new ReentrantLock();
+	private SecondaryPasswordAuth _secondaryAuth;
 	
 	private boolean _isAuthedGG;
 	private final long _connectionStartTime;
@@ -232,6 +234,9 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 	public void setAccountName(String pAccountName)
 	{
 		_accountName = pAccountName;
+		
+		if (Config.SECOND_AUTH_ENABLED)
+			_secondaryAuth = new SecondaryPasswordAuth(this);
 	}
 	
 	public String getAccountName()
@@ -408,9 +413,6 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 		record.setParameters(new Object[]{objid, L2GameClient.this});
 		_logAccounting.log(record);
 	}
-	
-	
-	
 	
 	public static void deleteCharByObjId(int objid)
 	{
@@ -603,6 +605,11 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 			return null;
 		return _charSlotMapping[charslot];
 	}
+	
+	public SecondaryPasswordAuth getSecondaryAuth()
+	{
+		return _secondaryAuth;
+	}
 
 	public void close(L2GameServerPacket gsp)
 	{
@@ -706,6 +713,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 		/**
 		 * @see java.lang.Runnable#run()
 		 */
+		@Override
 		public void run()
 		{
 			boolean fast = true;
@@ -789,6 +797,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 		/**
 		 * @see java.lang.Runnable#run()
 		 */
+		@Override
 		public void run()
 		{
 			try
@@ -838,6 +847,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 	
 	class AutoSaveTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			try
