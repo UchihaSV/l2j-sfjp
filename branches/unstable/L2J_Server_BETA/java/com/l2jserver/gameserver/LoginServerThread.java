@@ -375,6 +375,13 @@ public class LoginServerThread extends Thread
 				if (Config.DEBUG)
 					_log.log(Level.WARNING, "", e);
 			}
+			//[JOJO]-------------------------------------------------
+			catch (java.net.ConnectException e)	//+[JOJO]
+			{
+				_log.log(Level.WARNING, "Cannot connect LoginServer.");
+				try { sleep(60000L); } catch (InterruptedException e1) { }
+			}
+			//-------------------------------------------------------
 			catch (SocketException e)
 			{
 				_log.warning("LoginServer not avaible, trying to reconnect...");
