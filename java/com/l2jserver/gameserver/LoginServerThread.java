@@ -214,10 +214,11 @@ public class LoginServerThread extends Thread
 							InitLS init = new InitLS(decrypt);
 							if (Config.DEBUG)
 								_log.info("Init received");
-							if (init.getRevision() != REVISION)
+							int loginServerRevision;
+							if ((loginServerRevision = init.getRevision()) != REVISION)
 							{
 								//TODO: revision mismatch
-								_log.warning("/!\\ Revision mismatch between LS and GS /!\\");
+								_log.warning("<!> Revision mismatch between LS(" + Integer.toHexString(loginServerRevision) + ") and GS(" + Integer.toHexString(REVISION) + ") <!>");
 								break;
 							}
 							try
