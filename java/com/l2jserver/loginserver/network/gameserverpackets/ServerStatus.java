@@ -12,12 +12,13 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.gameserverpackets;
+package com.l2jserver.loginserver.network.gameserverpackets;
 
 import java.util.logging.Logger;
 
 import com.l2jserver.loginserver.GameServerTable;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
+import com.l2jserver.loginserver.GameServerThread;
 import com.l2jserver.util.network.BaseRecievePacket;
 
 
@@ -66,11 +67,11 @@ public class ServerStatus extends BaseRecievePacket
 	/**
 	 * @param decrypt
 	 */
-	public ServerStatus(byte[] decrypt, int serverId)
+	public ServerStatus(byte[] decrypt, GameServerThread server)
 	{
 		super(decrypt);
 		
-		GameServerInfo gsi = GameServerTable.getInstance().getRegisteredGameServerById(serverId);
+		GameServerInfo gsi = GameServerTable.getInstance().getRegisteredGameServerById(server.getServerId());
 		if (gsi != null)
 		{
 			int size = readD();

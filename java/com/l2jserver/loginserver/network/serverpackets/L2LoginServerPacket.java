@@ -12,12 +12,12 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.serverpackets;
+package com.l2jserver.loginserver.network.serverpackets;
 
 
 import org.mmocore.network.SendablePacket;
 
-import com.l2jserver.loginserver.L2LoginClient;
+import com.l2jserver.loginserver.network.L2LoginClient;
 
 /**
  *

@@ -12,9 +12,15 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.gameserverpackets;
+package com.l2jserver.loginserver.network.gameserverpackets;
 
+import java.util.logging.Logger;
+
+import com.l2jserver.Config;
+import com.l2jserver.loginserver.GameServerThread;
+import com.l2jserver.loginserver.LoginController;
 import com.l2jserver.loginserver.SessionKey;
+import com.l2jserver.loginserver.network.loginserverpackets.PlayerAuthResponse;
 import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
@@ -22,40 +28,47 @@ import com.l2jserver.util.network.BaseRecievePacket;
  *
  */
 public class PlayerAuthRequest extends BaseRecievePacket
-{
-	
-	private String _account;
-	private SessionKey _sessionKey;
-	
+{	
+	private static Logger _log = Logger.getLogger(PlayerAuthRequest.class.getName());
 	
 	/**
 	 * @param decrypt
 	 */
-	public PlayerAuthRequest(byte[] decrypt)
+	public PlayerAuthRequest(byte[] decrypt, GameServerThread server)
 	{
 		super(decrypt);
-		_account = readS();
+		String account = readS();
 		int playKey1 = readD();
 		int playKey2 = readD();
 		int loginKey1 = readD();
 		int loginKey2 = readD();
-		_sessionKey = new SessionKey(loginKey1, loginKey2, playKey1, playKey2);
+		SessionKey sessionKey = new SessionKey(loginKey1, loginKey2, playKey1, playKey2);
+		
+		PlayerAuthResponse authResponse;
+		if (Config.DEBUG)
+		{
+			_log.info("auth request received for Player "+account);
+		}
+		SessionKey key = LoginController.getInstance().getKeyForAccount(account);
+		if (key != null && key.equals(sessionKey))
+		{
+			if (Config.DEBUG)
+			{
+				_log.info("auth request: OK");
+			}
+			LoginController.getInstance().removeAuthedLoginClient(account);
+			authResponse = new PlayerAuthResponse(account, true);
+		}
+		else
+		{
+			if (Config.DEBUG)
+			{
+				_log.info("auth request: NO");
+				_log.info("session key from self: "+key);
+				_log.info("session key sent: "+sessionKey);
+			}
+			authResponse = new PlayerAuthResponse(account, false);
+		}
+		server.sendPacket(authResponse);
 	}
-	
-	/**
-	 * @return Returns the account.
-	 */
-	public String getAccount()
-	{
-		return _account;
-	}
-	
-	/**
-	 * @return Returns the key.
-	 */
-	public SessionKey getKey()
-	{
-		return _sessionKey;
-	}
-	
 }

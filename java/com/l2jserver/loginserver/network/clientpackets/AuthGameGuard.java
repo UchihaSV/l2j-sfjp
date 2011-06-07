@@ -12,11 +12,11 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.clientpackets;
+package com.l2jserver.loginserver.network.clientpackets;
 
-import com.l2jserver.loginserver.L2LoginClient.LoginClientState;
-import com.l2jserver.loginserver.serverpackets.GGAuth;
-import com.l2jserver.loginserver.serverpackets.LoginFail.LoginFailReason;
+import com.l2jserver.loginserver.network.L2LoginClient.LoginClientState;
+import com.l2jserver.loginserver.network.serverpackets.GGAuth;
+import com.l2jserver.loginserver.network.serverpackets.LoginFail.LoginFailReason;
 
 /**
  * @author -Wooden-
@@ -57,7 +57,7 @@ public class AuthGameGuard extends L2LoginClientPacket
 	}
 	
 	/**
-	 * @see com.l2jserver.loginserver.clientpackets.L2LoginClientPacket#readImpl()
+	 * @see com.l2jserver.loginserver.network.clientpackets.L2LoginClientPacket#readImpl()
 	 */
 	@Override
 	protected boolean readImpl()

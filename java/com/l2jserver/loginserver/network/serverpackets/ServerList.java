@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.serverpackets;
+package com.l2jserver.loginserver.network.serverpackets;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -22,8 +22,8 @@ import java.util.Map;
 
 import com.l2jserver.loginserver.GameServerTable;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
-import com.l2jserver.loginserver.L2LoginClient;
-import com.l2jserver.loginserver.gameserverpackets.ServerStatus;
+import com.l2jserver.loginserver.network.L2LoginClient;
+import com.l2jserver.loginserver.network.gameserverpackets.ServerStatus;
 
 /**
  * ServerList

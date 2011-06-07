@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.clientpackets;
+package com.l2jserver.loginserver.network.clientpackets;
 
 import java.net.InetAddress;
 import java.security.GeneralSecurityException;
@@ -24,15 +24,15 @@ import javax.crypto.Cipher;
 import com.l2jserver.Config;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
 import com.l2jserver.loginserver.HackingException;
-import com.l2jserver.loginserver.L2LoginClient;
-import com.l2jserver.loginserver.L2LoginClient.LoginClientState;
 import com.l2jserver.loginserver.LoginController;
 import com.l2jserver.loginserver.LoginController.AuthLoginResult;
-import com.l2jserver.loginserver.serverpackets.AccountKicked;
-import com.l2jserver.loginserver.serverpackets.AccountKicked.AccountKickedReason;
-import com.l2jserver.loginserver.serverpackets.LoginFail.LoginFailReason;
-import com.l2jserver.loginserver.serverpackets.LoginOk;
-import com.l2jserver.loginserver.serverpackets.ServerList;
+import com.l2jserver.loginserver.network.L2LoginClient;
+import com.l2jserver.loginserver.network.L2LoginClient.LoginClientState;
+import com.l2jserver.loginserver.network.serverpackets.AccountKicked;
+import com.l2jserver.loginserver.network.serverpackets.LoginOk;
+import com.l2jserver.loginserver.network.serverpackets.ServerList;
+import com.l2jserver.loginserver.network.serverpackets.AccountKicked.AccountKickedReason;
+import com.l2jserver.loginserver.network.serverpackets.LoginFail.LoginFailReason;
 
 
 /**
