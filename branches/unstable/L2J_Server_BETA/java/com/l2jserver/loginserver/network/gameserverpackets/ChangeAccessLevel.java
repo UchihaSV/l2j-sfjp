@@ -12,8 +12,12 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.gameserverpackets;
+package com.l2jserver.loginserver.network.gameserverpackets;
 
+import java.util.logging.Logger;
+
+import com.l2jserver.loginserver.GameServerThread;
+import com.l2jserver.loginserver.LoginController;
 import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
@@ -22,34 +26,18 @@ import com.l2jserver.util.network.BaseRecievePacket;
  */
 public class ChangeAccessLevel extends BaseRecievePacket
 {
-	
-	private int _level;
-	private String _account;
+	protected static Logger _log = Logger.getLogger(ChangeAccessLevel.class.getName());
 	
 	/**
 	 * @param decrypt
 	 */
-	public ChangeAccessLevel(byte[] decrypt)
+	public ChangeAccessLevel(byte[] decrypt, GameServerThread server)
 	{
 		super(decrypt);
-		_level = readD();
-		_account = readS();
-	}
-	
-	/**
-	 * @return Returns the account.
-	 */
-	public String getAccount()
-	{
-		return _account;
-	}
-	
-	/**
-	 * @return Returns the level.
-	 */
-	public int getLevel()
-	{
-		return _level;
-	}
-	
+		int level = readD();
+		String account = readS();
+		
+		LoginController.getInstance().setAccountAccessLevel(account, level);
+		_log.info("Changed "+account+" access level to "+level);
+	}	
 }

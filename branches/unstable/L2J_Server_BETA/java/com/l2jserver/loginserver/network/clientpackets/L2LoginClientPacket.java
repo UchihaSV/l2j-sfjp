@@ -12,14 +12,14 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.clientpackets;
+package com.l2jserver.loginserver.network.clientpackets;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.mmocore.network.ReceivablePacket;
 
-import com.l2jserver.loginserver.L2LoginClient;
+import com.l2jserver.loginserver.network.L2LoginClient;
 
 /**
  *

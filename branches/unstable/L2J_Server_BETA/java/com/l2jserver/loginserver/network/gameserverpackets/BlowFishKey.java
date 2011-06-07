@@ -12,15 +12,18 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.gameserverpackets;
+package com.l2jserver.loginserver.network.gameserverpackets;
 
 import java.security.GeneralSecurityException;
-import java.security.interfaces.RSAPrivateKey;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.crypto.Cipher;
 
+import com.l2jserver.Config;
+import com.l2jserver.loginserver.GameServerThread;
+import com.l2jserver.loginserver.network.L2JGameServerPacketHandler.GameServerState;
+import com.l2jserver.util.crypt.NewCrypt;
 import com.l2jserver.util.network.BaseRecievePacket;
 
 
@@ -30,12 +33,11 @@ import com.l2jserver.util.network.BaseRecievePacket;
  */
 public class BlowFishKey extends BaseRecievePacket
 {
-	byte[] _key;
 	protected static final Logger _log = Logger.getLogger(BlowFishKey.class.getName());
 	/**
 	 * @param decrypt
 	 */
-	public BlowFishKey(byte[] decrypt, RSAPrivateKey privateKey)
+	public BlowFishKey(byte[] decrypt, GameServerThread server)
 	{
 		super(decrypt);
 		int size = readD();
@@ -44,7 +46,7 @@ public class BlowFishKey extends BaseRecievePacket
 		{
 			byte [] tempDecryptKey;
 			Cipher rsaCipher = Cipher.getInstance("RSA/ECB/nopadding");
-			rsaCipher.init(Cipher.DECRYPT_MODE, privateKey);
+			rsaCipher.init(Cipher.DECRYPT_MODE, server.getPrivateKey());
 			tempDecryptKey = rsaCipher.doFinal(tempKey);
 			// there are nulls before the key we must remove them
 			int i = 0;
@@ -54,23 +56,19 @@ public class BlowFishKey extends BaseRecievePacket
 				if(tempDecryptKey[i] != 0)
 					break;
 			}
-			_key = new byte[len-i];
-			System.arraycopy(tempDecryptKey,i,_key,0,len-i);
+			byte[] key = new byte[len-i];
+			System.arraycopy(tempDecryptKey,i,key,0,len-i);
+			
+			server.SetBlowFish(new NewCrypt(key));
+			if (Config.DEBUG)
+			{
+				_log.info("New BlowFish key received, Blowfih Engine initialized:");
+			}
+			server.setLoginConnectionState(GameServerState.BF_CONNECTED);
 		}
 		catch(GeneralSecurityException e)
 		{
 			_log.log(Level.SEVERE, "Error While decrypting blowfish key (RSA): " + e.getMessage(), e);
 		}
-		/*catch(IOException ioe)
-		{
-			//TODO: manage
-		}*/
-		
 	}
-	
-	public byte[] getKey()
-	{
-		return _key;
-	}
-	
 }

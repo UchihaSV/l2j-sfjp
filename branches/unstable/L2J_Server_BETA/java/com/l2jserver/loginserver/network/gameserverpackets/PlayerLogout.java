@@ -12,8 +12,13 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.gameserverpackets;
+package com.l2jserver.loginserver.network.gameserverpackets;
 
+import java.util.logging.Logger;
+
+import com.l2jserver.Config;
+import com.l2jserver.loginserver.GameServerTable;
+import com.l2jserver.loginserver.GameServerThread;
 import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
@@ -22,24 +27,22 @@ import com.l2jserver.util.network.BaseRecievePacket;
  */
 public class PlayerLogout extends BaseRecievePacket
 {
-	
-	private String _account;
+	protected static Logger _log = Logger.getLogger(PlayerLogout.class.getName());
 	
 	/**
 	 * @param decrypt
 	 */
-	public PlayerLogout(byte[] decrypt)
+	public PlayerLogout(byte[] decrypt, GameServerThread server)
 	{
 		super(decrypt);
-		_account = readS();
+		String account = readS();
+		
+		server.removeAccountOnGameServer(account);
+		if (Config.DEBUG)
+		{
+			_log.info("Player "+account+" logged out from gameserver ["+server.getServerId()+"] "+GameServerTable.getInstance().getServerNameById(server.getServerId()));
+		}
+		
+		server.broadcastToTelnet("Player "+account+" disconnected from GameServer "+server.getServerId());
 	}
-	
-	/**
-	 * @return Returns the account.
-	 */
-	public String getAccount()
-	{
-		return _account;
-	}
-	
 }

@@ -12,10 +12,10 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.clientpackets;
+package com.l2jserver.loginserver.network.clientpackets;
 
-import com.l2jserver.loginserver.serverpackets.LoginFail.LoginFailReason;
-import com.l2jserver.loginserver.serverpackets.ServerList;
+import com.l2jserver.loginserver.network.serverpackets.ServerList;
+import com.l2jserver.loginserver.network.serverpackets.LoginFail.LoginFailReason;
 
 /**
  * Format: ddc

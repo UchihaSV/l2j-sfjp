@@ -12,8 +12,10 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.gameserverpackets;
+package com.l2jserver.loginserver.network.gameserverpackets;
 
+import com.l2jserver.loginserver.GameServerThread;
+import com.l2jserver.loginserver.LoginController;
 import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
@@ -22,54 +24,21 @@ import com.l2jserver.util.network.BaseRecievePacket;
  */
 public class ReplyCharacters extends BaseRecievePacket
 {
-	String _account;
-	int _chars;
-	long[] _charsList;
 	/**
 	 * @param decrypt
 	 */
-	public ReplyCharacters(byte[] decrypt)
+	public ReplyCharacters(byte[] decrypt, GameServerThread server)
 	{
 		super(decrypt);
-		_account = readS();
-		_chars = readC();
+		String account = readS();
+		int chars = readC();
 		int charsToDel = readC();
-		_charsList = new long[charsToDel];
+		long[] charsList = new long[charsToDel];
 		for (int i = 0; i < charsToDel; i++)
 		{
-			_charsList[i] = readQ();
+			charsList[i] = readQ();
 		}
-	}
-	
-	/**
-	 * @return Account Name
-	 */
-	public String getAccountName()
-	{
-		return _account;
-	}
-	
-	/**
-	 * @return Number of Characters on Server
-	 */
-	public int getCharsOnServer()
-	{
-		return _chars;
-	}
-	
-	/**
-	 * @return Number of Characters on Server Waiting for Delete
-	 */
-	public int getCharsWaitingDel()
-	{
-		return _charsList.length;
-	}
-	
-	/**
-	 * @return Array with Time to Character Delete
-	 */
-	public long[] getTimeToDelForChars()
-	{
-		return _charsList;
+		LoginController.getInstance().setCharactersOnServer(account,
+				chars, charsList, server.getServerId());
 	}
 }

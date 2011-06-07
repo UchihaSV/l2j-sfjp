@@ -12,8 +12,12 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.gameserverpackets;
+package com.l2jserver.loginserver.network.gameserverpackets;
 
+import java.util.logging.Logger;
+
+import com.l2jserver.Config;
+import com.l2jserver.loginserver.LoginController;
 import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
@@ -22,12 +26,7 @@ import com.l2jserver.util.network.BaseRecievePacket;
  */
 public class PlayerTracert extends BaseRecievePacket
 {
-	private String _account;
-	private String _pcIp;
-	private String _hop1;
-	private String _hop2;
-	private String _hop3;
-	private String _hop4;
+	protected static Logger _log = Logger.getLogger(PlayerTracert.class.getName());
 	
 	/**
 	 * @param decrypt
@@ -35,59 +34,17 @@ public class PlayerTracert extends BaseRecievePacket
 	public PlayerTracert(byte[] decrypt)
 	{
 		super(decrypt);
-		_account = readS();
-		_pcIp = readS();
-		_hop1 = readS();
-		_hop2 = readS();
-		_hop3 = readS();
-		_hop4 = readS();
-	}
-	
-	/**
-	 * @return Returns the account.
-	 */
-	public String getAccount()
-	{
-		return _account;
-	}
-	
-	/**
-	 * @return Returns PC IP.
-	 */
-	public String getPcIp()
-	{
-		return _pcIp;
-	}
-	
-	/**
-	 * @return Returns 1st Traceroute Hop.
-	 */
-	public String getFirstHop()
-	{
-		return _hop1;
-	}
-	
-	/**
-	 * @return Returns 2nd Traceroute Hop.
-	 */
-	public String getSecondHop()
-	{
-		return _hop2;
-	}
-	
-	/**
-	 * @return Returns 3rd Traceroute Hop.
-	 */
-	public String getThirdHop()
-	{
-		return _hop3;
-	}
-	
-	/**
-	 * @return Returns 4th Traceroute Hop.
-	 */
-	public String getFourthHop()
-	{
-		return _hop4;
+		String account = readS();
+		String pcIp = readS();
+		String hop1 = readS();
+		String hop2 = readS();
+		String hop3 = readS();
+		String hop4 = readS();
+		
+		LoginController.getInstance().setAccountLastTracert(account, pcIp, hop1, hop2, hop3, hop4);
+		if (Config.DEBUG)
+		{
+			_log.info("Saved "+account+" last tracert");
+		}
 	}
 }

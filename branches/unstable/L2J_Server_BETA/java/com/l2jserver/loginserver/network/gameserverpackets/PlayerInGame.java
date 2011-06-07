@@ -12,12 +12,13 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.loginserver.gameserverpackets;
+package com.l2jserver.loginserver.network.gameserverpackets;
 
-import java.util.List;
+import java.util.logging.Logger;
 
-import javolution.util.FastList;
-
+import com.l2jserver.Config;
+import com.l2jserver.loginserver.GameServerTable;
+import com.l2jserver.loginserver.GameServerThread;
 import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
@@ -26,28 +27,24 @@ import com.l2jserver.util.network.BaseRecievePacket;
  */
 public class PlayerInGame extends BaseRecievePacket
 {
-	private List<String> _accounts;
+	private static Logger _log = Logger.getLogger(PlayerInGame.class.getName());
 	
 	/**
 	 * @param decrypt
 	 */
-	public PlayerInGame(byte[] decrypt)
+	public PlayerInGame(byte[] decrypt, GameServerThread server)
 	{
 		super(decrypt);
-		_accounts =  new FastList<String>();
 		int size = readH();
 		for (int i = 0; i < size; i++)
 		{
-			_accounts.add(readS());
+			String account = readS();
+			server.addAccountOnGameServer(account);
+			if (Config.DEBUG)
+			{
+				_log.info("Account "+account+" logged in GameServer: ["+server.getServerId()+"] "+GameServerTable.getInstance().getServerNameById(server.getServerId()));
+			}
+			server.broadcastToTelnet("Account "+account+" logged in GameServer "+server.getServerId());
 		}
 	}
-	
-	/**
-	 * @return Returns the accounts.
-	 */
-	public List<String> getAccounts()
-	{
-		return _accounts;
-	}
-	
 }
