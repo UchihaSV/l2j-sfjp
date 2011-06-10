@@ -151,6 +151,7 @@ public class LoginServerThread extends Thread
 			int lengthLo = 0;
 			int length = 0;
 			boolean checksumOk = false;
+			long interval = 5000L;	//[JOJO]
 			try
 			{
 				// Connection
@@ -214,6 +215,7 @@ public class LoginServerThread extends Thread
 							InitLS init = new InitLS(decrypt);
 							if (Config.DEBUG)
 								_log.info("Init received");
+							//[JOJO]-------------------------------------------------
 							int loginServerRevision;
 							if ((loginServerRevision = init.getRevision()) != REVISION)
 							{
@@ -221,6 +223,7 @@ public class LoginServerThread extends Thread
 								_log.warning("<!> Revision mismatch between LS(" + Integer.toHexString(loginServerRevision) + ") and GS(" + Integer.toHexString(REVISION) + ") <!>");
 								break;
 							}
+							//-------------------------------------------------------
 							try
 							{
 								KeyFactory kfac = KeyFactory.getInstance("RSA");
@@ -379,14 +382,14 @@ public class LoginServerThread extends Thread
 			catch (java.net.ConnectException e)	//+[JOJO]
 			{
 				_log.log(Level.WARNING, "Cannot connect LoginServer.");
-				try { sleep(60000L); } catch (InterruptedException e1) { }
+				interval = 60000L;	//[JOJO]
 			}
 			//-------------------------------------------------------
 			catch (SocketException e)
 			{
 				_log.warning("LoginServer not avaible, trying to reconnect...");
+				interval = 60000L;	//[JOJO]
 			}
-
 			catch (IOException e)
 			{
 				_log.log(Level.WARNING, "Disconnected from Login, Trying to reconnect: " + e.getMessage(), e);
@@ -406,7 +409,7 @@ public class LoginServerThread extends Thread
 			
 			try
 			{
-				Thread.sleep(5000); // 5 seconds tempo.
+				Thread.sleep(interval); // 5 seconds tempo.
 			}
 			catch (InterruptedException e)
 			{
