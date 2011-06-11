@@ -239,7 +239,9 @@ public class PcStat extends PlayableStat
 			L2ClassMasterInstance.showQuestionMark(getActiveChar());
 		}
 		
-		getActiveChar().rewardSkills(); // Give Expertise skill of this level
+		//Give AutoGet skills and all normal skills if Auto-Learn is activated.
+		getActiveChar().rewardSkills();
+		
 		if (getActiveChar().getClan() != null)
 		{
 			getActiveChar().getClan().updateClanMember(getActiveChar());
@@ -549,8 +551,7 @@ public class PcStat extends PlayableStat
 		
 		if (useRates)
 		{
-			byte level = getLevel();
-			if (level < 10)
+			if (getActiveChar().isLucky())
 				return;
 			
 			if (points < 0) // vitality consumed
