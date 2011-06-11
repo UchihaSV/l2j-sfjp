@@ -860,6 +860,7 @@ public final class L2PcInstance extends L2Playable
 			
 		}
 		
+		@Override
 		public void run()
 		{
 			try
@@ -910,6 +911,7 @@ public final class L2PcInstance extends L2Playable
 			_sendMessage = sendMessage;
 		}
 		
+		@Override
 		public void run()
 		{
 			try
@@ -928,6 +930,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private class ShortBuffTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			if (L2PcInstance.this == null)
@@ -3122,6 +3125,7 @@ public final class L2PcInstance extends L2Playable
 	 */
 	private class SitDownTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			L2PcInstance.this.setIsParalyzed(false);
@@ -3133,6 +3137,7 @@ public final class L2PcInstance extends L2Playable
 	 */
 	private class StandUpTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			L2PcInstance.this.setIsSitting(false);
@@ -4559,6 +4564,7 @@ public final class L2PcInstance extends L2Playable
 		/**
 		 * @see java.lang.Runnable#run()
 		 */
+		@Override
 		public void run()
 		{
 			L2GameClient client = L2PcInstance.this.getClient();
@@ -4933,10 +4939,11 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	@Override
-	public void untransform()
+	public synchronized void untransform()
 	{
 		if (_transformation != null)
 		{
+			setQueuedSkill(null, false, false);
 			setTransformAllowedSkills(new int[]{});
 			_transformation.onUntransform();
 			_transformation = null;
@@ -9653,6 +9660,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private class InventoryEnable implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			_inventoryDisable = false;
@@ -9894,6 +9902,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private class WarnUserTakeBreak implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			if (L2PcInstance.this.isOnline())
@@ -9911,6 +9920,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private class RentPetTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			stopRentPet();
@@ -9919,6 +9929,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private class WaterTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			double reduceHp = getMaxHp()/100.0;
@@ -9950,6 +9961,7 @@ public final class L2PcInstance extends L2Playable
 			_isUpperGrade = isUpperGrade;
 		}
 		
+		@Override
 		public void run()
 		{
 			if (System.currentTimeMillis() >= _endTaskTime) {
@@ -11319,6 +11331,7 @@ public final class L2PcInstance extends L2Playable
 			_player = L2PcInstance.this;
 		}
 		
+		@Override
 		public void run()
 		{
 			if (_player == null || !_player.isTeleporting())
@@ -12801,6 +12814,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private class PunishTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			L2PcInstance.this.setPunishLevel(PunishLevel.NONE, 0);
@@ -12835,6 +12849,7 @@ public final class L2PcInstance extends L2Playable
 			_value = value;
 		}
 		
+		@Override
 		public void run()
 		{
 			if (_player == null || (_player.isDead() && !Config.FAME_FOR_DEAD_PLAYERS))
@@ -12876,6 +12891,7 @@ public final class L2PcInstance extends L2Playable
 			_player = player;
 		}
 		
+		@Override
 		public void run()
 		{
 			if (!_player.isInsideZone(L2Character.ZONE_PEACE))
@@ -13066,6 +13082,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private class SoulTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			L2PcInstance.this.clearSouls();
@@ -13662,6 +13679,7 @@ public final class L2PcInstance extends L2Playable
 	/** Section for mounted pets */
 	private class FeedTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			try
@@ -13804,6 +13822,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private class Dismount implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			try
@@ -14003,6 +14022,7 @@ public final class L2PcInstance extends L2Playable
 	private class ChargeTask implements Runnable
 	{
 		
+		@Override
 		public void run()
 		{
 			L2PcInstance.this.clearCharges();
@@ -15220,6 +15240,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private class RecoGiveTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			if (L2PcInstance.this == null)
@@ -15248,6 +15269,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private class RecoBonusTaskEnd implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			if (L2PcInstance.this == null)
