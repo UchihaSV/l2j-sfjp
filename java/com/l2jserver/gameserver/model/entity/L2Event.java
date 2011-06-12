@@ -24,9 +24,11 @@ import java.util.logging.Logger;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
+import com.l2jserver.Config;
 import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.datatables.SpawnTable;
+import com.l2jserver.gameserver.instancemanager.AntiFeedManager;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -247,7 +249,15 @@ public class L2Event
 			return;
 		}
 		
-		_registeredPlayers.add(player);
+		if (AntiFeedManager.getInstance().tryAddPlayer(AntiFeedManager.L2EVENT_ID, player, Config.L2JMOD_DUALBOX_CHECK_MAX_L2EVENT_PARTICIPANTS_PER_IP))
+			_registeredPlayers.add(player);
+		else
+		{
+			player.sendMessage("You have reached the maximum allowed participants per IP.");
+			return;
+		}
+		
+		
 	}
 	
 	/**
@@ -340,6 +350,10 @@ public class L2Event
 					eventState = EventState.STANDBY;
 					break;
 			}
+			
+			// Register the event at AntiFeedManager and clean it for just in case if the event is already registered.
+			AntiFeedManager.getInstance().registerEvent(AntiFeedManager.L2EVENT_ID);
+			AntiFeedManager.getInstance().clear(AntiFeedManager.TVT_ID);
 			
 			// Just in case
 			unspawnEventNpcs();
@@ -484,6 +498,7 @@ public class L2Event
 					}
 					
 					eventState = EventState.OFF;
+					AntiFeedManager.getInstance().clear(AntiFeedManager.TVT_ID);
 					unspawnEventNpcs(); // Just in case
 					//_npcs.clear();
 					_registeredPlayers.clear();
