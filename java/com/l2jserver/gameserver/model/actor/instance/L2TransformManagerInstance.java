@@ -204,7 +204,8 @@ public final class L2TransformManagerInstance extends L2MerchantInstance
 										_log.warning("Somehow " + player.getName() + " deleted a certification book!");
 									}
 								}
-								st.saveGlobalQuestVar(varName + String.valueOf(i + 1), "0");
+								st.saveGlobalQuestVar(qvarName, "0");	//[JOJO] FIX BUG
+							//	st.saveGlobalQuestVar(varName + String.valueOf(i + 1), "0");
 							}
 						}
 					}
