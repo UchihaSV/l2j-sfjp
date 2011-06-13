@@ -229,7 +229,7 @@ public class GameTimeController
 		public void run()
 		{
 if (com.l2jserver.Config.FIX_DAY_NIGHT_TIME) {{
-			h = (getGameTime() + 29) / 60 % 24; // Time in hour
+			h = (getGameTime() + 30) / 60 % 24; // Time in hour
 }} else {{
 			h = (getGameTime() / 60) % 24; // Time in hour
 }}
