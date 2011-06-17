@@ -223,11 +223,11 @@ public class GameTimeController
 	 */
 	class BroadcastSunState implements Runnable
 	{
-		int h;
-		boolean tempIsNight;
-		
 		public void run()
 		{
+			int h;
+			boolean tempIsNight;
+			
 if (com.l2jserver.Config.FIX_DAY_NIGHT_TIME) {{
 			h = (getGameTime() + 30) / 60 % 24; // Time in hour
 }} else {{
