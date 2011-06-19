@@ -14,6 +14,9 @@
  */
 package com.l2jserver.gameserver.communitybbs.Manager;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
@@ -131,15 +134,20 @@ public class RegionBBSManager extends BaseBBSManager
 			if (activeChar != null
 					&& (activeChar.isGM() || player.getObjectId() == activeChar.getObjectId() || Config.SHOW_LEVEL_COMMUNITYBOARD))
 			{
+				int level = player.getLevel();
+				long currentExp = player.getExp() - Experience.LEVEL[level];
 				long nextLevelExp = 0;
 				long nextLevelExpNeeded = 0;
-				if (player.getLevel() < (Experience.MAX_LEVEL - 1))
+				double perExp = 0f;
+				if (level + 1 < Experience.LEVEL.length)
 				{
-					nextLevelExp = Experience.LEVEL[player.getLevel() + 1];
-					nextLevelExpNeeded = nextLevelExp - player.getExp();
+					nextLevelExp = Experience.LEVEL[level + 1] - Experience.LEVEL[level];
+					nextLevelExpNeeded = nextLevelExp - currentExp;
+					perExp = (double)currentExp / nextLevelExp;
 				}
-				
-				StringUtil.append(htmlCode, "<tr><td>現在のレベル: ", String.valueOf(player.getLevel()), "</td></tr>" + "<tr><td>現在の経験値: ", String.valueOf(player.getExp()), "/", String.valueOf(nextLevelExp), "</td></tr>"
+				DecimalFormat dfExp = new DecimalFormat("0.00%");
+				dfExp.setRoundingMode(RoundingMode.DOWN);
+				StringUtil.append(htmlCode, "<tr><td>現在のレベル: ", String.valueOf(level), "</td></tr>" + "<tr><td>現在の経験値: ", String.valueOf(currentExp), "/", String.valueOf(nextLevelExp), " (", dfExp.format(new BigDecimal(perExp)), ")</td></tr>"
 						+ "<tr><td>次のLvUPに必要な経験値: ", String.valueOf(nextLevelExpNeeded), "</td></tr>"
 						+ "<tr><td><br></td></tr>");
 			}
