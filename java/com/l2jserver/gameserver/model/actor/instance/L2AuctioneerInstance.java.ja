@@ -1,5 +1,8 @@
 ﻿use utf8;
 
+## %AGIT_AUCTION_END%
+s!(?<=SimpleDateFormat\()"dd/MM/yyyy HH:mm"!"yyyy 年 MM 月 dd 日 H 時"!g;
+
 ## 残り時間
-s/\+ *" hours "/+" 時間 "/g;
-s/\+ *" minutes"/+" 分"/g;
+s/\+ *" hours "/+"時間"/g;
+s/\+ *" minutes"/+"分"/g;
