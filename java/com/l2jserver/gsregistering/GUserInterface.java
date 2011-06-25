@@ -221,6 +221,7 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 			msg += "\nCause: "+t.getLocalizedMessage();
 		}
 		JOptionPane.showMessageDialog(this.getFrame(), msg, title, JOptionPane.ERROR_MESSAGE);
+		t.printStackTrace();	//[JOJO]
 	}
 	
 	protected void refreshServers()

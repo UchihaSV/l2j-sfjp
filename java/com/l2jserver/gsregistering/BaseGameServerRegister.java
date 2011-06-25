@@ -461,6 +461,7 @@ public abstract class BaseGameServerRegister
 				msg += "\nCause: "+t.getLocalizedMessage();
 			}
 			System.out.println(title+": "+msg);
+			t.printStackTrace();	//[JOJO]
 		}
 	}
 	
