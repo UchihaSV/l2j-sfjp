@@ -327,7 +327,8 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 			_ca = null;
 		} else
 			writeS(_html);
-		writeD(_itemId);
+		if (_npcObjId != 0)
+			writeD(_itemId);
 	}
 	
 	/* (non-Javadoc)
