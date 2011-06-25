@@ -340,5 +340,6 @@ public class GameServerRegister extends BaseGameServerRegister
 			msg += "\nCause: "+t.getLocalizedMessage();
 		}
 		System.out.println(title+": "+msg);
+		t.printStackTrace();	//[JOJO]
 	}
 }
