@@ -215,7 +215,7 @@ public abstract class BaseGameServerRegister
 				"-c, --cmd\t\t\t\t"+bundle.getString("cmdOpt"),
 				"-f, --force\t\t\t\t"+bundle.getString("forceOpt"),
 				"-h, --help\t\t\t\t"+bundle.getString("helpOpt"),
-				"-l, --language\t\t\t\t"+bundle.getString("languageOpt"),
+				"-l, --language <locale>\t\t\t\t"+bundle.getString("languageOpt"),
 				"-r, --register <id> <hexid_dest_dir>\t"+bundle.getString("registerOpt1"),
 				"\t\t\t\t\t"+bundle.getString("registerOpt2"),
 				"\t\t\t\t\t"+bundle.getString("registerOpt3"),
