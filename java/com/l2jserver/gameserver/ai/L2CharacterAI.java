@@ -1242,8 +1242,6 @@ public class L2CharacterAI extends AbstractAI
 						debuffSkills.add(sk);
 						break;
 					case CANCEL:
-					case MAGE_BANE:
-					case WARRIOR_BANE:
 					case NEGATE:
 						cancelSkills.add(sk);
 						break;
