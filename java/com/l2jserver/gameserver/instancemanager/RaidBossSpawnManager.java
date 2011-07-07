@@ -14,10 +14,6 @@
  */
 package com.l2jserver.gameserver.instancemanager;
 
-/**
-@author godson
- **/
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,6 +40,9 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 import com.l2jserver.gameserver.util.Broadcast;
 import com.l2jserver.util.Rnd;
 
+/**
+ * @author godson
+ */
 public class RaidBossSpawnManager
 {
 	private static Logger _log = Logger.getLogger(RaidBossSpawnManager.class.getName());
