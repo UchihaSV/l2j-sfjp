@@ -39,7 +39,6 @@ import com.l2jserver.gameserver.templates.StatsSet;
 import com.l2jserver.util.L2FastList;
 
 /**
- *
  * @author DaRkRaGe
  * Revised by Emperorc
  */
@@ -133,7 +132,6 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			
 			PreparedStatement statement = con.prepareStatement("SELECT * from grandboss_data ORDER BY boss_id");
 			ResultSet rset = statement.executeQuery();
-			
 			while (rset.next())
 			{
 				//Read all info from DB, and store it for AI to read and decide what to do
@@ -160,7 +158,6 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 				
 				info = null;
 			}
-			
 			_log.info("GrandBossManager: Loaded " + _storedInfo.size() + " Instances");
 			
 			rset.close();
@@ -180,10 +177,9 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		}
 	}
 	
-	/*
+	/**
 	 * Zone Functions
 	 */
-	
 	public void initZones()
 	{
 		Connection con = null;
@@ -300,10 +296,6 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		return true;
 	}
 	
-	/*
-	 * The rest
-	 */
-	
 	public int getBossStatus(int bossId)
 	{
 		return _bossStatus.get(bossId);
@@ -316,10 +308,9 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		updateDb(bossId, true);
 	}
 	
-	/*
+	/**
 	 * Adds a L2GrandBossInstance to the list of bosses.
 	 */
-	
 	public void addBoss(L2GrandBossInstance boss) //Note: AI script.
 	{
 		if (boss != null)
@@ -376,7 +367,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			
 			for (Integer bossId : _storedInfo.keys())
 			{
-				L2GrandBossInstance boss = _bosses.get(bossId);
+				final L2GrandBossInstance boss = _bosses.get(bossId);
 				StatsSet info = _storedInfo.get(bossId);
 				if (boss == null && info == null)
 			//	if (boss == null || info == null)
@@ -384,8 +375,6 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 					statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA2);
 					statement.setInt(1, _bossStatus.get(bossId));
 					statement.setInt(2, bossId);
-					statement.executeUpdate();
-					statement.clearParameters();
 				}
 				else if (boss == null && info != null)
 				{
@@ -393,8 +382,6 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 					statement.setLong(1, info.getLong("respawn_time"));
 					statement.setInt(2, _bossStatus.get(bossId));
 					statement.setInt(3, bossId);
-					statement.executeUpdate();
-					statement.clearParameters();
 				}
 				else /*if (boss != null && info != null)*/
 				{
@@ -415,11 +402,11 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 					statement.setDouble(7, mp);
 					statement.setInt(8, _bossStatus.get(bossId));
 					statement.setInt(9, bossId);
-					statement.executeUpdate();
-					statement.clearParameters();
 				}
+				statement.executeUpdate();
+				statement.clearParameters();
+				statement.close();
 			}
-			statement.close();
 		}
 		catch (SQLException e)
 		{
