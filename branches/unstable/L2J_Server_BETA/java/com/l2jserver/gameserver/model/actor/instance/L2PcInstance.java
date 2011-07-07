@@ -9988,6 +9988,8 @@ public final class L2PcInstance extends L2Playable
 		_lastY = getY();
 		_lastZ = getZ();
 		
+		stopEffects(L2EffectType.HIDE);
+		
 		_observerMode = true;
 		setTarget(null);
 		setIsParalyzed(true);
@@ -10012,6 +10014,8 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (getPet() != null)
 			getPet().unSummon(this);
+		
+		stopEffects(L2EffectType.HIDE);
 		
 		if (!getCubics().isEmpty())
 		{
