@@ -126,7 +126,6 @@ public final class CharTemplateTable
 				_templates[ct.classId.getId() | 0x100] = ct;
 				// [L2J_JP EDIT END - TSL]
 			}
-			
 			rset.close();
 			statement.close();
 			
@@ -185,6 +184,8 @@ public final class CharTemplateTable
 					_log.warning("char_creation_items: No data for itemId: " + itemId + " defined for classId " + classId);
 				}
 			}
+			rset.close();
+			statement.close();
 		}
 		catch (SQLException e)
 		{

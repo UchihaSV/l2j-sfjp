@@ -81,15 +81,13 @@ public class ClanHallManager
 			String Name, Desc, Location/*[JOJO]*/,locName;
 			long paidUntil = 0;
 			boolean paid = false;
-			PreparedStatement statement;
-			ResultSet rs;
 			con = L2DatabaseFactory.getInstance().getConnection();
 			//[JOJO] add 'locName'
-			statement = con.prepareStatement("SELECT clanhall.*,castlename_ja.locName FROM clanhall"
+			PreparedStatement statement = con.prepareStatement("SELECT clanhall.*,castlename_ja.locName FROM clanhall"
 					+ " LEFT JOIN castlename_ja ON clanhall.id=castlename_ja.id"
 					+ " ORDER BY clanhall.id");
-		//	statement = con.prepareStatement("SELECT * FROM clanhall ORDER BY id");
-			rs = statement.executeQuery();
+		//	PreparedStatement statement = con.prepareStatement("SELECT * FROM clanhall ORDER BY id");
+			ResultSet rs = statement.executeQuery();
 			while (rs.next())
 			{
 				id = rs.getInt("id");
@@ -125,6 +123,7 @@ public class ClanHallManager
 					AuctionManager.getInstance().initNPC(id);
 			}
 			
+			rs.close();
 			statement.close();
 			_log.info("Loaded: " + getClanHalls().size() + " clan halls");
 			_log.info("Loaded: " + getFreeClanHalls().size() + " free clan halls");
