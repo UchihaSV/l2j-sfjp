@@ -348,7 +348,8 @@ public class L2VillageMasterInstance extends L2NpcInstance
 							SubClass subClass = subList.next();
 							
 							StringUtil.append(content3,
-									"Sub-class ",
+									"サブ クラス ",
+								//	"Sub-class ",
 									String.valueOf(classIndex++),
 									"<br>",
 									"<a action=\"bypass -h npc_%objectId%_Subclass 6 ",
