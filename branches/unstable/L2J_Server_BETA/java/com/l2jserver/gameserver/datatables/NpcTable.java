@@ -713,6 +713,7 @@ public class NpcTable
 				minions.addAll(old.getMinionData());
 			
 			// reload the NPC base data
+			StringIntern.begin();
 			con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement st = con.prepareStatement("SELECT "
 					+ L2DatabaseFactory.getInstance().safetyString(new String[] { "id", "idTemplate", "name", "serverSideName", "title",
@@ -722,9 +723,7 @@ public class NpcTable
 							"dropHerbGroup" })
 							+ " FROM npc WHERE id=?");
 			st.setInt(1, id);
-			StringIntern.begin();
 			ResultSet rs = st.executeQuery();
-			StringIntern.end();
 			fillNpcTable(rs, false);
 			if (Config.CUSTOM_NPC_TABLE) // reload certain NPCs
 			{
@@ -761,6 +760,7 @@ public class NpcTable
 		finally
 		{
 			L2DatabaseFactory.close(con);
+			StringIntern.end();
 		}
 	}
 	
