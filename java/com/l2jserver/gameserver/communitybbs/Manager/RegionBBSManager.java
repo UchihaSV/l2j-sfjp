@@ -136,15 +136,9 @@ public class RegionBBSManager extends BaseBBSManager
 			{
 				int level = player.getLevel();
 				long currentExp = player.getExp() - ExperienceTable.getInstance().getExpForLevel(level);
-				long nextLevelExp = 0;
-				long nextLevelExpNeeded = 0;
-				double perExp = 0f;
-				if (level <= ExperienceTable.getInstance().getMaxLevel())
-				{
-					nextLevelExp = ExperienceTable.getInstance().getExpForLevel(level + 1) - ExperienceTable.getInstance().getExpForLevel(level);
-					nextLevelExpNeeded = nextLevelExp - currentExp;
-					perExp = (double)currentExp / nextLevelExp;
-				}
+				long nextLevelExp = ExperienceTable.getInstance().getExpForLevel(level + 1) - ExperienceTable.getInstance().getExpForLevel(level);
+				long nextLevelExpNeeded = nextLevelExp - currentExp;
+				double perExp = (double)currentExp / nextLevelExp;
 				DecimalFormat dfExp = new DecimalFormat("0.00%");
 				dfExp.setRoundingMode(RoundingMode.DOWN);
 				StringUtil.append(htmlCode, "<tr><td>åªç›ÇÃÉåÉxÉã: ", String.valueOf(level), "</td></tr>" + "<tr><td>åªç›ÇÃåoå±íl: ", String.valueOf(currentExp), "/", String.valueOf(nextLevelExp), " (", dfExp.format(new BigDecimal(perExp)), ")</td></tr>"
