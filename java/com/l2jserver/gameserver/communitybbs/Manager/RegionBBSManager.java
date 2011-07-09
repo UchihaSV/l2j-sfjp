@@ -126,7 +126,7 @@ public class RegionBBSManager extends BaseBBSManager
 			else if (player.getLevel() >= 40)
 				levelApprox = "高い";
 			else if (player.getLevel() >= 20)
-				levelApprox = "普通";
+				levelApprox = "中くらい";
 			
 			StringUtil.append(htmlCode, "<table border=0><tr><td>", player.getName(), " (", sex, " ", player.getTemplate().className, "):</td></tr>"
 					+ "<tr><td>相対レベル: ", levelApprox, "</td></tr>" + "<tr><td><br></td></tr>");
@@ -134,16 +134,21 @@ public class RegionBBSManager extends BaseBBSManager
 			if (activeChar != null
 					&& (activeChar.isGM() || player.getObjectId() == activeChar.getObjectId() || Config.SHOW_LEVEL_COMMUNITYBOARD))
 			{
+				int level = player.getLevel();
+				long currentExp = player.getExp() - ExperienceTable.getInstance().getExpForLevel(level);
 				long nextLevelExp = 0;
 				long nextLevelExpNeeded = 0;
-				if (player.getLevel() < (ExperienceTable.getInstance().getMaxLevel() - 1))
+				double perExp = 0f;
+				if (level <= ExperienceTable.getInstance().getMaxLevel())
 				{
-					nextLevelExp = ExperienceTable.getInstance().getExpForLevel(player.getLevel() + 1);
-					nextLevelExpNeeded = nextLevelExp - player.getExp();
+					nextLevelExp = ExperienceTable.getInstance().getExpForLevel(level + 1) - ExperienceTable.getInstance().getExpForLevel(level);
+					nextLevelExpNeeded = nextLevelExp - currentExp;
+					perExp = (double)currentExp / nextLevelExp;
 				}
-				
-				StringUtil.append(htmlCode, "<tr><td>Level: ", String.valueOf(player.getLevel()), "</td></tr>" + "<tr><td>Experience: ", String.valueOf(player.getExp()), "/", String.valueOf(nextLevelExp), "</td></tr>"
-						+ "<tr><td>Experience needed for level up: ", String.valueOf(nextLevelExpNeeded), "</td></tr>"
+				DecimalFormat dfExp = new DecimalFormat("0.00%");
+				dfExp.setRoundingMode(RoundingMode.DOWN);
+				StringUtil.append(htmlCode, "<tr><td>現在のレベル: ", String.valueOf(level), "</td></tr>" + "<tr><td>現在の経験値: ", String.valueOf(currentExp), "/", String.valueOf(nextLevelExp), " (", dfExp.format(new BigDecimal(perExp)), ")</td></tr>"
+						+ "<tr><td>次のLvUPに必要な経験値: ", String.valueOf(nextLevelExpNeeded), "</td></tr>"
 						+ "<tr><td><br></td></tr>");
 			}
 			

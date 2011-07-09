@@ -11304,8 +11304,8 @@ public final class L2PcInstance extends L2Playable
 	//		return;
 		//２段とびレベルアップ禁止
 		int experienceMaxLevel;
-		if ((experienceMaxLevel = getLevel() + Config.LIMIT_LEVEL_STEPUP) <= Experience.MAX_LEVEL)
-			addToExp = Math.min(addToExp, Experience.LEVEL[experienceMaxLevel] - Experience.LEVEL[getLevel()]);
+		if ((experienceMaxLevel = getLevel() + Config.LIMIT_LEVEL_STEPUP) <= ExperienceTable.getInstance().getMaxLevel())
+			addToExp = Math.min(addToExp, ExperienceTable.getInstance().getExpForLevel(experienceMaxLevel) - ExperienceTable.getInstance().getExpForLevel(getLevel()));
 		//-------------------------------------------------------
 		getStat().addExpAndSp(addToExp, addToSp, useVitality);
 	}
