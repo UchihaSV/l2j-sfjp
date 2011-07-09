@@ -16,8 +16,6 @@ package com.l2jserver.gameserver.datatables;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,7 +37,7 @@ public class ExperienceTable
 	private byte MAX_LEVEL;
 	private byte MAX_PET_LEVEL;
 	
-	private Map<Integer, Long> _expTable;
+	private long[] _expTable;	//[JOJO]
 	
 	public static ExperienceTable getInstance()
 	{
@@ -53,7 +51,7 @@ public class ExperienceTable
 	
 	private void loadTable()
 	{
-		File xml = new File(Config.DATAPACK_ROOT, "data/experience.xml");
+		File xml = new File(Config.DATAPACK_ROOT, "data/stats/experience.xml");
 		Document doc = null;
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setValidating(false);
@@ -79,7 +77,8 @@ public class ExperienceTable
 			MAX_LEVEL = (byte)(Byte.parseByte(tableAttr.getNamedItem("maxLevel").getNodeValue())+1);
 			MAX_PET_LEVEL = (byte)(Byte.parseByte(tableAttr.getNamedItem("maxPetLevel").getNodeValue())+1);
 
-			_expTable = new HashMap<Integer, Long>(MAX_LEVEL+1);
+			_expTable = new long[Math.max(MAX_LEVEL, MAX_PET_LEVEL)+1];	//[JOJO]
+			int count = 0;												//[JOJO]
 			
 			for (Node experience = table.getFirstChild(); experience != null; experience = experience.getNextSibling())
 			{
@@ -89,11 +88,12 @@ public class ExperienceTable
 					int level = Integer.parseInt(attrs.getNamedItem("level").getNodeValue());
 					long exp = Long.parseLong(attrs.getNamedItem("tolevel").getNodeValue());
 					
-					_expTable.put(level, exp);
+					_expTable[level] = exp;	//[JOJO]
+					++count;				//[JOJO]
 				}
 			}
 			
-			_log.info("ExperienceTable: Loaded "+_expTable.size()+" levels");
+			_log.info("ExperienceTable: Loaded "+count+" levels");	//[JOJO]
 			_log.info("ExperienceTable: Max Player Level is: "+(MAX_LEVEL-1));
 			_log.info("ExperienceTable: Max Pet Level is: "+(MAX_PET_LEVEL-1));
 		}
@@ -103,7 +103,7 @@ public class ExperienceTable
 	
 	public long getExpForLevel(int level)
 	{
-		return _expTable.get(level);
+		return _expTable[level];	//[JOJO]
 	}
 	
 	public byte getMaxLevel()
