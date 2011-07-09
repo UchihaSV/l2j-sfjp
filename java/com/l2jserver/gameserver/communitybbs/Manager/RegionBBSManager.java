@@ -31,10 +31,10 @@ import javolution.util.FastList;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameServer;
 import com.l2jserver.gameserver.GameTimeController;
+import com.l2jserver.gameserver.datatables.ExperienceTable;
 import com.l2jserver.gameserver.model.BlockList;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.base.Experience;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
@@ -134,21 +134,16 @@ public class RegionBBSManager extends BaseBBSManager
 			if (activeChar != null
 					&& (activeChar.isGM() || player.getObjectId() == activeChar.getObjectId() || Config.SHOW_LEVEL_COMMUNITYBOARD))
 			{
-				int level = player.getLevel();
-				long currentExp = player.getExp() - Experience.LEVEL[level];
 				long nextLevelExp = 0;
 				long nextLevelExpNeeded = 0;
-				double perExp = 0f;
-				if (level + 1 < Experience.LEVEL.length)
+				if (player.getLevel() < (ExperienceTable.getInstance().getMaxLevel() - 1))
 				{
-					nextLevelExp = Experience.LEVEL[level + 1] - Experience.LEVEL[level];
-					nextLevelExpNeeded = nextLevelExp - currentExp;
-					perExp = (double)currentExp / nextLevelExp;
+					nextLevelExp = ExperienceTable.getInstance().getExpForLevel(player.getLevel() + 1);
+					nextLevelExpNeeded = nextLevelExp - player.getExp();
 				}
-				DecimalFormat dfExp = new DecimalFormat("0.00%");
-				dfExp.setRoundingMode(RoundingMode.DOWN);
-				StringUtil.append(htmlCode, "<tr><td>現在のレベル: ", String.valueOf(level), "</td></tr>" + "<tr><td>現在の経験値: ", String.valueOf(currentExp), "/", String.valueOf(nextLevelExp), " (", dfExp.format(new BigDecimal(perExp)), ")</td></tr>"
-						+ "<tr><td>次のLvUPに必要な経験値: ", String.valueOf(nextLevelExpNeeded), "</td></tr>"
+				
+				StringUtil.append(htmlCode, "<tr><td>Level: ", String.valueOf(player.getLevel()), "</td></tr>" + "<tr><td>Experience: ", String.valueOf(player.getExp()), "/", String.valueOf(nextLevelExp), "</td></tr>"
+						+ "<tr><td>Experience needed for level up: ", String.valueOf(nextLevelExpNeeded), "</td></tr>"
 						+ "<tr><td><br></td></tr>");
 			}
 			
