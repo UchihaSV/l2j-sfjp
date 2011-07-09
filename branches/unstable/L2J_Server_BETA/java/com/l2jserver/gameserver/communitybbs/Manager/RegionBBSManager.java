@@ -129,7 +129,7 @@ public class RegionBBSManager extends BaseBBSManager
 				levelApprox = "’†‚­‚ç‚¢";
 			
 			StringUtil.append(htmlCode, "<table border=0><tr><td>", player.getName(), " (", sex, " ", player.getTemplate().className, "):</td></tr>"
-					+ "<tr><td>‘Š‘ÎƒŒƒxƒ‹: ", levelApprox, "</td></tr>" + "<tr><td><br></td></tr>");
+					+ "<tr><td>ƒŒƒxƒ‹: ", levelApprox, "</td></tr>" + "<tr><td><br></td></tr>");
 			
 			if (activeChar != null
 					&& (activeChar.isGM() || player.getObjectId() == activeChar.getObjectId() || Config.SHOW_LEVEL_COMMUNITYBOARD))
