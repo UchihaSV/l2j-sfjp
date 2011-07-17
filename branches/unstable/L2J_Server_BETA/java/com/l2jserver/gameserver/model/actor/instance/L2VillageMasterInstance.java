@@ -64,6 +64,7 @@ public class L2VillageMasterInstance extends L2NpcInstance
   	private static final boolean ALLOW_BASECLASS_EVERYWHERE = false;	//[JOJO]
 
 	/**
+	 * @param objectId
 	 * @param template
 	 */
 	public L2VillageMasterInstance(int objectId, L2NpcTemplate template)
@@ -213,20 +214,37 @@ public class L2VillageMasterInstance extends L2NpcInstance
 				player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SUBCLASS_NO_CHANGE_OR_CREATE_WHILE_SKILL_IN_USE));
 				return;
 			}
-			
-			NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
-			
+			final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+			// Subclasses may not be changed while a transformated state.
 			if (player.getTransformation() != null)
 			{
 				html.setFile(player.getHtmlPrefix(), "data/html/villagemaster/SubClass_NoTransformed.htm");
 				player.sendPacket(html);
 				return;
 			}
+			// Subclasses may not be changed while a summon is active.
+			if (player.getPet() != null)
+			{
+				html.setFile(player.getHtmlPrefix(), "data/html/villagemaster/SubClass_NoSummon.htm");
+				player.sendPacket(html);
+				return;
+			}
+			// Subclasses may not be changed while you have exceeded your inventory limit.
+			if (!player.isInventoryUnder80(true))
+			{
+				player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NOT_SUBCLASS_WHILE_INVENTORY_FULL));
+				return;
+			}
+			// Subclasses may not be changed while a you are over your weight limit.
+			if (player.getWeightPenalty() >= 2)
+			{
+				player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NOT_SUBCLASS_WHILE_OVERWEIGHT));
+				return;
+			}
 			
 			int cmdChoice = 0;
 			int paramOne = 0;
 			int paramTwo = 0;
-			
 			try
 			{
 				cmdChoice = Integer.parseInt(command.substring(9, 10).trim());
@@ -235,21 +253,26 @@ public class L2VillageMasterInstance extends L2NpcInstance
 				if (endIndex == -1)
 					endIndex = command.length();
 				
-				paramOne = Integer.parseInt(command.substring(11, endIndex).trim());
-				if (command.length() > endIndex)
-					paramTwo = Integer.parseInt(command.substring(endIndex).trim());
+				if (command.length() > 11)
+				{
+					paramOne = Integer.parseInt(command.substring(11, endIndex).trim());
+					if (command.length() > endIndex)
+						paramTwo = Integer.parseInt(command.substring(endIndex).trim());
+				}
 			}
 			catch (Exception NumberFormatException)
 			{
+				_log.warning(L2VillageMasterInstance.class.getName() + ": Wrong numeric values for command " + command);
 			}
 			
+			Set<PlayerClass> subsAvailable = null;
 			switch (cmdChoice)
 			{
 				case 0: // Subclass change menu
 					html.setFile(player.getHtmlPrefix(), getSubClassMenu(player.getRace()));
 					break;
 				case 1: // Add Subclass - Initial
-					// Avoid giving player an option to add a new sub class, if they have three already.
+					// Avoid giving player an option to add a new sub class, if they have max sub-classes already.
 					if (player.getTotalSubClasses() >= Config.MAX_SUBCLASS)
 					{
 						html.setFile(player.getHtmlPrefix(), getSubClassFail());
@@ -262,12 +285,11 @@ public class L2VillageMasterInstance extends L2NpcInstance
 //						return;
 //					}
 					
-					html.setFile(player.getHtmlPrefix(), "data/html/villagemaster/SubClass_Add.htm");
-					final StringBuilder content1 = StringUtil.startAppend(200);
-					Set<PlayerClass> subsAvailable = getAvailableSubClasses(player);
-					
-					if (subsAvailable != null && !subsAvailable.isEmpty())
+					subsAvailable = getAvailableSubClasses(player);
+					if ((subsAvailable != null) && !subsAvailable.isEmpty())
 					{
+						html.setFile(player.getHtmlPrefix(), "data/html/villagemaster/SubClass_Add.htm");
+						final StringBuilder content1 = StringUtil.startAppend(200);
 						for (PlayerClass subClass : subsAvailable)
 						{
 							StringUtil.append(content1,
@@ -279,15 +301,28 @@ public class L2VillageMasterInstance extends L2NpcInstance
 									formatClassForDisplay(subClass),
 							"</a><br>");
 						}
+						html.replace("%list%", content1.toString());
 					}
 					else
 					{
-						// TODO: Retail message
-						player.sendMessage("取得可能なサブ クラスがありません。");
-					//	player.sendMessage("There are no sub classes available at this time.");
+						if ((player.getRace() == Race.Elf) || (player.getRace() == Race.DarkElf))
+						{
+							html.setFile(player.getHtmlPrefix(), "data/html/villagemaster/SubClass_Fail_Elves.htm");
+							player.sendPacket(html);
+						}
+						else if (player.getRace() == Race.Kamael)
+						{
+							html.setFile(player.getHtmlPrefix(), "data/html/villagemaster/SubClass_Fail_Kamael.htm");
+							player.sendPacket(html);
+						}
+						else
+						{
+							// TODO: Retail message
+							player.sendMessage("取得可能なサブ クラスがありません。");
+						//	player.sendMessage("There are no sub classes available at this time.");
+						}
 						return;
 					}
-					html.replace("%list%", content1.toString());
 					break;
 				case 2: // Change Class - Initial
 					if (player.getSubClasses().isEmpty())
@@ -295,7 +330,6 @@ public class L2VillageMasterInstance extends L2NpcInstance
 					else
 					{
 						final StringBuilder content2 = StringUtil.startAppend(200);
-						
 						//[JOJO]
 						if ((ALLOW_BASECLASS_EVERYWHERE || checkVillageMaster(player.getBaseClass()))
 								&& player.getActiveClass() != player.getBaseClass())
@@ -381,14 +415,13 @@ public class L2VillageMasterInstance extends L2NpcInstance
 					}
 					break;
 				case 4: // Add Subclass - Action (Subclass 4 x[x])
-					/*
+					/**
 					 * If the character is less than level 75 on any of their previously chosen
 					 * classes then disallow them to change to their most recently added sub-class choice.
 					 */
-					
 					if (!player.getFloodProtectors().getSubclass().tryPerformAction("add subclass"))
 					{
-						_log.warning("Player "+player.getName()+" has performed a subclass change too fast");
+						_log.warning(L2VillageMasterInstance.class.getName() + ": Player "+player.getName()+" has performed a subclass change too fast");
 						return;
 					}
 					
@@ -417,7 +450,7 @@ public class L2VillageMasterInstance extends L2NpcInstance
 						}
 					}
 					
-					/*
+					/**
 					 * If quest checking is enabled, verify if the character has completed the Mimir's Elixir (Path to Subclass)
 					 * and Fate's Whisper (A Grade Weapon) quests by checking for instances of their unique reward items.
 					 *
@@ -441,16 +474,15 @@ public class L2VillageMasterInstance extends L2NpcInstance
 						html.setFile(player.getHtmlPrefix(), getSubClassFail());
 					break;
 				case 5: // Change Class - Action
-					/*
+					/**
 					 * If the character is less than level 75 on any of their previously chosen
 					 * classes then disallow them to change to their most recently added sub-class choice.
 					 *
 					 * Note: paramOne = classIndex
 					 */
-					
 					if (!player.getFloodProtectors().getSubclass().tryPerformAction("change class"))
 					{
-						_log.warning("Player "+player.getName()+" has performed a subclass change too fast");
+						_log.warning(L2VillageMasterInstance.class.getName() + ": Player "+player.getName()+" has performed a subclass change too fast");
 						return;
 					}
 					
@@ -479,7 +511,6 @@ public class L2VillageMasterInstance extends L2NpcInstance
 					}
 					
 					player.setActiveClass(paramOne);
-					
 					player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SUBCLASS_TRANSFER_COMPLETED)); // Transfer completed.
 					return;
 				case 6: // Change/Cancel Subclass - Choice
@@ -488,7 +519,6 @@ public class L2VillageMasterInstance extends L2NpcInstance
 						return;
 					
 					subsAvailable = getAvailableSubClasses(player);
-					
 					// another validity check
 					if (subsAvailable == null || subsAvailable.isEmpty())
 					{
@@ -499,7 +529,6 @@ public class L2VillageMasterInstance extends L2NpcInstance
 					}
 					
 					final StringBuilder content6 = StringUtil.startAppend(200);
-					
 					for (PlayerClass subClass : subsAvailable)
 					{
 						StringUtil.append(content6,
@@ -530,14 +559,13 @@ public class L2VillageMasterInstance extends L2NpcInstance
 					html.replace("%list%", content6.toString());
 					break;
 				case 7: // Change Subclass - Action
-					/*
+					/**
 					 * Warning: the information about this subclass will be removed from the
 					 * subclass list even if false!
 					 */
-					
 					if (!player.getFloodProtectors().getSubclass().tryPerformAction("change class"))
 					{
-						_log.warning("Player "+player.getName()+" has performed a subclass change too fast");
+						_log.warning(L2VillageMasterInstance.class.getName() + ": Player "+player.getName()+" has performed a subclass change too fast");
 						return;
 					}
 					
@@ -558,7 +586,7 @@ public class L2VillageMasterInstance extends L2NpcInstance
 					}
 					else
 					{
-						/*
+						/**
 						 * This isn't good! modifySubClass() removed subclass from memory
 						 * we must update _classIndex! Else IndexOutOfBoundsException can turn
 						 * up some place down the line along with other seemingly unrelated
@@ -572,7 +600,6 @@ public class L2VillageMasterInstance extends L2NpcInstance
 					}
 					break;
 			}
-			
 			html.replace("%objectId%", getObjectId());
 			player.sendPacket(html);
 		}
@@ -584,8 +611,7 @@ public class L2VillageMasterInstance extends L2NpcInstance
 	
 	protected String getSubClassMenu(Race pRace)
 	{
-		if (Config.ALT_GAME_SUBCLASS_EVERYWHERE
-				|| pRace != Race.Kamael)
+		if (Config.ALT_GAME_SUBCLASS_EVERYWHERE || (pRace != Race.Kamael))
 			return "data/html/villagemaster/SubClass.htm";
 		
 		return "data/html/villagemaster/SubClass_NoOther.htm";
@@ -689,7 +715,7 @@ public class L2VillageMasterInstance extends L2NpcInstance
 		return availSubs;
 	}
 	
-	/*
+	/**
 	 * Check new subclass classId for validity
 	 * (villagemaster race/type, is not contains in previous subclasses,
 	 * is contains in allowed subclasses)
@@ -735,7 +761,6 @@ public class L2VillageMasterInstance extends L2NpcInstance
 				break;
 			}
 		}
-		
 		return found;
 	}
 	
@@ -1121,7 +1146,7 @@ public class L2VillageMasterInstance extends L2NpcInstance
 			asl.addSkill(s.getSkillId(), s.getSkillLevel(), s.getSkillLevel(), s.getLevelUpSp(), s.getSocialClass());
 			counts++;
 		}
-		//TODO: Missing some system message?
+		
 		if (counts == 0)
 		{
 			if (player.getClan().getLevel() < 8)
