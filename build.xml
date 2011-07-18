@@ -78,7 +78,7 @@
 	</target>
 
 	<target name="jar" depends="compile" description="Create the jar file">
-		<jar destfile="${build}/l2jserver.jar">
+		<jar destfile="${build.dist.game}/l2jserver.jar">
 			<fileset dir="${build.classes}">
 				<exclude name="**/dbinstaller/**" />
 				<exclude name="**/loginserver/**" />
@@ -94,7 +94,7 @@
 				<attribute name="Implementation-URL" value="http://www.l2jserver.com/" />
 			</manifest>
 		</jar>
-		<jar destfile="${build}/l2jlogin.jar">
+		<jar destfile="${build.dist.login}/l2jlogin.jar">
 			<fileset dir="${build.classes}">
 				<exclude name="**/dbinstaller/**" />
 				<exclude name="**/gameserver/**" />
@@ -109,7 +109,7 @@
 			</manifest>
 		</jar>
 		<!-- Tools -->
-		<jar destfile="${build}/dbinst_gs.jar">
+		<jar destfile="${build.dist.tools}/dbinst_gs.jar">
 			<fileset dir="${build.classes}">
 				<include name="**/dbinstaller/**" />
 				<include name="**/images/**" />
@@ -126,7 +126,7 @@
 				<attribute name="Implementation-URL" value="http://www.l2jserver.com/" />
 			</manifest>
 		</jar>
-		<jar destfile="${build}/dbinst_ls.jar">
+		<jar destfile="${build.dist.tools}/dbinst_ls.jar">
 			<fileset dir="${build.classes}">
 				<include name="**/dbinstaller/**" />
 				<include name="**/images/**" />
@@ -143,7 +143,7 @@
 				<attribute name="Implementation-URL" value="http://www.l2jserver.com/" />
 			</manifest>
 		</jar>
-		<jar destfile="${build}/dbinst_cs.jar">
+		<jar destfile="${build.dist.tools}/dbinst_cs.jar">
 			<fileset dir="${build.classes}">
 				<include name="**/dbinstaller/**" />
 				<include name="**/images/**" />
@@ -160,21 +160,6 @@
 				<attribute name="Implementation-URL" value="http://www.l2jserver.com/" />
 			</manifest>
 		</jar>
-		<copy todir="${build.dist.login}" preservelastmodified="true">
-			<fileset dir="${build}">
-				<include name="l2jlogin.jar" />
-			</fileset>
-		</copy>
-		<copy todir="${build.dist.game}" preservelastmodified="true">
-			<fileset dir="${build}">
-				<include name="l2jserver.jar" />
-			</fileset>
-		</copy>
-		<copy todir="${build.dist.tools}" preservelastmodified="true">
-			<fileset dir="${build}">
-				<include name="dbinst_*.jar" />
-			</fileset>
-		</copy>
 	</target>
 
 	<target name="jarsrc" depends="jar">
