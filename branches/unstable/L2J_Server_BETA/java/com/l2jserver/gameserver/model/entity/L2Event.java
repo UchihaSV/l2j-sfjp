@@ -38,7 +38,7 @@ import com.l2jserver.gameserver.network.serverpackets.MagicSkillUse;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
-import com.l2jserver.util.PlayerEventStatus;
+import com.l2jserver.gameserver.util.PlayerEventStatus;
 import com.l2jserver.util.Util;
 import com.l2jserver.util.ValueSortMap;
 
