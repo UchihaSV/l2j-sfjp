@@ -27,7 +27,6 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.GetOnVehicle;
 import com.l2jserver.gameserver.network.serverpackets.ValidateLocation;
 
-
 /**
  * This class ...
  *
@@ -35,8 +34,8 @@ import com.l2jserver.gameserver.network.serverpackets.ValidateLocation;
  */
 public class ValidatePosition extends L2GameClientPacket
 {
+	private static final String _C__59_VALIDATEPOSITION = "[C] 59 ValidatePosition";
 	private static Logger _log = Logger.getLogger(ValidatePosition.class.getName());
-	private static final String _C__48_VALIDATEPOSITION = "[C] 48 ValidatePosition";
 	
 	/** urgent messages, execute immediately */
 	public TaskPriority getPriority() { return TaskPriority.PR_HIGH; }
@@ -215,12 +214,9 @@ public class ValidatePosition extends L2GameClientPacket
 		// [L2J_JP ADD END]
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
-	 */
 	@Override
 	public String getType()
 	{
-		return _C__48_VALIDATEPOSITION;
+		return _C__59_VALIDATEPOSITION;
 	}
 }
