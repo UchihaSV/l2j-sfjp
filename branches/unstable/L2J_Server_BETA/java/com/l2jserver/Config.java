@@ -571,9 +571,9 @@ public final class Config
 	public static int ALT_MANOR_SAVE_PERIOD_RATE;
 	public static long ALT_LOTTERY_PRIZE;
 	public static long ALT_LOTTERY_TICKET_PRICE;
-	public static double ALT_LOTTERY_5_NUMBER_RATE;
-	public static double ALT_LOTTERY_4_NUMBER_RATE;
-	public static double ALT_LOTTERY_3_NUMBER_RATE;
+	public static float ALT_LOTTERY_5_NUMBER_RATE;
+	public static float ALT_LOTTERY_4_NUMBER_RATE;
+	public static float ALT_LOTTERY_3_NUMBER_RATE;
 	public static long ALT_LOTTERY_2_AND_1_NUMBER_PRIZE;
 	public static boolean ALT_ITEM_AUCTION_ENABLED;
 	public static int ALT_ITEM_AUCTION_EXPIRED_AFTER;
@@ -2058,9 +2058,9 @@ public final class Config
 					ALT_MANOR_SAVE_PERIOD_RATE = Integer.parseInt(General.getProperty("AltManorSavePeriodRate","2"));
 					ALT_LOTTERY_PRIZE = Long.parseLong(General.getProperty("AltLotteryPrize","50000"));
 					ALT_LOTTERY_TICKET_PRICE = Long.parseLong(General.getProperty("AltLotteryTicketPrice","2000"));
-					ALT_LOTTERY_5_NUMBER_RATE = Double.parseDouble(General.getProperty("AltLottery5NumberRate","0.6"));
-					ALT_LOTTERY_4_NUMBER_RATE = Double.parseDouble(General.getProperty("AltLottery4NumberRate","0.2"));
-					ALT_LOTTERY_3_NUMBER_RATE = Double.parseDouble(General.getProperty("AltLottery3NumberRate","0.2"));
+					ALT_LOTTERY_5_NUMBER_RATE = Float.parseFloat(General.getProperty("AltLottery5NumberRate","0.6"));
+					ALT_LOTTERY_4_NUMBER_RATE = Float.parseFloat(General.getProperty("AltLottery4NumberRate","0.2"));
+					ALT_LOTTERY_3_NUMBER_RATE = Float.parseFloat(General.getProperty("AltLottery3NumberRate","0.2"));
 					ALT_LOTTERY_2_AND_1_NUMBER_PRIZE = Long.parseLong(General.getProperty("AltLottery2and1NumberPrize","200"));
 					ALT_ITEM_AUCTION_ENABLED = Boolean.valueOf(General.getProperty("AltItemAuctionEnabled", "False"));
 					ALT_ITEM_AUCTION_EXPIRED_AFTER = Integer.valueOf(General.getProperty("AltItemAuctionExpiredAfter", "14"));
