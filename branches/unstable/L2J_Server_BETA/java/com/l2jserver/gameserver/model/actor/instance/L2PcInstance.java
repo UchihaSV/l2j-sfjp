@@ -4655,7 +4655,6 @@ public final class L2PcInstance extends L2Playable
 			_log.fine("pickup pos: "+ target.getX() + " "+target.getY()+ " "+target.getZ() );
 		sendPacket(sm);
 		
-		SystemMessage smsg = null;
 		synchronized (target)
 		{
 			// Check if the target to pick up is visible
@@ -4669,7 +4668,7 @@ public final class L2PcInstance extends L2Playable
 			if (!target.getDropProtection().tryPickUp(this))
 			{
 				sendPacket(ActionFailed.STATIC_PACKET);
-				smsg = SystemMessage.getSystemMessage(SystemMessageId.FAILED_TO_PICKUP_S1);
+				SystemMessage smsg = SystemMessage.getSystemMessage(SystemMessageId.FAILED_TO_PICKUP_S1);
 				smsg.addItemName(target);
 				sendPacket(smsg);
 				return;
@@ -4685,7 +4684,7 @@ public final class L2PcInstance extends L2Playable
 			if (isInvul() && !isGM())
 			{
 				sendPacket(ActionFailed.STATIC_PACKET);
-				smsg = SystemMessage.getSystemMessage(SystemMessageId.FAILED_TO_PICKUP_S1);
+				SystemMessage smsg = SystemMessage.getSystemMessage(SystemMessageId.FAILED_TO_PICKUP_S1);
 				smsg.addItemName(target);
 				sendPacket(smsg);
 				return;
@@ -4693,6 +4692,7 @@ public final class L2PcInstance extends L2Playable
 			
 			if (target.getOwnerId() != 0 && target.getOwnerId() != getObjectId() && !isInLooterParty(target.getOwnerId()))
 			{
+				final SystemMessage smsg;
 				if (target.getItemId() == 57)
 				{
 					smsg = SystemMessage.getSystemMessage(SystemMessageId.FAILED_TO_PICKUP_S1_ADENA);
@@ -4757,7 +4757,7 @@ public final class L2PcInstance extends L2Playable
 			{
 				if (target.getEnchantLevel() > 0)
 				{
-					smsg = SystemMessage.getSystemMessage(SystemMessageId.ANNOUNCEMENT_C1_PICKED_UP_S2_S3);
+					SystemMessage smsg = SystemMessage.getSystemMessage(SystemMessageId.ANNOUNCEMENT_C1_PICKED_UP_S2_S3);
 					smsg.addPcName(this);
 					smsg.addNumber(target.getEnchantLevel());
 					smsg.addItemName(target.getItemId());
@@ -4765,7 +4765,7 @@ public final class L2PcInstance extends L2Playable
 				}
 				else
 				{
-					smsg = SystemMessage.getSystemMessage(SystemMessageId.ANNOUNCEMENT_C1_PICKED_UP_S2);
+					SystemMessage smsg = SystemMessage.getSystemMessage(SystemMessageId.ANNOUNCEMENT_C1_PICKED_UP_S2);
 					smsg.addPcName(this);
 					smsg.addItemName(target.getItemId());
 					broadcastPacket(smsg, 1400);
