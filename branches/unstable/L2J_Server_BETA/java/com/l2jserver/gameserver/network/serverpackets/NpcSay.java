@@ -28,9 +28,9 @@ public final class NpcSay extends L2GameServerPacket
 {
 	// cddddS
 	private static final String _S__30_NPCSAY = "[S] 30 NpcSay";
-	private int _objectId;
-	private int _textType;
-	private int _npcId;
+	private final int _objectId;
+	private final int _textType;
+	private final int _npcId;
 	private String _text;
 	private int _npcString;
 	private List<String> _parameters;
@@ -42,7 +42,7 @@ public final class NpcSay extends L2GameServerPacket
 	{
 		_objectId = objectId;
 		_textType = messageType;
-		_npcId = 1000000+npcId;
+		_npcId = 1000000 + npcId;
 		_npcString = -1;
 		_text = text;
 	}
@@ -51,13 +51,13 @@ public final class NpcSay extends L2GameServerPacket
 	{
 		_objectId = objectId;
 		_textType = messageType;
-		_npcId = 1000000+npcId;
+		_npcId = 1000000 + npcId;
 		_npcString = npcString;	//client side npcstring-*.dat
 	}
 	
 	/**
-	 * String parameter for argument S1,S2,.. in npcstring-e.dat
-	 * @param text
+	 * @param text - parameter for argument S1,S2 etc of an npcstring
+	 * @return this NpcSay packet object
 	 */
 	public NpcSay addStringParameter(String text)
 	{
@@ -95,14 +95,9 @@ public final class NpcSay extends L2GameServerPacket
 		writeD(_npcString);
 		if (_npcString == -1)
 			writeS(_text);
-		else
-		{
-			if (_parameters != null)
-			{
-				for (String s : _parameters)
-					writeS(s);
-			}
-		}
+		else if (_parameters != null)
+			for (String s : _parameters)
+				writeS(s);
 	}
 	
 	/* (non-Javadoc)
