@@ -27,7 +27,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
  */
 public final class RequestChangePetName extends L2GameClientPacket
 {
-	private static final String __C__93_REQUESTCHANGEPETNAME = "[C] 93 RequestChangePetName";
+	private static final String _C__93_REQUESTCHANGEPETNAME = "[C] 93 RequestChangePetName";
 	//private static Logger _log = Logger.getLogger(RequestChangePetName.class.getName());
 	
 	private String _name;
@@ -61,9 +61,9 @@ public final class RequestChangePetName extends L2GameClientPacket
 		}
 		else if ((_name.length() < 3) || (_name.length() > 16))
 		{
-			// SystemMessage sm = SystemMessage.getSystemMessage(SystemMessage.NAMING_PETNAME_UP_TO_8CHARS);
-			activeChar.sendMessage("ペットには3文字以上16文字までの名前がつけられます。");
-		//	activeChar.sendMessage("Your pet's name can be up to 16 characters.");
+			//final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.NAMING_PETNAME_UP_TO_8CHARS);
+			activeChar.sendMessage("ペットの名前は3文字以上16文字まで可能です。");
+		//	activeChar.sendMessage("Your pet's name can be up to 16 characters in length.");
 			return;
 		}
 		else if (!PetNameTable.getInstance().isValidPetName(_name))
@@ -79,6 +79,6 @@ public final class RequestChangePetName extends L2GameClientPacket
 	@Override
 	public String getType()
 	{
-		return __C__93_REQUESTCHANGEPETNAME;
+		return _C__93_REQUESTCHANGEPETNAME;
 	}
 }
