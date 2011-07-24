@@ -8666,7 +8666,6 @@ public final class L2PcInstance extends L2Playable
 		
 		// Check if the target is correct and Notify the AI with AI_INTENTION_CAST and target
 		L2Object target = null;
-		
 		switch (skill.getTargetType())
 		{
 			case TARGET_AURA:    // AURA, SELF should be cast even if no target has been found
@@ -8674,6 +8673,7 @@ public final class L2PcInstance extends L2Playable
 			case TARGET_BEHIND_AURA:
 			case TARGET_GROUND:
 			case TARGET_SELF:
+			case TARGET_AURA_CORPSE_MOB:
 				target = this;
 				break;
 			default:
@@ -8695,7 +8695,6 @@ public final class L2PcInstance extends L2Playable
 		//************************************* Check Player State *******************************************
 		
 		// Abnormal effects(ex : Stun, Sleep...) are checked in L2Character useMagic()
-		
 		if (isOutOfControl() || isParalyzed() || isStunned() || isSleeping())
 		{
 			sendPacket(ActionFailed.STATIC_PACKET);
@@ -8788,6 +8787,7 @@ public final class L2PcInstance extends L2Playable
 			case TARGET_GROUND:
 			case TARGET_SELF:
 			case TARGET_AREA_SUMMON:
+			case TARGET_AURA_CORPSE_MOB:
 				target = this;
 				break;
 			case TARGET_PET:
@@ -8965,6 +8965,7 @@ public final class L2PcInstance extends L2Playable
 					case TARGET_AURA:
 					case TARGET_FRONT_AURA:
 					case TARGET_BEHIND_AURA:
+					case TARGET_AURA_CORPSE_MOB:
 					case TARGET_CLAN:
 					case TARGET_PARTY_CLAN:
 					case TARGET_ALLY:
@@ -9046,6 +9047,7 @@ public final class L2PcInstance extends L2Playable
 				case TARGET_AURA:
 				case TARGET_FRONT_AURA:
 				case TARGET_BEHIND_AURA:
+				case TARGET_AURA_CORPSE_MOB:
 				case TARGET_CLAN:
 				case TARGET_PARTY_CLAN:
 				case TARGET_SELF:
