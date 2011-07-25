@@ -41,6 +41,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
 import com.l2jserver.gameserver.network.serverpackets.MultiSellList;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
+import com.l2jserver.util.file.filter.XMLFilter;
 
 public class MultiSell
 {
@@ -185,7 +186,8 @@ public class MultiSell
 		Document doc = null;
 		int id = 0;
 		List<File> files = new FastList<File>();
-		hashFiles("multisell", files);
+		hashFiles("data/multisell", files);
+		hashFiles("data/multisell/custom", files);
 		
 		for (File f : files)
 		{
@@ -301,19 +303,15 @@ public class MultiSell
 	
 	private final void hashFiles(String dirname, List<File> hash)
 	{
-		File dir = new File(Config.DATAPACK_ROOT, "data/" + dirname);
+		File dir = new File(Config.DATAPACK_ROOT, dirname);
 		if (!dir.exists())
 		{
 			_log.log(Level.WARNING, "Dir " + dir.getAbsolutePath() + " not exists");
 			return;
 		}
 		
-		File[] files = dir.listFiles();
-		for (File f : files)
-		{
-			if (f.getName().endsWith(".xml"))
-				hash.add(f);
-		}
+		for (File f : dir.listFiles(new XMLFilter()))
+			hash.add(f);
 	}
 	
 	private final void verify()

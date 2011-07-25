@@ -1044,10 +1044,9 @@ public final class Config
 	public static long SECOND_AUTH_BAN_TIME;
 	public static String SECOND_AUTH_REC_LINK;
 	
+	// Email
 	public static String EMAIL_SERVERINFO_NAME;
 	public static String EMAIL_SERVERINFO_ADDRESS;
-	
-	// Email
 	public static boolean EMAIL_SYS_ENABLED;
 	public static String EMAIL_SYS_HOST;
 	public static int EMAIL_SYS_PORT;
@@ -1057,6 +1056,8 @@ public final class Config
 	public static String EMAIL_SYS_USERNAME;
 	public static String EMAIL_SYS_PASSWORD;
 	public static String EMAIL_SYS_ADDRESS;
+	public static String EMAIL_SYS_SELECTQUERY;
+	public static String EMAIL_SYS_DBFIELD;
 	
 	//////////////////////////////////////////////////////////////////////////
 	// [L2J_JP][l2jfree][JOJO]
@@ -1131,7 +1132,6 @@ public final class Config
 
 	//
 	//////////////////////////////////////////////////////////////////////////
-	
 	
 	/**
 	 * This class initializes all global variables for configuration.<br>
@@ -3103,6 +3103,8 @@ public final class Config
 					EMAIL_SYS_USERNAME = emailSettings.getProperty("SmtpUsername", "user@gmail.com");
 					EMAIL_SYS_PASSWORD = emailSettings.getProperty("SmtpPassword", "password");
 					EMAIL_SYS_ADDRESS = emailSettings.getProperty("EmailSystemAddress", "noreply@myl2jserver.com");
+					EMAIL_SYS_SELECTQUERY = emailSettings.getProperty("EmailDBSelectQuery", "SELECT value FROM account_data WHERE account_name=? AND var='email_addr'");
+					EMAIL_SYS_DBFIELD = emailSettings.getProperty("EmailDBField", "value");
 				}
 				catch (Exception e)
 				{
