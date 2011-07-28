@@ -2852,9 +2852,12 @@ public abstract class L2Character extends L2Object
 	/**
 	 * Active special effects flags in the binary mask and send Server->Client UserInfo/CharInfo packet.<BR><BR>
 	 */
-	public final void startSpecialEffect(AbnormalEffect mask)
+	public final void startSpecialEffect(AbnormalEffect[] mask)
 	{
-		_SpecialEffects |= mask.getMask();
+		for (AbnormalEffect special : mask)
+		{
+			_SpecialEffects |= special.getMask();
+		}
 		updateAbnormalEffect();
 	}
 	
@@ -3063,9 +3066,12 @@ public abstract class L2Character extends L2Object
 	/**
 	 * Modify the special effect map according to the mask.<BR><BR>
 	 */
-	public final void stopSpecialEffect(AbnormalEffect mask)
+	public final void stopSpecialEffect(AbnormalEffect[] mask)
 	{
-		_SpecialEffects &= ~mask.getMask();
+		for (AbnormalEffect special : mask)
+		{
+			_SpecialEffects &= ~special.getMask();
+		}
 		updateAbnormalEffect();
 	}
 	
