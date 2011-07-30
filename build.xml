@@ -298,7 +298,7 @@
 		<tstamp>
 			<format property="build.tstamp" pattern="yyyyMMdd_HHmm" />
 		</tstamp>
-		<exec dir="." executable="svnversion" outputproperty="l2j.revision" failifexecutionfails="false">
+		<exec dir="." executable="svnversion" outputproperty="l2j.revision">
 			<arg line="-n ." />
 		</exec>
 		<copy file="java/config/l2j-version.txt" tofile="${build.dist.game}/config/l2j-version.properties" overwrite="true"/><!--[JOJO]-->
