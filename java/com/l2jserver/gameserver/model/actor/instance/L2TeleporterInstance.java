@@ -19,9 +19,9 @@ import java.util.StringTokenizer;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.cache.HtmCache;
-import com.l2jserver.gameserver.datatables.MapRegionTable;
 import com.l2jserver.gameserver.datatables.TeleportLocationTable;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
+import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.SiegeManager;
 import com.l2jserver.gameserver.instancemanager.TownManager;
 import com.l2jserver.gameserver.model.L2TeleportLocation;
@@ -279,7 +279,7 @@ public final class L2TeleporterInstance extends L2Npc
 				//   UPDATE npc SET type='L2Teleporter' WHERE id=32467;
 				// TODO: data/html/teleporter/32467.htm
 				//   <a action="bypass -h npc_%objectId%_goto 0" msg="811;ç≈äÒÇÃë∫Ç÷">ç≈äÒÇÃë∫Ç÷</a>
-				player.teleToLocation(MapRegionTable.TeleportWhereType.Town);
+				player.teleToLocation(MapRegionManager.TeleportWhereType.Town);
 			}
 			else if (Config.ALT_GAME_FREE_TELEPORT || player.destroyItemByItemId("Teleport "+(list.getIsForNoble() ? " nobless" : ""), list.getItemId(), price, this, true))
 			{
