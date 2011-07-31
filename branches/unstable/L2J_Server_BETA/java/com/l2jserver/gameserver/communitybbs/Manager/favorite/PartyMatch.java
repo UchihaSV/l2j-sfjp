@@ -21,8 +21,8 @@ import java.util.logging.Logger;
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.cache.HtmCache;
-import com.l2jserver.gameserver.datatables.MapRegionTable;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
+import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.model.BlockList;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Party;
@@ -765,7 +765,7 @@ public class PartyMatch extends BaseFavoriteManager
 					memberList.append("<td width=120>" + member.getName() + "</td>");
 					memberList.append("<td width=130 align=center>" + member.getTemplate().className + "</td>");
 					memberList.append("<td width=40 align=center>" + member.getLevel() + "</td>");
-					memberList.append("<td width=130 align=center>" + MapRegionTable.getInstance().getClosestTownName(member) + "</td>");
+					memberList.append("<td width=130 align=center>" + MapRegionManager.getInstance().getClosestTownName(member) + "</td>");
 					if (result.getInt(3) == 0)
 					{
 						memberList.append("<td width=120 align=center>ルームリーダー</td>");

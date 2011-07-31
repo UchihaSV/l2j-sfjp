@@ -27,6 +27,7 @@ import javolution.util.FastSet;
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.instancemanager.DayNightSpawnManager;
+import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -268,7 +269,7 @@ public class SpawnTable
 			}
 			
 			//[JOJO]
-			String zoneName = MapRegionTable.getInstance().getClosestTownName(spawn.getLocx(),spawn.getLocy());
+			String zoneName = MapRegionManager.getInstance().getClosestTownName(spawn.getLocx(),spawn.getLocy());
 			addSqlLog("-- " + Util.dateFormat() + " " + spawn.getTemplate().title + " " + spawn.getTemplate().name + " - " + zoneName + "\r\n"
 					+ "INSERT INTO " + spawnTable + " SET location='//spawn." + zoneName + "'"
 					+ ", count=" + spawn.getAmount()
@@ -317,7 +318,7 @@ public class SpawnTable
 			}
 			
 			//[JOJO]
-			String zoneName = MapRegionTable.getInstance().getClosestTownName(spawn.getLocx(),spawn.getLocy());
+			String zoneName = MapRegionManager.getInstance().getClosestTownName(spawn.getLocx(),spawn.getLocy());
 			addSqlLog("-- " + Util.dateFormat() + " " + spawn.getTemplate().title + " " + spawn.getTemplate().name + " - " + zoneName + "\r\n"
 					+ "DELETE FROM "
 					+ (spawn.isCustom() ? "custom_spawnlist" : "spawnlist")

@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.cache.HtmCache;
+import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.TownManager;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.Location;
@@ -128,7 +129,7 @@ public class RepairChar extends BaseFavoriteManager
 						return;
 					}
 					final int x = rs.getInt("x"), y = rs.getInt("y"), z = rs.getInt("z");
-					Location loc = TownManager.getClosestTown(x, y).getSpawnLoc(); /*ç≈äÒÇÃë∫*/
+					Location loc = MapRegionManager.getInstance().getClosestTown(x, y).getSpawnLoc(); /*ç≈äÒÇÃë∫*/
 					nx = loc.getX();
 					ny = loc.getY();
 					nz = loc.getZ();
