@@ -24,6 +24,7 @@ import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
+import com.l2jserver.gameserver.model.L2MapRegion;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.zone.L2ZoneType;
@@ -128,7 +129,10 @@ public class RepairChar extends BaseFavoriteManager
 						return;
 					}
 					final int x = rs.getInt("x"), y = rs.getInt("y"), z = rs.getInt("z");
-					Location loc = MapRegionManager.getInstance().getClosestTown(x, y).getSpawnLoc(); /*ç≈äÒÇÃë∫*/
+					L2MapRegion mr = MapRegionManager.getInstance().getClosestTown(x, y);	/*ç≈äÒÇÃë∫*/
+					if (mr == null)
+						mr = MapRegionManager.getInstance().getMapRegion(146494, 30584);	/*ÉAÉfÉì*/
+					Location loc = mr.getSpawnLoc();
 					nx = loc.getX();
 					ny = loc.getY();
 					nz = loc.getZ();
