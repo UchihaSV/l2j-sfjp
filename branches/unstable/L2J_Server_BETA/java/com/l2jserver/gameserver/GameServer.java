@@ -418,6 +418,8 @@ public class GameServer
 		Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());
 		
 		CleanUpManager.getInstance().execute();	// [L2J_JP ADD - TSL][JOJO]
+		if (Config.ALLOW_LOTTERY)
+			com.l2jserver.gameserver.instancemanager.games.Lottery.getInstance();	//[JOJO]
 		
 		_log.info("IdFactory: Free ObjectID's remaining: " + IdFactory.getInstance().size());
 		

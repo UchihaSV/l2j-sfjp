@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,8 +27,13 @@ import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.Announcements;
 import com.l2jserver.gameserver.ThreadPoolManager;
+import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.model.L2ItemInstance;
+import com.l2jserver.gameserver.model.L2Spawn;
+import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.clientpackets.Say2;
+import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.util.Rnd;
 
@@ -144,38 +150,29 @@ public class Lottery
 					{
 						_number++;
 						_prize = rset.getLong("newprize");
+						rset.close(); rset = null;
+						statement.close(); statement = null;
+						L2DatabaseFactory.close(con); con = null;
 					}
 					else
 					{
 						_prize = rset.getLong("prize");
 						_enddate = rset.getLong("enddate");
+						rset.close(); rset = null;
+						statement.close(); statement = null;
+						L2DatabaseFactory.close(con); con = null;
 						
-						if (_enddate <= System.currentTimeMillis() + 2 * MINUTE)
-						{
-							(new finishLottery()).run();
-							rset.close();
-							statement.close();
-							return;
-						}
+						_isStarted = true;
+						ThreadPoolManager.getInstance().scheduleGeneral(new finishLottery(), _enddate - NOW);	//ìyój19:00
 						
-						if (_enddate > System.currentTimeMillis())
+						if (_enddate - 10 * MINUTE - NOW > 0)	//ìyój18:50
 						{
-							_isStarted = true;
-							ThreadPoolManager.getInstance().scheduleGeneral(new finishLottery(), _enddate - System.currentTimeMillis());
-							
-							if (_enddate > System.currentTimeMillis() + 12 * MINUTE)
-							{
-								_isSellingTickets = true;
-								ThreadPoolManager.getInstance().scheduleGeneral(new stopSellingTickets(), _enddate - System.currentTimeMillis() - 10 * MINUTE);
-							}
-							rset.close();
-							statement.close();
-							return;
+							_isSellingTickets = true;
+							ThreadPoolManager.getInstance().scheduleGeneral(new stopSellingTickets(), _enddate - 10 * MINUTE - NOW);	//ìyój18:50
 						}
+						return;
 					}
 				}
-				rset.close();
-				statement.close();
 			}
 			catch (SQLException e)
 			{
@@ -191,27 +188,20 @@ public class Lottery
 			_isSellingTickets = true;
 			_isStarted = true;
 			
-			Announcements.getInstance().announceToAll("Lottery tickets are now available for Lucky Lottery #" + getId() + ".");
+			shout(1000282/*çKâ^ÇÃïÛÇ≠Ç∂ÇÃîÃîÑÇçsÇ¢Ç‹Ç∑ÅI*/);
+		//	Announcements.getInstance().announceToAll("Lottery tickets are now available for Lucky Lottery #" + getId() + ".");
+			// _enddate = éüÇÃìyójì˙19:00
 			Calendar finishtime = Calendar.getInstance();
-			finishtime.setTimeInMillis(_enddate);
-			finishtime.set(Calendar.MINUTE, 0);
+			finishtime.set(Calendar.MILLISECOND, 0);
 			finishtime.set(Calendar.SECOND, 0);
+			finishtime.set(Calendar.MINUTE, 0);
+			finishtime.set(Calendar.HOUR_OF_DAY, 19);
+			finishtime.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+			while ((_enddate = finishtime.getTimeInMillis()) <= NOW)
+				finishtime.add(Calendar.DAY_OF_MONTH, 7);
 			
-			if (finishtime.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-			{
-				finishtime.set(Calendar.HOUR_OF_DAY, 19);
-				_enddate = finishtime.getTimeInMillis();
-				_enddate += 604800000;
-			}
-			else
-			{
-				finishtime.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-				finishtime.set(Calendar.HOUR_OF_DAY, 19);
-				_enddate = finishtime.getTimeInMillis();
-			}
-			
-			ThreadPoolManager.getInstance().scheduleGeneral(new stopSellingTickets(), _enddate - System.currentTimeMillis() - 10 * MINUTE);
-			ThreadPoolManager.getInstance().scheduleGeneral(new finishLottery(), _enddate - System.currentTimeMillis());
+			ThreadPoolManager.getInstance().scheduleGeneral(new stopSellingTickets(), _enddate - 10 * MINUTE - NOW);	//ìyójì˙18:50 îÃîÑí˜êÿ
+			ThreadPoolManager.getInstance().scheduleGeneral(new finishLottery(), _enddate - NOW);	//ìyójì˙19:00 íäëI ... 10ï™å„ îÃîÑäJén
 			
 			try
 			{
@@ -245,9 +235,9 @@ public class Lottery
 		
 		public void run()
 		{
+			_isSellingTickets = false;
 			if (Config.DEBUG)
 				_log.info("Lottery: Stopping ticket sell for lottery #" + getId() + ".");
-			_isSellingTickets = false;
 			
 			Announcements.getInstance().announceToAll(SystemMessage.getSystemMessage(SystemMessageId.LOTTERY_TICKET_SALES_TEMP_SUSPENDED));
 		}
@@ -262,28 +252,22 @@ public class Lottery
 		
 		public void run()
 		{
+			_isStarted = false;
 			if (Config.DEBUG)
 				_log.info("Lottery: Ending lottery #" + getId() + ".");
+			shout(1000283/*çKâ^ÇÃïÛÇ≠Ç∂ÇÃíäëIÇçsÇ¢Ç‹Ç∑ÅI*/);
 			
 			int[] luckynums = new int[5];
-			int luckynum = 0;
 			
 			for (int i = 0; i < 5; i++)
 			{
-				boolean found = true;
-				
-				while (found)
-				{
-					luckynum = Rnd.get(20) + 1;
-					found = false;
-					
-					for (int j = 0; j < i; j++)
-						if (luckynums[j] == luckynum)
-							found = true;
-				}
-				
+				int luckynum;
+				do
+					luckynum = Rnd.get(1, 20);
+				while (com.l2jserver.gameserver.util.Util.contains(luckynums, luckynum));
 				luckynums[i] = luckynum;
 			}
+			Arrays.sort(luckynums);
 			
 			if (Config.DEBUG)
 				_log.info("Lottery: The lucky numbers are " + luckynums[0] + ", " + luckynums[1] + ", " + luckynums[2] + ", " + luckynums[3] + ", " + luckynums[4] + ".");
@@ -293,10 +277,11 @@ public class Lottery
 			
 			for (int i = 0; i < 5; i++)
 			{
-				if (luckynums[i] < 17)
-					enchant += Math.pow(2, luckynums[i] - 1);
+				int num = luckynums[i];
+				if (num <= 16)
+					enchant |= 1 << (num - 1);
 				else
-					type2 += Math.pow(2, luckynums[i] - 17);
+					type2 |= 1 << (num - 16 - 1);
 			}
 			
 			if (Config.DEBUG)
@@ -326,21 +311,7 @@ public class Lottery
 					
 					int count = 0;
 					
-					for (int i = 1; i <= 16; i++)
-					{
-						int val = curenchant / 2;
-						
-						if (val != Math.round((double) curenchant / 2))
-							count++;
-						
-						int val2 = curtype2 / 2;
-						
-						if (val2 != (double) curtype2 / 2)
-							count++;
-						
-						curenchant = val;
-						curtype2 = val2;
-					}
+					count = Integer.bitCount(curtype2 << 16 | curenchant);
 					
 					if (count == 5)
 						count1++;
@@ -432,43 +403,48 @@ public class Lottery
 				L2DatabaseFactory.close(con);
 			}
 			
-			ThreadPoolManager.getInstance().scheduleGeneral(new startLottery(), MINUTE);
+			class ShoutResult implements Runnable
+			{
+				final int number;
+				final int[] luckynums;
+				private ShoutResult(int number, int[] luckynums)
+				{
+					this.number = number;
+					this.luckynums = luckynums;
+				}
+				private int getId() { return number; }
+				@Override
+				public void run()
+				{
+					shout(1000284/*Ç®ÇﬂÇ≈Ç∆Ç§Ç≤Ç¥Ç¢Ç‹Ç∑ÅIëÊ$s1âÒÇÃìñëIî‘çÜÇÕ$s2Ç≈Ç∑ÅB*/
+							, String.valueOf(getId())
+							, luckynums[0] + " " + luckynums[1] + " " + luckynums[2] + " " + luckynums[3] + " " + luckynums[4] + " ");
+				}
+			}
+			ShoutResult run = new ShoutResult(getId(), luckynums);
+			ThreadPoolManager.getInstance().scheduleGeneral(run, 30000);	//19:00:30
+			ThreadPoolManager.getInstance().scheduleGeneral(run, 60000);	//19:01:00
+			ThreadPoolManager.getInstance().scheduleGeneral(run, 90000);	//19:01:30
+			
+			ThreadPoolManager.getInstance().scheduleGeneral(new startLottery(), 10 * MINUTE);	//ìyój19:10
 			_number++;
 			
-			_isStarted = false;
 		}
 	}
 	
 	public int[] decodeNumbers(int enchant, int type2)
 	{
 		int res[] = new int[5];
+		int num = type2 << 16 | enchant;
 		int id = 0;
 		int nr = 1;
-		
-		while (enchant > 0)
+		while (num != 0)
 		{
-			int val = enchant / 2;
-			if (val != Math.round((double) enchant / 2))
-			{
+			if ((num & 1) != 0)
 				res[id++] = nr;
-			}
-			enchant /= 2;
-			nr++;
+			num >>>= 1;
+			++nr;
 		}
-		
-		nr = 17;
-		
-		while (type2 > 0)
-		{
-			int val = type2 / 2;
-			if (val != (double) type2 / 2)
-			{
-				res[id++] = nr;
-			}
-			type2 /= 2;
-			nr++;
-		}
-		
 		return res;
 	}
 	
@@ -503,19 +479,7 @@ public class Lottery
 					return res;
 				}
 				
-				int count = 0;
-				
-				for (int i = 1; i <= 16; i++)
-				{
-					int val = curenchant / 2;
-					if (val != Math.round((double) curenchant / 2))
-						count++;
-					int val2 = curtype2 / 2;
-					if (val2 != (double) curtype2 / 2)
-						count++;
-					curenchant = val;
-					curtype2 = val2;
-				}
+				int count = Integer.bitCount(curtype2 << 16 | curenchant);
 				
 				switch (count)
 				{
@@ -555,6 +519,20 @@ public class Lottery
 		}
 		
 		return res;
+	}
+	
+	private void shout(int npcString, String ... param)
+	{
+		for (L2Spawn s : SpawnTable.getInstance().getSpawnTable())
+		{
+			if (s != null && s.getNpcid() >= 30990 && s.getNpcid() <= 30994)
+			{
+				L2Npc npc = s.getLastSpawn();
+				NpcSay packet = new NpcSay(npc.getObjectId(), Say2.SHOUT, npc.getNpcId(), npcString);
+				for (String text : param) packet.addStringParameter(text);
+				npc.broadcastPacket(packet);
+			}
+		}
 	}
 	
 	@SuppressWarnings("synthetic-access")
