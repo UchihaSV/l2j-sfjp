@@ -134,6 +134,7 @@ public class Lottery
 		
 		public void run()
 		{
+			final long NOW = System.currentTimeMillis();
 			Connection con = null;
 			PreparedStatement statement;
 			try
