@@ -41,7 +41,6 @@ import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.RelationChanged;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
-
 /**
  * This class ...
  *
@@ -105,33 +104,31 @@ public final class Broadcast
 			_log.fine("players to notify:" + character.getKnownList().getKnownPlayers().size() + " packet:" + mov.getType());
 		
 		Collection<L2PcInstance> plrs = character.getKnownList().getKnownPlayers().values();
-		//synchronized (character.getKnownList().getKnownPlayers())
+		for (L2PcInstance player : plrs)
 		{
-			for (L2PcInstance player : plrs)
+			if (player == null)
+				continue;
+			try
 			{
-				if (player == null)
-					continue;
-				try
+				player.sendPacket(mov);
+				if (mov instanceof CharInfo && character instanceof L2PcInstance)
 				{
-					player.sendPacket(mov);
-					if (mov instanceof CharInfo && character instanceof L2PcInstance)
+					int relation = ((L2PcInstance) character).getRelation(player);
+					Integer oldrelation = character.getKnownList().getKnownRelations().get(player.getObjectId());
+					if (oldrelation != null && oldrelation != relation)
 					{
-						int relation = ((L2PcInstance) character).getRelation(player);
-						Integer oldrelation = character.getKnownList().getKnownRelations().get(player.getObjectId());
-						if (oldrelation != null && oldrelation != relation)
-						{
-							player.sendPacket(new RelationChanged((L2PcInstance) character, relation, character.isAutoAttackable(player)));
-							if (((L2PcInstance) character).getPet() != null)
-								player.sendPacket(new RelationChanged(((L2PcInstance) character).getPet(), relation, character.isAutoAttackable(player)));
-						}
+						player.sendPacket(new RelationChanged((L2PcInstance) character, relation, character.isAutoAttackable(player)));
+						if (((L2PcInstance) character).getPet() != null)
+							player.sendPacket(new RelationChanged(((L2PcInstance) character).getPet(), relation, character.isAutoAttackable(player)));
 					}
 				}
-				catch (NullPointerException e)
-				{
-					_log.log(Level.WARNING, e.getMessage(),e);
-				}
+			}
+			catch (NullPointerException e)
+			{
+				_log.log(Level.WARNING, e.getMessage(), e);
 			}
 		}
+		
 	}
 	
 	/**
@@ -159,13 +156,10 @@ public final class Broadcast
 			radius = 1500;
 		
 		Collection<L2PcInstance> plrs = character.getKnownList().getKnownPlayers().values();
-		//synchronized (character.getKnownList().getKnownPlayers())
+		for (L2PcInstance player : plrs)
 		{
-			for (L2PcInstance player : plrs)
-			{
-				if (character.isInsideRadius(player, radius, false, false))
-					player.sendPacket(mov);
-			}
+			if (character.isInsideRadius(player, radius, false, false))
+				player.sendPacket(mov);
 		}
 	}
 	
@@ -197,13 +191,10 @@ public final class Broadcast
 			character.sendPacket(mov);
 		
 		Collection<L2PcInstance> plrs = character.getKnownList().getKnownPlayers().values();
-		//synchronized (character.getKnownList().getKnownPlayers())
+		for (L2PcInstance player : plrs)
 		{
-			for (L2PcInstance player : plrs)
-			{
-				if (player != null && character.getDistanceSq(player) <= radiusSq)
-					player.sendPacket(mov);
-			}
+			if (player != null && character.getDistanceSq(player) <= radiusSq)
+				player.sendPacket(mov);
 		}
 	}
 	
@@ -242,6 +233,7 @@ public final class Broadcast
 	private static final class ForEachPlayerBroadcast implements TObjectProcedure<L2PcInstance>
 	{
 		L2GameServerPacket _packet;
+		
 		private ForEachPlayerBroadcast(L2GameServerPacket packet)
 		{
 			_packet = packet;
@@ -260,6 +252,7 @@ public final class Broadcast
 	{
 		L2GameServerPacket _packet;
 		int _instanceId;
+		
 		private ForEachPlayerInInstanceBroadcast(L2GameServerPacket packet, int instanceId)
 		{
 			_packet = packet;
