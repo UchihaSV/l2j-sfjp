@@ -14,18 +14,18 @@
  */
 package com.l2jserver.gameserver.cache;
 
+import gnu.trove.TIntObjectHashMap;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javolution.util.FastMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.ThreadPoolManager;
+import com.l2jserver.gameserver.util.L2TIntObjectHashMap;
 import com.l2jserver.gameserver.util.Util;
 
 /**
@@ -39,9 +39,9 @@ public class HtmCache
 	
 	static final boolean TIMED_CACHE = true;
 	private static final int EXPIRE_TIME = 60;	//[min]
-	private final FastMap<Integer, TimedCache> _timedCache;
+	private final L2TIntObjectHashMap<TimedCache> _timedCache;
 
-	private final FastMap<Integer, String> _cache;
+	private final TIntObjectHashMap<String> _cache;
 	
 	private int _loadedFiles;
 	private long _bytesBuffLen;
@@ -54,15 +54,15 @@ public class HtmCache
 	private HtmCache()
 	{
 		if (TIMED_CACHE) {
-			_timedCache = new FastMap<Integer, TimedCache>().shared();
+			_timedCache = new L2TIntObjectHashMap<TimedCache>();
 			_cache = null;
 			ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new CacheScheduler(), 3600*1000, 3600*1000);
 		} else if (Config.LAZY_CACHE) {
 			_timedCache = null;
-			_cache = new FastMap<Integer, String>().shared();
+			_cache = new L2TIntObjectHashMap<String>();
 		} else {
 			_timedCache = null;
-			_cache = new FastMap<Integer, String>();
+			_cache = new TIntObjectHashMap<String>();
 		}
 		reload();
 	}
@@ -322,17 +322,17 @@ public class HtmCache
 			_cache.put(hashcode, content);
 		}
 	}
-		
+	
 	class CacheScheduler implements Runnable
 	{
-        public void run()
+		public void run()
 		{
 			boolean update = false;
 			int cTime = GameTimeController.getInstance().getGameTime();
-			for (Map.Entry<Integer, TimedCache> e : _timedCache.entrySet())
+			final int[] keys = _timedCache.keys();
+			for (int hashcode : keys)
 			{
-				Integer hashcode = e.getKey();
-				TimedCache item = e.getValue();
+				TimedCache item = _timedCache.get(hashcode);
 				if (cTime - item.lastAccessTime > EXPIRE_TIME)
 				{
 					--_loadedFiles;
