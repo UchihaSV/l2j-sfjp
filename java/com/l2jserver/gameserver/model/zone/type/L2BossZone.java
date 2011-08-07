@@ -418,7 +418,7 @@ public class L2BossZone extends L2ZoneType
 	{
 		if (_characterList == null)
 			return false;
-		for (L2Character character : _characterList.values())
+		for (L2Character character : getCharactersInsideArray())
 		{
 			if (character instanceof L2PcInstance)
 			{
