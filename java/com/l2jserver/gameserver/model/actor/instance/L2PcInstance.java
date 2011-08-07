@@ -265,6 +265,7 @@ import com.l2jserver.gameserver.templates.item.L2WeaponType;
 import com.l2jserver.gameserver.templates.skills.L2EffectType;
 import com.l2jserver.gameserver.templates.skills.L2SkillType;
 import com.l2jserver.gameserver.util.FloodProtectors;
+import com.l2jserver.gameserver.util.L2TIntObjectHashMap;
 import com.l2jserver.gameserver.util.PlayerEventStatus;
 import com.l2jserver.gameserver.util.Point3D;
 import com.l2jserver.gameserver.util.Util;
@@ -706,7 +707,7 @@ public final class L2PcInstance extends L2Playable
 	
 	protected boolean _inventoryDisable = false;
 	
-	protected Map<Integer, L2CubicInstance> _cubics = new FastMap<Integer, L2CubicInstance>().shared();
+	protected L2TIntObjectHashMap<L2CubicInstance> _cubics = new L2TIntObjectHashMap<L2CubicInstance>();
 	
 	/** Active shots. */
 	protected FastSet<Integer> _activeSoulShots = new FastSet<Integer>().shared();
@@ -5468,7 +5469,7 @@ public final class L2PcInstance extends L2Playable
 		// Unsummon Cubics
 		if (!_cubics.isEmpty())
 		{
-			for (L2CubicInstance cubic : _cubics.values())
+			for (L2CubicInstance cubic : _cubics.getValues(new L2CubicInstance[_cubics.size()]))
 			{
 				cubic.stopAction();
 				cubic.cancelDisappear();
@@ -7846,7 +7847,7 @@ public final class L2PcInstance extends L2Playable
 			
 			// Store the reuse delays of remaining skills which
 			// lost effect but still under reuse delay. 'restore_type' 1.
-			for (int hash : _reuseTimeStamps.keySet())
+			for (int hash : _reuseTimeStamps.keys())
 			{
 				if (storedSkills.contains(hash))
 					continue;
@@ -9494,7 +9495,7 @@ public final class L2PcInstance extends L2Playable
 		if (getCubics() != null)
 		{
 			boolean removed = false;
-			for (L2CubicInstance cubic : getCubics().values())
+			for (L2CubicInstance cubic : _cubics.getValues(new L2CubicInstance[_cubics.size()]))
 			{
 				cubic.stopAction();
 				delCubic(cubic.getId());
@@ -9510,7 +9511,7 @@ public final class L2PcInstance extends L2Playable
 		if (getCubics() != null)
 		{
 			boolean removed = false;
-			for (L2CubicInstance cubic : getCubics().values())
+			for (L2CubicInstance cubic : _cubics.getValues(new L2CubicInstance[_cubics.size()]))
 			{
 				if (cubic.givenByOther())
 				{
@@ -9572,7 +9573,7 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	public Map<Integer, L2CubicInstance> getCubics()
+	public L2TIntObjectHashMap<L2CubicInstance> getCubics()
 	{
 		return _cubics;
 	}
@@ -10000,7 +10001,7 @@ public final class L2PcInstance extends L2Playable
 		
 		if (!getCubics().isEmpty())
 		{
-			for (L2CubicInstance cubic : getCubics().values())
+			for (L2CubicInstance cubic : _cubics.getValues(new L2CubicInstance[_cubics.size()]))
 			{
 				cubic.stopAction();
 				cubic.cancelDisappear();
@@ -13099,17 +13100,17 @@ public final class L2PcInstance extends L2Playable
 			addSkill(SkillTable.getInstance().getInfo(5076, getDeathPenaltyBuffLevel()), false);
 	}
 	
-	private final FastMap<Integer, TimeStamp> _reuseTimeStamps = new FastMap<Integer, TimeStamp>().shared();
+	private final L2TIntObjectHashMap<TimeStamp> _reuseTimeStamps = new L2TIntObjectHashMap<TimeStamp>();
 	private boolean _canFeed;
 	private int _eventEffectId = 0;
 	private boolean _isInSiege;
 	
-	public Collection<TimeStamp> getReuseTimeStamps()
+	public TimeStamp[] getReuseTimeStamps()
 	{
-		return _reuseTimeStamps.values();
+		return _reuseTimeStamps.getValues(new TimeStamp[_reuseTimeStamps.size()]);
 	}
 	
-	public FastMap<Integer, TimeStamp> getReuseTimeStamp()
+	public L2TIntObjectHashMap<TimeStamp> getReuseTimeStamp()
 	{
 		return _reuseTimeStamps;
 	}
