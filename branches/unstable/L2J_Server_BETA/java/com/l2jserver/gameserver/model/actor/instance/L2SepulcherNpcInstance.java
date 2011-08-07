@@ -14,7 +14,8 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
-import java.util.Collection;
+import gnu.trove.TObjectProcedure;
+
 import java.util.concurrent.Future;
 
 import com.l2jserver.Config;
@@ -28,6 +29,8 @@ import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
+import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
+import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.MyTargetSelected;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
@@ -435,23 +438,33 @@ public class L2SepulcherNpcInstance extends L2Npc
 	{
 		if (msg == null || msg.isEmpty())
 			return;// wrong usage
-		sayInShout(new NpcSay(this.getObjectId(), Say2.SHOUT, this.getNpcId(), msg));
+		
+		L2World.getInstance().forEachPlayer(new SayInShout(this, new NpcSay(this.getObjectId(), Say2.SHOUT, this.getNpcId(), msg)));
 	}
 	public void sayInShout(int npcStringId)
 	{
-		sayInShout(new NpcSay(this.getObjectId(), Say2.SHOUT, this.getNpcId(), npcStringId));
+		L2World.getInstance().forEachPlayer(new SayInShout(this, new NpcSay(this.getObjectId(), Say2.SHOUT, this.getNpcId(), npcStringId)));
 	}
-	public void sayInShout(com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket sm)
+	
+	private final class SayInShout implements TObjectProcedure<L2PcInstance>
 	{
-		Collection<L2PcInstance> knownPlayers = L2World.getInstance().getAllPlayers().values();
-		if (knownPlayers == null || knownPlayers.isEmpty())
-			return;
-		for (L2PcInstance player : knownPlayers)
+		L2SepulcherNpcInstance _npc;
+		NpcSay _sm;
+		
+		private SayInShout(L2SepulcherNpcInstance npc, NpcSay sm)
 		{
-			if (player == null)
-				continue;
-			if (Util.checkIfInRange(15000, player, this, true))
-				player.sendPacket(sm);
+			_npc = npc;
+			_sm = sm;
+		}
+		@Override
+		public final boolean execute(final L2PcInstance player)
+		{
+			if (player != null)
+			{
+				if (Util.checkIfInRange(15000, player, _npc, true))
+					player.sendPacket(_sm);
+			}
+			return true;
 		}
 	}
 	//-------------------------------------------------------

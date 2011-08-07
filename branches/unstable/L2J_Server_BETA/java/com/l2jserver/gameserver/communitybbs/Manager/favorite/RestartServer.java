@@ -14,6 +14,8 @@
  */
 package com.l2jserver.gameserver.communitybbs.Manager.favorite;
 
+import gnu.trove.TObjectProcedure;
+
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.Announcements;
 import com.l2jserver.gameserver.GameServer;
@@ -68,16 +70,24 @@ public class RestartServer extends BaseFavoriteManager
 	// サーバ再起動申請者数集計
 	private void countRestartServer()
 	{
-		int total = 0, score = 0;
-		for (L2PcInstance pc : L2World.getInstance().getAllPlayers().values()) {
-			L2GameClient c = pc.getClient();
-			if (c == null || c.isDetached()) continue;	// 不在モードを除外
-			++total;
-			if (pc.voteServerRestart) ++score;
+		class CountProcedure implements TObjectProcedure<L2PcInstance>
+		{
+			private int total = 0, score = 0;
+			@Override
+			public final boolean execute(final L2PcInstance pc)
+			{
+				L2GameClient c = pc.getClient();
+				if (c == null || c.isDetached()) return true;	// 不在モードを除外
+				++total;
+				if (pc.voteServerRestart) ++score;
+				return true;
+			}
 		}
-		_total = total;
-		_score = score;
-		_rate = total == 0 ? 0 : score * 100 / total;
+		CountProcedure cp = new CountProcedure();
+		L2World.getInstance().forEachPlayer(cp);
+		_total = cp.total;
+		_score = cp.score;
+		_rate = _total == 0 ? 0 : _score * 100 / _total;
 	}
 
 	// 申請画面表示部分
