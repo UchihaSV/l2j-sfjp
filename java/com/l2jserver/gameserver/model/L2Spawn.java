@@ -472,7 +472,8 @@ public class L2Spawn
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "NPC "+_template.npcId+" class not found", e);
+			_log.log(Level.WARNING, "NPC "+_template.npcId+" "+_template.name+" '"+_template.type+"' class not found", e);	//[JOJO]
+			_maximumCount = 0;	//+[JOJO]
 		}
 		return mob;
 	}
