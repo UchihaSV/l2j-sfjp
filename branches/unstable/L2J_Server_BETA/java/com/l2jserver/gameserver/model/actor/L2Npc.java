@@ -1279,7 +1279,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 						case SevenSigns.CABAL_DAWN:
 							if (playerCabal != compWinner || playerCabal != sealAvariceOwner)
 							{
-								player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CAN_BE_USED_BY_DAWN));
+								player.sendPacket(SystemMessageId.CAN_BE_USED_BY_DAWN);
 								player.sendPacket(ActionFailed.STATIC_PACKET);
 								return;
 							}
@@ -1287,13 +1287,13 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 						case SevenSigns.CABAL_DUSK:
 							if (playerCabal != compWinner || playerCabal != sealAvariceOwner)
 							{
-								player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CAN_BE_USED_BY_DUSK));
+								player.sendPacket(SystemMessageId.CAN_BE_USED_BY_DUSK);
 								player.sendPacket(ActionFailed.STATIC_PACKET);
 								return;
 							}
 							break;
 						default:
-							player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.QUEST_EVENT_PERIOD));
+							player.sendPacket(SystemMessageId.SSQ_COMPETITION_UNDERWAY);
 							return;
 					}
 				}
@@ -1307,7 +1307,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 						case SevenSigns.CABAL_DAWN:
 							if (playerCabal != compWinner || playerCabal != sealGnosisOwner)
 							{
-								player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CAN_BE_USED_BY_DAWN));
+								player.sendPacket(SystemMessageId.CAN_BE_USED_BY_DAWN);
 								player.sendPacket(ActionFailed.STATIC_PACKET);
 								return;
 							}
@@ -1315,13 +1315,13 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 						case SevenSigns.CABAL_DUSK:
 							if (playerCabal != compWinner || playerCabal != sealGnosisOwner)
 							{
-								player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CAN_BE_USED_BY_DUSK));
+								player.sendPacket(SystemMessageId.CAN_BE_USED_BY_DUSK);
 								player.sendPacket(ActionFailed.STATIC_PACKET);
 								return;
 							}
 							break;
 						default:
-							player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.QUEST_EVENT_PERIOD));
+							player.sendPacket(SystemMessageId.SSQ_COMPETITION_UNDERWAY);
 							return;
 					}
 				}
