@@ -799,6 +799,28 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 
 		final int combinedCollision = collision + mostHate.getTemplate().collisionRadius;
 
+		if (_skillrender.hasSuesideSkill() && (int) ((npc.getCurrentHp() / npc.getMaxHp()) * 100) < 30)
+		{
+			L2Skill skill = _skillrender._suesideskills.get(Rnd.nextInt(_skillrender._suesideskills.size()));	
+			if (Util.checkIfInRange(skill.getSkillRadius(), getActiveChar(), mostHate, false) && Rnd.get(100) < Rnd.get(npc.getMinSkillChance(), npc.getMaxSkillChance()))
+			{
+				if (cast(skill))
+				{
+					return;
+				}
+				else
+				{
+					for (L2Skill sk : _skillrender._suesideskills)
+					{
+						if (cast(sk))
+						{
+							return;
+						}
+					}
+				}
+			}
+		}
+		
 		//------------------------------------------------------
 		// In case many mobs are trying to hit from same place, move a bit,
 		// circling around the target
@@ -1086,19 +1108,26 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			movementDisable();
 			return;
 		}
+		
 		setTimepass(0);
 		//--------------------------------------------------------------------------------
 		//Skill Use
 		if (_skillrender.hasSkill())
 		{
-			if (Rnd.get(100) <= npc.getSkillChance())
+			if (Rnd.get(100) < Rnd.get(npc.getMinSkillChance(), npc.getMaxSkillChance()))
 			{
 				L2Skill skills = _skillrender._generalskills.get(Rnd.nextInt(_skillrender._generalskills.size()));
 				if (cast(skills))
+				{
 					return;
+				}
 				for (L2Skill sk : _skillrender._generalskills)
+				{
 					if (cast(sk))
+					{
 						return;
+					}
+				}
 			}
 			
 			//--------------------------------------------------------------------------------
@@ -1133,7 +1162,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 			}
 		}
-		
+				
 		//--------------------------------------------------------------------------------
 		// Starts Melee or Primary Skill
 		if (dist2 > range || !GeoData.getInstance().canSeeTarget(npc, mostHate))
@@ -1155,7 +1184,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 		}
 		else
 		{
-			melee(npc.getPrimaryAttack());
+			melee(npc.getPrimarySkillId());
 		}
 		
 	}
@@ -1169,26 +1198,46 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				case -1:
 				{
 					if (_skillrender._generalskills != null)
+					{
 						for (L2Skill sk : _skillrender._generalskills)
+						{
 							if (cast(sk))
+							{
 								return;
+							}
+						}
+					}
 					break;
 				}
 				case 1:
 				{
 					if (_skillrender.hasAtkSkill())
+					{
 						for (L2Skill sk : _skillrender._atkskills)
+						{
 							if (cast(sk))
+							{
 								return;
+							}
+						}
+					}
 					break;
 				}
 				default:
 				{
 					if (_skillrender._generalskills != null)
+					{
 						for (L2Skill sk : _skillrender._generalskills)
-							if (sk.getId() == getActiveChar().getPrimaryAttack())
+						{
+							if (sk.getId() == getActiveChar().getPrimarySkillId())
+							{
 								if (cast(sk))
+								{
 									return;
+								}
+							}
+						}
+					}
 				}
 				break;
 			}
@@ -1907,7 +1956,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				
 			}
 			
-			melee(npc.getPrimaryAttack());
+			melee(npc.getPrimarySkillId());
 		}
 		catch (NullPointerException e)
 		{
