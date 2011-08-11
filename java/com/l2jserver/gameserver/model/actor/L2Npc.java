@@ -260,6 +260,14 @@ public class L2Npc extends L2Character
 		return AI.getMaxSkillChance();
 	}
 	
+	//[JOJO]-------------------------------------------------
+	public int getSkillChance()
+	{
+		L2NpcAIData AI = getTemplate().getAIDataStatic();
+		return Rnd.get(AI.getMinSkillChance(), AI.getMaxSkillChance());
+	}
+	//-------------------------------------------------------
+	
 	public int getCanMove()
 	{
 		L2NpcAIData AI = getTemplate().getAIDataStatic();
