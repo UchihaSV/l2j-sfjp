@@ -229,6 +229,23 @@ public class Quest extends ManagedScript
 	}
 	
 	//[JOJO]-------------------------------------------------
+	/**
+	 * Return name of the quest for html
+	 * @return "&lt;fstring&gt;101&lt;/fstring&gt;" //ラブレターの配達
+	 */
+	public String getDescrHtm()
+	{
+		int id = _questId;
+		if (id > 0 && id < 20000)
+		{
+			if (id > 10000)
+				id -= 5000;
+			return "<fstring>" + id + "</fstring>";
+		}
+		else
+			return _descr;
+	}
+	
 	public FastMap<String, FastList<QuestTimer>> getAllQuestTimers()
 	{
 		return _allEventTimers;
