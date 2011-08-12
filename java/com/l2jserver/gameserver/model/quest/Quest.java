@@ -240,7 +240,7 @@ public class Quest extends ManagedScript
 		{
 			if (id > 10000)
 				id -= 5000;
-			return "<fstring>" + id + "</fstring>";
+			return "<fstring>" + id + "01</fstring>";
 		}
 		else
 			return _descr;
