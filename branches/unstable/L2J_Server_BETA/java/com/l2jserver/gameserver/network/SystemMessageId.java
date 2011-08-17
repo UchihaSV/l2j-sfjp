@@ -9402,7 +9402,7 @@ public final class SystemMessageId
 	 * ID: 1625<br>
 	 * Message: 10分間停泊後、ルウン港に出発します。
 	 */
-	public static final SystemMessageId REPARTURE_FOR_RUNE_10_MINUTES;
+	public static final SystemMessageId DEPARTURE_FOR_RUNE_10_MINUTES;
 	
 	/**
 	 * ID: 1626<br>
@@ -16179,7 +16179,7 @@ public final class SystemMessageId
 		DEPARTURE_FOR_GLUDIN_1_MINUTE = new SystemMessageId(1622);
 		DEPARTURE_FOR_GLUDIN_SHORTLY = new SystemMessageId(1623);
 		DEPARTURE_FOR_GLUDIN_NOW = new SystemMessageId(1624);
-		REPARTURE_FOR_RUNE_10_MINUTES = new SystemMessageId(1625);
+		DEPARTURE_FOR_RUNE_10_MINUTES = new SystemMessageId(1625);
 		DEPARTURE_FOR_RUNE_5_MINUTES = new SystemMessageId(1626);
 		DEPARTURE_FOR_RUNE_1_MINUTE = new SystemMessageId(1627);
 		DEPARTURE_FOR_GLUDIN_SHORTLY2 = new SystemMessageId(1628);

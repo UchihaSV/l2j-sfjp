@@ -29,7 +29,7 @@ public final class CreatureSay extends L2GameServerPacket
 	private String _charName = null;
 	private int _charId = 0;
 	private String _text = null;
-	private int _msgId = -1;
+	private int _npcString = -1;
 	
 	/**
 	 * @param _characters
@@ -42,22 +42,20 @@ public final class CreatureSay extends L2GameServerPacket
 		_text = text;
 	}
 	
-	//[JOJO]-------------------------------------------------
-	public CreatureSay(int objectId, int messageType, int charId, String text)
+	public CreatureSay(int objectId, int messageType, int charId, int npcString)
 	{
 		_objectId = objectId;
 		_textType = messageType;
 		_charId = charId;
-		_text = text;
+		_npcString = npcString;	//client side systemmsg-*.dat
 	}
-	//-------------------------------------------------------
 	
-	public CreatureSay(int objectId, int messageType, int charId, int msgId)
+	public CreatureSay(int objectId, int messageType, String charName, int npcString)
 	{
 		_objectId = objectId;
 		_textType = messageType;
-		_charId = charId;
-		_msgId = msgId;	//client side systemmsg-*.dat
+		_charName = charName;
+		_npcString = npcString;
 	}
 	
 	@Override
@@ -70,8 +68,8 @@ public final class CreatureSay extends L2GameServerPacket
 			writeS(_charName);
 		else
 			writeD(_charId);
-		writeD(_msgId);
-		if (_msgId == -1)
+		writeD(_npcString); // High Five NPCString ID
+		if (_text != null)
 			writeS(_text);
 	//	else
 	//	{
