@@ -1911,8 +1911,10 @@ public class Quest extends ManagedScript
 				}
 				if (randomOffset)
 				{
-					x += Rnd.sign() * Rnd.get(50, 100);
-					y += Rnd.sign() * Rnd.get(50, 100);
+					double radius = 50.0 + 50.0 * Rnd.nextDouble();
+					double angle = javolution.lang.MathLib.TWO_PI * Rnd.nextDouble();
+					x += radius * Math.cos(angle);
+					y += radius * Math.sin(angle);
 				}
 				L2Spawn spawn = new L2Spawn(template);
 				spawn.setInstanceId(instanceId);
