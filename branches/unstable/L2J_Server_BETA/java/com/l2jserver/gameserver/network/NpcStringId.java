@@ -21454,7 +21454,7 @@ public final class NpcStringId
 
 	/**
 	 * ID: 1900175<br>
-	 * Message: Ugh I think this is it for me¦
+	 * Message: Ugh I think this is it for me!
 	 */
 	public static final NpcStringId UGH_I_THINK_THIS_IS_IT_FOR_ME;
 
