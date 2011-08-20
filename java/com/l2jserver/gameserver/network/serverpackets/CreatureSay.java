@@ -14,6 +14,7 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.network.SystemMessageId;
 
 /**
  * This class ...
@@ -42,12 +43,12 @@ public final class CreatureSay extends L2GameServerPacket
 		_text = text;
 	}
 	
-	public CreatureSay(int objectId, int messageType, int charId, int npcString)
+	public CreatureSay(int objectId, int messageType, int charId, SystemMessageId sysString)
 	{
 		_objectId = objectId;
 		_textType = messageType;
 		_charId = charId;
-		_npcString = npcString;	//client side systemmsg-*.dat
+		_npcString = sysString.getId();
 	}
 	
 	@Override
@@ -63,14 +64,6 @@ public final class CreatureSay extends L2GameServerPacket
 		writeD(_npcString); // High Five NPCString ID
 		if (_text != null)
 			writeS(_text);
-	//	else
-	//	{
-	//		if (_parameters != null)
-	//		{
-	//			for (String s : _parameters)
-	//				writeS(s);
-	//		}
-	//	}
 	}
 	
 	@Override
