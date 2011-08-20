@@ -14,55 +14,72 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
-import java.util.Collection;
-
 import com.l2jserver.gameserver.ThreadPoolManager;
+import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.L2Object;
+import com.l2jserver.gameserver.model.L2Skill;
+import com.l2jserver.gameserver.model.zone.type.L2TownZone;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
 /**
  * @author JOJO
+ * 
+ * NPC          28      こたつ (type: L2Kotatsu) T25 Freya
+ * NPC          127     こたつ (type: L2Kotatsu) T26 H5
+ * |アイテム    20868   こたつ
+ * |召喚スキル  22127-1 温かなこたつ召喚
+ * |BUFスキル   22118-1 こたつのぬくもり - こたつのぬくもりが感じられます。HP回復力が40%、CP回復力が30%、MP回復力が20%増加している状態。
  */
 public class L2KotatsuInstance extends L2XmassTreeInstance /*extends L2Npc*/
 {
-
 	private class KotatsuAI extends XmassAI implements Runnable
 	{
-		protected KotatsuAI(L2KotatsuInstance caster/*, L2Skill skill*/)
+		protected KotatsuAI(L2KotatsuInstance caster, L2Skill skill)
 		{
-			super(caster/*, L2Skill skill*/);
+			super(caster, skill);
 		}
-
-		@Override public void run()
+		
+		@Override
+		public void run()
 		{
-			Collection<L2PcInstance> plrs = getKnownList().getKnownPlayersInRadius(getDistanceToWatchObject(null));
-			for (L2PcInstance player : plrs)
+			for (L2PcInstance player : getKnownList().getKnownPlayersInRadius(_skill.getSkillRadius()))
 			{
+				if (player.isInvul())
+					continue;
 				if (player.isMovementDisabled())
 					continue;
 				if (player.getPkKills() > 5)
 					continue;
-				if (player.getCurrentHp() < player.getMaxHp() * 9 / 10)
-					player.setCurrentHp(player.getCurrentHp() + player.getMaxHp() / player.getLevel());
-				if (player.getCurrentCp() < player.getMaxCp() * 9 / 10)
-					player.setCurrentCp(player.getCurrentHp() + player.getMaxCp() / player.getLevel());
-				if (player.getCurrentMp() < player.getMaxMp() * 9 / 10)
-					player.setCurrentMp(player.getCurrentMp() + player.getMaxMp() / player.getLevel());
-
-
+				if (player.getCurrentHp() < player.getMaxHp()
+				 || player.getCurrentCp() < player.getMaxCp()
+				 || player.getCurrentMp() < player.getMaxMp())
+				{
+					if (player.getFirstEffect(_skill.getId()) == null)
+						_skill.getEffects(player, player);
+				}
 			}
 		}
 	}
-
+	
 	public L2KotatsuInstance(int objectId, L2NpcTemplate template)
 	{
 		super(objectId, template);
-		_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new KotatsuAI(this/*,SkillTable.getInstance().getInfo(22118, 1)*/), 3000, 3000);
 	}
-
+	
+	@Override
+	public void onSpawn()
+	{
+		super.onSpawn();
+		
+		if (getNpcId() == 127 /*T26 H5*/
+				&& ZoneManager.getInstance().getZone(this, L2TownZone.class) == null)
+			_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new KotatsuAI(this, SkillTable.getInstance().getInfo(22118, 1)), 3000, 3000);
+	}
+	
 	@Override
 	public int getDistanceToWatchObject(L2Object object)
 	{
-		return 90;	//guess
+		return 90; //guess
 	}
 }

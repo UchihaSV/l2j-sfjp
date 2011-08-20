@@ -74,8 +74,10 @@ public class L2SkillSpawn extends L2Skill
 			
 			if (_randomOffset)
 			{
-				spawn.setLocx(caster.getX() + Rnd.sign() * Rnd.get(20, 50));
-				spawn.setLocy(caster.getY() + Rnd.sign() * Rnd.get(20, 50));
+				double radius = 20.0 + 30.0 * Rnd.nextDouble();
+				double angle = javolution.lang.MathLib.TWO_PI * Rnd.nextDouble();
+				spawn.setLocx(caster.getX() + (int)(radius * Math.cos(angle)));
+				spawn.setLocy(caster.getY() + (int)(radius * Math.sin(angle)));
 			}
 			else
 			{

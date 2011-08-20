@@ -30,7 +30,6 @@ import com.l2jserver.gameserver.model.L2DropData;
 import com.l2jserver.gameserver.model.L2MinionData;
 import com.l2jserver.gameserver.model.L2NpcAIData;
 import com.l2jserver.gameserver.model.L2Skill;
-import com.l2jserver.gameserver.model.actor.instance.L2XmassTreeInstance;
 import com.l2jserver.gameserver.model.base.ClassId;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.templates.StatsSet;
@@ -975,10 +974,10 @@ public final class L2NpcTemplate extends L2CharTemplate
 		return name;
 	}
 	
-	public boolean isSpecialTree()
-	{
-		return npcId == L2XmassTreeInstance.SPECIAL_TREE_ID;
-	}
+ //	public boolean isSpecialTree()	//-[JOJO]
+ //	{
+ //		return npcId == L2XmassTreeInstance.SPECIAL_TREE_ID;
+ //	}
 	
 	public boolean isUndead()
 	{
