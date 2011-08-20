@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.network.NpcStringId;
 
 /**
  *
@@ -53,6 +54,11 @@ public final class NpcSay extends L2GameServerPacket
 		_textType = messageType;
 		_npcId = 1000000 + npcId;
 		_npcString = npcString;	//client side npcstring-*.dat
+	}
+	
+	public NpcSay(int objectId, int messageType, int npcId, NpcStringId npcString)
+	{
+		this(objectId, messageType, npcId, npcString.getId());
 	}
 	
 	/**

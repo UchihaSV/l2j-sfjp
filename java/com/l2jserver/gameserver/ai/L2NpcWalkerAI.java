@@ -23,6 +23,7 @@ import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2NpcWalkerNode;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2NpcWalkerInstance;
+import com.l2jserver.gameserver.network.NpcStringId;
 
 public class L2NpcWalkerAI extends L2CharacterAI implements Runnable
 {
@@ -98,10 +99,10 @@ public class L2NpcWalkerAI extends L2CharacterAI implements Runnable
 			 * Check arrived.
 			 */
 			final L2NpcWalkerNode pos = _route.get(_currentPos);
-			int npcString = pos.getNpcString();
-			String chat = npcString == -1 ? pos.getChatText() : null;
+			NpcStringId npcString = pos.getNpcString();
+			String chat = npcString == null ? pos.getChatText() : null;
 			
-			if ((npcString != -1) || (chat != null && !chat.isEmpty()))
+			if ((npcString != null) || (chat != null && !chat.isEmpty()))
 				getActor().broadcastChat(chat, npcString);
 			
 			//time in millis

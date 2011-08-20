@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.network.NpcStringId;
 
 /**
  * @author Kerberos
@@ -72,6 +73,11 @@ public class ExShowScreenMessage extends L2GameServerPacket
 		_npcString = npcString;
 	}
 	
+	public ExShowScreenMessage (NpcStringId npcString, int position, int time) // For npcstring
+	{
+		this(npcString.getId(), position, time);
+	}
+	
 	/**
 	 * String parameter for argument S1,S2,.. in npcstring-e.dat
 	 * @param text
@@ -114,6 +120,11 @@ public class ExShowScreenMessage extends L2GameServerPacket
 		_size = size;
 		_effect = showEffect;
 		_npcString = npcString;
+	}
+	
+	public ExShowScreenMessage (int type, int messageId, int position, int unk1, int size, int unk2, int unk3,boolean showEffect, int time,boolean fade, String text, NpcStringId npcString)
+	{
+		this(type, messageId, position, unk1, size, unk2, unk3, showEffect, time, fade, text, npcString.getId());
 	}
 	
 	@Override

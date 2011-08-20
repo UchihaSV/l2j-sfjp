@@ -45,6 +45,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2SepulcherMonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2SepulcherNpcInstance;
 import com.l2jserver.gameserver.model.quest.QuestState;
 import com.l2jserver.gameserver.model.zone.type.L2BossZone;
+import com.l2jserver.gameserver.network.NpcStringId;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
@@ -1375,10 +1376,8 @@ public class FourSepulchersManager
 		
 		else if (_inEntryTime)
 		{
-			final int msg1 = 1000500; //"‘ü¡‚æ‚è—ì•_“à‚Ö“ü‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B"
-			final int msg2 = 1000501; //"l‘å—ì•_‚ÌÎ‘œ‚Éè‚ğæ‚¹‚é‚Æ—ì•_“à‚É“ü‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B"
-		//	String msg1 = "You may now enter the Sepulcher";
-		//	String msg2 = "If you place your hand on the stone statue in front of each sepulcher," + " you will be able to enter";
+			final NpcStringId msg1 = NpcStringId.YOU_MAY_NOW_ENTER_THE_SEPULCHER;
+			final NpcStringId msg2 = NpcStringId.IF_YOU_PLACE_YOUR_HAND_ON_THE_STONE_STATUE_IN_FRONT_OF_EACH_SEPULCHER_YOU_WILL_BE_ABLE_TO_ENTER;
 			for (L2Spawn temp : _managers)
 			{
 				if (temp == null)
