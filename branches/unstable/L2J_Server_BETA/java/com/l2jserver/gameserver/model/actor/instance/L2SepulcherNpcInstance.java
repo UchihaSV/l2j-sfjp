@@ -27,8 +27,10 @@ import com.l2jserver.gameserver.model.L2ItemInstance;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.quest.Quest;
+import com.l2jserver.gameserver.network.NpcStringId;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
+import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.MyTargetSelected;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
@@ -432,27 +434,38 @@ public class L2SepulcherNpcInstance extends L2Npc
 	}
 	
 	//[JOJO]-------------------------------------------------
+	public void sayInShout(L2GameServerPacket packet)
+	{
+		L2World.getInstance().forEachPlayer(new SayInShout(this, packet));
+	}
+	
 	public void sayInShout(String msg)
 	{
-		if (msg == null || msg.isEmpty())
+		sayInShout(new NpcSay(this.getObjectId(), Say2.SHOUT, this.getNpcId(), msg));
+	}
+	
+	public void sayInShout(int npcstring)
+	{
+		sayInShout(new NpcSay(this.getObjectId(), Say2.SHOUT, this.getNpcId(), npcstring));
+	}
+	
+	public void sayInShout(NpcStringId npcStringId)
+	{
+		if (npcStringId == null)
 			return;// wrong usage
 		
-		L2World.getInstance().forEachPlayer(new SayInShout(this, new NpcSay(this.getObjectId(), Say2.SHOUT, this.getNpcId(), msg)));
-	}
-	public void sayInShout(int npcStringId)
-	{
-		L2World.getInstance().forEachPlayer(new SayInShout(this, new NpcSay(this.getObjectId(), Say2.SHOUT, this.getNpcId(), npcStringId)));
+		sayInShout(new NpcSay(this.getObjectId(), Say2.SHOUT, this.getNpcId(), npcStringId));
 	}
 	
 	private final class SayInShout implements TObjectProcedure<L2PcInstance>
 	{
 		L2SepulcherNpcInstance _npc;
-		NpcSay _sm;
+		L2GameServerPacket _packet;
 		
-		private SayInShout(L2SepulcherNpcInstance npc, NpcSay sm)
+		private SayInShout(L2SepulcherNpcInstance npc, L2GameServerPacket packet)
 		{
 			_npc = npc;
-			_sm = sm;
+			_packet = packet;
 		}
 		@Override
 		public final boolean execute(final L2PcInstance player)
@@ -460,7 +473,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 			if (player != null)
 			{
 				if (Util.checkIfInRange(15000, player, _npc, true))
-					player.sendPacket(_sm);
+					player.sendPacket(_packet);
 			}
 			return true;
 		}

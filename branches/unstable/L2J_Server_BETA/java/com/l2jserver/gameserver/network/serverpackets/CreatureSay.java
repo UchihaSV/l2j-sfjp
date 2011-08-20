@@ -50,14 +50,6 @@ public final class CreatureSay extends L2GameServerPacket
 		_npcString = npcString;	//client side systemmsg-*.dat
 	}
 	
-	public CreatureSay(int objectId, int messageType, String charName, int npcString)
-	{
-		_objectId = objectId;
-		_textType = messageType;
-		_charName = charName;
-		_npcString = npcString;
-	}
-	
 	@Override
 	protected final void writeImpl()
 	{
