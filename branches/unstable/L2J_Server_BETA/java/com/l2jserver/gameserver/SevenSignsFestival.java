@@ -1680,11 +1680,10 @@ public class SevenSignsFestival implements SpawnListener
 	}
 	
 	/**
-	 * Used to send a "shout" message to all players currently present in an Oracle.
+	 * Used to send a "shout" message to all players currently present in an Oracle.<br>
 	 * Primarily used for Festival Guide and Witch related speech.
-	 *
 	 * @param senderName
-	 * @param message
+	 * @param npcString
 	 */
 	//[JOJO]-------------------------------------------------
 	private void sendMessageToAll(int npcString)
@@ -1695,6 +1694,11 @@ public class SevenSignsFestival implements SpawnListener
 		_dawnChatGuide.broadcastPacket(new NpcSay(_dawnChatGuide.getObjectId(), Say2.SHOUT, _dawnChatGuide.getNpcId(), npcString));
 		_duskChatGuide.broadcastPacket(new NpcSay(_duskChatGuide.getObjectId(), Say2.SHOUT, _duskChatGuide.getNpcId(), npcString));
 	}
+	
+	/**
+	 * @param senderName
+	 * @param npcString
+	 */
 	private void sendMessageToAll(String senderName, NpcStringId npcString)
 	{
 		sendMessageToAll(npcString.getId());
