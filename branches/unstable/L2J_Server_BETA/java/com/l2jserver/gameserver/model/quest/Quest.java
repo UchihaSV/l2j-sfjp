@@ -110,7 +110,7 @@ public class Quest extends ManagedScript
 		
 		if (questId != 0)
 		{
-			QuestManager.getInstance().addQuest(Quest.this);
+			QuestManager.getInstance().addQuest(this);
 		}
 		else
 		{
