@@ -50,7 +50,7 @@
 		</mapper>
 	</pathconvert>
 
-	<target name="init" depends="clean, checkAntVersion, checkJavaVersion" description="Create the output directories.">
+	<target name="init" depends="checkAntVersion, checkJavaVersion" description="Create the output directories."><!-- [JOJO] -->
 		<mkdir dir="${build}" />
 		<mkdir dir="${build.classes}" />
 	</target>
@@ -149,101 +149,29 @@
 		</jar>
 	</target>
 
-	<target name="jarsrc" depends="jar">
-		<jar destfile="${build.dist.doc}/l2jserver-src.jar">
-			<fileset dir="${src}">
-				<exclude name="/config/**" />
-				<exclude name="**.cfg" />
-			</fileset>
-		</jar>
-	</target>
-
 	<target name="dist ALL" depends="clean,dist"/><!-- [JOJO] -->
-	<target name="dist" depends="jarsrc">
+	<target name="dist" depends="jar">
 		<copy todir="${build.dist.doc}" preservelastmodified="true">
-			<fileset dir="doc">
-				<include name="*.html" />
-				<include name="*.txt" />
-			</fileset>
+			<fileset dir="dist/doc" />
 		</copy>
 		<copy todir="${build.dist.game}" preservelastmodified="true">
-			<fileset dir="dist">
-				<include name="GameServer_loop.sh" />
-				<include name="L2JConfig.*" />
-				<include name="startGameServer.*" />
-			</fileset>
-			<fileset dir="${src}">
-				<include name="console.cfg" />
-				<include name="log.cfg" />
-			</fileset>
-		</copy>
-		<copy todir="${build.dist.game}/config" preservelastmodified="true">
-			<fileset dir="${src}/config">
-				<include name="*.properties" />
-				<include name="*.xml" />
-				<include name="*.xsd" />
-				<include name="*.txt" />
-				<include name="*.ja" />
-				<include name="ipconfig_README.html" />
-				<exclude name="loginserver.properties" />
-				<exclude name="loginserver.properties.ja" />
-				<exclude name="email.properties" />
-			</fileset>
-		</copy>
-		<copy todir="${build.dist.game}/data" preservelastmodified="true">
-			<fileset dir="data">
-				<include name="*.csv" />
-				<include name="*.txt" />
-			</fileset>
-		</copy>
-		<copy todir="${build.dist.game}/data/geodata" preservelastmodified="true">
-			<fileset dir="data/geodata">
-				<include name="*.l2j" />
-				<include name="*.txt" />
-			</fileset>
-		</copy>
-		<copy todir="${build.dist.game}/data/pathnode" preservelastmodified="true">
-			<fileset dir="data/pathnode">
-				<include name="*.pn" />
-				<include name="*.txt" />
-			</fileset>
+			<fileset dir="dist/cfgs" />
+			<fileset dir="dist/configurators" />
+			<fileset dir="dist/game" />
 		</copy>
 		<copy todir="${build.dist.images}" preservelastmodified="true">
-			<fileset dir="images" />
+			<fileset dir="dist/images" />
 		</copy>
 		<copy todir="${build.dist.languages}" preservelastmodified="true">
-			<fileset dir="languages" />
+			<fileset dir="dist/languages" />
 		</copy>
 		<copy todir="${build.dist.libs}" preservelastmodified="true">
-			<fileset dir="lib">
-				<include name="*.jar" />
-			</fileset>
+			<fileset dir="lib" />
 		</copy>
 		<copy todir="${build.dist.login}" preservelastmodified="true">
-			<fileset dir="dist">
-				<include name="GSRegister.exe" />
-				<include name="L2JConfig.*" />
-				<include name="LoginServer_loop.sh" />
-				<include name="RegisterGameServer.*" />
-				<include name="startLoginServer.*" />
-				<include name="startSQLAccountManager.*" />
-			</fileset>
-			<fileset dir="${src}">
-				<include name="banned_ip.cfg" />
-				<include name="console.cfg" />
-				<include name="log.cfg" />
-			</fileset>
-		</copy>
-		<copy todir="${build.dist.login}/config" preservelastmodified="true">
-			<fileset dir="${src}/config">
-				<include name="email.properties" />
-				<include name="loginserver.properties" />
-				<include name="loginserver.properties.ja" />
-				<include name="mmo.properties" />
-				<include name="mmo.properties.ja" />
-				<include name="telnet.properties" />
-				<include name="telnet.properties.ja" />
-			</fileset>
+			<fileset dir="dist/cfgs" />
+			<fileset dir="dist/configurators" />
+			<fileset dir="dist/login" />
 		</copy>
 		<fixcrlf srcdir="${build.dist.game}" eol="crlf" eof="remove" includes="**/*.bat" />
 		<fixcrlf srcdir="${build.dist.game}" eol="lf" eof="remove" includes="**/*.sh" />
@@ -256,7 +184,7 @@
 		</exec>
 		<!-- [JOJO] -->
 
-		<!--zip destfile="${build}/L2J_Server_BETA.zip" basedir="${build.dist}" /-->
+		<zip destfile="${build}/L2J_Server_BETA.zip" basedir="${build.dist}" />
 	</target>
 
 	<target name="clean" description="Remove the output directories">
@@ -285,7 +213,7 @@
 		<exec dir="." executable="svnversion" outputproperty="l2j.revision">
 			<arg line="-n ." />
 		</exec>
-		<copy file="java/config/l2j-version.txt" tofile="${build.dist.game}/config/l2j-version.properties" overwrite="true"/><!--[JOJO]-->
+		<copy file="dist/game/config/l2j-version.txt" tofile="${build.dist.game}/config/l2j-version.properties" overwrite="true"/><!--[JOJO]-->
 		<concat destfile="${build.dist.game}/config/l2j-version.properties" append="true">
 			revision=${l2j.revision}
 			builddate=${build.tstamp}
