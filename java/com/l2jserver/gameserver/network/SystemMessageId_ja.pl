@@ -39,7 +39,7 @@ sub start {
 
 	my $UPDATE = 0;
 
-	$text =~ s!\bSUBMITTED_A_BID\b!\bSUBMITTED_A_BID_S1\b!g;	# FIX BUG
+	$text =~ s!\bSUBMITTED_A_BID\b!SUBMITTED_A_BID_OF_S1!g;	# FIX BUG
 
 	#	/**
 	#	 * 3119	<BR>	The couple action was denied.
