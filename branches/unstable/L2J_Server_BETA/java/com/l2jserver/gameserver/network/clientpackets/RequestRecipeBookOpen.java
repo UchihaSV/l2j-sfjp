@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.RecipeController;
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
-import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 public final class RequestRecipeBookOpen extends L2GameClientPacket
 {
@@ -41,17 +41,25 @@ public final class RequestRecipeBookOpen extends L2GameClientPacket
 	@Override
 	protected void runImpl()
 	{
-		if (getClient().getActiveChar() == null)
-			return;
-		
-		if (getClient().getActiveChar().getPrivateStoreType() != 0)
+		final L2PcInstance activeChar = getClient().getActiveChar();
+		if (activeChar == null)
 		{
-        	// [L2J_JP EDIT]
-            getClient().getActiveChar().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PRIVATE_STORE_UNDER_WAY));
 			return;
 		}
 		
-		RecipeController.getInstance().requestBookOpen(getClient().getActiveChar(), _isDwarvenCraft);
+		if (activeChar.isCastingNow() || activeChar.isCastingSimultaneouslyNow())
+		{
+			activeChar.sendPacket(SystemMessageId.NO_RECIPE_BOOK_WHILE_CASTING);
+			return;
+		}
+		
+		if (activeChar.getActiveRequester() != null)
+		{
+			activeChar.sendMessage("You may not alter your recipe book while trading.");
+			return;
+		}
+		
+		RecipeController.getInstance().requestBookOpen(activeChar, _isDwarvenCraft);
 	}
 	
 	@Override
