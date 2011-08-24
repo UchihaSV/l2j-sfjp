@@ -33,7 +33,7 @@ public final class CreatureSay extends L2GameServerPacket
 	private int _npcString = -1;
 	
 	/**
-	 * @param _characters
+	 * チャット、お知らせ など用
 	 */
 	public CreatureSay(int objectId, int messageType, String charName, String text)
 	{
@@ -43,6 +43,9 @@ public final class CreatureSay extends L2GameServerPacket
 		_text = text;
 	}
 	
+	/**
+	 * 定期船案内用
+	 */
 	public CreatureSay(int objectId, int messageType, int charId, SystemMessageId sysString)
 	{
 		_objectId = objectId;
