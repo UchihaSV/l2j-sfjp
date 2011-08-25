@@ -187,6 +187,10 @@
 		<zip destfile="${build}/L2J_Server_BETA.zip" basedir="${build.dist}" />
 	</target>
 
+	<target name="cleanAll" description="Remove the output directories">
+		<delete includeEmptyDirs="true" failonerror="false"><fileset dir="${build}" includes="**/*" /></delete>
+	</target>
+
 	<target name="clean" description="Remove the output directories">
 		<delete includeEmptyDirs="true" failonerror="false"><fileset dir="${build}" includes="**/*" /></delete>
 	</target>
