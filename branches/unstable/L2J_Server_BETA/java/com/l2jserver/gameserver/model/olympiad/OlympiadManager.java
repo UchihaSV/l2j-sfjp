@@ -476,7 +476,7 @@ public class OlympiadManager
 		{
 			NpcHtmlMessage message = new NpcHtmlMessage(0);
 			message.setFile(player.getHtmlPrefix(), "data/html/olympiad/noble_nopoints1.htm");
-			message.replace("%objectId%", String.valueOf(noble.getTargetId()));
+			message.replace("%objectId%", noble.getTargetId());
 			player.sendPacket(message);
 			return false;
 		}
@@ -486,7 +486,7 @@ public class OlympiadManager
 		{
 			NpcHtmlMessage message = new NpcHtmlMessage(0);
 			message.setFile(player.getHtmlPrefix(), "data/html/mods/OlympiadIPRestriction.htm");
-			message.replace("%max%", String.valueOf(AntiFeedManager.getInstance().getLimit(player, Config.L2JMOD_DUALBOX_CHECK_MAX_OLYMPIAD_PARTICIPANTS_PER_IP)));
+			message.replace("%max%", AntiFeedManager.getInstance().getLimit(player, Config.L2JMOD_DUALBOX_CHECK_MAX_OLYMPIAD_PARTICIPANTS_PER_IP));
 			player.sendPacket(message);
 			return false;
 		}
