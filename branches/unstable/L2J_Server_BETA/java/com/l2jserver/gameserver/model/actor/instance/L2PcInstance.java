@@ -10982,7 +10982,7 @@ public final class L2PcInstance extends L2Playable
 			checkPlayerSkills();
 		
 		if (Config.CACHE_CHAR_NAMES)
-			CharNameTable.getInstance().addName(getObjectId(), getName());
+			CharNameTable.getInstance().addName(this);
 	}
 	
 	public long getLastAccess()
