@@ -20,6 +20,7 @@ import java.util.concurrent.ScheduledFuture;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
+import com.l2jserver.gameserver.model.L2Effect;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Skill;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -59,8 +60,9 @@ public class L2XmassTreeInstance extends L2Npc
 
 	protected class XmassAI implements Runnable
 	{
-		protected L2XmassTreeInstance _caster;
-		protected L2Skill _skill;
+		protected final L2XmassTreeInstance _caster;
+		protected final L2Skill _skill;
+		protected final String _abnormalType;
 		private int _buffIndex = 0;
 		
 		protected XmassAI(L2XmassTreeInstance caster, L2Skill skill)
@@ -68,6 +70,7 @@ public class L2XmassTreeInstance extends L2Npc
 			_caster = caster;
 			_skill = skill;
 			if (_skill.getSkillType() == L2SkillType.NOTDONE) throw new RuntimeException();
+			_abnormalType = _skill.getEffectTemplates()[0].abnormalType;
 		}
 		
 		public void run()
@@ -84,8 +87,7 @@ public class L2XmassTreeInstance extends L2Npc
 				if (player.getCurrentHp() < player.getMaxHp()
 				 || player.getCurrentMp() < player.getMaxMp())
 				{
-					if (player.getFirstEffect(_skill.getId()) == null)
-						_skill.getEffects(player, player);
+					handleEffect(player);
 				}
 				else
 				{
@@ -95,7 +97,15 @@ public class L2XmassTreeInstance extends L2Npc
 			}
 			_buffIndex = (_buffIndex + 1) % _buffs.length;
 		}
-
+		
+		protected void handleEffect(L2PcInstance player)
+		{
+			for (L2Effect e : player.getAllEffects())
+				if (_abnormalType.equals(e.getAbnormalType()))
+					return;
+			_skill.getEffects(player, player);
+		}
+		
 		protected boolean handleCast(L2PcInstance player, int skillId, int skillLevel)
 		{
 			L2Skill skill = SkillTable.getInstance().getInfo(skillId, skillLevel);
