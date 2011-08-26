@@ -55,8 +55,7 @@ public class L2KotatsuInstance extends L2XmassTreeInstance /*extends L2Npc*/
 				 || player.getCurrentCp() < player.getMaxCp()
 				 || player.getCurrentMp() < player.getMaxMp())
 				{
-					if (player.getFirstEffect(_skill.getId()) == null)
-						_skill.getEffects(player, player);
+					handleEffect(player);
 				}
 			}
 		}
