@@ -50,7 +50,7 @@
 		</mapper>
 	</pathconvert>
 
-	<target name="init" depends="checkAntVersion, checkJavaVersion, getVersionAndDate" description="Create the output directories."><!-- [JOJO] -->
+	<target name="init" depends="checkRequirements,getChangelogDateVersion" description="Create the output directories."><!-- [JOJO] -->
 		<mkdir dir="${build}" />
 		<mkdir dir="${build.classes}" />
 	</target>
@@ -75,7 +75,7 @@
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Built-Date" value="${build.tstamp}" />
 				<attribute name="Implementation-URL" value="http://www.l2jserver.com/" />
-				<attribute name="Implementation-Version" value="${l2j.revision}" />
+				<attribute name="Implementation-Version" value="${l2j.version}" />
 				<attribute name="Main-Class" value="com.l2jserver.loginserver.L2LoginServer" />
 			</manifest>
 		</jar>
@@ -91,11 +91,10 @@
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Built-Date" value="${build.tstamp}" />
 				<attribute name="Implementation-URL" value="http://www.l2jserver.com/" />
-				<attribute name="Implementation-Version" value="${l2j.revision}" />
+				<attribute name="Implementation-Version" value="${l2j.version}" />
 				<attribute name="Main-Class" value="com.l2jserver.gameserver.GameServer" />
 			</manifest>
 		</jar>
-		<!-- Tools -->
 		<jar destfile="${build.dist.tools}/dbinst_cs.jar">
 			<fileset dir="${build.classes}">
 				<include name="**/dbinstaller/**" />
@@ -109,7 +108,7 @@
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Built-Date" value="${build.tstamp}" />
 				<attribute name="Implementation-URL" value="http://www.l2jserver.com/" />
-				<attribute name="Implementation-Version" value="${l2j.revision}" />
+				<attribute name="Implementation-Version" value="${l2j.version}" />
 				<attribute name="Main-Class" value="com.l2jserver.dbinstaller.LauncherCS" />
 			</manifest>
 		</jar>
@@ -126,7 +125,7 @@
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Built-Date" value="${build.tstamp}" />
 				<attribute name="Implementation-URL" value="http://www.l2jserver.com/" />
-				<attribute name="Implementation-Version" value="${l2j.revision}" />
+				<attribute name="Implementation-Version" value="${l2j.version}" />
 				<attribute name="Main-Class" value="com.l2jserver.dbinstaller.LauncherGS" />
 			</manifest>
 		</jar>
@@ -143,7 +142,7 @@
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Built-Date" value="${build.tstamp}" />
 				<attribute name="Implementation-URL" value="http://www.l2jserver.com/" />
-				<attribute name="Implementation-Version" value="${l2j.revision}" />
+				<attribute name="Implementation-Version" value="${l2j.version}" />
 				<attribute name="Main-Class" value="com.l2jserver.dbinstaller.LauncherLS" />
 			</manifest>
 		</jar>
@@ -154,16 +153,16 @@
 		<copy todir="${build.dist.doc}" preservelastmodified="true">
 			<fileset dir="dist/doc" />
 		</copy>
+		<concat destfile="${build.dist.doc}/Changelog.txt">${l2j.changelog}</concat>
 		<copy todir="${build.dist.game}" preservelastmodified="true">
 			<fileset dir="dist/cfgs" />
 			<fileset dir="dist/configurators" />
 			<fileset dir="dist/game" />
 		</copy>
 		<copy file="dist/game/config/l2j-version.txt" tofile="${build.dist.game}/config/l2j-version.properties" overwrite="true"/><!--[JOJO]-->
-		<concat destfile="${build.dist.game}/config/l2j-version.properties" append="true">
-			revision=${l2j.revision}
-			builddate=${build.tstamp}
-		</concat>
+		<concat destfile="${build.dist.game}/config/l2j-version.properties" append="true">revision=${l2j.version}
+builddate=${build.tstamp}
+</concat>
 		<copy todir="${build.dist.images}" preservelastmodified="true">
 			<fileset dir="dist/images" />
 		</copy>
@@ -200,7 +199,7 @@
 		<delete includeEmptyDirs="true" failonerror="false"><fileset dir="${build}" includes="**/*" /></delete>
 	</target>
 
-	<target name="checkAntVersion" description="Check if Ant 1.8.2 is present">
+	<target name="checkRequirements" description="Check Requirements">
 		<fail message="Ant 1.8.2 is required. But your version is ${ant.version}">
 			<condition>
 				<not>
@@ -208,17 +207,18 @@
 				</not>
 			</condition>
 		</fail>
-	</target>
-
-	<target name="checkJavaVersion" description="Checks if Java JDK 7 is present">
 		<available classname="java.lang.AutoCloseable" property="JDK7.present" />
 		<fail unless="JDK7.present" message="Java JDK 7 is required." />
 	</target>
 
-	<target name="getVersionAndDate" description="Create l2j-version.properties file">
+	<target name="getChangelogDateVersion" description="Get Changelog, Date, Version">
+		<exec dir="." executable="svn" outputproperty="l2j.changelog" >
+			<arg value="log" />
+			<arg value="--stop-on-copy" />
+		</exec>
 		<tstamp>
 			<format property="build.tstamp" pattern="yyyy/MM/dd HH:mm" />
 		</tstamp>
-		<exec dir="." executable="svnversion" outputproperty="l2j.revision" />
+		<exec dir="." executable="svnversion" outputproperty="l2j.version" />
 	</target>
 </project>
