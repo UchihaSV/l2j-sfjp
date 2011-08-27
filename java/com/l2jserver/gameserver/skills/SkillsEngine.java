@@ -34,8 +34,7 @@ import com.l2jserver.util.file.filter.XMLFilter;
  */
 public class SkillsEngine
 {
-	
-	protected /*static*/ final Logger _log = Logger.getLogger(SkillsEngine.class.getName());
+	private static final Logger _log = Logger.getLogger(SkillsEngine.class.getName());
 	
 	public static SkillsEngine getInstance()
 	{
@@ -55,7 +54,9 @@ public class SkillsEngine
 			return;
 		}
 		for (File f : dir.listFiles(new XMLFilter()))
+		{
 			hash.add(f);
+		}
 	}
 	
 	private/*public*/ List<L2Skill> loadSkills(File file)
@@ -82,7 +83,9 @@ public class SkillsEngine
 		{
 			List<L2Skill> s = loadSkills(file);
 			if (s == null)
+			{
 				continue;
+			}
 			for (L2Skill skill : s)
 			{
 				allSkills.put(SkillTable.getSkillHashCode(skill), skill);
@@ -90,7 +93,7 @@ public class SkillsEngine
 			}
 		}
 		StringIntern.end();
-		_log.info("SkillsEngine: Loaded " + count + " Skill templates from XML files.");
+		_log.info(getClass().getSimpleName() + ": Loaded " + count + " Skill templates from XML files.");
 	}
 	
 	/**
