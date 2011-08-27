@@ -690,7 +690,7 @@ public class TvTEvent
 				if (htmContent != null)
 				{
 					npcHtmlMessage.setHtml(htmContent);
-					npcHtmlMessage.replace("%max%", String.valueOf(AntiFeedManager.getInstance().getLimit(playerInstance, Config.TVT_EVENT_MAX_PARTICIPANTS_PER_IP)));
+					npcHtmlMessage.replace("%max%", (AntiFeedManager.getInstance().getLimit(playerInstance, Config.TVT_EVENT_MAX_PARTICIPANTS_PER_IP)));
 				}
 			}
 			else if (needParticipationFee() && !hasParticipationFee(playerInstance))

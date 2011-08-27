@@ -122,11 +122,11 @@ public class L2FortLogisticsInstance extends L2MerchantInstance
 				if (player.isClanLeader())
 				{
 					html.setFile(player.getHtmlPrefix(), "data/html/fortress/logistics-supplylvl.htm");
-					html.replace("%supplylvl%", String.valueOf(getFort().getSupplyLvL()));
+					html.replace("%supplylvl%", (getFort().getSupplyLvL()));
 				}
 				else
 					html.setFile(player.getHtmlPrefix(), "data/html/fortress/logistics-noprivs.htm");
-				html.replace("%objectId%", String.valueOf(getObjectId()));
+				html.replace("%objectId%", (getObjectId()));
 				player.sendPacket(html);
 				return;
 			}
@@ -134,7 +134,7 @@ public class L2FortLogisticsInstance extends L2MerchantInstance
 			{
 				NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 				html.setFile(player.getHtmlPrefix(), "data/html/fortress/logistics-1.htm");
-				html.replace("%objectId%", String.valueOf(getObjectId()));
+				html.replace("%objectId%", (getObjectId()));
 				player.sendPacket(html);
 				return;
 			}
@@ -167,7 +167,7 @@ public class L2FortLogisticsInstance extends L2MerchantInstance
 					else
 						html.setFile(player.getHtmlPrefix(), "data/html/fortress/logistics-nosupply.htm");
 				}
-				html.replace("%objectId%", String.valueOf(getObjectId()));
+				html.replace("%objectId%", (getObjectId()));
 				player.sendPacket(html);
 				return;
 			}
@@ -175,7 +175,7 @@ public class L2FortLogisticsInstance extends L2MerchantInstance
 			{
 				NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 				html.setFile(player.getHtmlPrefix(), "data/html/fortress/logistics-noprivs.htm");
-				html.replace("%objectId%", String.valueOf(getObjectId()));
+				html.replace("%objectId%", (getObjectId()));
 				player.sendPacket(html);
 				return;
 			}
