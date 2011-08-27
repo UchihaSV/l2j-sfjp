@@ -148,7 +148,7 @@
 		</jar>
 	</target>
 
-	<target name="dist ALL" depends="clean,dist"/><!-- [JOJO] -->
+	<target name="dist ALL" depends="cleanAll,dist"/><!-- [JOJO] -->
 	<target name="dist" depends="jar">
 		<copy todir="${build.dist.doc}" preservelastmodified="true">
 			<fileset dir="dist/doc" />
