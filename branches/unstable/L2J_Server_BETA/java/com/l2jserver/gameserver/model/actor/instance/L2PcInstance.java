@@ -10980,9 +10980,6 @@ public final class L2PcInstance extends L2Playable
 		notifyFriends();
 		if (!isGM() && Config.DECREASE_SKILL_LEVEL)
 			checkPlayerSkills();
-		
-		if (Config.CACHE_CHAR_NAMES)
-			CharNameTable.getInstance().addName(this);
 	}
 	
 	public long getLastAccess()
@@ -11007,6 +11004,14 @@ public final class L2PcInstance extends L2Playable
 			if (!DimensionalRiftManager.getInstance().checkIfInPeaceZone(getX(), getY(), getZ()))
 				getParty().getDimensionalRift().memberRessurected(this);
 		}
+	}
+	
+	@Override
+	public void setName(String value)
+	{
+		super.setName(value);
+		if (Config.CACHE_CHAR_NAMES)
+			CharNameTable.getInstance().addName(this);
 	}
 	
 	@Override
