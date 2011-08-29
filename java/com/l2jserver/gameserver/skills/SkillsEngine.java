@@ -76,7 +76,8 @@ public class SkillsEngine
 		int count = 0;
 		List<File> files = new FastList<File>();
 		hashFiles("data/stats/skills", files);
-		hashFiles("data/stats/skills/custom", files);
+		if (Config.CUSTOM_SKILLS_LOAD)
+			hashFiles("data/stats/skills/custom", files);
 		
 		StringIntern.begin();
 		for (File file : files)
@@ -105,7 +106,8 @@ public class SkillsEngine
 		List<L2Item> list = new FastList<L2Item>();
 		List<File> files = new FastList<File>();
 		hashFiles("data/stats/items", files);
-		hashFiles("data/stats/items/custom", files);
+		if (Config.CUSTOM_ITEMS_LOAD)
+			hashFiles("data/stats/items/custom", files);
 		
 		StringIntern.begin();
 		for (File f : files)
