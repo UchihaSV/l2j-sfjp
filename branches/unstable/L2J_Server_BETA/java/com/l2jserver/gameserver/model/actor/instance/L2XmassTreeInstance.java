@@ -25,7 +25,7 @@ import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Skill;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
-import com.l2jserver.gameserver.model.zone.type.L2TownZone;
+import com.l2jserver.gameserver.model.zone.type.L2PeaceZone;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillUse;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
@@ -138,7 +138,7 @@ public class L2XmassTreeInstance extends L2Npc
 		super.onSpawn();
 		
 		if (getNpcId() == 13007
-				&& ZoneManager.getInstance().getZone(this, L2TownZone.class) == null)
+				&& ZoneManager.getInstance().getZone(this, L2PeaceZone.class) == null)
 			_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new XmassAI(this,SkillTable.getInstance().getInfo(2139, 1)), 3000, 3000);
 	}
 	
