@@ -1102,7 +1102,7 @@ public final class NpcStringId
 
 	/**
 	 * ID: 7362<br>
-	 * Message: おい、逃したのか！あれっぽっちのやつも倒せないのか。うーーーっ！　
+	 * Message: おい、逃したのか！あれっぽっちのやつも倒せないのか。うーーーっ！ 
 	 */
 	public static final NpcStringId YOU_MISSED_WHAT_A_FOOL_YOU_ARE;
 
@@ -4414,7 +4414,7 @@ public final class NpcStringId
 
 	/**
 	 * ID: 45677<br>
-	 * Message: ダブルトパ　スピアー
+	 * Message: ダブルトパ スピアー
 	 */
 	public static final NpcStringId DOUBLETOP_SPEAR;
 
@@ -4654,7 +4654,7 @@ public final class NpcStringId
 
 	/**
 	 * ID: 60013<br>
-	 * Message: ソリアの名誉のために！
+	 * Message: ソリナの名誉のために！
 	 */
 	public static final NpcStringId FOR_THE_GLORY_OF_SOLINA;
 
@@ -4672,7 +4672,7 @@ public final class NpcStringId
 
 	/**
 	 * ID: 60016<br>
-	 * Message: ソリアの名誉のために剣を取ろう。
+	 * Message: ソリナの名誉のために剣を取ろう。
 	 */
 	public static final NpcStringId WE_RAISE_OUR_BLADES_FOR_THE_GLORY_OF_SOLINA;
 
@@ -17650,7 +17650,7 @@ public final class NpcStringId
 
 	/**
 	 * ID: 1800756<br>
-	 * Message: がおーっ！あ、間違えた。ブヒブヒ！おい！俺はブタだぞ！ブヒブヒ！
+	 * Message: あ、間違えた。ブヒブヒ！俺はブタだ！ブヒブヒ！
 	 */
 	public static final NpcStringId ROAR_NO_OINK_OINK_SEE_IM_A_PIG_OINK_OINK;
 
@@ -17662,85 +17662,85 @@ public final class NpcStringId
 
 	/**
 	 * ID: 1800758<br>
-	 * Message: 乳牛と一緒に遊びに来ただけだよ。ブヒブヒ！
+	 * Message: 友達と一緒に遊びに来ただけだよ。ブヒブヒ！
 	 */
 	public static final NpcStringId I_JUST_FOLLOWED_MY_FRIEND_HERE_FOR_FUN_OINK_OINK;
 
 	/**
 	 * ID: 1800759<br>
-	 * Message: んもう～っ！五臓六腑に染み渡るな！
+	 * Message: プハァ～五臓六腑に染み渡る！
 	 */
 	public static final NpcStringId WOW_THATS_WHAT_I_CALL_A_CURE_ALL;
 
 	/**
 	 * ID: 1800760<br>
-	 * Message: んもう～っ！食欲がどんどんでてきたぞ。草でも食いに行くべ。
+	 * Message: 食欲がどんどんでてきたぞ。草でも食いに行くべ。
 	 */
 	public static final NpcStringId IM_STARVING_SHOULD_I_GO_CHEW_SOME_GRASS;
 
 	/**
 	 * ID: 1800761<br>
-	 * Message: ありがとよ。今度、一杯おごるよ。牛乳をな。
+	 * Message: ありがとよ！
 	 */
 	public static final NpcStringId THANK_YOU_THANK_YOU;
 
 	/**
 	 * ID: 1800762<br>
-	 * Message: んもう～っつ！か～っ！元気が出てきたぞ！
+	 * Message: か～っ！元気が出てきたぞ！
 	 */
 	public static final NpcStringId WHATS_THIS_FEELING_OH_OH_FEELS_LIKE_MY_ENERGY_IS_BACK;
 
 	/**
 	 * ID: 1800763<br>
-	 * Message: んもう～っ！そう、そこそこ！
+	 * Message: そう、これこれ！カラダが軽くなるこの感じ！
 	 */
 	public static final NpcStringId MY_BODYS_GETTING_LIGHTER_THIS_FEELING_FEELS_FAMILIAR_SOMEHOW;
 
 	/**
 	 * ID: 1800764<br>
-	 * Message: わ～疲れが溶けていくようだ。
+	 * Message: わぁ～疲れが溶けていくようだ。
 	 */
 	public static final NpcStringId WOW_MY_FATIGUE_IS_COMPLETELY_GONE;
 
 	/**
 	 * ID: 1800765<br>
-	 * Message: へえ～疲労ゲージがどんどん下がってくぞ！疲れがどんどん取れる。
+	 * Message: 不吉な気が消えてきてる！
 	 */
 	public static final NpcStringId HEY_THE_OMINOUS_ENERGY_IS_DISAPPEARED;
 
 	/**
 	 * ID: 1800766<br>
-	 * Message: んもう～っ！カラダが軽くなったぞ。
+	 * Message: カラダが綿のように軽くなったぞ。
 	 */
 	public static final NpcStringId MY_BODY_FEELS_AS_LIGHT_AS_A_FEATHER;
 
 	/**
 	 * ID: 1800767<br>
-	 * Message: 何、これ？食い物か。ブヒブヒ！
+	 * Message: 何、これ？食い物か。
 	 */
 	public static final NpcStringId WHATS_THIS_FOOD;
 
 	/**
 	 * ID: 1800768<br>
-	 * Message: パワーマンタン！もう疲労回復剤なんて要らねえぜ！ブヒブヒ！
+	 * Message: 力がみなぎる！もう元気回復剤なんて要らねえぜ！
 	 */
 	public static final NpcStringId MY_ENERGY_IS_OVERFLOWING_I_DONT_NEED_ANY_FATIGUE_RECOVERY_POTION;
 
 	/**
 	 * ID: 1800769<br>
-	 * Message: 何やってんだ！？素人かよっ！疲労回復剤は牛にでもくれてやりな。ブヒブヒ！
+	 * Message: 何やってんだ！？素人かよっ！
 	 */
 	public static final NpcStringId WHATS_THE_MATTER_THATS_AN_AMATEUR_MOVE;
 
 	/**
 	 * ID: 1800770<br>
-	 * Message: 幸運のタイマー：10秒以内に終われば報賞は2倍！
+	 * Message: ダブルチャンス！10秒以内に治療すれば報賞が2倍！
 	 */
 	public static final NpcStringId FORTUNE_TIMER_REWARD_INCREASES_2_TIMES_IF_COMPLETED_WITHIN_10_SECONDS;
 
 	/**
 	 * ID: 1800771<br>
-	 * Message: 幸運のタイマー：40秒以内に終われば報賞は2倍！
+	 * Message: ダブルチャンス！40秒以内に治療すれば報賞が2倍！
 	 */
 	public static final NpcStringId FORTUNE_TIMER_REWARD_INCREASES_2_TIMES_IF_COMPLETED_WITHIN_40_SECONDS;
 
@@ -17992,13 +17992,13 @@ public final class NpcStringId
 
 	/**
 	 * ID: 1800813<br>
-	 * Message: Mission Failed!
+	 * Message: 治療に失敗しました．．．
 	 */
 	public static final NpcStringId MISSION_FAILED;
 
 	/**
 	 * ID: 1800814<br>
-	 * Message: Mission Success!
+	 * Message: 治療に成功しました！
 	 */
 	public static final NpcStringId MISSION_SUCCESS;
 
@@ -18010,25 +18010,25 @@ public final class NpcStringId
 
 	/**
 	 * ID: 1800816<br>
-	 * Message: おい！俺を焼いて食おうってのか？！キューピッドの疲労回復剤を使ってくれよ。
+	 * Message: おい！俺を焼いて食おうってのか！？キューピッドの元気回復剤を使ってくれよ。
 	 */
 	public static final NpcStringId HEY_ARE_YOU_PLANNING_ON_EATING_ME_USE_A_CUPIDS_FATIGUE_RECOVERY_POTION_ALREADY;
 
 	/**
 	 * ID: 1800817<br>
-	 * Message: 生兵法は怪我の元だぜ。素人のマッサージは遠慮して、キューピッドの疲労回復剤にしとくわ。
+	 * Message: 生兵法は怪我の元だぜ。素人のマッサージは遠慮して、キューピッドの元気回復剤にしとくわ。
 	 */
 	public static final NpcStringId ILL_PASS_ON_AN_AMATEURS_MERIDIAN_MASSAGE_USE_A_CUPIDS_FATIGUE_RECOVERY_POTION_ALREADY;
 
 	/**
 	 * ID: 1800818<br>
-	 * Message: んも～お！こんなに早く疲れが取れるなんてな。$s1、助かったぜ。
+	 * Message: こんなに早く疲れが取れるなんてな。$s1、助かったぜ。
 	 */
 	public static final NpcStringId I_ALREADY_FEEL_MORE_ENERGETIC_THANKS_S1;
 
 	/**
 	 * ID: 1800819<br>
-	 * Message: 速ええな！あんたはマッサージの達人だぜ、$s1先生。
+	 * Message: スッキリしたぁ！あんたはマッサージの達人だぜ、$s1先生。
 	 */
 	public static final NpcStringId HOW_REFRESHING_YOU_WOULDNT_HAPPEN_TO_BE_A_MASTER_MASSEUSE_S1_WOULD_YOU;
 
@@ -18040,13 +18040,13 @@ public final class NpcStringId
 
 	/**
 	 * ID: 1800821<br>
-	 * Message: ひとりでやるのはしんどいだろ？次からは仲間とパーティを組んでからやりな。
+	 * Message: ひとりでやるのはしんどいだろ？次からは仲間とパーティーを組んでからやりな。
 	 */
 	public static final NpcStringId ISNT_IT_TOUGH_DOING_IT_ALL_ON_YOUR_OWN_NEXT_TIME_TRY_MAKING_A_PARTY_WITH_SOME_COMRADES;
 
 	/**
 	 * ID: 1800822<br>
-	 * Message: わりぃけどさ、俺の友達にもしてやってくれねえかな？
+	 * Message: キタキタキター！巨大化しちゃうぞ～！
 	 */
 	public static final NpcStringId SORRY_BUT_ILL_LEAVE_MY_FRIEND_IN_YOUR_CARE_AS_WELL_THANKS;
 
@@ -19378,7 +19378,7 @@ public final class NpcStringId
 
 	/**
 	 * ID: 1801048<br>
-	 * Message: どもども、ベルダです。ジャック　ゲーム1位、おめでとうございます！村にいるクルドから衝撃！のプレゼントがもらえますよ。それじゃ、またゲームしにきてくださいね。
+	 * Message: どもども、ベルダです。ジャック ゲーム1位、おめでとうございます！村にいるクルドから衝撃！のプレゼントがもらえますよ。それじゃ、またゲームしにきてくださいね。
 	 */
 	public static final NpcStringId HELLO_IM_BELLDANDY_CONGRATULATIONS_ON_WINNING_1ST_PLACE_IN_JACKS_GAME_IF_YOU_GO_AND_FIND_MY_SIBLING_SKOOLDIE_IN_THE_VILLAGE_YOULL_GET_AN_AMAZING_GIFT_LETS_PLAY_JACKS_GAME_AGAIN;
 
@@ -19468,7 +19468,7 @@ public final class NpcStringId
 
 	/**
 	 * ID: 1801063<br>
-	 * Message: カードを出すタイミングに気をつけろ。あたいの頭の上のゲージが0になる前にカード　スキルを使っちゃいな！
+	 * Message: カードを出すタイミングに気をつけろ。あたいの頭の上のゲージが0になる前にカード スキルを使っちゃいな！
 	 */
 	public static final NpcStringId YOU_GOTTA_SHOW_THE_CARD_AT_THE_RIGHT_TIME_USE_THE_CARD_SKILL_YOU_WANT_BEFORE_THE_GAUGE_ABOVE_MY_HEAD_DISAPPEARS;
 
@@ -19696,7 +19696,7 @@ public final class NpcStringId
 
 	/**
 	 * ID: 1801104<br>
-	 * Message: 使いでのある$s1
+	 * Message: 有能な$s1
 	 */
 	public static final NpcStringId USEFUL_S2;
 
@@ -20140,13 +20140,13 @@ public final class NpcStringId
 
 	/**
 	 * ID: 1801183<br>
-	 * Message: がおーっ！こんなに早く疲れが取れるなんてな。$s1、助かったぜ。
+	 * Message: こんなに早く元気になるとはな。$s1、助かったぜ。
 	 */
 	public static final NpcStringId MY_ENERGY_WAS_RECOVERED_SO_QUICKLY_THANKS_S1;
 
 	/**
 	 * ID: 1801187<br>
-	 * Message: ジュルル．．．食欲が湧いてきたぞ．．．
+	 * Message: ジュルル．．．食欲が湧いてきた！
 	 */
 	public static final NpcStringId IM_STARVING;
 
@@ -21028,7 +21028,7 @@ public final class NpcStringId
 
 	/**
 	 * ID: 1900084<br>
-	 * Message: どもども、ベルダです。ジャック　ゲーム1位、おめでとうございます！村にいる弟のクルドから衝撃！のプレゼントがもらえますよ。それじゃ、またゲームしにきてくださいね。
+	 * Message: どもども、ベルダです。ジャック ゲーム1位、おめでとうございます！村にいる弟のクルドから衝撃！のプレゼントがもらえますよ。それじゃ、またゲームしにきてくださいね。
 	 */
 	public static final NpcStringId HELLO_IM_BELLDANDY_CONGRATULATIONS_ON_GETTING_1ST_PLACE_IN_JACKS_GAME_IF_YOU_GO_AND_FIND_MY_SIBLING_SKOOLDIE_IN_THE_VILLAGE_YOULL_GET_AN_AMAZING_GIFT_LETS_PLAY_JACKS_GAME_AGAIN;
 
@@ -21454,13 +21454,13 @@ public final class NpcStringId
 
 	/**
 	 * ID: 1900175<br>
-	 * Message: Ugh I think this is it for me!
+	 * Message: うう．．．私もここまでか．．．
 	 */
 	public static final NpcStringId UGH_I_THINK_THIS_IS_IT_FOR_ME;
 
 	/**
 	 * ID: 1900176<br>
-	 * Message: Valakas calls forth the servitor's master.
+	 * Message: ヴァラカスが召喚獣の召喚者を強制的に引き寄せます。
 	 */
 	public static final NpcStringId VALAKAS_CALLS_FORTH_THE_SERVITORS_MASTER;
 
