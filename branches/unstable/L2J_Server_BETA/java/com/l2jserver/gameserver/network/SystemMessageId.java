@@ -421,13 +421,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 66<br>
-	 * Message: $c1がパーティに招待しています。参加しますか。
+	 * Message: $c1 がパーティに招待しています。参加しますか。
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY;
 	
 	/**
 	 * ID: 67<br>
-	 * Message: $s1から$s2血盟の勧誘を受けています。加入しますか。
+	 * Message: $s1 から$s2血盟の勧誘を受けています。加入しますか。
 	 */
 	public static final SystemMessageId S1_HAS_INVITED_YOU_TO_JOIN_THE_CLAN_S2;
 	
@@ -655,7 +655,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 105<br>
-	 * Message: $c1をパーティに招待しました。
+	 * Message: $c1 をパーティに招待しました。
 	 */
 	public static final SystemMessageId C1_INVITED_TO_PARTY;
 	
@@ -733,13 +733,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 118<br>
-	 * Message: $c1にトレードを申し込みます。
+	 * Message: $c1 にトレードを申し込みます。
 	 */
 	public static final SystemMessageId REQUEST_C1_FOR_TRADE;
 	
 	/**
 	 * ID: 119<br>
-	 * Message: $c1がトレードを拒否しました。
+	 * Message: $c1 がトレードを拒否しました。
 	 */
 	public static final SystemMessageId C1_DENIED_TRADE_REQUEST;
 	
@@ -751,7 +751,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 121<br>
-	 * Message: $c1がトレードするアイテムを確定しました。
+	 * Message: $c1 がトレードするアイテムを確定しました。
 	 */
 	public static final SystemMessageId C1_CONFIRMED_TRADE;
 	
@@ -769,7 +769,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 124<br>
-	 * Message: $c1がトレードをキャンセルしました。
+	 * Message: $c1 がトレードをキャンセルしました。
 	 */
 	public static final SystemMessageId C1_CANCELED_TRADE;
 	
@@ -883,7 +883,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 143<br>
-	 * Message: $c1は他の人とトレードしています。
+	 * Message: $c1 は他の人とトレードしています。
 	 */
 	public static final SystemMessageId C1_ALREADY_TRADING;
 	
@@ -943,7 +943,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 153<br>
-	 * Message: $c1は作業中です。しばらくしてから申請しなおしてください。
+	 * Message: $c1 は作業中です。しばらくしてから申請しなおしてください。
 	 */
 	public static final SystemMessageId C1_IS_BUSY_TRY_LATER;
 	
@@ -985,7 +985,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 160<br>
-	 * Message: $c1はすでにパーティに所属しているため、招待できません。
+	 * Message: $c1 はすでにパーティに所属しているため、招待できません。
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_IN_PARTY;
 	
@@ -1027,13 +1027,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 167<br>
-	 * Message: $c1はすでに友人リストに登録されています。
+	 * Message: $c1 はすでに友人リストに登録されています。
 	 */
 	public static final SystemMessageId C1_ALREADY_ON_FRIEND_LIST;
 	
 	/**
 	 * ID: 168<br>
-	 * Message: $c1から友人リストの登録を要請されました。
+	 * Message: $c1 から友人リストの登録を要請されました。
 	 */
 	public static final SystemMessageId C1_REQUESTED_TO_BECOME_FRIENDS;
 	
@@ -1051,7 +1051,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 171<br>
-	 * Message: $c1は友人リストに登録されているユーザーではありません。
+	 * Message: $c1 は友人リストに登録されているユーザーではありません。
 	 */
 	public static final SystemMessageId C1_NOT_ON_YOUR_FRIENDS_LIST;
 	
@@ -2813,7 +2813,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 503<br>
-	 * Message: 友人$s1がログインしました。
+	 * Message: 友人$s1 がログインしました。
 	 */
 	public static final SystemMessageId FRIEND_S1_HAS_LOGGED_IN;
 	
@@ -2885,7 +2885,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 516<br>
-	 * Message: $s1があなたを友人として招待しました。
+	 * Message: $s1 があなたを友人として招待しました。
 	 */
 	public static final SystemMessageId SI_INVITED_YOU_AS_FRIEND;
 	
@@ -2951,7 +2951,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 527<br>
-	 * Message: $s1同盟の同盟主$s2に同盟を申し込まれました。
+	 * Message: $s1同盟の同盟主$s2 に同盟を申し込まれました。
 	 */
 	public static final SystemMessageId S2_ALLIANCE_LEADER_OF_S1_REQUESTED_ALLIANCE;
 	
@@ -3185,13 +3185,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 572<br>
-	 * Message: $c1のパーティ勧誘に応じますか。（アイテム分配：拾った人が所有）
+	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：拾った人が所有）
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY_FINDERS_KEEPERS;
 	
 	/**
 	 * ID: 573<br>
-	 * Message: $c1のパーティ勧誘に応じますか。（アイテム分配：パーティ メンバーにランダムで）
+	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：パーティ メンバーにランダムで）
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY_RANDOM;
 	
@@ -4099,13 +4099,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 731<br>
-	 * Message: $c1にサポートからの対応要請をしました。受付番号は$s2です。
+	 * Message: $c1 にサポートからの対応要請をしました。受付番号は$s2です。
 	 */
 	public static final SystemMessageId PETITION_S1_RECEIVED_CODE_IS_S2;
 	
 	/**
 	 * ID: 732<br>
-	 * Message: $c1にサポートからのご連絡があります。
+	 * Message: $c1 にサポートからのご連絡があります。
 	 */
 	public static final SystemMessageId C1_RECEIVED_CONSULTATION_REQUEST;
 	
@@ -4117,13 +4117,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 734<br>
-	 * Message: サポートの代理受付に失敗しました。$c1がすでにサポートを受け付けた状態です。
+	 * Message: サポートの代理受付に失敗しました。$c1 がすでにサポートを受け付けた状態です。
 	 */
 	public static final SystemMessageId PETITION_FAILED_C1_ALREADY_SUBMITTED;
 	
 	/**
 	 * ID: 735<br>
-	 * Message: $c1に対するサポートの代理受付に失敗しました。エラー番号は$s2です。
+	 * Message: $c1 に対するサポートの代理受付に失敗しました。エラー番号は$s2です。
 	 */
 	public static final SystemMessageId PETITION_FAILED_FOR_C1_ERROR_NUMBER_S2;
 	
@@ -4135,7 +4135,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 737<br>
-	 * Message: $c1に対するサポートの代理受付をキャンセルしました。
+	 * Message: $c1 に対するサポートの代理受付をキャンセルしました。
 	 */
 	public static final SystemMessageId CANCELED_PETITION_ON_S1;
 	
@@ -4147,37 +4147,37 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 739<br>
-	 * Message: $c1に対するサポートの代理受付のキャンセルに失敗しました。エラーコードは$s2です。
+	 * Message: $c1 に対するサポートの代理受付のキャンセルに失敗しました。エラーコードは$s2です。
 	 */
 	public static final SystemMessageId PETITION_CANCEL_FAILED_FOR_C1_ERROR_NUMBER_S2;
 	
 	/**
 	 * ID: 740<br>
-	 * Message: $c1がサポートの要請で対話に参加しました。
+	 * Message: $c1 がサポートの要請で対話に参加しました。
 	 */
 	public static final SystemMessageId C1_PARTICIPATE_PETITION;
 	
 	/**
 	 * ID: 741<br>
-	 * Message: $c1を対話に追加するのに失敗しました。すでにサポートを受け付けた状態です。
+	 * Message: $c1 を対話に追加するのに失敗しました。すでにサポートを受け付けた状態です。
 	 */
 	public static final SystemMessageId FAILED_ADDING_C1_TO_PETITION;
 	
 	/**
 	 * ID: 742<br>
-	 * Message: $c1を対話に追加するのに失敗しました。エラーコードは$s2です。
+	 * Message: $c1 を対話に追加するのに失敗しました。エラーコードは$s2です。
 	 */
 	public static final SystemMessageId PETITION_ADDING_C1_FAILED_ERROR_NUMBER_S2;
 	
 	/**
 	 * ID: 743<br>
-	 * Message: $c1が対話から退場しました。
+	 * Message: $c1 が対話から退場しました。
 	 */
 	public static final SystemMessageId C1_LEFT_PETITION_CHAT;
 	
 	/**
 	 * ID: 744<br>
-	 * Message: $s1を対話から削除するのに失敗しました。エラーコードは$s2です。
+	 * Message: $s1 を対話から削除するのに失敗しました。エラーコードは$s2です。
 	 */
 	public static final SystemMessageId PETITION_REMOVING_S1_FAILED_ERROR_NUMBER_S2;
 	
@@ -4267,7 +4267,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 760<br>
-	 * Message: $c1は血盟脱退後1日間経過しておらず、血盟に加入できない状態です。
+	 * Message: $c1 は血盟脱退後1日間経過しておらず、血盟に加入できない状態です。
 	 */
 	public static final SystemMessageId C1_MUST_WAIT_BEFORE_JOINING_ANOTHER_CLAN;
 	
@@ -5461,19 +5461,19 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 967<br>
-	 * Message: $c1のパーティ勧誘に応じますか。（アイテム分配：スポイルを含めランダムに）
+	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：スポイルを含めランダムに）
 	 */
 	public static final SystemMessageId C1_PARTY_INVITE_RANDOM_INCLUDING_SPOIL;
 	
 	/**
 	 * ID: 968<br>
-	 * Message: $c1のパーティ勧誘に応じますか。（アイテム分配：順番に取得）
+	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：順番に取得）
 	 */
 	public static final SystemMessageId C1_PARTY_INVITE_BY_TURN;
 	
 	/**
 	 * ID: 969<br>
-	 * Message: $c1のパーティ勧誘に応じますか。（アイテム分配：スポイルを含め順番に）
+	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：スポイルを含め順番に）
 	 */
 	public static final SystemMessageId C1_PARTY_INVITE_BY_TURN_INCLUDING_SPOIL;
 	
@@ -6187,7 +6187,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1089<br>
-	 * Message: $c1が1周年記念アイテムを得ました。
+	 * Message: $c1 が1周年記念アイテムを得ました。
 	 */
 	public static final SystemMessageId C1_OBTAINED_ANNIVERSARY_ITEM;
 	
@@ -7875,7 +7875,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1370<br>
-	 * Message: $c1は運営者なのでメールを送ることができません。
+	 * Message: $c1 は運営者なのでメールを送ることができません。
 	 */
 	public static final SystemMessageId CANNOT_MAIL_GM_C1;
 	
@@ -8649,19 +8649,19 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1500<br>
-	 * Message: $c1は参加条件に合いません。サブクラス キャラクターではオリンピアードに参加できません。
+	 * Message: $c1 は参加条件に合いません。サブクラス キャラクターではオリンピアードに参加できません。
 	 */
 	public static final SystemMessageId C1_CANT_JOIN_THE_OLYMPIAD_WITH_A_SUB_CLASS_CHARACTER;
 	
 	/**
 	 * ID: 1501<br>
-	 * Message: $c1は参加条件に合いません。ノーブレス以外はオリンピアードに参加できません。
+	 * Message: $c1 は参加条件に合いません。ノーブレス以外はオリンピアードに参加できません。
 	 */
 	public static final SystemMessageId C1_DOES_NOT_MEET_REQUIREMENTS_ONLY_NOBLESS_CAN_PARTICIPATE_IN_THE_OLYMPIAD;
 	
 	/**
 	 * ID: 1502<br>
-	 * Message: $c1は競技待機者リストにすでに登録されています。
+	 * Message: $c1 は競技待機者リストにすでに登録されています。
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_REGISTERED_ON_THE_MATCH_WAITING_LIST;
 	
@@ -9755,25 +9755,25 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1689<br>
-	 * Message: $c1はクラス別競技の待機者リストにすでに登録されています。
+	 * Message: $c1 はクラス別競技の待機者リストにすでに登録されています。
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_REGISTERED_ON_THE_CLASS_MATCH_WAITING_LIST;
 	
 	/**
 	 * ID: 1690<br>
-	 * Message: $c1はクラス無制限個人競技の待機者リストにすでに登録されています。
+	 * Message: $c1 はクラス無制限個人競技の待機者リストにすでに登録されています。
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_REGISTERED_ON_THE_NON_CLASS_LIMITED_MATCH_WAITING_LIST;
 	
 	/**
 	 * ID: 1691<br>
-	 * Message: $c1は参加条件に合いません。インベントリ スロットが80％を超えているため、オリンピアードに参加できません。
+	 * Message: $c1 は参加条件に合いません。インベントリ スロットが80％を超えているため、オリンピアードに参加できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_PARTICIPATE_IN_OLYMPIAD_INVENTORY_SLOT_EXCEEDS_80_PERCENT;
 	
 	/**
 	 * ID: 1692<br>
-	 * Message: $c1は参加条件に合いません。クラスをサブクラスに変更したため、参加できません。
+	 * Message: $c1 は参加条件に合いません。クラスをサブクラスに変更したため、参加できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_PARTICIPATE_IN_OLYMPIAD_WHILE_CHANGED_TO_SUB_CLASS;
 	
@@ -9983,7 +9983,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1727<br>
-	 * Message: $s1から$s2パーティー ルームに招待されました。応じますか。
+	 * Message: $s1 から$s2パーティー ルームに招待されました。応じますか。
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY_ROOM_CONFIRM;
 	
@@ -10031,7 +10031,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1735<br>
-	 * Message: $s1は血盟アカデミーの加入条件に合いません。
+	 * Message: $s1 は血盟アカデミーの加入条件に合いません。
 	 */
 	public static final SystemMessageId S1_DOESNOT_MEET_REQUIREMENTS_TO_JOIN_ACADEMY;
 	
@@ -10121,7 +10121,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1750<br>
-	 * Message: $c1は参加条件に合いません。$s2の所有者はオリンピアードに参加できません。
+	 * Message: $c1 は参加条件に合いません。$s2の所有者はオリンピアードに参加できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_JOIN_OLYMPIAD_POSSESSING_S2;
 	
@@ -10229,13 +10229,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1768<br>
-	 * Message: $c1から$s2血盟の血盟アカデミーとして加入申請が送られました。加入しますか。
+	 * Message: $c1 から$s2 血盟の血盟アカデミーとして加入申請が送られました。加入しますか。
 	 */
 	public static final SystemMessageId JOIN_REQUEST_BY_C1_TO_CLAN_S2_ACADEMY;
 	
 	/**
 	 * ID: 1769<br>
-	 * Message: $c1から$s2血盟所属$s3騎士団として加入招待を送られました。加入しますか。
+	 * Message: $c1 から$s2 血盟所属$s3 騎士団として加入招待を送られました。加入しますか。
 	 */
 	public static final SystemMessageId JOIN_REQUEST_BY_C1_TO_ORDER_OF_KNIGHTS_S3_UNDER_CLAN_S2;
 	
@@ -10277,7 +10277,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1776<br>
-	 * Message: 所属血盟の血盟員$c1が英雄となり血盟名声値$s2ポイントを手に入れました。
+	 * Message: 所属血盟の血盟員$c1 が英雄となり血盟名声値$s2ポイントを手に入れました。
 	 */
 	public static final SystemMessageId CLAN_MEMBER_C1_BECAME_HERO_AND_GAINED_S2_REPUTATION_POINTS;
 	
@@ -10379,7 +10379,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1793<br>
-	 * Message: $c1が$s2の団長に任命されました。
+	 * Message: $c1 が$s2の団長に任命されました。
 	 */
 	public static final SystemMessageId C1_HAS_BEEN_SELECTED_AS_CAPTAIN_OF_S2;
 	
@@ -10409,7 +10409,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1798<br>
-	 * Message: 血盟主の権限を$c1に委譲しました。
+	 * Message: 血盟主の権限を$c1 に委譲しました。
 	 */
 	public static final SystemMessageId CLAN_LEADER_PRIVILEGES_HAVE_BEEN_TRANSFERRED_TO_C1;
 	
@@ -10421,7 +10421,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1800<br>
-	 * Message: ユーザー$c1はBOT使用歴があります。
+	 * Message: ユーザー$c1 はBOT使用歴があります。
 	 */
 	public static final SystemMessageId C1_HISTORY_USING_BOT;
 	
@@ -10595,13 +10595,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1830<br>
-	 * Message: $c1をパーティ ルームへ招待できません。待機者リストを更新してください。
+	 * Message: $c1 をパーティ ルームへ招待できません。待機者リストを更新してください。
 	 */
 	public static final SystemMessageId C1_NOT_ALLOWED_INVITE_TO_PARTY_ROOM;
 	
 	/**
 	 * ID: 1831<br>
-	 * Message: $c1はパーティ ルームの条件に合いません。待機者リストを更新してください。
+	 * Message: $c1 はパーティ ルームの条件に合いません。待機者リストを更新してください。
 	 */
 	public static final SystemMessageId C1_NOT_MEET_CONDITIONS_FOR_PARTY_ROOM;
 	
@@ -10637,7 +10637,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1837<br>
-	 * Message: $c1が$s2血盟所属の$s3近衛隊への加入を勧めています。加入しますか。
+	 * Message: $c1 が$s2血盟所属の$s3近衛隊への加入を勧めています。加入しますか。
 	 */
 	public static final SystemMessageId C1_SENT_INVITATION_TO_ROYAL_GUARD_S3_OF_CLAN_S2;
 	
@@ -10667,19 +10667,19 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1842<br>
-	 * Message: $c1が$s2から召喚を申し込みました。召喚に応じますか。
+	 * Message: $c1 が$s2から召喚を申し込みました。召喚に応じますか。
 	 */
 	public static final SystemMessageId C1_WISHES_TO_SUMMON_YOU_FROM_S2_DO_YOU_ACCEPT;
 	
 	/**
 	 * ID: 1843<br>
-	 * Message: $c1は戦闘中のため召喚できません。
+	 * Message: $c1 は戦闘中のため召喚できません。
 	 */
 	public static final SystemMessageId C1_IS_ENGAGED_IN_COMBAT_AND_CANNOT_BE_SUMMONED;
 	
 	/**
 	 * ID: 1844<br>
-	 * Message: $c1は現在死亡状態のため召喚できません。
+	 * Message: $c1 は現在死亡状態のため召喚できません。
 	 */
 	public static final SystemMessageId C1_IS_DEAD_AT_THE_MOMENT_AND_CANNOT_BE_SUMMONED;
 	
@@ -10757,13 +10757,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1857<br>
-	 * Message: $c1は$s2の所有者になっているため、オリンピアードに参加できません。
+	 * Message: $c1 は$s2の所有者になっているため、オリンピアードに参加できません。
 	 */
 	public static final SystemMessageId C1_OWNS_S2_AND_CANNOT_PARTICIPATE_IN_OLYMPIAD;
 	
 	/**
 	 * ID: 1858<br>
-	 * Message: $c1は死亡状態であるため、オリンピアードに参加できません。
+	 * Message: $c1 は死亡状態であるため、オリンピアードに参加できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_PARTICIPATE_OLYMPIAD_WHILE_DEAD;
 	
@@ -10793,7 +10793,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1863<br>
-	 * Message: $c1がアイテムを購入したので、血盟名声値が$s2差し引かれます。
+	 * Message: $c1 がアイテムを購入したので、血盟名声値が$s2差し引かれます。
 	 */
 	public static final SystemMessageId C1_PURCHASED_CLAN_ITEM_REDUCING_S2_REPU_POINTS;
 	
@@ -10985,13 +10985,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1895<br>
-	 * Message: $c1は現在召喚できない地域にいます。
+	 * Message: $c1 は現在召喚できない地域にいます。
 	 */
 	public static final SystemMessageId C1_IN_SUMMON_BLOCKING_AREA;
 	
 	/**
 	 * ID: 1896<br>
-	 * Message: $c1はすでに召喚中です。
+	 * Message: $c1 はすでに召喚中です。
 	 */
 	public static final SystemMessageId C1_ALREADY_SUMMONED;
 	
@@ -11003,7 +11003,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1898<br>
-	 * Message: $c1はトレードか個人商店を行っているため召喚できません。
+	 * Message: $c1 はトレードか個人商店を行っているため召喚できません。
 	 */
 	public static final SystemMessageId C1_CURRENTLY_TRADING_OR_OPERATING_PRIVATE_STORE_AND_CANNOT_BE_SUMMONED;
 	
@@ -11015,13 +11015,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1900<br>
-	 * Message: $c1がパーティ ルームに入室しました。
+	 * Message: $c1 がパーティ ルームに入室しました。
 	 */
 	public static final SystemMessageId C1_ENTERED_PARTY_ROOM;
 	
 	/**
 	 * ID: 1901<br>
-	 * Message: $s1から$s2パーティー ルームに招待されました。
+	 * Message: $s1 から$s2パーティー ルームに招待されました。
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY_ROOM;
 	
@@ -11063,7 +11063,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1908<br>
-	 * Message: $c1は召喚できない状態です。
+	 * Message: $c1 は召喚できない状態です。
 	 */
 	public static final SystemMessageId C1_STATE_FORBIDS_SUMMONING;
 	
@@ -11177,55 +11177,55 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1927<br>
-	 * Message: $c1に1対1での決闘を申し込みます。
+	 * Message: $c1 に1対1での決闘を申し込みます。
 	 */
 	public static final SystemMessageId C1_HAS_BEEN_CHALLENGED_TO_A_DUEL;
 	
 	/**
 	 * ID: 1928<br>
-	 * Message: $c1のパーティにパーティ同士での決闘を申し込みます。
+	 * Message: $c1 のパーティにパーティ同士での決闘を申し込みます。
 	 */
 	public static final SystemMessageId C1_PARTY_HAS_BEEN_CHALLENGED_TO_A_DUEL;
 	
 	/**
 	 * ID: 1929<br>
-	 * Message: $c1が1対1での決闘を受け入れました。しばらくすると決闘が始まります。
+	 * Message: $c1 が1対1での決闘を受け入れました。しばらくすると決闘が始まります。
 	 */
 	public static final SystemMessageId C1_HAS_ACCEPTED_YOUR_CHALLENGE_TO_A_DUEL_THE_DUEL_WILL_BEGIN_IN_A_FEW_MOMENTS;
 	
 	/**
 	 * ID: 1930<br>
-	 * Message: $c1からの1対1での決闘の申し込みを受け入れました。しばらくすると決闘が始まります。
+	 * Message: $c1 からの1対1での決闘の申し込みを受け入れました。しばらくすると決闘が始まります。
 	 */
 	public static final SystemMessageId YOU_HAVE_ACCEPTED_C1_CHALLENGE_TO_A_DUEL_THE_DUEL_WILL_BEGIN_IN_A_FEW_MOMENTS;
 	
 	/**
 	 * ID: 1931<br>
-	 * Message: $c1が1対1での決闘を拒否しました。
+	 * Message: $c1 が1対1での決闘を拒否しました。
 	 */
 	public static final SystemMessageId C1_HAS_DECLINED_YOUR_CHALLENGE_TO_A_DUEL;
 	
 	/**
 	 * ID: 1932<br>
-	 * Message: $c1が決闘の申し込みを拒否しました。
+	 * Message: $c1 が決闘の申し込みを拒否しました。
 	 */
 	public static final SystemMessageId C1_HAS_DECLINED_YOUR_CHALLENGE_TO_A_DUEL2;
 	
 	/**
 	 * ID: 1933<br>
-	 * Message: $c1のパーティからのパーティ同士での決闘の申し込みを受け入れました。しばらくすると決闘が始まります。
+	 * Message: $c1 のパーティからのパーティ同士での決闘の申し込みを受け入れました。しばらくすると決闘が始まります。
 	 */
 	public static final SystemMessageId YOU_HAVE_ACCEPTED_C1_CHALLENGE_TO_A_PARTY_DUEL_THE_DUEL_WILL_BEGIN_IN_A_FEW_MOMENTS;
 	
 	/**
 	 * ID: 1934<br>
-	 * Message: $c1がパーティ同士での決闘を受け入れました。しばらくすると決闘が始まります。
+	 * Message: $c1 がパーティ同士での決闘を受け入れました。しばらくすると決闘が始まります。
 	 */
 	public static final SystemMessageId S1_HAS_ACCEPTED_YOUR_CHALLENGE_TO_DUEL_AGAINST_THEIR_PARTY_THE_DUEL_WILL_BEGIN_IN_A_FEW_MOMENTS;
 	
 	/**
 	 * ID: 1935<br>
-	 * Message: $c1がパーティ同士での決闘を拒否しました。
+	 * Message: $c1 がパーティ同士での決闘を拒否しました。
 	 */
 	public static final SystemMessageId C1_HAS_DECLINED_YOUR_CHALLENGE_TO_A_PARTY_DUEL;
 	
@@ -11243,13 +11243,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1938<br>
-	 * Message: $c1が1対1での決闘を申し込みました。
+	 * Message: $c1 が1対1での決闘を申し込みました。
 	 */
 	public static final SystemMessageId C1_HAS_CHALLENGED_YOU_TO_A_DUEL;
 	
 	/**
 	 * ID: 1939<br>
-	 * Message: $c1のパーティがパーティ同士での決闘を申し込みました。
+	 * Message: $c1 のパーティがパーティ同士での決闘を申し込みました。
 	 */
 	public static final SystemMessageId C1_PARTY_HAS_CHALLENGED_YOUR_PARTY_TO_A_DUEL;
 	
@@ -11291,13 +11291,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1946<br>
-	 * Message: $c1が1対1での決闘を申し込みました。受け入れますか。
+	 * Message: $c1 が1対1での決闘を申し込みました。受け入れますか。
 	 */
 	public static final SystemMessageId C1_CHALLENGED_YOU_TO_A_DUEL;
 	
 	/**
 	 * ID: 1947<br>
-	 * Message: $c1のパーティがパーティ同士での決闘を申し込みました。受け入れますか。
+	 * Message: $c1 のパーティがパーティ同士での決闘を申し込みました。受け入れますか。
 	 */
 	public static final SystemMessageId C1_CHALLENGED_YOU_TO_A_PARTY_DUEL;
 	
@@ -11315,13 +11315,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1950<br>
-	 * Message: $c1が決闘に勝利しました。
+	 * Message: $c1 が決闘に勝利しました。
 	 */
 	public static final SystemMessageId C1_HAS_WON_THE_DUEL;
 	
 	/**
 	 * ID: 1951<br>
-	 * Message: $c1のパーティが決闘に勝利しました。
+	 * Message: $c1 のパーティが決闘に勝利しました。
 	 */
 	public static final SystemMessageId C1_PARTY_HAS_WON_THE_DUEL;
 	
@@ -11339,7 +11339,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1954<br>
-	 * Message: $c1のパーティが失格となり$s2のパーティが勝利しました。
+	 * Message: $c1のパーティが失格となり$s2 のパーティが勝利しました。
 	 */
 	public static final SystemMessageId SINCE_C1_PARTY_WAS_DISQUALIFIED_S2_PARTY_HAS_WON;
 	
@@ -11711,79 +11711,79 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2017<br>
-	 * Message: $c1は個人商店や個人工房を開いているため決闘できません。
+	 * Message: $c1 は個人商店や個人工房を開いているため決闘できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_ENGAGED_IN_A_PRIVATE_STORE_OR_MANUFACTURE;
 	
 	/**
 	 * ID: 2018<br>
-	 * Message: $c1はフィッシング中のため決闘できません。
+	 * Message: $c1 はフィッシング中のため決闘できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_FISHING;
 	
 	/**
 	 * ID: 2019<br>
-	 * Message: $c1はHPまたはMPが50％以下のため決闘できません。
+	 * Message: $c1 はHPまたはMPが50％以下のため決闘できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_HP_OR_MP_IS_BELOW_50_PERCENT;
 	
 	/**
 	 * ID: 2020<br>
-	 * Message: $c1は決闘不可能な地域（ピースゾーン、セブン サイン、水中、リスタート不可能な地域）にいるため決闘を申し込めません。
+	 * Message: $c1 は決闘不可能な地域（ピースゾーン、セブン サイン、水中、リスタート不可能な地域）にいるため決闘を申し込めません。
 	 */
 	public static final SystemMessageId C1_CANNOT_MAKE_A_CHALLANGE_TO_A_DUEL_BECAUSE_C1_IS_CURRENTLY_IN_A_DUEL_PROHIBITED_AREA;
 	
 	/**
 	 * ID: 2021<br>
-	 * Message: $c1は戦闘中のため、決闘できません。
+	 * Message: $c1 は戦闘中のため、決闘できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_ENGAGED_IN_BATTLE;
 	
 	/**
 	 * ID: 2022<br>
-	 * Message: $c1はすでに決闘中のため決闘できません。
+	 * Message: $c1 はすでに決闘中のため決闘できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_ALREADY_ENGAGED_IN_A_DUEL;
 	
 	/**
 	 * ID: 2023<br>
-	 * Message: $c1はカオティック性向のため決闘できません。
+	 * Message: $c1 はカオティック性向のため決闘できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_IN_A_CHAOTIC_STATE;
 	
 	/**
 	 * ID: 2024<br>
-	 * Message: $c1はオリンピアードを行っているため、決闘できません。
+	 * Message: $c1 はオリンピアードを行っているため、決闘できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_PARTICIPATING_IN_THE_OLYMPIAD;
 	
 	/**
 	 * ID: 2025<br>
-	 * Message: $c1はアジト戦遂行中のため決闘できません。
+	 * Message: $c1 はアジト戦遂行中のため決闘できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_PARTICIPATING_IN_A_CLAN_HALL_WAR;
 	
 	/**
 	 * ID: 2026<br>
-	 * Message: $c1は攻城戦に参加中のため決闘できません。
+	 * Message: $c1 は攻城戦に参加中のため決闘できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_PARTICIPATING_IN_A_SIEGE_WAR;
 	
 	/**
 	 * ID: 2027<br>
-	 * Message: $c1は船、ワイバーン、ストライダーなどに搭乗中のため決闘できません。
+	 * Message: $c1 は船、ワイバーン、ストライダーなどに搭乗中のため決闘できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_RIDING_A_BOAT_STEED_OR_STRIDER;
 	
 	/**
 	 * ID: 2028<br>
-	 * Message: $c1は遠距離にいるため決闘を承諾できません。
+	 * Message: $c1 は遠距離にいるため決闘を承諾できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_RECEIVE_A_DUEL_CHALLENGE_BECAUSE_C1_IS_TOO_FAR_AWAY;
 	
 	/**
 	 * ID: 2029<br>
-	 * Message: $c1はテレポート中であるため、オリンピアードに参加できません。
+	 * Message: $c1 はテレポート中であるため、オリンピアードに参加できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_PARTICIPATE_IN_OLYMPIAD_DURING_TELEPORT;
 	
@@ -12185,31 +12185,31 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2096<br>
-	 * Message: $c1が入場できない位置にいるため進行できません。
+	 * Message: $c1 が入場できない位置にいるため進行できません。
 	 */
 	public static final SystemMessageId C1_IS_IN_LOCATION_THAT_CANNOT_BE_ENTERED;
 	
 	/**
 	 * ID: 2097<br>
-	 * Message: $c1のレベル条件が満たないため入場できません。
+	 * Message: $c1 のレベル条件が満たないため入場できません。
 	 */
 	public static final SystemMessageId C1_LEVEL_REQUIREMENT_NOT_SUFFICIENT;
 	
 	/**
 	 * ID: 2098<br>
-	 * Message: $c1のクエスト条件が満たないため入場できません。
+	 * Message: $c1 のクエスト条件が満たないため入場できません。
 	 */
 	public static final SystemMessageId C1_QUEST_REQUIREMENT_NOT_SUFFICIENT;
 	
 	/**
 	 * ID: 2099<br>
-	 * Message: $c1のアイテム条件が満たないため入場できません。
+	 * Message: $c1 のアイテム条件が満たないため入場できません。
 	 */
 	public static final SystemMessageId C1_ITEM_REQUIREMENT_NOT_SUFFICIENT;
 	
 	/**
 	 * ID: 2100<br>
-	 * Message: $c1が再入場可能時間にならないため、入場できません。
+	 * Message: $c1 が再入場可能時間にならないため、入場できません。
 	 */
 	public static final SystemMessageId C1_MAY_NOT_REENTER_YET;
 	
@@ -12461,7 +12461,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2142<br>
-	 * Message: $c1はパーティ メンバーではないため追放できません。
+	 * Message: $c1 はパーティ メンバーではないため追放できません。
 	 */
 	public static final SystemMessageId CANT_EXPEL_C1_NOT_A_PARTY_MEMBER;
 	
@@ -12653,7 +12653,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2174<br>
-	 * Message: $c1が変身状態のため決闘できません。
+	 * Message: $c1 が変身状態のため決闘できません。
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_WHILE_POLYMORPHED;
 	
@@ -13508,7 +13508,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2440<br>
-	 * Message: $c1はクラス無制限競技種目の待機者リストにすでに登録されています。
+	 * Message: $c1 はクラス無制限競技種目の待機者リストにすでに登録されています。
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_REGISTERED_NON_CLASS_LIMITED_EVENT_TEAMS;
 
@@ -13610,7 +13610,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2450<br>
-	 * Message: $c1の誕生日は$s2年$s3月$s4日です。
+	 * Message: $c1 の誕生日は$s2年$s3月$s4日です。
 	 */
 	public static final SystemMessageId C1_BIRTHDAY_IS_S3_S4_S2;
 	
@@ -14005,7 +14005,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2911<br>
-	 * Message: $c1に友人登録を申し込みました。
+	 * Message: $c1 に友人登録を申し込みました。
 	 */
 	public static final SystemMessageId YOU_REQUESTED_C1_TO_BE_FRIEND;
 	
@@ -14191,7 +14191,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2988<br>
-	 * Message: インベントリ　エラーのため、受取をキャンセルできませんでした。
+	 * Message: インベントリ エラーのため、受取をキャンセルできませんでした。
 	 */
 	public static final SystemMessageId CANT_CANCEL_INVENTORY_FULL;
 	
@@ -14233,7 +14233,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3013<br>
-	 * Message: $c1が+$s2$s3エンチャントに成功しました。
+	 * Message: $c1 が+$s2$s3エンチャントに成功しました。
 	 */
 	public static final SystemMessageId C1_SUCCESSFULY_ENCHANTED_A_S2_S3;
 	
@@ -14281,7 +14281,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3025<br>
-	 * Message: $s2が代金を支払いました。$s1アデナを獲得しました。
+	 * Message: $s2 が代金を支払いました。$s1アデナを獲得しました。
 	 */
 	public static final SystemMessageId PAYMENT_OF_S1_ADENA_COMPLETED_BY_S2;
 	
@@ -14305,7 +14305,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3029<br>
-	 * Message: $s1が郵便を返送しました。
+	 * Message: $s1 が郵便を返送しました。
 	 */
 	public static final SystemMessageId S1_RETURNED_MAIL;
 	
@@ -14317,7 +14317,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3059<br>
-	 * Message: $s1が受取待機期間中に受け取らなかったため、自動的に返送されました。
+	 * Message: $s1 が受取待機期間中に受け取らなかったため、自動的に返送されました。
 	 */
 	public static final SystemMessageId S1_NOT_RECEIVE_DURING_WAITING_TIME_MAIL_RETURNED;
 	
@@ -14353,7 +14353,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3067<br>
-	 * Message: $s1が郵便の差出をキャンセルしました。
+	 * Message: $s1 が郵便の差出をキャンセルしました。
 	 */
 	public static final SystemMessageId S1_CANCELLED_MAIL;
 	
@@ -14371,7 +14371,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3072<br>
-	 * Message: $s1が郵便に添付されたアイテムを獲得しました。
+	 * Message: $s1 が郵便に添付されたアイテムを獲得しました。
 	 */
 	public static final SystemMessageId S1_ACQUIRED_ATTACHED_ITEM;
 	
@@ -14467,67 +14467,67 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3123<br>
-	 * Message: $c1は個人商店や個人工房を開いているため、カップル　アクションの申し込みはできません。
+	 * Message: $c1 は個人商店や個人工房を開いているため、カップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_IN_PRIVATE_SHOP_MODE_OR_IN_A_BATTLE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3124<br>
-	 * Message: $c1はフィッシング中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 はフィッシング中のため、カップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_FISHING_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3125<br>
-	 * Message: $c1は戦闘中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 は戦闘中のため、カップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_IN_A_BATTLE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3126<br>
-	 * Message: $c1はすでにカップル アクション中のため、新たにカップル アクションの申し込みはできません。
+	 * Message: $c1 はすでにカップル アクション中のため、新たにカップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_PARTICIPATING_IN_A_COUPLE_ACTION_AND_CANNOT_BE_REQUESTED_FOR_ANOTHER_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3127<br>
-	 * Message: $c1はカオティック性向のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 はカオティック性向のため、カップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_IN_A_CHAOTIC_STATE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3128<br>
-	 * Message: $c1はオリンピアード参加中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 はオリンピアード参加中のため、カップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_PARTICIPATING_IN_THE_OLYMPIAD_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3129<br>
-	 * Message: $c1はアジト戦遂行中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 はアジト戦遂行中のため、カップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_PARTICIPATING_IN_A_HIDEOUT_SIEGE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3130<br>
-	 * Message: $c1は攻城戦に参加中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 は攻城戦に参加中のため、カップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_IN_A_CASTLE_SIEGE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3131<br>
-	 * Message: $c1は船、ワイバーン、ストライダーなどに搭乗中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 は船、ワイバーン、ストライダーなどに搭乗中のため、カップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_RIDING_A_SHIP_STEED_OR_STRIDER_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3132<br>
-	 * Message: $c1はテレポート中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 はテレポート中のため、カップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_CURRENTLY_TELEPORTING_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3133<br>
-	 * Message: $c1は変身中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 は変身中のため、カップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_CURRENTLY_TRANSFORMING_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
@@ -14551,7 +14551,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3139<br>
-	 * Message: $c1は現在死亡状態のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 は現在死亡状態のため、カップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_CURRENTLY_DEAD_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
@@ -14563,7 +14563,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3150<br>
-	 * Message: $c1にカップル アクションを申し込みました。
+	 * Message: $c1 にカップル アクションを申し込みました。
 	 */
 	public static final SystemMessageId YOU_HAVE_REQUESTED_COUPLE_ACTION_C1;
 	
@@ -14593,19 +14593,19 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3164<br>
-	 * Message: $c1はすでにカップル拒否状態のため、新たにカップル アクションの申し込みはできません。
+	 * Message: $c1 はすでにカップル拒否状態のため、新たにカップル アクションの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_SET_TO_REFUSE_COUPLE_ACTIONS;
 	
 	/**
 	 * ID: 3168<br>
-	 * Message: $c1はすでにカップル拒否状態のため、新たにパーティの申し込みはできません。
+	 * Message: $c1 はすでにカップル拒否状態のため、新たにパーティの申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_SET_TO_REFUSE_PARTY_REQUEST;
 	
 	/**
 	 * ID: 3169<br>
-	 * Message: $c1はすでに決闘申込拒否状態のため、新たに決闘の申し込みはできません。
+	 * Message: $c1 はすでに決闘申込拒否状態のため、新たに決闘の申し込みはできません。
 	 */
 	public static final SystemMessageId C1_IS_SET_TO_REFUSE_DUEL_REQUEST;
 	
@@ -14623,7 +14623,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3214<br>
-	 * Message: $s1が受取人リストに登録されました。
+	 * Message: $s1 が受取人リストに登録されました。
 	 */
 	public static final SystemMessageId S1_SUCCESSFULLY_ADDED_TO_CONTACT_LIST;
 	
@@ -14647,7 +14647,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3219<br>
-	 * Message: $s1が受取人リストから削除されました。
+	 * Message: $s1 が受取人リストから削除されました。
 	 */
 	public static final SystemMessageId S1_SUCCESFULLY_DELETED_FROM_CONTACT_LIST;
 	
