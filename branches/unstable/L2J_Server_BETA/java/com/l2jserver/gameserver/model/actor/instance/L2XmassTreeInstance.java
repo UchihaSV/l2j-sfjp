@@ -62,7 +62,6 @@ public class L2XmassTreeInstance extends L2Npc
 	{
 		protected final L2XmassTreeInstance _caster;
 		protected final L2Skill _skill;
-		protected final String _abnormalType;
 		private int _buffIndex = 0;
 		
 		protected XmassAI(L2XmassTreeInstance caster, L2Skill skill)
@@ -70,7 +69,6 @@ public class L2XmassTreeInstance extends L2Npc
 			_caster = caster;
 			_skill = skill;
 			if (_skill.getSkillType() == L2SkillType.NOTDONE) throw new RuntimeException();
-			_abnormalType = _skill.getEffectTemplates()[0].abnormalType;
 		}
 		
 		public void run()
@@ -92,7 +90,7 @@ public class L2XmassTreeInstance extends L2Npc
 				else
 				{
 					int[] b = _buffs[_buffIndex];
-					handleCast(player, b[0], b[1]);
+					handleBuff(player, b[0], b[1]);
 				}
 			}
 			_buffIndex = (_buffIndex + 1) % _buffs.length;
@@ -100,30 +98,29 @@ public class L2XmassTreeInstance extends L2Npc
 		
 		protected void handleEffect(L2PcInstance player)
 		{
-			for (L2Effect e : player.getAllEffects())
-				if (_abnormalType.equals(e.getAbnormalType()))
-					return;
-			_skill.getEffects(player, player);
+			final L2Skill skill = _skill;
+			if (! hasEffect(player, skill))
+				skill.getEffects(player, player);
 		}
 		
-		protected boolean handleCast(L2PcInstance player, int skillId, int skillLevel)
+		protected void handleBuff(L2PcInstance player, int skillId, int skillLevel)
 		{
-			L2Skill skill = SkillTable.getInstance().getInfo(skillId, skillLevel);
-
-			if (player.getFirstEffect(skill) == null)
+			final L2Skill skill = SkillTable.getInstance().getInfo(skillId, skillLevel);
+			if (! hasEffect(player, skill))
 			{
-				setTarget(player);
-				doCast(skill);
-
-				MagicSkillUse msu = new MagicSkillUse(_caster, player, skillId, skillLevel, skill.getHitTime(), 0);
-				broadcastPacket(msu);
-
-				return true;
+				skill.getEffects(_caster, player);
+				player.sendPacket(new MagicSkillUse(_caster, player, skillId, skillLevel, skill.getHitTime(), 0));
 			}
-
+		}
+		
+		private boolean hasEffect(L2PcInstance player, L2Skill skill)
+		{
+			final String abnormalType = skill.getEffectTemplates()[0].abnormalType;
+			for (L2Effect e : player.getAllEffects())
+				if (e.getAbnormalType().equals(abnormalType))
+					return true;
 			return false;
 		}
-
 	}
 	
 	public L2XmassTreeInstance(int objectId, L2NpcTemplate template)
