@@ -47,7 +47,6 @@ import com.l2jserver.util.ValueSortMap;
  * This ancient thingie got reworked by Nik at $Date: 2011/05/17 21:51:39 $
  * Yeah, for 6 years no one bothered reworking this buggy event engine.
  */
-
 public class L2Event
 {
 	protected static final Logger _log = Logger.getLogger(L2Event.class.getName());
@@ -113,12 +112,10 @@ public class L2Event
 			toReturn.addAll(tmp.keySet());
 			return toReturn;
 		}
-		else
-		{
-			List<L2PcInstance> toReturn = new FastList<L2PcInstance>();
-			toReturn.addAll(tmp.keySet());
-			return toReturn.subList(1, n);
-		}
+		
+		List<L2PcInstance> toReturn = new FastList<L2PcInstance>();
+		toReturn.addAll(tmp.keySet());
+		return toReturn.subList(1, n);
 	}
 
 	public static void showEventHtml(L2PcInstance player, String objectid)

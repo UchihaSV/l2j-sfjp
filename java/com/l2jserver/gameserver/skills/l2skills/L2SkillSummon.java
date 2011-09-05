@@ -184,7 +184,6 @@ public class L2SkillSummon extends L2Skill
 						player.addCubic(_npcId, _cubicSkillLevel, getPower(), _activationtime, _activationchance, _maxcount, _summonTotalLifeTime, true);
 					player.broadcastUserInfo();
 				}
-				return;
 			}
 			else // Normal cubic skill
 			{
@@ -206,8 +205,8 @@ public class L2SkillSummon extends L2Skill
 				}
 				activeChar.addCubic(_npcId, _cubicSkillLevel, getPower(), _activationtime, _activationchance, _maxcount, _summonTotalLifeTime, false);
 				activeChar.broadcastUserInfo();
-				return;
 			}
+			return;
 		}
 		
 		if (activeChar.getPet() != null || activeChar.isMounted()) {

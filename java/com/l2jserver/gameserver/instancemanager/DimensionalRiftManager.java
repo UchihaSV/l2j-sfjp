@@ -54,7 +54,6 @@ import com.l2jserver.util.Rnd;
  */
 public class DimensionalRiftManager
 {
-	
 	private static Logger _log = Logger.getLogger(DimensionalRiftManager.class.getName());
 	private TByteObjectHashMap<TByteObjectHashMap<DimensionalRiftRoom>> _rooms = new TByteObjectHashMap<TByteObjectHashMap<DimensionalRiftRoom>>(7);
 	private final int DIMENSIONAL_FRAGMENT_ITEM_ID = 7079;
@@ -253,8 +252,8 @@ public class DimensionalRiftManager
 	{
 		if (ignorePeaceZone)
 			return _rooms.get((byte) 0).get((byte) 1).checkIfInZone(x, y, z);
-		else
-			return _rooms.get((byte) 0).get((byte) 1).checkIfInZone(x, y, z) && !_rooms.get((byte) 0).get((byte) 0).checkIfInZone(x, y, z);
+		
+		return _rooms.get((byte) 0).get((byte) 1).checkIfInZone(x, y, z) && !_rooms.get((byte) 0).get((byte) 0).checkIfInZone(x, y, z);
 	}
 	
 	public boolean checkIfInPeaceZone(int x, int y, int z)

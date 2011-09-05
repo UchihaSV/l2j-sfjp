@@ -1371,8 +1371,7 @@ public class L2ClanHallManagerInstance extends L2MerchantInstance
 		{
 			if (getClanHall().getOwnerId() == player.getClanId())
 				return COND_OWNER;
-			else
-				return COND_OWNER_FALSE;
+			return COND_OWNER_FALSE;
 		}
 		return COND_ALL_FALSE;
 	}

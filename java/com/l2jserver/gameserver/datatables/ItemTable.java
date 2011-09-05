@@ -248,8 +248,8 @@ public class ItemTable
 	{
 		if (id >= _allTemplates.length)
 			return null;
-		else
-			return _allTemplates[id];
+		
+		return _allTemplates[id];
 	}
 	
 	/**
