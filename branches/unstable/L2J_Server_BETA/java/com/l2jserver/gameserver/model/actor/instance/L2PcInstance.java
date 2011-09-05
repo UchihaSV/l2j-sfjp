@@ -4469,8 +4469,7 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (_clan == null)
 			return 0;
-		else
-			return _clan.getAllyId();
+		return _clan.getAllyId();
 	}
 	
 	public int getAllyCrestId()
@@ -6355,10 +6354,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			return false;
 		}
-		else
-		{
-			return getObjectId() == getClan().getLeaderId();
-		}
+		return getObjectId() == getClan().getLeaderId();
 	}
 	
 	/**
@@ -7888,8 +7884,7 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (_isOnline && getClient() != null)
 			return getClient().isDetached() ? 2 : 1;
-		else
-			return 0;
+		return 0;
 	}
 	
 	public boolean isIn7sDungeon()
@@ -7931,16 +7926,14 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (store)
 			return removeSkill(skill);
-		else
-			return super.removeSkill(skill, true);
+		return super.removeSkill(skill, true);
 	}
 	
 	public L2Skill removeSkill(L2Skill skill, boolean store, boolean cancelEffect)
 	{
 		if (store)
 			return removeSkill(skill);
-		else
-			return super.removeSkill(skill, cancelEffect);
+		return super.removeSkill(skill, cancelEffect);
 	}
 	
 	/**
@@ -8519,8 +8512,7 @@ public final class L2PcInstance extends L2Playable
 		if (attacker instanceof L2PcInstance && ((L2PcInstance)attacker).isInOlympiadMode() ){
 			if (isInOlympiadMode() && isOlympiadStart() && ((L2PcInstance)attacker).getOlympiadGameId()==getOlympiadGameId())
 				return true;
-			else
-				return false;
+			return false;
 		}
 		
 		// Check if the attacker is in TvT and TvT is started
@@ -9167,9 +9159,7 @@ public final class L2PcInstance extends L2Playable
 		
 		if (castle != null)
 			return checkIfOkToUseStriderSiegeAssault(castle);
-		else
-			return checkIfOkToUseStriderSiegeAssault(fort);
-		
+		return checkIfOkToUseStriderSiegeAssault(fort);
 	}
 	
 	public boolean checkIfOkToUseStriderSiegeAssault(Castle castle)
@@ -9778,7 +9768,7 @@ public final class L2PcInstance extends L2Playable
 					.addItemName(itemId));	//[JOJO]
 			return true;
 		}
-		else return false;
+		return false;
 	}
 	
 	/**
@@ -13712,8 +13702,7 @@ public final class L2PcInstance extends L2Playable
 		// if pet is attacking
 		if (isAttackingNow())
 			return getPetLevelData(_mountNpcId).getPetFeedBattle();
-		else
-			return getPetLevelData(_mountNpcId).getPetFeedNormal();
+		return getPetLevelData(_mountNpcId).getPetFeedNormal();
 	}
 	
 	public void setCurrentFeed(int num)
@@ -13876,12 +13865,10 @@ public final class L2PcInstance extends L2Playable
 			sendPacket(SystemMessage.getSystemMessage(SystemMessageId.FORCE_MAXLEVEL_REACHED));
 			return;
 		}
-		else
-		{
-			// if no charges - start clear task
-			if (_charges.get() == 0)
-				restartChargeTask();
-		}
+		
+		// if no charges - start clear task
+		if (_charges.get() == 0)
+			restartChargeTask();
 		
 		if (_charges.addAndGet(count) >= max)
 		{
@@ -14450,17 +14437,15 @@ public final class L2PcInstance extends L2Playable
 		{
 			return 0;
 		}
-		else
+		
+		int i;
+		for (i = 1; i < 6; i++)
 		{
-			int i;
-			for (i = 1; i < 6; i++)
-			{
-				now.add(Calendar.HOUR_OF_DAY, 24);
-				if (now.get(Calendar.MONTH) == birth.get(Calendar.MONTH)
-						&& now.get(Calendar.DAY_OF_MONTH) == birth.get(Calendar.DAY_OF_MONTH)
-						&& now.get(Calendar.YEAR) != birth.get(Calendar.YEAR))
-					return i;
-			}
+			now.add(Calendar.HOUR_OF_DAY, 24);
+			if (now.get(Calendar.MONTH) == birth.get(Calendar.MONTH)
+					&& now.get(Calendar.DAY_OF_MONTH) == birth.get(Calendar.DAY_OF_MONTH)
+					&& now.get(Calendar.YEAR) != birth.get(Calendar.YEAR))
+				return i;
 		}
 		return -1;
 	}
@@ -14622,16 +14607,14 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (getAppearance().getSex())
 			return getBaseTemplate().fCollisionRadius_female;
-		else
-			return getBaseTemplate().fCollisionRadius;
+		return getBaseTemplate().fCollisionRadius;
 	}
 	
 	public double getCollisionHeight()
 	{
 		if (getAppearance().getSex())
 			return getBaseTemplate().fCollisionHeight_female;
-		else
-			return getBaseTemplate().fCollisionHeight;
+		return getBaseTemplate().fCollisionHeight;
 	}
 	
 	public final int getClientX()
@@ -14845,12 +14828,9 @@ public final class L2PcInstance extends L2Playable
 			{
 				continue;
 			}
-			else
-			{
-				// player level is too low for such skill level
-				if (getLevel() < (learn.getGetLevel() - 9))
-					deacreaseSkillLevel(id);
-			}
+			// player level is too low for such skill level
+			if (getLevel() < (learn.getGetLevel() - 9))
+				deacreaseSkillLevel(id);
 		}
 	}
 	
@@ -14891,8 +14871,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			return true;
 		}
-		else
-			return false;
+		return false;
 	}
 	
 	public void setMultiSocialAction(int id, int targetId)

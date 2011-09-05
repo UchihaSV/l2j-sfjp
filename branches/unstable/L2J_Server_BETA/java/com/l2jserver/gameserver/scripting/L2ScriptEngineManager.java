@@ -367,12 +367,8 @@ public final class L2ScriptEngineManager
 					{
 					}
 				}
-				return new CompiledScriptCache();
 			}
-			else
-			{
-				return new CompiledScriptCache();
-			}
+			return new CompiledScriptCache();
 		}
 		return null;
 	}
@@ -396,10 +392,7 @@ public final class L2ScriptEngineManager
 		{
 			throw new ScriptException("No engine registered for extension (" + extension + ")");
 		}
-		else
-		{
-			this.executeScript(engine, file);
-		}
+		executeScript(engine, file);
 	}
 	
 	public void executeScript(String engineName, File file) throws FileNotFoundException, ScriptException
@@ -409,10 +402,7 @@ public final class L2ScriptEngineManager
 		{
 			throw new ScriptException("No engine registered with name (" + engineName + ")");
 		}
-		else
-		{
-			this.executeScript(engine, file);
-		}
+		executeScript(engine, file);
 	}
 	
 	public void executeScript(ScriptEngine engine, File file) throws FileNotFoundException, ScriptException
@@ -516,10 +506,7 @@ public final class L2ScriptEngineManager
 		{
 			throw new IllegalStateException("No engine registered with name (" + engineName + ")");
 		}
-		else
-		{
-			return this.getScriptContext(engine);
-		}
+		return getScriptContext(engine);
 	}
 	
 	public Object eval(ScriptEngine engine, String script, ScriptContext context) throws ScriptException
@@ -530,10 +517,7 @@ public final class L2ScriptEngineManager
 			CompiledScript cs = eng.compile(script);
 			return context != null ? cs.eval(context) : cs.eval();
 		}
-		else
-		{
-			return context != null ? engine.eval(script, context) : engine.eval(script);
-		}
+		return context != null ? engine.eval(script, context) : engine.eval(script);
 	}
 	
 	public Object eval(String engineName, String script) throws ScriptException
@@ -548,10 +532,7 @@ public final class L2ScriptEngineManager
 		{
 			throw new ScriptException("No engine registered with name (" + engineName + ")");
 		}
-		else
-		{
-			return this.eval(engine, script, context);
-		}
+		return eval(engine, script, context);
 	}
 	
 	public Object eval(ScriptEngine engine, String script) throws ScriptException
