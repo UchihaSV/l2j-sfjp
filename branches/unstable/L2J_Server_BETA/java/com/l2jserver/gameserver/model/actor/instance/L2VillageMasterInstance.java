@@ -576,6 +576,7 @@ public class L2VillageMasterInstance extends L2NpcInstance
 					{
 						player.abortCast();
 						player.stopAllEffectsExceptThoseThatLastThroughDeath(); // all effects from old subclass stopped!
+						player.stopAllEffectsNotStayOnSubclassChange();
 						player.stopCubics();
 						player.setActiveClass(paramOne);
 						

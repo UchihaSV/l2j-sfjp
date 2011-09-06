@@ -15,6 +15,7 @@
 package com.l2jserver.gameserver.model.actor.instance;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -292,9 +293,9 @@ public final class L2PcInstance extends L2Playable
 	private static final String DELETE_SKILL_SAVE = "DELETE FROM character_skills_save WHERE charId=? AND class_index=?";
 	
 	// Character Character SQL String Definitions:
-	private static final String INSERT_CHARACTER = "INSERT INTO characters (account_name,charId,char_name,level,maxHp,curHp,maxCp,curCp,maxMp,curMp,face,hairStyle,hairColor,sex,exp,sp,karma,fame,pvpkills,pkkills,clanid,race,classid,deletetime,cancraft,title,title_color,accesslevel,online,isin7sdungeon,clan_privs,wantspeace,base_class,newbie,nobless,power_grade,createTime) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_CHARACTER = "INSERT INTO characters (account_name,charId,char_name,level,maxHp,curHp,maxCp,curCp,maxMp,curMp,face,hairStyle,hairColor,sex,exp,sp,karma,fame,pvpkills,pkkills,clanid,race,classid,deletetime,cancraft,title,title_color,accesslevel,online,isin7sdungeon,clan_privs,wantspeace,base_class,newbie,nobless,power_grade,createDate) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE_CHARACTER = "UPDATE characters SET level=?,maxHp=?,curHp=?,maxCp=?,curCp=?,maxMp=?,curMp=?,face=?,hairStyle=?,hairColor=?,sex=?,heading=?,x=?,y=?,z=?,exp=?,expBeforeDeath=?,sp=?,karma=?,fame=?,pvpkills=?,pkkills=?,clanid=?,race=?,classid=?,deletetime=?,title=?,title_color=?,accesslevel=?,online=?,isin7sdungeon=?,clan_privs=?,wantspeace=?,base_class=?,onlinetime=?,punish_level=?,punish_timer=?,newbie=?,nobless=?,power_grade=?,subpledge=?,lvl_joined_academy=?,apprentice=?,sponsor=?,varka_ketra_ally=?,clan_join_expiry_time=?,clan_create_expiry_time=?,char_name=?,death_penalty_level=?,bookmarkslot=?,vitality_points=?,language=?,hero=? WHERE charId=?";		//[L2J_JP EDIT] <,hero=?> ’Ç‰Á
-	private static final String RESTORE_CHARACTER = "SELECT account_name, charId, char_name, level, maxHp, curHp, maxCp, curCp, maxMp, curMp, face, hairStyle, hairColor, sex, heading, x, y, z, exp, expBeforeDeath, sp, karma, fame, pvpkills, pkkills, clanid, race, classid, deletetime, cancraft, title, title_color, accesslevel, online, char_slot, lastAccess, clan_privs, wantspeace, base_class, onlinetime, isin7sdungeon, punish_level, punish_timer, newbie, nobless, power_grade, subpledge, lvl_joined_academy, apprentice, sponsor, varka_ketra_ally,clan_join_expiry_time,clan_create_expiry_time,death_penalty_level,bookmarkslot,vitality_points,createTime,language,hero FROM characters WHERE charId=?";	//[L2J_JP EDIT] <,hero> ’Ç‰Á
+	private static final String RESTORE_CHARACTER = "SELECT account_name, charId, char_name, level, maxHp, curHp, maxCp, curCp, maxMp, curMp, face, hairStyle, hairColor, sex, heading, x, y, z, exp, expBeforeDeath, sp, karma, fame, pvpkills, pkkills, clanid, race, classid, deletetime, cancraft, title, title_color, accesslevel, online, char_slot, lastAccess, clan_privs, wantspeace, base_class, onlinetime, isin7sdungeon, punish_level, punish_timer, newbie, nobless, power_grade, subpledge, lvl_joined_academy, apprentice, sponsor, varka_ketra_ally,clan_join_expiry_time,clan_create_expiry_time,death_penalty_level,bookmarkslot,vitality_points,createDate,language,hero FROM characters WHERE charId=?";	//[L2J_JP EDIT] <,hero> ’Ç‰Á
 	
 	// Character Teleport Bookmark:
 	private static final String INSERT_TP_BOOKMARK = "INSERT INTO character_tpbookmark (charId,Id,x,y,z,icon,tag,name) values (?,?,?,?,?,?,?,?)";
@@ -374,7 +375,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private String _accountName;
 	private long _deleteTimer;
-	private long _creationTime;
+	private Calendar _createDate = Calendar.getInstance();
 	
 	private String _lang = null;
 	private String _htmlPrefix = null;
@@ -1051,7 +1052,7 @@ public final class L2PcInstance extends L2Playable
 		player.setName(name);
 		
 		// Set Character's create time
-		player.setCreateTime(System.currentTimeMillis());
+		player.setCreateDate(Calendar.getInstance());
 		
 		// Set the base class ID to that of the actual class ID.
 		player.setBaseClass(player.getClassId());
@@ -7081,7 +7082,7 @@ public final class L2PcInstance extends L2Playable
 			statement.setInt(34, getNewbie());
 			statement.setInt(35, isNoble() ? 1 :0);
 			statement.setLong(36, 0);
-			statement.setLong(37,getCreateTime());
+			statement.setDate(37, new Date(getCreateDate().getTimeInMillis()));
 			
 			statement.executeUpdate();
 			statement.close();
@@ -7278,7 +7279,7 @@ public final class L2PcInstance extends L2Playable
 				player.setBookMarkSlot(rset.getInt("BookmarkSlot"));
 				
 				//character creation Time
-				player.setCreateTime(rset.getLong("createTime"));
+				player.getCreateDate().setTime(rset.getDate("createDate"));
 				
 				// Language
 				player.setLang(rset.getString("language"));
@@ -9465,6 +9466,16 @@ public final class L2PcInstance extends L2Playable
 		updateAndBroadcastStatus(2);
 	}
 	
+	public final void stopAllEffectsNotStayOnSubclassChange()
+	{
+		for (L2Effect effect : _effects.getAllEffects())
+		{
+			if (effect != null && !effect.getSkill().isStayOnSubclassChange())
+				effect.exit(true);
+		}
+		updateAndBroadcastStatus(2);
+	}
+	
 	/**
 	 * Stop all toggle-type effects
 	 */
@@ -10781,6 +10792,7 @@ public final class L2PcInstance extends L2Playable
 				super.removeSkill(oldSkill);
 			
 			stopAllEffectsExceptThoseThatLastThroughDeath();
+			stopAllEffectsNotStayOnSubclassChange();
 			stopCubics();
 			
 			restoreRecipeBook(false);
@@ -11506,6 +11518,11 @@ public final class L2PcInstance extends L2Playable
 			_vehicle.removePassenger(this);
 		
 		_vehicle = v;
+	}
+	
+	public boolean isInVehicle()
+	{
+		return _vehicle != null;
 	}
 	
 	public void setInCrystallize(boolean inCrystallize)
@@ -14389,19 +14406,19 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	/**
-	 * Set the _creationTime of the L2PcInstance.<BR><BR>
+	 * Set the _createDate of the L2PcInstance.<BR><BR>
 	 */
-	public void setCreateTime(long creationTime)
+	public void setCreateDate(Calendar createDate)
 	{
-		_creationTime = creationTime;
+		_createDate = createDate;
 	}
 	
 	/**
-	 * Return the _creationTime of the L2PcInstance.<BR><BR>
+	 * Return the _createDate of the L2PcInstance.<BR><BR>
 	 */
-	public long getCreateTime()
+	public Calendar getCreateDate()
 	{
-		return _creationTime;
+		return _createDate;
 	}
 	
 	/**
@@ -14420,7 +14437,7 @@ public final class L2PcInstance extends L2Playable
 		QuestState _state = getQuestState("CharacterBirthday");
 		GregorianCalendar now = new GregorianCalendar();	//[JOJO]
 		Calendar birth = Calendar.getInstance();
-		birth.setTimeInMillis(_creationTime);
+		birth.setTimeInMillis(_createDate.getTimeInMillis());
 		
 		if (checkState) //+[JOJO]
 			if (_state != null && _state.getInt("Birthday") > now.get(Calendar.YEAR))
@@ -14432,8 +14449,8 @@ public final class L2PcInstance extends L2Playable
 				birth.add(Calendar.HOUR_OF_DAY, -24);
 		
 		if (now.get(Calendar.MONTH) == birth.get(Calendar.MONTH)
-				&& now.get(Calendar.DAY_OF_MONTH) == birth.get(Calendar.DAY_OF_MONTH)
-				&& now.get(Calendar.YEAR) != birth.get(Calendar.YEAR))
+			&& now.get(Calendar.DAY_OF_MONTH) == birth.get(Calendar.DAY_OF_MONTH)
+			&& now.get(Calendar.YEAR) != birth.get(Calendar.YEAR))
 		{
 			return 0;
 		}
@@ -14443,13 +14460,12 @@ public final class L2PcInstance extends L2Playable
 		{
 			now.add(Calendar.HOUR_OF_DAY, 24);
 			if (now.get(Calendar.MONTH) == birth.get(Calendar.MONTH)
-					&& now.get(Calendar.DAY_OF_MONTH) == birth.get(Calendar.DAY_OF_MONTH)
-					&& now.get(Calendar.YEAR) != birth.get(Calendar.YEAR))
+				&& now.get(Calendar.DAY_OF_MONTH) == birth.get(Calendar.DAY_OF_MONTH)
+				&& now.get(Calendar.YEAR) != birth.get(Calendar.YEAR))
 				return i;
 		}
 		return -1;
 	}
-	
 	
 	/**
 	 * list of character friends
