@@ -20,6 +20,7 @@ import java.util.List;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.NpcStringId;
+import com.l2jserver.gameserver.network.SystemMessageId;
 
 /**
  * @author Kerberos
@@ -41,7 +42,7 @@ public class ExShowScreenMessage extends L2GameServerPacket
 	private int _npcString;
 	private List<String> _parameters;
 	
-	public ExShowScreenMessage (String text, int time)
+	/*TODO:@Deprecated */public ExShowScreenMessage (String text, int time)
 	{
 		_type = 1;
 		_sysMessageId = -1;
@@ -59,7 +60,7 @@ public class ExShowScreenMessage extends L2GameServerPacket
 	
 	public ExShowScreenMessage (int npcString, int position, int time) // For npcstring
 	{
-		_type = 2;
+		_type = 2;/*TODO: this(...)*/
 		_sysMessageId = -1;
 		_unk1 = 0;
 		_unk2 = 0;
@@ -75,7 +76,12 @@ public class ExShowScreenMessage extends L2GameServerPacket
 	
 	public ExShowScreenMessage (NpcStringId npcString, int position, int time) // For npcstring
 	{
-		this(npcString.getId(), position, time);
+		this(npcString.getId(), position, time);/*TODO: this(...)*/
+	}
+	
+	public ExShowScreenMessage (SystemMessageId systemMsg, int position, int time) // For SystemMessage
+	{
+		this(2, systemMsg.getId(), position, 0, 0, 0, 0, false, time, false, null, -1);
 	}
 	
 	/**
@@ -122,7 +128,7 @@ public class ExShowScreenMessage extends L2GameServerPacket
 		_npcString = npcString;
 	}
 	
-	public ExShowScreenMessage (int type, int messageId, int position, int unk1, int size, int unk2, int unk3,boolean showEffect, int time,boolean fade, String text, NpcStringId npcString)
+	/*TODO:@Deprecated */public ExShowScreenMessage (int type, int messageId, int position, int unk1, int size, int unk2, int unk3,boolean showEffect, int time,boolean fade, String text, NpcStringId npcString)
 	{
 		this(type, messageId, position, unk1, size, unk2, unk3, showEffect, time, fade, text, npcString.getId());
 	}
