@@ -14424,29 +14424,18 @@ public final class L2PcInstance extends L2Playable
 	/**
 	 * @return number of days to char birthday.<BR><BR>
 	 */
+	@Deprecated public int checkBirthDayA()	//+[JOJO]
+	{
+		throw new RuntimeException();
+	}
 	public int checkBirthDay()
 	{
-		return checkBirthDay(true);
-	}
-	public int checkBirthDayA()	//+[JOJO]
-	{
-		return checkBirthDay(false);
-	}
-	private int checkBirthDay(boolean checkState)
-	{
-		QuestState _state = getQuestState("CharacterBirthday");
 		GregorianCalendar now = new GregorianCalendar();	//[JOJO]
-		Calendar birth = Calendar.getInstance();
-		birth.setTimeInMillis(_createDate.getTimeInMillis());
-		
-		if (checkState) //+[JOJO]
-			if (_state != null && _state.getInt("Birthday") > now.get(Calendar.YEAR))
-				return -1;
+		Calendar birth = (Calendar)_createDate.clone();
 		
 		// "Characters with a February 29 creation date will receive a gift on February 28."
-		if (! now.isLeapYear(now.get(Calendar.YEAR)))	//+[JOJO]
-			if (birth.get(Calendar.DAY_OF_MONTH) == 29 && birth.get(Calendar.MONTH) == 1)
-				birth.add(Calendar.HOUR_OF_DAY, -24);
+		if (birth.get(Calendar.MONTH) == Calendar.FEBRUARY && birth.get(Calendar.DAY_OF_MONTH) == 29 && !now.isLeapYear(now.get(Calendar.YEAR)))
+			birth.add(Calendar.DAY_OF_MONTH, -1);
 		
 		if (now.get(Calendar.MONTH) == birth.get(Calendar.MONTH)
 			&& now.get(Calendar.DAY_OF_MONTH) == birth.get(Calendar.DAY_OF_MONTH)
@@ -14456,7 +14445,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		int i;
-		for (i = 1; i < 6; i++)
+		for (i = 1; i <= 5; i++)
 		{
 			now.add(Calendar.HOUR_OF_DAY, 24);
 			if (now.get(Calendar.MONTH) == birth.get(Calendar.MONTH)

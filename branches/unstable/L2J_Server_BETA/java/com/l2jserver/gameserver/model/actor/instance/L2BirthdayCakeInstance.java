@@ -18,61 +18,58 @@ import java.util.concurrent.ScheduledFuture;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.L2Party;
 import com.l2jserver.gameserver.model.L2Skill;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
+import com.l2jserver.gameserver.model.zone.type.L2PeaceZone;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
 /**
  * @author Nyaran
  */
-public class L2BirthdayCakeInstance extends L2Npc
+public class L2BirthdayCakeInstance extends L2Npc implements IhaveOwner
 {
 	private static final int BIRTHDAY_CAKE_24 = 106;
 	private static final int BIRTHDAY_CAKE = 139;
-	private static L2Skill _skill;
+	private L2Skill _skill;
 	private ScheduledFuture<?> _aiTask;
 	private int _masterId;
 	
-	public L2BirthdayCakeInstance(int objectId, L2NpcTemplate template, int masterId)
+	public L2BirthdayCakeInstance(int objectId, L2NpcTemplate template)
 	{
 		super(objectId, template);
-		
-		if (template.npcId == BIRTHDAY_CAKE_24)
-			_skill = SkillTable.getInstance().getInfo(22035, 1);
-		else if (template.npcId == BIRTHDAY_CAKE)
-			_skill = SkillTable.getInstance().getInfo(22250, 1);
-		
-		_masterId = masterId;
-		
-		_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new BuffTask(this), 1000, 1000);
 	}
 	
-	class BuffTask implements Runnable
+	@Override
+	public final L2PcInstance getOwner()	//[JOJO]
 	{
-		L2BirthdayCakeInstance _cake;
-		
-		protected BuffTask(L2BirthdayCakeInstance cake)
-		{
-			_cake = cake;
-		}
-		
+		return L2World.getInstance().getPlayer(_masterId);
+	}
+	@Override
+	public void setOwner(L2PcInstance newOwner)	//[JOJO]
+	{
+		_masterId = newOwner.getObjectId();
+	}
+	
+	private class BuffTask implements Runnable
+	{
 		@Override
 		public void run()
 		{
-			if (!isInsideZone(ZONE_PEACE))
+			L2BirthdayCakeInstance npc = L2BirthdayCakeInstance.this;
+			switch (getNpcId())
 			{
-				if (_cake.getNpcId() == BIRTHDAY_CAKE_24)
-				{
-					for(L2PcInstance player : _cake.getKnownList().getKnownPlayersInRadius(_skill.getSkillRadius()))
+				case BIRTHDAY_CAKE_24:
+					for (L2PcInstance player : getKnownList().getKnownPlayersInRadius(_skill.getSkillRadius()))
 					{
-						_skill.getEffects(_cake, player);
+						_skill.getEffects(npc, player);
 					}
-				}
-				else if (_cake.getNpcId() == BIRTHDAY_CAKE)
-				{
+					break;
+					
+				case BIRTHDAY_CAKE:
 					L2PcInstance player = L2World.getInstance().getPlayer(_masterId);
 					if (player == null)
 						return;
@@ -80,19 +77,40 @@ public class L2BirthdayCakeInstance extends L2Npc
 					L2Party party = player.getParty();
 					if (party == null)
 					{
-						if (player.isInsideRadius(_cake, _skill.getSkillRadius(), true, true))
-							_skill.getEffects(_cake, player);
+						if (player.isInsideRadius(npc, _skill.getSkillRadius(), true, true))
+							_skill.getEffects(npc, player);
 					}
 					else
 					{
 						for (L2PcInstance member : party.getPartyMembers())
 						{
-							if (member != null && member.isInsideRadius(_cake, _skill.getSkillRadius(), true, true))
-								_skill.getEffects(_cake, member);
+							if (member != null && member.isInsideRadius(npc, _skill.getSkillRadius(), true, true))
+								_skill.getEffects(npc, member);
 						}
 					}
-				}
+					break;
 			}
+		}
+	}
+	
+	@Override
+	public void onSpawn()
+	{
+		if (ZoneManager.getInstance().getZone(this, L2PeaceZone.class) == null)
+		{
+			switch (getNpcId())
+			{
+				case BIRTHDAY_CAKE_24:
+					_skill = SkillTable.getInstance().getInfo(22035, 1);
+					break;
+				case BIRTHDAY_CAKE:
+					_skill = SkillTable.getInstance().getInfo(22250, 1);
+					break;
+				default:
+					throw new RuntimeException();
+			}
+			
+			_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new BuffTask(), 3000, 3000);
 		}
 	}
 	
@@ -100,7 +118,10 @@ public class L2BirthdayCakeInstance extends L2Npc
 	public void deleteMe()
 	{
 		if (_aiTask != null)
+		{
 			_aiTask.cancel(true);
+			_aiTask = null;
+		}
 		super.deleteMe();
 	}
 	

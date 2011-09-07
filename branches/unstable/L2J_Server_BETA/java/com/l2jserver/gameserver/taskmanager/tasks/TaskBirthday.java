@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,22 +34,20 @@ import com.l2jserver.gameserver.taskmanager.Task;
 import com.l2jserver.gameserver.taskmanager.TaskManager;
 import com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask;
 import com.l2jserver.gameserver.taskmanager.TaskTypes;
-import com.l2jserver.gameserver.util.Util;
 
 /**
  * @author Nyaran
  */
 public class TaskBirthday extends Task
 {
+	private static final boolean DEBUG_LEAP_YEAR = true;
+	
 	private static final Logger _log = Logger.getLogger(TaskBirthday.class.getName());
 	
 	private static final String NAME = "birthday";
 	
 	private static final String QUERY = "SELECT charId, createDate FROM characters WHERE createDate LIKE ?";
-	private static final Calendar _today = Calendar.getInstance();
 	
-	private int _count = 0;
-
 	/* (non-Javadoc)
 	 * @see com.l2jserver.gameserver.taskmanager.Task#getName()
 	 */
@@ -64,30 +63,49 @@ public class TaskBirthday extends Task
 	@Override
 	public void onTimeElapsed(ExecutedTask task)
 	{
-		Calendar lastExecDate = Calendar.getInstance();
+		long currentTimeMillis;
+		if (DEBUG_LEAP_YEAR) currentTimeMillis = new Date(2011-1900, 3-1, 1, 6, 30, 10).getTime();
+		
+		Calendar now = Calendar.getInstance();
+		if (DEBUG_LEAP_YEAR) now.setTimeInMillis(currentTimeMillis);
+		now.set(Calendar.HOUR_OF_DAY, 23);
+		now.set(Calendar.MINUTE, 59);
+		now.set(Calendar.SECOND, 59);
+		now.set(Calendar.MILLISECOND, 999);
+		
+		GregorianCalendar birth = new GregorianCalendar();
 		long lastActivation = task.getLastActivation();
-		
-		if (lastActivation > 0)
-			lastExecDate.setTimeInMillis(lastActivation);
-		
-		String rangeDate = "[" + Util.getDateString(lastExecDate.getTime()) + "] - [" + Util.getDateString(_today.getTime()) + "]";
-		
-		for(;!_today.before(lastExecDate);lastExecDate.add(Calendar.DATE, 1))
+		if (lastActivation != 0)
 		{
-			checkBirthday(lastExecDate.get(Calendar.YEAR), lastExecDate.get(Calendar.MONTH), lastExecDate.get(Calendar.DATE));
+			birth.setTimeInMillis(lastActivation);
+			birth.add(Calendar.DAY_OF_MONTH, 1);
 		}
-		
-		_log.info("BirthdayManager: " + _count + " gifts sent. " + rangeDate);
+		else
+		{
+			if (DEBUG_LEAP_YEAR) birth.setTimeInMillis(currentTimeMillis);
+		}
+		for (/*birth = birth*/; !birth.after(now); birth.add(Calendar.DAY_OF_MONTH, 1))
+		{
+			int year = birth.get(Calendar.YEAR);
+			int month = birth.get(Calendar.MONTH) + 1;
+			int day = birth.get(Calendar.DAY_OF_MONTH);
+			checkBirthday(year, month, day);
+			
+			// If character birthday is 29-Feb and year isn't leap, send gift on 28-feb
+			if (month == 2 && day == 28 && !birth.isLeapYear(birth.get(Calendar.YEAR)))
+				checkBirthday(year, 2, 29);
+		}
 	}
 	
 	private void checkBirthday(int year, int month, int day)
 	{
+		int count = 0;
 		Connection con = null;
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement(QUERY);
-			statement.setString(1, "%-" + getNum(month + 1) + "-" + getNum(day));
+			statement.setString(1, "%-" + getNum(month) + "-" + getNum(day));
 			
 			ResultSet rset = statement.executeQuery();
 			
@@ -115,7 +133,7 @@ public class TaskBirthday extends Task
 				attachments.addItem("Birthday", Config.ALT_BIRTHDAY_GIFT, 1, null, null);
 				
 				MailManager.getInstance().sendMessage(msg);
-				_count++;
+				++count;
 			}
 		}
 		catch (SQLException e)
@@ -125,12 +143,8 @@ public class TaskBirthday extends Task
 		finally
 		{
 			L2DatabaseFactory.close(con);
+			_log.info("BirthdayManager: " + count + " gifts sent. " + year + "/" + month + "/" + day);
 		}
-		
-		// If character birthday is 29-Feb and year isn't leap, send gift on 28-feb
-		GregorianCalendar calendar = new GregorianCalendar();
-		if (month == Calendar.FEBRUARY && day == 28 && !calendar.isLeapYear(_today.get(Calendar.YEAR)))
-			checkBirthday(year, Calendar.FEBRUARY, 29);
 	}
 	
 	private String getNum(int num)
