@@ -14,17 +14,16 @@
  */
 package com.l2jserver.gameserver.skills.l2skills;
 
+import java.util.logging.Level;
+
 import com.l2jserver.gameserver.datatables.NpcTable;
-import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Skill;
+import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
-import com.l2jserver.gameserver.model.actor.instance.L2BirthdayCakeInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2ChronoMonsterInstance;
-import com.l2jserver.gameserver.model.actor.instance.L2NpcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.actor.instance.L2XmassTreeInstance;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo.NpcInfo;
 import com.l2jserver.gameserver.templates.StatsSet;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
@@ -51,8 +50,6 @@ public class L2SkillSpawn extends L2Skill
 	@Override
 	public void useSkill(L2Character caster, L2Object[] targets)
 	{
-		int x, y;
-		
 		if (caster.isAlikeDead())
 			return;
 		
@@ -62,7 +59,6 @@ public class L2SkillSpawn extends L2Skill
 			return;
 		}
 		
-		L2Npc npc;
 		final L2NpcTemplate template = NpcTable.getInstance().getTemplate(_npcId);
 		if (template == null)
 		{
@@ -70,44 +66,42 @@ public class L2SkillSpawn extends L2Skill
 			return;
 		}
 		
-		if (template.type.equalsIgnoreCase("L2XmassTree"))
-			npc = new L2XmassTreeInstance(IdFactory.getInstance().getNextId(), template);
-		else if (template.type.equalsIgnoreCase("L2BirthdayCake"))
-			npc = new L2BirthdayCakeInstance(IdFactory.getInstance().getNextId(), template, caster.getObjectId());
-		/* TODO
-		else if (template.type.equalsIgnoreCase("L2WeddingCake"))
-			npc = new L2WeddingCakeInstance(IdFactory.getInstance().getNextId(), template);*/
-		else
-			npc = new L2NpcInstance(IdFactory.getInstance().getNextId(), template);
-		
-		npc.setName(template.name);
-		npc.setTitle(caster.getName());
-		npc.setHeading(-1);
-		npc.setShowSummonAnimation(_summonSpawn);
-		
-		if (_randomOffset)
+		try
 		{
-			double radius = 20.0 + 30.0 * Rnd.nextDouble();
-			double angle = javolution.lang.MathLib.TWO_PI * Rnd.nextDouble();
-			x = caster.getX() + (int)(radius * Math.cos(angle));
-			y = caster.getY() + (int)(radius * Math.sin(angle));
-		}
-		else
-		{
-			x = caster.getX();
-			y = caster.getY();
-		}
+			final L2Spawn spawn = new L2Spawn(template);
+			spawn.setInstanceId(caster.getInstanceId());
+			spawn.setHeading(-1);
+			
+			if (_randomOffset)
+			{
+				double radius = 20.0 + 30.0 * Rnd.nextDouble();
+				double angle = javolution.lang.MathLib.TWO_PI * Rnd.nextDouble();
+				spawn.setLocx(caster.getX() + (int)(radius * Math.cos(angle)));
+				spawn.setLocy(caster.getY() + (int)(radius * Math.sin(angle)));
+			}
+			else
+			{
+				spawn.setLocx(caster.getX());
+				spawn.setLocy(caster.getY());
+			}
+			spawn.setLocz(caster.getZ() + 20);
+			
+			spawn.stopRespawn();
+			L2Npc npc = spawn.spawnOne(_summonSpawn);
+			if (_despawnDelay > 0)
+				npc.scheduleDespawn(_despawnDelay);
 
-		npc.spawnMe(x, y, caster.getZ() + 20);
-		if (_despawnDelay > 0)
-			npc.scheduleDespawn(_despawnDelay);
-
-		if (npc instanceof L2ChronoMonsterInstance)
-			((L2ChronoMonsterInstance)npc).setOwner((L2PcInstance)caster);
-		if (_showOwnerName)
+			if (npc instanceof L2ChronoMonsterInstance)
+				((L2ChronoMonsterInstance)npc).setOwner((L2PcInstance)caster);
+			if (_showOwnerName)
+			{
+				npc.setTitle(caster.getName());
+				npc.broadcastPacket(new NpcInfo(npc, null));
+			}
+		}
+		catch (Exception e)
 		{
-			npc.setTitle(caster.getName());
-			npc.broadcastPacket(new NpcInfo(npc, null));
+			_log.log(Level.WARNING, "Exception while spawning NPC ID: " + _npcId + ", skill ID: " + this.getId() + ", exception: " + e.getMessage(), e);
 		}
 	}
 }
