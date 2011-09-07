@@ -514,14 +514,12 @@ public class EnterWorld extends L2GameClientPacket
 		int birthday = activeChar.checkBirthDay();
 		if (birthday == 0)
 		{
-			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOUR_BIRTHDAY_GIFT_HAS_ARRIVED));
+			activeChar.sendPacket(SystemMessageId.YOUR_BIRTHDAY_GIFT_HAS_ARRIVED);
 			// activeChar.sendPacket(new ExBirthdayPopup()); Removed in H5?
 		}
 		else if (birthday != -1)
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.THERE_ARE_S1_DAYS_UNTIL_YOUR_CHARACTERS_BIRTHDAY);
-			sm.addString(Integer.toString(birthday));
-			activeChar.sendPacket(sm);
+			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.THERE_ARE_S1_DAYS_UNTIL_YOUR_CHARACTERS_BIRTHDAY).addNumber(birthday));
 		}
 		
 		if(!activeChar.getPremiumItemList().isEmpty())

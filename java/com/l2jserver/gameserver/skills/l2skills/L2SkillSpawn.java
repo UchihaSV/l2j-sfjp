@@ -14,6 +14,9 @@
  */
 package com.l2jserver.gameserver.skills.l2skills;
 
+import static java.lang.Math.PI;
+import static javolution.lang.MathLib.TWO_PI;
+
 import java.util.logging.Level;
 
 import com.l2jserver.gameserver.datatables.NpcTable;
@@ -22,7 +25,7 @@ import com.l2jserver.gameserver.model.L2Skill;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
-import com.l2jserver.gameserver.model.actor.instance.L2ChronoMonsterInstance;
+import com.l2jserver.gameserver.model.actor.instance.IhaveOwner;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo.NpcInfo;
 import com.l2jserver.gameserver.templates.StatsSet;
@@ -70,29 +73,39 @@ public class L2SkillSpawn extends L2Skill
 		{
 			final L2Spawn spawn = new L2Spawn(template);
 			spawn.setInstanceId(caster.getInstanceId());
-			spawn.setHeading(-1);
 			
+			int x, y, h;
 			if (_randomOffset)
 			{
 				double radius = 20.0 + 30.0 * Rnd.nextDouble();
-				double angle = javolution.lang.MathLib.TWO_PI * Rnd.nextDouble();
-				spawn.setLocx(caster.getX() + (int)(radius * Math.cos(angle)));
-				spawn.setLocy(caster.getY() + (int)(radius * Math.sin(angle)));
+				double angle = TWO_PI * Rnd.nextDouble();
+				x = caster.getX() + (int)(radius * Math.cos(angle));
+				y = caster.getY() + (int)(radius * Math.sin(angle));
+				h = (int)((angle + PI) / TWO_PI * 65536.0) % 65536;
 			}
 			else
 			{
-				spawn.setLocx(caster.getX());
-				spawn.setLocy(caster.getY());
+				x = caster.getX();
+				y = caster.getY();
+				h = caster.getHeading();
 			}
+			spawn.setLocx(x);
+			spawn.setLocy(y);
 			spawn.setLocz(caster.getZ() + 20);
+			spawn.setHeading(h);
 			
 			spawn.stopRespawn();
 			L2Npc npc = spawn.spawnOne(_summonSpawn);
 			if (_despawnDelay > 0)
 				npc.scheduleDespawn(_despawnDelay);
 
-			if (npc instanceof L2ChronoMonsterInstance)
-				((L2ChronoMonsterInstance)npc).setOwner((L2PcInstance)caster);
+		//	if (npc instanceof L2ChronoMonsterInstance)
+		//		((L2ChronoMonsterInstance)npc).setOwner((L2PcInstance)caster);
+		//	else if (npc instanceof L2BirthdayCakeInstance)
+		//		((L2BirthdayCakeInstance)npc).setOwner((L2PcInstance)caster);
+			if (npc instanceof IhaveOwner)
+				((IhaveOwner)npc).setOwner((L2PcInstance)caster);
+			
 			if (_showOwnerName)
 			{
 				npc.setTitle(caster.getName());
