@@ -19,7 +19,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,8 +39,6 @@ import com.l2jserver.gameserver.taskmanager.TaskTypes;
  */
 public class TaskBirthday extends Task
 {
-	private static final boolean DEBUG_LEAP_YEAR = true;
-	
 	private static final Logger _log = Logger.getLogger(TaskBirthday.class.getName());
 	
 	private static final String NAME = "birthday";
@@ -63,11 +60,7 @@ public class TaskBirthday extends Task
 	@Override
 	public void onTimeElapsed(ExecutedTask task)
 	{
-		long currentTimeMillis;
-		if (DEBUG_LEAP_YEAR) currentTimeMillis = new Date(2011-1900, 3-1, 1, 6, 30, 10).getTime();
-		
 		Calendar now = Calendar.getInstance();
-		if (DEBUG_LEAP_YEAR) now.setTimeInMillis(currentTimeMillis);
 		now.set(Calendar.HOUR_OF_DAY, 23);
 		now.set(Calendar.MINUTE, 59);
 		now.set(Calendar.SECOND, 59);
@@ -79,10 +72,6 @@ public class TaskBirthday extends Task
 		{
 			birth.setTimeInMillis(lastActivation);
 			birth.add(Calendar.DAY_OF_MONTH, 1);
-		}
-		else
-		{
-			if (DEBUG_LEAP_YEAR) birth.setTimeInMillis(currentTimeMillis);
 		}
 		for (/*birth = birth*/; !birth.after(now); birth.add(Calendar.DAY_OF_MONTH, 1))
 		{
