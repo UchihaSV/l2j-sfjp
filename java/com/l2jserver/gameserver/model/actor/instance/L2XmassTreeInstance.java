@@ -99,25 +99,25 @@ public class L2XmassTreeInstance extends L2Npc
 		protected void handleEffect(L2PcInstance player)
 		{
 			final L2Skill skill = _skill;
-			if (! hasEffect(player, skill))
+			if (! doesStack(player, skill))
 				skill.getEffects(player, player);
 		}
 		
 		protected void handleBuff(L2PcInstance player, int skillId, int skillLevel)
 		{
 			final L2Skill skill = SkillTable.getInstance().getInfo(skillId, skillLevel);
-			if (! hasEffect(player, skill))
+			if (! doesStack(player, skill))
 			{
 				skill.getEffects(_caster, player);
 				player.sendPacket(new MagicSkillUse(_caster, player, skillId, skillLevel, skill.getHitTime(), 0));
 			}
 		}
 		
-		private boolean hasEffect(L2PcInstance player, L2Skill skill)
+		private boolean doesStack(L2PcInstance player, L2Skill checkSkill)
 		{
-			final String abnormalType = skill.getEffectTemplates()[0].abnormalType;
+			String stackType = checkSkill.getEffectTemplates()[0].abnormalType;
 			for (L2Effect e : player.getAllEffects())
-				if (e.getAbnormalType().equals(abnormalType))
+				if (stackType.equals(e.getAbnormalType()))
 					return true;
 			return false;
 		}

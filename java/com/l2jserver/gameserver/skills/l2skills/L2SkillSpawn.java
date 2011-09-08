@@ -58,14 +58,14 @@ public class L2SkillSpawn extends L2Skill
 		
 		if (_npcId == 0)
 		{
-			_log.warning("NPC ID not defined for skill ID:"+this.getId());
+			_log.warning("NPC ID not defined for skill ID:" + this.getId());
 			return;
 		}
 		
 		final L2NpcTemplate template = NpcTable.getInstance().getTemplate(_npcId);
 		if (template == null)
 		{
-			_log.warning("Spawn of the nonexisting NPC ID:"+_npcId+", skill ID:"+this.getId());
+			_log.warning("Spawn of the nonexisting NPC ID:" + _npcId + ", skill ID:" + this.getId());
 			return;
 		}
 		
@@ -98,11 +98,7 @@ public class L2SkillSpawn extends L2Skill
 			L2Npc npc = spawn.spawnOne(_summonSpawn);
 			if (_despawnDelay > 0)
 				npc.scheduleDespawn(_despawnDelay);
-
-		//	if (npc instanceof L2ChronoMonsterInstance)
-		//		((L2ChronoMonsterInstance)npc).setOwner((L2PcInstance)caster);
-		//	else if (npc instanceof L2BirthdayCakeInstance)
-		//		((L2BirthdayCakeInstance)npc).setOwner((L2PcInstance)caster);
+			
 			if (npc instanceof IhaveOwner)
 				((IhaveOwner)npc).setOwner((L2PcInstance)caster);
 			

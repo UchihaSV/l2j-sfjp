@@ -59,13 +59,14 @@ public class L2BirthdayCakeInstance extends L2Npc implements IhaveOwner
 		@Override
 		public void run()
 		{
-			L2BirthdayCakeInstance npc = L2BirthdayCakeInstance.this;
+			final L2BirthdayCakeInstance npc = L2BirthdayCakeInstance.this;
+			final L2Skill skill = _skill;
 			switch (getNpcId())
 			{
 				case BIRTHDAY_CAKE_24:
-					for (L2PcInstance player : getKnownList().getKnownPlayersInRadius(_skill.getSkillRadius()))
+					for (L2PcInstance player : getKnownList().getKnownPlayersInRadius(skill.getSkillRadius()))
 					{
-						_skill.getEffects(npc, player);
+						skill.getEffects(npc, player);
 					}
 					break;
 					
@@ -77,15 +78,17 @@ public class L2BirthdayCakeInstance extends L2Npc implements IhaveOwner
 					L2Party party = player.getParty();
 					if (party == null)
 					{
-						if (player.isInsideRadius(npc, _skill.getSkillRadius(), true, true))
-							_skill.getEffects(npc, player);
+						if (player.isInsideRadius(npc, skill.getSkillRadius(), true, true)
+						 && player.getFirstEffect(skill) == null)
+							skill.getEffects(npc, player);
 					}
 					else
 					{
 						for (L2PcInstance member : party.getPartyMembers())
 						{
-							if (member != null && member.isInsideRadius(npc, _skill.getSkillRadius(), true, true))
-								_skill.getEffects(npc, member);
+							if (member != null && member.isInsideRadius(npc, skill.getSkillRadius(), true, true)
+							 && member.getFirstEffect(skill) == null)
+								skill.getEffects(npc, member);
 						}
 					}
 					break;
