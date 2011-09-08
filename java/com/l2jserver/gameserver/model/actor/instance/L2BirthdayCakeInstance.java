@@ -25,6 +25,7 @@ import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.zone.type.L2PeaceZone;
+import com.l2jserver.gameserver.network.serverpackets.PlaySound;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
 /**
@@ -114,6 +115,7 @@ public class L2BirthdayCakeInstance extends L2Npc implements IhaveOwner
 			}
 			
 			_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new BuffTask(), 3000, 3000);
+			broadcastPacket(new PlaySound(1, "HB01", 0, 0, 0, 0, 0));	//[JOJO]
 		}
 	}
 	
