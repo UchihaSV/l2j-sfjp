@@ -14424,10 +14424,6 @@ public final class L2PcInstance extends L2Playable
 	/**
 	 * @return number of days to char birthday.<BR><BR>
 	 */
-	@Deprecated public int checkBirthDayA()	//+[JOJO]
-	{
-		throw new RuntimeException();
-	}
 	public int checkBirthDay()
 	{
 		GregorianCalendar now = new GregorianCalendar();	//[JOJO]
@@ -14437,21 +14433,13 @@ public final class L2PcInstance extends L2Playable
 		if (birth.get(Calendar.MONTH) == Calendar.FEBRUARY && birth.get(Calendar.DAY_OF_MONTH) == 29 && !now.isLeapYear(now.get(Calendar.YEAR)))
 			birth.add(Calendar.DAY_OF_MONTH, -1);
 		
-		if (now.get(Calendar.MONTH) == birth.get(Calendar.MONTH)
-			&& now.get(Calendar.DAY_OF_MONTH) == birth.get(Calendar.DAY_OF_MONTH)
-			&& now.get(Calendar.YEAR) != birth.get(Calendar.YEAR))
+		for (int i = 0; i <= 5; i++)
 		{
-			return 0;
-		}
-		
-		int i;
-		for (i = 1; i <= 5; i++)
-		{
-			now.add(Calendar.HOUR_OF_DAY, 24);
 			if (now.get(Calendar.MONTH) == birth.get(Calendar.MONTH)
-				&& now.get(Calendar.DAY_OF_MONTH) == birth.get(Calendar.DAY_OF_MONTH)
-				&& now.get(Calendar.YEAR) != birth.get(Calendar.YEAR))
+			 && now.get(Calendar.DAY_OF_MONTH) == birth.get(Calendar.DAY_OF_MONTH)
+			 && now.get(Calendar.YEAR) != birth.get(Calendar.YEAR))
 				return i;
+			now.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		return -1;
 	}
