@@ -17,7 +17,6 @@ package com.l2jserver.gameserver.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
@@ -206,7 +205,7 @@ public class MacroList
 				String name = rset.getString("name");
 				String descr = rset.getString("descr");
 				String acronym = rset.getString("acronym");
-				List<L2MacroCmd> commands = FastList.newInstance();
+				FastList<L2MacroCmd> commands = FastList.newInstance();
 				StringTokenizer st1 = new StringTokenizer(rset.getString("commands"),";");
 				while (st1.hasMoreTokens()) {
 					StringTokenizer st = new StringTokenizer(st1.nextToken(),",");
@@ -223,7 +222,7 @@ public class MacroList
 				}
 				
 				L2Macro m = new L2Macro(id, icon, name, descr, acronym, commands.toArray(new L2MacroCmd[commands.size()]));
-				FastList.recycle((FastList<?>) commands);
+				FastList.recycle(commands);
 				_macroses.put(m.id, m);
 			}
 			rset.close();

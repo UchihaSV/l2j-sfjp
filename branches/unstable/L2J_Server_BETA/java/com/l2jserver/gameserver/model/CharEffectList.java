@@ -123,14 +123,15 @@ public class CharEffectList
 			FastList<L2Effect> temp = FastList.newInstance();
 			
 			// Add all buffs and all debuffs
-			if (_buffs != null && !_buffs.isEmpty())
+			if (_buffs != null && _buffs.size() > 0)
 				temp.addAll(_buffs);
-			if (_debuffs != null && !_debuffs.isEmpty())
+			if (_debuffs != null && _debuffs.size() > 0)
 				temp.addAll(_debuffs);
 			
 			// Return all effects in an array
 			L2Effect[] tempArray = new L2Effect[temp.size()];
 			temp.toArray(tempArray);
+			FastList.recycle(temp);	//[JOJO] (r4775Ç≈åÎè¡ãé)
 			return (_effectCache = tempArray);
 		}
 	}
