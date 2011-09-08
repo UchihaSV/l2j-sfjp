@@ -711,12 +711,17 @@ public abstract class L2Item
 			}
 		}
 		
-		if (effects.isEmpty())
+		if (effects.size() == 0)
+		{
+			FastList.recycle(effects);
 			return _emptyEffectSet;
-		
-		L2Effect[] result = effects.toArray(new L2Effect[effects.size()]);
-		FastList.recycle(effects);
-		return result;
+		}
+		else
+		{
+			L2Effect[] result = effects.toArray(new L2Effect[effects.size()]);
+			FastList.recycle(effects);
+			return result;
+		}
 	}
 	
 	/**

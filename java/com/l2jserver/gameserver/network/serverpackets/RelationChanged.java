@@ -14,8 +14,6 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import javolution.util.FastList;
 
 import com.l2jserver.gameserver.model.actor.L2Playable;
@@ -52,7 +50,7 @@ public final class RelationChanged extends L2GameServerPacket
 	}
 	
 	private Relation _singled;
-	private List<Relation> _multi;
+	private FastList<Relation> _multi;
 	
 	public RelationChanged(L2Playable activeChar, int relation, boolean autoattackable)
 	{
@@ -100,7 +98,8 @@ public final class RelationChanged extends L2GameServerPacket
 			writeD(_multi.size());
 			for (Relation r : _multi)
 				writeRelation(r);
-			FastList.recycle((FastList<?>) _multi);
+			FastList.recycle(_multi);
+			_multi = null;	//[JOJO]
 		}
 	}
 	

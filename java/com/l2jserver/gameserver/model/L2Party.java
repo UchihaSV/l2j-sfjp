@@ -86,7 +86,7 @@ public class L2Party
 	private L2CommandChannel _commandChannel = null;
 	private DimensionalRift _dr;
 	private byte _requestChangeLoot = -1;
-	private List<Integer> _changeLootAnswers = null;
+	private FastList<Integer> _changeLootAnswers = null;
 	private long _requestChangeLootTimer = 0;
 	private Future<?> _checkTask = null;
 	private Future<?> _positionBroadcastTask = null;
@@ -705,15 +705,15 @@ public class L2Party
 		
 		// Check the number of party members that must be rewarded
 		// (The party member must be in range to receive its reward)
-		List<L2PcInstance> ToReward = FastList.newInstance();
-		for(L2PcInstance member : membersList)
+		FastList<L2PcInstance> ToReward = FastList.newInstance();
+		for (L2PcInstance member : membersList)
 		{
 			if (!Util.checkIfInRange(Config.ALT_PARTY_RANGE2, target, member, true)) continue;
 			ToReward.add(member);
 		}
 		
 		// Avoid null exceptions, if any
-		if (ToReward.isEmpty()) return;
+		if (ToReward.size() == 0) { FastList.recycle(ToReward); return; }
 		
 		// Now we can actually distribute the adena reward
 		// (Total adena splitted by the number of party members that are in range and must be rewarded)
@@ -723,7 +723,7 @@ public class L2Party
 			member.addAdena("Party", count, player, true);
 		}
 		
-		FastList.recycle((FastList<?>) ToReward);
+		FastList.recycle(ToReward);
 	}
 	
 	/**
@@ -1026,7 +1026,8 @@ public class L2Party
 			broadcastToPartyMembers(SystemMessage.getSystemMessage(SystemMessageId.PARTY_LOOT_CHANGE_CANCELLED));
 		}
 		_requestChangeLoot = -1;
-		FastList.recycle((FastList<?>) _changeLootAnswers);
+		FastList.recycle(_changeLootAnswers);
+		_changeLootAnswers = null;	//[JOJO]
 		_requestChangeLootTimer = 0;
 	}
 	
