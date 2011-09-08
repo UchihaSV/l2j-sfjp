@@ -128,6 +128,24 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		TARGET_CLAN_MEMBER
 	}
 	
+	public static enum SkillTraitType
+	{
+		NONE,
+		BLEED,
+		BOSS,
+		DEATH,
+		DERANGEMENT,
+		ETC,
+		GUST,
+		HOLD,
+		PARALYZE,
+		PHYSICAL_BLOCKADE,
+		POISON,
+		SHOCK,
+		SLEEP,
+		VALAKAS
+	}
+	
 	//conditional values
 	public final static int COND_RUNNING = 0x0001;
 	public final static int COND_WALKING = 0x0002;
@@ -153,6 +171,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	private final String _name;
 	private final SkillOpType _operateType;
 	private final boolean _magic;
+	private final SkillTraitType _traitType;
 	private final boolean _staticReuse;
 	private final boolean _staticHitTime;
 	private final int _mpConsume;
@@ -310,6 +329,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		_name = set.getString("name");
 		_operateType = set.getEnum("operateType", SkillOpType.class);
 		_magic = set.getBool("isMagic", false);
+		_traitType = set.getEnum("trait", SkillTraitType.class, SkillTraitType.NONE);
 		_staticReuse = set.getBool("staticReuse", false);
 		_staticHitTime = set.getBool("staticHitTime", false);
 		_isPotion = set.getBool("isPotion", false);
@@ -593,6 +613,11 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	public final L2SkillType getSkillType()
 	{
 		return _skillType;
+	}
+	
+	public final SkillTraitType getTraitType()
+	{
+		return _traitType;
 	}
 	
 	public final byte getElement()
