@@ -28,8 +28,10 @@ import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.zone.type.L2PeaceZone;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillUse;
+import com.l2jserver.gameserver.network.serverpackets.PlaySound;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 import com.l2jserver.gameserver.templates.skills.L2SkillType;
+import com.l2jserver.util.Rnd;
 
 /**
  * @author Drunkard Zabb0x
@@ -55,7 +57,11 @@ public class L2XmassTreeInstance extends L2Npc
 		,{ 4265, 3 }	// クリスマス マイト／一時的に攻撃力が向上した状態。効力3。
 		,{ 4266, 3 }	// クリスマス シールド／一時的に防御力が向上した状態。効力3。
 	};
-
+	
+	private static final String[] XMASS_SONGS = {
+		"CC_01", "CC_02", "CC_03", "CC_04", "CC_05"
+	};
+	
 	protected/*private*/ ScheduledFuture<?> _aiTask;
 
 	protected class XmassAI implements Runnable
@@ -136,7 +142,10 @@ public class L2XmassTreeInstance extends L2Npc
 		
 		if (getNpcId() == 13007
 				&& ZoneManager.getInstance().getZone(this, L2PeaceZone.class) == null)
+		{
 			_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new XmassAI(this,SkillTable.getInstance().getInfo(2139, 1)), 3000, 3000);
+			broadcastPacket(new PlaySound(1, XMASS_SONGS[Rnd.get(XMASS_SONGS.length)], 0, 0, 0, 0, 0));
+		}
 	}
 	
 	@Override
