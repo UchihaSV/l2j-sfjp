@@ -96,6 +96,7 @@ public class L2KotatsuInstance extends L2XmassTreeInstance /*extends L2Npc*/
 	public void onSpawn()
 	{
 		super.onSpawn();
+		setShowSummonAnimation(false);
 		
 		switch (getNpcId())
 		{

@@ -59,7 +59,14 @@ public class L2ChronoMonsterInstance extends L2MonsterInstance implements IhaveO
 	{
 		return null;
 	}
-
+	
+	@Override
+	public void onSpawn()
+	{
+		super.onSpawn();
+		setShowSummonAnimation(false);
+	}
+	
 	/* package com.l2jserver.gameserver.ai; */
 	class L2ChronoAI extends L2AttackableAI implements Runnable
 	{

@@ -30,6 +30,19 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
 /**
  * @author Nyaran
+ * 
+ * update JOJO
+ * 
+ * NPC          106     バースデイケーキ (type: L2BirthdayCake)
+ * |アイテム    20314   バースデイ ケーキ パック - バイタリティ (capsuled_items)
+ * |アイテム    20320   バースデイ ケーキ - バイタリティ：24時間限定 TODO:24時間経っても消えません
+ * |召喚スキル  22034-1 バースデイ ケーキ
+ * |BUFスキル   22035-1 バースデイ ケーキ効果 - バースデイ ケーキのバイタリティ効果。 経験値を獲得して、バイタリティが回復している状態。
+ * NPC          139     バースデイケーキ (type: L2BirthdayCake)
+ * |アイテム    21169   喜びのバースデイ ギフト ボックス (capsuled_items)
+ * |アイテム    21595   バースデイ ケーキ
+ * |召喚スキル  22249-1 バースデイ ケーキ
+ * |BUFスキル   22250-1 バースデイ ケーキ効果 - バースデイ ケーキのバイタリティ効果。5分間、バイタリティが保たれている状態。
  */
 public class L2BirthdayCakeInstance extends L2Npc implements IhaveOwner
 {
@@ -67,7 +80,8 @@ public class L2BirthdayCakeInstance extends L2Npc implements IhaveOwner
 				case BIRTHDAY_CAKE_24:
 					for (L2PcInstance player : getKnownList().getKnownPlayersInRadius(skill.getSkillRadius()))
 					{
-						skill.getEffects(npc, player);
+						if (player.getFirstEffect(skill) == null)
+							skill.getEffects(npc, player);
 					}
 					break;
 					
@@ -100,6 +114,9 @@ public class L2BirthdayCakeInstance extends L2Npc implements IhaveOwner
 	@Override
 	public void onSpawn()
 	{
+		super.onSpawn();
+		setShowSummonAnimation(false);
+		
 		if (ZoneManager.getInstance().getZone(this, L2PeaceZone.class) == null)
 		{
 			switch (getNpcId())
