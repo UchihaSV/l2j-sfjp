@@ -139,6 +139,7 @@ public class L2XmassTreeInstance extends L2Npc
 	public void onSpawn()
 	{
 		super.onSpawn();
+	//	setShowSummonAnimation(false);
 		
 		if (getNpcId() == 13007
 				&& ZoneManager.getInstance().getZone(this, L2PeaceZone.class) == null)
