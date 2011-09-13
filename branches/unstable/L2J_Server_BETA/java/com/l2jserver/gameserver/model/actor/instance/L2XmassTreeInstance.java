@@ -59,7 +59,7 @@ public class L2XmassTreeInstance extends L2Npc
 	};
 	
 	private static final String[] XMASS_SONGS = {
-		"CC_01", "CC_02", "CC_03", "CC_04", "CC_05"
+		"CC_01", "CC_02", "CC_03", "CC_04", "CC_05", "CC_06"
 	};
 	
 	protected/*private*/ ScheduledFuture<?> _aiTask;
