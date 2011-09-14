@@ -29,6 +29,7 @@ import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.handler.BypassHandler;
 import com.l2jserver.gameserver.handler.IBypassHandler;
+import com.l2jserver.gameserver.instancemanager.CHSiegeManager;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.TownManager;
@@ -55,6 +56,7 @@ import com.l2jserver.gameserver.model.actor.stat.NpcStat;
 import com.l2jserver.gameserver.model.actor.status.NpcStatus;
 import com.l2jserver.gameserver.model.entity.Castle;
 import com.l2jserver.gameserver.model.entity.Fort;
+import com.l2jserver.gameserver.model.entity.clanhall.SiegableHall;
 import com.l2jserver.gameserver.model.olympiad.Olympiad;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.zone.type.L2TownZone;
@@ -925,6 +927,11 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 			return null;
 		
 		return CastleManager.getInstance().getCastles().get(_castleIndex);
+	}
+	
+	public final SiegableHall getConquerableHall()
+	{
+		return CHSiegeManager.getInstance().getNearbyClanHall(getX(), getY(), 10000);
 	}
 	
 	/**
