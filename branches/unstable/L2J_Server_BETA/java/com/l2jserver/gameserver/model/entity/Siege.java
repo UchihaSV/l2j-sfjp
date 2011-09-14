@@ -1648,4 +1648,7 @@ public class Siege implements Siegable
 	{
 		return Config.CASTLE_ZONE_FAME_AQUIRE_POINTS;
 	}
+	
+	@Override
+	public void updateSiege() { }
 }
