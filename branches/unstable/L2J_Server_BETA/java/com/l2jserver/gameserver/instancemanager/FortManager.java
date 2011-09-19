@@ -177,12 +177,6 @@ public class FortManager implements InstanceListManager
 			
 			rs.close();
 			statement.close();
-			
-			_log.info("Loaded: " + getForts().size() + " fortress");
-			for (Fort fort : getForts())
-			{
-				fort.getSiege().getSiegeGuardManager().loadSiegeGuard();
-			}
 		}
 		catch (Exception e)
 		{
@@ -191,6 +185,12 @@ public class FortManager implements InstanceListManager
 		finally
 		{
 			L2DatabaseFactory.close(con);
+		}
+		_log.info("Loaded: " + getForts().size() + " fortress");
+		
+		for (Fort fort : getForts())
+		{
+			fort.getSiege().getSiegeGuardManager().loadSiegeGuard();
 		}
 	}
 	

@@ -153,7 +153,7 @@ public final class SystemMessage extends L2GameServerPacket
 		this(SystemMessageId.getSystemMessageId(id));
 	}
 	
-	private final void append(final SMParam param)
+	private final SystemMessage append(final SMParam param)
 	{
 		if (_paramIndex >= _params.length)
 		{
@@ -163,12 +163,12 @@ public final class SystemMessage extends L2GameServerPacket
 		}
 		
 		_params[_paramIndex++] = param;
+		return this;
 	}
 	
 	public final SystemMessage addString(final String text)
 	{
-		append(new SMParam(TYPE_TEXT, text));
-		return this;
+		return append(new SMParam(TYPE_TEXT, text));
 	}
 	
 	/**
@@ -180,22 +180,35 @@ public final class SystemMessage extends L2GameServerPacket
 	 * @param number
 	 * @return
 	 */
-	public final SystemMessage addFortId(final int number)
+	public final SystemMessage addCastleName(final com.l2jserver.gameserver.model.entity.Castle castle)
 	{
-		append(new SMParam(TYPE_CASTLE_NAME, number));
-		return this;
+		return addCastleName(castle.getCastleId());
+	}
+	public final SystemMessage addClanHallName(final com.l2jserver.gameserver.model.entity.ClanHall clanHall)
+	{
+		return addCastleName(clanHall.getId());
+	}
+	public final SystemMessage addSiegableHallName(final com.l2jserver.gameserver.model.entity.clanhall.SiegableHall siegableHall)
+	{
+		return addCastleName(siegableHall.getId());
+	}
+	public final SystemMessage addFortName(final com.l2jserver.gameserver.model.entity.Fort fort)
+	{
+		return addCastleName(fort.getFortId());
+	}
+	private final SystemMessage addCastleName(final int number)
+	{
+		return append(new SMParam(TYPE_CASTLE_NAME, number));
 	}
 	
 	public final SystemMessage addNumber(final int number)
 	{
-		append(new SMParam(TYPE_NUMBER, number));
-		return this;
+		return append(new SMParam(TYPE_NUMBER, number));
 	}
 	
 	public final SystemMessage addItemNumber(final long number)
 	{
-		append(new SMParam(TYPE_ITEM_NUMBER, number));
-		return this;
+		return append(new SMParam(TYPE_ITEM_NUMBER, number));
 	}
 	public SystemMessage addExpNumber(long number)	//+[JOJO]
 	{
@@ -225,8 +238,7 @@ public final class SystemMessage extends L2GameServerPacket
 	
 	public final SystemMessage addPcName(final L2PcInstance pc)
 	{
-		append(new SMParam(TYPE_PLAYER_NAME, pc.getAppearance().getVisibleName()));
-		return this;
+		return append(new SMParam(TYPE_PLAYER_NAME, pc.getAppearance().getVisibleName()));
 	}
 	
 	public final SystemMessage addNpcName(final L2Npc npc)
@@ -248,8 +260,7 @@ public final class SystemMessage extends L2GameServerPacket
 	
 	public final SystemMessage addNpcName(final int id)
 	{
-		append(new SMParam(TYPE_NPC_NAME, 1000000 + id));
-		return this;
+		return append(new SMParam(TYPE_NPC_NAME, 1000000 + id));
 	}
 	
 	public final SystemMessage addItemName(final L2ItemInstance item)
@@ -264,14 +275,12 @@ public final class SystemMessage extends L2GameServerPacket
 	
 	public final SystemMessage addItemName(final int id)
 	{
-		append(new SMParam(TYPE_ITEM_NAME, id));
-		return this;
+		return append(new SMParam(TYPE_ITEM_NAME, id));
 	}
 	
 	public final SystemMessage addZoneName(final int x, final int y, final int z)
 	{
-		append(new SMParam(TYPE_ZONE_NAME, new int[]{x, y, z}));
-		return this;
+		return append(new SMParam(TYPE_ZONE_NAME, new int[]{x, y, z}));
 	}
 	
 	public final SystemMessage addSkillName(final L2Effect effect)
@@ -293,8 +302,7 @@ public final class SystemMessage extends L2GameServerPacket
 	
 	public final SystemMessage addSkillName(final int id, final int lvl)
 	{
-		append(new SMParam(TYPE_SKILL_NAME, new int[]{id, lvl}));
-		return this;
+		return append(new SMParam(TYPE_SKILL_NAME, new int[]{id, lvl}));
 	}
 	
 	/**
@@ -304,8 +312,7 @@ public final class SystemMessage extends L2GameServerPacket
 	 */
 	public final SystemMessage addElemental(final int type)
 	{
-		append(new SMParam(TYPE_ELEMENT_NAME, type));
-		return this;
+		return append(new SMParam(TYPE_ELEMENT_NAME, type));
 	}
 	
 	/**
@@ -315,8 +322,7 @@ public final class SystemMessage extends L2GameServerPacket
 	 */
 	public final SystemMessage addSystemString(final int type)
 	{
-		append(new SMParam(TYPE_SYSTEM_STRING, type));
-		return this;
+		return append(new SMParam(TYPE_SYSTEM_STRING, type));
 	}
 	
 	/**
@@ -326,8 +332,7 @@ public final class SystemMessage extends L2GameServerPacket
 	 */
 	public final SystemMessage addInstanceName(final int type)
 	{
-		append(new SMParam(TYPE_INSTANCE_NAME, type));
-		return this;
+		return append(new SMParam(TYPE_INSTANCE_NAME, type));
 	}
 	
 	public final SystemMessageId getSystemMessageId()

@@ -83,11 +83,7 @@ public final class ClanHallManager
 		{
 			int id, ownerId, lease;
 			con = L2DatabaseFactory.getInstance().getConnection();
-			//[JOJO] add 'locName'
-			PreparedStatement statement = con.prepareStatement("SELECT clanhall.*,castlename_ja.locName FROM clanhall"
-					+ " LEFT JOIN castlename_ja ON clanhall.id=castlename_ja.id"
-					+ " ORDER BY clanhall.id");
-		//	PreparedStatement statement = con.prepareStatement("SELECT * FROM clanhall ORDER BY id");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM clanhall ORDER BY id");
 			ResultSet rs = statement.executeQuery();
 			while (rs.next())
 			{
@@ -103,7 +99,6 @@ public final class ClanHallManager
 				set.set("lease", lease);
 				set.set("desc", rs.getString("desc"));
 				set.set("location", rs.getString("location"));
-				set.set("locName", rs.getString("locName")); //[JOJO]
 				set.set("paidUntil", rs.getLong("paidUntil"));
 				set.set("grade", rs.getInt("Grade"));
 				set.set("paid", rs.getBoolean("paid"));

@@ -118,7 +118,7 @@ public class L2ClanHallDoormenInstance extends L2DoormenInstance
 				else
 				{
 					html.setFile(player.getHtmlPrefix(), "data/html/clanHallDoormen/emptyowner.htm");
-					html.replace("%hallname%", getClanHall().getName());
+					html.replace("%hallname%", getClanHall().getNameHtm());
 				}
 			}
 		}

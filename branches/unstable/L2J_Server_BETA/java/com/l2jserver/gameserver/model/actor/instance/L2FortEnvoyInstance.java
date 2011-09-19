@@ -47,7 +47,7 @@ public class L2FortEnvoyInstance extends L2Npc
 		NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 		html.setFile(player.getHtmlPrefix(), filename);
 		html.replace("%objectId%", getObjectId());
-		html.replace("%castleName%", CastleManager.getInstance().getCastleById(getFort().getCastleIdFromEnvoy(getNpcId())).getName());
+		html.replace("%castleName%", CastleManager.getInstance().getCastleById(getFort().getCastleIdFromEnvoy(getNpcId())).getCastleNameHtm());
 		player.sendPacket(html);
 	}
 	
@@ -78,14 +78,14 @@ public class L2FortEnvoyInstance extends L2Npc
 				castleId = getFort().getCastleIdFromEnvoy(getNpcId());
 				if (CastleManager.getInstance().getCastleById(castleId).getOwnerId() < 1)
 				{
-					html.setHtml("<html><body>Contact is currently not possible, "+CastleManager.getInstance().getCastleById(castleId).getName()+" Castle isn't currently owned by clan.</body></html>");
+					html.setHtml("<html><body>Contact is currently not possible, "+CastleManager.getInstance().getCastleById(castleId).getCastleNameHtm()+" Castle isn't currently owned by clan.</body></html>");
 					player.sendPacket(html);
 					return;
 				}
 			}
 			getFort().setFortState(val, castleId);
 			html.setFile(player.getHtmlPrefix(), "data/html/fortress/envoy-ok.htm");
-			html.replace("%castleName%", CastleManager.getInstance().getCastleById(getFort().getCastleIdFromEnvoy(getNpcId())).getName());
+			html.replace("%castleName%", CastleManager.getInstance().getCastleById(getFort().getCastleIdFromEnvoy(getNpcId())).getCastleNameHtm());
 			player.sendPacket(html);
 		}
 		else

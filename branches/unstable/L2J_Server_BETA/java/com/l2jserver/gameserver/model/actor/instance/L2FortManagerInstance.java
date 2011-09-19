@@ -168,7 +168,7 @@ public class L2FortManagerInstance extends L2MerchantInstance
 					}
 					hour = (int) Math.floor(getFort().getTimeTillNextFortUpdate() / 3600);
 					minutes = (int) (Math.floor(getFort().getTimeTillNextFortUpdate() - hour * 3600) / 60);
-					html.replace("%castle%", CastleManager.getInstance().getCastleById(getFort().getCastleId()).getName());
+					html.replace("%castle%", CastleManager.getInstance().getCastleById(getFort().getCastleId()).getCastleNameHtm());
 					html.replace("%hr2%", hour);
 					html.replace("%min2%", minutes);
 					player.sendPacket(html);

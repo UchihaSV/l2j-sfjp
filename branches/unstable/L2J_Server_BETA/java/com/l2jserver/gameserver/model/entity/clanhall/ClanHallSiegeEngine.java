@@ -283,7 +283,7 @@ public abstract class ClanHallSiegeEngine extends Quest implements Siegable
 	public void endSiege()
 	{
 		SystemMessage end = SystemMessage.getSystemMessage(SystemMessageId.SIEGE_OF_S1_HAS_ENDED);
-		end.addString(_hall.getName());
+		end.addSiegableHallName(_hall);	//[JOJO]
 		Announcements.getInstance().announceToAll(end);
 
 		L2Clan winner = getWinner();
@@ -294,13 +294,13 @@ public abstract class ClanHallSiegeEngine extends Quest implements Siegable
 			winner.setHasHideout(_hall.getId());
 			finalMsg = SystemMessage.getSystemMessage(SystemMessageId.CLAN_S1_VICTORIOUS_OVER_S2_S_SIEGE);
 			finalMsg.addString(winner.getName());
-			finalMsg.addString(_hall.getName());
+			finalMsg.addSiegableHallName(_hall);	//[JOJO]
 			Announcements.getInstance().announceToAll(finalMsg);
 		}
 		else
 		{
 			finalMsg = SystemMessage.getSystemMessage(SystemMessageId.SIEGE_S1_DRAW);
-			finalMsg.addString(_hall.getName());
+			finalMsg.addSiegableHallName(_hall);	//[JOJO]
 			Announcements.getInstance().announceToAll(finalMsg);
 		}
 		_missionAccomplished = false;
@@ -399,7 +399,7 @@ public abstract class ClanHallSiegeEngine extends Quest implements Siegable
 			getAttackers().clear();
 			_hall.updateNextSiege();
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.SIEGE_OF_S1_HAS_BEEN_CANCELED_DUE_TO_LACK_OF_INTEREST);
-			sm.addString(_hall.getName());
+			sm.addSiegableHallName(_hall);	//[JOJO]
 			Announcements.getInstance().announceToAll(sm);
 			return;
 		}
@@ -437,7 +437,7 @@ public abstract class ClanHallSiegeEngine extends Quest implements Siegable
 	{
 		cancelSiegeTask();
 		_siegeTask = ThreadPoolManager.getInstance().scheduleGeneral(new PrepareOwner(), _hall.getNextSiegeTime() - 3600000);
-		_log.config(_hall.getName()+" siege scheduled for: "+_hall.getSiegeDate().getTime().toString());
+		_log.config(_hall.getName()+" siege scheduled for: "+com.l2jserver.util.Util.dateFormat(_hall.getSiegeDate()));
 	}
 		
 	public void cancelSiegeTask()
