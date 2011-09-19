@@ -73,7 +73,7 @@ public class Fort
 	private List<String> _doorDefault = new FastList<String>();
 	private List<String> _flagPoleStats = new FastList<String>();
 	private String _name = "";
-	private String _fortName, _fortNameShort;	//+[JOJO]
+	private String _fortName;	//+[JOJO]
 	private FortSiege _siege = null;
 	private Calendar _siegeDate;
 	private Calendar _lastOwnedTime;
@@ -614,9 +614,9 @@ public class Fort
 			
 			con = L2DatabaseFactory.getInstance().getConnection();
 			
-			statement = con.prepareStatement("SELECT fort.*,castlename_ja.name AS fortName,fortname_ja.nameJA FROM fort"
+			statement = con.prepareStatement("SELECT fort.*,castlename_ja.name AS fortName FROM fort"
 					+ " LEFT JOIN castlename_ja ON fort.id=castlename_ja.id"
-					+ " LEFT JOIN fortname_ja ON fort.id=fortname_ja.id WHERE fort.id=?");	//[JOJO]
+					+ " WHERE fort.id=?");	//[JOJO]
 		//	statement = con.prepareStatement("SELECT * FROM fort WHERE id = ?");
 			statement.setInt(1, getFortId());
 			rs = statement.executeQuery();
@@ -627,7 +627,6 @@ public class Fort
 				_name = rs.getString("name");
 				//[JOJO]-------------------------------------------------
 				_fortName = rs.getString("fortName"); if (_fortName.length() == 0) _fortName = _name;
-				_fortNameShort = rs.getString("nameJA"); if (_fortNameShort.length() == 0) _fortNameShort = _name;
 				//-------------------------------------------------------
 				
 				_siegeDate = Calendar.getInstance();
@@ -1094,11 +1093,6 @@ public class Fort
 	public final String getFortName()
 	{
 		return _fortName;
-	}
-	/** return "òIâcín" (íZèkñº) [ì˙ñ{åÍ]*/
-	public final String getFortNameShort()
-	{
-		return _fortNameShort;
 	}
 	/** return "&%101;" (òIâcínóvç«) [ÉNÉâÉCÉAÉìÉg]*/
 	public final String getFortNameHtm()
