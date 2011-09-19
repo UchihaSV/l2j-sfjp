@@ -434,7 +434,7 @@ public final class L2AuctioneerInstance extends L2Npc
 					player.sendPacket(html);
 					return;
 				}
-				else if (player.getClan() != null && player.getClan().getHasHideout() != 0)
+				else if (player.getClan() != null && ClanHallManager.getInstance().getAuctionableHallById(player.getClan().getHasHideout()) != null) //[JOJO]
 				{
 					int ItemId = player.getClan().getHasHideout();
 					String filename = "data/html/auction/AgitInfo.htm";
