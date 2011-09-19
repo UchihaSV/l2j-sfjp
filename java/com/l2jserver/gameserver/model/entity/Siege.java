@@ -178,7 +178,7 @@ public class Siege implements Siegable
 				else if ((timeRemaining <= 86400000) && (timeRemaining > 13600000))
 				{
 					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.REGISTRATION_TERM_FOR_S1_ENDED);
-					sm.addFortId(getCastle().getCastleId());	//[JOJO]
+					sm.addCastleName(getCastle());	//[JOJO]
 					Announcements.getInstance().announceToAll(sm);
 					_isRegistrationOver = true;
 					clearSiegeWaitingClan();
@@ -242,7 +242,7 @@ public class Siege implements Siegable
 		if (getIsInProgress())
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.SIEGE_OF_S1_HAS_ENDED);	//$s1の攻城戦が終了しました。
-			sm.addFortId(getCastle().getCastleId());	//[JOJO]
+			sm.addCastleName(getCastle());	//[JOJO]
 			Announcements.getInstance().announceToAll(sm);
 			
 			if (getCastle().getOwnerId() > 0)
@@ -250,7 +250,7 @@ public class Siege implements Siegable
 				L2Clan clan = ClanTable.getInstance().getClan(getCastle().getOwnerId());
 				sm = SystemMessage.getSystemMessage(SystemMessageId.CLAN_S1_VICTORIOUS_OVER_S2_S_SIEGE);	//$s1 血盟が $s2 との攻城戦で勝利しました。
 				sm.addString(clan.getName());
-				sm.addFortId(getCastle().getCastleId());	//[JOJO]
+				sm.addCastleName(getCastle());	//[JOJO]
 				Announcements.getInstance().announceToAll(sm);
 				
 				if (clan.getClanId() == _firstOwnerClanId)
@@ -280,7 +280,7 @@ public class Siege implements Siegable
 			else
 			{
 				sm = SystemMessage.getSystemMessage(SystemMessageId.SIEGE_S1_DRAW);	//$s1の占領戦が引き分けで終了しました。
-				sm.addFortId(getCastle().getCastleId());	//[JOJO]
+				sm.addCastleName(getCastle());	//[JOJO]
 				Announcements.getInstance().announceToAll(sm);
 			}
 			
@@ -449,7 +449,7 @@ public class Siege implements Siegable
 					sm = SystemMessage.getSystemMessage(SystemMessageId.SIEGE_OF_S1_HAS_BEEN_CANCELED_DUE_TO_LACK_OF_INTEREST);
 				else
 					sm = SystemMessage.getSystemMessage(SystemMessageId.S1_SIEGE_WAS_CANCELED_BECAUSE_NO_CLANS_PARTICIPATED);
-				sm.addFortId(getCastle().getCastleId()); // [L2J_JP EDIT - TSL][JOJO]
+				sm.addCastleName(getCastle()); // [L2J_JP EDIT - TSL][JOJO]
 				Announcements.getInstance().announceToAll(sm);
 				saveCastleSiege();
 				return;
@@ -479,7 +479,7 @@ public class Siege implements Siegable
 			ThreadPoolManager.getInstance().scheduleGeneral(new ScheduleEndSiegeTask(getCastle()), 1000); // Prepare auto end task
 			
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.SIEGE_OF_S1_HAS_STARTED);	//$s1の攻城戦が始まりました。
-			sm.addFortId(getCastle().getCastleId());	//[JOJO]
+			sm.addCastleName(getCastle());	//[JOJO]
 			Announcements.getInstance().announceToAll(sm);
 		}
 	}
@@ -1020,7 +1020,7 @@ public class Siege implements Siegable
 		if (getIsRegistrationOver())
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.DEADLINE_FOR_SIEGE_S1_PASSED);
-			sm.addFortId(getCastle().getCastleId());	//[JOJO]
+			sm.addCastleName(getCastle());	//[JOJO]
 			player.sendPacket(sm);
 		}
 		else if (getIsInProgress())
@@ -1344,7 +1344,7 @@ public class Siege implements Siegable
 			getCastle().getSiegeDate().add(Calendar.DAY_OF_MONTH, 7);
 		
 		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_ANNOUNCED_SIEGE_TIME);
-		sm.addFortId(getCastle().getCastleId());	//[JOJO]
+		sm.addCastleName(getCastle());	//[JOJO]
 		Announcements.getInstance().announceToAll(sm);
 		
 		_isRegistrationOver = false; // Allow registration for next siege

@@ -970,7 +970,7 @@ public class Fort
 				SystemMessage sm;
 				sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CLAN_IS_VICTORIOUS_IN_THE_FORTRESS_BATTLE_OF_S2);
 				sm.addString(clan.getName());
-				sm.addFortId(getFortId());
+				sm.addFortName(this);	//[JOJO]
 				L2World.getInstance().forEachPlayer(new ForEachPlayerSendMessage(sm));
 				clan.broadcastToOnlineMembers(new PledgeShowInfoUpdate(clan));
 				clan.broadcastToOnlineMembers(new PlaySound(1, "Siege_Victory", 0, 0, 0, 0, 0));
@@ -1081,6 +1081,7 @@ public class Fort
 		return _FortUpdater[0].getDelay(TimeUnit.SECONDS);
 	}
 	
+	/** return "Shanty" [英語]*/
 	public final String getName()
 	{
 		return _name;
@@ -1089,17 +1090,17 @@ public class Fort
 	/**
 	 * getName() は日本語化できないので...
 	 */
-	/** return "XX要塞"; (long name) */
+	/** return "露営地要塞" [日本語]*/
 	public final String getFortName()
 	{
 		return _fortName;
 	}
-	/** return "XX"; (short name) */
+	/** return "露営地" (短縮名) [日本語]*/
 	public final String getFortNameShort()
 	{
 		return _fortNameShort;
 	}
-	/** return "&%XX;"; (XX要塞) */
+	/** return "&%101;" (露営地要塞) [クライアント]*/
 	public final String getFortNameHtm()
 	{
 		return "&%" + _fortId + ";";

@@ -233,6 +233,8 @@ public class DoorTable
 					
 					if(hall.isSiegableHall())
 						((SiegableHall)hall).getDoorDefault().add(line);
+					if (Config.DEBUG)
+						_log.info("door " + door.getDoorId() + "-" + door.getDoorName() + " attached to ch " + hall.getName());
 				}
 			}
 			

@@ -46,7 +46,6 @@ public abstract class ClanHall
 	private int _ownerId;
 	private String _desc;
 	private String _location;
-	private String _locName;	//+[JOJO]
 	private L2ClanHallZone _zone;
 	protected final int _chRate = 604800000;
 	protected boolean _isFree = true;
@@ -213,9 +212,6 @@ public abstract class ClanHall
 			_log.warning("Init Owner : " + _ownerId);
 		_desc = set.getString("desc");
 		_location = set.getString("location");
-		//[JOJO]-------------------------------------------------
-		_locName = set.getString("locName").intern();
-		//-------------------------------------------------------
 		_functions = new FastMap<Integer, ClanHallFunction>();
 		
 		if(_ownerId > 0)
@@ -234,7 +230,7 @@ public abstract class ClanHall
 		return _clanHallId;
 	}
 	
-	/** Return name */
+	/** Return "ムーンストーン ホール" [日本語]*/
 	public final String getName()
 	{
 		return _name;
@@ -246,31 +242,25 @@ public abstract class ClanHall
 		return _ownerId;
 	}
 	
-	/** Return Desc */
+	/** Return "グルーディオ城の村にあるアジト" [日本語]*/
 	public final String getDesc()
 	{
 		return _desc;
 	}
 	
-	/** Return Location */
+	/** Return "Gludio" [英語]*/
 	public final String getLocation()
 	{
 		return _location;
 	}
 	
 	//[JOJO]-------------------------------------------------
-	/**
-	 * getLocation() は日本語化できないので...
-	 */
-	/** Return Location */
-	public final String getLocName()
-	{
-		return _locName;
-	}
+	/** return "&%22;"; (グルーディオ ムーンストーン ホール) [クライアント]*/
 	public final String getNameHtm()
 	{
 		return "&%" + _clanHallId + ";";
 	}
+	/** return "&^22;"; (グルーディオ)  [クライアント]*/
 	public final String getLocNameHtm()
 	{
 		return "&^" + _clanHallId + ";";

@@ -328,7 +328,7 @@ public class Hero
 					Castle castle = CastleManager.getInstance().getCastleById(param);
 					if(castle != null)
 					{
-						_diaryentry.set("action", castle.getName()+" Castle was successfuly taken");
+						_diaryentry.set("action", castle.getCastleName()+" Castle was successfuly taken");
 					}
 				}
 				_diary.add(_diaryentry);
@@ -1003,7 +1003,7 @@ public class Hero
 			StatsSet _diaryentry = new StatsSet();
 			String date = (new SimpleDateFormat("yyyy-MM-dd HH")).format(new Date(System.currentTimeMillis()));
 			_diaryentry.set("date", date);
-			_diaryentry.set("action", castle.getName() + " Castle was successfuly taken");
+			_diaryentry.set("action", castle.getCastleName() + " Castle was successfuly taken");
 			// Add to old list
 			_list.add(_diaryentry);
 			// Put new list into diary

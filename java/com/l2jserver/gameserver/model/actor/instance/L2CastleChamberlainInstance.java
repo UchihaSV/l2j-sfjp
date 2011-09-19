@@ -1231,7 +1231,7 @@ public class L2CastleChamberlainInstance extends L2MerchantInstance
 						
 						html.setFile(player.getHtmlPrefix(), "data/html/chamberlain/chamberlain-gavecrown.htm");
 						html.replace("%CharName%", player.getName());
-						html.replace("%FeudName%", getCastle().getName());
+						html.replace("%FeudName%", getCastle().getCastleNameHtm());
 					}
 					else
 						html.setFile(player.getHtmlPrefix(), "data/html/chamberlain/chamberlain-hascrown.htm");

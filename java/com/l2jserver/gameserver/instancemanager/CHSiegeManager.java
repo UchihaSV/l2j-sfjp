@@ -148,7 +148,7 @@ public final class CHSiegeManager
 		else if(hall.isWaitingBattle())
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.DEADLINE_FOR_SIEGE_S1_PASSED);
-			sm.addString(hall.getName());
+			sm.addSiegableHallName(hall);	//[JOJO]
 			player.sendPacket(sm);
 		}
 		else if(hall.isInSiege())

@@ -610,7 +610,7 @@ public class Castle
 		}
 		
 		setTaxPercent(taxPercent);
-		activeChar.sendMessage(getName() + " castle tax changed to " + taxPercent + "%.");
+		activeChar.sendMessage(getCastleName() + " castle tax changed to " + taxPercent + "%.");
 	}
 	
 	public void setTaxPercent(int taxPercent)
@@ -1041,6 +1041,7 @@ public class Castle
 		return _doors;
 	}
 	
+	/** return "Aden" [英語]*/
 	public final String getName()
 	{
 		return _name;
@@ -1050,22 +1051,22 @@ public class Castle
 	/**
 	 * getName() は日本語化できないので...
 	 */
-	/** return "XX城"; */
+	/** return "アデン城" [日本語]*/
 	public final String getCastleName()
 	{
 		return _castleName;
 	}
-	/** return "XX"; (領地名) */
+	/** return "アデン" [日本語]*/
 	public final String getLocName()
 	{
 		return _locName;
 	}
-	/** return "&%XX;"; (XX城) */
+	/** return "&%5;" (アデン城) [クライアント]*/
 	public final String getCastleNameHtm()
 	{
 		return "&%" + _castleId + ";";
 	}
-	/** return "&^XX;"; (領地名) */
+	/** return "&^5;" (アデン) [クライアント]*/
 	public final String getLocNameHtm()
 	{
 		return "&^" + _castleId + ";";
