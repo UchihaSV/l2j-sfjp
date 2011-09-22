@@ -156,6 +156,22 @@ public final class SiegableHall extends ClanHall
 		return _nextSiege;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	public static String dateFormat(long d)
+	{
+		return new java.text.SimpleDateFormat(DATE_FORMAT).format(new java.util.Date(d));
+	}
+	public static String dateFormat(java.util.Date d)
+	{
+		return new java.text.SimpleDateFormat(DATE_FORMAT).format(d);
+	}
+	public static String dateFormat(java.util.Calendar d)
+	{
+		return new java.text.SimpleDateFormat(DATE_FORMAT).format(d.getTime());
+	}
+	//-------------------------------------------------------
+	
 	public final long getNextSiegeTime()
 	{
 		return _nextSiege.getTimeInMillis();

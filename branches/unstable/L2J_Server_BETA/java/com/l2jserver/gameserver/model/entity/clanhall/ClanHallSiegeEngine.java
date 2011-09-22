@@ -35,9 +35,9 @@ import com.l2jserver.gameserver.instancemanager.CHSiegeManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2SiegeClan;
+import com.l2jserver.gameserver.model.L2SiegeClan.SiegeClanType;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.L2World;
-import com.l2jserver.gameserver.model.L2SiegeClan.SiegeClanType;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -334,7 +334,7 @@ public abstract class ClanHallSiegeEngine extends Quest implements Siegable
 		onSiegeEnds();
 			
 		_siegeTask = ThreadPoolManager.getInstance().scheduleGeneral(new PrepareOwner(), _hall.getNextSiegeTime() - System.currentTimeMillis() - 3600000);
-		_log.config("Siege of "+_hall.getName()+" scheduled for: "+_hall.getSiegeDate().getTime());
+		_log.config("Siege of "+_hall.getName()+" scheduled for: "+SiegableHall.dateFormat(_hall.getSiegeDate()));	//[JOJO]
 		
 		_hall.updateSiegeStatus(SiegeStatus.REGISTERING);
 		unSpawnSiegeGuards();
@@ -437,7 +437,7 @@ public abstract class ClanHallSiegeEngine extends Quest implements Siegable
 	{
 		cancelSiegeTask();
 		_siegeTask = ThreadPoolManager.getInstance().scheduleGeneral(new PrepareOwner(), _hall.getNextSiegeTime() - 3600000);
-		_log.config(_hall.getName()+" siege scheduled for: "+com.l2jserver.util.Util.dateFormat(_hall.getSiegeDate()));
+		_log.config(_hall.getName()+" siege scheduled for: "+SiegableHall.dateFormat(_hall.getSiegeDate()));	//[JOJO]
 	}
 		
 	public void cancelSiegeTask()
