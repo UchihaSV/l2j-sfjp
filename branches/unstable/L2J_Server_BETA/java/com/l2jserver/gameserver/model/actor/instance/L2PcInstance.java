@@ -814,6 +814,8 @@ public final class L2PcInstance extends L2Playable
 	
 	private long _pvpFlagLasts;
 	
+	private long _notMoveUntil = 0;
+	
 	public void setPvpFlagLasts(long time)
 	{
 		_pvpFlagLasts = time;
@@ -15218,5 +15220,15 @@ public final class L2PcInstance extends L2Playable
 	public PlayerEventStatus getEventStatus()
 	{
 		return eventStatus;
+	}
+	
+	public long getNotMoveUntil()
+	{
+		return _notMoveUntil;
+	}
+	
+	public void updateNotMoveUntil()
+	{
+		_notMoveUntil = System.currentTimeMillis() + Config.PLAYER_MOVEMENT_BLOCK_TIME;
 	}
 }
