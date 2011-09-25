@@ -315,7 +315,7 @@ public class InstanceManager
 		return true;
 	}
 	
-	public boolean createInstanceFromTemplate(int id, String template) throws FileNotFoundException
+	public boolean createInstanceFromTemplate(int id, String template)
 	{
 		if (getInstance(id) != null)
 			return false;
@@ -347,14 +347,7 @@ public class InstanceManager
 		_instanceList.put(_dynamic, instance);
 		if (template != null)
 		{
-			try
-			{
-				instance.loadInstanceTemplate(template);
-			}
-			catch (FileNotFoundException e)
-			{
-				_log.log(Level.WARNING, "InstanceManager: Failed creating instance from template " + template + ", " + e.getMessage(), e);
-			}
+			instance.loadInstanceTemplate(template);
 		}
 		return _dynamic++;	//[JOJO]
 	//	return _dynamic;

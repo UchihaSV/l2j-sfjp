@@ -232,7 +232,7 @@ public class LoginController
 	}
 	// [L2J_JP ADD END - TSL]
 
-	public AuthLoginResult tryAuthLogin(String account, String password, L2LoginClient client) throws HackingException
+	public AuthLoginResult tryAuthLogin(String account, String password, L2LoginClient client)
 	{
 		AuthLoginResult ret = AuthLoginResult.INVALID_PASSWORD;
 		// [L2J_JP ADD START - TSL]
