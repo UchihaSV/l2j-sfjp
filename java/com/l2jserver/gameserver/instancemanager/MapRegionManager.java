@@ -278,8 +278,8 @@ public class MapRegionManager
 	
 	/**
 	 * Get town name by character position
-	 * @param townId
-	 * @return String
+	 * @param activeChar
+	 * @return
 	 */
 	public String getClosestTownName(L2Character activeChar)
 	{

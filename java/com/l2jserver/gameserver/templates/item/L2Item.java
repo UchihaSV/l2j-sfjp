@@ -432,8 +432,8 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Returns the quantity of crystals for crystallization on specific enchant level
-	 * @return int
+	 * @param enchantLevel 
+	 * @return the quantity of crystals for crystallization on specific enchant level
 	 */
 	public final int getCrystalCount(int enchantLevel)
 	{
@@ -493,6 +493,7 @@ public abstract class L2Item
 	
 	/**
 	 * Sets the base elemental of the item
+	 * @param element 
 	 */
 	public void setElementals(Elementals element)
 	{

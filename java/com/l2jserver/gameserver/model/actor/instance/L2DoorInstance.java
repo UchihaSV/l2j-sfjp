@@ -203,6 +203,11 @@ public class L2DoorInstance extends L2Character
 	}
 	
 	/**
+	 * @param objectId 
+	 * @param template 
+	 * @param doorId 
+	 * @param name 
+	 * @param unlockable 
 	 */
 	public L2DoorInstance(int objectId, L2CharTemplate template, int doorId, String name, boolean unlockable)
 	{
@@ -333,7 +338,7 @@ public class L2DoorInstance extends L2Character
 	 * <BR>
 	 * <B>Note:</B> A value of -1 cancels the auto open/close task.
 	 *
-	 * @param int actionDelay
+	 * @param actionDelay
 	 */
 	public void setAutoActionDelay(int actionDelay)
 	{
@@ -466,12 +471,11 @@ public class L2DoorInstance extends L2Character
 	}
 	
 	/**
-	 * Return the distance after which the object must be remove from _knownObject according to the type of the object.<BR><BR>
-	 *
 	 * <B><U> Values </U> :</B><BR><BR>
 	 * <li> object is a L2PcInstance : 4000</li>
 	 * <li> object is not a L2PcInstance : 0 </li><BR><BR>
-	 *
+	 * @param object 
+	 * @return the distance after which the object must be remove from _knownObject according to the type of the object.
 	 */
 	public int getDistanceToForgetObject(L2Object object)
 	{
@@ -658,6 +662,7 @@ public class L2DoorInstance extends L2Character
 	
 	/**
 	 * Set this door as a castle wall, can be damaged by siege golem only.
+	 * @param b 
 	 */
 	public void setIsWall(boolean b)
 	{

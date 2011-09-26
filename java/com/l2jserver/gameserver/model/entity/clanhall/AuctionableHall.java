@@ -56,7 +56,9 @@ public final class AuctionableHall extends ClanHall
 		}
 	}
 
-	/** Return if clanHall is paid or not */
+	/**
+	 * @return if clanHall is paid or not
+	 */
 	public final boolean getPaid()
 	{
 		return _paid;
@@ -107,7 +109,10 @@ public final class AuctionableHall extends ClanHall
 		initialyzeTask(true);
 	}
 	
-	/** Initialize Fee Task */
+	/**
+	 * Initialize Fee Task 
+	 * @param forced
+	 */
 	private final void initialyzeTask(boolean forced)
 	{
 		long currentTime = System.currentTimeMillis();

@@ -905,9 +905,9 @@ public class NpcTable
 		
 		return list.toArray(new L2NpcTemplate[list.size()]);
 	}
-	
+
 	/**
-	 * @param class1
+	 * @param clazz
 	 * @return
 	 */
 	public Set<Integer> getAllNpcOfL2jClass(Class<?> clazz)

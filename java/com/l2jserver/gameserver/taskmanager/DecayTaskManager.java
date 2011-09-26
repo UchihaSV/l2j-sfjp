@@ -176,6 +176,7 @@ public class DecayTaskManager
 	
 	/**
 	 * <u><b><font color="FF0000">Read only</font></b></u>
+	 * @return 
 	 */
 	public Map<L2Character, Long> getTasks()
 	{

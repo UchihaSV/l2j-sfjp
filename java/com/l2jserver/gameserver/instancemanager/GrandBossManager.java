@@ -310,6 +310,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	/**
 	 * Adds a L2GrandBossInstance to the list of bosses.
+	 * @param boss 
 	 */
 	public void addBoss(L2GrandBossInstance boss) //Note: AI script.
 	{

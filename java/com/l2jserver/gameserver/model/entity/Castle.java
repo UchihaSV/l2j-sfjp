@@ -286,7 +286,11 @@ public class Castle
 	// =========================================================
 	// Method - Public
 	
-	/** Return function with id */
+	/**
+	 * Return function with id 
+	 * @param type 
+	 * @return
+	 */
 	public CastleFunction getFunction(int type)
 	{
 		if (_function.get(type) != null)
@@ -312,7 +316,10 @@ public class Castle
 	}
 	
 	// This method add to the treasury
-	/** Add amount to castle instance's treasury (warehouse). */
+	/**
+	 * Add amount to castle instance's treasury (warehouse). 
+	 * @param amount
+	 */
 	public void addToTreasury(long amount)
 	{
 		// check if owned
@@ -348,7 +355,11 @@ public class Castle
 		addToTreasuryNoTax(amount);
 	}
 	
-	/** Add amount to castle instance's treasury (warehouse), no tax paying. */
+	/**
+	 * Add amount to castle instance's treasury (warehouse), no tax paying. 
+	 * @param amount 
+	 * @return
+	 */
 	public boolean addToTreasuryNoTax(long amount)
 	{
 		if (getOwnerId() <= 0)
@@ -399,6 +410,10 @@ public class Castle
 	
 	/**
 	 * Return true if object is inside the zone
+	 * @param x 
+	 * @param y 
+	 * @param z 
+	 * @return 
 	 */
 	public boolean checkIfInZone(int x, int y, int z)
 	{
@@ -647,6 +662,7 @@ public class Castle
 	
 	/**
 	 * Respawn all doors on castle grounds<BR><BR>
+	 * @param isDoorWeak 
 	 */
 	public void spawnDoor(boolean isDoorWeak)
 	{
@@ -785,7 +801,10 @@ public class Castle
 		}
 	}
 	
-	/** Remove function In List and in DB */
+	/**
+	 * Remove function In List and in DB 
+	 * @param functionType
+	 */
 	public void removeFunction(int functionType)
 	{
 		_function.remove(functionType);

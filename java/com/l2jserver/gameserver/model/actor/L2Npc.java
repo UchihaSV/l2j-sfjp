@@ -493,6 +493,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	
 	/**
 	 * Send a packet SocialAction to all L2PcInstance in the _KnownPlayers of the L2NpcInstance and create a new RandomAnimation Task.<BR><BR>
+	 * @param animationId 
 	 */
 	public void onRandomAnimation(int animationId)
 	{
@@ -537,7 +538,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Check if the server allows Random Animation.<BR><BR>
+	 * @return true if the server allows Random Animation.
 	 */
 	public boolean hasRandomAnimation()
 	{
@@ -626,7 +627,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the generic Identifier of this L2NpcInstance contained in the L2NpcTemplate.<BR><BR>
+	 * @return the generic Identifier of this L2NpcInstance contained in the L2NpcTemplate.
 	 */
 	public int getNpcId()
 	{
@@ -640,11 +641,9 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the faction Identifier of this L2NpcInstance contained in the L2NpcTemplate.<BR><BR>
-	 *
 	 * <B><U> Concept</U> :</B><BR><BR>
-	 * If a NPC belows to a Faction, other NPC of the faction inside the Faction range will help it if it's attacked<BR><BR>
-	 *
+	 * If a NPC belongs to a Faction, other NPC of the faction inside the Faction range will help it if it's attacked<BR><BR>
+	 * @return the faction Identifier of this L2NpcInstance contained in the L2NpcTemplate.
 	 */
 	//@Deprecated
 	public final String getFactionId()
@@ -662,7 +661,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return True if the L2NpcInstance is agressive (ex : L2MonsterInstance in function of aggroRange).<BR><BR>
+	 * @return True if the L2NpcInstance is aggressive (ex : L2MonsterInstance in function of aggroRange).
 	 */
 	public boolean isAggressive()
 	{
@@ -670,7 +669,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the Aggro Range of this L2NpcInstance contained in the L2NpcTemplate.<BR><BR>
+	 * @return the Aggro Range of this L2NpcInstance contained in the L2NpcTemplate.
 	 */
 	public int getAggroRange()
 	{
@@ -693,7 +692,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 
 	/**
-	 * Return the Faction Range of this L2NpcInstance contained in the L2NpcTemplate.<BR><BR>
+	 * @return the Faction Range of this L2NpcInstance contained in the L2NpcTemplate.
 	 */
 	//@Deprecated
 	public int getFactionRange()
@@ -730,10 +729,6 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the distance under which the object must be add to _knownObject in
-	 * function of the object type.<BR>
-	 * <BR>
-	 * 
 	 * <B><U> Values </U> :</B><BR>
 	 * <BR>
 	 * <li> object is a L2FolkInstance : 0 (don't remember it) </li>
@@ -749,9 +744,8 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 * <BR>
 	 * <BR>
 	 * 
-	 * @param object
-	 *            The Object to add to _knownObject
-	 * 
+	 * @param object The Object to add to _knownObject
+	 * @return the distance under which the object must be add to _knownObject in function of the object type.
 	 */
 	public int getDistanceToWatchObject(L2Object object)
 	{
@@ -768,8 +762,6 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the distance after which the object must be remove from _knownObject in function of the object type.<BR><BR>
-	 *
 	 * <B><U> Values </U> :</B><BR><BR>
 	 * <li> object is not a L2Character : 0 (don't remember it) </li>
 	 * <li> object is a L2FolkInstance : 0 (don't remember it)</li>
@@ -780,7 +772,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 * <li> L2Attackable</li><BR><BR>
 	 *
 	 * @param object The Object to remove from _knownObject
-	 *
+	 * @return the distance after which the object must be remove from _knownObject in function of the object type.
 	 */
 	public int getDistanceToForgetObject(L2Object object)
 	{
@@ -806,7 +798,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the Identifier of the item in the left hand of this L2NpcInstance contained in the L2NpcTemplate.<BR><BR>
+	 * @return the Identifier of the item in the left hand of this L2NpcInstance contained in the L2NpcTemplate.
 	 */
 	public int getLeftHandItem()
 	{
@@ -814,7 +806,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the Identifier of the item in the right hand of this L2NpcInstance contained in the L2NpcTemplate.<BR><BR>
+	 * @return the Identifier of the item in the right hand of this L2NpcInstance contained in the L2NpcTemplate.
 	 */
 	public int getRightHandItem()
 	{
@@ -827,7 +819,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the busy status of this L2NpcInstance.<BR><BR>
+	 * @return the busy status of this L2NpcInstance.
 	 */
 	public final boolean isBusy()
 	{
@@ -836,6 +828,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	
 	/**
 	 * Set the busy status of this L2NpcInstance.<BR><BR>
+	 * @param isBusy 
 	 */
 	public void setBusy(boolean isBusy)
 	{
@@ -843,7 +836,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the busy message of this L2NpcInstance.<BR><BR>
+	 * @return the busy message of this L2NpcInstance.
 	 */
 	public final String getBusyMessage()
 	{
@@ -852,6 +845,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	
 	/**
 	 * Set the busy message of this L2NpcInstance.<BR><BR>
+	 * @param message 
 	 */
 	public void setBusyMessage(String message)
 	{
@@ -859,7 +853,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return true if this L2Npc instance can be warehouse manager.<BR><BR>
+	 * @return true if this L2Npc instance can be warehouse manager.
 	 */
 	public boolean isWarehouse()
 	{
@@ -904,7 +898,9 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		return true;
 	}
 	
-	/** Return the L2Castle this L2NpcInstance belongs to. */
+	/**
+	 * @return the L2Castle this L2NpcInstance belongs to.
+	 */
 	public final Castle getCastle()
 	{
 		// Get castle this NPC belongs to (excluding L2Attackable)
@@ -949,7 +945,9 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		return CastleManager.getInstance().getCastles().get(index);
 	}
 	
-	/** Return the L2Fort this L2NpcInstance belongs to. */
+	/**
+	 * @return the L2Fort this L2NpcInstance belongs to.
+	 */
 	public final Fort getFort()
 	{
 		// Get Fort this NPC belongs to (excluding L2Attackable)
@@ -997,9 +995,8 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 *
 	 * <B><U> Example of use </U> :</B><BR><BR>
 	 * <li> Client packet : RequestBypassToServer</li><BR><BR>
-	 *
+	 * @param player 
 	 * @param command The command string received from client
-	 *
 	 */
 	public void onBypassFeedback(L2PcInstance player, String command)
 	{
@@ -1106,8 +1103,6 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the pathfile of the selected HTML file in function of the npcId and of the page number.<BR><BR>
-	 * 
 	 * <B><U> Format of the pathfile </U> :</B><BR><BR>
 	 * <li> if the file exists on the server (page number = 0) : <B>data/html/default/12006.htm</B> (npcId-page number)</li>
 	 * <li> if the file exists on the server (page number > 0) : <B>data/html/default/12006-1.htm</B> (npcId-page number)</li>
@@ -1118,7 +1113,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 * 
 	 * @param npcId The Identifier of the L2NpcInstance whose text must be display
 	 * @param val The number of the page to display
-	 * 
+	 * @return the pathfile of the selected HTML file in function of the npcId and of the page number.
 	 */
 	public String getHtmlPath(String prefix, int npcId, int val)	//+[JOJO]
 	{
@@ -1432,7 +1427,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the Exp Reward of this L2NpcInstance contained in the L2NpcTemplate (modified by RATE_XP).<BR><BR>
+	 * @return the Exp Reward of this L2NpcInstance contained in the L2NpcTemplate (modified by RATE_XP).
 	 */
 	public int getExpReward()
 	{
@@ -1440,7 +1435,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the SP Reward of this L2NpcInstance contained in the L2NpcTemplate (modified by RATE_SP).<BR><BR>
+	 * @return the SP Reward of this L2NpcInstance contained in the L2NpcTemplate (modified by RATE_SP).
 	 */
 	public int getSpReward()
 	{
@@ -1586,7 +1581,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * Return the L2Spawn object that manage this L2NpcInstance.<BR><BR>
+	 * @return the L2Spawn object that manage this L2NpcInstance.
 	 */
 	public L2Spawn getSpawn()
 	{

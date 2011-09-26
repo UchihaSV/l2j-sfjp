@@ -80,7 +80,7 @@ public class Instance
 	}
 	
 	/**
-	 *  Returns the ID of this instance.
+	 * @return the ID of this instance.
 	 */
 	public int getId()
 	{
@@ -88,7 +88,7 @@ public class Instance
 	}
 	
 	/**
-	 *  Returns the name of this instance
+	 * @return the name of this instance
 	 */
 	public String getName()
 	{
@@ -101,7 +101,7 @@ public class Instance
 	}
 	
 	/**
-	 * Returns whether summon friend type skills are allowed for this instance
+	 * @return whether summon friend type skills are allowed for this instance
 	 */
 	public boolean isSummonAllowed()
 	{
@@ -110,6 +110,7 @@ public class Instance
 	
 	/**
 	 * Sets the status for the instance for summon friend type skills
+	 * @param b 
 	 */
 	public void setAllowSummon(boolean b)
 	{
@@ -327,6 +328,7 @@ public class Instance
 	
 	/**
 	 * Sets the spawn location for this instance to be used when leaving the instance
+	 * @param loc 
 	 */
 	public void setSpawnLoc(int[] loc)
 	{
