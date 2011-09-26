@@ -51,9 +51,10 @@ public class AnswerCoupleAction extends L2GameClientPacket
 		if (target.getMultiSocialTarget() != activeChar.getObjectId()
 				|| target.getMultiSociaAction() != _actionId)
 			return;
+		target.setMultiSocialAction(0, 0);		//+[JOJO]
 		if (_answer == 0) // cancel
 		{
-			target.setMultiSocialAction(0, 0);
+		//	target.setMultiSocialAction(0, 0);	//-[JOJO]
 			target.sendPacket(SystemMessageId.COUPLE_ACTION_DENIED);
 		}
 		else if (_answer == 1) // approve

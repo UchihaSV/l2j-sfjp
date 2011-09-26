@@ -22,8 +22,8 @@ import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.ai.CtrlIntention;
 import com.l2jserver.gameserver.ai.L2SummonAI;
 import com.l2jserver.gameserver.datatables.PetDataTable;
-import com.l2jserver.gameserver.datatables.SummonSkillsTable;
 import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.datatables.SummonSkillsTable;
 import com.l2jserver.gameserver.instancemanager.AirShipManager;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
@@ -1076,13 +1076,15 @@ public final class RequestActionUse extends L2GameClientPacket
 		}
 		
 		//TODO: Remove when Next Intention is supported.
-		if ((activeChar.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE) && (player.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE))
+		if (!checkCoupleAI(activeChar) || !checkCoupleAI(player))	//[JOJO]
+	//	if ((activeChar.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE) && (player.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE))
 		{
 			activeChar.sendPacket(SystemMessageId.COUPLE_ACTION_CANCELED);
 			return;
 		}
 		
-		if (!AttackStanceTaskManager.getInstance().getAttackStanceTask(activeChar) && !AttackStanceTaskManager.getInstance().getAttackStanceTask(player))
+		if (AttackStanceTaskManager.getInstance().getAttackStanceTask(activeChar) || AttackStanceTaskManager.getInstance().getAttackStanceTask(player))	//[JOJO]
+	//	if (!AttackStanceTaskManager.getInstance().getAttackStanceTask(activeChar) && !AttackStanceTaskManager.getInstance().getAttackStanceTask(player))
 		{
 			activeChar.sendPacket(SystemMessageId.COUPLE_ACTION_CANCELED);
 			return;
@@ -1094,6 +1096,22 @@ public final class RequestActionUse extends L2GameClientPacket
 		activeChar.sendPacket(sm);
 		player.sendPacket(new ExAskCoupleAction(activeChar.getObjectId(), id));
 	}
+	
+	//[JOJO]-------------------------------------------------
+	private boolean checkCoupleAI(L2PcInstance a)
+	{
+		switch (a.getAI().getIntention())
+		{
+			case AI_INTENTION_IDLE:
+				return true;
+			case AI_INTENTION_FOLLOW:
+				if (!a.isMoving())
+					return true;
+				break;
+		}
+		return false;
+	}
+	//-------------------------------------------------------
 	
 	@Override
 	public String getType()
