@@ -107,7 +107,7 @@ public class L2Party
 	/**
 	 * constructor ensures party has always one member - leader
 	 * @param leader
-	 * @param itemDistributionMode
+	 * @param itemDistribution
 	 */
 	public L2Party(L2PcInstance leader, int itemDistribution)
 	{
@@ -132,6 +132,7 @@ public class L2Party
 	/**
 	 * set invitation process flag and store time for expiration
 	 * happens when: player join party or player decline to join
+	 * @param val 
 	 */
 	public void setPendingInvitation(boolean val)
 	{
@@ -160,6 +161,8 @@ public class L2Party
 	
 	/**
 	 * get random member from party
+	 * @param ItemId 
+	 * @param target 
 	 * @return
 	 */
 	private L2PcInstance getCheckedRandomMember(int ItemId, L2Character target)
@@ -177,6 +180,8 @@ public class L2Party
 	
 	/**
 	 * get next item looter
+	 * @param ItemId 
+	 * @param target 
 	 * @return
 	 */
 	private L2PcInstance getCheckedNextLooter(int ItemId, L2Character target)
@@ -203,6 +208,10 @@ public class L2Party
 	
 	/**
 	 * get next item looter
+	 * @param player 
+	 * @param ItemId 
+	 * @param spoil 
+	 * @param target 
 	 * @return
 	 */
 	private L2PcInstance getActualLooter(L2PcInstance player, int ItemId, boolean spoil, L2Character target)
@@ -290,6 +299,8 @@ public class L2Party
 	
 	/**
 	 * Send a Server->Client packet to all other L2PcInstance of the Party.<BR><BR>
+	 * @param player 
+	 * @param msg 
 	 */
 	public void broadcastToPartyMembers(L2PcInstance player, L2GameServerPacket msg)
 	{
@@ -659,6 +670,8 @@ public class L2Party
 	 * distribute item(s) to party members
 	 * @param player
 	 * @param item
+	 * @param spoil 
+	 * @param target 
 	 */
 	public void distributeItem(L2PcInstance player, L2Attackable.RewardItem item, boolean spoil, L2Attackable target)
 	{
@@ -696,7 +709,9 @@ public class L2Party
 	
 	/**
 	 * distribute adena to party members
+	 * @param player 
 	 * @param adena
+	 * @param target 
 	 */
 	public void distributeAdena(L2PcInstance player, long adena, L2Character target)
 	{
@@ -740,7 +755,9 @@ public class L2Party
 	 * @param xpReward The Experience reward to distribute
 	 * @param spReward The SP reward to distribute
 	 * @param rewardedMembers The list of L2PcInstance to reward
-	 *
+	 * @param topLvl 
+	 * @param partyDmg 
+	 * @param target 
 	 */
 	public void distributeXpAndSp(long xpReward, int spReward, List<L2Playable> rewardedMembers, int topLvl, int partyDmg, L2Attackable target)
 	{

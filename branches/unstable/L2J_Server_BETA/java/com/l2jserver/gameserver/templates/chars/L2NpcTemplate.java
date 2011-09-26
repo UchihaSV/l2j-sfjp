@@ -408,7 +408,7 @@ public final class L2NpcTemplate extends L2CharTemplate
 	}*/
 	
 	/**
-	 * Return the list of all possible UNCATEGORIZED drops of this L2NpcTemplate.<BR><BR>
+	 * @return the list of all possible UNCATEGORIZED drops of this L2NpcTemplate.
 	 */
 	public FastList<L2DropCategory> getDropData()
 	{
@@ -416,8 +416,8 @@ public final class L2NpcTemplate extends L2CharTemplate
 	}
 	
 	/**
-	 * Return the list of all possible item drops of this L2NpcTemplate.<BR>
-	 * (ie full drops and part drops, mats, miscellaneous & UNCATEGORIZED)<BR><BR>
+	 * @return the list of all possible item drops of this L2NpcTemplate.<br>
+	 * (ie full drops and part drops, mats, miscellaneous & UNCATEGORIZED)
 	 */
 	public List<L2DropData> getAllDropData()
 	{
@@ -447,7 +447,7 @@ public final class L2NpcTemplate extends L2CharTemplate
 	}
 	
 	/**
-	 * Return the list of all Minions that must be spawn with the L2NpcInstance using this L2NpcTemplate.<BR><BR>
+	 * @return the list of all Minions that must be spawn with the L2NpcInstance using this L2NpcTemplate.
 	 */
 	public List<L2MinionData> getMinionData()
 	{

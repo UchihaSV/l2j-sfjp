@@ -541,7 +541,7 @@ public class EnterWorld extends L2GameClientPacket
 	}
 	
 	/**
-	 * @param activeChar
+	 * @param cha 
 	 */
 	private void engage(L2PcInstance cha)
 	{
@@ -566,7 +566,8 @@ public class EnterWorld extends L2GameClientPacket
 	}
 	
 	/**
-	 * @param activeChar partnerid
+	 * @param cha 
+	 * @param partnerId 
 	 */
 	private void notifyPartner(L2PcInstance cha, int partnerId)
 	{
@@ -641,7 +642,6 @@ public class EnterWorld extends L2GameClientPacket
 	/**
 	 * @param string
 	 * @return
-	 * @throws UnsupportedEncodingException
 	 */
 	private String getText(String string)
 	{
