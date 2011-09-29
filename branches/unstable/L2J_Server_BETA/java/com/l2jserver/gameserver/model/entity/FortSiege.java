@@ -775,7 +775,7 @@ public class FortSiege implements Siegable
 					// lower than 1 min, set to 1 min
 					_siegeStartTask = ThreadPoolManager.getInstance().scheduleGeneral(new FortSiege.ScheduleStartSiegeTask(60), 0);
 				
-				_log.info("Siege of " + getFort().getName() + " fort: " + getFort().getSiegeDate().getTime());
+				_log.info("Siege of " + getFort().getName() + " fort: " + com.l2jserver.util.Util.dateFormat(getFort().getSiegeDate()));	//[JOJO]
 			}
 		}
 	}
