@@ -77,6 +77,7 @@ public class L2XmassTreeInstance extends L2Npc
 			if (_skill.getSkillType() == L2SkillType.NOTDONE) throw new RuntimeException();
 		}
 		
+		@Override
 		public void run()
 		{
 			Collection<L2PcInstance> plrs = getKnownList().getKnownPlayersInRadius(_skill.getSkillRadius());
@@ -164,18 +165,12 @@ public class L2XmassTreeInstance extends L2Npc
 		return 900;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jserver.gameserver.model.L2Object#isAttackable()
-	 */
 	@Override
 	public boolean isAutoAttackable(L2Character attacker)
 	{
 		return false;
 	}
 	
-	/**
-	 * @see com.l2jserver.gameserver.model.actor.L2Npc#onAction(com.l2jserver.gameserver.model.actor.instance.L2PcInstance, boolean)
-	 */
 	@Override
 	public void onAction(L2PcInstance player, boolean interact)
 	{

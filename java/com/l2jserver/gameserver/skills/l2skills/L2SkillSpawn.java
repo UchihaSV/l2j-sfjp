@@ -27,6 +27,7 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.IhaveOwner;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2TotemInstance;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo.NpcInfo;
 import com.l2jserver.gameserver.templates.StatsSet;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
@@ -38,6 +39,7 @@ public class L2SkillSpawn extends L2Skill
 	private final int _despawnDelay;
 	private final boolean _summonSpawn;
 	private final boolean _randomOffset;
+	private final int _skillToCast;
 	private final boolean _showOwnerName;	//+[JOJO]
 	
 	public L2SkillSpawn(StatsSet set)
@@ -47,6 +49,7 @@ public class L2SkillSpawn extends L2Skill
 		_despawnDelay = set.getInteger("despawnDelay", 0);
 		_summonSpawn = set.getBool("isSummonSpawn", false);
 		_randomOffset = set.getBool("randomOffset", true);
+		_skillToCast = set.getInteger("skillToCast", 0);
 		_showOwnerName = set.getBool("showOwnerName", false);
 	}
 	
@@ -58,14 +61,14 @@ public class L2SkillSpawn extends L2Skill
 		
 		if (_npcId == 0)
 		{
-			_log.warning("NPC ID not defined for skill ID:" + this.getId());
+			_log.warning("NPC ID not defined for skill ID:" + getId());
 			return;
 		}
 		
 		final L2NpcTemplate template = NpcTable.getInstance().getTemplate(_npcId);
 		if (template == null)
 		{
-			_log.warning("Spawn of the nonexisting NPC ID:" + _npcId + ", skill ID:" + this.getId());
+			_log.warning("Spawn of the nonexisting NPC ID:" + _npcId + ", skill ID:" + getId());
 			return;
 		}
 		
@@ -110,7 +113,7 @@ public class L2SkillSpawn extends L2Skill
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Exception while spawning NPC ID: " + _npcId + ", skill ID: " + this.getId() + ", exception: " + e.getMessage(), e);
+			_log.log(Level.WARNING, "Exception while spawning NPC ID: " + _npcId + ", skill ID: " + getId() + ", exception: " + e.getMessage(), e);
 		}
 	}
 }
