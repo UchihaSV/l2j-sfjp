@@ -243,15 +243,8 @@ public class GameTimeController
 	{
 		public void run()
 		{
-			int h;
-			boolean tempIsNight;
-			
-if (com.l2jserver.Config.FIX_DAY_NIGHT_TIME) {{
-			h = (getGameTime() + 30) / 60 % 24; // Time in hour
-}} else {{
-			h = (getGameTime() / 60) % 24; // Time in hour
-}}
-			tempIsNight = (h < 6);
+			int h = (getGameTime() + 30) / 60 % 24; // Time in hour (+ 30 is to round 60)
+			boolean tempIsNight = h < 6;
 			
 			if (tempIsNight != _isNight)
 			{ // If diff day/night state
