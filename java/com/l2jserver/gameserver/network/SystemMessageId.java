@@ -14665,13 +14665,13 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3224<br>
-	 * Message: The maximum matches you can participate in 1 week is 70.
+	 * Message: 1週間に参加できる最大競技数は70です。
 	 */
 	public static final SystemMessageId MAX_OLY_WEEKLY_MATCHES_REACHED;
 	
-	/***
-	 * ID: 3225
-	 * Message: The total number of matches that can be entered in 1 week is 60 class irrelevant individual matches, 30 specific matches, and 10 team matches.
+	/**
+	 * ID: 3225<br>
+	 * Message: 1週間に参加できる最大競技数は無制限競技60、クラス別競技30、チーム競技10です。
 	 */
 	public static final SystemMessageId MAX_OLY_WEEKLY_MATCHES_REACHED_60_NON_CLASSED_30_CLASSED_10_TEAM;
 	
@@ -14689,7 +14689,7 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3261<br>
-	 * Message: You have $s1 match(es) remaining that you can participate in this week ($s2 1 vs 1 Class matches, $s3 1 vs 1 matches, & $s4 3 vs 3 Team matches).
+	 * Message: 今週、参加できる競技の数は$s1です。(クラス別競技：$s2、無制限競技：$s3、チーム競技：$s4)
 	 */
 	public static final SystemMessageId YOU_HAVE_S1_MATCHES_REMAINING_THAT_YOU_CAN_PARTECIPATE_IN_THIS_WEEK_S2_CLASSED_S3_NON_CLASSED_S4_TEAM;
 	
