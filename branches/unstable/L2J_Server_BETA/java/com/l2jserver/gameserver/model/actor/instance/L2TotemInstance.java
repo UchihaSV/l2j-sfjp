@@ -28,12 +28,30 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
 /**
  * @author UnAfraid
- *
+ * 
+ * @author JOJO
+ * 
+ * NPC          143     体力のトーテム
+ * |アイテム    21899   体力のトーテム
+ * |召喚スキル  22294-1 体力のトーテム
+ * |BUFスキル   23308-1 トーテムのエナジー：体力 - 神秘的なトーテムの力でHP回復ボーナスが30%向上します。地形から受けるダメージが80%減少します。トーテムの範囲を外れると効果は消えます。
+ * NPC          144     精神のトーテム
+ * |アイテム    21900   精神のトーテム
+ * |召喚スキル  22295-1 精神のトーテム
+ * |BUFスキル   23309-1 トーテムのエナジー：精神 - 神秘的なトーテムの力でMP回復ボーナスが30%向上します。トーテムの範囲を外れると効果は消えます。
+ * NPC          145     勇気のトーテム
+ * |アイテム    21901   勇気のトーテム
+ * |召喚スキル  22296-1 勇気のトーテム
+ * |BUFスキル   23310-1 トーテムのエナジー：勇気 - 神秘的なトーテムの力で防御力が15%向上します。トーテムの範囲を外れると効果は消えます。
+ * NPC          146     不屈のトーテム
+ * |アイテム    21902   不屈のトーテム
+ * |召喚スキル  22297-1 不屈のトーテム
+ * |BUFスキル   23311-1 トーテムのエナジー：不屈 - 神秘的なトーテムの力で魔法抵抗力が25%向上します。トーテムの範囲を外れると効果は消えます。
  */
 public class L2TotemInstance extends L2Npc
 {
 	private ScheduledFuture<?> _aiTask;
-	private final L2Skill _skill;
+	private L2Skill _skill;
 	
 	private class TotemAI implements Runnable
 	{
@@ -65,19 +83,24 @@ public class L2TotemInstance extends L2Npc
 		}
 	}
 	
-	public L2TotemInstance(int objectId, L2NpcTemplate template, int skillId)
+	public L2TotemInstance(int objectId, L2NpcTemplate template)
 	{
 		super(objectId, template);
 		setInstanceType(InstanceType.L2TotemInstance);
+	}
+	
+	public void startAITask(int skillId)
+	{
 		_skill = SkillTable.getInstance().getInfo(skillId, 1);
-		_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new TotemAI(this), 3000, 3000);
+		if (_aiTask == null)
+			_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new TotemAI(this), 3000, 3000);
 	}
 	
 	@Override
 	public void deleteMe()
 	{
-		if (_aiTask != null)
-			_aiTask.cancel(true);
+		if (_aiTask != null) _aiTask.cancel(true);
+		_aiTask = null;
 		super.deleteMe();
 	}
 	

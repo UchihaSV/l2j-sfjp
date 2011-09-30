@@ -50,7 +50,7 @@ public class L2SkillSpawn extends L2Skill
 		_summonSpawn = set.getBool("isSummonSpawn", false);
 		_randomOffset = set.getBool("randomOffset", true);
 		_skillToCast = set.getInteger("skillToCast", 0);
-		_showOwnerName = set.getBool("showOwnerName", false);
+		_showOwnerName = set.getBool("showOwnerName", true);
 	}
 	
 	@Override
@@ -104,6 +104,8 @@ public class L2SkillSpawn extends L2Skill
 			
 			if (npc instanceof IhaveOwner)
 				((IhaveOwner)npc).setOwner((L2PcInstance)caster);
+			if (npc instanceof L2TotemInstance)
+				((L2TotemInstance)npc).startAITask(_skillToCast);
 			
 			if (_showOwnerName)
 			{
