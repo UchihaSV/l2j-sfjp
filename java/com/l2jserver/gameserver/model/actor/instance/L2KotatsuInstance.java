@@ -42,7 +42,7 @@ public class L2KotatsuInstance extends L2XmassTreeInstance /*extends L2Npc*/
 	/** Minimum interval between social packets*/
 	private int _minimalSocialInterval = MIN_NPC_ANIMATION;
 	
-	private class KotatsuAI extends XmassAI implements Runnable
+	private class KotatsuAI extends XmassAI /*(implements Runnable)*/
 	{
 		protected KotatsuAI(L2KotatsuInstance caster, L2Skill skill)
 		{
