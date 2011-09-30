@@ -77,6 +77,7 @@ import com.l2jserver.gameserver.datatables.UITable;
 import com.l2jserver.gameserver.geoeditorcon.GeoEditorListener;
 import com.l2jserver.gameserver.handler.AdminCommandHandler;
 import com.l2jserver.gameserver.handler.ChatHandler;
+import com.l2jserver.gameserver.handler.EffectHandler;
 import com.l2jserver.gameserver.handler.ItemHandler;
 import com.l2jserver.gameserver.handler.SkillHandler;
 import com.l2jserver.gameserver.handler.TargetHandler;
@@ -224,6 +225,7 @@ public class GameServer
 		
 		printSection("Skills");
 		TargetHandler.getInstance().executeScript();
+		EffectHandler.getInstance().executeScript();
 		EnchantGroupsTable.getInstance();
 		SkillTable.getInstance();
 		SkillTreesData.getInstance();
