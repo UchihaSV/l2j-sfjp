@@ -11,7 +11,7 @@ binmode STDOUT,':encoding(cp932)'; $|=1;
 sub   FS {Encode::encode('cp932',shift)}
 sub UTF8 {Encode::decode('cp932',shift)}
 
-my $systemmsg_txt = '../../../../../../L2J_DataPack_BETA/data/lang/ja/systemmsg.txt';
+my $systemmsg_txt = '../../../../../../L2J_DataPack_BETA/dist/game/data/lang/ja/systemmsg.txt';
 
 my $DEBUG = 1; # 1 or 0
 
