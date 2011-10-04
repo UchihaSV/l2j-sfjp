@@ -29,7 +29,7 @@ $SIG{__WARN__} = sub {
 	print STDERR $ERROR_HEADER,' ' if $ERROR_HEADER;
 	foreach my $m (@_) {
 		my $a = $m;
-		$a =~ s!build[/\\]dist[/\\]gameserver[/\\](data[/\\])!$1!;
+		$a =~ s!build[/\\]dist[/\\]game[/\\](data[/\\])!$1!;
 		$a =~ s!build[/\\]dist[/\\]!!;
 		if ($a =~ m/^Malformed UTF-8 character \(/) {
 			print STDERR $a;
@@ -44,7 +44,7 @@ $SIG{__DIE__} = sub {
 	print STDERR $ERROR_HEADER,' ' if $ERROR_HEADER;
 	foreach my $m (@_) {
 		my $a = $m;
-		$a =~ s!build[/\\]dist[/\\]gameserver[/\\](data[/\\])!$1!;
+		$a =~ s!build[/\\]dist[/\\]game[/\\](data[/\\])!$1!;
 		$a =~ s!build[/\\]dist[/\\]!!;
 		print STDERR $a;
 	}
