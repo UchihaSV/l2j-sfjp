@@ -679,7 +679,6 @@ public class PartyMatch extends BaseFavoriteManager
 		where_str.append(" ORDER BY id");
 		StringBuilder roomList = new StringBuilder();
 		StringBuilder DelRoom = new StringBuilder();
-		int roomCount = 0;
 		java.sql.Connection con = null;
 		try
 		{
@@ -707,7 +706,6 @@ public class PartyMatch extends BaseFavoriteManager
 					roomList.append("<td width=50 align=center>" + pi.count + " / " + pi.limit + "</td>");
 					roomList.append("<td width=80 align=center><button value=\"“üŽº\" action=\"bypass _bbsgetfav;bbs_party_match;_joinRoom " + pi.roomId + "\" width=65 height=20 back=\"L2UI_CT1.BUTTON_DF_DOWN\" fore=\"L2UI_CT1.BUTTON_DF\"></td>");
 					roomList.append("</tr></table>");
-					roomCount++;
 				}
 			}
 			result.close();
@@ -747,7 +745,6 @@ public class PartyMatch extends BaseFavoriteManager
 		if (pi.roomId == -1 && pi.owner_id == -1)
 			return;
 		StringBuilder memberList = new StringBuilder();
-		int memberCount = 0;
 		java.sql.Connection con = null;
 		try
 		{
@@ -789,7 +786,6 @@ public class PartyMatch extends BaseFavoriteManager
 					else
 						memberList.append("<td width=70 align=center></td>");
 					memberList.append("</tr></table>");
-					memberCount++;
 				}
 			}
 			result.close();

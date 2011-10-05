@@ -14,7 +14,6 @@
  */
 package com.l2jserver.gameserver.network.clientpackets;
 
-import com.l2jserver.gameserver.network.serverpackets.ExNeedToChangeName;
 
 /**
  * Reply for {@link ExNeedToChangeName}
