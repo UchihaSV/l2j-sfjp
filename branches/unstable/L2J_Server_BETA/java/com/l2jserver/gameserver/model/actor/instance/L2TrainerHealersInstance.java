@@ -43,7 +43,8 @@ public final class L2TrainerHealersInstance extends L2TrainerInstance
 	@Override
 	public String getHtmlPath(int npcId, int val)
 	{
-		String pom = "";
+		return getHtmlPath("data/html/trainer/skilltransfer/", npcId, val);
+	/*	String pom = "";
 		if (val == 0)
 		{
 			pom = "" + npcId;
@@ -53,7 +54,7 @@ public final class L2TrainerHealersInstance extends L2TrainerInstance
 			pom = npcId + "-" + val;
 		}
 		
-		return "data/html/trainer/skilltransfer/" + pom + ".htm";
+		return "data/html/trainer/skilltransfer/" + pom + ".htm";	*/
 	}
 	
 	@Override

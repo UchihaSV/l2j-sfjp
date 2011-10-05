@@ -120,13 +120,14 @@ public final class L2ClanTraderInstance extends L2Npc
 	@Override
 	public String getHtmlPath(int npcId, int val)
 	{
-		String pom = "";
+		return getHtmlPath("data/html/clantrader/", npcId, val);
+	/*	String pom = "";
 		
 		if (val == 0)
 			pom = "" + npcId;
 		else
 			pom = npcId + "-" + val;
 		
-		return "data/html/clantrader/" + pom + ".htm";
+		return "data/html/clantrader/" + pom + ".htm";	*/
 	}
 }

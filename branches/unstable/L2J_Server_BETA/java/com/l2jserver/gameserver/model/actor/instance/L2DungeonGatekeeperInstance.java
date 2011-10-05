@@ -160,12 +160,13 @@ public class L2DungeonGatekeeperInstance extends L2Npc
 	@Override
 	public String getHtmlPath(int npcId, int val)
 	{
-		String pom = "";
+		return getHtmlPath("data/html/teleporter/", npcId, val);
+	/*	String pom = "";
 		if (val == 0)
 			pom = "" + npcId;
 		else
 			pom = npcId + "-" + val;
 		
-		return "data/html/teleporter/" + pom + ".htm";
+		return "data/html/teleporter/" + pom + ".htm";	*/
 	}
 }
