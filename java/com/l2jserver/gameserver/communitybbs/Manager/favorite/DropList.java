@@ -79,7 +79,6 @@ public class DropList extends BaseFavoriteManager
 		}
 		_log.info("UserName: " + activeChar.getName() + " SearchWord : " + where_str);
 		StringBuilder dropList = new StringBuilder();
-		int dropCount = 0;
 		java.sql.Connection con = null;
 		try
 		{
@@ -107,7 +106,6 @@ public class DropList extends BaseFavoriteManager
 				dropList.append("<td width=300>" + result.getString("itemname") + "</td>");
 				dropList.append("<td width=50 align=center>" + (result.getInt("category") == -1 ? "Åñ" : "Å|") + "</td>");
 				dropList.append("</tr></table>");
-				dropCount++;
 			}
 			result.close();
 			statement.close();

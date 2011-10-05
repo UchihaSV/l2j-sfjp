@@ -68,7 +68,7 @@ public class L2ChronoMonsterInstance extends L2MonsterInstance implements IhaveO
 	}
 	
 	/* package com.l2jserver.gameserver.ai; */
-	class L2ChronoAI extends L2AttackableAI implements Runnable
+	class L2ChronoAI extends L2AttackableAI
 	{
 		public L2ChronoAI(L2Character.AIAccessor accessor)
 		{
