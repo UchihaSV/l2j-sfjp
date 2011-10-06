@@ -631,6 +631,7 @@ public final class Config
 	public static int MIN_BLOCK_CHECKER_TEAM_MEMBERS;
 	public static boolean HBCE_FAIR_PLAY;
 	public static int PLAYER_MOVEMENT_BLOCK_TIME;
+	public static boolean CLEAR_CREST_CACHE;
 	
 	
 	//--------------------------------------------------
@@ -2162,6 +2163,7 @@ public final class Config
 					else if(MIN_BLOCK_CHECKER_TEAM_MEMBERS > 6)
 						MIN_BLOCK_CHECKER_TEAM_MEMBERS = 6;
 					HBCE_FAIR_PLAY = Boolean.parseBoolean(General.getProperty("HBCEFairPlay", "false"));
+					CLEAR_CREST_CACHE = Boolean.parseBoolean(General.getProperty("ClearClanCache", "false"));
 				}
 				catch (Exception e)
 				{
