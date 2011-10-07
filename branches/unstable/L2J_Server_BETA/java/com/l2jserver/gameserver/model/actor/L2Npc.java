@@ -33,6 +33,7 @@ import com.l2jserver.gameserver.instancemanager.CHSiegeManager;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.TownManager;
+import com.l2jserver.gameserver.instancemanager.WalkingManager;
 import com.l2jserver.gameserver.model.L2ItemInstance;
 import com.l2jserver.gameserver.model.L2NpcAIData;
 import com.l2jserver.gameserver.model.L2Object;
@@ -1522,6 +1523,9 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		// Decrease its spawn counter
 		if (_spawn != null)
 			_spawn.decreaseCount(this);
+		
+		//Notify Walking Manager
+		WalkingManager.getInstance().onDeath(this);
 	}
 	
 	/**
