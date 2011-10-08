@@ -158,22 +158,22 @@ public class PcStat extends PlayableStat
 		else if (addToSp == 0 && addToExp != 0)
 		{
 			sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S1_EXPERIENCE);
-			sm.addNumber((int) addToExp);
+			sm.addNumber(addToExp);		//[JOJO]
 		}
 		else
 		{
 			if ((addToExp - baseExp) > 0)
 			{
 				sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_EARNED_S1_EXP_BONUS_S2_AND_S3_SP_BONUS_S4);
-				sm.addNumber((int) addToExp);
-				sm.addNumber((int) (addToExp - baseExp));
+				sm.addNumber(addToExp);				//[JOJO]
+				sm.addNumber(addToExp - baseExp);	//[JOJO]
 				sm.addNumber(addToSp);
 				sm.addNumber((addToSp - baseSp));
 			}
 			else
 			{
 				sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_EARNED_S1_EXP_AND_S2_SP);
-				sm.addNumber((int) addToExp);
+				sm.addNumber(addToExp);		//[JOJO]
 				sm.addNumber(addToSp);
 			}
 		}
@@ -197,7 +197,7 @@ public class PcStat extends PlayableStat
 		{
 			// Send a Server->Client System Message to the L2PcInstance
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.EXP_DECREASED_BY_S1);
-			sm.addNumber((int) addToExp);
+			sm.addNumber(addToExp);		//[JOJO]
 			getActiveChar().sendPacket(sm);
 			sm = SystemMessage.getSystemMessage(SystemMessageId.SP_DECREASED_S1);
 			sm.addNumber(addToSp);
