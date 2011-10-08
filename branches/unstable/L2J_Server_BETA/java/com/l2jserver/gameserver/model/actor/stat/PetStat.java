@@ -49,8 +49,7 @@ public class PetStat extends SummonStat
 		if (!super.addExpAndSp(addToExp, addToSp)) return false;
 		
 		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.PET_EARNED_S1_EXP);
-		sm.addExpNumber(addToExp);		//+[JOJO]
-	//	sm.addNumber((int)addToExp);	//-[JOJO]
+		sm.addNumber(addToExp);		//[JOJO]
 		getActiveChar().updateAndBroadcastStatus(1);
 		getActiveChar().getOwner().sendPacket(sm);
 		

@@ -211,9 +211,12 @@ public final class SystemMessage extends L2GameServerPacket
 	{
 		return append(new SMParam(TYPE_ITEM_NUMBER, number));
 	}
-	public SystemMessage addExpNumber(long number)	//+[JOJO]
+	public SystemMessage addNumber(final long number)	//+[JOJO] @Overload
 	{
-		return addItemNumber(number);
+		if (Integer.MIN_VALUE <= number && number <= Integer.MAX_VALUE)
+			return addNumber((int)number);	// int
+		else
+			return addItemNumber(number);	// long
 	}
 	
 	public final SystemMessage addCharName(final L2Character cha)
