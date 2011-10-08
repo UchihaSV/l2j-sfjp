@@ -251,8 +251,7 @@ public class GameServer
 		PetDataTable.getInstance();
 		CharSummonTable.getInstance().init();
 		
-		printSection("Clans");
-		CrestCache.getInstance(); // Must be initialized before ClanTable! 
+		printSection("Clans"); 
 		ClanTable.getInstance();
 		CHSiegeManager.getInstance();
 		ClanHallManager.getInstance();
@@ -299,6 +298,7 @@ public class GameServer
 		// Call to load caches
 		printSection("Cache");
 		HtmCache.getInstance();
+		CrestCache.getInstance();
 		TeleportLocationTable.getInstance();
 		UITable.getInstance();
 		PartyMatchWaitingList.getInstance();
