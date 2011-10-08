@@ -14686,7 +14686,13 @@ public final class SystemMessageId
 	 * Message: アケイン シールドの影響で、HPの代わりにMPが$s1のダメージを受けました。
 	 */
 	public static final SystemMessageId ARCANE_SHIELD_DECREASED_YOUR_MP_BY_S1_INSTEAD_OF_HP;
-
+	
+	/**
+	 * ID: 3259<br>
+	 * Message: $s1の経験値(ボーナス：$s2)と$s3のSP(ボーナス：$s4)を得ました。
+	 */
+	public static final SystemMessageId YOU_EARNED_S1_EXP_BONUS_S2_AND_S3_SP_BONUS_S4;
+	
 	/**
 	 * ID: 3256<br>
 	 * Message: MPが0になって、アケイン シールドが消滅します。
@@ -17168,6 +17174,7 @@ public final class SystemMessageId
 		MAX_OLY_WEEKLY_MATCHES_REACHED = new SystemMessageId(3224);
 		MAX_OLY_WEEKLY_MATCHES_REACHED_60_NON_CLASSED_30_CLASSED_10_TEAM = new SystemMessageId(3225);		
 		ARCANE_SHIELD_DECREASED_YOUR_MP_BY_S1_INSTEAD_OF_HP = new SystemMessageId(3255);
+		YOU_EARNED_S1_EXP_BONUS_S2_AND_S3_SP_BONUS_S4 = new SystemMessageId(3259);
 		MP_BECAME_0_ARCANE_SHIELD_DISAPPEARING = new SystemMessageId(3256);
 		YOU_HAVE_S1_MATCHES_REMAINING_THAT_YOU_CAN_PARTECIPATE_IN_THIS_WEEK_S2_CLASSED_S3_NON_CLASSED_S4_TEAM = new SystemMessageId(3261);
 		YOU_CANNOT_BOOKMARK_THIS_LOCATION_BECAUSE_YOU_DO_NOT_HAVE_A_MY_TELEPORT_FLAG = new SystemMessageId(6501);
