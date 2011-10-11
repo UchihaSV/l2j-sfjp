@@ -15,7 +15,7 @@
 package com.l2jserver.gameserver.templates.chars;
 
 import static com.l2jserver.gameserver.datatables.StringIntern.intern;
-import gnu.trove.TIntObjectHashMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
 
 import java.util.List;
 import java.util.Map;
@@ -33,6 +33,7 @@ import com.l2jserver.gameserver.model.L2Skill;
 import com.l2jserver.gameserver.model.base.ClassId;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.templates.StatsSet;
+import com.l2jserver.gameserver.templates.chars.L2CharTemplate;
 
 /**
  * This cl contains all generic data of a L2Spawn object.<BR><BR>
@@ -461,7 +462,7 @@ public final class L2NpcTemplate extends L2CharTemplate
 	
 	public L2Skill[] getSkillsArray()
 	{
-		return _skills.getValues(new L2Skill[_skills.size()]);
+		return _skills.values(new L2Skill[_skills.size()]);
 	}
 	
 	public void addQuestEvent(Quest.QuestEventType EventType, Quest q)

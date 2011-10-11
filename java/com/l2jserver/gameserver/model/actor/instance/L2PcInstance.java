@@ -14,7 +14,7 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
-import gnu.trove.TIntArrayList;
+import gnu.trove.list.array.TIntArrayList;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -5577,7 +5577,7 @@ public final class L2PcInstance extends L2Playable
 		// Unsummon Cubics
 		if (!_cubics.isEmpty())
 		{
-			for (L2CubicInstance cubic : _cubics.getValues(new L2CubicInstance[_cubics.size()]))
+			for (L2CubicInstance cubic : _cubics.values(new L2CubicInstance[_cubics.size()]))
 			{
 				cubic.stopAction();
 				cubic.cancelDisappear();
@@ -9629,7 +9629,7 @@ public final class L2PcInstance extends L2Playable
 		if (getCubics() != null)
 		{
 			boolean removed = false;
-			for (L2CubicInstance cubic : _cubics.getValues(new L2CubicInstance[_cubics.size()]))
+			for (L2CubicInstance cubic : _cubics.values(new L2CubicInstance[_cubics.size()]))
 			{
 				cubic.stopAction();
 				delCubic(cubic.getId());
@@ -9645,7 +9645,7 @@ public final class L2PcInstance extends L2Playable
 		if (getCubics() != null)
 		{
 			boolean removed = false;
-			for (L2CubicInstance cubic : _cubics.getValues(new L2CubicInstance[_cubics.size()]))
+			for (L2CubicInstance cubic : _cubics.values(new L2CubicInstance[_cubics.size()]))
 			{
 				if (cubic.givenByOther())
 				{
@@ -10145,7 +10145,7 @@ public final class L2PcInstance extends L2Playable
 		
 		if (!getCubics().isEmpty())
 		{
-			for (L2CubicInstance cubic : _cubics.getValues(new L2CubicInstance[_cubics.size()]))
+			for (L2CubicInstance cubic : _cubics.values(new L2CubicInstance[_cubics.size()]))
 			{
 				cubic.stopAction();
 				cubic.cancelDisappear();
@@ -13272,7 +13272,7 @@ public final class L2PcInstance extends L2Playable
 	
 	public TimeStamp[] getReuseTimeStamps()
 	{
-		return _reuseTimeStamps.getValues(new TimeStamp[_reuseTimeStamps.size()]);
+		return _reuseTimeStamps.values(new TimeStamp[_reuseTimeStamps.size()]);
 	}
 	
 	public L2TIntObjectHashMap<TimeStamp> getReuseTimeStamp()
