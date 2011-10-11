@@ -14,7 +14,7 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import gnu.trove.TIntObjectHashMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -741,7 +741,7 @@ public class NpcTable
 			// restore additional data from saved copy
 			L2NpcTemplate created = getTemplate(id);
 			
-			for (L2Skill skill : skills.getValues(new L2Skill[skills.size()]))
+			for (L2Skill skill : skills.values(new L2Skill[skills.size()]))
 				created.addSkill(skill);
 			
 			if (classIds != null)
@@ -851,7 +851,7 @@ public class NpcTable
 	
 	public L2NpcTemplate getTemplateByName(String name)
 	{
-		for (Object npcTemplate : _npcs.getValues())
+		for (Object npcTemplate : _npcs.values())
 			if (((L2NpcTemplate)npcTemplate).name.equalsIgnoreCase(name))
 				return (L2NpcTemplate) npcTemplate;
 		
@@ -862,7 +862,7 @@ public class NpcTable
 	{
 		List<L2NpcTemplate> list = new FastList<L2NpcTemplate>();
 		
-		for (Object t : _npcs.getValues())
+		for (Object t : _npcs.values())
 			if (((L2NpcTemplate)t).level == lvl)
 				list.add((L2NpcTemplate) t);
 		
@@ -873,7 +873,7 @@ public class NpcTable
 	{
 		List<L2NpcTemplate> list = new FastList<L2NpcTemplate>();
 		
-		for (Object t : _npcs.getValues())
+		for (Object t : _npcs.values())
 			if (((L2NpcTemplate)t).level == lvl && "L2Monster".equals(((L2NpcTemplate)t).type))
 				list.add((L2NpcTemplate) t);
 		
@@ -884,7 +884,7 @@ public class NpcTable
 	{
 		List<L2NpcTemplate> list = new FastList<L2NpcTemplate>();
 		
-		for (Object t : _npcs.getValues())
+		for (Object t : _npcs.values())
 			if (((L2NpcTemplate)t).name.startsWith(letter) && "L2Npc".equals(((L2NpcTemplate)t).type))
 				list.add((L2NpcTemplate) t);
 		
@@ -899,7 +899,7 @@ public class NpcTable
 	{
 		List<L2NpcTemplate> list = new FastList<L2NpcTemplate>();
 		
-		for (Object t : _npcs.getValues())
+		for (Object t : _npcs.values())
 			if (classType.equals(((L2NpcTemplate)t).type))
 				list.add((L2NpcTemplate) t);
 		
