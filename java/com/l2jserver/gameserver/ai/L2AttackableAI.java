@@ -32,7 +32,6 @@ import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
 import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Skill;
-import com.l2jserver.gameserver.model.L2Skill.SkillTargetType;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -52,6 +51,7 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate.AIType;
 import com.l2jserver.gameserver.templates.skills.L2EffectType;
 import com.l2jserver.gameserver.templates.skills.L2SkillType;
+import com.l2jserver.gameserver.templates.skills.L2TargetType;
 import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
 
@@ -946,7 +946,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					if (leader != null && !leader.isDead() && Rnd.get(100) > (leader.getCurrentHp() / leader.getMaxHp() * 100))
 						for (L2Skill sk : _skillrender._healskills)
 						{
-							if (sk.getTargetType() == L2Skill.SkillTargetType.TARGET_SELF)
+							if (sk.getTargetType() == L2TargetType.TARGET_SELF)
 								continue;
 							if ((sk.getMpConsume() >= npc.getCurrentMp() || npc.isSkillDisabled(sk) || (sk.isMagic() && npc.isMuted()) || (!sk.isMagic() && npc.isPhysicalMuted())))
 							{
@@ -985,7 +985,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					{
 						continue;
 					}
-					if (sk.getTargetType() == L2Skill.SkillTargetType.TARGET_ONE)
+					if (sk.getTargetType() == L2TargetType.TARGET_ONE)
 						for (L2Character obj : npc.getKnownList().getKnownCharactersInRadius(sk.getCastRange() + collision))
 						{
 							if (!(obj instanceof L2Attackable) || obj.isDead())
@@ -1024,7 +1024,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					if (leader != null && leader.isDead())
 						for (L2Skill sk : _skillrender._resskills)
 						{
-							if (sk.getTargetType() == L2Skill.SkillTargetType.TARGET_SELF)
+							if (sk.getTargetType() == L2TargetType.TARGET_SELF)
 								continue;
 							if ((sk.getMpConsume() >= npc.getCurrentMp() || npc.isSkillDisabled(sk) || (sk.isMagic() && npc.isMuted()) || (!sk.isMagic() && npc.isPhysicalMuted())))
 							{
@@ -1050,7 +1050,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					{
 						continue;
 					}
-					if (sk.getTargetType() == L2Skill.SkillTargetType.TARGET_ONE)
+					if (sk.getTargetType() == L2TargetType.TARGET_ONE)
 						for (L2Character obj : npc.getKnownList().getKnownCharactersInRadius(sk.getCastRange() + collision))
 						{
 							if (!(obj instanceof L2Attackable) || !obj.isDead())
@@ -1276,9 +1276,9 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				//----------------------------------------
 				//If actor already have buff, start looking at others same faction mob to cast
-				if (sk.getTargetType() == L2Skill.SkillTargetType.TARGET_SELF)
+				if (sk.getTargetType() == L2TargetType.TARGET_SELF)
 					return false;
-				if (sk.getTargetType() == L2Skill.SkillTargetType.TARGET_ONE)
+				if (sk.getTargetType() == L2TargetType.TARGET_ONE)
 				{
 					L2Character target = effectTargetReconsider(sk, true);
 					if (target != null)
@@ -1309,7 +1309,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			case BALANCE_LIFE:
 			{
 				double percentage = caster.getCurrentHp() / caster.getMaxHp() * 100;
-				if (caster.isMinion() && sk.getTargetType() != L2Skill.SkillTargetType.TARGET_SELF)
+				if (caster.isMinion() && sk.getTargetType() != L2TargetType.TARGET_SELF)
 				{
 					L2Character leader = caster.getLeader();
 					if (leader != null && !leader.isDead() && Rnd.get(100) > (leader.getCurrentHp() / leader.getMaxHp() * 100))
@@ -1335,7 +1335,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					return true;
 				}
 				
-				if (sk.getTargetType() == L2Skill.SkillTargetType.TARGET_ONE)
+				if (sk.getTargetType() == L2TargetType.TARGET_ONE)
 					for (L2Character obj : caster.getKnownList().getKnownCharactersInRadius(sk.getCastRange() + caster.getTemplate().collisionRadius))
 					{
 						if (!(obj instanceof L2Attackable) || obj.isDead())
@@ -1383,7 +1383,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			{
 				if (!isParty(sk))
 				{
-					if (caster.isMinion() && sk.getTargetType() != L2Skill.SkillTargetType.TARGET_SELF)
+					if (caster.isMinion() && sk.getTargetType() != L2TargetType.TARGET_SELF)
 					{
 						L2Character leader = caster.getLeader();
 						if (leader != null && leader.isDead())
@@ -1460,7 +1460,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				else if (canAOE(sk))
 				{
-					if (sk.getTargetType() == SkillTargetType.TARGET_AURA || sk.getTargetType() == SkillTargetType.TARGET_BEHIND_AURA || sk.getTargetType() == SkillTargetType.TARGET_FRONT_AURA  || (sk.getTargetType() == L2Skill.SkillTargetType.TARGET_AURA_CORPSE_MOB))
+					if (sk.getTargetType() == L2TargetType.TARGET_AURA || sk.getTargetType() == L2TargetType.TARGET_BEHIND_AURA || sk.getTargetType() == L2TargetType.TARGET_FRONT_AURA  || (sk.getTargetType() == L2TargetType.TARGET_AURA_CORPSE_MOB))
 					{
 						clientStopMoving(null);
 						//L2Object target = attackTarget;
@@ -1469,14 +1469,14 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						//_actor.setTarget(target);
 						return true;
 					}
-					if ((sk.getTargetType() == SkillTargetType.TARGET_AREA || sk.getTargetType() == SkillTargetType.TARGET_BEHIND_AREA || sk.getTargetType() == SkillTargetType.TARGET_FRONT_AREA) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && dist2 <= srange)
+					if ((sk.getTargetType() == L2TargetType.TARGET_AREA || sk.getTargetType() == L2TargetType.TARGET_BEHIND_AREA || sk.getTargetType() == L2TargetType.TARGET_FRONT_AREA) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && dist2 <= srange)
 					{
 						clientStopMoving(null);
 						caster.doCast(sk);
 						return true;
 					}
 				}
-				else if (sk.getTargetType() == SkillTargetType.TARGET_ONE)
+				else if (sk.getTargetType() == L2TargetType.TARGET_ONE)
 				{
 					L2Character target = effectTargetReconsider(sk, false);
 					if (target != null)
@@ -1490,7 +1490,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			}
 			case SLEEP:
 			{
-				if (sk.getTargetType() == SkillTargetType.TARGET_ONE)
+				if (sk.getTargetType() == L2TargetType.TARGET_ONE)
 				{
 					if (!attackTarget.isDead() && dist2 <= srange)
 					{
@@ -1516,7 +1516,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				else if (canAOE(sk))
 				{
-					if (sk.getTargetType() == SkillTargetType.TARGET_AURA || sk.getTargetType() == SkillTargetType.TARGET_BEHIND_AURA || sk.getTargetType() == SkillTargetType.TARGET_FRONT_AURA)
+					if (sk.getTargetType() == L2TargetType.TARGET_AURA || sk.getTargetType() == L2TargetType.TARGET_BEHIND_AURA || sk.getTargetType() == L2TargetType.TARGET_FRONT_AURA)
 					{
 						clientStopMoving(null);
 						//L2Object target = attackTarget;
@@ -1525,7 +1525,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						//_actor.setTarget(target);
 						return true;
 					}
-					if ((sk.getTargetType() == SkillTargetType.TARGET_AREA || sk.getTargetType() == SkillTargetType.TARGET_BEHIND_AREA || sk.getTargetType() == SkillTargetType.TARGET_FRONT_AREA) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && dist2 <= srange)
+					if ((sk.getTargetType() == L2TargetType.TARGET_AREA || sk.getTargetType() == L2TargetType.TARGET_BEHIND_AREA || sk.getTargetType() == L2TargetType.TARGET_FRONT_AREA) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && dist2 <= srange)
 					{
 						clientStopMoving(null);
 						caster.doCast(sk);
@@ -1549,7 +1549,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				else if (canAOE(sk))
 				{
-					if (sk.getTargetType() == SkillTargetType.TARGET_AURA || sk.getTargetType() == SkillTargetType.TARGET_BEHIND_AURA || sk.getTargetType() == SkillTargetType.TARGET_FRONT_AURA)
+					if (sk.getTargetType() == L2TargetType.TARGET_AURA || sk.getTargetType() == L2TargetType.TARGET_BEHIND_AURA || sk.getTargetType() == L2TargetType.TARGET_FRONT_AURA)
 					{
 						clientStopMoving(null);
 						//L2Object target = attackTarget;
@@ -1558,14 +1558,14 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						//_actor.setTarget(target);
 						return true;
 					}
-					else if ((sk.getTargetType() == SkillTargetType.TARGET_AREA || sk.getTargetType() == SkillTargetType.TARGET_BEHIND_AREA || sk.getTargetType() == SkillTargetType.TARGET_FRONT_AREA) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && dist2 <= srange)
+					else if ((sk.getTargetType() == L2TargetType.TARGET_AREA || sk.getTargetType() == L2TargetType.TARGET_BEHIND_AREA || sk.getTargetType() == L2TargetType.TARGET_FRONT_AREA) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && dist2 <= srange)
 					{
 						clientStopMoving(null);
 						caster.doCast(sk);
 						return true;
 					}
 				}
-				else if (sk.getTargetType() == SkillTargetType.TARGET_ONE)
+				else if (sk.getTargetType() == L2TargetType.TARGET_ONE)
 				{
 					L2Character target = effectTargetReconsider(sk, false);
 					if (target != null)
@@ -1591,7 +1591,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				else if (canAOE(sk))
 				{
-					if (sk.getTargetType() == SkillTargetType.TARGET_AURA || sk.getTargetType() == SkillTargetType.TARGET_BEHIND_AURA || sk.getTargetType() == SkillTargetType.TARGET_FRONT_AURA)
+					if (sk.getTargetType() == L2TargetType.TARGET_AURA || sk.getTargetType() == L2TargetType.TARGET_BEHIND_AURA || sk.getTargetType() == L2TargetType.TARGET_FRONT_AURA)
 					{
 						clientStopMoving(null);
 						//L2Object target = attackTarget;
@@ -1600,14 +1600,14 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						//_actor.setTarget(target);
 						return true;
 					}
-					if ((sk.getTargetType() == SkillTargetType.TARGET_AREA || sk.getTargetType() == SkillTargetType.TARGET_BEHIND_AREA || sk.getTargetType() == SkillTargetType.TARGET_FRONT_AREA) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && dist2 <= srange)
+					if ((sk.getTargetType() == L2TargetType.TARGET_AREA || sk.getTargetType() == L2TargetType.TARGET_BEHIND_AREA || sk.getTargetType() == L2TargetType.TARGET_FRONT_AREA) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && dist2 <= srange)
 					{
 						clientStopMoving(null);
 						caster.doCast(sk);
 						return true;
 					}
 				}
-				else if (sk.getTargetType() == SkillTargetType.TARGET_ONE)
+				else if (sk.getTargetType() == L2TargetType.TARGET_ONE)
 				{
 					L2Character target = effectTargetReconsider(sk, false);
 					if (target != null)
@@ -1626,7 +1626,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				if (Rnd.get(50) != 0)
 					return true;
 
-				if (sk.getTargetType() == SkillTargetType.TARGET_ONE)
+				if (sk.getTargetType() == L2TargetType.TARGET_ONE)
 				{
 					if (attackTarget.getFirstEffect(L2EffectType.BUFF) != null && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && dist2 <= srange)
 					{
@@ -1650,7 +1650,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				else if (canAOE(sk))
 				{
-					if ((sk.getTargetType() == SkillTargetType.TARGET_AURA || sk.getTargetType() == SkillTargetType.TARGET_BEHIND_AURA || sk.getTargetType() == SkillTargetType.TARGET_FRONT_AURA) && GeoData.getInstance().canSeeTarget(caster, attackTarget))
+					if ((sk.getTargetType() == L2TargetType.TARGET_AURA || sk.getTargetType() == L2TargetType.TARGET_BEHIND_AURA || sk.getTargetType() == L2TargetType.TARGET_FRONT_AURA) && GeoData.getInstance().canSeeTarget(caster, attackTarget))
 						
 					{
 						clientStopMoving(null);
@@ -1660,7 +1660,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						//_actor.setTarget(target);
 						return true;
 					}
-					else if ((sk.getTargetType() == SkillTargetType.TARGET_AREA || sk.getTargetType() == SkillTargetType.TARGET_BEHIND_AREA || sk.getTargetType() == SkillTargetType.TARGET_FRONT_AREA) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && dist2 <= srange)
+					else if ((sk.getTargetType() == L2TargetType.TARGET_AREA || sk.getTargetType() == L2TargetType.TARGET_BEHIND_AREA || sk.getTargetType() == L2TargetType.TARGET_FRONT_AREA) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && dist2 <= srange)
 					{
 						clientStopMoving(null);
 						caster.doCast(sk);

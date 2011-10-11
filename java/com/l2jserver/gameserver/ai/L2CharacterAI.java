@@ -52,6 +52,7 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 import com.l2jserver.gameserver.templates.item.L2Weapon;
 import com.l2jserver.gameserver.templates.item.L2WeaponType;
 import com.l2jserver.gameserver.templates.skills.L2SkillType;
+import com.l2jserver.gameserver.templates.skills.L2TargetType;
 import com.l2jserver.gameserver.util.Point3D;
 import com.l2jserver.util.Rnd;
 /**
@@ -1359,10 +1360,10 @@ public class L2CharacterAI extends AbstractAI
 	
 	public boolean canAura(L2Skill sk)
 	{
-		if(sk.getTargetType() == L2Skill.SkillTargetType.TARGET_AURA
-				|| sk.getTargetType() == L2Skill.SkillTargetType.TARGET_BEHIND_AURA
-				|| sk.getTargetType() == L2Skill.SkillTargetType.TARGET_FRONT_AURA
-				|| (sk.getTargetType() == L2Skill.SkillTargetType.TARGET_AURA_CORPSE_MOB))
+		if(sk.getTargetType() == L2TargetType.TARGET_AURA
+				|| sk.getTargetType() == L2TargetType.TARGET_BEHIND_AURA
+				|| sk.getTargetType() == L2TargetType.TARGET_FRONT_AURA
+				|| (sk.getTargetType() == L2TargetType.TARGET_AURA_CORPSE_MOB))
 		{
 			for(L2Object target:_actor.getKnownList().getKnownCharactersInRadius(sk.getSkillRadius()))
 			{
@@ -1377,10 +1378,10 @@ public class L2CharacterAI extends AbstractAI
 	{
 		if(sk.getSkillType() != L2SkillType.NEGATE || sk.getSkillType() != L2SkillType.CANCEL)
 		{
-			if(sk.getTargetType() == L2Skill.SkillTargetType.TARGET_AURA
-					|| sk.getTargetType() == L2Skill.SkillTargetType.TARGET_BEHIND_AURA
-					|| sk.getTargetType() == L2Skill.SkillTargetType.TARGET_FRONT_AURA
-					|| (sk.getTargetType() == L2Skill.SkillTargetType.TARGET_AURA_CORPSE_MOB))
+			if(sk.getTargetType() == L2TargetType.TARGET_AURA
+					|| sk.getTargetType() == L2TargetType.TARGET_BEHIND_AURA
+					|| sk.getTargetType() == L2TargetType.TARGET_FRONT_AURA
+					|| (sk.getTargetType() == L2TargetType.TARGET_AURA_CORPSE_MOB))
 			{
 				boolean cancast = true;
 				for(L2Character target:_actor.getKnownList().getKnownCharactersInRadius(sk.getSkillRadius()))
@@ -1409,9 +1410,9 @@ public class L2CharacterAI extends AbstractAI
 				if(cancast)
 					return true;
 			}
-			else if(sk.getTargetType() == L2Skill.SkillTargetType.TARGET_AREA
-					|| sk.getTargetType() == L2Skill.SkillTargetType.TARGET_BEHIND_AREA
-					|| sk.getTargetType() == L2Skill.SkillTargetType.TARGET_FRONT_AREA)
+			else if(sk.getTargetType() == L2TargetType.TARGET_AREA
+					|| sk.getTargetType() == L2TargetType.TARGET_BEHIND_AREA
+					|| sk.getTargetType() == L2TargetType.TARGET_FRONT_AREA)
 			{
 				boolean cancast = true;
 				for(L2Character target: getAttackTarget().getKnownList().getKnownCharactersInRadius(sk.getSkillRadius()))
@@ -1435,10 +1436,10 @@ public class L2CharacterAI extends AbstractAI
 		}
 		else
 		{
-			if(sk.getTargetType() == L2Skill.SkillTargetType.TARGET_AURA
-					|| sk.getTargetType() == L2Skill.SkillTargetType.TARGET_BEHIND_AURA
-					|| sk.getTargetType() == L2Skill.SkillTargetType.TARGET_FRONT_AURA
-					|| (sk.getTargetType() == L2Skill.SkillTargetType.TARGET_AURA_CORPSE_MOB))
+			if(sk.getTargetType() == L2TargetType.TARGET_AURA
+					|| sk.getTargetType() == L2TargetType.TARGET_BEHIND_AURA
+					|| sk.getTargetType() == L2TargetType.TARGET_FRONT_AURA
+					|| (sk.getTargetType() == L2TargetType.TARGET_AURA_CORPSE_MOB))
 			{
 				boolean cancast = false;
 				for(L2Character target:_actor.getKnownList().getKnownCharactersInRadius(sk.getSkillRadius()))
@@ -1459,9 +1460,9 @@ public class L2CharacterAI extends AbstractAI
 				if(cancast)
 					return true;
 			}
-			else if(sk.getTargetType() == L2Skill.SkillTargetType.TARGET_AREA
-					|| sk.getTargetType() == L2Skill.SkillTargetType.TARGET_BEHIND_AREA
-					|| sk.getTargetType() == L2Skill.SkillTargetType.TARGET_FRONT_AREA)
+			else if(sk.getTargetType() == L2TargetType.TARGET_AREA
+					|| sk.getTargetType() == L2TargetType.TARGET_BEHIND_AREA
+					|| sk.getTargetType() == L2TargetType.TARGET_FRONT_AREA)
 			{
 				boolean cancast = true;
 				for(L2Character target: getAttackTarget().getKnownList().getKnownCharactersInRadius(sk.getSkillRadius()))
@@ -1494,7 +1495,7 @@ public class L2CharacterAI extends AbstractAI
 	}
 	public boolean canParty(L2Skill sk)
 	{
-		if(sk.getTargetType() == L2Skill.SkillTargetType.TARGET_PARTY)
+		if(sk.getTargetType() == L2TargetType.TARGET_PARTY)
 		{
 			int count = 0;
 			int ccount = 0;
@@ -1530,7 +1531,7 @@ public class L2CharacterAI extends AbstractAI
 	}
 	public boolean isParty(L2Skill sk)
 	{
-		if(sk.getTargetType() == L2Skill.SkillTargetType.TARGET_PARTY)
+		if(sk.getTargetType() == L2TargetType.TARGET_PARTY)
 		{
 			return true;
 		}
