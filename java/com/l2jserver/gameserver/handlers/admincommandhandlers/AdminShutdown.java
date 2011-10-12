@@ -50,6 +50,7 @@ public class AdminShutdown implements IAdminCommandHandler
 		"admin_server_abort"
 	};
 	
+	@Override
 	public boolean useAdminCommand(String command, L2PcInstance activeChar)
 	{
 		if (command.startsWith("admin_server_shutdown"))
@@ -84,6 +85,7 @@ public class AdminShutdown implements IAdminCommandHandler
 		return true;
 	}
 	
+	@Override
 	public String[] getAdminCommandList()
 	{
 		return ADMIN_COMMANDS;
