@@ -32,6 +32,7 @@ import com.l2jserver.gameserver.model.L2NpcAIData;
 import com.l2jserver.gameserver.model.L2Skill;
 import com.l2jserver.gameserver.model.base.ClassId;
 import com.l2jserver.gameserver.model.quest.Quest;
+import com.l2jserver.gameserver.model.quest.Quest.QuestEventType;
 import com.l2jserver.gameserver.templates.StatsSet;
 import com.l2jserver.gameserver.templates.chars.L2CharTemplate;
 
@@ -992,5 +993,12 @@ public final class L2NpcTemplate extends L2CharTemplate
 	public boolean hasSuicideSkill()
 	{
 		return _hasSuicideSkills;
+	}
+	
+	public Map<QuestEventType, Quest[]> getEventQuests()
+	{
+		if (_questEvents == null)
+			_questEvents = new FastMap<Quest.QuestEventType, Quest[]>();
+		return _questEvents;
 	}
 }
