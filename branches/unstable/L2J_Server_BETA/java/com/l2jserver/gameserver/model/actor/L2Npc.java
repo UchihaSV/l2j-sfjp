@@ -690,7 +690,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	public void setAggroEnable(long delay)	//[JOJO]
 	{
-		ThreadPoolManager.getInstance().scheduleGeneral(new Runnable(){public void run(){ _aggroMask = -1; }}, delay);
+		ThreadPoolManager.getInstance().scheduleGeneral(new Runnable(){ @Override public void run(){ _aggroMask = -1; }}, delay);
 	}
 
 	/**

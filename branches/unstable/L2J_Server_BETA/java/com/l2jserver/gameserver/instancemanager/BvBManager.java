@@ -135,7 +135,8 @@ public class BvBManager
     ScheduledFuture<?> _TimeUpTask;
     class TimeUp implements Runnable
     {
-    	public void run()
+    	@Override
+		public void run()
     	{
     		Announcements.getInstance().announceToAll("ŠÔØ‚êˆø‚«•ª‚¯‚Å‚·B");
     		end();
@@ -149,6 +150,7 @@ public class BvBManager
     ScheduledFuture<?> _CheckWinnerTask;
 	class CheckWinner implements Runnable
 	{
+		@Override
 		public void run()
 		{
     		assert _group1 != null && _group2 != null;

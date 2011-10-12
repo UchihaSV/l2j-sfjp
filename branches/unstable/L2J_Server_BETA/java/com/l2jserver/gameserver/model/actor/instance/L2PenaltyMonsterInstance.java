@@ -165,6 +165,7 @@ public class L2PenaltyMonsterInstance extends L2MonsterInstance
 			case 18326: _randomNpcStrings = S18326; break;	//’Þ‚ê‚½‘å‰ö‹…
 		}
 		ThreadPoolManager.getInstance().scheduleGeneral(new Runnable(){
+			@Override
 			public void run()
 			{
 				if (isVisible() && !isDead())
