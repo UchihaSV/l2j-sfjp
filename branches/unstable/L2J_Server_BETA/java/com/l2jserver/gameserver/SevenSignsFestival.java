@@ -1723,6 +1723,7 @@ public class SevenSignsFestival implements SpawnListener
 	 *
 	 * @param npc
 	 */
+	@Override
 	public void npcSpawned(L2Npc npc)
 	{
 		if (npc == null)
@@ -1771,6 +1772,7 @@ public class SevenSignsFestival implements SpawnListener
 			setNextFestivalStart(Config.ALT_FESTIVAL_CYCLE_LENGTH - FESTIVAL_SIGNUP_TIME);
 		}
 		
+		@Override
 		public synchronized void run()
 		{
 			try

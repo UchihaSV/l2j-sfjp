@@ -150,6 +150,7 @@ public class L2FortCommanderInstance extends L2DefenderInstance
 		{
 		}
 		
+		@Override
 		public void run()
 		{
 			setCanTalk(true);

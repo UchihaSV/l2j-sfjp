@@ -374,7 +374,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			_victimSpawnKeyBoxTime = victimSpawnKeyBoxTime;
 		}
 		
-		@SuppressWarnings("synthetic-access")
+		@Override
 		public void run()
 		{
 		 try {
@@ -404,6 +404,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 					broadcastPacket(new NpcSay(getObjectId(), 0, getNpcId(), 1010483/*"$s1! Help me!!"*/).addPcName(player));
 					_activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_INTERACT, player);
 					ThreadPoolManager.getInstance().scheduleEffect(new Runnable() {
+						@Override
 						public void run()
 						{
 							if (_activeChar.getAI().getIntention() == CtrlIntention.AI_INTENTION_INTERACT)
@@ -476,6 +477,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			_activeChar = activeChar;
 		}
 		
+		@Override
 		public void run()
 		{
 			if (_victimShout != null)
@@ -558,6 +560,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			_activeChar = activeChar;
 		}
 		
+		@Override
 		public void run()
 		{
 			switch (_activeChar.getNpcId())
@@ -662,6 +665,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			activeChar = mob;
 		}
 		
+		@Override
 		public void run()
 		{
 			L2Skill fp = SkillTable.FrequentSkill.FAKE_PETRIFICATION.getSkill(); // Invulnerable	by petrification

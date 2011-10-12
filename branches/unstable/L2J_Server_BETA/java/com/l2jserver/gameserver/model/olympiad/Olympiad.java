@@ -404,6 +404,7 @@ public class Olympiad
 	
 	protected class OlympiadEndTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.OLYMPIAD_PERIOD_S1_HAS_ENDED);
@@ -435,6 +436,7 @@ public class Olympiad
 	
 	protected class ValidationEndTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			Announcements.getInstance().announceToAll("Olympiad Validation Period has ended");
@@ -485,6 +487,7 @@ public class Olympiad
 		}
 		
 		_scheduledCompStart = ThreadPoolManager.getInstance().scheduleGeneral(new Runnable() {
+			@Override
 			public void run()
 			{
 				if (isOlympiadEnd())
@@ -504,6 +507,7 @@ public class Olympiad
 				if (regEnd > 0)
 				{
 					ThreadPoolManager.getInstance().scheduleGeneral(new Runnable() {
+						@Override
 						public void run()
 						{
 							Announcements.getInstance().announceToAll(SystemMessage.getSystemMessage(SystemMessageId.OLYMPIAD_REGISTRATION_PERIOD_ENDED));
@@ -512,6 +516,7 @@ public class Olympiad
 				}
 				
 				_scheduledCompEnd = ThreadPoolManager.getInstance().scheduleGeneral(new Runnable() {
+					@Override
 					public void run()
 					{
 						if (isOlympiadEnd())
@@ -647,6 +652,7 @@ public class Olympiad
 	private void scheduleWeeklyChange()
 	{
 		_scheduledWeeklyTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new Runnable() {
+			@Override
 			public void run()
 			{
 				addWeeklyPoints();
