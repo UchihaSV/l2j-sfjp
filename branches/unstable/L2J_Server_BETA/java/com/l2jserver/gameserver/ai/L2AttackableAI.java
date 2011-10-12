@@ -2344,7 +2344,6 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						actor.addDamageHate(obj, 0, 2000);
 					actor.setTarget(obj);
 					setAttackTarget(obj);
-					
 				}
 				else if (obj instanceof L2Attackable)
 				{
