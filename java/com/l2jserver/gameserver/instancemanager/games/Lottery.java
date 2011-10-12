@@ -132,6 +132,7 @@ public class Lottery
 			// Do nothing
 		}
 		
+		@Override
 		public void run()
 		{
 			final long NOW = System.currentTimeMillis();
@@ -234,6 +235,7 @@ public class Lottery
 			// Do nothing
 		}
 		
+		@Override
 		public void run()
 		{
 			_isSellingTickets = false;
@@ -251,6 +253,7 @@ public class Lottery
 			// Do nothing
 		}
 		
+		@Override
 		public void run()
 		{
 			_isStarted = false;

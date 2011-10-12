@@ -521,6 +521,7 @@ public class RecipeController
 			_isValid = true;
 		}
 		
+		@Override
 		public void run()
 		{
 			if (!Config.IS_CRAFTING_ENABLED)
