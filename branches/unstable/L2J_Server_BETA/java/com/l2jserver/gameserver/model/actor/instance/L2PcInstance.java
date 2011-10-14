@@ -13293,7 +13293,7 @@ public final class L2PcInstance extends L2Playable
 	private boolean _canFeed;
 	private int _eventEffectId = 0;
 	private boolean _isInSiege;
-	private boolean _isInHideoutSiege = false; //TODO: Implement it.
+	private boolean _isInHideoutSiege = false;
 	
 	public TimeStamp[] getReuseTimeStamps()
 	{
@@ -14020,11 +14020,17 @@ public final class L2PcInstance extends L2Playable
 		return _isInSiege;
 	}
 	
-	public void setisInHideoutSiege(boolean isInHideoutSiege)
+	/**
+	 * @param isInHideoutSiege sets the value of {@link #_isInHideoutSiege}.
+	 */
+	public void setIsInHideoutSiege(boolean isInHideoutSiege)
 	{
 		_isInHideoutSiege = isInHideoutSiege;
 	}
 	
+	/**
+	 * @return the value of {@link #_isInHideoutSiege}, {@code true} if the player is participing on a Hideout Siege, otherwise {@code false}.
+	 */
 	public boolean isInHideoutSiege()
 	{
 		return _isInHideoutSiege;

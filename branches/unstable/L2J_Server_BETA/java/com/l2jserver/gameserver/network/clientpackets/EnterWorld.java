@@ -264,6 +264,7 @@ public class EnterWorld extends L2GameClientPacket
 				{
 					activeChar.setSiegeState((byte)1);
 					activeChar.setSiegeSide(hall.getId());
+					activeChar.setIsInHideoutSiege(true);
 				}
 			}
 			
