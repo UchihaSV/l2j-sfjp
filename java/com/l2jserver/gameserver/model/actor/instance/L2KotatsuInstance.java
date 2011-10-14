@@ -14,14 +14,19 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
+import java.util.concurrent.ScheduledFuture;
+
 import com.l2jserver.gameserver.ThreadPoolManager;
+import com.l2jserver.gameserver.ai.L2CharacterAI;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
-import com.l2jserver.gameserver.model.L2Object;
+import com.l2jserver.gameserver.model.L2Effect;
 import com.l2jserver.gameserver.model.L2Skill;
-import com.l2jserver.gameserver.model.zone.type.L2PeaceZone;
+import com.l2jserver.gameserver.model.actor.L2Npc;
+import com.l2jserver.gameserver.model.zone.type.L2TownZone;
 import com.l2jserver.gameserver.network.serverpackets.SocialAction;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
+import com.l2jserver.gameserver.templates.skills.L2SkillType;
 import com.l2jserver.util.Rnd;
 
 /**
@@ -29,11 +34,11 @@ import com.l2jserver.util.Rnd;
  * 
  * NPC          28      こたつ (type: L2Kotatsu) T25 Freya
  * NPC          127     こたつ (type: L2Kotatsu) T26 H5
- * |アイテム    20868   こたつ
+ * |アイテム    20868   こたつ - 村から一定距離以上離れたところで召喚すると、HP・MPの回復効果が発揮されます。トレード、ドロップはできません。
  * |召喚スキル  22127-1 温かなこたつ召喚
  * |BUFスキル   22118-1 こたつのぬくもり - こたつのぬくもりが感じられます。HP回復力が40%、CP回復力が30%、MP回復力が20%増加している状態。
  */
-public class L2KotatsuInstance extends L2XmassTreeInstance /*extends L2Npc*/
+public class L2KotatsuInstance extends L2Npc implements Runnable
 {
 	private static final int MIN_NPC_ANIMATION = 40000;
 	private static final int MAX_NPC_ANIMATION = 120000;
@@ -42,34 +47,49 @@ public class L2KotatsuInstance extends L2XmassTreeInstance /*extends L2Npc*/
 	/** Minimum interval between social packets*/
 	private int _minimalSocialInterval = MIN_NPC_ANIMATION;
 	
-	private class KotatsuAI extends XmassAI /*(implements Runnable)*/
+	private L2Skill _skill;
+	private ScheduledFuture<?> _aiTask;
+	
+	@Override
+	public void run()
 	{
-		protected KotatsuAI(L2KotatsuInstance caster, L2Skill skill)
+		if (getKnownList().getKnownPlayers().size() > 0)
 		{
-			super(caster, skill);
-		}
-		
-		@Override
-		public void run()
-		{
-			for (L2PcInstance player : getKnownList().getKnownPlayersInRadius(_skill.getSkillRadius()))
+			if (_skill != null)
 			{
-				if (player.isInvul())
-					continue;
-				if (player.isMovementDisabled())
-					continue;
-				if (player.getPkKills() > 5)
-					continue;
-				if (player.getCurrentHp() < player.getMaxHp()
-				 || player.getCurrentCp() < player.getMaxCp()
-				 || player.getCurrentMp() < player.getMaxMp())
+				for (L2PcInstance player : getKnownList().getKnownPlayersInRadius(_skill.getSkillRadius()))
 				{
-					handleEffect(player);
+					if (player.isInvul())
+						continue;
+					if (player.isMovementDisabled())
+						continue;
+					if (player.getPkKills() > 5)
+						continue;
+					if (player.getCurrentHp() < player.getMaxHp()
+					 || player.getCurrentCp() < player.getMaxCp()
+					 || player.getCurrentMp() < player.getMaxMp())
+					{
+						handleEffect(player);
+					}
 				}
 			}
-			if (getKnownList().getKnownPlayers().size() > 0)
-				randomAnimation(Rnd.get(1, 3));
+			randomAnimation(Rnd.get(1, 3));
 		}
+	}
+	
+	private void handleEffect(L2PcInstance player)
+	{
+		if (! doesStack(player, _skill))
+			_skill.getEffects(player, player);
+	}
+	
+	private boolean doesStack(L2PcInstance player, L2Skill checkSkill)
+	{
+		String stackType = checkSkill.getEffectTemplates()[0].abnormalType;
+		for (L2Effect e : player.getAllEffects())
+			if (stackType.equals(e.getAbnormalType()))
+				return true;
+		return false;
 	}
 	
 	/**
@@ -90,6 +110,7 @@ public class L2KotatsuInstance extends L2XmassTreeInstance /*extends L2Npc*/
 	public L2KotatsuInstance(int objectId, L2NpcTemplate template)
 	{
 		super(objectId, template);
+	//	setInstanceType(InstanceType.L2KotatsuInstance);
 	}
 	
 	@Override
@@ -98,19 +119,31 @@ public class L2KotatsuInstance extends L2XmassTreeInstance /*extends L2Npc*/
 		super.onSpawn();
 		setShowSummonAnimation(false);
 		
-		switch (getNpcId())
+		if (ZoneManager.getInstance().getZone(this, L2TownZone.class) == null)
 		{
-		case 28:	/*T25 Freya*/
-		case 127:	/*T26 H5*/
-			if (ZoneManager.getInstance().getZone(this, L2PeaceZone.class) == null)
-				_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new KotatsuAI(this, SkillTable.getInstance().getInfo(22118, 1)), 3000, 3000);
-			break;
+			_skill = SkillTable.getInstance().getInfo(22118, 1);
+			if (_skill.getSkillType() == L2SkillType.NOTDONE) throw new RuntimeException();
 		}
+		_lastSocialBroadcast = System.currentTimeMillis();
+		_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(this, 3000, 3000);
 	}
 	
 	@Override
-	public int getDistanceToWatchObject(L2Object object)
+	public void deleteMe()
 	{
-		return 90; //guess
+		if (_aiTask != null)
+		{
+			_aiTask.cancel(true);
+			_aiTask = null;
+		}
+		_skill = null;
+		
+		super.deleteMe();
 	}
+	
+@Override
+public void setAI(L2CharacterAI newAI)
+{
+	super.setAI(newAI);
+}
 }
