@@ -112,7 +112,7 @@ public class TextReplacer implements CharSequence/*, Appendable*/ {
 //	}
 
 	@Override public String toString() { return new String(_ca, 0, _count); }
-	public char charAt(int index) { return _ca[index]; }
-	public int length() { return _count; }
-	public CharSequence subSequence(int start, int end) { return new String(_ca, start, end-start); }
+	@Override public char charAt(int index) { return _ca[index]; }
+	@Override public int length() { return _count; }
+	@Override public CharSequence subSequence(int start, int end) { return new String(_ca, start, end-start); }
 }

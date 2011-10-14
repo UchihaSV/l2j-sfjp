@@ -41,6 +41,7 @@ public class Native2Ascii
 	
 	private final FileFilter _fileFilter = new FileFilter()
 	{
+		@Override
 		public boolean accept(File file)
 		{
 			String fileName = file.getName();

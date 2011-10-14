@@ -22,6 +22,7 @@ public class NumberStringSortComparator implements java.util.Comparator<CharSequ
 {
 	private static final boolean DEBUG = false;
 	
+	@Override
 	public int compare(CharSequence s1, CharSequence s2)
 	{
 		int length = Math.min(s1.length(), s2.length());
