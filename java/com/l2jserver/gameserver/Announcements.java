@@ -36,7 +36,6 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.script.DateRange;
 import com.l2jserver.gameserver.util.Broadcast;
 import com.l2jserver.util.StringUtil;
-import com.l2jserver.util.Util;
 
 /**
  * This class ...
@@ -48,6 +47,7 @@ public class Announcements
 	private static Logger _log = Logger.getLogger(Announcements.class.getName());
 	
 	private List<String> _announcements = new FastList<String>();
+	private List<String> _critAnnouncements = new FastList<String>();
 	private List<List<Object>> _eventAnnouncements = new FastList<List<Object>>();
 	
 	private Announcements()
@@ -63,31 +63,33 @@ public class Announcements
 	public void loadAnnouncements()
 	{
 		_announcements.clear();
-		File file = new File(Config.DATAPACK_ROOT, "data/announcements.txt");
-		if (file.exists())
-		{
-			readFromDisk(file);
-		}
-		else
-		{
-			_log.warning("data/announcements.txt doesn't exist");
-		}
+		_critAnnouncements.clear();
+		readFromDisk("data/announcements.txt", _announcements);
+		readFromDisk("data/critannouncements.txt", _critAnnouncements);
+		
+		if (Config.DEBUG)
+			_log.info("Announcements: Loaded " + (_announcements.size() + _critAnnouncements.size())  + " announcements.");
 	}
 	
 	public void showAnnouncements(L2PcInstance activeChar)
 	{
-		for (int i = 0; i < _announcements.size(); i++)
+		for (String announce : _announcements)
 		{
-			String announcement = _announcements.get(i);
-			if (announcement.indexOf('%') >= 0)
-				announcement = announcement.replaceFirst("%server_name%", LoginServerThread.getInstance().getServerName());			//[JOJO]
-			CreatureSay cs = new CreatureSay(0, Say2.ANNOUNCEMENT, activeChar.getName(), announcement/*_announcements.get(i)*/);	//[JOJO]
+			CreatureSay cs = new CreatureSay(0, Say2.ANNOUNCEMENT, activeChar.getName(), announce);
 			activeChar.sendPacket(cs);
 		}
 		
-		for (int i = 0; i < _eventAnnouncements.size(); i++)
+		for (String critAnnounce : _critAnnouncements)
 		{
-			List<Object> entry = _eventAnnouncements.get(i);
+			if (critAnnounce.indexOf('%') >= 0)
+				critAnnounce = critAnnounce.replaceFirst("%server_name%", LoginServerThread.getInstance().getServerName());			//[JOJO]
+			CreatureSay cs = new CreatureSay(0, Say2.CRITICAL_ANNOUNCE, activeChar.getName(), critAnnounce);
+			activeChar.sendPacket(cs);
+		}
+		
+		for (List<Object> eventAnnounce : _eventAnnouncements)
+		{
+			List<Object> entry = eventAnnounce;
 			
 			DateRange validDateRange = (DateRange) entry.get(0);
 			String[] msg = (String[]) entry.get(1);
@@ -129,65 +131,108 @@ public class Announcements
 		activeChar.sendPacket(adminReply);
 	}
 	
+	public void listCritAnnouncements(L2PcInstance activeChar)
+	{
+		String content = HtmCache.getInstance().getHtmForce(activeChar.getHtmlPrefix(), "data/html/admin/critannounce.htm");
+		NpcHtmlMessage adminReply = new NpcHtmlMessage(5);
+		adminReply.setHtml(content);
+		final StringBuilder replyMSG = StringUtil.startAppend(500, "<br>");
+		for (int i = 0; i < _critAnnouncements.size(); i++)
+		{
+			StringUtil.append(replyMSG, "<table width=260><tr><td width=220>", _critAnnouncements.get(i), "</td><td width=40>"
+					+ "<button value=\"Delete\" action=\"bypass -h admin_del_critannouncement ", String.valueOf(i), "\" width=60 height=20 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\"></td></tr></table>");
+		}
+		adminReply.replace("%critannounces%", replyMSG.toString());
+		activeChar.sendPacket(adminReply);
+	}
+	
 	public void addAnnouncement(String text)
 	{
 		_announcements.add(text);
-		saveToDisk();
+		saveToDisk(false);
 	}
 	
 	public void delAnnouncement(int line)
 	{
 		_announcements.remove(line);
-		saveToDisk();
+		saveToDisk(false);
 	}
 	
-	private void readFromDisk(File file)
+	public void addCritAnnouncement(String text)
 	{
-		BufferedReader lnr = null;	//[JOJO]
-		try
+		_critAnnouncements.add(text);
+		saveToDisk(true);
+	}
+	
+	public void delCritAnnouncement(int line)
+	{
+		_critAnnouncements.remove(line);
+		saveToDisk(true);
+	}
+	
+	private void readFromDisk(String path, List<String> list)
+	{
+		File file = new File(Config.DATAPACK_ROOT, path);
+		
+		if (file.exists())
 		{
-			int i = 0;
-			//[JOJO] UTF-8
-			String line = null;
-			lnr = Util.utf8BufferedReader(file);
-			while ((line = lnr.readLine()) != null)
-			{
-				_announcements.add(line);
-				i++;
-			}
-			//[JOJO]
-			
-			if (Config.DEBUG)
-				_log.info("Announcements: Loaded " + i + " Announcements.");
-		}
-		catch (IOException e1)
-		{
-			_log.log(Level.SEVERE, "Error reading announcements: ", e1);
-		}
-		finally
-		{
+			BufferedReader lnr = null;	//[JOJO]
 			try
 			{
-				lnr.close();
+				//[JOJO] UTF-8
+				String line = null;
+				lnr = com.l2jserver.util.Util.utf8BufferedReader(file);
+				while ((line = lnr.readLine()) != null)
+				{
+					list.add(line);
+				}
+				//[JOJO]
 			}
-			catch (Exception e2)
+			catch (IOException e1)
 			{
-				// nothing
+				_log.log(Level.SEVERE, "Error reading announcements: ", e1);
+			}
+			finally
+			{
+				try
+				{
+					lnr.close();
+				}
+				catch (Exception e2)
+				{
+					// nothing
+				}
 			}
 		}
+		else
+			_log.warning(file.getAbsolutePath() + " doesn't exist");
 	}
 	
-	private void saveToDisk()
+	private void saveToDisk(boolean isCritical)
 	{
-		File file = new File("data/announcements.txt");
+		String path;
+		List<String> list;
+		
+		if (isCritical)
+		{
+			path = "data/critannouncements.txt";
+			list = _critAnnouncements;
+		}
+		else
+		{
+			path = "data/announcements.txt";
+			list = _announcements;
+		}
+		
+		File file = new File(path);
 		UTF8StreamWriter save = null;	//[JOJO]
 		
 		try
 		{
-			save = Util.utf8StreamWriter(file);	//[JOJO] UTF-8
-			for (int i = 0; i < _announcements.size(); i++)
+			save = com.l2jserver.util.Util.utf8StreamWriter(file);	//[JOJO] UTF-8
+			for (String announce : list)
 			{
-				save.write(_announcements.get(i));
+				save.write(announce);
 				save.write("\r\n");
 			}
 		}
@@ -209,7 +254,12 @@ public class Announcements
 	
 	public void announceToAll(String text)
 	{
-		Broadcast.announceToOnlinePlayers(text);
+		announceToAll(text, false);
+	}
+	
+	public void announceToAll(String text, boolean isCritical)
+	{
+		Broadcast.announceToOnlinePlayers(text, isCritical);
 	}
 	
 	public void announceToAll(SystemMessage sm)
@@ -223,13 +273,13 @@ public class Announcements
 	}
 	
 	// Method for handling announcements from admin
-	public void handleAnnounce(String command, int lengthToTrim)
+	public void handleAnnounce(String command, int lengthToTrim, boolean isCritical)
 	{
 		try
 		{
 			// Announce string to everyone on server
 			String text = command.substring(lengthToTrim);
-			SingletonHolder._instance.announceToAll(text);
+			SingletonHolder._instance.announceToAll(text, isCritical);
 		}
 		
 		// No body cares!
