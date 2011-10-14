@@ -61,7 +61,7 @@ public class TextReplacerLite implements CharSequence/*, Appendable*/ {
 //	}
 
 	@Override public String toString() { return sb.toString(); }
-	public char charAt(int index) { return sb.charAt(index); }
-	public int length() { return sb.length(); }
-	public CharSequence subSequence(int start, int end) { return sb.subSequence(start, end); }
+	@Override public char charAt(int index) { return sb.charAt(index); }
+	@Override public int length() { return sb.length(); }
+	@Override public CharSequence subSequence(int start, int end) { return sb.subSequence(start, end); }
 }
