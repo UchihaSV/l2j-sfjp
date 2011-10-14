@@ -414,6 +414,7 @@ public class GameServer
 		CleanUpManager.getInstance().execute();	// [L2J_JP ADD - TSL][JOJO]
 		if (Config.ALLOW_LOTTERY)
 			com.l2jserver.gameserver.instancemanager.games.Lottery.getInstance();	//[JOJO]
+		TradeController.getInstance().checkAllPrice();	//[JOJO]
 		
 		_log.info("IdFactory: Free ObjectID's remaining: " + IdFactory.getInstance().size());
 		
