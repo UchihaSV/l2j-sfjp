@@ -231,6 +231,10 @@ public final class Broadcast
 		
 		toAllOnlinePlayers(cs);
 	}
+	public static void announceToOnlinePlayers(String text)	//[JOJO]
+	{
+		toAllOnlinePlayers(new CreatureSay(0, Say2.ANNOUNCEMENT, "", text));
+	}
 	public static void announceToOnlinePlayers(SystemMessage message)	//XXX:[JOJO]
 	{
 		toAllOnlinePlayers(message);
