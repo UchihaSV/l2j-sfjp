@@ -281,7 +281,6 @@ public class TradeController
 			}
 		}
 		StringIntern.end();
-		checkAllPrice();	//+[JOJO]
 	}
 	
 	//[JOJO]-------------------------------------------------
