@@ -364,6 +364,7 @@ public class NpcTable
 		Connection con = null;
 		try
 		{
+			StringIntern.begin();
 			con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = null;
 			if (id > 0)
@@ -421,6 +422,7 @@ public class NpcTable
 		finally
 		{
 			L2DatabaseFactory.close(con);
+			StringIntern.end();
 		}
 	}
 	
