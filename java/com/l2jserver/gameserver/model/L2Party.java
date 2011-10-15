@@ -38,6 +38,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2SummonInstance;
 import com.l2jserver.gameserver.model.entity.DimensionalRift;
+import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.ExAskModifyPartyLooting;
@@ -638,7 +639,7 @@ public class L2Party
 	 */
 	public void distributeItem(L2PcInstance player, L2ItemInstance item)
 	{
-		if (item.getItemId() == 57)
+		if (item.getItemId() == PcInventory.ADENA_ID)
 		{
 			distributeAdena(player, item.getCount(), player);
 			ItemTable.getInstance().destroyItem("Party", item, player, null);
@@ -677,7 +678,7 @@ public class L2Party
 	{
 		if (item == null) return;
 		
-		if (item.getItemId() == 57)
+		if (item.getItemId() == PcInventory.ADENA_ID)
 		{
 			distributeAdena(player, item.getCount(), target);
 			return;

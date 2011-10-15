@@ -35,6 +35,7 @@ import com.l2jserver.gameserver.datatables.ExperienceTable;
 import com.l2jserver.gameserver.model.BlockList;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
@@ -376,7 +377,7 @@ public class RegionBBSManager extends BaseBBSManager
 					+ colSpacer
 					+ tdOpen, "スポイル倍率: ", String.valueOf(Config.RATE_DROP_SPOIL), tdClose
 					+ colSpacer
-					+ tdOpen, "アデナ倍率: ", String.valueOf(Config.RATE_DROP_ITEMS_ID.get(57)), tdClose
+					+ tdOpen, "アデナ倍率: ", String.valueOf(Config.RATE_DROP_ITEMS_ID.get(PcInventory.ADENA_ID)), tdClose
 					+ trClose
 			
 					+ "</table>"
