@@ -1332,10 +1332,14 @@ public class L2ClanHallManagerInstance extends L2MerchantInstance
 			else if (actualCommand.equalsIgnoreCase("list_back"))
 			{
 				NpcHtmlMessage html = new NpcHtmlMessage(1);
+				String content;
 				String file = "data/html/clanHallManager/chamberlain-"+getNpcId()+".htm";
-				if(!HtmCache.getInstance().isLoadable(file))
+				if ((content = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), file)) == null)
+				{
 					file = "data/html/clanHallManager/chamberlain.htm";
-				html.setFile(player.getHtmlPrefix(), file);
+					content = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), file);
+				}
+				html.setHtml(content);
 				html.replace("%objectId%", this.getObjectId());
 				html.replace("%npcname%", this.getName());
 				sendHtmlMessage(player, html);
@@ -1372,19 +1376,21 @@ public class L2ClanHallManagerInstance extends L2MerchantInstance
 	public void showChatWindow(L2PcInstance player)
 	{
 		player.sendPacket(ActionFailed.STATIC_PACKET);
-		String filename = "data/html/clanHallManager/chamberlain-no.htm";
+		String content = null;
 		
 		int condition = validateCondition(player);
 		if (condition == COND_OWNER)
 		{
-			filename = "data/html/clanHallManager/chamberlain-"+getNpcId()+".htm";
-			if(!HtmCache.getInstance().isLoadable(filename))
-				filename = "data/html/clanHallManager/chamberlain.htm";// Owner message window
+			content = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/clanHallManager/chamberlain-"+getNpcId()+".htm");
+			if (content == null)
+				content = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/clanHallManager/chamberlain.htm");// Owner message window
 		}
 		else if (condition == COND_OWNER_FALSE)
-			filename = "data/html/clanHallManager/chamberlain-of.htm";
+			content = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/clanHallManager/chamberlain-of.htm");
+		if (content == null)
+			content = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/clanHallManager/chamberlain-no.htm");
 		NpcHtmlMessage html = new NpcHtmlMessage(1);
-		html.setFile(player.getHtmlPrefix(), filename);
+		html.setHtml(content);
 		html.replace("%objectId%", getObjectId());
 		html.replace("%npcId%", getNpcId());
 		player.sendPacket(html);
