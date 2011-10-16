@@ -1727,8 +1727,8 @@ public abstract class L2Character extends L2Object
 		{
 			if (isResurrectionBlocked() || target.isResurrectionBlocked())
 			{
-				sendPacket(SystemMessage.getSystemMessage(356)); // Reject resurrection
-				target.sendPacket(SystemMessage.getSystemMessage(356)); // Reject resurrection
+				sendPacket(SystemMessage.getSystemMessage(SystemMessageId.REJECT_RESURRECTION)); // Reject resurrection
+				target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.REJECT_RESURRECTION)); // Reject resurrection
 				
 				if (simultaneously)
 					setIsCastingSimultaneouslyNow(false);
