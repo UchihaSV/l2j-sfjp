@@ -272,7 +272,7 @@ public class DoorTable
 	
 	public L2DoorInstance[] getDoors()
 	{
-		L2DoorInstance[] _allTemplates = _staticItems.values(new L2DoorInstance[_staticItems.size()]);
+		L2DoorInstance[] _allTemplates = _staticItems.values();
 		return _allTemplates;
 	}
 	
