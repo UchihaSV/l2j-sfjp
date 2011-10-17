@@ -105,7 +105,7 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 		}
 		
 		// first validation check
-		if (!scrollTemplate.isValid(item, supportTemplate) || !isEnchantable(item))
+		if (!scrollTemplate.isValid(item, supportTemplate) || !item.isEnchantable())
 		{
 			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION));
 			activeChar.setActiveEnchantItem(null);
@@ -166,7 +166,7 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 			
 			// last validation check
 			if (item.getOwnerId() != activeChar.getObjectId()
-					|| !isEnchantable(item)
+					|| !item.isEnchantable()
 					|| chance < 0)
 			{
 				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION));
