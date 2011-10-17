@@ -5590,7 +5590,7 @@ public final class L2PcInstance extends L2Playable
 		// Unsummon Cubics
 		if (!_cubics.isEmpty())
 		{
-			for (L2CubicInstance cubic : _cubics.values())
+			for (L2CubicInstance cubic : _cubics.valueCollection())
 			{
 				cubic.stopAction();
 				cubic.cancelDisappear();
@@ -9657,7 +9657,7 @@ public final class L2PcInstance extends L2Playable
 		if (getCubics() != null)
 		{
 			boolean removed = false;
-			for (L2CubicInstance cubic : _cubics.values())
+			for (L2CubicInstance cubic : _cubics.valueCollection())
 			{
 				cubic.stopAction();
 				delCubic(cubic.getId());
@@ -9673,7 +9673,7 @@ public final class L2PcInstance extends L2Playable
 		if (getCubics() != null)
 		{
 			boolean removed = false;
-			for (L2CubicInstance cubic : _cubics.values())
+			for (L2CubicInstance cubic : _cubics.valueCollection())
 			{
 				if (cubic.givenByOther())
 				{
@@ -10173,7 +10173,7 @@ public final class L2PcInstance extends L2Playable
 		
 		if (!getCubics().isEmpty())
 		{
-			for (L2CubicInstance cubic : _cubics.values())
+			for (L2CubicInstance cubic : _cubics.valueCollection())
 			{
 				cubic.stopAction();
 				cubic.cancelDisappear();
@@ -13300,7 +13300,7 @@ public final class L2PcInstance extends L2Playable
 	
 	public TimeStamp[] getReuseTimeStamps()
 	{
-		return _reuseTimeStamps.values();
+		return _reuseTimeStamps.values(new TimeStamp[0]);
 	}
 	
 	public L2TIntObjectHashMap<TimeStamp> getReuseTimeStamp()
