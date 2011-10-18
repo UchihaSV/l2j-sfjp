@@ -59,7 +59,7 @@ public class EventNpcAligner
 				if (o instanceof L2Npc)
 				{
 					L2Npc obj = (L2Npc)o;
-					final double collisionRadius = Math.max(30, manager.getTemplate().collisionRadius * 2 + obj.getTemplate().collisionRadius);
+					final double collisionRadius = Math.max(30, manager.getTemplate().getCollisionRadius() * 2 + obj.getTemplate().getCollisionRadius());
 					boolean isMove = false;
 					while (Util.calculateDistance(mX, mY, obj.getX(), obj.getY()) < collisionRadius)
 					{
@@ -75,7 +75,7 @@ public class EventNpcAligner
 						final int gx = guide.getX(), gy = guide.getY();
 						final double dx = mX - gx, dy = mY - gy;
 						final double angle = Math.atan2(dy, dx);
-						final double radius = Math.sqrt(dx * dx + dy * dy) + manager.getTemplate().collisionRadius * 2;
+						final double radius = Math.sqrt(dx * dx + dy * dy) + manager.getTemplate().getCollisionRadius() * 2;
 						mX = gx + (int)Math.round(Math.cos(angle) * radius);
 						mY = gy + (int)Math.round(Math.sin(angle) * radius);
 						isMove = true;
@@ -152,11 +152,11 @@ public class EventNpcAligner
 				if (o instanceof L2Npc)
 				{
 					L2Npc obj = (L2Npc)o;
-					final double collisionRadius = Math.max(30, manager.getTemplate().collisionRadius * 2 + obj.getTemplate().collisionRadius);
+					final double collisionRadius = Math.max(30, manager.getTemplate().getCollisionRadius() * 2 + obj.getTemplate().getCollisionRadius());
 					boolean isMove = false;
 					while (Util.calculateDistance(mX, mY, obj.getX(), obj.getY()) < collisionRadius)
 					{
-						radius += manager.getTemplate().collisionRadius * 2;
+						radius += manager.getTemplate().getCollisionRadius() * 2;
 						mX = gx + (int)Math.round(Math.cos(angle) * radius);
 						mY = gy + (int)Math.round(Math.sin(angle) * radius);
 						isMove = true;

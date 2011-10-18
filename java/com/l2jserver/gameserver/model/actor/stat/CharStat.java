@@ -472,14 +472,12 @@ public class CharStat
 	public float getMovementSpeedMultiplier()
 	{
 		if (_activeChar == null)
-			return 1;
+			return 1f;
 		
     	//[JOJO]-------------------------------------------------
 		int baseRunSpd = _activeChar.getTemplate().getBaseRunSpd();
-		
 		if (baseRunSpd == 0)
-			return 1;
-		
+			return 1f;
 		return getRunSpeed() / (float) baseRunSpd;
 	//	return getRunSpeed() / (float) _activeChar.getTemplate().getBaseRunSpd();
 		//-------------------------------------------------------

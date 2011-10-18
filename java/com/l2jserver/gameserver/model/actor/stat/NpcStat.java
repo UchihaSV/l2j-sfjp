@@ -39,22 +39,24 @@ public class NpcStat extends CharStat
 	@Override
 	public float getMovementSpeedMultiplier()
 	{
+    	//[JOJO]-------------------------------------------------
     	L2Npc ac = getActiveChar();
 		if (ac == null)
-			return 1;
+			return 1f;
 		if (ac.isRunning()) {
 			int baseRunSpd = ac.getTemplate().getBaseRunSpd();
 			if (baseRunSpd == 0)
-				return 1;
+				return 1f;
 			return (float)getRunSpeed() / baseRunSpd;
 		} else {
 			int baseWalkSpd = ac.getTemplate().getBaseWalkSpd();
 			if (baseWalkSpd == 0)
-				return 1;
+				return 1f;
 			return (float)getWalkSpeed() / baseWalkSpd;
 		}
 	//	if (getActiveChar().isRunning())
 	//		return getRunSpeed() * 1f / getActiveChar().getTemplate().getBaseRunSpd();
 	//	return getWalkSpeed() * 1f / getActiveChar().getTemplate().getBaseWalkSpd();
+		//-------------------------------------------------------
 	}
 }
