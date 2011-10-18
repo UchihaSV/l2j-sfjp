@@ -672,7 +672,7 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 			return;
 		}
 		
-		final int collision = npc.getTemplate().collisionRadius;
+		final int collision = npc.getTemplate().getCollisionRadius();
 
 		// Handle all L2Object of its Faction inside the Faction Range
 		
@@ -791,7 +791,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 		setAttackTarget(mostHate);
 		npc.setTarget(mostHate);
 
-		final int combinedCollision = collision + mostHate.getTemplate().collisionRadius;
+		final int combinedCollision = collision + mostHate.getTemplate().getCollisionRadius();
 
 		if (_skillrender.hasSuicideSkill() && (int) ((npc.getCurrentHp() / npc.getMaxHp()) * 100) < 30)
 		{
@@ -952,9 +952,9 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 							{
 								continue;
 							}
-							if (!Util.checkIfInRange((sk.getCastRange() + collision + leader.getTemplate().collisionRadius), npc, leader, false) && !isParty(sk) && !npc.isMovementDisabled())
+							if (!Util.checkIfInRange((sk.getCastRange() + collision + leader.getTemplate().getCollisionRadius()), npc, leader, false) && !isParty(sk) && !npc.isMovementDisabled())
 							{
-								moveToPawn(leader, sk.getCastRange() + collision + leader.getTemplate().collisionRadius);
+								moveToPawn(leader, sk.getCastRange() + collision + leader.getTemplate().getCollisionRadius());
 								return;
 							}
 							if (GeoData.getInstance().canSeeTarget(npc, leader))
@@ -1030,9 +1030,9 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 							{
 								continue;
 							}
-							if (!Util.checkIfInRange((sk.getCastRange() + collision + leader.getTemplate().collisionRadius), npc, leader, false) && !isParty(sk) && !npc.isMovementDisabled())
+							if (!Util.checkIfInRange((sk.getCastRange() + collision + leader.getTemplate().getCollisionRadius()), npc, leader, false) && !isParty(sk) && !npc.isMovementDisabled())
 							{
-								moveToPawn(leader, sk.getCastRange() + collision + leader.getTemplate().collisionRadius);
+								moveToPawn(leader, sk.getCastRange() + collision + leader.getTemplate().getCollisionRadius());
 								return;
 							}
 							if (GeoData.getInstance().canSeeTarget(npc, leader))
@@ -1254,9 +1254,9 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 		if (attackTarget == null)
 			return false;
 		double dist = Math.sqrt(caster.getPlanDistanceSq(attackTarget.getX(), attackTarget.getY()));
-		double dist2 = dist - attackTarget.getTemplate().collisionRadius;
-		double range = caster.getPhysicalAttackRange() + caster.getTemplate().collisionRadius + attackTarget.getTemplate().collisionRadius;
-		double srange = sk.getCastRange() + caster.getTemplate().collisionRadius;
+		double dist2 = dist - attackTarget.getTemplate().getCollisionRadius();
+		double range = caster.getPhysicalAttackRange() + caster.getTemplate().getCollisionRadius() + attackTarget.getTemplate().getCollisionRadius();
+		double srange = sk.getCastRange() + caster.getTemplate().getCollisionRadius();
 		if (attackTarget.isMoving())
 			dist2 = dist2 - 30;
 		
@@ -1314,9 +1314,9 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					L2Character leader = caster.getLeader();
 					if (leader != null && !leader.isDead() && Rnd.get(100) > (leader.getCurrentHp() / leader.getMaxHp() * 100))
 					{
-						if (!Util.checkIfInRange((sk.getCastRange() + caster.getTemplate().collisionRadius + leader.getTemplate().collisionRadius), caster, leader, false) && !isParty(sk) && !caster.isMovementDisabled())
+						if (!Util.checkIfInRange((sk.getCastRange() + caster.getTemplate().getCollisionRadius() + leader.getTemplate().getCollisionRadius()), caster, leader, false) && !isParty(sk) && !caster.isMovementDisabled())
 						{
-							moveToPawn(leader, sk.getCastRange() + caster.getTemplate().collisionRadius + leader.getTemplate().collisionRadius);
+							moveToPawn(leader, sk.getCastRange() + caster.getTemplate().getCollisionRadius() + leader.getTemplate().getCollisionRadius());
 						}
 						if (GeoData.getInstance().canSeeTarget(caster, leader))
 						{
@@ -1336,7 +1336,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				
 				if (sk.getTargetType() == L2TargetType.TARGET_ONE)
-					for (L2Character obj : caster.getKnownList().getKnownCharactersInRadius(sk.getCastRange() + caster.getTemplate().collisionRadius))
+					for (L2Character obj : caster.getKnownList().getKnownCharactersInRadius(sk.getCastRange() + caster.getTemplate().getCollisionRadius()))
 					{
 						if (!(obj instanceof L2Attackable) || obj.isDead())
 							continue;
@@ -1358,7 +1358,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					}
 				if (isParty(sk))
 				{
-					for (L2Character obj : caster.getKnownList().getKnownCharactersInRadius(sk.getSkillRadius() + caster.getTemplate().collisionRadius))
+					for (L2Character obj : caster.getKnownList().getKnownCharactersInRadius(sk.getSkillRadius() + caster.getTemplate().getCollisionRadius()))
 					{
 						if (!(obj instanceof L2Attackable))
 						{
@@ -1387,9 +1387,9 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					{
 						L2Character leader = caster.getLeader();
 						if (leader != null && leader.isDead())
-							if (!Util.checkIfInRange((sk.getCastRange() + caster.getTemplate().collisionRadius + leader.getTemplate().collisionRadius), caster, leader, false) && !isParty(sk) && !caster.isMovementDisabled())
+							if (!Util.checkIfInRange((sk.getCastRange() + caster.getTemplate().getCollisionRadius() + leader.getTemplate().getCollisionRadius()), caster, leader, false) && !isParty(sk) && !caster.isMovementDisabled())
 							{
-								moveToPawn(leader, sk.getCastRange() + caster.getTemplate().collisionRadius + leader.getTemplate().collisionRadius);
+								moveToPawn(leader, sk.getCastRange() + caster.getTemplate().getCollisionRadius() + leader.getTemplate().getCollisionRadius());
 							}
 						if (GeoData.getInstance().canSeeTarget(caster, leader))
 						{
@@ -1400,7 +1400,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						}
 					}
 					
-					for (L2Character obj : caster.getKnownList().getKnownCharactersInRadius(sk.getCastRange() + caster.getTemplate().collisionRadius))
+					for (L2Character obj : caster.getKnownList().getKnownCharactersInRadius(sk.getCastRange() + caster.getTemplate().getCollisionRadius()))
 					{
 						if (!(obj instanceof L2Attackable) || !obj.isDead())
 							continue;
@@ -1422,7 +1422,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				else if (isParty(sk))
 				{
-					for (L2Character obj : caster.getKnownList().getKnownCharactersInRadius(sk.getSkillRadius() + caster.getTemplate().collisionRadius))
+					for (L2Character obj : caster.getKnownList().getKnownCharactersInRadius(sk.getSkillRadius() + caster.getTemplate().getCollisionRadius()))
 					{
 						if (!(obj instanceof L2Attackable))
 						{
@@ -1762,8 +1762,8 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			if (npc.getTarget() == null)
 				npc.setTarget(getAttackTarget());
 			dist = Math.sqrt(npc.getPlanDistanceSq(getAttackTarget().getX(), getAttackTarget().getY()));
-			dist2 = dist - npc.getTemplate().collisionRadius;
-			range = npc.getPhysicalAttackRange() + npc.getTemplate().collisionRadius + getAttackTarget().getTemplate().collisionRadius;
+			dist2 = dist - npc.getTemplate().getCollisionRadius();
+			range = npc.getPhysicalAttackRange() + npc.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius();
 			if (getAttackTarget().isMoving())
 			{
 				dist = dist - 30;
@@ -1781,7 +1781,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				{
 					for (L2Skill sk : _skillrender._immobiliseskills)
 					{
-						if (sk.getMpConsume() >= npc.getCurrentMp() || npc.isSkillDisabled(sk) || (sk.getCastRange() + npc.getTemplate().collisionRadius + getAttackTarget().getTemplate().collisionRadius <= dist2 && !canAura(sk)) || (sk.isMagic() && npc.isMuted()) || (!sk.isMagic() && npc.isPhysicalMuted()))
+						if (sk.getMpConsume() >= npc.getCurrentMp() || npc.isSkillDisabled(sk) || (sk.getCastRange() + npc.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius() <= dist2 && !canAura(sk)) || (sk.isMagic() && npc.isMuted()) || (!sk.isMagic() && npc.isPhysicalMuted()))
 						{
 							continue;
 						}
@@ -1804,7 +1804,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				{
 					for (L2Skill sk : _skillrender._cotskills)
 					{
-						if (sk.getMpConsume() >= npc.getCurrentMp() || npc.isSkillDisabled(sk) || (sk.getCastRange() + npc.getTemplate().collisionRadius + getAttackTarget().getTemplate().collisionRadius <= dist2 && !canAura(sk)) || (sk.isMagic() && npc.isMuted()) || (!sk.isMagic() && npc.isPhysicalMuted()))
+						if (sk.getMpConsume() >= npc.getCurrentMp() || npc.isSkillDisabled(sk) || (sk.getCastRange() + npc.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius() <= dist2 && !canAura(sk)) || (sk.isMagic() && npc.isMuted()) || (!sk.isMagic() && npc.isPhysicalMuted()))
 						{
 							continue;
 						}
@@ -1826,7 +1826,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				{
 					for (L2Skill sk : _skillrender._debuffskills)
 					{
-						if (sk.getMpConsume() >= npc.getCurrentMp() || npc.isSkillDisabled(sk) || (sk.getCastRange() + npc.getTemplate().collisionRadius + getAttackTarget().getTemplate().collisionRadius <= dist2 && !canAura(sk)) || (sk.isMagic() && npc.isMuted()) || (!sk.isMagic() && npc.isPhysicalMuted()))
+						if (sk.getMpConsume() >= npc.getCurrentMp() || npc.isSkillDisabled(sk) || (sk.getCastRange() + npc.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius() <= dist2 && !canAura(sk)) || (sk.isMagic() && npc.isMuted()) || (!sk.isMagic() && npc.isPhysicalMuted()))
 						{
 							continue;
 						}
@@ -1849,7 +1849,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				{
 					for (L2Skill sk : _skillrender._negativeskills)
 					{
-						if (sk.getMpConsume() >= npc.getCurrentMp() || npc.isSkillDisabled(sk) || (sk.getCastRange() + npc.getTemplate().collisionRadius + getAttackTarget().getTemplate().collisionRadius <= dist2 && !canAura(sk)) || (sk.isMagic() && npc.isMuted()) || (!sk.isMagic() && npc.isPhysicalMuted()))
+						if (sk.getMpConsume() >= npc.getCurrentMp() || npc.isSkillDisabled(sk) || (sk.getCastRange() + npc.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius() <= dist2 && !canAura(sk)) || (sk.isMagic() && npc.isMuted()) || (!sk.isMagic() && npc.isPhysicalMuted()))
 						{
 							continue;
 						}
@@ -1873,7 +1873,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				{
 					for (L2Skill sk : _skillrender._atkskills)
 					{
-						if (sk.getMpConsume() >= npc.getCurrentMp() || npc.isSkillDisabled(sk) || (sk.getCastRange() + npc.getTemplate().collisionRadius + getAttackTarget().getTemplate().collisionRadius <= dist2 && !canAura(sk)) || (sk.isMagic() && npc.isMuted()) || (!sk.isMagic() && npc.isPhysicalMuted()))
+						if (sk.getMpConsume() >= npc.getCurrentMp() || npc.isSkillDisabled(sk) || (sk.getCastRange() + npc.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius() <= dist2 && !canAura(sk)) || (sk.isMagic() && npc.isMuted()) || (!sk.isMagic() && npc.isPhysicalMuted()))
 						{
 							continue;
 						}
@@ -1896,7 +1896,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					{
 						if(sk.getMpConsume()>=_actor.getCurrentMp()
 								|| _actor.isSkillDisabled(sk.getId())
-								||(sk.getCastRange()+ _actor.getTemplate().collisionRadius + getAttackTarget().getTemplate().collisionRadius <= dist2 && !canAura(sk))
+								||(sk.getCastRange()+ _actor.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius() <= dist2 && !canAura(sk))
 								||(sk.isMagic()&&_actor.isMuted())
 								||(!sk.isMagic()&&_actor.isPhysicalMuted()))
 						{
@@ -1972,8 +1972,8 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					{
 						actor.setTarget(getAttackTarget());
 						dist = Math.sqrt(actor.getPlanDistanceSq(obj.getX(), obj.getY()));
-						dist2 = dist - actor.getTemplate().collisionRadius;
-						range = sk.getCastRange() + actor.getTemplate().collisionRadius + obj.getTemplate().collisionRadius;
+						dist2 = dist - actor.getTemplate().getCollisionRadius();
+						range = sk.getCastRange() + actor.getTemplate().getCollisionRadius() + obj.getTemplate().getCollisionRadius();
 						if (obj.isMoving())
 							dist2 = dist2 - 70;
 					}
@@ -1999,7 +1999,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						actor.setTarget(getAttackTarget());
 						dist = Math.sqrt(actor.getPlanDistanceSq(obj.getX(), obj.getY()));
 						dist2 = dist;
-						range = sk.getCastRange() + actor.getTemplate().collisionRadius + obj.getTemplate().collisionRadius;
+						range = sk.getCastRange() + actor.getTemplate().getCollisionRadius() + obj.getTemplate().getCollisionRadius();
 						if (obj.isMoving())
 							dist2 = dist2 - 70;
 					}
@@ -2046,8 +2046,8 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					{
 						actor.setTarget(getAttackTarget());
 						dist = Math.sqrt(actor.getPlanDistanceSq(obj.getX(), obj.getY()));
-						dist2 = dist - actor.getTemplate().collisionRadius;
-						range = sk.getCastRange() + actor.getTemplate().collisionRadius + obj.getTemplate().collisionRadius;
+						dist2 = dist - actor.getTemplate().getCollisionRadius();
+						range = sk.getCastRange() + actor.getTemplate().getCollisionRadius() + obj.getTemplate().getCollisionRadius();
 						if (obj.isMoving())
 							dist2 = dist2 - 70;
 					}
@@ -2068,7 +2068,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			double dist = 0;
 			double dist2 = 0;
 			int range = 0;
-			range = sk.getCastRange() + actor.getTemplate().collisionRadius + getAttackTarget().getTemplate().collisionRadius;
+			range = sk.getCastRange() + actor.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius();
 			for (L2Character obj : actor.getKnownList().getKnownCharactersInRadius(range))
 			{
 				if (obj == null || obj.isDead() || !GeoData.getInstance().canSeeTarget(actor, obj))
@@ -2077,8 +2077,8 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				{
 					actor.setTarget(getAttackTarget());
 					dist = Math.sqrt(actor.getPlanDistanceSq(obj.getX(), obj.getY()));
-					dist2 = dist - actor.getTemplate().collisionRadius;
-					range = sk.getCastRange() + actor.getTemplate().collisionRadius + obj.getTemplate().collisionRadius;
+					dist2 = dist - actor.getTemplate().getCollisionRadius();
+					range = sk.getCastRange() + actor.getTemplate().getCollisionRadius() + obj.getTemplate().getCollisionRadius();
 					if (obj.isMoving())
 						dist2 = dist2 - 70;
 				}
@@ -2126,8 +2126,8 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				{
 					actor.setTarget(getAttackTarget());
 					dist = Math.sqrt(actor.getPlanDistanceSq(obj.getX(), obj.getY()));
-					dist2 = dist - actor.getTemplate().collisionRadius;
-					range = sk.getCastRange() + actor.getTemplate().collisionRadius + getAttackTarget().getTemplate().collisionRadius;
+					dist2 = dist - actor.getTemplate().getCollisionRadius();
+					range = sk.getCastRange() + actor.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius();
 					//if(obj.isMoving())
 					//	dist2 = dist2 - 40;
 				}
@@ -2151,7 +2151,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					actor.setTarget(getAttackTarget());
 					dist = Math.sqrt(actor.getPlanDistanceSq(target.getX(), target.getY()));
 					dist2 = dist;
-					range = sk.getCastRange() + actor.getTemplate().collisionRadius + getAttackTarget().getTemplate().collisionRadius;
+					range = sk.getCastRange() + actor.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius();
 					//if(obj.isMoving())
 					//	dist2 = dist2 - 40;
 				}
@@ -2207,8 +2207,8 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				try
 				{
 					dist = Math.sqrt(actor.getPlanDistanceSq(obj.getX(), obj.getY()));
-					dist2 = dist - actor.getTemplate().collisionRadius;
-					range = actor.getPhysicalAttackRange() + actor.getTemplate().collisionRadius + obj.getTemplate().collisionRadius;
+					dist2 = dist - actor.getTemplate().getCollisionRadius();
+					range = actor.getPhysicalAttackRange() + actor.getTemplate().getCollisionRadius() + obj.getTemplate().getCollisionRadius();
 					if (obj.isMoving())
 						dist2 = dist2 - 70;
 				}
