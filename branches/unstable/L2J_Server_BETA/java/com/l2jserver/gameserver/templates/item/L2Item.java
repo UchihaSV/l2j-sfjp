@@ -418,7 +418,7 @@ public abstract class L2Item
 	/**
 	 * Returns the grade of the item.<BR><BR>
 	 * <U><I>Concept :</I></U><BR>
-	 * In fact, this fucntion returns the type of crystal of the item.
+	 * In fact, this function returns the type of crystal of the item.
 	 * @return int
 	 */
 	public final int getItemGrade()
@@ -427,9 +427,8 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Returns the grade of the item.<BR><BR>
 	 * For grades S80 and S84 return S
-	 * @return int
+	 * @return the grade of the item.
 	 */
 	public final int getItemGradeSPlus()
 	{
@@ -444,8 +443,7 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Returns the quantity of crystals for crystallization
-	 * @return int
+	 * @return the quantity of crystals for crystallization.
 	 */
 	public final int getCrystalCount()
 	{
@@ -485,8 +483,7 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Returns the name of the item
-	 * @return String
+	 * @return the name of the item.
 	 */
 	public final String getName()
 	{
@@ -494,8 +491,7 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Returns the base elemental of the item
-	 * @return Elementals
+	 * @return the base elemental of the item.
 	 */
 	public final Elementals[] getElementals()
 	{
@@ -513,8 +509,8 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Sets the base elemental of the item
-	 * @param element 
+	 * Sets the base elemental of the item.
+	 * @param element the element to set.
 	 */
 	public void setElementals(Elementals element)
 	{
@@ -542,16 +538,14 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Return the part of the body used with the item.
-	 * @return int
+	 * @return the part of the body used with the item.
 	 */
 	public final int getBodyPart()
 	{
 		return _bodyPart;
 	}	
 	/**
-	 * Returns the type 1 of the item
-	 * @return int
+	 * @return the type 1 of the item.
 	 */
 	public final int getType1()
 	{
@@ -559,8 +553,7 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Returns if the item is stackable
-	 * @return boolean
+	 * @return {@code true} if the item is stackable, {@code false} otherwise.
 	 */
 	public final boolean isStackable()
 	{
@@ -568,22 +561,23 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Returns if the item is consumable
-	 * @return boolean
+	 * @return {@code true} if the item is consumable, {@code false} otherwise.
 	 */
 	public boolean isConsumable()
 	{
 		return false;
 	}
 	
+	/**
+	 * @return {@code true} if the item can be equipped, {@code false} otherwise.
+	 */
 	public boolean isEquipable()
 	{
-		return this.getBodyPart() != 0 && !(this.getItemType() instanceof L2EtcItemType);
+		return getBodyPart() != 0 && !(getItemType() instanceof L2EtcItemType);
 	}
 	
 	/**
-	 * Returns the price of reference of the item
-	 * @return int
+	 * @return the price of reference of the item.
 	 */
 	public final int getReferencePrice()
 	{
@@ -591,8 +585,7 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Returns if the item can be sold
-	 * @return boolean
+	 * @return {@code true} if the item can be sold, {@code false} otherwise.
 	 */
 	public final boolean isSellable()
 	{
@@ -600,8 +593,7 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Returns if the item can dropped
-	 * @return boolean
+	 * @return {@code true} if the item can be dropped, {@code false} otherwise.
 	 */
 	public final boolean isDropable()
 	{
@@ -609,8 +601,7 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Returns if the item can destroy
-	 * @return boolean
+	 * @return {@code true} if the item can be destroyed, {@code false} otherwise.
 	 */
 	public final boolean isDestroyable()
 	{
@@ -618,8 +609,7 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Returns if the item can add to trade
-	 * @return boolean
+	 * @return {@code true} if the item can be traded, {@code false} otherwise.
 	 */
 	public final boolean isTradeable()
 	{
@@ -627,8 +617,7 @@ public abstract class L2Item
 	}
 	
 	/**
-	 * Returns if the item can be put into warehouse
-	 * @return boolean
+	 * @return {@code true} if the item can be put into warehouse, {@code false} otherwise.
 	 */
 	public final boolean isDepositable()
 	{
@@ -636,11 +625,12 @@ public abstract class L2Item
 	}
 	
 	/**
+	 * This method also check the enchant blacklist.
 	 * @return {@code true} if the item can be enchanted, {@code false} otherwise.
 	 */
 	public final boolean isEnchantable()
 	{
-		return _enchantable && Arrays.binarySearch(Config.ENCHANT_BLACKLIST, getItemId()) == 0;
+		return _enchantable && Arrays.binarySearch(Config.ENCHANT_BLACKLIST, getItemId()) < 0;
 	}
 	
 	/**
