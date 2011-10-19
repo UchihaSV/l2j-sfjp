@@ -302,7 +302,7 @@ public class L2Npc extends L2Character
 		return true;
 	}
 	
-	public FastList<L2Skill> getLrangeSkill()
+	public FastList<L2Skill> getLongRangeSkill()
 	{
 		FastList<L2Skill> skilldata = new FastList<L2Skill>();
 		boolean hasLrange = false;
@@ -333,9 +333,9 @@ public class L2Npc extends L2Character
 			}
 			case 1:
 			{
-				if (getTemplate()._universalskills != null)
+				if (getTemplate().getUniversalSkills() != null)
 				{
-					for (L2Skill sk : getTemplate()._universalskills)
+					for (L2Skill sk : getTemplate().getUniversalSkills())
 					{
 						if (sk.getCastRange() >= 200)
 						{
@@ -362,7 +362,7 @@ public class L2Npc extends L2Character
 		return (hasLrange ? skilldata : null);
 	}
 	
-	public FastList<L2Skill> getSrangeSkill()
+	public FastList<L2Skill> getShortRangeSkill()
 	{
 		FastList<L2Skill> skilldata = new FastList<L2Skill>();
 		boolean hasSrange = false;
@@ -393,9 +393,9 @@ public class L2Npc extends L2Character
 			}
 			case 1:
 			{
-				if (getTemplate()._universalskills != null)
+				if (getTemplate().getUniversalSkills() != null)
 				{
-					for (L2Skill sk : getTemplate()._universalskills)
+					for (L2Skill sk : getTemplate().getUniversalSkills())
 					{
 						if (sk.getCastRange() <= 200)
 						{
@@ -543,9 +543,9 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		initCharStatusUpdateValues();
 		
 		// initialize the "current" equipment
-		_currentLHandId = getTemplate().lhand;
-		_currentRHandId = getTemplate().rhand;
-		_currentEnchant = Config.ENABLE_RANDOM_ENCHANT_EFFECT ? Rnd.get(4, 21) : getTemplate().enchantEffect;
+		_currentLHandId = getTemplate().getLeftHand();
+		_currentRHandId = getTemplate().getRightHand();
+		_currentEnchant = Config.ENABLE_RANDOM_ENCHANT_EFFECT ? Rnd.get(4, 21) : getTemplate().getEnchantEffect();
 		// initialize the "current" collisions
 		_currentCollisionHeight = getTemplate().getfCollisionHeight();
 		_currentCollisionRadius = getTemplate().getfCollisionRadius();
@@ -557,7 +557,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		}
 		
 		// Set the name of the L2Character
-		setName(template.name);
+		setName(template.getName());
 	}
 	
 	@Override
@@ -608,7 +608,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 */
 	public int getNpcId()
 	{
-		return getTemplate().npcId;
+		return getTemplate().getNpcId();
 	}
 	
 	@Override
@@ -634,7 +634,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	@Override
 	public final int getLevel()
 	{
-		return getTemplate().level;
+		return getTemplate().getLevel();
 	}
 	
 	/**
@@ -650,8 +650,8 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 */
 	public int getAggroRange()
 	{
-		return getTemplate().aggroRange & _aggroMask;	//+[JOJO]
-	//	return getTemplate().aggroRange;				//-[JOJO]
+		return getTemplate().getAggroRange() & _aggroMask;	//+[JOJO]
+	//	return getTemplate().getAggroRange();				//-[JOJO]
 	}
 	
 	int _aggroMask = -1;	//[JOJO]
@@ -1015,13 +1015,13 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	public L2Weapon getActiveWeaponItem()
 	{
 		// Get the weapon identifier equiped in the right hand of the L2NpcInstance
-		int weaponId = getTemplate().rhand;
+		int weaponId = getTemplate().getRightHand();
 		
 		if (weaponId < 1)
 			return null;
 		
 		// Get the weapon item equiped in the right hand of the L2NpcInstance
-		L2Item item = ItemTable.getInstance().getTemplate(getTemplate().rhand);
+		L2Item item = ItemTable.getInstance().getTemplate(getTemplate().getRightHand());
 		
 		if (!(item instanceof L2Weapon))
 			return null;
@@ -1046,13 +1046,13 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	public L2Weapon getSecondaryWeaponItem()
 	{
 		// Get the weapon identifier equiped in the right hand of the L2NpcInstance
-		int weaponId = getTemplate().lhand;
+		int weaponId = getTemplate().getLeftHand();
 		
 		if (weaponId < 1)
 			return null;
 		
 		// Get the weapon item equiped in the right hand of the L2NpcInstance
-		L2Item item = ItemTable.getInstance().getTemplate(getTemplate().lhand);
+		L2Item item = ItemTable.getInstance().getTemplate(getTemplate().getLeftHand());
 		
 		if (!(item instanceof L2Weapon))
 			return null;
@@ -1216,10 +1216,10 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 			}
 		}
 		
-		if ("L2Auctioneer".equals(getTemplate().type) && val == 0)
+		if (getTemplate().isType("L2Auctioneer") && (val == 0))
 			return;
 		
-		int npcId = getTemplate().npcId;
+		int npcId = getTemplate().getNpcId();
 		
 		/* For use with Seven Signs implementation */
 		String filename = SevenSigns.SEVEN_SIGNS_HTML_PATH;
@@ -1405,7 +1405,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 */
 	public int getExpReward()
 	{
-		return (int) (getTemplate().rewardExp * Config.RATE_XP);
+		return (int) (getTemplate().getRewardExp() * Config.RATE_XP);
 	}
 	
 	/**
@@ -1413,7 +1413,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 */
 	public int getSpReward()
 	{
-		return (int) (getTemplate().rewardSp * Config.RATE_SP);
+		return (int) (getTemplate().getRewardSp() * Config.RATE_SP);
 	}
 	
 	/**
@@ -1442,8 +1442,8 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		
 		// normally this wouldn't really be needed, but for those few exceptions,
 		// we do need to reset the weapons back to the initial template weapon.
-		_currentLHandId = getTemplate().lhand;
-		_currentRHandId = getTemplate().rhand;
+		_currentLHandId = getTemplate().getLeftHand();
+		_currentRHandId = getTemplate().getRightHand();
 		_currentCollisionHeight = getTemplate().getfCollisionHeight();
 		_currentCollisionRadius = getTemplate().getfCollisionRadius();
 		DecayTaskManager.getInstance().addDecayTask(this);
@@ -1568,7 +1568,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	@Override
 	public String toString()
 	{
-		return getClass().getSimpleName() + ":" + getTemplate().name + "(" + getNpcId() + ")" + "[" + getObjectId() + "]";
+		return getClass().getSimpleName() + ":" + getName() + "(" + getNpcId() + ")" + "[" + getObjectId() + "]";
 	}
 	
 	public boolean isDecayed()
