@@ -62,7 +62,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 	
 	public static void autoChat(L2Npc npc, int[] stringId, int type)
 	{
-		NpcSay packet = new NpcSay(npc.getObjectId(), type, npc.getTemplate().idTemplate, stringId[Rnd.get(stringId.length)]);
+		NpcSay packet = new NpcSay(npc.getObjectId(), type, npc.getTemplate().getIdTemplate(), stringId[Rnd.get(stringId.length)]);
 		for (L2PcInstance player : npc.getKnownList().getKnownPlayers().values())
 			if (player != null && player.getTransformationId() == TRANSFORMATION_ID)
 				player.sendPacket(packet);
