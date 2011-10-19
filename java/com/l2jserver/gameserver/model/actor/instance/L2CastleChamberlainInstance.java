@@ -339,7 +339,7 @@ public class L2CastleChamberlainInstance extends L2MerchantInstance
 					}
 					
 					NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
-					html.setFile(player.getHtmlPrefix(), "data/html/chamberlain/" + getTemplate().npcId	+ "-d.htm");
+					html.setFile(player.getHtmlPrefix(), "data/html/chamberlain/" + getTemplate().getNpcId() + "-d.htm");
 					html.replace("%objectId%", getObjectId());
 					html.replace("%npcname%", getName());
 					player.sendPacket(html);

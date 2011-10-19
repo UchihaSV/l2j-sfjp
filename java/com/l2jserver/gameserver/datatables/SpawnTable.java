@@ -82,15 +82,15 @@ public class SpawnTable
 				template1 = NpcTable.getInstance().getTemplate(rset.getInt("npc_templateid"));
 				if (template1 != null)
 				{
-					if (template1.type.equalsIgnoreCase("L2SiegeGuard"))
+					if (template1.isType("L2SiegeGuard"))
 					{
 						// Don't spawn
 					}
-					else if (template1.type.equalsIgnoreCase("L2RaidBoss"))
+					else if (template1.isType("L2RaidBoss"))
 					{
 						// Don't spawn raidboss
 					}
-					else if (!Config.ALLOW_CLASS_MASTERS && template1.type.equals("L2ClassMaster"))
+					else if (!Config.ALLOW_CLASS_MASTERS && template1.isType("L2ClassMaster"))
 					{
 						// Dont' spawn class masters
 					}
@@ -160,15 +160,15 @@ public class SpawnTable
 					template1 = NpcTable.getInstance().getTemplate(rset.getInt("npc_templateid"));
 					if (template1 != null)
 					{
-						if (template1.type.equalsIgnoreCase("L2SiegeGuard"))
+						if (template1.isType("L2SiegeGuard"))
 						{
 							// Don't spawn
 						}
-						else if (template1.type.equalsIgnoreCase("L2RaidBoss"))
+						else if (template1.isType("L2RaidBoss"))
 						{
 							// Don't spawn raidboss
 						}
-						else if (!Config.ALLOW_CLASS_MASTERS && template1.type.equals("L2ClassMaster"))
+						else if (!Config.ALLOW_CLASS_MASTERS && template1.isType("L2ClassMaster"))
 						{
 							// Dont' spawn class masters
 						}
@@ -270,7 +270,7 @@ public class SpawnTable
 			
 			//[JOJO]
 			String zoneName = MapRegionManager.getInstance().getClosestTownName(spawn.getLocx(),spawn.getLocy());
-			addSqlLog("-- " + Util.dateFormat() + " " + spawn.getTemplate().title + " " + spawn.getTemplate().name + " - " + zoneName + "\r\n"
+			addSqlLog("-- " + Util.dateFormat() + " " + spawn.getTemplate().getTitle() + " " + spawn.getTemplate().getName() + " - " + zoneName + "\r\n"
 					+ "INSERT INTO " + spawnTable + " SET location='//spawn." + zoneName + "'"
 					+ ", count=" + spawn.getAmount()
 					+ ", npc_templateid=" + spawn.getNpcid()
@@ -319,7 +319,7 @@ public class SpawnTable
 			
 			//[JOJO]
 			String zoneName = MapRegionManager.getInstance().getClosestTownName(spawn.getLocx(),spawn.getLocy());
-			addSqlLog("-- " + Util.dateFormat() + " " + spawn.getTemplate().title + " " + spawn.getTemplate().name + " - " + zoneName + "\r\n"
+			addSqlLog("-- " + Util.dateFormat() + " " + spawn.getTemplate().getTitle() + " " + spawn.getTemplate().getName() + " - " + zoneName + "\r\n"
 					+ "DELETE FROM "
 					+ (spawn.isCustom() ? "custom_spawnlist" : "spawnlist")
 					+ " WHERE locx=" + spawn.getLocx()
@@ -369,13 +369,13 @@ public class SpawnTable
 				else
 				{
 					if (index == 1)
-						activeChar.sendMessage(spawn.getNpcid() + " " + spawn.getTemplate().name);
+						activeChar.sendMessage(spawn.getNpcid() + " " + spawn.getTemplate().getName());
 					if(showposition && _npc != null)
 						activeChar.sendMessage("- " + index + ". " + _npc.getX() + " "+ _npc.getY() + " " + _npc.getZ());
-				//		activeChar.sendMessage(index + " - " + spawn.getTemplate().name + " (" + spawn + "): " + _npc.getX() + " "+ _npc.getY() + " " + _npc.getZ());
+				//		activeChar.sendMessage(index + " - " + spawn.getTemplate().getName() + " (" + spawn + "): " + _npc.getX() + " "+ _npc.getY() + " " + _npc.getZ());
 					else
 						activeChar.sendMessage("- " + index + ". " + spawn.getLocx() + " "+ spawn.getLocy() + " " + spawn.getLocz());
-				//		activeChar.sendMessage(index + " - " + spawn.getTemplate().name + " (" + spawn + "): " + spawn.getLocx() + " "+ spawn.getLocy() + " " + spawn.getLocz());
+				//		activeChar.sendMessage(index + " - " + spawn.getTemplate().getName() + " (" + spawn + "): " + spawn.getLocx() + " "+ spawn.getLocy() + " " + spawn.getLocz());
 				}
 			}
 		}
