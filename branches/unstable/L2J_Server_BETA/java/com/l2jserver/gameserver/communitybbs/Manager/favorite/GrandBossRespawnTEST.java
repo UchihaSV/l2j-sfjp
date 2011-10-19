@@ -57,6 +57,8 @@ public class GrandBossRespawnTEST extends BaseFavoriteManager
 	}
 	private void add(StringBuilder tb, boolean isGM, int bossId, String[] statusString)
 	{
+		if (GrandBossManager.getInstance().getStatsSet(bossId) == null)
+			return;
 		tb.append("<tr><td width=270 align=right><font color=\"00C3FF\">")
 		  .append(NpcTable.getInstance().getTemplate(bossId).getName())
 		  .append("</font></td>");

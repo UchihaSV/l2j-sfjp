@@ -56,6 +56,8 @@ public class GrandBossRespawn extends BaseFavoriteManager
 
 		for (int bossId : BOSSES)
 		{
+			if (GrandBossManager.getInstance().getStatsSet(bossId) == null)
+				continue;
 			tb.append("<tr><td width=300 align=right><font color=\"00C3FF\">").append(NpcTable.getInstance().getTemplate(bossId).getName()).append("</font></td>"
 					+ "<td width=300>");
 			final long respawnTime;
