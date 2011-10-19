@@ -558,7 +558,6 @@ public final class L2NpcTemplate extends L2CharTemplate
 		{
 			return _teachInfo.contains(classId.getParent());
 		}
-		
 		return _teachInfo.contains(classId);
 	}
 	
