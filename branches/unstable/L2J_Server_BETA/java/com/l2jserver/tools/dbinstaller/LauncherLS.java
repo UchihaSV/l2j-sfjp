@@ -12,13 +12,13 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.dbinstaller;
+package com.l2jserver.tools.dbinstaller;
 
 import java.awt.HeadlessException;
 import javax.swing.UIManager;
 
-import com.l2jserver.dbinstaller.console.DBInstallerConsole;
-import com.l2jserver.dbinstaller.gui.DBConfigGUI;
+import com.l2jserver.tools.dbinstaller.console.DBInstallerConsole;
+import com.l2jserver.tools.dbinstaller.gui.DBConfigGUI;
 
 /**
  * Contains main class for Database Installer If system doesn't support the graphical UI, start the installer in console mode.

@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.configurator;
+package com.l2jserver.tools.configurator;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -61,10 +61,10 @@ import javax.swing.UIManager;
 
 import javolution.util.FastList;
 
-import com.l2jserver.configurator.ConfigUserInterface.ConfigFile.ConfigComment;
-import com.l2jserver.configurator.ConfigUserInterface.ConfigFile.ConfigProperty;
-import com.l2jserver.i18n.LanguageControl;
-import com.l2jserver.images.ImagesTable;
+import com.l2jserver.tools.configurator.ConfigUserInterface.ConfigFile.ConfigComment;
+import com.l2jserver.tools.configurator.ConfigUserInterface.ConfigFile.ConfigProperty;
+import com.l2jserver.tools.i18n.LanguageControl;
+import com.l2jserver.tools.images.ImagesTable;
 
 /**
  *

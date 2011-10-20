@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.l2jserver.dbinstaller.util.swing;
+package com.l2jserver.tools.dbinstaller.util.swing;
 
 import javax.swing.*;
 import javax.swing.SpringLayout;

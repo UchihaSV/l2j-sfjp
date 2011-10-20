@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.dbinstaller.gui;
+package com.l2jserver.tools.dbinstaller.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -25,8 +25,8 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import com.l2jserver.dbinstaller.DBOutputInterface;
-import com.l2jserver.images.ImagesTable;
+import com.l2jserver.tools.dbinstaller.DBOutputInterface;
+import com.l2jserver.tools.images.ImagesTable;
 
 /**
  * @author mrTJO

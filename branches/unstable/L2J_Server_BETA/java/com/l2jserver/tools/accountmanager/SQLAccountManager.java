@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.accountmanager;
+package com.l2jserver.tools.accountmanager;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -28,8 +28,8 @@ import javolution.util.FastList;
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.Server;
-import com.l2jserver.ngl.ConsoleLocalizator;
-import com.l2jserver.ngl.LocaleCodes;
+import com.l2jserver.tools.ngl.ConsoleLocalizator;
+import com.l2jserver.tools.ngl.LocaleCodes;
 import com.l2jserver.util.Base64;
 
 /**

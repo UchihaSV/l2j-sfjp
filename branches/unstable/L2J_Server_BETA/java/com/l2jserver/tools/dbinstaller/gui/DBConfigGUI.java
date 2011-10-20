@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.dbinstaller.gui;
+package com.l2jserver.tools.dbinstaller.gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -28,10 +28,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import com.l2jserver.dbinstaller.RunTasks;
-import com.l2jserver.dbinstaller.util.mysql.MySqlConnect;
-import com.l2jserver.dbinstaller.util.swing.SpringUtilities;
-import com.l2jserver.images.ImagesTable;
+import com.l2jserver.tools.dbinstaller.RunTasks;
+import com.l2jserver.tools.dbinstaller.util.mysql.MySqlConnect;
+import com.l2jserver.tools.dbinstaller.util.swing.SpringUtilities;
+import com.l2jserver.tools.images.ImagesTable;
 
 /**
  * @author mrTJO

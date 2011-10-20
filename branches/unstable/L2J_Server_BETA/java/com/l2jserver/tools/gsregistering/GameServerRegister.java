@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gsregistering;
+package com.l2jserver.tools.gsregistering;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -323,7 +323,7 @@ public class GameServerRegister extends BaseGameServerRegister
 	}
 	
 	/**
-	 * @see com.l2jserver.gsregistering.BaseGameServerRegister#showError(java.lang.String, java.lang.Throwable)
+	 * @see com.l2jserver.tools.gsregistering.BaseGameServerRegister#showError(java.lang.String, java.lang.Throwable)
 	 */
 	@Override
 	public void showError(String msg, Throwable t)

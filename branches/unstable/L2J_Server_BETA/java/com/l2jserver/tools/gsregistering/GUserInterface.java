@@ -1,4 +1,4 @@
-package com.l2jserver.gsregistering;
+package com.l2jserver.tools.gsregistering;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -31,8 +31,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import com.l2jserver.images.ImagesTable;
 import com.l2jserver.loginserver.GameServerTable;
+import com.l2jserver.tools.images.ImagesTable;
 
 /**
  * @author KenM
@@ -196,7 +196,7 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 	}
 	
 	/**
-	 * @see com.l2jserver.gsregistering.BaseGameServerRegister#showError(String, Throwable)
+	 * @see com.l2jserver.tools.gsregistering.BaseGameServerRegister#showError(String, Throwable)
 	 */
 	@Override
 	public void showError(String msg, Throwable t)
