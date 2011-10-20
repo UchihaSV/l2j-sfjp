@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.dbinstaller.util.mysql;
+package com.l2jserver.tools.dbinstaller.util.mysql;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,8 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.l2jserver.dbinstaller.DBOutputInterface;
-import com.l2jserver.dbinstaller.util.FileWriterStdout;
+import com.l2jserver.tools.dbinstaller.DBOutputInterface;
+import com.l2jserver.tools.dbinstaller.util.FileWriterStdout;
 
 /**
  * @author mrTJO

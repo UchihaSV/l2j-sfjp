@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.ngl;
+package com.l2jserver.tools.ngl;
 
 import java.io.File;
 import java.util.HashMap;

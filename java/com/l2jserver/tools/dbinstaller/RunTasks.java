@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.dbinstaller;
+package com.l2jserver.tools.dbinstaller;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -20,9 +20,9 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JOptionPane;
 
-import com.l2jserver.dbinstaller.util.mysql.DBDumper;
-import com.l2jserver.dbinstaller.util.mysql.ScriptExecutor;
-import com.l2jserver.dbinstaller.util.mysql.ScriptExecutor.SqlFileFilter;
+import com.l2jserver.tools.dbinstaller.util.mysql.DBDumper;
+import com.l2jserver.tools.dbinstaller.util.mysql.ScriptExecutor;
+import com.l2jserver.tools.dbinstaller.util.mysql.ScriptExecutor.SqlFileFilter;
 
 /**
  * @author mrTJO

@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gsregistering;
+package com.l2jserver.tools.gsregistering;
 
 import java.awt.HeadlessException;
 import java.io.File;
@@ -34,8 +34,8 @@ import javax.swing.UIManager;
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.Server;
-import com.l2jserver.i18n.LanguageControl;
 import com.l2jserver.loginserver.GameServerTable;
+import com.l2jserver.tools.i18n.LanguageControl;
 import com.l2jserver.util.Util;
 
 /**
