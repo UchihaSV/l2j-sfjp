@@ -251,7 +251,11 @@ public class DoorTable
 		return door;
 	}
 	
-	public L2DoorInstance getDoor(Integer id)
+	public L2DoorInstance getDoor(int id)	//[JOJO]
+	{
+		return _staticItems.get(id);
+	}
+	@Deprecated public L2DoorInstance getDoor(Integer id)
 	{
 		return _staticItems.get(id);
 	}
