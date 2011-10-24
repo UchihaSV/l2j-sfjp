@@ -17,7 +17,6 @@ package com.l2jserver.gameserver.model.actor.instance;
 import java.util.concurrent.ScheduledFuture;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.ai.L2CharacterAI;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.L2Effect;
@@ -140,10 +139,4 @@ public class L2KotatsuInstance extends L2Npc implements Runnable
 		
 		super.deleteMe();
 	}
-	
-@Override
-public void setAI(L2CharacterAI newAI)
-{
-	super.setAI(newAI);
-}
 }
