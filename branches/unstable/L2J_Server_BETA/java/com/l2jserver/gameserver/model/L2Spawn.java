@@ -93,11 +93,6 @@ public class L2Spawn
 	/** If True a L2NpcInstance is respawned each time that another is killed */
 	private boolean _doRespawn;
 	
-	@Deprecated public boolean isRespawnable()	//[L2J_JP ADD]
-	{
-		return _doRespawn;
-	}
-	
 	/** If true then spawn is custom */
 	private boolean _customSpawn;
 	
