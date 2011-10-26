@@ -97,7 +97,10 @@ public final class L2World
 	{
 		_allPlayers = new L2TIntObjectHashMap<L2PcInstance>();
 		_allObjects = new L2TIntObjectHashMap<L2Object>();
-		_allObjectsDebug = new L2TIntObjectHashMap<String>();
+		if (Config.DEBUG) //+[JOJO]
+			_allObjectsDebug = new L2TIntObjectHashMap<String>();
+		else
+			_allObjectsDebug = null;
 		_petsInstance = new L2TIntObjectHashMap<L2PetInstance>();
 		
 		initRegions();
@@ -135,14 +138,16 @@ public final class L2World
 		}
 		
 		_allObjects.put(object.getObjectId(), object);
-		_allObjectsDebug.put(object.getObjectId(), StringUtil.getTraceString(Thread.currentThread().getStackTrace()));
+		if (Config.DEBUG) //+[JOJO]
+			_allObjectsDebug.put(object.getObjectId(), StringUtil.getTraceString(Thread.currentThread().getStackTrace()));
 	}
 	
 	public long timeStoreObject(L2Object object)
 	{
 		long time = System.nanoTime();
 		_allObjects.put(object.getObjectId(), object);
-		_allObjectsDebug.put(object.getObjectId(), StringUtil.getTraceString(Thread.currentThread().getStackTrace()));
+		if (Config.DEBUG) //+[JOJO]
+			_allObjectsDebug.put(object.getObjectId(), StringUtil.getTraceString(Thread.currentThread().getStackTrace()));
 		time = System.nanoTime() - time;
 		return time;
 	}
