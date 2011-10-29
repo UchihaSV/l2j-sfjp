@@ -27,7 +27,6 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.util.Broadcast;
 
 /**
- * 
  * @author nBd
  */
 public class AutoAnnounceTaskManager
@@ -58,7 +57,9 @@ public class AutoAnnounceTaskManager
 		if (!_announces.isEmpty())
 		{
 			for (AutoAnnouncement a : _announces)
+			{
 				a.stopAnnounce();
+			}
 			
 			_announces.clear();
 		}
@@ -83,7 +84,9 @@ public class AutoAnnounceTaskManager
 			//	ThreadPoolManager.getInstance().scheduleGeneral(new AutoAnnouncement(id, delay, repeat, text, isCritical), initial);
 				count++;
 				if (_nextId <= id)
+				{
 					_nextId = id + 1;
+				}
 			}
 			data.close();
 			statement.close();
@@ -161,12 +164,12 @@ public class AutoAnnounceTaskManager
 	
 	public class AutoAnnouncement implements Runnable
 	{
-		private int _id;
-		private long _delay;
+		private final int _id;
+		private final long _delay;
 		private int _repeat = -1;
-		private String[] _memo;
+		private final String[] _memo;
 		private boolean _stopped = false;
-		private boolean _isCritical;
+		private final boolean _isCritical;
 		
 		public AutoAnnouncement(int id, long delay, int repeat, String[] memo, boolean isCritical)
 		{
@@ -176,7 +179,9 @@ public class AutoAnnounceTaskManager
 			_memo = memo;
 			_isCritical = isCritical;
 			if (!_announces.contains(this))
+			{
 				_announces.add(this);
+			}
 		}
 		public AutoAnnouncement(int id, long delay, int repeat, String memo, boolean isCritical)	//+[JOJO]
 		{
@@ -201,7 +206,7 @@ public class AutoAnnounceTaskManager
 		@Override
 		public void run()
 		{
-			if (!_stopped && _repeat != 0)
+			if (!_stopped && (_repeat != 0))
 			{
 				for (String text : _memo)
 				{
@@ -209,7 +214,9 @@ public class AutoAnnounceTaskManager
 				}
 				
 				if (_repeat > 0)
+				{
 					_repeat--;
+				}
 				ThreadPoolManager.getInstance().scheduleGeneral(this, _delay);
 			}
 			else
@@ -224,7 +231,7 @@ public class AutoAnnounceTaskManager
 		Broadcast.announceToOnlinePlayers(text, isCritical);
 		if (Config.LOG_AUTO_ANNOUNCEMENTS)
 		{
-			_log.info(isCritical ? "Critical AutoAnnounce" : "AutoAnnounce" + text);
+			_log.info((isCritical ? "Critical AutoAnnounce" : "AutoAnnounce") + text);
 		}
 	}
 	
