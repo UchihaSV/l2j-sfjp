@@ -112,6 +112,7 @@ public class RequestUnEquipItem extends L2GameClientPacket
 		
 		// Show the update in the inventory.
 		activeChar.sendPacket(iu);
+		if (Config.MOD_AURA) activeChar.checkAuraItemEquipped(); // [JOJO]
 		activeChar.broadcastUserInfo();
 		
 		// This can be 0 if the user pressed the right mouse button twice very fast.
