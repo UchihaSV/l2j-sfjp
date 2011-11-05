@@ -1177,6 +1177,7 @@ public final class Config
 	public static final boolean STRING_INTERN = true;					//[JOJO]
 	public static final boolean MOD_AURA = true;						//[JOJO]英雄とは無関係に英雄オーラを発する.
 	public static final boolean FIX_FOURSEPULCHER_VICTIM_AI = true;		//[JOJO]四大霊廟 ケープゴートAI修正.
+	public static final boolean QUEST_TIMER_SHARED = false;				//[JOJO]全てのQuestTimerに共有ロックをかける.
 
 	//
 	//////////////////////////////////////////////////////////////////////////
