@@ -479,7 +479,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		if (now - _lastSocialBroadcast > _minimalSocialInterval)
 		{
 			_lastSocialBroadcast = now;
-			broadcastPacket(new SocialAction(this, animationId));
+			broadcastPacket(new SocialAction(getObjectId(), animationId));
 		}
 	}
 	
