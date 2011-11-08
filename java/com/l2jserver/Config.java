@@ -1064,8 +1064,8 @@ public final class Config
 	public static int Random_Of_QueenAnt_Spawn;
 	public static int Interval_Of_Zaken_Spawn;
 	public static int Random_Of_Zaken_Spawn;
-	public static int Interval_Of_Frintezza_Spawn;
-	public static int Random_Of_Frintezza_Spawn;
+	public static final int Interval_Of_Frintezza_Spawn = 48 * 3600000;
+	public static final int Random_Of_Frintezza_Spawn = 8 * 3600000;
 	public static int BELETH_MIN_PLAYERS;
 	public static int INTERVAL_OF_BELETH_SPAWN;
 	public static int RANDOM_OF_BELETH_SPAWN;
