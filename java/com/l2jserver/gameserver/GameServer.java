@@ -77,6 +77,7 @@ import com.l2jserver.gameserver.datatables.UITable;
 import com.l2jserver.gameserver.geoeditorcon.GeoEditorListener;
 import com.l2jserver.gameserver.handler.AdminCommandHandler;
 import com.l2jserver.gameserver.handler.EffectHandler;
+import com.l2jserver.gameserver.handler.TelnetHandler;
 import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.AirShipManager;
 import com.l2jserver.gameserver.instancemanager.AntiFeedManager;
@@ -337,12 +338,18 @@ public class GameServer
 		{
 			_log.severe("Failed loading scripts.cfg, no script going to be loaded");
 		}
-		//[JOJO] スクリプトのロードが１つでも失敗するとコマンドが全滅するので
-		// server_shutdown だけは使用きるように予備の AdminShutdown.java をロードしておく。
+		//[JOJO]-------------------------------------------------
+		// data/scripts/handlers/* スクリプトのロードが１つでも失敗するとコマンドが全滅して
+		// シャットダウンすらできなくなるので、重要なコマンドのみ予備をロードしておく。
+		// GMコマンドの //server_shutdown と //server_restart
 		if (AdminCommandHandler.getInstance().getAdminCommandHandler("admin_server_shutdown") == null)
 			AdminCommandHandler.getInstance().registerAdminCommandHandler(
 					new com.l2jserver.gameserver.handlers.admincommandhandlers.AdminShutdown() );
-		//--
+		// telnetコマンドの shutdown と restart
+		if (TelnetHandler.getInstance().getCommandHandler("shutdown") == null)
+			TelnetHandler.getInstance().registerCommandHandler(
+					new com.l2jserver.gameserver.handlers.telnethandlers.ServerHandler() );
+		//-------------------------------------------------------
 		try
 		{
 			CompiledScriptCache compiledScriptCache = L2ScriptEngineManager.getInstance().getCompiledScriptCache();

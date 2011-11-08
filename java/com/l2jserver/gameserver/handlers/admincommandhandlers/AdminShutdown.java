@@ -1,6 +1,6 @@
 /**
  * [JOJO] This file is copy of:
- *   datapack_development/data/scripts/handlers/admincommandhandlers/AdminShutdown.java
+ *   L2J_DataPack_BETA/dist/game/data/scripts/handlers/admincommandhandlers/AdminShutdown.java
  *   sync revesion 7150, timestamp 2010/03/08 21:16
  *   sync revesion 5901, timestamp 2009/04/03 19:05
  **/
