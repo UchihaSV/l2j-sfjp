@@ -196,6 +196,13 @@ public class GameStatusThread extends Thread
 				{
 					/* Do Nothing :p - Just here to save us from the "Command Not Understood" Text */
 				}
+				//[JOJO]-------------------------------------------------
+				else if (_usrCommand.startsWith("!"))
+				{
+					int exitValue = new com.l2jserver.status.TelnetExec(_print).exec(_usrCommand.substring(1));
+					_print.println("*ERROELEVEL=" + exitValue);
+				}
+				//-------------------------------------------------------
 				else
 					_print.print("Command: " + _usrCommand + " was not found!");
 				
