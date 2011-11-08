@@ -13916,6 +13916,18 @@ public final class SystemMessageId
 	 * Message: 距離が離れているため、対象を操縦できません。
 	 */
 	public static final SystemMessageId CANT_CONTROL_TOO_FAR;
+
+	/**
+	 * ID: 2764<br>
+	 * Message: この連合チャンネルは人数超過のため入れません。
+	 */
+	public static final SystemMessageId YOU_CANNOT_ENTER_BECAUSE_MAXIMUM_ENTRANTS;
+
+	/**
+	 * ID: 2765<br>
+	 * Message: 連合チャンネルリーダー以外は入れません。
+	 */
+	public static final SystemMessageId ONLY_ALLIANCE_CHANNEL_LEADER_CAN_ENTER;
 	
 	/**
 	 * ID: 2766<br>
@@ -13976,7 +13988,13 @@ public final class SystemMessageId
 	 * Message: 守護物を持っている状態では瞬間移動効果が適用されません。
 	 */
 	public static final SystemMessageId YOU_CANNOT_TELEPORT_WHILE_IN_POSSESSION_OF_A_WARD;
-	
+
+	/**
+	 * ID: 2793<br>
+	 * Message: インスタント ゾーンの最少人数（$s1人）に達していないため、入れません。
+	 */
+	public static final SystemMessageId YOU_MUST_HAVE_MINIMUM_OF_S1_PEOPLE_TO_ENTER;
+
 	/**
 	 * ID: 2795<br>
 	 * Message: 既に他の領地戦を申し込んでいる状態です。
@@ -17080,6 +17098,8 @@ public final class SystemMessageId
 		THE_S1_WARD_HAS_BEEN_DESTROYED_C2_HAS_THE_WARD = new SystemMessageId(2750);
 		THE_CHAR_THAT_ACQUIRED_S1_WARD_HAS_BEEN_KILLED = new SystemMessageId(2751);
 		CANT_CONTROL_TOO_FAR = new SystemMessageId(2762);
+		YOU_CANNOT_ENTER_BECAUSE_MAXIMUM_ENTRANTS = new SystemMessageId(2764);
+		ONLY_ALLIANCE_CHANNEL_LEADER_CAN_ENTER = new SystemMessageId(2765);
 		SEED_OF_INFINITY_STAGE_1_ATTACK_IN_PROGRESS = new SystemMessageId(2766);
 		SEED_OF_INFINITY_STAGE_2_ATTACK_IN_PROGRESS = new SystemMessageId(2767);
 		SEED_OF_INFINITY_CONQUEST_COMPLETE = new SystemMessageId(2768);
@@ -17090,6 +17110,7 @@ public final class SystemMessageId
 		SEED_OF_DESTRUCTION_DEFENSE_IN_PROGRESS = new SystemMessageId(2773);
 		THE_AIRSHIP_SUMMON_LICENSE_ENTERED = new SystemMessageId(2777);
 		YOU_CANNOT_TELEPORT_WHILE_IN_POSSESSION_OF_A_WARD = new SystemMessageId(2778);
+		YOU_MUST_HAVE_MINIMUM_OF_S1_PEOPLE_TO_ENTER = new SystemMessageId(2793);
 		YOU_ALREADY_REQUESTED_TW_REGISTRATION = new SystemMessageId(2795);
 		THE_TERRITORY_OWNER_CLAN_CANNOT_PARTICIPATE_AS_MERCENARIES = new SystemMessageId(2796);
 		NOT_TERRITORY_REGISTRATION_PERIOD = new SystemMessageId(2797);
