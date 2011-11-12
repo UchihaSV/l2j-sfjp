@@ -43,6 +43,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
+import com.l2jserver.gameserver.model.L2Object;
+import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
 import com.l2jserver.gameserver.util.FloodProtectorConfig;
 import com.l2jserver.util.L2Properties;
@@ -1178,6 +1180,7 @@ public final class Config
 	public static final boolean MOD_AURA = true;						//[JOJO]英雄とは無関係に英雄オーラを発する.
 	public static final boolean FIX_FOURSEPULCHER_VICTIM_AI = true;		//[JOJO]四大霊廟 ケープゴートAI修正.
 	public static final boolean QUEST_TIMER_SHARED = false;				//[JOJO]全てのQuestTimerに共有ロックをかける.
+	public static final boolean ADMIN_VIEW_NPC_STATUS = true;			//[JOJO]NPCをSHIFTクリックしたときNPCの状態を詳細表示する.
 
 	//
 	//////////////////////////////////////////////////////////////////////////
