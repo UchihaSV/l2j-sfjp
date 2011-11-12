@@ -1174,7 +1174,6 @@ public final class Config
 	public static final boolean ADMIN_MENU_AUTO_RETURN = true;			//[JOJO]adminメニューを開いたままにする.
 	public static final boolean NEVER_EVT_AGGRESSION_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体にはEVT_AGGRESSIONを発行しない.
 	public static final boolean NEVER_RandomAnimation_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体はあくびしない.
-	public static final boolean ACTIVATE_AGGROESSIVE_ONLY = true;		//[JOJO]AI_INTENTION_IDOL状態からAI_INTENTION_ACTIVEにさせるのはアグレッシブMOBのみ.
 	public static final boolean FIX_ATTACKABLE_AI_FACTION_CALL = true;	//[JOJO]同族モンスターをリンクさせる.
 	public static final boolean STRING_INTERN = true;					//[JOJO]
 	public static final boolean MOD_AURA = true;						//[JOJO]英雄とは無関係に英雄オーラを発する.

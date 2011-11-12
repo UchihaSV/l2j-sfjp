@@ -35,23 +35,6 @@ public class MonsterKnownList extends AttackableKnownList
 		if (!super.addKnownObject(object))
 			return false;
 		
-if (com.l2jserver.Config.ACTIVATE_AGGROESSIVE_ONLY) {{
-		//[JOJO]-------------------------------------------------
-		// Aggressive monsters problem..:?:
-		// by kotkot90 >> Thu Aug 12, 2010 6:42 pm
-		// http://www.l2jserver.com/forum/viewtopic.php?f=81&t=18481
-		if (object instanceof L2PcInstance) {
-			L2MonsterInstance i = getActiveChar();
-			if (i.hasAI()) {
-				if (i.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE)
-					i.getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE, null);
-			} else /* AI is null */ {
-				if (i.isAggressive())
-					i.getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE, null);
-			}
-		}
-		//-------------------------------------------------------
-}} else {{
 		final L2CharacterAI ai = getActiveChar().getAI(); // force AI creation
 
 		// Set the L2MonsterInstance Intention to AI_INTENTION_ACTIVE if the state was AI_INTENTION_IDLE
@@ -60,7 +43,6 @@ if (com.l2jserver.Config.ACTIVATE_AGGROESSIVE_ONLY) {{
 				&& ai.getIntention() == CtrlIntention.AI_INTENTION_IDLE)
 			ai.setIntention(CtrlIntention.AI_INTENTION_ACTIVE, null);
 		
-}}
 		return true;
 	}
 	
