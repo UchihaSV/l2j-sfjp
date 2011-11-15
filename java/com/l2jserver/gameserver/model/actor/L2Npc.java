@@ -989,7 +989,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 			}
 			else
 			{
-				IBypassHandler handler = BypassHandler.getInstance().getBypassHandler(command);
+				IBypassHandler handler = BypassHandler.getInstance().getHandler(command);
 				if (handler != null)
 					handler.useBypass(command, player, this);
 				else

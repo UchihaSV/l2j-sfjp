@@ -1416,7 +1416,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	 */
 	public final L2Object[] getTargetList(L2Character activeChar, boolean onlyFirst, L2Character target)
 	{
-		final ITargetTypeHandler handler = TargetHandler.getInstance().getTargetTypeHandler(getTargetType()); 
+		final ITargetTypeHandler handler = TargetHandler.getInstance().getHandler(getTargetType()); 
 		if (handler != null) 
 		{ 
 			try 
