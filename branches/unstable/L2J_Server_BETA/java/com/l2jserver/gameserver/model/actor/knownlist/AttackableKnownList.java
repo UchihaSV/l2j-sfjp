@@ -60,10 +60,19 @@ public class AttackableKnownList extends NpcKnownList
 	@Override
 	public int getDistanceToForgetObject(L2Object object)
 	{
+if (com.l2jserver.Config.FIX_ATTACKABLE_KNOWN_FORGET) {{
+		final int distanceToWatchObject = getDistanceToWatchObject(object);
+		
+		if (getActiveChar().getAggroList().get(object) != null)
+			return Math.max(3000, distanceToWatchObject + 100);
+		
+		return Math.max(Math.min(2200, 2 * distanceToWatchObject), distanceToWatchObject + 100);
+}} else {{
 		if (getActiveChar().getAggroList().get(object) != null)
 			return 3000;
 		
 		return Math.min(2200, 2 * getDistanceToWatchObject(object));
+}}
 	}
 	
 	@Override

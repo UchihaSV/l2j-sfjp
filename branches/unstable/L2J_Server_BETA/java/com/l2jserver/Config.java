@@ -1174,6 +1174,7 @@ public final class Config
 	public static final boolean NEVER_EVT_AGGRESSION_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体にはEVT_AGGRESSIONを発行しない.
 	public static final boolean NEVER_RandomAnimation_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体はあくびしない.
 	public static final boolean FIX_ATTACKABLE_AI_FACTION_CALL = true;	//[JOJO]同族モンスターをリンクさせる.
+	public static final boolean FIX_ATTACKABLE_KNOWN_FORGET = true;		//[JOJO]getDistanceToForgetObjectがgetDistanceToWatchObjectより小さい値を返してしまう不具合.
 	public static final boolean STRING_INTERN = true;					//[JOJO]
 	public static final boolean MOD_AURA = true;						//[JOJO]英雄とは無関係に英雄オーラを発する.
 	public static final boolean FIX_FOURSEPULCHER_VICTIM_AI = true;		//[JOJO]四大霊廟 ケープゴートAI修正.
