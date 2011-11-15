@@ -342,12 +342,12 @@ public class GameServer
 		// data/scripts/handlers/* スクリプトのロードが１つでも失敗するとコマンドが全滅して
 		// シャットダウンすらできなくなるので、重要なコマンドのみ予備をロードしておく。
 		// GMコマンドの //server_shutdown と //server_restart
-		if (AdminCommandHandler.getInstance().getAdminCommandHandler("admin_server_shutdown") == null)
-			AdminCommandHandler.getInstance().registerAdminCommandHandler(
+		if (AdminCommandHandler.getInstance().getHandler("admin_server_shutdown") == null)
+			AdminCommandHandler.getInstance().registerHandler(
 					new com.l2jserver.gameserver.handlers.admincommandhandlers.AdminShutdown() );
 		// telnetコマンドの shutdown と restart
-		if (TelnetHandler.getInstance().getCommandHandler("shutdown") == null)
-			TelnetHandler.getInstance().registerCommandHandler(
+		if (TelnetHandler.getInstance().getHandler("shutdown") == null)
+			TelnetHandler.getInstance().registerHandler(
 					new com.l2jserver.gameserver.handlers.telnethandlers.ServerHandler() );
 		//-------------------------------------------------------
 		try
