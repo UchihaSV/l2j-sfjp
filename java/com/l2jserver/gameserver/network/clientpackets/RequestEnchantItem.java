@@ -19,7 +19,10 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import com.l2jserver.Config;
+import com.l2jserver.gameserver.datatables.EnchantItemTable;
 import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.model.EnchantItem;
+import com.l2jserver.gameserver.model.EnchantScroll;
 import com.l2jserver.gameserver.model.L2Skill;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -37,7 +40,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
 
-public final class RequestEnchantItem extends AbstractEnchantPacket
+public final class RequestEnchantItem extends L2GameClientPacket
 {
 	protected static final Logger _log = Logger.getLogger(RequestEnchantItem.class.getName());
 	protected static final Logger _logEnchant = Logger.getLogger("enchant");
@@ -70,7 +73,7 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 		
 		if (activeChar.isProcessingTransaction() || activeChar.isInStoreMode())
 		{
-			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CANNOT_ENCHANT_WHILE_STORE));
+			activeChar.sendPacket(SystemMessageId.CANNOT_ENCHANT_WHILE_STORE);
 			activeChar.setActiveEnchantItem(null);
 			return;
 		}
@@ -86,7 +89,7 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 		}
 		
 		// template for scroll
-		EnchantScroll scrollTemplate = getEnchantScroll(scroll);
+		EnchantScroll scrollTemplate = EnchantItemTable.getInstance().getEnchantScroll(scroll);
 		
 		// scroll not found in list
 		if (scrollTemplate == null)
@@ -101,13 +104,13 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 				activeChar.setActiveEnchantItem(null);
 				return;
 			}
-			supportTemplate = getSupportItem(support);
+			supportTemplate = EnchantItemTable.getInstance().getSupportItem(support);
 		}
 		
 		// first validation check
-		if (!scrollTemplate.isValid(item, supportTemplate) || !item.isEnchantable())
+		if (!scrollTemplate.isValid(item, supportTemplate))
 		{
-			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION));
+			activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
 			activeChar.setActiveEnchantItem(null);
 			activeChar.sendPacket(new EnchantResult(2, 0, 0));
 			return;
@@ -135,7 +138,7 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 		scroll = activeChar.getInventory().destroyItem("Enchant", scroll.getObjectId(), 1, activeChar, item);
 		if (scroll == null)
 		{
-			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NOT_ENOUGH_ITEMS));
+			activeChar.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
 			Util.handleIllegalPlayerAction(activeChar, "Player " + activeChar.getName() + " tried to enchant with a scroll he doesn't have", Config.DEFAULT_PUNISH);
 			activeChar.setActiveEnchantItem(null);
 			activeChar.sendPacket(new EnchantResult(2, 0, 0));
@@ -149,7 +152,7 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 			support = activeChar.getInventory().destroyItem("Enchant", support.getObjectId(), 1, activeChar, item);
 			if (support == null)
 			{
-				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NOT_ENOUGH_ITEMS));
+				activeChar.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
 				Util.handleIllegalPlayerAction(activeChar, "Player " + activeChar.getName() + " tried to enchant with a support item he doesn't have", Config.DEFAULT_PUNISH);
 				activeChar.setActiveEnchantItem(null);
 				activeChar.sendPacket(new EnchantResult(2, 0, 0));
@@ -159,17 +162,15 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 		
 		synchronized (item)
 		{
-			int chance = scrollTemplate.getChance(item, supportTemplate);
+			double chance = scrollTemplate.getChance(item, supportTemplate);
 			
 			L2Skill enchant4Skill = null;
 			L2Item it = item.getItem();
 			
 			// last validation check
-			if (item.getOwnerId() != activeChar.getObjectId()
-					|| !item.isEnchantable()
-					|| chance < 0)
+			if (item.getOwnerId() != activeChar.getObjectId() || item.isEnchantable() == 0 || chance < 0)
 			{
-				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION));
+				activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
 				activeChar.setActiveEnchantItem(null);
 				activeChar.sendPacket(new EnchantResult(2, 0, 0));
 				return;
@@ -185,7 +186,10 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 				if (Config.LOG_ITEM_ENCHANTS)
 				{
 					LogRecord record = new LogRecord(Level.INFO, "Success");
-					record.setParameters(new Object[]{activeChar, item, scroll, support, chance});
+					record.setParameters(new Object[]
+					{
+						activeChar, item, scroll, support, chance
+					});
 					record.setLoggerName("item");
 					_logEnchant.log(record);
 				}
@@ -208,7 +212,7 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 				
 				if (it instanceof L2Armor && item.getEnchantLevel() == 4 && activeChar.getInventory().getItemByObjectId(item.getObjectId()).isEquipped())
 				{
-					enchant4Skill = ((L2Armor)it).getEnchant4Skill();
+					enchant4Skill = ((L2Armor) it).getEnchant4Skill();
 					if (enchant4Skill != null)
 					{
 						// add skills bestowed from +4 armor
@@ -228,7 +232,10 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 					if (Config.LOG_ITEM_ENCHANTS)
 					{
 						LogRecord record = new LogRecord(Level.INFO, "Safe Fail");
-						record.setParameters(new Object[]{activeChar, item, scroll, support, chance});
+						record.setParameters(new Object[]
+						{
+							activeChar, item, scroll, support, chance
+						});
 						record.setLoggerName("item");
 						_logEnchant.log(record);
 					}
@@ -264,7 +271,7 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 					if (scrollTemplate.isBlessed())
 					{
 						// blessed enchant - clear enchant value
-						activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.BLESSED_ENCHANT_FAILED));
+						activeChar.sendPacket(SystemMessageId.BLESSED_ENCHANT_FAILED);
 						
 						item.setEnchantLevel(0);
 						item.updateDatabase();
@@ -273,7 +280,10 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 						if (Config.LOG_ITEM_ENCHANTS)
 						{
 							LogRecord record = new LogRecord(Level.INFO, "Blessed Fail");
-							record.setParameters(new Object[]{activeChar, item, scroll, support, chance});
+							record.setParameters(new Object[]
+							{
+								activeChar, item, scroll, support, chance
+							});
 							record.setLoggerName("item");
 							_logEnchant.log(record);
 						}
@@ -297,7 +307,10 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 							if (Config.LOG_ITEM_ENCHANTS)
 							{
 								LogRecord record = new LogRecord(Level.INFO, "Unable to destroy");
-								record.setParameters(new Object[]{activeChar, item, scroll, support, chance});
+								record.setParameters(new Object[]
+								{
+									activeChar, item, scroll, support, chance
+								});
 								record.setLoggerName("item");
 								_logEnchant.log(record);
 							}
@@ -341,7 +354,10 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 						if (Config.LOG_ITEM_ENCHANTS)
 						{
 							LogRecord record = new LogRecord(Level.INFO, "Fail");
-							record.setParameters(new Object[]{activeChar, item, scroll, support, chance});
+							record.setParameters(new Object[]
+							{
+								activeChar, item, scroll, support, chance
+							});
 							record.setLoggerName("item");
 							_logEnchant.log(record);
 						}
