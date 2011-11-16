@@ -16,7 +16,7 @@ package com.l2jserver.gameserver.model.entity;
 /*package com.l2jfree.gameserver.model.entity;*/
 
 import com.l2jserver.gameserver.instancemanager.GrandBossManager;
-import com.l2jserver.gameserver.templates.StatsSet;
+import com.l2jserver.gameserver.model.StatsSet;
 
 /**
  * l2j-free ⇒ l2jserver.com/l2j_jp/l2j-sfjp ボス移植用ラッパ

@@ -34,11 +34,11 @@ import com.l2jserver.gameserver.datatables.EventDroplist;
 import com.l2jserver.gameserver.datatables.EventDroplist.DateDrop;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.model.L2DropData;
+import com.l2jserver.gameserver.model.item.L2Item;
 import com.l2jserver.gameserver.script.Parser;
 import com.l2jserver.gameserver.script.ParserNotCreatedException;
 import com.l2jserver.gameserver.script.ScriptDocument;
 import com.l2jserver.gameserver.script.ScriptEngine;
-import com.l2jserver.gameserver.templates.item.L2Item;
 
 /**
  * @author Luis Arias
