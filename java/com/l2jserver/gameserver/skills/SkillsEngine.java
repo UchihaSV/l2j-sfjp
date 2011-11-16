@@ -26,7 +26,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.datatables.StringIntern;
 import com.l2jserver.gameserver.model.L2Skill;
-import com.l2jserver.gameserver.templates.item.L2Item;
+import com.l2jserver.gameserver.model.item.L2Item;
 import com.l2jserver.util.file.filter.XMLFilter;
 
 /**

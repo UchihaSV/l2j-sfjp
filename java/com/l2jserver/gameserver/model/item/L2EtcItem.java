@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.templates.item;
+package com.l2jserver.gameserver.model.item;
 
 import static com.l2jserver.gameserver.datatables.StringIntern.intern;
 
@@ -20,8 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.l2jserver.gameserver.model.L2ExtractableProduct;
+import com.l2jserver.gameserver.model.StatsSet;
+import com.l2jserver.gameserver.model.item.type.L2EtcItemType;
 import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
-import com.l2jserver.gameserver.templates.StatsSet;
 import com.l2jserver.util.StringUtil;
 
 /**
