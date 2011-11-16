@@ -35,7 +35,7 @@ import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.datatables.StringIntern;
 import com.l2jserver.gameserver.model.L2TradeList;
 import com.l2jserver.gameserver.model.L2TradeList.L2TradeItem;
-import com.l2jserver.gameserver.templates.item.L2Item;
+import com.l2jserver.gameserver.model.item.L2Item;
 import com.l2jserver.gameserver.util.Util;
 
 /**
