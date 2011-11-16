@@ -1114,10 +1114,10 @@ public final class Config
 	public static boolean ALT_DISMOUNT_WYVERN_IN_NOLANDING;
 	/* Config for Wyvern enable flying in siege */
 	public static boolean ALT_FLYING_WYVERN_IN_SIEGE;
-	/* Chance that an item will succesfully be enchanted */
-	public static int CRYSTAL_ENCHANT_CHANCE_WEAPON;
-	public static int CRYSTAL_ENCHANT_CHANCE_ARMOR;
-	public static int CRYSTAL_ENCHANT_CHANCE_JEWELRY;
+ //	/* Chance that an item will succesfully be enchanted */
+ //	public static int CRYSTAL_ENCHANT_CHANCE_WEAPON;
+ //	public static int CRYSTAL_ENCHANT_CHANCE_ARMOR;
+ //	public static int CRYSTAL_ENCHANT_CHANCE_JEWELRY;
 	public static int LIMIT_PATK_SPD;
 	public static int LIMIT_MATK_SPD;
 	/* Config for Custom Community Board */
@@ -2860,9 +2860,9 @@ public final class Config
 					ALT_WYVERN_MAKEALANDING = Boolean.parseBoolean(settings.getProperty("AltWyvernMakeALanding", "false"));
 					ALT_DISMOUNT_WYVERN_IN_NOLANDING = Boolean.parseBoolean(settings.getProperty("AltDismountWyvernInNoLanding", "true"));
 					ALT_FLYING_WYVERN_IN_SIEGE = Boolean.parseBoolean(settings.getProperty("AltFlyingWyvernInSiege", "false"));
-					CRYSTAL_ENCHANT_CHANCE_WEAPON = Integer.parseInt(settings.getProperty("CrystalEnchantChanceWeapon", "66"));
-					CRYSTAL_ENCHANT_CHANCE_ARMOR = Integer.parseInt(settings.getProperty("CrystalEnchantChanceArmor", "66"));
-					CRYSTAL_ENCHANT_CHANCE_JEWELRY = Integer.parseInt(settings.getProperty("CrystalEnchantChanceJewelry", "66"));
+ //					CRYSTAL_ENCHANT_CHANCE_WEAPON = Integer.parseInt(settings.getProperty("CrystalEnchantChanceWeapon", "66"));
+ //					CRYSTAL_ENCHANT_CHANCE_ARMOR = Integer.parseInt(settings.getProperty("CrystalEnchantChanceArmor", "66"));
+ //					CRYSTAL_ENCHANT_CHANCE_JEWELRY = Integer.parseInt(settings.getProperty("CrystalEnchantChanceJewelry", "66"));
 					LIMIT_PATK_SPD = Integer.parseInt(settings.getProperty("LimitPAtkSpeed", "999"));
 					LIMIT_MATK_SPD = Integer.parseInt(settings.getProperty("LimitMAtkSpeed", "999"));
 					CUSTOM_COMMUNITY_BOARD = Boolean.parseBoolean(settings.getProperty("CustomCommunityBoard", "true"));
@@ -3582,9 +3582,9 @@ public final class Config
 		else if (pName.equalsIgnoreCase("AltWyvernMakeALanding")) ALT_WYVERN_MAKEALANDING = Boolean.valueOf(pValue);
 		else if (pName.equalsIgnoreCase("AltDismountWyvernInNoLanding")) ALT_DISMOUNT_WYVERN_IN_NOLANDING = Boolean.valueOf(pValue);
 		else if (pName.equalsIgnoreCase("AltFlyingWyvernInSiege")) ALT_FLYING_WYVERN_IN_SIEGE = Boolean.valueOf(pValue);
-		else if (pName.equalsIgnoreCase("CrystalEnchantChanceWeapon")) CRYSTAL_ENCHANT_CHANCE_WEAPON = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("CrystalEnchantChanceArmor")) CRYSTAL_ENCHANT_CHANCE_ARMOR = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("CrystalEnchantChanceJewelry")) CRYSTAL_ENCHANT_CHANCE_JEWELRY = Integer.parseInt(pValue);
+ //		else if (pName.equalsIgnoreCase("CrystalEnchantChanceWeapon")) CRYSTAL_ENCHANT_CHANCE_WEAPON = Integer.parseInt(pValue);
+ //		else if (pName.equalsIgnoreCase("CrystalEnchantChanceArmor")) CRYSTAL_ENCHANT_CHANCE_ARMOR = Integer.parseInt(pValue);
+ //		else if (pName.equalsIgnoreCase("CrystalEnchantChanceJewelry")) CRYSTAL_ENCHANT_CHANCE_JEWELRY = Integer.parseInt(pValue);
 		else if (pName.equalsIgnoreCase("LimitPAtkSpeed")) LIMIT_PATK_SPD = Integer.parseInt(pValue);
 		else if (pName.equalsIgnoreCase("LimitMAtkSpeed")) LIMIT_MATK_SPD = Integer.parseInt(pValue);
 		else if (pName.equalsIgnoreCase("CustomCommunityBoard")) CUSTOM_COMMUNITY_BOARD = Boolean.valueOf(pValue);
