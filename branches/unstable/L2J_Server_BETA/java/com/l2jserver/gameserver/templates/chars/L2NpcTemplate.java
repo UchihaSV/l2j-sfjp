@@ -30,11 +30,10 @@ import com.l2jserver.gameserver.model.L2DropData;
 import com.l2jserver.gameserver.model.L2MinionData;
 import com.l2jserver.gameserver.model.L2NpcAIData;
 import com.l2jserver.gameserver.model.L2Skill;
+import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.base.ClassId;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.quest.Quest.QuestEventType;
-import com.l2jserver.gameserver.templates.StatsSet;
-import com.l2jserver.gameserver.templates.chars.L2CharTemplate;
 
 /**
  * @author Zoey76
