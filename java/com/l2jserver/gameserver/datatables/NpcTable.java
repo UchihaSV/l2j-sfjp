@@ -327,6 +327,23 @@ public class NpcTable
 	}
 	
 	/**
+	 * @param lvl of all the templates to get.
+	 * @return the template list for the given level.
+	 */
+	public List<L2NpcTemplate> getAllOfLevel(int lvl)
+	{
+		final List<L2NpcTemplate> list = new FastList<>();
+		for (L2NpcTemplate t : _npcs.valueCollection())
+		{
+			if (t.getLevel() == lvl)
+			{
+				list.add(t);
+			}
+		}
+		return list;
+	}
+	
+	/**
 	 * @param lvls of all the templates to get.
 	 * @return the template list for the given level.
 	 */
@@ -341,6 +358,23 @@ public class NpcTable
 				{
 					list.add(t);
 				}
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * @param lvl of all the monster templates to get.
+	 * @return the template list for the given level.
+	 */
+	public List<L2NpcTemplate> getAllMonstersOfLevel(int lvl)
+	{
+		final List<L2NpcTemplate> list = new FastList<>();
+		for (L2NpcTemplate t : _npcs.valueCollection())
+		{
+			if ((t.getLevel() == lvl) && t.isType("L2Monster"))
+			{
+				list.add(t);
 			}
 		}
 		return list;
@@ -367,6 +401,23 @@ public class NpcTable
 	}
 	
 	/**
+	 * @param letter of all the NPC templates which its name start with.
+	 * @return the template list for the given letter.
+	 */
+	public List<L2NpcTemplate> getAllNpcStartingWith(String letter)
+	{
+		final List<L2NpcTemplate> list = new FastList<>();
+		for (L2NpcTemplate t : _npcs.valueCollection())
+		{
+			if (t.getName().startsWith(letter) && t.isType("L2Npc"))
+			{
+				list.add(t);
+			}
+		}
+		return list;
+	}
+	
+	/**
 	 * @param letters of all the NPC templates which its name start with.
 	 * @return the template list for the given letter.
 	 */
@@ -386,6 +437,22 @@ public class NpcTable
 		return list;
 	}
 	
+	/**
+	 * @param classType of all the templates to get.
+	 * @return the template list for the given class type.
+	 */
+	public List<L2NpcTemplate> getAllNpcOfClassType(String classType)
+	{
+		final List<L2NpcTemplate> list = new FastList<>();
+		for (L2NpcTemplate t : _npcs.valueCollection())
+		{
+			if (t.isType(classType))
+			{
+				list.add(t);
+			}
+		}
+		return list;
+	}
 	/**
 	 * @param classTypes of all the templates to get.
 	 * @return the template list for the given class type.
