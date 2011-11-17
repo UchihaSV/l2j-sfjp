@@ -168,8 +168,14 @@ public final class RequestEnchantItem extends L2GameClientPacket
 			// events/MasterOfEnchanting/MasterOfEnchanting.java
 			//   13539 Staff of Master Yogi
 			//   13540 Master Yogi's Scroll: Enchant Weapon
-			if (item.getItemId() == 13539 && item.getEnchantLevel() >= 4 && scroll.getItemId() == 13540)
-				chance = 66.66; //chance = scrollTemplate.getChanceAdd();
+			if (item.getItemId() == 13539 && scroll.getItemId() == 13540)
+			{
+				// Ignore Config.ENCHANT_SAFE_MAX
+				if (item.getEnchantLevel() < 3)
+					chance = 100.00;
+				else
+					chance = 66.66; //chance = scrollTemplate.getChanceAdd();
+			}
 			else
 				chance = scrollTemplate.getChance(item, supportTemplate);
 			//-------------------------------------------------------
