@@ -1828,12 +1828,12 @@ public class Quest extends ManagedScript
 		//Create handler to file linked to the quest
 		String content = getHtm(player.getHtmlPrefix(), fileName);
 		
-		if (player.getTarget() != null)
-			content = content.replaceAll("%objectId%", String.valueOf(player.getTarget().getObjectId()));
-		
 		//Send message to client if message not empty
 		if (content != null)
 		{
+			if (player.getTarget() != null)
+				content = content.replaceAll("%objectId%", String.valueOf(player.getTarget().getObjectId()));
+			
 			if (questwindow && isQuests() && questId != 999)							//[JOJO]
 		//	if (questwindow && questId > 0 && questId < 20000 && questId != 999)
 			{
