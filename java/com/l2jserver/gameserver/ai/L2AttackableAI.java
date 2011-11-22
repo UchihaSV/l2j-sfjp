@@ -21,6 +21,7 @@ import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_IDLE;
 import java.util.Collection;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javolution.util.FastList;
 
@@ -62,7 +63,7 @@ import com.l2jserver.util.Rnd;
  */
 public class L2AttackableAI extends L2CharacterAI implements Runnable
 {
-	//protected static final Logger _log = Logger.getLogger(L2AttackableAI.class.getName());
+	private static final Logger _log = Logger.getLogger(L2AttackableAI.class.getName());
 	
 	private static final int RANDOM_WALK_RATE = 30; // confirmed
 	// private static final int MAX_DRIFT_RANGE = 300;
@@ -83,6 +84,8 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 	private int timepass = 0;
 	private int chaostime = 0;
 	private final L2NpcTemplate _skillrender;
+	private FastList<L2Skill> shortRangeSkills = new FastList<>();
+	private FastList<L2Skill> longRangeSkills = new FastList<>();
 	int lastBuffTick;
 	
 	/**
@@ -1119,19 +1122,20 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			}
 			
 			// --------------------------------------------------------------------------------
-			// Long/Short Range skill Usage
+			// Long/Short Range skill usage.
 			if (npc.hasLSkill() || npc.hasSSkill())
 			{
 				final FastList<L2Skill> shortRangeSkills = shortRangeSkillRender();
 				if (npc.hasSSkill() && dist2 <= 150 && Rnd.get(100) <= npc.getSSkillChance())
 				{
-					if (cast(shortRangeSkills.get(Rnd.nextInt(shortRangeSkills.size()))))
+					final L2Skill shortRangeSkill = shortRangeSkills.get(Rnd.get(shortRangeSkills.size()));
+					if ((shortRangeSkill != null) && cast(shortRangeSkill))
 					{
 						return;
 					}
 					for (L2Skill sk : shortRangeSkills)
 					{
-						if (cast(sk))
+						if ((sk != null) && cast(sk))
 						{
 							return;
 						}
@@ -1143,7 +1147,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				{
 					for (L2Skill sk : longRangeSkills)
 					{
-						if (cast(sk))
+						if ((sk != null) && cast(sk))
 						{
 							return;
 						}
@@ -2383,20 +2387,22 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 	
 	private FastList<L2Skill> longRangeSkillRender()
 	{
-		if (_skillrender.getLongRangeSkills().isEmpty())
+		longRangeSkills = _skillrender.getLongRangeSkills();
+		if (longRangeSkills.isEmpty())
 		{
-			return getActiveChar().getLongRangeSkill();
+			longRangeSkills = getActiveChar().getLongRangeSkill();
 		}
-		return _skillrender.getLongRangeSkills();
+		return longRangeSkills;
 	}
 	
 	private FastList<L2Skill> shortRangeSkillRender()
 	{
-		if (_skillrender.getShortRangeSkills().isEmpty())
+		shortRangeSkills = _skillrender.getLongRangeSkills();
+		if (shortRangeSkills.isEmpty())
 		{
-			return getActiveChar().getShortRangeSkill();
+			shortRangeSkills = getActiveChar().getShortRangeSkill();
 		}
-		return _skillrender.getShortRangeSkills();
+		return shortRangeSkills;
 	}
 	
 	/**
