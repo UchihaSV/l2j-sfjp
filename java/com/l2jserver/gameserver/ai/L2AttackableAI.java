@@ -2397,7 +2397,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 	
 	private FastList<L2Skill> shortRangeSkillRender()
 	{
-		shortRangeSkills = _skillrender.getLongRangeSkills();
+		shortRangeSkills = _skillrender.getShortRangeSkills();
 		if (shortRangeSkills.isEmpty())
 		{
 			shortRangeSkills = getActiveChar().getShortRangeSkill();
