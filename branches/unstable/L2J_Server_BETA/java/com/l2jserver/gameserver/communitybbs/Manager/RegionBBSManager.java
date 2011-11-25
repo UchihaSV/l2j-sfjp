@@ -219,7 +219,7 @@ public class RegionBBSManager extends BaseBBSManager
 				}
 				if (receiver.isChatBanned())
 				{
-					activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.TARGET_IS_CHAT_BANNED));
+					activeChar.sendPacket(SystemMessageId.TARGET_IS_CHAT_BANNED);
 					return;
 				}
 				if (activeChar.isInJail() && Config.JAIL_DISABLE_CHAT)
@@ -229,7 +229,7 @@ public class RegionBBSManager extends BaseBBSManager
 				}
 				if (activeChar.isChatBanned())
 				{
-					activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CHATTING_IS_CURRENTLY_PROHIBITED));
+					activeChar.sendPacket(SystemMessageId.CHATTING_IS_CURRENTLY_PROHIBITED);
 					return;
 				}
 				

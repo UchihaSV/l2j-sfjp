@@ -60,7 +60,7 @@ public final class RequestRestart extends L2GameClientPacket
 		// [L2J_JP ADD START][JOJO]
 		if (player.isFlying())
 		{
-			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NO_RESTART_HERE)); // [JOJO]
+			player.sendPacket(SystemMessageId.NO_RESTART_HERE); // [JOJO]
 		//	player.sendMessage("You can not restart while flying.");
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;

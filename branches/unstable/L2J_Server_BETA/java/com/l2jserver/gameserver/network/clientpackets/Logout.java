@@ -57,7 +57,7 @@ public final class Logout extends L2GameClientPacket
 		// [L2J_JP ADD START][JOJO] TODO:[JOJO]要オーラバード対策
 		if (player.isFlying())
 		{
-			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NO_LOGOUT_HERE)); // [JOJO]
+			player.sendPacket(SystemMessageId.NO_LOGOUT_HERE); // [JOJO]
 		//	player.sendMessage("You can not log out while flying.");
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;

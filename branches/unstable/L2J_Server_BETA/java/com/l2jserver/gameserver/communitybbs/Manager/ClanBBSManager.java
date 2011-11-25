@@ -30,7 +30,6 @@ import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ShowBoard;
-import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.util.StringUtil;
 import com.l2jserver.util.Util;
 
@@ -101,7 +100,7 @@ public class ClanBBSManager extends BaseBBSManager
 			if (activeChar.getClan() == null || activeChar.getClan().getClanId() != clanId
 			        || activeChar.getClan().getLeaderId() != activeChar.getObjectId())
 			{
-				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_ARE_NOT_AUTHORIZED_TO_DO_THAT));
+				activeChar.sendPacket(SystemMessageId.YOU_ARE_NOT_AUTHORIZED_TO_DO_THAT);
 				parsecmd("_bbsclan_clanlist", activeChar);
 				return;
 			}

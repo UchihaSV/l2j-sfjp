@@ -23,7 +23,6 @@ import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
-import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * Client packet for setting ally crest.
@@ -71,8 +70,7 @@ public final class RequestSetAllyCrest extends L2GameClientPacket
 			
 			if (activeChar.getClanId() != leaderclan.getClanId() || !activeChar.isClanLeader())
 			{
-	 			// [L2J_JP ADD]
-				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.FEATURE_ONLY_FOR_ALLIANCE_LEADER));
+				activeChar.sendPacket(SystemMessageId.FEATURE_ONLY_FOR_ALLIANCE_LEADER); // [L2J_JP ADD]
 				return;
 			}
 			

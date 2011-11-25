@@ -12799,8 +12799,8 @@ public final class L2PcInstance extends L2Playable
 						_punishLevel = state;
 						stopPunishTask(true);
 						sendPacket(new EtcStatusUpdate(this));
-						sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CHATBAN_REMOVED)); //[JOJO]
-					//	sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CHAT_ENABLED)); //[L2J_JP]
+						sendPacket(SystemMessageId.CHATBAN_REMOVED); //[JOJO]
+					//	sendPacket(SystemMessageId.CHAT_ENABLED); //[L2J_JP]
 					//	sendMessage("Your Chat ban has been lifted");
 						break;
 					}
@@ -12839,13 +12839,13 @@ public final class L2PcInstance extends L2Playable
 					
 					// start the countdown
 					_punishTask = ThreadPoolManager.getInstance().scheduleGeneral(new PunishTask(), _punishTimer);
-					sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CHATTING_PROHIBITED)); //[JOJO]
+					sendPacket(SystemMessageId.CHATTING_PROHIBITED); //[JOJO]
 					sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CHAT_AVAILABLE_S1_MINUTE).addNumber(delayInMinutes)); //[JOJO]
 				//	sendMessage("You are chat banned for "+delayInMinutes+" minutes.");
 				}
 				else
-					sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CHATTING_PROHIBITED)); //[JOJO]
-				//	sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CHAT_DISABLED)); //[L2J_JP]
+					sendPacket(SystemMessageId.CHATTING_PROHIBITED); //[JOJO]
+				//	sendPacket(SystemMessageId.CHAT_DISABLED); //[L2J_JP]
 				//	sendMessage("You have been chat banned");
 				break;
 				

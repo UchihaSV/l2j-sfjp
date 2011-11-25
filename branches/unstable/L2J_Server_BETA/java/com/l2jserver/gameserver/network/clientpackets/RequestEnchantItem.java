@@ -120,7 +120,7 @@ public final class RequestEnchantItem extends L2GameClientPacket
 		{
 			if (item.getItemType() == L2WeaponType.FISHINGROD)
 			{
-				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION));
+				activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
 				return;
 			}
 		}

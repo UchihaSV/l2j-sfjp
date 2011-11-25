@@ -822,7 +822,7 @@ public final class RequestActionUse extends L2GameClientPacket
 		
 		if (activeChar.getPrivateStoreType() != 0)
 		{
-			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PRIVATE_STORE_UNDER_WAY));	// [L2J_JP EDIT]
+			activeChar.sendPacket(SystemMessageId.PRIVATE_STORE_UNDER_WAY);	// [L2J_JP EDIT]
 		//	activeChar.sendMessage("You cannot use a skill while operating a private store.");
 			return;
 		}

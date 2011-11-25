@@ -266,13 +266,13 @@ public final class HandysBlockCheckerManager
 			
 			if(isFromRed && holder.getBlueTeamSize() == 6)
 			{
-				player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CANNOT_REGISTER_CAUSE_QUEUE_FULL));
+				player.sendPacket(SystemMessageId.CANNOT_REGISTER_CAUSE_QUEUE_FULL);
 			//	player.sendMessage("The team is full");
 				return;
 			}
 			else if(!isFromRed && holder.getRedTeamSize() == 6)
 			{
-				player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CANNOT_REGISTER_CAUSE_QUEUE_FULL));
+				player.sendPacket(SystemMessageId.CANNOT_REGISTER_CAUSE_QUEUE_FULL);
 			//	player.sendMessage("The team is full");
 				return;
 			}

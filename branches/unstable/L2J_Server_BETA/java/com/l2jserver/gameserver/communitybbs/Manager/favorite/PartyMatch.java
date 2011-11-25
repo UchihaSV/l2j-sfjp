@@ -557,13 +557,13 @@ public class PartyMatch extends BaseFavoriteManager
 
 		if (target == null)
 		{
-			requestor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.TARGET_IS_INCORRECT));
+			requestor.sendPacket(SystemMessageId.TARGET_IS_INCORRECT);
 			return false;
 		}
 
 		if (target.getAppearance().getInvisible())
 		{
-			requestor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.TARGET_IS_INCORRECT));
+			requestor.sendPacket(SystemMessageId.TARGET_IS_INCORRECT);
 			return false;
 		}
 
@@ -585,13 +585,13 @@ public class PartyMatch extends BaseFavoriteManager
 
 		if (target == requestor)
 		{
-			requestor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INCORRECT_TARGET));
+			requestor.sendPacket(SystemMessageId.INCORRECT_TARGET);
 			return false;
 		}
 
 		if (target.isCursedWeaponEquipped() || requestor.isCursedWeaponEquipped())
 		{
-			requestor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INCORRECT_TARGET));
+			requestor.sendPacket(SystemMessageId.INCORRECT_TARGET);
 			return false;
 		}
 
@@ -613,18 +613,18 @@ public class PartyMatch extends BaseFavoriteManager
 		// summary of ppl already in party and ppl that get invitation
 		if (!requestor.getParty().isLeader(requestor))
 		{
-			requestor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ONLY_LEADER_CAN_INVITE));
+			requestor.sendPacket(SystemMessageId.ONLY_LEADER_CAN_INVITE);
 			return false;
 		}
 		if (requestor.getParty() != null && requestor.getParty().getMemberCount() >= 9)
 //		if (requestor.getParty() != null && requestor.getParty().getMemberCount() + requestor.getParty().getPendingInvitationNumber() >= 9)
 		{
-			requestor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PARTY_FULL));
+			requestor.sendPacket(SystemMessageId.PARTY_FULL);
 			return false;
 		}
 		if (requestor.getParty().getPendingInvitation())
 		{
-			requestor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.WAITING_FOR_ANOTHER_REPLY));
+			requestor.sendPacket(SystemMessageId.WAITING_FOR_ANOTHER_REPLY);
 			return false;
 		}
 
