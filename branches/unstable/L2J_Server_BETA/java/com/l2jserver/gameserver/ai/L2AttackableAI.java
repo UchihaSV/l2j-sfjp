@@ -1126,7 +1126,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			if (npc.hasLSkill() || npc.hasSSkill())
 			{
 				final FastList<L2Skill> shortRangeSkills = shortRangeSkillRender();
-				if (npc.hasSSkill() && dist2 <= 150 && Rnd.get(100) <= npc.getSSkillChance())
+				if (!shortRangeSkills.isEmpty() && npc.hasSSkill() && (dist2 <= 150) && Rnd.get(100) <= npc.getSSkillChance())
 				{
 					final L2Skill shortRangeSkill = shortRangeSkills.get(Rnd.get(shortRangeSkills.size()));
 					if ((shortRangeSkill != null) && cast(shortRangeSkill))
@@ -1143,8 +1143,13 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				
 				final FastList<L2Skill> longRangeSkills = longRangeSkillRender();
-				if (npc.hasLSkill() && dist2 > 150 && Rnd.get(100) <= npc.getLSkillChance())
+				if (!longRangeSkills.isEmpty() && npc.hasLSkill() && (dist2 > 150) && Rnd.get(100) <= npc.getLSkillChance())
 				{
+					final L2Skill longRangeSkill = longRangeSkills.get(Rnd.get(longRangeSkills.size()));
+					if ((longRangeSkill != null) && cast(longRangeSkill))
+					{
+						return;
+					}
 					for (L2Skill sk : longRangeSkills)
 					{
 						if ((sk != null) && cast(sk))
