@@ -109,7 +109,7 @@ public class L2SkillSummon extends L2Skill
 				int count = player.getCubics().size();
 				if (count > mastery)
 				{
-					activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CUBIC_SUMMONING_FAILED));//[L2J_JP]
+					activeChar.sendPacket(SystemMessageId.CUBIC_SUMMONING_FAILED);//[L2J_JP]
 				//	activeChar.sendMessage("You already have "+count+" cubic(s).");
 					return false;
 				}
