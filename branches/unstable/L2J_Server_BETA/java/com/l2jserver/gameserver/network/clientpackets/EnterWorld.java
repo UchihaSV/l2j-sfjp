@@ -408,7 +408,7 @@ public class EnterWorld extends L2GameClientPacket
 				obj.sendPacket(sm);
 		}
 		
-		sendPacket(SystemMessage.getSystemMessage(SystemMessageId.WELCOME_TO_LINEAGE));
+		activeChar.sendPacket(SystemMessageId.WELCOME_TO_LINEAGE);
 		
 		activeChar.sendMessage(getText("VGhpcyBzZXJ2ZXIgdXNlcyBMMkosIGEgcHJvamVjdCBmb3VuZGVkIGJ5IEwyQ2hlZg==\n"));
 		activeChar.sendMessage(getText("YW5kIGRldmVsb3BlZCBieSB0aGUgTDJKIERldiBUZWFtIGF0IGwyanNlcnZlci5jb20=\n"));
@@ -477,7 +477,7 @@ public class EnterWorld extends L2GameClientPacket
 			DimensionalRiftManager.getInstance().teleportToWaitingRoom(activeChar);
 		
 		if (activeChar.getClanJoinExpiryTime() > System.currentTimeMillis())
-			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBERSHIP_TERMINATED));
+			activeChar.sendPacket(SystemMessageId.CLAN_MEMBERSHIP_TERMINATED);
 		
 		// remove combat flag before teleporting
 		if (activeChar.getInventory().getItemByItemId(9819) != null)
