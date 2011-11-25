@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 
 import javolution.io.UTF8StreamWriter;
+
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.ClanTable;
 import com.l2jserver.gameserver.model.L2Clan;
@@ -155,7 +156,7 @@ public class ClanBBSManager extends BaseBBSManager
 		{
 			if (cl.getLevel() < 2)
 			{
-				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NO_CB_IN_MY_CLAN));
+				activeChar.sendPacket(SystemMessageId.NO_CB_IN_MY_CLAN);
 				parsecmd("_bbsclan_clanlist", activeChar);
 			}
 			else
@@ -355,7 +356,7 @@ public class ClanBBSManager extends BaseBBSManager
 			if (activeChar.getClan() != null && activeChar.getClan().getClanId() == clanId
 			        && cl.getLevel() < 2)
 			{
-				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NO_CB_IN_MY_CLAN));
+				activeChar.sendPacket(SystemMessageId.NO_CB_IN_MY_CLAN);
 				parsecmd("_bbsclan_clanlist", activeChar);
 			}
 			else

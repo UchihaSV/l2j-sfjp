@@ -190,7 +190,7 @@ public class RecipeController
 	{
 		if (AttackStanceTaskManager.getInstance().getAttackStanceTask(player) || player.isInDuel())
 		{
-			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CANT_OPERATE_PRIVATE_STORE_DURING_COMBAT));
+			player.sendPacket(SystemMessageId.CANT_OPERATE_PRIVATE_STORE_DURING_COMBAT);
 			return;
 		}
 		
@@ -477,7 +477,7 @@ public class RecipeController
 						_price = temp.getCost();
 						if (_target.getAdena() < _price) // check price
 						{
-							_target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_NOT_ENOUGH_ADENA));
+							_target.sendPacket(SystemMessageId.YOU_NOT_ENOUGH_ADENA);
 							abort();
 							return;
 						}
@@ -622,7 +622,7 @@ public class RecipeController
 				
 				if (adenatransfer == null)
 				{
-					_target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_NOT_ENOUGH_ADENA));
+					_target.sendPacket(SystemMessageId.YOU_NOT_ENOUGH_ADENA);
 					abort();
 					return;
 				}
@@ -656,7 +656,7 @@ public class RecipeController
 				else
 				{
 					_player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_MANUFACTURE_FAILURE).addItemName(_recipeList.getItemId()));	//[JOJO]
-				//	_target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ITEM_MIXING_FAILED));
+				//	_target.sendPacket(SystemMessageId.ITEM_MIXING_FAILED);
 				}
 				updateMakeInfo(false);
 			}
@@ -780,9 +780,8 @@ public class RecipeController
 							ThreadPoolManager.getInstance().scheduleGeneral(this, 100 + _delay);
 						}
 						else
-						// no rest - report no hp
 						{
-							_target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NOT_ENOUGH_HP));
+							_target.sendPacket(SystemMessageId.NOT_ENOUGH_HP);
 							abort();
 						}
 						ret = false;
@@ -803,9 +802,8 @@ public class RecipeController
 							ThreadPoolManager.getInstance().scheduleGeneral(this, 100 + _delay);
 						}
 						else
-						// no rest - report no mana
 						{
-							_target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NOT_ENOUGH_MP));
+							_target.sendPacket(SystemMessageId.NOT_ENOUGH_MP);
 							abort();
 						}
 						ret = false;
