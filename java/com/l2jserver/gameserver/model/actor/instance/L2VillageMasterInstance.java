@@ -194,17 +194,17 @@ public class L2VillageMasterInstance extends L2NpcInstance
 			}
 //			if (player.getWeightPenalty() >= 3)	//[JOJO]
 //			{
-//				player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NOT_SUBCLASS_WHILE_OVERWEIGHT));
+//				player.sendPacket(SystemMessageId.NOT_SUBCLASS_WHILE_OVERWEIGHT);
 //				return;
 //			}
 //			if (player.getInventoryLimit() * 0.8 <= player.getInventory().getSize())	//[JOJO]
 //			{
-//				player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NOT_SUBCLASS_WHILE_INVENTORY_FULL));
+//				player.sendPacket(SystemMessageId.NOT_SUBCLASS_WHILE_INVENTORY_FULL);
 //				return;
 //			}
 //			if (player.getPet() != null)	//[JOJO]
 //			{
-//				player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CANT_SUBCLASS_WITH_SUMMONED_SERVITOR));
+//				player.sendPacket(SystemMessageId.CANT_SUBCLASS_WITH_SUMMONED_SERVITOR);
 //				return;
 //			}
 

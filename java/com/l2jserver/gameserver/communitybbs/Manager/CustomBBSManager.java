@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import javolution.util.FastList;
+
 import com.l2jserver.gameserver.communitybbs.BB.CustomComment;
 import com.l2jserver.gameserver.communitybbs.BB.CustomMsg;
 import com.l2jserver.gameserver.communitybbs.BB.CustomMsg.MsgType;
@@ -29,7 +30,6 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.network.serverpackets.ShowBoard;
-import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * @author  TSL
@@ -213,12 +213,12 @@ public class CustomBBSManager extends BaseBBSManager
 			if (! CustomMsg.insert(MsgType.PRIVATE, ar5, ar4, ar3, activeChar))
 			{
 				errorDialog(activeChar, "MAIL ERROR!");
-				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.MESSAGE_NOT_SENT));
+				activeChar.sendPacket(SystemMessageId.MESSAGE_NOT_SENT);
 				return;
 			}
-			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SENT_MAIL));
+			activeChar.sendPacket(SystemMessageId.SENT_MAIL);
 			L2PcInstance receiver = L2World.getInstance().getPlayer(ar5);
-			if (receiver != null) receiver.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NEW_MAIL));
+			if (receiver != null) receiver.sendPacket(SystemMessageId.NEW_MAIL);
 			showMessageList(activeChar, msgType);
 		}
 		else if (ar1.equals("edit"))
@@ -238,7 +238,7 @@ public class CustomBBSManager extends BaseBBSManager
 		{
 			//action="Write Custom comment [ar2]              [ar3]     [ar4]"
 			//action="Write Custom comment [MsgType];[msg_id] [Content] [Content]"	//ÅŒã‚Ì Content ‚Íƒ_ƒ~[
-			if (ar3.length() > 256) { activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ONE_LINE_RESPONSE_NOT_EXCEED_128_CHARACTERS)); return; }
+			if (ar3.length() > 256) { activeChar.sendPacket(SystemMessageId.ONE_LINE_RESPONSE_NOT_EXCEED_128_CHARACTERS); return; }
 			int msgId = Integer.parseInt(st.nextToken());
 			if (! CustomComment.insert(msgId, ar3, activeChar))
 			{
@@ -256,11 +256,11 @@ public class CustomBBSManager extends BaseBBSManager
 	private boolean checkTitleAndContent(L2PcInstance activeChar, String title, String content)
 	{
 		if (title.length() >  128) {
-			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PLEASE_INPUT_TITLE_LESS_128_CHARACTERS));
+			activeChar.sendPacket(SystemMessageId.PLEASE_INPUT_TITLE_LESS_128_CHARACTERS);
 			return false;
 		}
 		if (content.length() > 3000) {
-			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PLEASE_INPUT_CONTENT_LESS_3000_CHARACTERS));
+			activeChar.sendPacket(SystemMessageId.PLEASE_INPUT_CONTENT_LESS_3000_CHARACTERS);
 			return false;
 		}
 		return true;
@@ -1089,7 +1089,7 @@ public class CustomBBSManager extends BaseBBSManager
 	 */
 	private void authError(L2PcInstance activeChar)
 	{
-		activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_ARE_NOT_AUTHORIZED_TO_DO_THAT));
+		activeChar.sendPacket(SystemMessageId.YOU_ARE_NOT_AUTHORIZED_TO_DO_THAT);
 	}
 
 	private boolean isShutout(L2PcInstance activeChar)
