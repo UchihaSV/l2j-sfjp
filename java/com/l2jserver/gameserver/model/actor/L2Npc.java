@@ -306,8 +306,9 @@ public class L2Npc extends L2Character
 		final FastList<L2Skill> skilldata = new FastList<>();
 		if (_staticAIData == null || _staticAIData.getLongRangeSkill() == 0)
 		{
-			return null;
+			return skilldata;
 		}
+		
 		switch (_staticAIData.getLongRangeSkill())
 		{
 			case -1:
@@ -364,6 +365,7 @@ public class L2Npc extends L2Character
 		{
 			return skilldata;
 		}
+		
 		switch (_staticAIData.getShortRangeSkill())
 		{
 			case -1:
