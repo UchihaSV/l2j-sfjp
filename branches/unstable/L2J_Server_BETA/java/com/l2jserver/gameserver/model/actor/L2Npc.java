@@ -135,7 +135,6 @@ public class L2Npc extends L2Character
 	private int _spiritshotamount = 0;
 	public boolean _ssrecharged = true;
 	public boolean _spsrecharged = true;
-	protected boolean _isHideName = false;
 	private int _displayEffect = 0;
 	
 	private final L2NpcAIData _staticAIData = getTemplate().getAIDataStatic();
@@ -644,8 +643,8 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 */
 	public int getAggroRange()
 	{
-		return getTemplate().getAggroRange() & _aggroMask;	//+[JOJO]
-	//	return getTemplate().getAggroRange();				//-[JOJO]
+		return _staticAIData.getAggroRange() & _aggroMask;	//+[JOJO]
+	//	return _staticAIData.getAggroRange();				//-[JOJO]
 	}
 	
 	int _aggroMask = -1;	//[JOJO]
@@ -1616,14 +1615,14 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		updateAbnormalEffect();
 	}
 	
-	public void setHideName(boolean val)
+	public boolean isShowName()
 	{
-		_isHideName = val;
+		return _staticAIData.showName();
 	}
 	
-	public boolean isHideName()
+	public boolean isTargetable()
 	{
-		return _isHideName;
+		return _staticAIData.isTargetable();
 	}
 	
 	public void setCollisionHeight(double height)
