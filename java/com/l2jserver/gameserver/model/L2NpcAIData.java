@@ -48,8 +48,8 @@ public class L2NpcAIData
 	private int _switchRangeChance;
 	private AIType _aiType = AIType.FIGHTER;
 	private int _aggroRange;
-	private boolean _showName;
-	private boolean _targetable;
+	private boolean _showName = com.l2jserver.Config.FIX_NPC_SHOWNAME;
+	private boolean _targetable = com.l2jserver.Config.FIX_NPC_TARGETABLE;
 	
 	public void setPrimarySkillId(int primarySkillId)
 	{

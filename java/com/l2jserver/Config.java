@@ -1171,6 +1171,9 @@ public final class Config
 	public static final boolean FIX_FOURSEPULCHER_VICTIM_AI = true;		//[JOJO]四大霊廟 ケープゴートAI修正.
 	public static final boolean QUEST_TIMER_SHARED = false;				//[JOJO]全てのQuestTimerに共有ロックをかける.
 	public static final boolean ADMIN_VIEW_NPC_STATUS = true;			//[JOJO]NPCをSHIFTクリックしたときNPCの状態を詳細表示する.
+	public static final boolean FIX_NPC_SHOWNAME = true;				//[JOJO]オリジナルNPCがデフォルトでshowName=falseとなる不具合の修正.
+	public static final boolean FIX_NPC_TARGETABLE = true;				//[JOJO]オリジナルNPCがデフォルトでtargetable=falseとなる不具合の修正.
+	
 
 	//
 	//////////////////////////////////////////////////////////////////////////
