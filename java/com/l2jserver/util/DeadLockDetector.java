@@ -65,7 +65,11 @@ public class DeadLockDetector extends Thread
 						.append("DeadLock Found!\n");
 					for(ThreadInfo ti : tis)
 					{
+if (Config.FIX_THREADINFO_TO_STRING) {{
+						appendThreadInfo(info, ti);
+}} else {{
 						info.append(ti.toString());
+}}
 					}
 					
 					for(ThreadInfo ti : tis)
@@ -115,4 +119,90 @@ public class DeadLockDetector extends Thread
 			}
 		}
 	}
+    //[JOJO]-------------------------------------------------
+    // Copy of java.lang.management.ThreadInfo#toString()
+    /**
+     * Returns a string representation of this thread info.
+     * The format of this string depends on the implementation.
+     * The returned string will typically include
+     * the {@linkplain #getThreadName thread name},
+     * the {@linkplain #getThreadId thread ID},
+     * its {@linkplain #getThreadState state},
+     * and a {@linkplain #getStackTrace stack trace} if any.
+     *
+     * @return a string representation of this thread info.
+     */
+    void appendThreadInfo(StringBuilder sb, java.lang.management.ThreadInfo ti) {
+if (Config.FIX_THREADINFO_TO_STRING) {{
+        MonitorInfo[]       lockedMonitors = ti.getLockedMonitors();
+        StackTraceElement[] stackTrace = ti.getStackTrace();
+        
+        sb.append("\"").append(ti.getThreadName()).append("\"" +
+                                             " Id=").append(ti.getThreadId()).append(" ")
+                                             .append(ti.getThreadState());
+        if (ti.getLockName() != null) {
+            sb.append(" on ").append(ti.getLockName());
+        }
+        if (ti.getLockOwnerName() != null) {
+            sb.append(" owned by \"").append(ti.getLockOwnerName())
+                      .append("\" Id=").append(ti.getLockOwnerId());
+        }
+        if (ti.isSuspended()) {
+            sb.append(" (suspended)");
+        }
+        if (ti.isInNative()) {
+            sb.append(" (in native)");
+        }
+        sb.append('\n');
+        int i = 0;
+        for (; i < stackTrace.length /*&& i < MAX_FRAMES*/; i++) {
+            StackTraceElement ste = stackTrace[i];
+            sb.append("\tat ").append(ste.toString())
+              .append('\n');
+            if (i == 0 && ti.getLockInfo() != null) {
+                Thread.State ts = ti.getThreadState();
+                switch (ts) {
+                    case BLOCKED:
+                        sb.append("\t-  blocked on ").append(ti.getLockInfo())
+                          .append('\n');
+                        break;
+                    case WAITING:
+                        sb.append("\t-  waiting on ").append(ti.getLockInfo())
+                          .append('\n');
+                        break;
+                    case TIMED_WAITING:
+                        sb.append("\t-  waiting on ").append(ti.getLockInfo())
+                          .append('\n');
+                        break;
+                    default:
+                }
+            }
+
+            for (MonitorInfo mi : lockedMonitors) {
+                if (mi.getLockedStackDepth() == i) {
+                    sb.append("\t-  locked ").append(mi)
+                      .append('\n');
+                }
+            }
+       }
+       if (i < stackTrace.length) {
+           sb.append("\t..."
+                   + '\n');
+       }
+
+       LockInfo[] locks = ti.getLockedSynchronizers();
+       if (locks.length > 0) {
+           sb.append("\n\tNumber of locked synchronizers = " + locks.length)
+             .append('\n');
+           for (LockInfo li : locks) {
+               sb.append("\t- ").append(li)
+                 .append('\n');
+           }
+       }
+       sb.append('\n');
+       /*return sb.toString();*/
+}}
+    }
+    /*private static final int MAX_FRAMES = 8;*/
+    //-------------------------------------------------------
 }
