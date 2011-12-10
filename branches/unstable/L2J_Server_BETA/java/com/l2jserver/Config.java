@@ -1174,6 +1174,7 @@ public final class Config
 	public static final boolean ADMIN_VIEW_NPC_STATUS = true;			//[JOJO]NPCをSHIFTクリックしたときNPCの状態を詳細表示する.
 	public static final boolean FIX_NPC_SHOWNAME = true;				//[JOJO]オリジナルNPCがデフォルトでshowName=falseとなる不具合の修正.
 	public static final boolean FIX_NPC_TARGETABLE = true;				//[JOJO]オリジナルNPCがデフォルトでtargetable=falseとなる不具合の修正.
+	public static final boolean FIX_THREADINFO_TO_STRING = true;		//[JOJO]ThreadInfo#toString()が8行しか表示されないバグの修正.
 	
 
 	//
