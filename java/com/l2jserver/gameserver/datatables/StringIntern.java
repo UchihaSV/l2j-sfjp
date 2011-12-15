@@ -41,9 +41,8 @@ public class StringIntern
 			if (v == null)
 				return null;
 			String a;
-			if ((a = _stringSet.get(v)) != null)
+			if ((a = _stringSet.putIfAbsent(v, v)) != null)
 				return a;
-			_stringSet.put(v, v);
 			return v;
 		} else {
 			return v;
