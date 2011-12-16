@@ -1,0 +1,4 @@
+package com.l2jserver.troja;
+public interface IntObjectProcedure<T> {
+    public boolean execute( {K} a, T b );
+}
