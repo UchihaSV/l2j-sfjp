@@ -1181,7 +1181,7 @@ if (REENTRANT_LOCK) {{
     }
 
     /**
-     * x - for (long key : map.keySet()) { ... }<BR>
+     * x - for (Long key : map.keySet()) { ... }<BR>
      * o - for (long key : map.keys()) { ... }<BR>
      * o - for (LongObjectMap.Entry<Object> e : map.entrySet()) { long key = e.getKey(); }
      */
@@ -1196,7 +1196,7 @@ if (REENTRANT_LOCK) {{
                 System.arraycopy(array, 0, temp, 0, length);
                 array = temp;
             }
-            array[length++] = e.getKey();
+            array[length++] = e._key;
         }
         if (length < array.length) {
             // trimToSize
@@ -1213,7 +1213,7 @@ if (REENTRANT_LOCK) {{
      */
     public boolean forEachKey(LongProcedure procedure) {
         for (Entry <V>  e = _head,  end = _tail; (e = e._next) != end;)
-            if (!procedure.execute(e.getKey()))
+            if (!procedure.execute(e._key))
                 return false;
         return true;
     }
@@ -1223,7 +1223,7 @@ if (REENTRANT_LOCK) {{
      */
     public boolean forEachValue(ObjectProcedure<? super V> procedure) {
         for (Entry <V>  e = _head,  end = _tail; (e = e._next) != end;)
-            if (!procedure.execute(e.getValue()))
+            if (!procedure.execute(e._value))
                 return false;
         return true;
     }
@@ -1233,7 +1233,7 @@ if (REENTRANT_LOCK) {{
      */
     public boolean forEachEntry(LongObjectProcedure<? super V> procedure) {
         for (Entry <V>  e = _head,  end = _tail; (e = e._next) != end;)
-            if (!procedure.execute(e.getKey(), e.getValue()))
+            if (!procedure.execute(e._key, e._value))
                 return false;
         return true;
     }

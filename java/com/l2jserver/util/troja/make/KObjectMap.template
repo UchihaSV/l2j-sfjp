@@ -1,4 +1,4 @@
-package com.l2jserver.troja;
+package com.l2jserver.util.troja;
 
 import gnu.trove.map.TIntObjectMap;
 
