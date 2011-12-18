@@ -1,3 +1,5 @@
+------------ ñ¢äÆê¨ ---------------
+
 /*
  * Troja: Trove + Javolution.
  * Version: Beta 1 based on Trove 3.0.2 and Javolution 5.5.1
@@ -17,34 +19,29 @@
  */
 package com.l2jserver.util.troja;
 
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.procedure.TIntObjectProcedure;
-
 import java.io.IOException;
+import java.io.PrintStream;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.io.Serializable;
+import java.lang.IllegalStateException;
+import java.lang.UnsupportedOperationException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.concurrent.locks.ReentrantLock;
-
 import javax.realtime.MemoryArea;
-
 import javolution.context.ArrayFactory;
 import javolution.context.LogContext;
 import javolution.context.ObjectFactory;
+import javolution.context.PersistentContext;
 import javolution.lang.MathLib;
 import javolution.lang.Realtime;
 import javolution.lang.Reusable;
 import javolution.text.Text;
-import javolution.util.FastCollection;
 import javolution.util.FastCollection.Record;
-import javolution.util.FastComparator;
-import javolution.util.FastMap;
 import javolution.xml.XMLSerializable;
 
 
@@ -146,13 +143,13 @@ import javolution.xml.XMLSerializable;
  * @version 5.2, September 11, 2007
  */
 @SuppressWarnings({ "unchecked", "rawtypes", "javadoc" })
-public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
+public class FastObjectIntMap <K>  implements ObjectIntMap <K> , Reusable,
         XMLSerializable, Realtime {
 
     private static final boolean REENTRANT_LOCK = true;	// true: ReentrantLock(), false: synchronized
     
     @SuppressWarnings("unused") private static final boolean DEBUG = true;
-    private static final {K} KEY_NULL = 0;
+    private static final {V} VALUE_NULL = 0;
 
     // We do a full resize (and rehash) only when the capacity is less than C1.
     // For large maps we dispatch to sub-maps.
@@ -166,16 +163,16 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      * Holds the head entry to which the first entry attaches.
      * The head entry never changes (entries always added last).
      */
-    private transient Entry <V>  _head;
+    private transient Entry <K>  _head;
     /**
      * Holds the tail entry to which the last entry attaches.
      * The tail entry changes as entries are added/removed.
      */
-    private transient Entry <V>  _tail;
+    private transient Entry <K>  _tail;
     /**
      * Holds the map's entries. 
      */
-    private transient Entry <V> [] _entries;
+    private transient Entry <K> [] _entries;
     /**
      * Holds the number of user entry in the entry table.
      */
@@ -188,7 +185,7 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
     /**
      * Holds sub-maps (for large collection). 
      */
-    private transient FastIntObjectMap[] _subMaps;
+    private transient FastObjectIntMap[] _subMaps;
     /**
      * Indicates if sub-maps are active.
      */
@@ -197,14 +194,14 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      * The hash shift (for sub-maps to discard bits already taken into account).
      */
     private transient int _keyShift;
-    /**
-     * Holds the values view.
-     */
-    private transient Values _values;
 //    /**
-//     * Holds the key set view.
+//     * Holds the values view.
 //     */
-//    private transient KeySet _keySet;
+//    private transient Values _values;
+    /**
+     * Holds the key set view.
+     */
+    private transient KeySet _keySet;
     /**
      * Holds the entry set view.
      */
@@ -212,19 +209,19 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
     /**
      * Holds the unmodifiable view.
      */
-    private transient IntObjectMap <V>  _unmodifiable;
-//    /**
-//     * Holds the key comparator.
-//     */
-//    private transient FastComparator _keyComparator;
-//    /**
-//     * Indicates if key comparator is direct.
-//     */
-//    private transient boolean _isDirectKeyComparator;
+    private transient ObjectIntMap <K>  _unmodifiable;
     /**
-     * Holds the value comparator.
+     * Holds the key comparator.
      */
-    private transient FastComparator _valueComparator;
+    private transient FastComparator _keyComparator;
+    /**
+     * Indicates if key comparator is direct.
+     */
+    private transient boolean _isDirectKeyComparator;
+//    /**
+//     * Holds the value comparator.
+//     */
+//    private transient FastComparator _valueComparator;
     /**
      * Indicates if this map is shared (thread-safe).
      */
@@ -235,7 +232,7 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      * Creates a map whose capacity increment smoothly without large resize 
      * operations.
      */
-    public FastIntObjectMap() {
+    public FastObjectIntMap() {
         this(4);
     }
 
@@ -247,7 +244,7 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      * @throws IllegalArgumentException if the identifier is not unique.
      * @see javolution.context.PersistentContext.Reference
      */
-    public FastIntObjectMap(String id) {
+    public FastObjectIntMap(String id) {
         throw new UnsupportedOperationException();
 //        this();
 //        new PersistentContext.Reference(id, this) {
@@ -265,8 +262,8 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      * 
      * @param capacity the maximum capacity.
      */
-    public FastIntObjectMap(int capacity) {
-        setValueComparator(FastComparator.DEFAULT);
+    public FastObjectIntMap(int capacity) {
+        setKeyComparator(FastComparator.DEFAULT);
         setup(capacity);
     }
 
@@ -275,7 +272,7 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
         while (tableLength < capacity) {
             tableLength <<= 1;
         }
-        _entries = /*(Entry <V> [])*/ new Entry[tableLength << 1];
+        _entries = /*(Entry <K> [])*/ new Entry[tableLength << 1];
         _head = newEntry();
         _tail = newEntry();
         _head._next = _tail;
@@ -295,15 +292,15 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      *
      * @param map the map whose entries are to be placed into this map.
      */
-    public FastIntObjectMap(IntObjectMap <? extends V>  map) {
+    public FastObjectIntMap(ObjectIntMap <? extends K>  map) {
         this(map.size());
         putAll(map);
     }
-    public FastIntObjectMap(TIntObjectMap  <? extends V>  map) {
+    public FastObjectIntMap(TObjectIntMap  <? extends K>  map) {
         this(map.size());
         putAll(map);
     }
-    public FastIntObjectMap(java.util.Map <Integer, ? extends V>  map) {
+    public FastObjectIntMap(java.util.Map <? extends K, Integer>  map) {
         this(map.size());
         putAll(map);
     }
@@ -311,7 +308,7 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
     /**
      * Used solely for sub-maps (we don't need head or tail just the table).
      */
-    private FastIntObjectMap(Entry[] entries) {
+    private FastObjectIntMap(Entry[] entries) {
         _entries = entries;
     }
 
@@ -320,8 +317,8 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      *
      * @return a new, preallocated or recycled map instance.
      */
-    public static <V>  FastIntObjectMap <V>  newInstance() {
-        return (FastIntObjectMap <V> ) FACTORY.object();
+    public static <K>  FastObjectIntMap <K>  newInstance() {
+        return (FastObjectIntMap <K> ) FACTORY.object();
     }
 
     /**
@@ -329,7 +326,7 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      * 
      * @param instance the map instance to recycle.
      */
-    public static void recycle(FastIntObjectMap instance) {
+    public static void recycle(FastObjectIntMap instance) {
         FACTORY.recycle(instance);
     }
 
@@ -340,9 +337,9 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      * @return the map having for keys this map values and for values 
      *         this map's key.
      */
-    public final Map <V,Integer>  reverse() {
-        FastMap <V,Integer>  map = new FastMap<V,Integer>(FastIntObjectMap.this.size());	//TODO:
-        for (Entry <V>  e = _head,  n = _tail; (e = e._next) != n;) {
+    public final FastIntObjectMap <K>  reverse() {
+        FastIntObjectMap <K>  map = (FastIntObjectMap <K> ) FACTORY.object();
+        for (Entry <K>  e = _head,  n = _tail; (e = e._next) != n;) {
             map.put(e._value, e._key);
         }
         return map;
@@ -354,7 +351,7 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      * @return the entry such as <code>head().getNext()</code> holds 
      *         the first map entry.
      */
-    public final Entry <V>  head() {
+    public final Entry <K>  head() {
         return _head;
     }
 
@@ -364,12 +361,12 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      * @return the entry such as <code>tail().getPrevious()</code>
      *         holds the last map entry.
      */
-    public final Entry <V>  tail() {
+    public final Entry <K>  tail() {
         return _tail;
     }
 
     /**
-     * Returns the number of key-value mappings in this {@link FastIntObjectMap}.
+     * Returns the number of key-value mappings in this {@link FastObjectIntMap}.
      * 
      * <p>Note: If concurrent updates are performed, application should not 
      *          rely upon the size during iterations.</p> 
@@ -405,7 +402,7 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      *         specified key; <code>false</code> otherwise.
      * @throws NullPointerException if the key is <code>null</code>.
      */
-    public final boolean containsKey({K} key) {
+    public final boolean containsKey(Object key) {
         return getEntry(key) != null;
     }
 
@@ -417,8 +414,11 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      *         specified value.
      * @throws NullPointerException if the key is <code>null</code>.
      */
-    public final boolean containsValue(Object value) {
-        return values().contains(value);
+    public final boolean containsValue({V} value) {
+        for (Entry <V>  e = _head,  end = _tail; (e = e._next) != end;)
+            if (e._value == value)
+                return true;
+        return false;
     }
 
     /**
@@ -431,9 +431,9 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      *         <code>null</code> if there is no mapping for the key.
      * @throws NullPointerException if key is <code>null</code>.
      */
-    public final  V  get({K} key) {
-        Entry <V>  entry = getEntry(key);
-        return (entry != null) ? entry._value : null;
+    public final  {V}  get(Object key) {
+        Entry <K>  entry = getEntry(key);
+        return (entry != null) ? entry._value : VALUE_NULL;
     }
 
     /**
@@ -443,12 +443,13 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      * @param key the key whose associated entry is to be returned.
      * @return the entry for the specified key or <code>null</code> if none.
      */
-    public final Entry <V>  getEntry({K} key) {
-        return getEntry(key, HASHCODE(key));
+    public final Entry <K>  getEntry(Object key) {
+        return getEntry(key, _isDirectKeyComparator ? key.hashCode()
+                : _keyComparator.hashCodeOf(key));
     }
 
-    private final Entry getEntry({K} key, int keyHash) {
-        final FastIntObjectMap map = getSubMap(keyHash);
+    private final Entry getEntry(Object key, int keyHash) {
+        final FastObjectIntMap map = getSubMap(keyHash);
         final Entry[] entries = map._entries; // Atomic.
         final int mask = entries.length - 1;
         for (int i = keyHash >> map._keyShift;; i++) {
@@ -456,13 +457,14 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
             if (entry == null) {
                 return null;
             }
-            if (key == entry._key) {
+            if ((key == entry._key) || ((keyHash == entry._keyHash) && (_isDirectKeyComparator ? key.equals(entry._key)
+                    : _keyComparator.areEqual(key, entry._key)))) {
                 return entry;
             }
         }
     }
 
-    private final FastIntObjectMap getSubMap(int keyHash) {
+    private final FastObjectIntMap getSubMap(int keyHash) {
         return _useSubMaps ? _subMaps[keyHash & (C2 - 1)].getSubMap(keyHash >> B2) : this;
     }
 
@@ -480,14 +482,14 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
      *         previously associated <code>null</code> with the specified key.
      * @throws NullPointerException if the key is <code>null</code>.
      */
-    public final  V  put( {K}  key,  V  value) {
-        return ( V ) put(key, value, HASHCODE(key), _isShared, false,
+    public final  {V}  put( K  key,  {V}  value) {
+        return ( {V} ) put(key, value, _isDirectKeyComparator ? key.hashCode() : _keyComparator.hashCodeOf(key), _isShared, false,
                 false);
     }
 
-    private final Object put({K} key, Object value, int keyHash,
+    private final Object put(Object key, {V} value, int keyHash,
             boolean concurrent, boolean noReplace/*=putIfAbsent*/, boolean returnEntry) {
-        final FastIntObjectMap map = getSubMap(keyHash);
+        final FastObjectIntMap map = getSubMap(keyHash);
         final Entry[] entries = map._entries; // Atomic.
         final int mask = entries.length - 1;
         int slot = -1;
@@ -498,7 +500,8 @@ public class FastIntObjectMap <V>  implements IntObjectMap<V>, Reusable,
                 break;
             } else if (entry == Entry.NULL) {
                 slot = slot < 0 ? i & mask : slot;
-            } else if (key == entry._key) {
+            } else if ((key == entry._key) || ((keyHash == entry._keyHash) && (_isDirectKeyComparator ? key.equals(entry._key)
+                    : _keyComparator.areEqual(key, entry._key)))) {
                 if (noReplace) {
                     return returnEntry ? entry : entry._value;
                 }
@@ -575,7 +578,7 @@ if (REENTRANT_LOCK) {{
             public void run() {
                 Entry previous = _tail;
                 for (int i = 0; i < 8; i++) { // Creates 8 entries at a time.
-                    Entry <V>  newEntry = newEntry();
+                    Entry <K>  newEntry = newEntry();
                     newEntry._previous = previous;
                     previous._next = newEntry;
                     previous = newEntry;
@@ -603,9 +606,9 @@ if (REENTRANT_LOCK) {{
                     } else { // We need a temporary buffer.
                         Object[] tmp = ArrayFactory.OBJECTS_FACTORY.array(_entries.length);
                         System.arraycopy(_entries, 0, tmp, 0, _entries.length);
-                        FastIntObjectMap.reset(_entries); // Ok not shared. 
+                        FastObjectIntMap.reset(_entries); // Ok not shared. 
                         copyEntries(tmp, _entries, _entries.length);
-                        FastIntObjectMap.reset(tmp); // Clear references.
+                        FastObjectIntMap.reset(tmp); // Clear references.
                         ArrayFactory.OBJECTS_FACTORY.recycle(tmp);
                     }
                     return;
@@ -631,7 +634,7 @@ if (REENTRANT_LOCK) {{
                     if ((entry == null) || (entry == Entry.NULL)) {
                         continue;
                     }
-                    FastIntObjectMap subMap = _subMaps[(entry._keyHash >> _keyShift) & (C2 - 1)];
+                    FastObjectIntMap subMap = _subMaps[(entry._keyHash >> _keyShift) & (C2 - 1)];
                     subMap.mapEntry(entry);
                     if (((subMap._entryCount + subMap._nullCount) << 1) >= subMap._entries.length) {
                         // Serious problem submap already full, don't use submap just resize.
@@ -646,7 +649,7 @@ if (REENTRANT_LOCK) {{
                 
                 if(isShared) {
                 	// clear the entries which now are held by submaps
-                    FastIntObjectMap.reset(_entries);
+                    FastObjectIntMap.reset(_entries);
                     _nullCount = 0;
                     _entryCount = 0;
                 }
@@ -656,10 +659,10 @@ if (REENTRANT_LOCK) {{
         });
     }
 
-    private FastIntObjectMap[] newSubMaps(int capacity) {
-        FastIntObjectMap[] subMaps = new FastIntObjectMap[C2];
+    private FastObjectIntMap[] newSubMaps(int capacity) {
+        FastObjectIntMap[] subMaps = new FastObjectIntMap[C2];
         for (int i = 0; i < C2; i++) {
-            FastIntObjectMap subMap = new FastIntObjectMap(new Entry[capacity]);
+            FastObjectIntMap subMap = new FastObjectIntMap(new Entry[capacity]);
             subMap._keyShift = B2 + _keyShift;
             subMaps[i] = subMap;
         }
@@ -706,8 +709,8 @@ if (REENTRANT_LOCK) {{
      * @return the entry being added.
      * @throws NullPointerException if the key is <code>null</code>.
      */
-    public final Entry <V>  putEntry( {K}  key,  V  value) {
-        return (Entry <V> ) put(key, value, HASHCODE(key), _isShared, false,
+    public final Entry <K>  putEntry( K  key,  {V}  value) {
+        return (Entry <K> ) put(key, value, _isDirectKeyComparator ? key.hashCode() : _keyComparator.hashCodeOf(key), _isShared, false,
                 true);
     }
 
@@ -718,25 +721,25 @@ if (REENTRANT_LOCK) {{
      * @throws NullPointerException the specified map is <code>null</code>,
      *         or the specified map contains <code>null</code> keys.
      */
-    public final void putAll(IntObjectMap <? extends V>  map) {
+    public final void putAll(ObjectIntMap <? extends K>  map) {
         for (Iterator i = map.entrySet().iterator(); i.hasNext();) {
-            IntObjectMap.Entry <V>  e = (IntObjectMap.Entry <V> ) i.next();
+            ObjectIntMap.Entry <K>  e = (ObjectIntMap.Entry <K> ) i.next();
             put(e.getKey(), e.getValue());
         }
     }
-    public final void putAll(TIntObjectMap <? extends V>  map) {
-        map.forEachEntry(new TIntObjectProcedure<V>(){
+    public final void putAll(TObjectIntMap <? extends K>  map) {
+        map.forEachEntry(new TObjectIntProcedure<V>(){
             @Override
-            public boolean execute({K} key, V value) {
-                FastIntObjectMap.this.put(key, value);
+            public boolean execute(<K> key, {V} value) {
+                FastObjectIntMap.this.put(key, value);
                 return true;
             }
         });
     }
-    public final void putAll(java.util.Map <Integer, ? extends V>  map) {
+    public final void putAll(java.util.Map <? extends K, Integer>  map) {
         for (Iterator i = map.entrySet().iterator(); i.hasNext();) {
-            java.util.Map.Entry <Integer,V>  e = (java.util.Map.Entry <Integer,V> ) i.next();
-            put(e.getKey().intValue(), e.getValue());
+            java.util.Map.Entry <K,Integer>  e = (java.util.Map.Entry <K,Integer> ) i.next();
+            put(e.getKey(), e.getValue().intValue());
         }
     }
 
@@ -759,9 +762,9 @@ if (REENTRANT_LOCK) {{
      *         previously associated <code>null</code> with the specified key.
      * @throws NullPointerException if the key is <code>null</code>.
      */
-    public final  V  putIfAbsent( {K}  key,
-             V  value) {
-        return ( V ) put(key, value, HASHCODE(key), _isShared, true,
+    public final  {V}  putIfAbsent( K  key,
+             {V}  value) {
+        return ( {V} ) put(key, value, _isDirectKeyComparator ? key.hashCode() : _keyComparator.hashCodeOf(key), _isShared, true,
                 false);
     }
 
@@ -782,12 +785,12 @@ if (REENTRANT_LOCK) {{
      *         previously associated <code>null</code> with the specified key.
      * @throws NullPointerException if the key is <code>null</code>.
      */
-    public final  V  remove({K} key) {
-        return ( V ) remove(key, HASHCODE(key), _isShared);
+    public final  {V}  remove(Object key) {
+        return ( {V} ) remove(key, _isDirectKeyComparator ? key.hashCode() : _keyComparator.hashCodeOf(key), _isShared);
     }
 
-    private final Object remove({K} key, int keyHash, boolean concurrent) {
-        final FastIntObjectMap map = getSubMap(keyHash);
+    private final Object remove(Object key, int keyHash, boolean concurrent) {
+        final FastObjectIntMap map = getSubMap(keyHash);
         final Entry[] entries = map._entries; // Atomic.
         final int mask = entries.length - 1;
         for (int i = keyHash >> map._keyShift;; i++) {
@@ -795,7 +798,8 @@ if (REENTRANT_LOCK) {{
             if (entry == null) {
                 return null;
             } // No entry.
-            if (key == entry._key) {
+            if ((key == entry._key) || ((keyHash == entry._keyHash) && (_isDirectKeyComparator ? key.equals(entry._key)
+                    : _keyComparator.areEqual(key, entry._key)))) {
                 // Found the entry.
                 if (concurrent) {
 if (REENTRANT_LOCK) {{
@@ -822,8 +826,8 @@ if (REENTRANT_LOCK) {{
 
                 Object prevValue = entry._value;
                 if (!_isShared) { // Clears key/value and recycle.
-                    entry._key = KEY_NULL;
-                    entry._value = null;
+                    entry._key = null;
+                    entry._value = VALUE_NULL;
 
                     final Entry next = _tail._next;
                     entry._previous = _tail;
@@ -854,7 +858,7 @@ if (REENTRANT_LOCK) {{
      * 
      * @return <code>this</code>
      */
-    public FastIntObjectMap <V>  shared() {
+    public FastObjectIntMap <K>  shared() {
         if (REENTRANT_LOCK) if (_shared == null) _shared = new ReentrantLock();
         _isShared = true;
         return this;
@@ -863,7 +867,7 @@ if (REENTRANT_LOCK) {{
 //    /**
 //     * @deprecated Replaced by {@link #shared}
 //     */
-//    public FastIntObjectMap <V>  setShared(boolean isShared) {
+//    public FastObjectIntMap <K>  setShared(boolean isShared) {
 //        if (REENTRANT_LOCK) if (isShared) if (_shared == null) _shared = new ReentrantLock();
 //        _isShared = isShared;
 //        return this;
@@ -909,48 +913,48 @@ if (REENTRANT_LOCK) {{
 }}
     }
 
-//    /**
-//     * Sets the key comparator for this fast map.
-//     * 
-//     * @param keyComparator the key comparator.
-//     * @return <code>this</code>
-//     */
-//    public FastMap <K,V>  setKeyComparator(
-//            FastComparator <? super K>  keyComparator) {
-//        _keyComparator = keyComparator;
-//        _isDirectKeyComparator = (keyComparator == FastComparator.DIRECT) || ((_keyComparator == FastComparator.DEFAULT) && !((Boolean) FastComparator.REHASH_SYSTEM_HASHCODE.get()).booleanValue());
-//        return this;
-//    }
-//
-//    /**
-//     * Returns the key comparator for this fast map.
-//     * 
-//     * @return the key comparator.
-//     */
-//    public FastComparator <? super K>  getKeyComparator() {
-//        return _keyComparator;
-//    }
-
     /**
-     * Sets the value comparator for this map.
+     * Sets the key comparator for this fast map.
      * 
-     * @param valueComparator the value comparator.
+     * @param keyComparator the key comparator.
      * @return <code>this</code>
      */
-    public FastIntObjectMap <V>  setValueComparator(
-            FastComparator <? super V>  valueComparator) {
-        _valueComparator = valueComparator;
+    public FastObjectIntMap <K>  setKeyComparator(
+            FastComparator <? super K>  keyComparator) {
+        _keyComparator = keyComparator;
+        _isDirectKeyComparator = (keyComparator == FastComparator.DIRECT) || ((_keyComparator == FastComparator.DEFAULT) && !((Boolean) FastComparator.REHASH_SYSTEM_HASHCODE.get()).booleanValue());
         return this;
     }
 
     /**
-     * Returns the value comparator for this fast map.
+     * Returns the key comparator for this fast map.
      * 
-     * @return the value comparator.
+     * @return the key comparator.
      */
-    public FastComparator <? super V>  getValueComparator() {
-        return _valueComparator;
+    public FastComparator <? super K>  getKeyComparator() {
+        return _keyComparator;
     }
+
+//    /**
+//     * Sets the value comparator for this map.
+//     * 
+//     * @param valueComparator the value comparator.
+//     * @return <code>this</code>
+//     */
+//    public FastObjectIntMap <K,V>  setValueComparator(
+//            FastComparator <? super V>  valueComparator) {
+//        _valueComparator = valueComparator;
+//        return this;
+//    }
+//
+//    /**
+//     * Returns the value comparator for this fast map.
+//     * 
+//     * @return the value comparator.
+//     */
+//    public FastComparator <? super V>  getValueComparator() {
+//        return _valueComparator;
+//    }
 
     /**
      * Removes all map's entries. The entries are removed and recycled; 
@@ -969,8 +973,8 @@ if (REENTRANT_LOCK) {{
         }
         // Clears keys, values and recycle entries.
         for (Entry e = _head,  end = _tail; (e = e._next) != end;) {
-            e._key = KEY_NULL;
-            e._value = null;
+            e._key = null;
+            e._value = VALUE_NULL;
         }
         _tail = _head._next; // Reuse linked list of entries.       
         clearTables();
@@ -983,7 +987,7 @@ if (REENTRANT_LOCK) {{
             }
             _useSubMaps = false;
         }
-        FastIntObjectMap.reset(_entries);
+        FastObjectIntMap.reset(_entries);
         _nullCount = 0;
         _entryCount = 0;
     }
@@ -1024,8 +1028,8 @@ if (REENTRANT_LOCK) {{
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
-        } else if (obj instanceof IntObjectMap) {
-            IntObjectMap <?>  that = (IntObjectMap) obj;
+        } else if (obj instanceof ObjectIntMap) {
+            ObjectIntMap <?>  that = (ObjectIntMap) obj;
             return this.entrySet().equals(that.entrySet());
         } else {
             return false;
@@ -1056,7 +1060,7 @@ if (REENTRANT_LOCK) {{
 
     /**
      * Returns the <code>String</code> representation of this 
-     * {@link FastIntObjectMap}.
+     * {@link FastObjectIntMap}.
      *
      * @return <code>toText().toString()</code>
      */
@@ -1070,7 +1074,7 @@ if (REENTRANT_LOCK) {{
      *
      * @return a new entry.
      */
-    protected Entry <V>  newEntry() {
+    protected Entry <K>  newEntry() {
         return new Entry();
     }
 
@@ -1181,26 +1185,26 @@ if (REENTRANT_LOCK) {{
     }
 
     /**
-     * x - for (Integer key : map.keySet()) { ... }<BR>
-     * o - for ({K} key : map.keys()) { ... }<BR>
-     * o - for (IntObjectMap.Entry<Object> e : map.entrySet()) { {K} key = e.getKey(); }
+     * x - for (Integer value : map.values()) { ... }<BR>
+     * o - for ({V} value : map.values()) { ... }<BR>
+     * o - for (ObjectIntMap.Entry<Object> e : map.entrySet()) { {V} value = e.getValue(); }
      */
-    public final {K}[] keys() {
-        {K}[] array = new {K}[FastIntObjectMap.this.size()];
+    public final {V}[] values() {
+        {V}[] array = new {V}[FastObjectIntMap.this.size()];
         int length = 0;
-        for (Entry <V>  e = _head,  end = _tail; (e = e._next) != end;) {
+        for (Entry <K>  e = _head,  end = _tail; (e = e._next) != end;) {
             if (length >= array.length)
             {
                 // ensureCapacity
-                {K}[] temp = new {K}[length + 1];
+                {V}[] temp = new {V}[length + 1];
                 System.arraycopy(array, 0, temp, 0, length);
                 array = temp;
             }
-            array[length++] = e._key;
+            array[length++] = e._value;
         }
         if (length < array.length) {
             // trimToSize
-            {K}[] temp = new {K}[length];
+            {V}[] temp = new {V}[length];
             System.arraycopy(array, 0, temp, 0, length);
             array = temp;
         }
@@ -1211,8 +1215,8 @@ if (REENTRANT_LOCK) {{
      * <b>Deprecated</b><br>
      * trove like.
      */
-    public boolean forEachKey(IntProcedure procedure) {
-        for (Entry <V>  e = _head,  end = _tail; (e = e._next) != end;)
+    public boolean forEachKey(ObjectProcedure<? super K> procedure) {
+        for (Entry <K>  e = _head,  end = _tail; (e = e._next) != end;)
             if (!procedure.execute(e._key))
                 return false;
         return true;
@@ -1221,8 +1225,8 @@ if (REENTRANT_LOCK) {{
      * <b>Deprecated</b><br>
      * trove like.
      */
-    public boolean forEachValue(ObjectProcedure<? super V> procedure) {
-        for (Entry <V>  e = _head,  end = _tail; (e = e._next) != end;)
+    public boolean forEachValue(IntProcedure procedure) {
+        for (Entry <K>  e = _head,  end = _tail; (e = e._next) != end;)
             if (!procedure.execute(e._value))
                 return false;
         return true;
@@ -1231,135 +1235,135 @@ if (REENTRANT_LOCK) {{
      * <b>Deprecated</b><br>
      * trove like.
      */
-    public boolean forEachEntry(IntObjectProcedure<? super V> procedure) {
-        for (Entry <V>  e = _head,  end = _tail; (e = e._next) != end;)
+    public boolean forEachEntry(ObjectIntProcedure<? super K> procedure) {
+        for (Entry <K>  e = _head,  end = _tail; (e = e._next) != end;)
             if (!procedure.execute(e._key, e._value))
                 return false;
         return true;
     }
 
-    /**
-     * Returns a {@link FastCollection} view of the values contained in this
-     * map. The collection is backed by the map, so changes to the
-     * map are reflected in the collection, and vice-versa. The collection 
-     * supports element removal, which removes the corresponding mapping from
-     * this map, via the <code>Iterator.remove</code>, 
-     * <code>Collection.remove</code>, <code>removeAll</code>,
-     * <code>retainAll</code> and <code>clear</code> operations. 
-     * It does not support the <code>add</code> or <code>addAll</code> 
-     * operations.
-     * 
-     * @return a collection view of the values contained in this map 
-     *         (instance of {@link FastCollection}).
-     */
-    public final Collection <V>  values() {
-        if (_values == null) {
-            MemoryArea.getMemoryArea(this).executeInArea(new Runnable() {
-
-                public void run() {
-                    _values = new Values();
-                }
-            });
-        }
-        return _values;
-    }
-
-    private final class Values extends FastCollection {
-
-        public int size() {
-            return FastIntObjectMap.this.size();
-        }
-
-        public void clear() {
-            FastIntObjectMap.this.clear();
-        }
-
-        public Record head() {
-            return FastIntObjectMap.this._head;
-        }
-
-        public Record tail() {
-            return FastIntObjectMap.this._tail;
-        }
-
-        public Object valueOf(Record record) {
-            return ((Entry) record)._value;
-        }
-
-        public void delete(Record record) {
-            FastIntObjectMap.this.remove(((Entry) record).getKey());
-        }
-
-        public FastComparator getValueComparator() {
-            return _valueComparator;
-        }
-
-        public Iterator iterator() {
-            return ValueIterator.valueOf(FastIntObjectMap.this);
-        }
-    }
-
-    // Value iterator optimization.
-    private static final class ValueIterator implements Iterator {
-
-        private static final ObjectFactory FACTORY = new ObjectFactory() {
-
-            protected Object create() {
-                return new ValueIterator();
-            }
-
-            protected void cleanup(Object obj) {
-                ValueIterator iterator = (ValueIterator) obj;
-                iterator._map = null;
-                iterator._current = null;
-                iterator._next = null;
-                iterator._tail = null;
-            }
-        };
-        private FastIntObjectMap _map;
-        private Entry _current;
-        private Entry _next;
-        private Entry _tail;
-
-        public static ValueIterator valueOf(FastIntObjectMap map) {
-            ValueIterator iterator = (ValueIterator) ValueIterator.FACTORY.object();
-            iterator._map = map;
-            iterator._next = map._head._next;
-            iterator._tail = map._tail;
-            return iterator;
-        }
-
-        private ValueIterator() {
-        }
-
-        public boolean hasNext() {
-            return (_next != _tail);
-        }
-
-        public Object next() {
-            if (_next == _tail) {
-                throw new NoSuchElementException();
-            }
-            _current = _next;
-            _next = _next._next;
-            return _current._value;
-        }
-
-        public void remove() {
-            if (_current != null) {
-                _next = _current._next;
-                _map.remove(_current._key);
-                _current = null;
-            } else {
-                throw new IllegalStateException();
-            }
-        }
-    }
+//    /**
+//     * Returns a {@link FastCollection} view of the values contained in this
+//     * map. The collection is backed by the map, so changes to the
+//     * map are reflected in the collection, and vice-versa. The collection 
+//     * supports element removal, which removes the corresponding mapping from
+//     * this map, via the <code>Iterator.remove</code>, 
+//     * <code>Collection.remove</code>, <code>removeAll</code>,
+//     * <code>retainAll</code> and <code>clear</code> operations. 
+//     * It does not support the <code>add</code> or <code>addAll</code> 
+//     * operations.
+//     * 
+//     * @return a collection view of the values contained in this map 
+//     *         (instance of {@link FastCollection}).
+//     */
+//    public final Collection <V>  values() {
+//        if (_values == null) {
+//            MemoryArea.getMemoryArea(this).executeInArea(new Runnable() {
+//
+//                public void run() {
+//                    _values = new Values();
+//                }
+//            });
+//        }
+//        return _values;
+//    }
+//
+//    private final class Values extends FastCollection {
+//
+//        public int size() {
+//            return FastObjectIntMap.this.size();
+//        }
+//
+//        public void clear() {
+//            FastObjectIntMap.this.clear();
+//        }
+//
+//        public Record head() {
+//            return FastObjectIntMap.this._head;
+//        }
+//
+//        public Record tail() {
+//            return FastObjectIntMap.this._tail;
+//        }
+//
+//        public Object valueOf(Record record) {
+//            return ((Entry) record)._value;
+//        }
+//
+//        public void delete(Record record) {
+//            FastObjectIntMap.this.remove(((Entry) record).getKey());
+//        }
+//
+//        public FastComparator getValueComparator() {
+//            return _valueComparator;
+//        }
+//
+//        public Iterator iterator() {
+//            return ValueIterator.valueOf(FastObjectIntMap.this);
+//        }
+//    }
+//
+//    // Value iterator optimization.
+//    private static final class ValueIterator implements Iterator {
+//
+//        private static final ObjectFactory FACTORY = new ObjectFactory() {
+//
+//            protected Object create() {
+//                return new ValueIterator();
+//            }
+//
+//            protected void cleanup(Object obj) {
+//                ValueIterator iterator = (ValueIterator) obj;
+//                iterator._map = null;
+//                iterator._current = null;
+//                iterator._next = null;
+//                iterator._tail = null;
+//            }
+//        };
+//        private FastObjectIntMap _map;
+//        private Entry _current;
+//        private Entry _next;
+//        private Entry _tail;
+//
+//        public static ValueIterator valueOf(FastObjectIntMap map) {
+//            ValueIterator iterator = (ValueIterator) ValueIterator.FACTORY.object();
+//            iterator._map = map;
+//            iterator._next = map._head._next;
+//            iterator._tail = map._tail;
+//            return iterator;
+//        }
+//
+//        private ValueIterator() {
+//        }
+//
+//        public boolean hasNext() {
+//            return (_next != _tail);
+//        }
+//
+//        public Object next() {
+//            if (_next == _tail) {
+//                throw new NoSuchElementException();
+//            }
+//            _current = _next;
+//            _next = _next._next;
+//            return _current._value;
+//        }
+//
+//        public void remove() {
+//            if (_current != null) {
+//                _next = _current._next;
+//                _map.remove(_current._key);
+//                _current = null;
+//            } else {
+//                throw new IllegalStateException();
+//            }
+//        }
+//    }
 
     /**
      * Returns a {@link FastCollection} view of the mappings contained in this
      * map. Each element in the returned collection is a 
-     * <code>IntObjectMap.Entry</code>. The collection is backed by the map, so
+     * <code>FastObjectIntMap.Entry</code>. The collection is backed by the map, so
      * changes to the map are reflected in the collection, and vice-versa. The
      * collection supports element removal, which removes the corresponding
      * mapping from this map, via the <code>Iterator.remove</code>,
@@ -1370,7 +1374,7 @@ if (REENTRANT_LOCK) {{
      * @return a collection view of the mappings contained in this map
      *         (instance of {@link FastCollection}).
      */
-    public final Set <IntObjectMap.Entry<V>>  entrySet() {
+    public final Set <ObjectIntMap.Entry<K>>  entrySet() {
         if (_entrySet == null) {
             MemoryArea.getMemoryArea(this).executeInArea(new Runnable() {
 
@@ -1385,22 +1389,21 @@ if (REENTRANT_LOCK) {{
     private final class EntrySet extends FastCollection implements Set {
 
         public int size() {
-            return FastIntObjectMap.this.size();
+            return FastObjectIntMap.this.size();
         }
 
         public void clear() {
-            FastIntObjectMap.this.clear();
+            FastObjectIntMap.this.clear();
         }
 
         public boolean contains(Object obj) { // Optimization.
-            if (obj instanceof IntObjectMap.Entry) {
-                IntObjectMap.Entry thatEntry = (IntObjectMap.Entry) obj;
+            if (obj instanceof ObjectIntMap.Entry) {
+                ObjectIntMap.Entry thatEntry = (ObjectIntMap.Entry) obj;
                 Entry thisEntry = getEntry(thatEntry.getKey());
                 if (thisEntry == null) {
                     return false;
                 }
-                return _valueComparator.areEqual(thisEntry.getValue(),
-                        thatEntry.getValue());
+                return thisEntry.getValue() == thatEntry.getValue();
             } else {
                 return false;
             }
@@ -1415,11 +1418,11 @@ if (REENTRANT_LOCK) {{
         }
 
         public Object valueOf(Record record) {
-            return (IntObjectMap.Entry) record;
+            return (ObjectIntMap.Entry) record;
         }
 
         public void delete(Record record) {
-            FastIntObjectMap.this.remove(((Entry) record).getKey());
+            FastObjectIntMap.this.remove(((Entry) record).getKey());
         }
 
         public FastComparator getValueComparator() {
@@ -1428,33 +1431,27 @@ if (REENTRANT_LOCK) {{
         private final FastComparator _entryComparator = new FastComparator() {
 
             public boolean areEqual(Object o1, Object o2) {
-                if ((o1 instanceof IntObjectMap.Entry) && (o2 instanceof IntObjectMap.Entry)) {
-                    IntObjectMap.Entry e1 = (IntObjectMap.Entry) o1;
-                    IntObjectMap.Entry e2 = (IntObjectMap.Entry) o2;
-                    return e1.getKey() == e2.getKey() && _valueComparator.areEqual(e1.getValue(), e2.getValue());
+                if ((o1 instanceof ObjectIntMap.Entry) && (o2 instanceof ObjectIntMap.Entry)) {
+                    ObjectIntMap.Entry e1 = (ObjectIntMap.Entry) o1;
+                    ObjectIntMap.Entry e2 = (ObjectIntMap.Entry) o2;
+                    return _keyComparator.areEqual(e1.getKey(), e2.getKey()) && e1.getValue() == e2.getValue();
                 }
                 return (o1 == null) && (o2 == null);
             }
 
             public int compare(Object o1, Object o2) {
-                if ((o1 instanceof IntObjectMap.Entry) && (o2 instanceof IntObjectMap.Entry)) {
-                    IntObjectMap.Entry e1 = (IntObjectMap.Entry) o1;
-                    IntObjectMap.Entry e2 = (IntObjectMap.Entry) o2;
-                    return e1.getKey() - e2.getKey();	/*@IF INT@*/
-                    long a = e1.getKey() - e2.getKey(); return a < 0 ? -1 : a > 0 ? 1 : 0;	/*@IF LONG@*/
-                }
-                throw new UnsupportedOperationException("EntrySet#compare(" + o1 + "," + o2 + ")");	//TODO:
-              /*return _keyComparator.compare(o1, o2);*/
+                return _keyComparator.compare(o1, o2);
             }
 
             public int hashCodeOf(Object obj) {
-                IntObjectMap.Entry entry = (IntObjectMap.Entry) obj;
-                return entry.getKeyHash() + _valueComparator.hashCodeOf(entry.getValue());
+                ObjectIntMap.Entry entry = (ObjectIntMap.Entry) obj;
+                {V} v = entry.getValue();
+                return _keyComparator.hashCodeOf(entry.getKey()) + HASHCODE(v);
             }
         };
 
         public Iterator iterator() {
-            return EntryIterator.valueOf(FastIntObjectMap.this);
+            return EntryIterator.valueOf(FastObjectIntMap.this);
         }
     }
 
@@ -1475,12 +1472,12 @@ if (REENTRANT_LOCK) {{
                 iterator._tail = null;
             }
         };
-        private FastIntObjectMap _map;
+        private FastObjectIntMap _map;
         private Entry _current;
         private Entry _next;
         private Entry _tail;
 
-        public static EntryIterator valueOf(FastIntObjectMap map) {
+        public static EntryIterator valueOf(FastObjectIntMap map) {
             EntryIterator iterator = (EntryIterator) EntryIterator.FACTORY.object();
             iterator._map = map;
             iterator._next = map._head._next;
@@ -1515,130 +1512,130 @@ if (REENTRANT_LOCK) {{
         }
     }
 
-//    /**
-//     * Returns a {@link FastCollection} view of the keys contained in this 
-//     * map. The set is backed by the map, so changes to the map are reflected
-//     * in the set, and vice-versa. The set supports element removal, which 
-//     * removes the corresponding mapping from this map, via the 
-//     * <code>Iterator.remove</code>,
-//    <code>Collection.remove</code>,<code>removeAll<f/code>,
-//     * <code>retainAll</code>, and <code>clear</code> operations. It does
-//     * not support the <code>add</code> or <code>addAll</code> operations.
-//     * 
-//     * @return a set view of the keys contained in this map
-//     *         (instance of {@link FastCollection}).
-//     */
-//    public final Set keySet() {
-//        if (_keySet == null) {
-//            MemoryArea.getMemoryArea(this).executeInArea(new Runnable() {
-//
-//                public void run() {
-//                    _keySet = new KeySet();
-//                }
-//            });
-//        }
-//        return _keySet;
-//    }
-//
-//    private final class KeySet extends FastCollection implements Set {
-//
-//        public int size() {
-//            return FastMap.this.size();
-//        }
-//
-//        public void clear() {
-//            FastMap.this.clear();
-//        }
-//
-//        public boolean contains(Object obj) { // Optimization.
-//            return FastMap.this.containsKey(obj);
-//        }
-//
-//        public boolean remove(Object obj) { // Optimization.
-//            return FastMap.this.remove(obj) != null;
-//        }
-//
-//        public Record head() {
-//            return FastMap.this._head;
-//        }
-//
-//        public Record tail() {
-//            return FastMap.this._tail;
-//        }
-//
-//        public Object valueOf(Record record) {
-//            return ((Entry) record)._key;
-//        }
-//
-//        public void delete(Record record) {
-//            FastMap.this.remove(((Entry) record).getKey());
-//        }
-//
-//        public FastComparator getValueComparator() {
-//            return _keyComparator;
-//        }
-//
-//        public Iterator iterator() {
-//            return KeyIterator.valueOf(FastMap.this);
-//        }
-//    }
-//
-//    // Entry iterator optimization.
-//    private static final class KeyIterator implements Iterator {
-//
-//        private static final ObjectFactory FACTORY = new ObjectFactory() {
-//
-//            protected Object create() {
-//                return new KeyIterator();
-//            }
-//
-//            protected void cleanup(Object obj) {
-//                KeyIterator iterator = (KeyIterator) obj;
-//                iterator._map = null;
-//                iterator._current = null;
-//                iterator._next = null;
-//                iterator._tail = null;
-//            }
-//        };
-//        private FastMap _map;
-//        private Entry _current;
-//        private Entry _next;
-//        private Entry _tail;
-//
-//        public static KeyIterator valueOf(FastMap map) {
-//            KeyIterator iterator = (KeyIterator) KeyIterator.FACTORY.object();
-//            iterator._map = map;
-//            iterator._next = map._head._next;
-//            iterator._tail = map._tail;
-//            return iterator;
-//        }
-//
-//        private KeyIterator() {
-//        }
-//
-//        public boolean hasNext() {
-//            return (_next != _tail);
-//        }
-//
-//        public Object next() {
-//            if (_next == _tail) {
-//                throw new NoSuchElementException();
-//            }
-//            _current = _next;
-//            _next = _next._next;
-//            return _current._key;
-//        }
-//
-//        public void remove() {
-//            if (_current != null) {
-//                _next = _current._next;
-//                _map.remove(_current._key);
-//                _current = null;
-//            } else {
-//                throw new IllegalStateException();
-//            }
-//        }
-//    }
+    /**
+     * Returns a {@link FastCollection} view of the keys contained in this 
+     * map. The set is backed by the map, so changes to the map are reflected
+     * in the set, and vice-versa. The set supports element removal, which 
+     * removes the corresponding mapping from this map, via the 
+     * <code>Iterator.remove</code>,
+    <code>Collection.remove</code>,<code>removeAll<f/code>,
+     * <code>retainAll</code>, and <code>clear</code> operations. It does
+     * not support the <code>add</code> or <code>addAll</code> operations.
+     * 
+     * @return a set view of the keys contained in this map
+     *         (instance of {@link FastCollection}).
+     */
+    public final Set <K>  keySet() {
+        if (_keySet == null) {
+            MemoryArea.getMemoryArea(this).executeInArea(new Runnable() {
+
+                public void run() {
+                    _keySet = new KeySet();
+                }
+            });
+        }
+        return _keySet;
+    }
+
+    private final class KeySet extends FastCollection implements Set {
+
+        public int size() {
+            return FastObjectIntMap.this.size();
+        }
+
+        public void clear() {
+            FastObjectIntMap.this.clear();
+        }
+
+        public boolean contains(Object obj) { // Optimization.
+            return FastObjectIntMap.this.containsKey(obj);
+        }
+
+        public boolean remove(Object obj) { // Optimization.
+            return FastObjectIntMap.this.remove(obj) != null;
+        }
+
+        public Record head() {
+            return FastObjectIntMap.this._head;
+        }
+
+        public Record tail() {
+            return FastObjectIntMap.this._tail;
+        }
+
+        public Object valueOf(Record record) {
+            return ((Entry) record)._key;
+        }
+
+        public void delete(Record record) {
+            FastObjectIntMap.this.remove(((Entry) record).getKey());
+        }
+
+        public FastComparator getValueComparator() {
+            return _keyComparator;
+        }
+
+        public Iterator iterator() {
+            return KeyIterator.valueOf(FastObjectIntMap.this);
+        }
+    }
+
+    // Entry iterator optimization.
+    private static final class KeyIterator implements Iterator {
+
+        private static final ObjectFactory FACTORY = new ObjectFactory() {
+
+            protected Object create() {
+                return new KeyIterator();
+            }
+
+            protected void cleanup(Object obj) {
+                KeyIterator iterator = (KeyIterator) obj;
+                iterator._map = null;
+                iterator._current = null;
+                iterator._next = null;
+                iterator._tail = null;
+            }
+        };
+        private FastObjectIntMap _map;
+        private Entry _current;
+        private Entry _next;
+        private Entry _tail;
+
+        public static KeyIterator valueOf(FastObjectIntMap map) {
+            KeyIterator iterator = (KeyIterator) KeyIterator.FACTORY.object();
+            iterator._map = map;
+            iterator._next = map._head._next;
+            iterator._tail = map._tail;
+            return iterator;
+        }
+
+        private KeyIterator() {
+        }
+
+        public boolean hasNext() {
+            return (_next != _tail);
+        }
+
+        public Object next() {
+            if (_next == _tail) {
+                throw new NoSuchElementException();
+            }
+            _current = _next;
+            _next = _next._next;
+            return _current._key;
+        }
+
+        public void remove() {
+            if (_current != null) {
+                _next = _current._next;
+                _map.remove(_current._key);
+                _current = null;
+            } else {
+                throw new IllegalStateException();
+            }
+        }
+    }
 
     /**
      * Returns the unmodifiable view associated to this map.
@@ -1651,7 +1648,7 @@ if (REENTRANT_LOCK) {{
      *  
      * @return an unmodifiable view of this map.
      */
-    public final IntObjectMap <V>  unmodifiable() {
+    public final ObjectIntMap <K>  unmodifiable() {
         if (_unmodifiable == null) {
             MemoryArea.getMemoryArea(this).executeInArea(new Runnable() {
 
@@ -1667,7 +1664,7 @@ if (REENTRANT_LOCK) {{
     public void reset() {
         _isShared = false; // A shared map can only be reset if no thread use it.
         clear(); // In which case, it is safe to recycle the entries.
-        setValueComparator(FastComparator.DEFAULT);
+        setKeyComparator(FastComparator.DEFAULT);
     }
 
     /**
@@ -1680,13 +1677,13 @@ if (REENTRANT_LOCK) {{
      */
     private void readObject(ObjectInputStream stream) throws IOException,
             ClassNotFoundException {
-        setValueComparator((FastComparator) stream.readObject());
+        setKeyComparator((FastComparator) stream.readObject());
         _isShared = stream.readBoolean();
         final int size = stream.readInt();
         setup(size);
         for (int i = 0; i < size; i++) {
-             {K}  key = ( {K} ) stream.readObject();
-             V  value = ( V ) stream.readObject();
+             K  key = ( K ) stream.readObject();
+             {V}  value = ( {V} ) stream.readObject();
             put(key, value);
         }
     }
@@ -1698,7 +1695,7 @@ if (REENTRANT_LOCK) {{
      * @throws IOException if an I/O error occurs.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
-        stream.writeObject(getValueComparator());
+        stream.writeObject(getKeyComparator());
         stream.writeBoolean(_isShared);
         stream.writeInt(size());
         for (Entry e = _head,  end = _tail; (e = e._next) != end;) {
@@ -1708,10 +1705,10 @@ if (REENTRANT_LOCK) {{
     }
 
     /**
-     * This class represents a {@link FastIntObjectMap} entry.
-     * Custom {@link FastIntObjectMap} may use a derived implementation.
+     * This class represents a {@link FastObjectIntMap} entry.
+     * Custom {@link FastObjectIntMap} may use a derived implementation.
      * For example:[code]
-     *    static class MyMap<K,V,X> extends IntObjectMap<V> {
+     *    static class MyMap<K,V,X> extends FastObjectIntMap<K> {
      *        protected MyEntry newEntry() {
      *            return new MyEntry();
      *        }
@@ -1720,7 +1717,7 @@ if (REENTRANT_LOCK) {{
      *        }        
      *    }[/code]
      */
-    public static class Entry <V>  implements IntObjectMap.Entry <V> , Record, Realtime {
+    public static class Entry <K>  implements ObjectIntMap.Entry <K> , Record, Realtime {
 
         /**
          * Holds NULL entries (to fill empty hole).
@@ -1729,19 +1726,19 @@ if (REENTRANT_LOCK) {{
         /**
          * Holds the next node.
          */
-        private Entry <V>  _next;
+        private Entry <K>  _next;
         /**
          * Holds the previous node.
          */
-        private Entry <V>  _previous;
+        private Entry <K>  _previous;
         /**
          * Holds the entry key.
          */
-        private  {K}  _key;
+        private  K  _key;
         /**
          * Holds the entry value.
          */
-        private  V  _value;
+        private  {V}  _value;
         /**
          * Holds the key hash code.
          */
@@ -1758,7 +1755,7 @@ if (REENTRANT_LOCK) {{
          * 
          * @return the next entry.
          */
-        public final Entry<V> getNext() {
+        public final Entry<K> getNext() {
             return _next;
         }
 
@@ -1767,7 +1764,7 @@ if (REENTRANT_LOCK) {{
          * 
          * @return the previous entry.
          */
-        public final Entry<V> getPrevious() {
+        public final Entry<K> getPrevious() {
             return _previous;
         }
 
@@ -1776,12 +1773,8 @@ if (REENTRANT_LOCK) {{
          * 
          * @return the entry key.
          */
-        public final  {K}  getKey() {
+        public final  K  getKey() {
             return _key;
-        }
-
-        public final int getKeyHash() {
-            return _keyHash;
         }
 
         /**
@@ -1789,7 +1782,7 @@ if (REENTRANT_LOCK) {{
          * 
          * @return the entry value.
          */
-        public final  V  getValue() {
+        public final  {V}  getValue() {
             return _value;
         }
 
@@ -1799,8 +1792,8 @@ if (REENTRANT_LOCK) {{
          * @param value the new value.
          * @return the previous value.
          */
-        public final  V  setValue( V  value) {
-             V  old = _value;
+        public final  {V}  setValue( {V}  value) {
+             {V}  old = _value;
             _value = value;
             return old;
         }
@@ -1814,9 +1807,9 @@ if (REENTRANT_LOCK) {{
          *         <code>false<code> otherwise.
          */
         public boolean equals(Object that) {
-            if (that instanceof IntObjectMap.Entry) {
-                IntObjectMap.Entry entry = (IntObjectMap.Entry) that;
-                return _key == entry.getKey() && FastComparator.DEFAULT.areEqual(_value, entry.getValue());
+            if (that instanceof ObjectIntMap.Entry) {
+                ObjectIntMap.Entry entry = (ObjectIntMap.Entry) that;
+                return FastComparator.DEFAULT.areEqual(_key, entry.getKey()) && _value == entry.getValue();
             } else {
                 return false;
             }
@@ -1828,7 +1821,7 @@ if (REENTRANT_LOCK) {{
          * @return this entry hash code.
          */
         public int hashCode() {
-            return HASHCODE(_key) ^ ((_value != null) ? _value.hashCode() : 0);
+            return ((_key != null) ? _key.hashCode() : 0) ^ HASHCODE(_value);
             /*return ((_key != null) ? _key.hashCode() : 0) ^ ((_value != null) ? _value.hashCode() : 0);*/
         }
 
@@ -1841,54 +1834,54 @@ if (REENTRANT_LOCK) {{
     }
 
     /**
-     * This class represents an read-only view over a {@link FastIntObjectMap}.
+     * This class represents an read-only view over a {@link FastObjectIntMap}.
      */
-    private final class Unmodifiable implements IntObjectMap, Serializable {
+    private final class Unmodifiable implements ObjectIntMap, Serializable {
 
         public boolean equals(Object obj) {
-            return FastIntObjectMap.this.equals(obj);
+            return FastObjectIntMap.this.equals(obj);
         }
 
         public int hashCode() {
-            return FastIntObjectMap.this.hashCode();
+            return FastObjectIntMap.this.hashCode();
         }
 
         public Text toText() {
-            return FastIntObjectMap.this.toText();
+            return FastObjectIntMap.this.toText();
         }
 
         public int size() {
-            return FastIntObjectMap.this.size();
+            return FastObjectIntMap.this.size();
         }
 
         public boolean isEmpty() {
-            return FastIntObjectMap.this.isEmpty();
+            return FastObjectIntMap.this.isEmpty();
         }
 
-        public boolean containsKey({K} key) {
-            return FastIntObjectMap.this.containsKey(key);
+        public boolean containsKey(Object key) {
+            return FastObjectIntMap.this.containsKey(key);
         }
 
         public boolean containsValue(Object value) {
-            return FastIntObjectMap.this.containsValue(value);
+            return FastObjectIntMap.this.containsValue(value);
         }
 
-        public Object get({K} key) {
-            return FastIntObjectMap.this.get(key);
+        public Object get(Object key) {
+            return FastObjectIntMap.this.get(key);
         }
 
-        public Object put({K} key, Object value) {
+        public Object put(Object key, Object value) {
             throw new UnsupportedOperationException("Unmodifiable map");
         }
 
-        public Object remove({K} key) {
+        public Object remove(Object key) {
             throw new UnsupportedOperationException("Unmodifiable map");
         }
 
-        public void putAll(IntObjectMap map) {
+        public void putAll(ObjectIntMap map) {
             throw new UnsupportedOperationException("Unmodifiable map");
         }
-        public void putAll(TIntObjectMap map) {
+        public void putAll(TObjectIntMap map) {
             throw new UnsupportedOperationException("Unmodifiable map");
         }
         public void putAll(java.util.Map map) {
@@ -1899,12 +1892,12 @@ if (REENTRANT_LOCK) {{
             throw new UnsupportedOperationException("Unmodifiable map");
         }
 
-        public {K}[] keys() {
-            return FastIntObjectMap.this.keys();
+        public Set keySet() {
+            return (Set) ((KeySet) FastObjectIntMap.this.keySet()).unmodifiable();
         }
 
-        public Collection values() {
-            return ((Values) FastIntObjectMap.this.values()).unmodifiable();
+        public {V}[] values() {
+            return FastObjectIntMap.this.values();
         }
 
         public Set entrySet() {
@@ -1912,16 +1905,16 @@ if (REENTRANT_LOCK) {{
                     "Direct view over unmodifiable map entries is not supported " + " (to prevent access to Entry.setValue(Object) method). " + "To iterate over unmodifiable map entries, applications may " + "use the keySet() and values() fast collection views " + "in conjonction.");
         }
 
-        public boolean forEachKey(IntProcedure procedure) { throw new UnsupportedOperationException(); }
-        public boolean forEachValue(ObjectProcedure procedure) { throw new UnsupportedOperationException(); }
-        public boolean forEachEntry(IntObjectProcedure procedure) { throw new UnsupportedOperationException(); }
+        public boolean forEachKey(ObjectProcedure procedure) { throw new UnsupportedOperationException(); }
+        public boolean forEachValue(IntProcedure procedure) { throw new UnsupportedOperationException(); }
+        public boolean forEachEntry(ObjectIntProcedure procedure) { throw new UnsupportedOperationException(); }
     }
 
     // Holds the map factory.
     private static final ObjectFactory FACTORY = new ObjectFactory() {
 
         public Object create() {
-            return new FastIntObjectMap();
+            return new FastObjectIntMap();
         }
 
     };

@@ -2,17 +2,20 @@ use utf8;
 use strict;
 use warnings;
 
-&ToInt('KObjectMap.template', 'IntObjectMap.java.txt');
+&ToInt( 'KObjectMap.template', 'IntObjectMap.java.txt');
 &ToLong('KObjectMap.template', 'LongObjectMap.java.txt');
 
-&ToInt('FastKObjectMap.template', 'FastIntObjectMap.java.txt');
+&ToInt( 'FastKObjectMap.template', 'FastIntObjectMap.java.txt');
 &ToLong('FastKObjectMap.template', 'FastLongObjectMap.java.txt');
 
-&ToInt('KProcedure.template', 'IntProcedure.java.txt');
+&ToInt( 'KProcedure.template', 'IntProcedure.java.txt');
 &ToLong('KProcedure.template', 'LongProcedure.java.txt');
 
-&ToInt('KObjectProcedure.template', 'IntObjectProcedure.java.txt');
+&ToInt( 'KObjectProcedure.template', 'IntObjectProcedure.java.txt');
 &ToLong('KObjectProcedure.template', 'LongObjectProcedure.java.txt');
+
+&ToInt( 'FastObjectVMap.template', 'FastObjectIntMap.java.txt');
+&ToLong('FastObjectVMap.template', 'FastObjectLongMap.java.txt');
 
 exit;
 
@@ -22,6 +25,7 @@ sub ToInt()
 	$_ = readAll($template);
 
 	s/\Q{K}/int/g;
+	s/\Q{V}/int/g;
 	s/\bHASHCODE\((\w+?)\)/$1/g;
 
 	s/[ \t]*\/\*\@IF INT\@\*\/[ \t]*//g;
@@ -37,6 +41,7 @@ sub ToLong()
 	$_ = readAll($template);
 
 	s/\Q{K}/long/g;
+	s/\Q{V}/long/g;
 	s/\bHASHCODE\((\w+?)\)/(int)($1 ^ ($1 >>> 32))/g;
 
 	s/[ \t]*\/\*\@IF LONG\@\*\/[ \t]*//g;
@@ -46,6 +51,7 @@ sub ToLong()
 	s/\bInteger\b/Long/g;
 	s/\bIntProcedure\b/LongProcedure/g;
 	s/IntObject/LongObject/g;
+	s/ObjectInt/ObjectLong/g;
 
 	writeAll($output, $_);
 }
