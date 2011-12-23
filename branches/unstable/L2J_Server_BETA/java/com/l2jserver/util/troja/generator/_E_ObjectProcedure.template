@@ -18,11 +18,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ///////////////////////////////////////////////////////////////////////////////
 
-package com.l2jserver.util.troja;
-
-public interface LongIterator
-{
-    public boolean hasNext();
-    public long next();
-    public void remove();
+package #p#;
+public interface #E#ObjectProcedure<T> {
+    public boolean execute( #e# a, T b );
 }

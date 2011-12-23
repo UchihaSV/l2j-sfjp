@@ -1,8 +1,0 @@
-package com.l2jserver.util.troja;
-
-public interface IntIterator
-{
-    public boolean hasNext();
-    public {K} next();
-    public void remove();
-}

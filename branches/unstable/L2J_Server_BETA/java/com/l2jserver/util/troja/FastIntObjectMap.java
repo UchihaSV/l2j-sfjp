@@ -1912,6 +1912,8 @@ if (REENTRANT_LOCK) {{
             return FastIntObjectMap.this.keys();
         }
 
+        public IntIterator keySetIterator() { throw new UnsupportedOperationException(); } //TODO:
+
         public Collection values() {
             return ((Values) FastIntObjectMap.this.values()).unmodifiable();
         }
@@ -1921,9 +1923,9 @@ if (REENTRANT_LOCK) {{
                     "Direct view over unmodifiable map entries is not supported " + " (to prevent access to Entry.setValue(Object) method). " + "To iterate over unmodifiable map entries, applications may " + "use the keySet() and values() fast collection views " + "in conjonction.");
         }
 
-        public boolean forEachKey(IntProcedure procedure) { throw new UnsupportedOperationException(); }
-        public boolean forEachValue(ObjectProcedure procedure) { throw new UnsupportedOperationException(); }
-        public boolean forEachEntry(IntObjectProcedure procedure) { throw new UnsupportedOperationException(); }
+        public boolean forEachKey(IntProcedure procedure) { throw new UnsupportedOperationException(); } //TODO:
+        public boolean forEachValue(ObjectProcedure procedure) { throw new UnsupportedOperationException(); } //TODO:
+        public boolean forEachEntry(IntObjectProcedure procedure) { throw new UnsupportedOperationException(); } //TODO:
     }
 
     // Holds the map factory.
