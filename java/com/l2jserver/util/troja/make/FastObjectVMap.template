@@ -1,4 +1,4 @@
------------- ñ¢äÆê¨ ---------------
+//------------ ñ¢äÆê¨ ---------------
 
 /*
  * Troja: Trove + Javolution.
@@ -1302,63 +1302,66 @@ if (REENTRANT_LOCK) {{
 //            return ValueIterator.valueOf(FastObjectIntMap.this);
 //        }
 //    }
-//
-//    // Value iterator optimization.
-//    private static final class ValueIterator implements Iterator {
-//
-//        private static final ObjectFactory FACTORY = new ObjectFactory() {
-//
-//            protected Object create() {
-//                return new ValueIterator();
-//            }
-//
-//            protected void cleanup(Object obj) {
-//                ValueIterator iterator = (ValueIterator) obj;
-//                iterator._map = null;
-//                iterator._current = null;
-//                iterator._next = null;
-//                iterator._tail = null;
-//            }
-//        };
-//        private FastObjectIntMap _map;
-//        private Entry _current;
-//        private Entry _next;
-//        private Entry _tail;
-//
-//        public static ValueIterator valueOf(FastObjectIntMap map) {
-//            ValueIterator iterator = (ValueIterator) ValueIterator.FACTORY.object();
-//            iterator._map = map;
-//            iterator._next = map._head._next;
-//            iterator._tail = map._tail;
-//            return iterator;
-//        }
-//
-//        private ValueIterator() {
-//        }
-//
-//        public boolean hasNext() {
-//            return (_next != _tail);
-//        }
-//
-//        public Object next() {
-//            if (_next == _tail) {
-//                throw new NoSuchElementException();
-//            }
-//            _current = _next;
-//            _next = _next._next;
-//            return _current._value;
-//        }
-//
-//        public void remove() {
-//            if (_current != null) {
-//                _next = _current._next;
-//                _map.remove(_current._key);
-//                _current = null;
-//            } else {
-//                throw new IllegalStateException();
-//            }
-//        }
-//    }
+
+    public IntIterator valuesIterator() {
+        return ValueIterator.valueOf(FastObjectIntMap.this);
+    }
+    // Value iterator optimization.
+    private static final class ValueIterator implements IntIterator {
+
+        private static final ObjectFactory FACTORY = new ObjectFactory() {
+
+            protected Object create() {
+                return new ValueIterator();
+            }
+
+            protected void cleanup(Object obj) {
+                ValueIterator iterator = (ValueIterator) obj;
+                iterator._map = null;
+                iterator._current = null;
+                iterator._next = null;
+                iterator._tail = null;
+            }
+        };
+        private FastObjectIntMap _map;
+        private Entry _current;
+        private Entry _next;
+        private Entry _tail;
+
+        public static ValueIterator valueOf(FastObjectIntMap map) {
+            ValueIterator iterator = (ValueIterator) ValueIterator.FACTORY.object();
+            iterator._map = map;
+            iterator._next = map._head._next;
+            iterator._tail = map._tail;
+            return iterator;
+        }
+
+        private ValueIterator() {
+        }
+
+        public boolean hasNext() {
+            return (_next != _tail);
+        }
+
+        public {V} next() {
+            if (_next == _tail) {
+                throw new NoSuchElementException();
+            }
+            _current = _next;
+            _next = _next._next;
+            return _current._value;
+        }
+
+        public void remove() {
+            if (_current != null) {
+                _next = _current._next;
+                _map.remove(_current._key);
+                _current = null;
+            } else {
+                throw new IllegalStateException();
+            }
+        }
+    }
 
     /**
      * Returns a {@link FastCollection} view of the mappings contained in this
