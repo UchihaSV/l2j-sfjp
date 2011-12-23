@@ -1527,7 +1527,7 @@ if (REENTRANT_LOCK) {{
 //     * @return a set view of the keys contained in this map
 //     *         (instance of {@link FastCollection}).
 //     */
-//    public final Set keySet() {
+//    public final Set <K>  keySet() {
 //        if (_keySet == null) {
 //            MemoryArea.getMemoryArea(this).executeInArea(new Runnable() {
 //
@@ -1581,63 +1581,73 @@ if (REENTRANT_LOCK) {{
 //            return KeyIterator.valueOf(FastMap.this);
 //        }
 //    }
-//
-//    // Entry iterator optimization.
-//    private static final class KeyIterator implements Iterator {
-//
-//        private static final ObjectFactory FACTORY = new ObjectFactory() {
-//
-//            protected Object create() {
-//                return new KeyIterator();
-//            }
-//
-//            protected void cleanup(Object obj) {
-//                KeyIterator iterator = (KeyIterator) obj;
-//                iterator._map = null;
-//                iterator._current = null;
-//                iterator._next = null;
-//                iterator._tail = null;
-//            }
-//        };
-//        private FastMap _map;
-//        private Entry _current;
-//        private Entry _next;
-//        private Entry _tail;
-//
-//        public static KeyIterator valueOf(FastMap map) {
-//            KeyIterator iterator = (KeyIterator) KeyIterator.FACTORY.object();
-//            iterator._map = map;
-//            iterator._next = map._head._next;
-//            iterator._tail = map._tail;
-//            return iterator;
-//        }
-//
-//        private KeyIterator() {
-//        }
-//
-//        public boolean hasNext() {
-//            return (_next != _tail);
-//        }
-//
-//        public Object next() {
-//            if (_next == _tail) {
-//                throw new NoSuchElementException();
-//            }
-//            _current = _next;
-//            _next = _next._next;
-//            return _current._key;
-//        }
-//
-//        public void remove() {
-//            if (_current != null) {
-//                _next = _current._next;
-//                _map.remove(_current._key);
-//                _current = null;
-//            } else {
-//                throw new IllegalStateException();
-//            }
-//        }
-//    }
+
+    /**
+     * <pre>For example:
+     * for (IntIterator it = map.keySetIterator(); it.hasNext(); ) {
+     *   int key = it.next();
+     *   ...
+     * }</pre>
+     */
+    public IntIterator keySetIterator() {
+        return KeyIterator.valueOf(FastIntObjectMap.this);
+    }
+    // Entry iterator optimization.
+    private static final class KeyIterator implements IntIterator {
+
+        private static final ObjectFactory FACTORY = new ObjectFactory() {
+
+            protected Object create() {
+                return new KeyIterator();
+            }
+
+            protected void cleanup(Object obj) {
+                KeyIterator iterator = (KeyIterator) obj;
+                iterator._map = null;
+                iterator._current = null;
+                iterator._next = null;
+                iterator._tail = null;
+            }
+        };
+        private FastIntObjectMap _map;
+        private Entry _current;
+        private Entry _next;
+        private Entry _tail;
+
+        public static KeyIterator valueOf(FastIntObjectMap map) {
+            KeyIterator iterator = (KeyIterator) KeyIterator.FACTORY.object();
+            iterator._map = map;
+            iterator._next = map._head._next;
+            iterator._tail = map._tail;
+            return iterator;
+        }
+
+        private KeyIterator() {
+        }
+
+        public boolean hasNext() {
+            return (_next != _tail);
+        }
+
+        public int next() {
+            if (_next == _tail) {
+                throw new NoSuchElementException();
+            }
+            _current = _next;
+            _next = _next._next;
+            return _current._key;
+        }
+
+        public void remove() {
+            if (_current != null) {
+                _next = _current._next;
+                _map.remove(_current._key);
+                _current = null;
+            } else {
+                throw new IllegalStateException();
+            }
+        }
+    }
 
     /**
      * Returns the unmodifiable view associated to this map.

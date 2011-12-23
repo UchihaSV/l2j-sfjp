@@ -17,6 +17,9 @@ use warnings;
 &ToInt( 'FastObjectVMap.template', 'FastObjectIntMap.java.txt');
 &ToLong('FastObjectVMap.template', 'FastObjectLongMap.java.txt');
 
+&ToInt( 'KIterator.template', 'IntIterator.java.txt');
+&ToLong('KIterator.template', 'LongIterator.java.txt');
+
 exit;
 
 sub ToInt()
@@ -50,6 +53,7 @@ sub ToLong()
 
 	s/\bInteger\b/Long/g;
 	s/\bIntProcedure\b/LongProcedure/g;
+	s/\bIntIterator\b/LongIterator/g;
 	s/IntObject/LongObject/g;
 	s/ObjectInt/ObjectLong/g;
 
