@@ -3,11 +3,10 @@ package com.l2jserver.util.troja.test;
 import com.l2jserver.util.Rnd;
 import com.l2jserver.util.troja.FastIntObjectMap;
 import com.l2jserver.util.troja.IntObjectMap;
-import com.l2jserver.util.troja.IntObjectProcedure;
 
 public class TestForEntryFastIntObjectMap2
 {
-	private static IntObjectMap<String> map = new FastIntObjectMap<String>().shared();	//2,427,303,580
+	private static FastIntObjectMap<String> map = new FastIntObjectMap<String>().shared();	//2,090,653,331
 	static
 	{
 		for (int i = 0; i < 800000; i++)
@@ -20,22 +19,20 @@ public class TestForEntryFastIntObjectMap2
 	
 	static class Iterate implements Runnable
 	{
-		int count;
 		@Override
 		public void run()
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				count = 0;
-				map.forEachEntry(new IntObjectProcedure<String>() {
-					@Override
-					public boolean execute(int key, String value)
-					{
-						if (key % 10 == 0)
-							++count;
-						return true;
-					}
-				});
+				int count = 0;
+				// http://javolution.org/target/site/apidocs/javolution/util/FastMap.html
+				// FastMap.Entry can quickly be iterated over (forward or backward) without using iterators.
+				for (IntObjectMap.Entry<String> e = map.head(), end = map.tail(); (e = e.getNext()) != end;)
+				{
+					int key = e.getKey();
+					if (key % 10 == 0)
+						++count;
+				}
 				map.put(count, "*");
 			}
 		}

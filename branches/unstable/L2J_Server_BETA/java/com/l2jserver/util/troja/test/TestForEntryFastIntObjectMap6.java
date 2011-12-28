@@ -3,11 +3,10 @@ package com.l2jserver.util.troja.test;
 import com.l2jserver.util.Rnd;
 import com.l2jserver.util.troja.FastIntObjectMap;
 import com.l2jserver.util.troja.IntObjectMap;
-import com.l2jserver.util.troja.IntObjectProcedure;
 
-public class TestForEntryFastIntObjectMap3
+public class TestForEntryFastIntObjectMap6
 {
-	private static IntObjectMap<String> map = new FastIntObjectMap<String>().shared();	//2,427,303,580
+	private static FastIntObjectMap<String> map = new FastIntObjectMap<>();	//6,083,137,014
 	static
 	{
 		for (int i = 0; i < 800000; i++)
@@ -20,24 +19,23 @@ public class TestForEntryFastIntObjectMap3
 	
 	static class Iterate implements Runnable
 	{
-		int count;
 		@Override
 		public void run()
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				count = 0;
-				// trove like
-				map.forEachEntry(new IntObjectProcedure<String>() {
-					@Override
-					public boolean execute(int key, String value)
+				int count = 0;
+				// bad performance
+				synchronized (map)
+				{
+					for (IntObjectMap.Entry<String> e : map.entrySet())
 					{
+						int key = e.getKey();
 						if (key % 10 == 0)
 							++count;
-						return true;
 					}
-				});
-				map.put(count, "*");
+					map.put(count, "*");
+				}
 			}
 		}
 	}
