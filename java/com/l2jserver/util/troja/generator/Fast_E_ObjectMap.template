@@ -1237,6 +1237,21 @@ if (REENTRANT_LOCK) {{
                 return false;
         return true;
     }
+    /**
+     * <b>Deprecated</b><br>
+     * trove like.
+     */
+    public boolean retainEntries(#E#ObjectProcedure<? super V> procedure) {
+        boolean modified = false;
+        for (Iterator<#E#ObjectMap.Entry<V>> it = entrySet().iterator(); it.hasNext(); ) {
+            #E#ObjectMap.Entry<V> e = it.next();
+            if (!procedure.execute(e.getKey(), e.getValue())) {
+                it.remove();
+                modified = true;
+            }
+        }
+        return modified;
+    }
 
     /**
      * Returns a {@link FastCollection} view of the values contained in this
@@ -1262,6 +1277,9 @@ if (REENTRANT_LOCK) {{
             });
         }
         return _values;
+    }
+    public final Collection <V>  valueCollection() {
+        return values();
     }
 
     private final class Values extends FastCollection {
