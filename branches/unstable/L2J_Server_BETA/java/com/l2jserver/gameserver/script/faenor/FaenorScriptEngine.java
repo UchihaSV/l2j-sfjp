@@ -35,6 +35,8 @@ import com.l2jserver.gameserver.datatables.EventDroplist.DateDrop;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.model.L2DropData;
 import com.l2jserver.gameserver.model.item.L2Item;
+import com.l2jserver.gameserver.script.DateRange;
+import com.l2jserver.gameserver.script.EventDrop;
 import com.l2jserver.gameserver.script.Parser;
 import com.l2jserver.gameserver.script.ParserNotCreatedException;
 import com.l2jserver.gameserver.script.ScriptDocument;
@@ -137,14 +139,16 @@ public class FaenorScriptEngine extends ScriptEngine
 	public void dump()	//+[JOJO]
 	{
 		System.out.println("FaenorScriptEngine:");
-		for (DateDrop drop : EventDroplist.getInstance().getAllDrops())
+		for (DateDrop dateDrop : EventDroplist.getInstance().getAllDrops())
 		{
+			EventDrop eventDrop = dateDrop.getEventDrop();
+			DateRange dateRange = dateDrop.getDateRange();
 			System.out.println("  Active="
-					+ dateFormat(drop.dateRange.getStartDate())
+					+ dateFormat(dateRange.getStartDate())
 					+ "-"
-					+ dateFormat(drop.dateRange.getEndDate()));
-			System.out.println("  Count=" + drop.min + "," + drop.max + " Chance=" + ((double)drop.chance * 100 / L2DropData.MAX_CHANCE) + "%");
-			for (int itemId : drop.items)
+					+ dateFormat(dateRange.getEndDate()));
+			System.out.println("  Count=" + eventDrop.getMinCount() + "," + eventDrop.getMaxCount() + " Chance=" + ((double)eventDrop.getDropChance() * 100 / L2DropData.MAX_CHANCE) + "%");
+			for (int itemId : eventDrop.getItemIdList())
 			{
 				L2Item i = ItemTable.getInstance().getTemplate(itemId);
 				System.out.println("    Item=" + itemId + " " + (i == null ? "NULL" : i.getName()));
