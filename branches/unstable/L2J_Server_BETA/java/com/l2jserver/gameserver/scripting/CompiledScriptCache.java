@@ -55,7 +55,7 @@ public class CompiledScriptCache implements Serializable
 	public CompiledScript loadCompiledScript(ScriptEngine engine, File file) throws FileNotFoundException, ScriptException
 	{
 		int len = L2ScriptEngineManager.SCRIPT_FOLDER.getPath().length() + 1;
-		String relativeName = file.getPath().substring(len);
+		String relativeName = file.getPath().substring(len).replace('\\', '/');
 		
 		CompiledScriptHolder csh = _compiledScriptCache.get(relativeName);
 		if (csh != null && csh.matches(file))
@@ -75,6 +75,7 @@ public class CompiledScriptCache implements Serializable
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		
 		// TODO lock file
+		System.out.println(" script compiling: " + relativeName); //[JOJO]
 		CompiledScript cs = eng.compile(reader);
 		if (cs instanceof Serializable)
 		{
