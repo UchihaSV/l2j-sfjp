@@ -410,6 +410,8 @@ public final class L2ScriptEngineManager
 //		BufferedReader reader = Util.utf8BufferedReader(file);					//[JOJO] UTF-8 TODO:BOM対策
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		
+		String relativeName = file.getAbsolutePath().substring(SCRIPT_FOLDER.getAbsolutePath().length() + 1).replace('\\', '/');	//[JOJO]
+		
 		if (VERBOSE_LOADING)
 		{
 			_log.info("Loading Script: " + file.getAbsolutePath());
@@ -429,10 +431,11 @@ public final class L2ScriptEngineManager
 		{
 			ScriptContext context = new SimpleScriptContext();
 			context.setAttribute("mainClass", getClassForFile(file).replace('/', '.').replace('\\', '.'), ScriptContext.ENGINE_SCOPE);
-			context.setAttribute(ScriptEngine.FILENAME, file.getName(), ScriptContext.ENGINE_SCOPE);
+			context.setAttribute(ScriptEngine.FILENAME, relativeName, ScriptContext.ENGINE_SCOPE);
 			context.setAttribute("classpath", SCRIPT_FOLDER.getAbsolutePath(), ScriptContext.ENGINE_SCOPE);
 			context.setAttribute("sourcepath", SCRIPT_FOLDER.getAbsolutePath(), ScriptContext.ENGINE_SCOPE);
-		//	context.setAttribute(JythonScriptEngine.JYTHON_ENGINE_INSTANCE, engine, ScriptContext.ENGINE_SCOPE); //[JOJO] Jython 日本語バグありバージョン用なので削除
+			context.setAttribute("com.l2jserver.script.jython.engine.instance", engine, ScriptContext.ENGINE_SCOPE); //+[JOJO]
+		//	context.setAttribute(JythonScriptEngine.JYTHON_ENGINE_INSTANCE, engine, ScriptContext.ENGINE_SCOPE); //-[JOJO] Jython 日本語バグありバージョン用なので削除
 			
 			this.setCurrentLoadingScript(file);
 			ScriptContext ctx = engine.getContext();
@@ -446,7 +449,7 @@ public final class L2ScriptEngineManager
 				}
 				else
 				{
-        			System.out.println(" script compiling: " + context.getAttribute("mainClass", ScriptContext.ENGINE_SCOPE)); //XXX:[JOJO]
+					System.out.println(" script compiling: " + relativeName); //[JOJO]
 					Compilable eng = (Compilable) engine;
 					CompiledScript cs = eng.compile(reader);
 					cs.eval(context);
@@ -464,7 +467,7 @@ public final class L2ScriptEngineManager
 		{
 			ScriptContext context = new SimpleScriptContext();
 			context.setAttribute("mainClass", getClassForFile(file).replace('/', '.').replace('\\', '.'), ScriptContext.ENGINE_SCOPE);
-			context.setAttribute(ScriptEngine.FILENAME, file.getName(), ScriptContext.ENGINE_SCOPE);
+			context.setAttribute(ScriptEngine.FILENAME, relativeName, ScriptContext.ENGINE_SCOPE);
 			context.setAttribute("classpath", SCRIPT_FOLDER.getAbsolutePath(), ScriptContext.ENGINE_SCOPE);
 			context.setAttribute("sourcepath", SCRIPT_FOLDER.getAbsolutePath(), ScriptContext.ENGINE_SCOPE);
 			this.setCurrentLoadingScript(file);
