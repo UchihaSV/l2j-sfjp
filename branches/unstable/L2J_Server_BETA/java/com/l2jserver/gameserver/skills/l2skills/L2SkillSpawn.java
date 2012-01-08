@@ -14,7 +14,6 @@
  */
 package com.l2jserver.gameserver.skills.l2skills;
 
-import static java.lang.Math.PI;
 import static javolution.lang.MathLib.TWO_PI;
 
 import java.util.logging.Level;
@@ -26,10 +25,7 @@ import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
-import com.l2jserver.gameserver.model.actor.instance.IhaveOwner;
-import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2TotemInstance;
-import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo.NpcInfo;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 import com.l2jserver.util.Rnd;
 
@@ -57,7 +53,9 @@ public class L2SkillSpawn extends L2Skill
 	public void useSkill(L2Character caster, L2Object[] targets)
 	{
 		if (caster.isAlikeDead())
+		{
 			return;
+		}
 		
 		if (_npcId == 0)
 		{
@@ -72,50 +70,51 @@ public class L2SkillSpawn extends L2Skill
 			return;
 		}
 		
+		final L2Spawn spawn;
 		try
 		{
-			final L2Spawn spawn = new L2Spawn(template);
-			spawn.setInstanceId(caster.getInstanceId());
-			
-			int x, y, h;
-			if (_randomOffset)
-			{
-				double radius = 20.0 + 30.0 * Rnd.nextDouble();
-				double angle = TWO_PI * Rnd.nextDouble();
-				x = caster.getX() + (int)(radius * Math.cos(angle));
-				y = caster.getY() + (int)(radius * Math.sin(angle));
-				h = (int)((angle + PI) / TWO_PI * 65536.0) % 65536;
-			}
-			else
-			{
-				x = caster.getX();
-				y = caster.getY();
-				h = caster.getHeading();
-			}
-			spawn.setLocx(x);
-			spawn.setLocy(y);
-			spawn.setLocz(caster.getZ() + 20);
-			spawn.setHeading(h);
-			
-			spawn.stopRespawn();
-			L2Npc npc = spawn.spawnOne(_summonSpawn);
-			if (_despawnDelay > 0)
-				npc.scheduleDespawn(_despawnDelay);
-			
-			if (npc instanceof IhaveOwner)
-				((IhaveOwner)npc).setOwner((L2PcInstance)caster);
-			if (npc instanceof L2TotemInstance)
-				((L2TotemInstance)npc).startAITask(_skillToCast);
-			
-			if (_showOwnerName)
-			{
-				npc.setTitle(caster.getName());
-				npc.broadcastPacket(new NpcInfo(npc, null));
-			}
+			spawn = new L2Spawn(template);
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Exception while spawning NPC ID: " + _npcId + ", skill ID: " + getId() + ", exception: " + e.getMessage(), e);
+			_log.log(Level.WARNING, "Exception in L2SkillSpawn. NPC ID: " + _npcId + ", skill ID: " + getId() + ", exception: " + e.getMessage(), e);
+			return;
+		}
+		
+		int x = caster.getX();
+		int y = caster.getY();
+		if (_randomOffset)
+		{
+			double radius = 20.0 + 30.0 * Rnd.nextDouble();
+			double angle = TWO_PI * Rnd.nextDouble();
+			x += (int)(radius * Math.cos(angle));
+			y += (int)(radius * Math.sin(angle));
+		}
+		
+		spawn.setLocx(x);
+		spawn.setLocy(y);
+		spawn.setLocz(caster.getZ() + 20);
+		spawn.setHeading(caster.getHeading());
+		spawn.stopRespawn();
+		spawn.setInstanceId(caster.getInstanceId());	//+[JOJO]
+		
+		final L2Npc npc = spawn.doSpawn(_summonSpawn);
+		//npc.setName(template.getName());	//-[JOJO]
+		if (_showOwnerName)
+		{
+			npc.setTitle(caster.getName());
+		}
+		npc.setSummoner(caster);
+		if (_despawnDelay > 0)
+		{
+			npc.scheduleDespawn(_despawnDelay);
+		}
+		npc.setIsRunning(false); // Broadcast info
+		
+		if ((npc instanceof L2TotemInstance) && (_skillToCast > 0))
+		{
+			((L2TotemInstance) npc).setSkill(_skillToCast);
+			((L2TotemInstance) npc).setAITask();
 		}
 	}
 }
