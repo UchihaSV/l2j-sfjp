@@ -26,27 +26,14 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
  * ・召還した人を保持する。
  * ・攻撃できるが、反撃してこない。
  */
-public class L2ChronoMonsterInstance extends L2MonsterInstance implements IhaveOwner
+public class L2ChronoMonsterInstance extends L2MonsterInstance
 {
-	private L2PcInstance _owner;
-	
 	public L2ChronoMonsterInstance(int objectId, L2NpcTemplate template)
 	{
 		super(objectId, template);
 		setAI(new L2ChronoAI(new AIAccessor()));
 	}
 	
-	@Override
-	public L2PcInstance getOwner()
-	{
-		return _owner;
-	}
-	@Override
-	public void setOwner(L2PcInstance newOwner)
-	{
-		_owner = newOwner;
-	}
-
 	public class AIAccessor extends L2Character.AIAccessor
 	{
 		@Override

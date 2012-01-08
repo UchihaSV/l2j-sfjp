@@ -21,7 +21,6 @@ import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.L2Party;
 import com.l2jserver.gameserver.model.L2Skill;
-import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.zone.type.L2PeaceZone;
@@ -44,28 +43,16 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
  * |召喚スキル  22249-1 バースデイ ケーキ
  * |BUFスキル   22250-1 バースデイ ケーキ効果 - バースデイ ケーキのバイタリティ効果。5分間、バイタリティが保たれている状態。
  */
-public class L2BirthdayCakeInstance extends L2Npc implements IhaveOwner
+public class L2BirthdayCakeInstance extends L2Npc
 {
 	private static final int BIRTHDAY_CAKE_24 = 106;
 	private static final int BIRTHDAY_CAKE = 139;
 	private L2Skill _skill;
 	private ScheduledFuture<?> _aiTask;
-	private int _masterId;
 	
 	public L2BirthdayCakeInstance(int objectId, L2NpcTemplate template)
 	{
 		super(objectId, template);
-	}
-	
-	@Override
-	public final L2PcInstance getOwner()	//[JOJO]
-	{
-		return L2World.getInstance().getPlayer(_masterId);
-	}
-	@Override
-	public void setOwner(L2PcInstance newOwner)	//[JOJO]
-	{
-		_masterId = newOwner.getObjectId();
 	}
 	
 	private class BuffTask implements Runnable
@@ -86,7 +73,7 @@ public class L2BirthdayCakeInstance extends L2Npc implements IhaveOwner
 					break;
 					
 				case BIRTHDAY_CAKE:
-					L2PcInstance player = L2World.getInstance().getPlayer(_masterId);
+					L2PcInstance player = (L2PcInstance)getSummoner();
 					if (player == null)
 						return;
 					
