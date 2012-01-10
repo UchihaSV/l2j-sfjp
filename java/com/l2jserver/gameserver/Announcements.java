@@ -75,14 +75,14 @@ public class Announcements
 	{
 		for (String announce : _announcements)
 		{
+			if (announce.indexOf('%') >= 0)
+				announce = announce.replaceFirst("%server_name%", LoginServerThread.getInstance().getServerName());			//[JOJO]
 			CreatureSay cs = new CreatureSay(0, Say2.ANNOUNCEMENT, activeChar.getName(), announce);
 			activeChar.sendPacket(cs);
 		}
 		
 		for (String critAnnounce : _critAnnouncements)
 		{
-			if (critAnnounce.indexOf('%') >= 0)
-				critAnnounce = critAnnounce.replaceFirst("%server_name%", LoginServerThread.getInstance().getServerName());			//[JOJO]
 			CreatureSay cs = new CreatureSay(0, Say2.CRITICAL_ANNOUNCE, activeChar.getName(), critAnnounce);
 			activeChar.sendPacket(cs);
 		}
