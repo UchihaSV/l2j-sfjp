@@ -202,8 +202,7 @@ public class PcAppearance
 	
 	public void setNameColor(int red, int green, int blue)
 	{
-		_nameColor = (red & 0xFF) + ((green & 0xFF) << 8)
-		+ ((blue & 0xFF) << 16);
+		_nameColor = (red & 0xFF) << 16 | (green & 0xFF) << 8 | (blue & 0xFF);
 	}
 	
 	public int getTitleColor()
@@ -221,8 +220,7 @@ public class PcAppearance
 	
 	public void setTitleColor(int red, int green, int blue)
 	{
-		_titleColor = (red & 0xFF) + ((green & 0xFF) << 8)
-		+ ((blue & 0xFF) << 16);
+		_titleColor = (red & 0xFF) << 16 | (green & 0xFF) << 8 | (blue & 0xFF);
 	}
 	
 	/**
