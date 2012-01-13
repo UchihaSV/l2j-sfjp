@@ -29,7 +29,6 @@ import com.l2jserver.Config;
 
 /**
  * @author mrTJO
- *
  */
 public class ExperienceTable
 {
@@ -65,10 +64,12 @@ public class ExperienceTable
 			catch (IOException e)
 			{
 				_log.log(Level.WARNING, "Could not read experience.xml table: " + e.getMessage(), e);
+				return;
 			}
 			catch (Exception e)
 			{
 				_log.log(Level.WARNING, "Could not parse experience.xml table: " + e.getMessage(), e);
+				return;
 			}
 			
 			Node table = doc.getFirstChild();
