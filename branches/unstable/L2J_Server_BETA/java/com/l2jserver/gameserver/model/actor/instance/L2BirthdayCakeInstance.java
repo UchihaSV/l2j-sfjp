@@ -18,12 +18,10 @@ import java.util.concurrent.ScheduledFuture;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.SkillTable;
-import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.L2Party;
 import com.l2jserver.gameserver.model.L2Skill;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
-import com.l2jserver.gameserver.model.zone.type.L2PeaceZone;
 import com.l2jserver.gameserver.network.serverpackets.PlaySound;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
@@ -53,6 +51,7 @@ public class L2BirthdayCakeInstance extends L2Npc
 	public L2BirthdayCakeInstance(int objectId, L2NpcTemplate template)
 	{
 		super(objectId, template);
+		setInstanceType(InstanceType.L2BirthdayCakeInstance);
 	}
 	
 	private class BuffTask implements Runnable
@@ -60,37 +59,45 @@ public class L2BirthdayCakeInstance extends L2Npc
 		@Override
 		public void run()
 		{
-			final L2BirthdayCakeInstance npc = L2BirthdayCakeInstance.this;
+			final L2BirthdayCakeInstance cake = L2BirthdayCakeInstance.this;
 			final L2Skill skill = _skill;
-			switch (getNpcId())
+			switch (cake.getNpcId())
 			{
 				case BIRTHDAY_CAKE_24:
-					for (L2PcInstance player : getKnownList().getKnownPlayersInRadius(skill.getSkillRadius()))
+					for (L2PcInstance player : cake.getKnownList().getKnownPlayersInRadius(skill.getSkillRadius()))
 					{
 						if (player.getFirstEffect(skill) == null)
-							skill.getEffects(npc, player);
+						{
+							skill.getEffects(cake, player);
+						}
 					}
 					break;
 					
 				case BIRTHDAY_CAKE:
-					L2PcInstance player = (L2PcInstance)getSummoner();
+					final L2PcInstance player = (L2PcInstance) cake.getSummoner();
 					if (player == null)
+					{
 						return;
+					}
 					
-					L2Party party = player.getParty();
+					final L2Party party = player.getParty();
 					if (party == null)
 					{
-						if (player.isInsideRadius(npc, skill.getSkillRadius(), true, true)
+						if (player.isInsideRadius(cake, skill.getSkillRadius(), true, true)
 						 && player.getFirstEffect(skill) == null)
-							skill.getEffects(npc, player);
+						{
+							skill.getEffects(cake, player);
+						}
 					}
 					else
 					{
 						for (L2PcInstance member : party.getPartyMembers())
 						{
-							if (member != null && member.isInsideRadius(npc, skill.getSkillRadius(), true, true)
+							if ((member != null) && member.isInsideRadius(cake, skill.getSkillRadius(), true, true)
 							 && member.getFirstEffect(skill) == null)
-								skill.getEffects(npc, member);
+							{
+								skill.getEffects(cake, member);
+							}
 						}
 					}
 					break;
@@ -104,7 +111,7 @@ public class L2BirthdayCakeInstance extends L2Npc
 		super.onSpawn();
 		setShowSummonAnimation(false);
 		
-		if (ZoneManager.getInstance().getZone(this, L2PeaceZone.class) == null)
+		if (!isInsideZone(ZONE_PEACE))
 		{
 			switch (getNpcId())
 			{
@@ -119,6 +126,7 @@ public class L2BirthdayCakeInstance extends L2Npc
 			}
 			
 			_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new BuffTask(), 3000, 3000);
+			
 			broadcastPacket(new PlaySound(1, "HB01", 0, 0, 0, 0, 0));	//[JOJO]
 		}
 	}
@@ -134,9 +142,6 @@ public class L2BirthdayCakeInstance extends L2Npc
 		super.deleteMe();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jserver.gameserver.model.L2Object#isAttackable()
-	 */
 	@Override
 	public boolean isAutoAttackable(L2Character attacker)
 	{
