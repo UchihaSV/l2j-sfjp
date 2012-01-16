@@ -45,8 +45,6 @@ public class TaskBirthday extends Task
 	
 	private static final String QUERY = "SELECT charId, createDate FROM characters WHERE createDate LIKE ?";
 	
-	private int _count = 0;
-	
 	@Override
 	public String getName()
 	{
