@@ -1728,9 +1728,6 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jserver.gameserver.model.actor.L2Character#isMovementDisabled()
-	 */
 	@Override
 	public boolean isMovementDisabled()
 	{

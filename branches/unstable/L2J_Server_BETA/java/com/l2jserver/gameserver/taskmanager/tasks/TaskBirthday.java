@@ -45,18 +45,14 @@ public class TaskBirthday extends Task
 	
 	private static final String QUERY = "SELECT charId, createDate FROM characters WHERE createDate LIKE ?";
 	
-	/* (non-Javadoc)
-	 * @see com.l2jserver.gameserver.taskmanager.Task#getName()
-	 */
+	private int _count = 0;
+	
 	@Override
 	public String getName()
 	{
 		return NAME;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.l2jserver.gameserver.taskmanager.Task#onTimeElapsed(com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask)
-	 */
+	
 	@Override
 	public void onTimeElapsed(ExecutedTask task)
 	{
