@@ -23,6 +23,7 @@ import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.util.logging.Logger;
 
 import javolution.io.UTF8StreamReader;
 import javolution.io.UTF8StreamWriter;
@@ -34,6 +35,8 @@ import javolution.io.UTF8StreamWriter;
  */
 public class Util
 {
+	private static final Logger _log = Logger.getLogger(Util.class.getName());
+	
 	/**
 	 * Checks if a host name is internal
 	 * 
@@ -52,7 +55,7 @@ public class Util
 		}
 		catch (UnknownHostException e)
 		{
-			e.printStackTrace();
+			_log.warning("Util: " + e.getMessage());
 		}
 		return false;
 	}
@@ -194,11 +197,8 @@ public class Util
 
 	/**
 	 * Method to get the stack trace of a Throwable into a String
-	 * 
-	 * @param t
-	 * 	Throwable to get the stacktrace from
-	 * @return
-	 * 	stack trace from Throwable as String
+	 * @param t Throwable to get the stacktrace from
+	 * @return stack trace from Throwable as String
 	 */
 	//[JOJO]-------------------------------------------------
 	/**

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -31,6 +32,8 @@ import javolution.util.FastList;
  */
 public class ScriptPackage
 {
+	private static final Logger _log = Logger.getLogger(ScriptPackage.class.getName());
+	
 	private List<ScriptDocument> _scriptFiles;
 	
 	public ScriptPackage(ZipFile pack)
@@ -76,9 +79,9 @@ public class ScriptPackage
 					ScriptDocument newScript = new ScriptDocument(entry.getName(), pack.getInputStream(entry));
 					_scriptFiles.add(newScript);
 				}
-				catch (IOException e1)
+				catch (IOException io)
 				{
-					e1.printStackTrace();
+					_log.warning(getClass().getSimpleName() + ": " + io.getMessage());
 				}
 			}
 		}
