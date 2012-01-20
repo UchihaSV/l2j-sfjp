@@ -14,7 +14,7 @@ public class SqlBuilder
 	private final String[] _values;
 	private java.sql.PreparedStatement _prepareStatement;
 
-	public SqlBuilder(java.sql.Connection con, String s) throws SQLException
+	public SqlBuilder(java.sql.Connection con, String s)
 	{
 		_con = con;
 		_queries = s.split("\\?", -1);
