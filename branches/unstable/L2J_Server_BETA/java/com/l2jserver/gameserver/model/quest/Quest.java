@@ -1373,13 +1373,10 @@ public class Quest extends ManagedScript
 	 * @param npcIds
 	 * @return L2NpcTemplate : Start NPC
 	 */
-	public L2NpcTemplate[] addStartNpc(int ...npcIds)
+	public void addStartNpc(int ...npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
-			value[i++] = addEventId(npcId, QuestEventType.QUEST_START);
-		return value;
+			addEventId(npcId, QuestEventType.QUEST_START);
 	}
 	
 	public L2NpcTemplate addStartNpc(int npcId)
@@ -1392,13 +1389,10 @@ public class Quest extends ManagedScript
 	 * @param npcIds
 	 * @return L2NpcTemplate : Start NPC
 	 */
-	public L2NpcTemplate[] addFirstTalkId(int ...npcIds)
+	public void addFirstTalkId(int ...npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
-			value[i++] = addEventId(npcId, QuestEventType.ON_FIRST_TALK);
-		return value;
+			addEventId(npcId, QuestEventType.ON_FIRST_TALK);
 	}
 	
 	public L2NpcTemplate addFirstTalkId(int npcId)
@@ -1411,13 +1405,10 @@ public class Quest extends ManagedScript
 	 * @param npcIds
 	 * @return L2NpcTemplate : NPC
 	 */
-	public L2NpcTemplate[] addAcquireSkillId(int ...npcIds)
+	public void addAcquireSkillId(int ...npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
-			value[i++] = addEventId(npcId, QuestEventType.ON_SKILL_LEARN);
-		return value;
+			addEventId(npcId, QuestEventType.ON_SKILL_LEARN);
 	}
 	
 	public L2NpcTemplate addAcquireSkillId(int npcId)
@@ -1430,13 +1421,10 @@ public class Quest extends ManagedScript
 	 * @param npcIds
 	 * @return int : attackId
 	 */
-	public L2NpcTemplate[] addAttackId(int ...npcIds)
+	public void addAttackId(int ...npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
-			value[i++] = addEventId(npcId, QuestEventType.ON_ATTACK);
-		return value;
+			addEventId(npcId, QuestEventType.ON_ATTACK);
 	}
 	
 	public L2NpcTemplate addAttackId(int npcId)
@@ -1449,13 +1437,10 @@ public class Quest extends ManagedScript
 	 * @param killIds
 	 * @return int : killId
 	 */
-	public L2NpcTemplate[] addKillId(int ...killIds)
+	public void addKillId(int ...killIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[killIds.length];
-		int i = 0;
 		for (int killId : killIds)
-			value[i++] = addEventId(killId, QuestEventType.ON_KILL);
-		return value;
+			addEventId(killId, QuestEventType.ON_KILL);
 	}
 	
 	public L2NpcTemplate addKillId(int npcId)
@@ -1468,13 +1453,10 @@ public class Quest extends ManagedScript
 	 * @param talkIds : ID of the NPC
 	 * @return int : ID of the NPC
 	 */
-	public L2NpcTemplate[] addTalkId(int ...talkIds)
+	public void addTalkId(int ...talkIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[talkIds.length];
-		int i = 0;
 		for (int talkId : talkIds)
-			value[i++] = addEventId(talkId, QuestEventType.ON_TALK);
-		return value;
+			addEventId(talkId, QuestEventType.ON_TALK);
 	}
 	
 	public L2NpcTemplate addTalkId(int npcId)
@@ -1487,13 +1469,10 @@ public class Quest extends ManagedScript
 	 * @param npcIds : ID of the NPC
 	 * @return int : ID of the NPC
 	 */
-	public L2NpcTemplate[] addSpawnId(int ...npcIds)
+	public void addSpawnId(int ...npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
-			value[i++] = addEventId(npcId, QuestEventType.ON_SPAWN);
-		return value;
+			addEventId(npcId, QuestEventType.ON_SPAWN);
 	}
 	
 	public L2NpcTemplate addSpawnId(int npcId)
@@ -1507,13 +1486,10 @@ public class Quest extends ManagedScript
 	 * @param npcIds : ID of the NPC
 	 * @return int : ID of the NPC
 	 */
-	public L2NpcTemplate[] addSkillSeeId(int ...npcIds)
+	public void addSkillSeeId(int ...npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
-			value[i++] = addEventId(npcId, QuestEventType.ON_SKILL_SEE);
-		return value;
+			addEventId(npcId, QuestEventType.ON_SKILL_SEE);
 	}
 	
 	public L2NpcTemplate addSkillSeeId(int npcId)
@@ -1521,13 +1497,10 @@ public class Quest extends ManagedScript
 		return addEventId(npcId, QuestEventType.ON_SKILL_SEE);
 	}
 	
-	public L2NpcTemplate[] addSpellFinishedId(int ...npcIds)
+	public void addSpellFinishedId(int ...npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
-			value[i++] = addEventId(npcId, QuestEventType.ON_SPELL_FINISHED);
-		return value;
+			addEventId(npcId, QuestEventType.ON_SPELL_FINISHED);
 	}
 	
 	public L2NpcTemplate addSpellFinishedId(int npcId)
@@ -1535,13 +1508,10 @@ public class Quest extends ManagedScript
 		return addEventId(npcId, QuestEventType.ON_SPELL_FINISHED);
 	}
 	
-	public L2NpcTemplate[] addTrapActionId(int ...npcIds)
+	public void addTrapActionId(int ...npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
-			value[i++] = addEventId(npcId, QuestEventType.ON_TRAP_ACTION);
-		return value;
+			addEventId(npcId, QuestEventType.ON_TRAP_ACTION);
 	}
 	
 	public L2NpcTemplate addTrapActionId(int npcId)
@@ -1554,13 +1524,10 @@ public class Quest extends ManagedScript
 	 * @param npcIds : ID of the NPC
 	 * @return int : ID of the NPC
 	 */
-	public L2NpcTemplate[] addFactionCallId(int ...npcIds)
+	public void addFactionCallId(int ...npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
-			value[i++] = addEventId(npcId, QuestEventType.ON_FACTION_CALL);
-		return value;
+			addEventId(npcId, QuestEventType.ON_FACTION_CALL);
 	}
 	
 	public L2NpcTemplate addFactionCallId(int npcId)
@@ -1573,13 +1540,10 @@ public class Quest extends ManagedScript
 	 * @param npcIds : ID of the NPC
 	 * @return int : ID of the NPC
 	 */
-	public L2NpcTemplate[] addAggroRangeEnterId(int ...npcIds)
+	public void addAggroRangeEnterId(int ...npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
-			value[i++] = addEventId(npcId, QuestEventType.ON_AGGRO_RANGE_ENTER);
-		return value;
+			addEventId(npcId, QuestEventType.ON_AGGRO_RANGE_ENTER);
 	}
 	
 	public L2NpcTemplate addAggroRangeEnterId(int npcId)
