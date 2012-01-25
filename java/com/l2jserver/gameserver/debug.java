@@ -19,7 +19,7 @@ public class debug
 	}
 	@Deprecated public static String STR(com.l2jserver.gameserver.model.actor.L2Npc npc) { return npc == null ? "NULL" : npc.getNpcId() + npc.getName(); }
 	@Deprecated public static String STR(com.l2jserver.gameserver.model.L2Object obj) { return obj == null ? "NULL" : obj.getName(); }
-	@Deprecated public static String STR(com.l2jserver.gameserver.model.L2Skill skill) { return skill == null ? "NULL" : (skill.getId()+"-"+skill.getLevel()+" "+skill.getName()); }
+	@Deprecated public static String STR(com.l2jserver.gameserver.model.skills.L2Skill skill) { return skill == null ? "NULL" : (skill.getId()+"-"+skill.getLevel()+" "+skill.getName()); }
 	@Deprecated public static String STR(com.l2jserver.gameserver.model.L2Object[] targets) {
 		if (targets == null) return "NULL";
 		if (targets.length == 0) return "EMPTY";

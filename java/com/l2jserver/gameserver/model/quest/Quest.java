@@ -36,7 +36,6 @@ import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Party;
-import com.l2jserver.gameserver.model.L2Skill;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -45,15 +44,16 @@ import com.l2jserver.gameserver.model.actor.L2Trap;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2TrapInstance;
-import com.l2jserver.gameserver.model.item.L2Item;
+import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
+import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.olympiad.CompetitionType;
+import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.zone.L2ZoneType;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.network.serverpackets.NpcQuestHtmlMessage;
 import com.l2jserver.gameserver.scripting.ManagedScript;
 import com.l2jserver.gameserver.scripting.ScriptManager;
-import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 import com.l2jserver.gameserver.util.MinionList;
 import com.l2jserver.util.Rnd;
 import com.l2jserver.util.Util;
@@ -2028,7 +2028,7 @@ public class Quest extends ManagedScript
 	@Deprecated protected void TRACE(String title, String message) { com.l2jserver.gameserver.debug.TRACE(title, message); }
 	@Deprecated protected String STR(com.l2jserver.gameserver.model.actor.L2Npc npc) { return com.l2jserver.gameserver.debug.STR(npc); }
 	@Deprecated protected String STR(com.l2jserver.gameserver.model.L2Object obj) { return com.l2jserver.gameserver.debug.STR(obj); }
-	@Deprecated protected String STR(com.l2jserver.gameserver.model.L2Skill skill) { return com.l2jserver.gameserver.debug.STR(skill); }
+	@Deprecated protected String STR(com.l2jserver.gameserver.model.skills.L2Skill skill) { return com.l2jserver.gameserver.debug.STR(skill); }
 	@Deprecated protected String STR(com.l2jserver.gameserver.model.L2Object[] targets) { return com.l2jserver.gameserver.debug.STR(targets); }
 	@Deprecated protected String STR(java.util.concurrent.ScheduledFuture<?> task) { return com.l2jserver.gameserver.debug.STR(task); }
 	

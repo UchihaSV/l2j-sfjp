@@ -14,11 +14,12 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
-import static com.l2jserver.gameserver.ai.CtrlIntention.*;
+import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ACTIVE;
+import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ATTACK;
 
 import com.l2jserver.gameserver.ai.L2AttackableAI;
 import com.l2jserver.gameserver.model.actor.L2Character;
-import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
+import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 
 /**
  * @author JOJO

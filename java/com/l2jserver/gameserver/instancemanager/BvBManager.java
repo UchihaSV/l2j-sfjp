@@ -28,7 +28,7 @@ import com.l2jserver.gameserver.ai.L2ControllableMobAI;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.model.MobGroup;
 import com.l2jserver.gameserver.model.MobGroupTable;
-import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
+import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.util.Rnd;
 
 /**
