@@ -16,7 +16,7 @@ package com.l2jserver.gameserver.model.actor.instance;
 
 import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.model.actor.L2Npc;
-import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
+import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 
 /**
  * NPC that gives information about territory wars
