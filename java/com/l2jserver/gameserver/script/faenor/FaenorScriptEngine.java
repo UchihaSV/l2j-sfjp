@@ -34,7 +34,7 @@ import com.l2jserver.gameserver.datatables.EventDroplist;
 import com.l2jserver.gameserver.datatables.EventDroplist.DateDrop;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.model.L2DropData;
-import com.l2jserver.gameserver.model.item.L2Item;
+import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.script.DateRange;
 import com.l2jserver.gameserver.script.EventDrop;
 import com.l2jserver.gameserver.script.Parser;
