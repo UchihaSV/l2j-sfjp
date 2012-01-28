@@ -1937,26 +1937,27 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 		}
 	}
 	
+	/**
+	 * @param skill the skill to check.
+	 * @return {@code true} if the skill is available for casting {@code false} otherwise.
+	 */
 	private boolean checkSkillCastConditions(L2Skill skill)
 	{
+		// Not enough MP.
 		if (skill.getMpConsume() >= getActiveChar().getCurrentMp())
-			return false;
-		else if (getActiveChar().isSkillDisabled(skill))
-			return false;
-		else if (!skill.ignoreSkillMute())
 		{
-			if (skill.isMagic())
-			{
-				if (getActiveChar().isMuted())
-					return false;
-			}
-			else
-			{
-				if (getActiveChar().isPhysicalMuted())
-					return false;
-			}
+			return false;
 		}
-		
+		// Character is in "skill disabled" mode. 
+		if (getActiveChar().isSkillDisabled(skill))
+		{
+			return false;
+		}
+		// Is a magic skill and character is magically muted or is a physical skill and character is physically muted.
+		if (!skill.ignoreSkillMute() && ((skill.isMagic() && getActiveChar().isMuted()) || getActiveChar().isPhysicalMuted()))
+		{
+			return false;
+		}
 		return true;
 	}
 	
