@@ -428,12 +428,9 @@ public final class Util
 	 */
 	public static String formatDate(Date date, String format)
 	{
-		final DateFormat dateFormat = new SimpleDateFormat(format);
-		if (date != null)
-		{
-			return dateFormat.format(date);
-		}
-		return null;
+		if (date == null)
+			return null;
+		return new SimpleDateFormat(format).format(date);
 	}
 	
 	/**
