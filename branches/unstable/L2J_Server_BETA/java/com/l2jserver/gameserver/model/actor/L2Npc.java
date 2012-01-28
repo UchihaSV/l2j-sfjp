@@ -1773,6 +1773,12 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	{
 		_summoner = summoner;
 	}
+	
+	@Override
+	public boolean isNpc()
+	{
+		return true;
+	}
 }
 
 // L2J r2884:
