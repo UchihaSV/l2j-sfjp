@@ -429,11 +429,8 @@ public final class Util
 	public static String formatDate(Date date, String format)
 	{
 		if (date == null)
-		{
 			return null;
-		}
-		final DateFormat dateFormat = new SimpleDateFormat(format);
-		return dateFormat.format(date);
+		return new SimpleDateFormat(format).format(date);
 	}
 	
 	/**
@@ -483,7 +480,6 @@ public final class Util
 	
 	public static String getDateString(Date date)
 	{
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		return dateFormat.format(date.getTime());
+		return new SimpleDateFormat("yyyy-MM-dd").format(date.getTime());
 	}
 }
