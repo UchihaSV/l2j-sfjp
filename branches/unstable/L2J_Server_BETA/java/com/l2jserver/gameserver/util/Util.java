@@ -13,7 +13,6 @@
 package com.l2jserver.gameserver.util;
 
 import java.io.File;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
