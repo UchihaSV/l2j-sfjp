@@ -46,14 +46,9 @@ import com.l2jserver.gameserver.model.stats.BaseStats;
 
 public class NpcTable
 {
-	private static Logger _log = Logger.getLogger(NpcTable.class.getName());
+	private static final Logger _log = Logger.getLogger(NpcTable.class.getName());
 	
 	private final TIntObjectHashMap<L2NpcTemplate> _npcs = new TIntObjectHashMap<L2NpcTemplate>();
-	
-	public static NpcTable getInstance()
-	{
-		return SingletonHolder._instance;
-	}
 	
 	private NpcTable()
 	{
@@ -215,7 +210,7 @@ public class NpcTable
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "NPCTable: Could not reload data for NPC " + id + ": " + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Could not reload data for NPC " + id + ": " + e.getMessage(), e);
 		}
 	}
 	
@@ -286,7 +281,7 @@ public class NpcTable
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "NPCTable: Could not store new NPC data in database: " + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Could not store new NPC data in database: " + e.getMessage(), e);
 		}
 		finally
 		{
@@ -572,11 +567,11 @@ public class NpcTable
 				statement.close();
 			}
 			
-			_log.info("NpcTable: Loaded " + cont + " (Custom: " + cCont + ") NPC template(s).");
+			_log.info(getClass().getSimpleName() + ": Loaded " + cont + " (Custom: " + cCont + ") NPC template(s).");
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.SEVERE, "NPCTable: Error creating NPC table.", e);
+			_log.log(Level.SEVERE, getClass().getSimpleName() + ": Error creating NPC table.", e);
 		}
 		finally
 		{
@@ -621,7 +616,7 @@ public class NpcTable
 				
 				if (npcDat == null)
 				{
-					_log.warning("NPCTable: Skill data for undefined NPC. npcId: " + mobId);
+					_log.warning(getClass().getSimpleName() + ": Skill data for undefined NPC. npcId: " + mobId);
 					continue;
 				}
 				
@@ -666,7 +661,7 @@ public class NpcTable
 					
 					if (npcDat == null)
 					{
-						_log.warning("Custom NPCTable: Skill data for undefined NPC. npcId: " + mobId);
+						_log.warning("Custom " + getClass().getSimpleName() + ": Skill data for undefined NPC. npcId: " + mobId);
 						continue;
 					}
 					
@@ -694,11 +689,11 @@ public class NpcTable
 				statement.close();
 			}
 			
-			_log.info("NpcTable: Loaded " + cont + " (Custom: " + cCont + ") npc skills.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + cont + " (Custom: " + cCont + ") npc skills.");
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.SEVERE, "NPCTable: Error reading NPC skills table.", e);
+			_log.log(Level.SEVERE, getClass().getSimpleName() + ": Error reading NPC skills table.", e);
 		}
 		finally
 		{
@@ -741,7 +736,7 @@ public class NpcTable
 				npcDat = _npcs.get(mobId);
 				if (npcDat == null)
 				{
-					_log.warning("NPCTable: Drop data for undefined NPC. npcId: " + mobId);
+					_log.warning(getClass().getSimpleName() + ": Drop data for undefined NPC. npcId: " + mobId);
 					continue;
 				}
 				dropDat = new L2DropData();
@@ -755,7 +750,7 @@ public class NpcTable
 				
 				if (ItemTable.getInstance().getTemplate(dropDat.getItemId()) == null)
 				{
-					_log.warning("Drop data for undefined item template! NpcId: " + mobId + " itemId: " + dropDat.getItemId());
+					_log.warning(getClass().getSimpleName() + ": Drop data for undefined item template! NpcId: " + mobId + " itemId: " + dropDat.getItemId());
 					continue;
 				}
 				cont++;
@@ -778,26 +773,28 @@ public class NpcTable
 				}
 				
 				rset = statement.executeQuery();
-				
+				int mobId;
+				int category;
 				while (rset.next())
 				{
-					int mobId = rset.getInt("mobId");
+					mobId = rset.getInt("mobId");
 					npcDat = _npcs.get(mobId);
 					if (npcDat == null)
 					{
-						_log.warning("NPCTable: CUSTOM DROPLIST: Drop data for undefined NPC. npcId: " + mobId);
+						_log.warning(getClass().getSimpleName() + ": CUSTOM DROPLIST: Drop data for undefined NPC. npcId: " + mobId);
 						continue;
 					}
+					
 					dropDat = new L2DropData();
 					dropDat.setItemId(rset.getInt("itemId"));
 					dropDat.setMinDrop(rset.getInt("min"));
 					dropDat.setMaxDrop(rset.getInt("max"));
 					dropDat.setChance(rset.getInt("chance"));
-					int category = rset.getInt("category");
+					category = rset.getInt("category");
 					
 					if (ItemTable.getInstance().getTemplate(dropDat.getItemId()) == null)
 					{
-						_log.warning("Custom drop data for undefined item template! NpcId: " + mobId + " itemId: " + dropDat.getItemId());
+						_log.warning(getClass().getSimpleName() + ": Custom drop data for undefined item template! NpcId: " + mobId + " itemId: " + dropDat.getItemId());
 						continue;
 					}
 					
@@ -807,11 +804,11 @@ public class NpcTable
 				rset.close();
 				statement.close();
 			}
-			_log.info("NpcTable: Loaded " + cont + " (Custom: " + cCont + ") drops.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + cont + " (Custom: " + cCont + ") drops.");
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.SEVERE, "NPCTable: Error reading NPC dropdata. ", e);
+			_log.log(Level.SEVERE, getClass().getSimpleName() + ": Error reading NPC dropdata. ", e);
 		}
 		finally
 		{
@@ -844,18 +841,20 @@ public class NpcTable
 			ResultSet rset = statement.executeQuery();
 			
 			int cont = 0;
-			
+			int npcId;
+			int classId;
+			L2NpcTemplate npc;
 			while (rset.next())
 			{
-				int npcId = rset.getInt("npc_id");
-				int classId = rset.getInt("class_id");
-				L2NpcTemplate npc = getTemplate(npcId);
-				
+				npcId = rset.getInt("npc_id");
+				classId = rset.getInt("class_id");
+				npc = getTemplate(npcId);
 				if (npc == null)
 				{
-					_log.warning("NPCTable: Error getting NPC template ID " + npcId + " while trying to load skill trainer data.");
+					_log.warning(getClass().getSimpleName() + ": Error getting NPC template ID " + npcId + " while trying to load skill trainer data.");
 					continue;
 				}
+				
 				cont++;
 				npc.addTeachInfo(ClassId.values()[classId]);
 			}
@@ -863,11 +862,11 @@ public class NpcTable
 			rset.close();
 			statement.close();
 			
-			_log.info("NpcTable: Loaded " + cont + " Skill Learn.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + cont + " Skill Learn.");
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.SEVERE, "NPCTable: Error reading NPC trainer data.", e);
+			_log.log(Level.SEVERE, getClass().getSimpleName() + ": Error reading NPC trainer data.", e);
 		}
 		finally
 		{
@@ -902,16 +901,17 @@ public class NpcTable
 			L2MinionData minionDat = null;
 			L2NpcTemplate npcDat = null;
 			int cnt = 0;
-			
+			int raidId;
 			while (rset.next())
 			{
-				int raidId = rset.getInt("boss_id");
+				raidId = rset.getInt("boss_id");
 				npcDat = _npcs.get(raidId);
 				if (npcDat == null)
 				{
-					_log.warning("Minion references undefined boss NPC. Boss NpcId: " + raidId);
+					_log.warning(getClass().getSimpleName() + ": Minion references undefined boss NPC. Boss NpcId: " + raidId);
 					continue;
 				}
+				
 				minionDat = new L2MinionData();
 				minionDat.setMinionId(rset.getInt("minion_id"));
 				minionDat.setAmountMin(rset.getInt("amount_min"));
@@ -922,11 +922,11 @@ public class NpcTable
 			
 			rset.close();
 			statement.close();
-			_log.info("NpcTable: Loaded " + cnt + " Minions.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + cnt + " Minions.");
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.SEVERE, "NPCTable: Error loading minion data.", e);
+			_log.log(Level.SEVERE, getClass().getSimpleName() + ": Error loading minion data.", e);
 		}
 		finally
 		{
@@ -963,14 +963,14 @@ public class NpcTable
 			
 			int cont = 0;
 			int cCont = 0;
-			
+			int npcId;
 			while (rset.next())
 			{
-				int npc_id = rset.getInt("npcId");
-				npcDat = _npcs.get(npc_id);
+				npcId = rset.getInt("npcId");
+				npcDat = _npcs.get(npcId);
 				if (npcDat == null)
 				{
-					_log.severe("NPCTable: AI Data Error with id : " + npc_id);
+					_log.severe(getClass().getSimpleName() + ": AI Data Error with id : " + npcId);
 					continue;
 				}
 				npcAIDat = new L2NpcAIData();
@@ -1018,14 +1018,13 @@ public class NpcTable
 				}
 				
 				rset = statement.executeQuery();
-				
 				while (rset.next())
 				{
-					int npc_id = rset.getInt("npcId");
-					npcDat = _npcs.get(npc_id);
+					npcId = rset.getInt("npcId");
+					npcDat = _npcs.get(npcId);
 					if (npcDat == null)
 					{
-						_log.severe("NPCTable: Custom AI Data Error with id : " + npc_id);
+						_log.severe(getClass().getSimpleName() + ": Custom AI Data Error with id : " + npcId);
 						continue;
 					}
 					npcAIDat = new L2NpcAIData();
@@ -1061,11 +1060,11 @@ public class NpcTable
 				statement.close();
 			}
 			
-			_log.info("NpcTable: Loaded " + cont + " (Custom: " + cCont + ") AI Data.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + cont + " (Custom: " + cCont + ") AI Data.");
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.SEVERE, "NPCTable: Error reading NPC AI Data: " + e.getMessage(), e);
+			_log.log(Level.SEVERE, getClass().getSimpleName() + ": Error reading NPC AI Data: " + e.getMessage(), e);
 		}
 		finally
 		{
@@ -1099,14 +1098,14 @@ public class NpcTable
 			
 			int cont = 0;
 			int cCount = 0;
-			
+			int npcId;
 			while (rset.next())
 			{
-				int npc_id = rset.getInt("npc_id");
-				npcDat = _npcs.get(npc_id);
+				npcId = rset.getInt("npc_id");
+				npcDat = _npcs.get(npcId);
 				if (npcDat == null)
 				{
-					_log.severe("NPCElementals: Elementals Error with id : " + npc_id);
+					_log.severe("NPCElementals: Elementals Error with id : " + npcId);
 					continue;
 				}
 				switch (rset.getByte("elemAtkType"))
@@ -1130,7 +1129,7 @@ public class NpcTable
 						npcDat.setBaseDark(rset.getInt("elemAtkValue"));
 						break;
 					default:
-						_log.severe("NPCElementals: Elementals Error with id : " + npc_id + "; unknown elementType: " + rset.getByte("elemAtkType"));
+						_log.severe("NPCElementals: Elementals Error with id : " + npcId + "; unknown elementType: " + rset.getByte("elemAtkType"));
 						continue;
 				}
 				npcDat.setBaseFireRes(rset.getInt("fireDefValue"));
@@ -1161,11 +1160,11 @@ public class NpcTable
 				
 				while (rset.next())
 				{
-					int npc_id = rset.getInt("npc_id");
-					npcDat = _npcs.get(npc_id);
+					npcId = rset.getInt("npc_id");
+					npcDat = _npcs.get(npcId);
 					if (npcDat == null)
 					{
-						_log.severe("NPCElementals: Custom Elementals Error with id : " + npc_id);
+						_log.severe("NPCElementals: Custom Elementals Error with id : " + npcId);
 						continue;
 					}
 					switch (rset.getByte("elemAtkType"))
@@ -1189,7 +1188,7 @@ public class NpcTable
 							npcDat.setBaseDark(rset.getInt("elemAtkValue"));
 							break;
 						default:
-							_log.severe("NPCElementals: Custom Elementals Error with id : " + npc_id + "; unknown elementType: " + rset.getByte("elemAtkType"));
+							_log.severe("NPCElementals: Custom Elementals Error with id : " + npcId + "; unknown elementType: " + rset.getByte("elemAtkType"));
 							continue;
 					}
 					npcDat.setBaseFireRes(rset.getInt("fireDefValue"));
@@ -1204,16 +1203,21 @@ public class NpcTable
 				statement.close();
 			}
 			
-			_log.info("NpcTable: Loaded " + cont + " (Custom: " + cCount + ") elementals Data.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + cont + " (Custom: " + cCount + ") elementals Data.");
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.SEVERE, "NPCTable: Error reading NPC Elementals Data: " + e.getMessage(), e);
+			_log.log(Level.SEVERE, getClass().getSimpleName() + ": Error reading NPC Elementals Data: " + e.getMessage(), e);
 		}
 		finally
 		{
 			L2DatabaseFactory.close(con);
 		}
+	}
+	
+	public static NpcTable getInstance()
+	{
+		return SingletonHolder._instance;
 	}
 	
 	@SuppressWarnings("synthetic-access")
