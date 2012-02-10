@@ -3588,16 +3588,16 @@ public final class Config
 		
 		//////////////////////////////////////////////////////////////////////
 		// JP Custom Setting
-		else if (pName.equalsIgnoreCase("FaildFakeDeath")) FAILD_FAKEDEATH = Boolean.valueOf(pValue);
-		else if (pName.equalsIgnoreCase("AltWyvernMakeALanding")) ALT_WYVERN_MAKEALANDING = Boolean.valueOf(pValue);
-		else if (pName.equalsIgnoreCase("AltDismountWyvernInNoLanding")) ALT_DISMOUNT_WYVERN_IN_NOLANDING = Boolean.valueOf(pValue);
-		else if (pName.equalsIgnoreCase("AltFlyingWyvernInSiege")) ALT_FLYING_WYVERN_IN_SIEGE = Boolean.valueOf(pValue);
+		else if (pName.equalsIgnoreCase("FaildFakeDeath")) FAILD_FAKEDEATH = Boolean.parseBoolean(pValue);
+		else if (pName.equalsIgnoreCase("AltWyvernMakeALanding")) ALT_WYVERN_MAKEALANDING = Boolean.parseBoolean(pValue);
+		else if (pName.equalsIgnoreCase("AltDismountWyvernInNoLanding")) ALT_DISMOUNT_WYVERN_IN_NOLANDING = Boolean.parseBoolean(pValue);
+		else if (pName.equalsIgnoreCase("AltFlyingWyvernInSiege")) ALT_FLYING_WYVERN_IN_SIEGE = Boolean.parseBoolean(pValue);
  //		else if (pName.equalsIgnoreCase("CrystalEnchantChanceWeapon")) CRYSTAL_ENCHANT_CHANCE_WEAPON = Integer.parseInt(pValue);
  //		else if (pName.equalsIgnoreCase("CrystalEnchantChanceArmor")) CRYSTAL_ENCHANT_CHANCE_ARMOR = Integer.parseInt(pValue);
  //		else if (pName.equalsIgnoreCase("CrystalEnchantChanceJewelry")) CRYSTAL_ENCHANT_CHANCE_JEWELRY = Integer.parseInt(pValue);
 		else if (pName.equalsIgnoreCase("LimitPAtkSpeed")) LIMIT_PATK_SPD = Integer.parseInt(pValue);
 		else if (pName.equalsIgnoreCase("LimitMAtkSpeed")) LIMIT_MATK_SPD = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("CustomCommunityBoard")) CUSTOM_COMMUNITY_BOARD = Boolean.valueOf(pValue);
+		else if (pName.equalsIgnoreCase("CustomCommunityBoard")) CUSTOM_COMMUNITY_BOARD = Boolean.parseBoolean(pValue);
 		else if (pName.equalsIgnoreCase("LimitLevelStepUp")) LIMIT_LEVEL_STEPUP = Integer.parseInt(pValue);	//+[JOJO]
 		
 		//TODO: boss.properties はタイマー駆動部分などがあり設定をリロードしても意味が無いので省略した。[JOJO]
