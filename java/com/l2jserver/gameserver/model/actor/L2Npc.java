@@ -1779,6 +1779,16 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	{
 		return true;
 	}
+	
+	@Override
+	public void setTeam(int id)
+	{
+		super.setTeam(id);
+		for (L2PcInstance player : getKnownList().getKnownPlayers().values())
+		{
+			player.sendPacket(new AbstractNpcInfo.NpcInfo(this, player));
+		}
+	}
 }
 
 // L2J r2884:
