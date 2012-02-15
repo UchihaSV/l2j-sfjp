@@ -20,12 +20,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.l2jserver.tools.dbinstaller.DBOutputInterface;
 import com.l2jserver.tools.dbinstaller.util.FileWriterStdout;
@@ -70,100 +66,53 @@ public class DBDumper
 			}
 			
 			FileWriterStdout ps = new FileWriterStdout(dump);
+			ps.println("-- SET NAMES utf8;");
+			ps.println();
 			while (rset.next())
 			{
+				final String table = rset.getString(1);
 				_frame.setProgressValue(rset.getRow());
-				_frame.appendToProgressArea("Dumping Table " + rset.getString(1));
-				ps.println("CREATE TABLE `" + rset.getString(1) + "`");
-				ps.println("(");
-				PreparedStatement desc = con.prepareStatement("DESC " + rset.getString(1));
-				ResultSet dset = desc.executeQuery();
-				Map<String, List<String>> keys = new HashMap<String, List<String>>();
-				boolean isFirst = true;
+				_frame.appendToProgressArea("Dumping Table " + table);
+				PreparedStatement desc;
+				ResultSet dset;
+				desc = con.prepareStatement("SHOW CREATE TABLE " + table);
+				dset = desc.executeQuery();
+				ps.println("-- DROP TABLE IF EXISTS `" + table + "`;");
 				while (dset.next())
-				{
-					if (!isFirst)
-						ps.println(",");
-					ps.print("\t`" + dset.getString(1) + "`");
-					ps.print(" " + dset.getString(2));
-					if (dset.getString(3).equals("NO"))
-						ps.print(" NOT NULL");
-					if (!dset.getString(4).isEmpty())
-					{
-						if (!keys.containsKey(dset.getString(4)))
-							keys.put(dset.getString(4), new ArrayList<String>());
-						keys.get(dset.getString(4)).add(dset.getString(1));
-					}
-					if (dset.getString(5) != null)
-						ps.print(" DEFAULT '" + dset.getString(5) + "'");
-					if (!dset.getString(6).isEmpty())
-						ps.print(" " + dset.getString(6));
-					isFirst = false;
-				}
-				if (keys.containsKey("PRI"))
-				{
-					ps.println(",");
-					ps.print("\tPRIMARY KEY (");
-					isFirst = true;
-					for (String key : keys.get("PRI"))
-					{
-						if (!isFirst)
-							ps.print(", ");
-						ps.print("`" + key + "`");
-						isFirst = false;
-					}
-					ps.print(")");
-				}
-				if (keys.containsKey("MUL"))
-				{
-					ps.println(",");
-					isFirst = true;
-					for (String key : keys.get("MUL"))
-					{
-						if (!isFirst)
-							ps.println(", ");
-						ps.print("\tKEY `key_" + key + "` (`" + key + "`)");
-						isFirst = false;
-					}
-				}
-				ps.println();
-				ps.println(");");
+					ps.println(dset.getString(2) + ";");
 				ps.flush();
 				dset.close();
 				desc.close();
 				
-				desc = con.prepareStatement("SELECT * FROM " + rset.getString(1));
+				desc = con.prepareStatement("SELECT * FROM " + table);
 				dset = desc.executeQuery();
-				isFirst = true;
 				int cnt = 0;
 				while (dset.next())
 				{
-					if ((cnt % 100) == 0)
-						ps.println("INSERT INTO `" + rset.getString(1) + "` VALUES ");
+					if (cnt % 100 == 0)
+						ps.println("INSERT INTO `" + table + "` VALUES ");
 					else
 						ps.println(",");
 					
 					ps.print("\t(");
-					boolean isInFirst = true;
 					for (int i = 1; i <= dset.getMetaData().getColumnCount(); i++)
 					{
-						if (!isInFirst)
+						final String value = dset.getString(i);
+						if (i > 1)
 							ps.print(", ");
 						
-						if (dset.getString(i) == null)
+						if (value == null)
 							ps.print("NULL");
 						else
-							ps.print("'" + dset.getString(i).replace("\'", "\\\'") + "'");
-						isInFirst = false;
+							ps.print("'" + value.replace("\'", "\\\'") + "'");
 					}
 					ps.print(")");
-					isFirst = false;
 					
-					if ((cnt % 100) == 99)
+					++cnt;
+					if (cnt % 100 == 0)
 						ps.println(";");
-					cnt++;
 				}
-				if (!isFirst && (cnt % 100) != 0)
+				if (cnt % 100 != 0)
 					ps.println(";");
 				ps.println();
 				ps.flush();

@@ -71,8 +71,6 @@ public class TerritoryWarManager implements Siegable
 		return SingletonHolder._instance;
 	}
 	
-	// =========================================================
-	// Data Field
 	public static String qn = "TerritoryWarSuperClass";
 	public static int DEFENDERMAXCLANS; // Max number of clans
 	public static int DEFENDERMAXPLAYERS; // Max number of individual player
@@ -103,8 +101,6 @@ public class TerritoryWarManager implements Siegable
 	protected ScheduledFuture<?> _scheduledEndTWTask = null;
 	protected ScheduledFuture<?> _scheduledRewardOnlineTask = null;
 	
-	// =========================================================
-	// Constructor
 	private TerritoryWarManager()
 	{
 		_log.info("Initializing TerritoryWarManager");
@@ -132,8 +128,6 @@ public class TerritoryWarManager implements Siegable
 		load();
 	}
 	
-	// =========================================================
-	// Method - Public
 	public int getRegisteredTerritoryId(L2PcInstance player)
 	{
 		if (player == null || !_isTWChannelOpen || player.getLevel() < PLAYERMINLEVEL)
@@ -648,8 +642,6 @@ public class TerritoryWarManager implements Siegable
 		}
 	}
 	
-	// =========================================================
-	// Method - Private
 	public L2Npc spawnNPC(int npcId, Location loc)
 	{
 		L2NpcTemplate template = NpcTable.getInstance().getTemplate(npcId);
@@ -1339,8 +1331,7 @@ public class TerritoryWarManager implements Siegable
 				}
 			}
 	}
-	// =========================================================
-	// Property - Public
+	
 	public static class TerritoryNPCSpawn
 	{
 		private Location _location;
