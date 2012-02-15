@@ -16,8 +16,10 @@ package com.l2jserver.tools.dbinstaller.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+
+import javolution.io.UTF8StreamWriter;
 
 /**
  * @author mrTJO
@@ -26,7 +28,7 @@ public class FileWriterStdout extends BufferedWriter
 {
 	public FileWriterStdout(File file) throws IOException
 	{
-		super(new FileWriter(file));
+		super(new UTF8StreamWriter().setOutput(new FileOutputStream(file)));
 	}
 	
 	public void println() throws IOException

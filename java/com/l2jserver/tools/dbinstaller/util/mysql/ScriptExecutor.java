@@ -14,15 +14,18 @@
  */
 package com.l2jserver.tools.dbinstaller.util.mysql;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
+
+import javolution.io.UTF8StreamReader;
 
 import com.l2jserver.tools.dbinstaller.DBOutputInterface;
 
@@ -65,14 +68,15 @@ public class ScriptExecutor
 		try
 		{
 			_frame.appendToProgressArea("Installing " + file.getName());
-			String line = "";
+			String line;
 			Connection con = _frame.getConnection();
 			Statement stmt = con.createStatement();
-			Scanner scn = new Scanner(file);
+			BufferedReader scn = new BufferedReader(new UTF8StreamReader().setInput(new FileInputStream(file)));
 			StringBuilder sb = new StringBuilder();
-			while (scn.hasNextLine())
+			while ((line = scn.readLine()) != null)
 			{
-				line = scn.nextLine();
+				if (line.startsWith("\uFEFF"))
+					line = line.substring(1);
 				if (line.startsWith("--"))
 					continue;
 				else if (line.contains("--"))
@@ -80,12 +84,12 @@ public class ScriptExecutor
 				
 				line = line.trim();
 				if (!line.isEmpty())
-					sb.append(line + "\n");
+					sb.append(line).append('\n');
 				
 				if (line.endsWith(";"))
 				{
 					stmt.execute(sb.toString());
-					sb = new StringBuilder();
+					sb.setLength(0);
 				}
 			}
 			scn.close();
@@ -107,6 +111,18 @@ public class ScriptExecutor
 				if (n == 1)
 					System.exit(0);
 			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();  //console: java -cp dbinst_gs.jar com.l2jserver.tools.dbinstaller.LauncherGS
+			
+			Object[] options =
+			{
+				"Abort"
+			};
+			JOptionPane.showOptionDialog(null, "Error: " + e.getMessage(), "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);
+			
+			System.exit(0);
 		}
 	}
 	
