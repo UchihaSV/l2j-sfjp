@@ -365,7 +365,7 @@ public class AugmentationData
 		}
 		
 		// Load the stats from xml
-		for (int i = 1; i < 5; i++)
+		for (int i = 1; i <= 4; i++)
 		{
 			try
 			{
