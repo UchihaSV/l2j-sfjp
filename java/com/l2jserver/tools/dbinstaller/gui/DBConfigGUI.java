@@ -49,6 +49,7 @@ public class DBConfigGUI extends JFrame
 	String _db;
 	String _dir;
 	String _cleanUp;
+	String log;
 	
 	Preferences _prop;
 	
@@ -62,6 +63,7 @@ public class DBConfigGUI extends JFrame
 		_db = db;
 		_dir = dir;
 		_cleanUp = cleanUp;
+		log = "dbinst_" + "localhost" + "_" + db + ".log";
 		
 		int width = 260;
 		int height = 220;
@@ -133,6 +135,7 @@ public class DBConfigGUI extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				MySqlConnect connector = new MySqlConnect(_dbHost.getText(), _dbPort.getText(), _dbUser.getText(), new String(_dbPass.getPassword()), _dbDbse.getText(), false);
+				log = "dbinst_" + _dbHost.getText().replaceAll("[^0-9a-zA-Z.]+", "-") + "_" + _dbDbse.getText() + ".log";
 				
 				if (connector.getConnection() != null)
 				{
@@ -166,7 +169,7 @@ public class DBConfigGUI extends JFrame
 					
 					dbi.setVisible(true);
 					
-					RunTasks task = new RunTasks(dbi, _db, _dir, _cleanUp, cleanInstall);
+					RunTasks task = new RunTasks(dbi, _db, _dir, _cleanUp, cleanInstall, log);
 					task.setPriority(Thread.MAX_PRIORITY);
 					task.start();
 				}

@@ -31,6 +31,7 @@ public class DBInstallerConsole implements DBOutputInterface
 	
 	public DBInstallerConsole(String db, String dir, String cleanUp)
 	{
+		String log = "dbinst_" + "localhost" + "_" + db + ".log";
 		System.out.println("Welcome to L2J DataBase installer");
 		Preferences prop = Preferences.userRoot();
 		Scanner scn = new Scanner(System.in);
@@ -53,6 +54,7 @@ public class DBInstallerConsole implements DBOutputInterface
 			dbDbse = dbDbse.isEmpty() ? prop.get("dbDbse_" + db, db) : dbDbse;
 			
 			MySqlConnect connector = new MySqlConnect(dbHost, dbPort, dbUser, dbPass, dbDbse, true);
+			log = "dbinst_" + dbHost.replaceAll("[^0-9a-zA-Z.]+", "-") + "_" + dbDbse + ".log";
 			
 			_con = connector.getConnection();
 		}
@@ -66,13 +68,13 @@ public class DBInstallerConsole implements DBOutputInterface
 			System.out.print("Do you really want to destroy your db (Y/N)?");
 			if (scn.next().equalsIgnoreCase("y"))
 			{
-				rt = new RunTasks(this, db, dir, cleanUp, true);
+				rt = new RunTasks(this, db, dir, cleanUp, true, log);
 			}
 			else
 				System.exit(0);
 		}
 		else if (resp.equalsIgnoreCase("u"))
-			rt = new RunTasks(this, db, dir, cleanUp, false);
+			rt = new RunTasks(this, db, dir, cleanUp, false, log);
 		else
 			System.exit(0);
 		
