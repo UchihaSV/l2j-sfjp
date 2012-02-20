@@ -34,21 +34,23 @@ public class RunTasks extends Thread
 	String _db;
 	String _sqlDir;
 	String _cleanUpFile;
+	String _log;
 	
-	public RunTasks(DBOutputInterface frame, String db, String sqlDir, String cleanUpFile, boolean cleanInstall)
+	public RunTasks(DBOutputInterface frame, String db, String sqlDir, String cleanUpFile, boolean cleanInstall, String log)
 	{
 		_frame = frame;
 		_db = db;
 		_cleanInstall = cleanInstall;
 		_sqlDir = sqlDir;
 		_cleanUpFile = cleanUpFile;
+		_log = log;
 	}
 	
 	@Override
 	public void run()
 	{
 		new DBDumper(_frame, _db);
-		ScriptExecutor exec = new ScriptExecutor(_frame);
+		ScriptExecutor exec = new ScriptExecutor(_frame, _log);
 		
 		File clnFile = new File(_cleanUpFile);
 		File updDir = new File(_sqlDir, "updates");

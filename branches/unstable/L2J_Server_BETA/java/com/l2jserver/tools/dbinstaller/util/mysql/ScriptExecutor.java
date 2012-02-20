@@ -15,17 +15,23 @@
 package com.l2jserver.tools.dbinstaller.util.mysql;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
 import javolution.io.UTF8StreamReader;
+import javolution.io.UTF8StreamWriter;
 
 import com.l2jserver.tools.dbinstaller.DBOutputInterface;
 
@@ -35,10 +41,13 @@ import com.l2jserver.tools.dbinstaller.DBOutputInterface;
 public class ScriptExecutor
 {
 	DBOutputInterface _frame;
+	String _log;
 	
-	public ScriptExecutor(DBOutputInterface frame)
+	public ScriptExecutor(DBOutputInterface frame, String log)
 	{
 		_frame = frame;
+		_log = log;
+		new File(log).delete();
 	}
 	
 	public void execSqlBatch(File dir)
@@ -67,12 +76,14 @@ public class ScriptExecutor
 	{
 		try
 		{
+			log(file.getPath() + ":");
 			_frame.appendToProgressArea("Installing " + file.getName());
 			String line;
 			Connection con = _frame.getConnection();
 			Statement stmt = con.createStatement();
 			BufferedReader scn = new BufferedReader(new UTF8StreamReader().setInput(new FileInputStream(file)));
 			StringBuilder sb = new StringBuilder();
+			Pattern patternSourceStatement = Pattern.compile("^SOURCE[ \t]+(.+);$", Pattern.CASE_INSENSITIVE);
 			while ((line = scn.readLine()) != null)
 			{
 				if (line.startsWith("\uFEFF"))
@@ -88,18 +99,25 @@ public class ScriptExecutor
 				
 				if (line.endsWith(";"))
 				{
-					stmt.execute(sb.toString());
+					String sql = sb.toString();
 					sb.setLength(0);
+					Matcher m = patternSourceStatement.matcher(sql);
+					if (m.find())
+						execSqlFile(new File(m.group(1)), skipErrors);	//recursive call
+					else
+						stmt.execute(sql);
 				}
 			}
 			scn.close();
 		}
 		catch (FileNotFoundException e)
 		{
+			log(e.getMessage());
 			JOptionPane.showMessageDialog(null, "File Not Found!: " + e.getMessage(), "Installer Error", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (SQLException e)
 		{
+			log(e.getMessage());
 			if (!skipErrors)
 			{
 				Object[] options =
@@ -114,6 +132,7 @@ public class ScriptExecutor
 		}
 		catch (Exception e)
 		{
+			log(e.getMessage());
 			e.printStackTrace();  //console: java -cp dbinst_gs.jar com.l2jserver.tools.dbinstaller.LauncherGS
 			
 			Object[] options =
@@ -135,4 +154,16 @@ public class ScriptExecutor
 		}
 	}
 	
+	private void log(String msg)
+	{
+		try (BufferedWriter log = new BufferedWriter(new UTF8StreamWriter().setOutput((new FileOutputStream(_log, true))));)
+		{
+			log.write(msg);
+			log.write("\r\n");
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
 }
