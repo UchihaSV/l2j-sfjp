@@ -18,6 +18,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
+import javolution.util.FastList;
+
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.Announcements;
 import com.l2jserver.gameserver.GmListTable;
@@ -90,6 +92,7 @@ import com.l2jserver.gameserver.network.serverpackets.QuestList;
 import com.l2jserver.gameserver.network.serverpackets.ShortCutInit;
 import com.l2jserver.gameserver.network.serverpackets.SkillCoolTime;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+import com.l2jserver.gameserver.scripting.scriptengine.listeners.player.PlayerSpawnListener;
 import com.l2jserver.util.Base64;
 
 /**
@@ -104,6 +107,8 @@ public class EnterWorld extends L2GameClientPacket
 	private static final String _C__11_ENTERWORLD = "[C] 11 EnterWorld";
 	
 	private static Logger _log = Logger.getLogger(EnterWorld.class.getName());
+	
+	private static FastList<PlayerSpawnListener> listeners = new FastList<PlayerSpawnListener>().shared();
 	
 	private final int[][] tracert = new int[5][4];
 	
@@ -541,6 +546,11 @@ public class EnterWorld extends L2GameClientPacket
 		
 		if(!activeChar.getPremiumItemList().isEmpty())
 			activeChar.sendPacket(new ExNotifyPremiumItem());
+		
+		for(PlayerSpawnListener listener: listeners)
+		{
+			listener.onSpawn(activeChar);
+		}
 	}
 	
 	/**
@@ -677,5 +687,27 @@ public class EnterWorld extends L2GameClientPacket
 	protected boolean triggersOnActionRequest()
 	{
 		return false;
+	}
+	
+	// Player spawn listeners
+	/**
+	 * Adds a spawn listener
+	 * @param listener
+	 */
+	public static void addSpawnListener(PlayerSpawnListener listener)
+	{
+		if (!listeners.contains(listener))
+		{
+			listeners.add(listener);
+		}
+	}
+	
+	/**
+	 * Removes a spawn listener
+	 * @param listener
+	 */
+	public static void removeSpawnListener(PlayerSpawnListener listener)
+	{
+		listeners.remove(listener);
 	}
 }
