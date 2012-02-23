@@ -77,11 +77,9 @@ public class Hero
 	
 	private static final Map<Integer, StatsSet> _herocounts = new FastMap<Integer, StatsSet>();
 	private static final Map<Integer, List<StatsSet>> _herofights = new FastMap<Integer, List<StatsSet>>();
-	private static final List<StatsSet> _fights = new FastList<StatsSet>();
 	
 	private static final Map<Integer, List<StatsSet>> _herodiary = new FastMap<Integer, List<StatsSet>>();
 	private static final Map<Integer, String> _heroMessage = new FastMap<Integer, String>();
-	private static final List<StatsSet> _diary = new FastList<StatsSet>();
 	
 	public static final String COUNT = "count";
 	public static final String PLAYED = "played";
@@ -283,7 +281,8 @@ public class Hero
 	
 	public void loadDiary(int charId)
 	{
-		_diary.clear();
+		FastList<StatsSet> _diary = new FastList<>();
+		
 		int diaryentries = 0;
 		Connection con = null;
 		try
@@ -346,8 +345,10 @@ public class Hero
 	
 	public void loadFights(int charId)
 	{
-		_fights.clear();
+		FastList<StatsSet> _fights = new FastList<>();
+		
 		StatsSet _herocountdata = new StatsSet();
+		
 		Calendar _data = Calendar.getInstance();
 		_data.set(Calendar.DAY_OF_MONTH, 1);
 		_data.set(Calendar.HOUR_OF_DAY, 0);
@@ -370,24 +371,16 @@ public class Hero
 			statement.setLong(3, from);
 			ResultSet rset = statement.executeQuery();
 			
-			int charOneId;
-			int charOneClass;
-			int charTwoId;
-			int charTwoClass;
-			int winner;
-			long start;
-			int time;
-			int classed;
 			while (rset.next())
 			{
-				charOneId = rset.getInt("charOneId");
-				charOneClass = rset.getInt("charOneClass");
-				charTwoId = rset.getInt("charTwoId");
-				charTwoClass = rset.getInt("charTwoClass");
-				winner = rset.getInt("winner");
-				start = rset.getLong("start");
-				time = rset.getInt("time");
-				classed = rset.getInt("classed");
+				int charOneId = rset.getInt("charOneId");
+				int charOneClass = rset.getInt("charOneClass");
+				int charTwoId = rset.getInt("charTwoId");
+				int charTwoClass = rset.getInt("charTwoClass");
+				int winner = rset.getInt("winner");
+				long start = rset.getLong("start");
+				int time = rset.getInt("time");
+				int classed = rset.getInt("classed");
 				
 				if (charId == charOneId)
 				{
@@ -782,10 +775,10 @@ public class Hero
 		
 		updateHeroes(false);
 		
-		L2PcInstance player;
 		for(Integer charId : _heroes.keySet())
 		{
-			player = L2World.getInstance().getPlayer(charId);
+			L2PcInstance player = L2World.getInstance().getPlayer(charId);
+			
 			if (player != null)
 			{
 				player.setHero(true);
@@ -873,12 +866,10 @@ public class Hero
 			}
 			else
 			{
-				StatsSet hero;
-				int heroId;
 				for (Entry<Integer, StatsSet> entry : _heroes.entrySet())
 				{
-					hero = entry.getValue();
-					heroId = entry.getKey();
+					StatsSet hero = entry.getValue();
+					int heroId = entry.getKey();
 					if (_completeHeroes.isEmpty() || !_completeHeroes.containsKey(heroId))
 					{
 						statement = con.prepareStatement(INSERT_HERO);
@@ -924,7 +915,7 @@ public class Hero
 						rset.close();
 						statement.close();
 						
-						_heroes.remove(heroId);
+					//	_heroes.remove(heroId);
 						_heroes.put(heroId, hero);
 						
 						_completeHeroes.put(heroId, hero);
