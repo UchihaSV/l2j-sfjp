@@ -540,7 +540,7 @@ public class Castle
 				{
 					_log.log(Level.WARNING, "Exception in setOwner: " + e.getMessage(), e);
 				}
-				oldOwner.setHasCastle(0); // Unset has castle flag for old owner
+				oldOwner.setCastleId(0); // Unset has castle flag for old owner
 				for (L2PcInstance member : oldOwner.getOnlineMembers(0))
 				{
 					removeResidentialSkills(member);
@@ -553,7 +553,7 @@ public class Castle
 		setShowNpcCrest(false);
 		
 		// if clan have fortress, remove it
-		if (clan.getHasFort() > 0)
+		if (clan.getFortId() > 0)
 			FortManager.getInstance().getFortByOwner(clan).removeOwner(true);
 		
 		if (getSiege().getIsInProgress()) // If siege in progress
@@ -582,7 +582,7 @@ public class Castle
 				removeResidentialSkills(member);
 				member.sendSkillList();
 			}
-			clan.setHasCastle(0);
+			clan.setCastleId(0);
 			clan.broadcastToOnlineMembers(new PledgeShowInfoUpdate(clan));
 		}
 		
@@ -1008,7 +1008,7 @@ public class Castle
 			// Announce to clan memebers
 			if (clan != null)
 			{
-				clan.setHasCastle(getCastleId()); // Set has castle flag for new owner
+				clan.setCastleId(getCastleId()); // Set has castle flag for new owner
 				clan.broadcastToOnlineMembers(new PledgeShowInfoUpdate(clan));
 				clan.broadcastToOnlineMembers(new PlaySound(1, "Siege_Victory", 0, 0, 0, 0, 0));
 				ThreadPoolManager.getInstance().scheduleGeneral(new CastleUpdater(clan, 1), 3600000); // Schedule owner tasks to start running
