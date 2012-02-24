@@ -31,8 +31,8 @@ import com.l2jserver.gameserver.communitybbs.Manager.ClanBBSManager;
 import com.l2jserver.gameserver.communitybbs.Manager.CustomBBSManager;
 import com.l2jserver.gameserver.communitybbs.Manager.RegionBBSManager;
 import com.l2jserver.gameserver.datatables.AdminCommandAccessRights;
-import com.l2jserver.gameserver.datatables.GMSkillTable;
 import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.instancemanager.CHSiegeManager;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.ClanHallManager;
@@ -192,10 +192,10 @@ public class EnterWorld extends L2GameClientPacket
 				GmListTable.getInstance().addGm(activeChar, true);
 			
 			if (Config.GM_GIVE_SPECIAL_SKILLS)
-				GMSkillTable.getInstance().addSkills(activeChar, false);
+				SkillTreesData.getInstance().addSkills(activeChar, false);
 			
 			if (Config.GM_GIVE_SPECIAL_AURA_SKILLS)
-				GMSkillTable.getInstance().addSkills(activeChar, true);
+				SkillTreesData.getInstance().addSkills(activeChar, true);
 		}
 		
 		// Set dead status if applies
