@@ -13498,17 +13498,20 @@ public final class SystemMessageId
 	public static final SystemMessageId TIME_LIMITED_ITEM_DELETED;
 	
 	/**
-	 * 2372 1 There is not much time remaining until the hunting helper pet leaves.
+	 * ID: 2372<br>
+	 * Message: ハントサポートペットがまもなくいなくなります。
 	 */
 	public static final SystemMessageId THERE_NOT_MUCH_TIME_REMAINING_UNTIL_HELPER_LEAVES;
 	
 	/**
-	 * 2373 1 The hunting helper pet is now leaving. 0 B09B79 0 0 0 0 0 none
+	 * ID: 2373<br>
+	 * Message: ハントサポートペットがあなたのもとから去る時間となりました。
 	 */
 	public static final SystemMessageId THE_HELPER_PET_LEAVING;
 	
 	/**
-	 * 2375 1 The hunting helper pet cannot be returned because there is not much time remaining until it leaves. 0
+	 * ID: 2375<br>
+	 * Message: ハントサポートペットがまもなくいなくなります。今からは戻せません。
 	 */
 	public static final SystemMessageId THE_HELPER_PET_CANNOT_BE_RETURNED;
 	
