@@ -33,7 +33,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
- * @author  Noctarius & Nille02 & crion ^ Forsaiken
+ * @author Noctarius & Nille02 & crion ^ Forsaiken
  */
 public final class SystemMessageId
 {
@@ -3839,9 +3839,7 @@ public final class SystemMessageId
 	 * ID: 681<br>
 	 * Message: 血盟がアジトを所有していません。
 	 */
-	//CLAN_HAS_NO_CLAN_HALL(681) // Doesn't exist in Hellbound anymore
-	
-	
+	// CLAN_HAS_NO_CLAN_HALL(681) // Doesn't exist in Hellbound anymore
 	
 	/**
 	 * ID: 683<br>
@@ -6939,7 +6937,6 @@ public final class SystemMessageId
 	 */
 	public static final SystemMessageId RAID_WAS_SUCCESSFUL;
 	
-	
 	/**
 	 * ID: 1210<br>
 	 * Message: セブン サイン：競争期間が始まりました。黎明の司祭か黄昏の司祭を訪ねることで参加できます。
@@ -7671,7 +7668,6 @@ public final class SystemMessageId
 	 * Message: 個人商店および個人工房の開設禁止が解除されました。
 	 */
 	public static final SystemMessageId NO_LONGER_BLOCKED_USING_STORE;
-	
 	
 	/**
 	 * ID: 1332<br>
@@ -13502,17 +13498,17 @@ public final class SystemMessageId
 	public static final SystemMessageId TIME_LIMITED_ITEM_DELETED;
 	
 	/**
-	 * 	2372	1	There is not much time remaining until the hunting helper pet leaves.
+	 * 2372 1 There is not much time remaining until the hunting helper pet leaves.
 	 */
 	public static final SystemMessageId THERE_NOT_MUCH_TIME_REMAINING_UNTIL_HELPER_LEAVES;
 	
 	/**
-	 * 	2373	1	The hunting helper pet is now leaving.	0	B09B79			0	0	0	0	0		none
+	 * 2373 1 The hunting helper pet is now leaving. 0 B09B79 0 0 0 0 0 none
 	 */
 	public static final SystemMessageId THE_HELPER_PET_LEAVING;
 	
 	/**
-	 * 	2375	1	The hunting helper pet cannot be returned because there is not much time remaining until it leaves.	0
+	 * 2375 1 The hunting helper pet cannot be returned because there is not much time remaining until it leaves. 0
 	 */
 	public static final SystemMessageId THE_HELPER_PET_CANNOT_BE_RETURNED;
 	
@@ -13545,19 +13541,19 @@ public final class SystemMessageId
 	 * Message: $c1 はクラス無制限競技種目の待機者リストにすでに登録されています。
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_REGISTERED_NON_CLASS_LIMITED_EVENT_TEAMS;
-
+	
 	/**
 	 * ID: 2441<br>
 	 * Message: チーム競技の申し込みはパーティリーダーしかできません。
 	 */
 	public static final SystemMessageId ONLY_PARTY_LEADER_CAN_REQUEST_TEAM_MATCH;
-
+	
 	/**
 	 * ID: 2442<br>
 	 * Message: 条件が合わないため、申し込みできません。チーム競技に参加するためには3人以上のパーティを作らなければなりません。
 	 */
 	public static final SystemMessageId PARTY_REQUIREMENTS_NOT_MET;
-
+	
 	/**
 	 * ID: 2936<br>
 	 * Message: 所属の領地とスクロールが一致しないため、偽装できません。
@@ -13611,7 +13607,7 @@ public final class SystemMessageId
 	 * Message: クラス無制限競技種目の待機者リストに登録されました。
 	 */
 	public static final SystemMessageId YOU_HAVE_REGISTERED_IN_A_WAITING_LIST_OF_TEAM_GAMES;
-
+	
 	/**
 	 * ID: 2409<br>
 	 * Message: フリーテレポート スロットが拡張されました。
@@ -13755,11 +13751,11 @@ public final class SystemMessageId
 	 * Message: 人員の比率が合わないため、チームが調整されました。
 	 */
 	public static final SystemMessageId TEAM_ADJUSTED_BECAUSE_WRONG_POPULATION_RATIO;
- 		
- 	/**
- 	 * ID: 2704<br>
- 	 * Message: 定員を超過したため、登録できません。
- 	 */
+	
+	/**
+	 * ID: 2704<br>
+	 * Message: 定員を超過したため、登録できません。
+	 */
 	public static final SystemMessageId CANNOT_REGISTER_CAUSE_QUEUE_FULL;
 	
 	/**
@@ -13767,7 +13763,7 @@ public final class SystemMessageId
 	 * Message: 競技待機時間が1分間延長されました。
 	 */
 	public static final SystemMessageId MATCH_WAITING_TIME_EXTENDED;
-
+	
 	/**
 	 * ID: 2706<br>
 	 * Message: 条件が合わないため、入場できません。
@@ -13916,13 +13912,13 @@ public final class SystemMessageId
 	 * Message: 距離が離れているため、対象を操縦できません。
 	 */
 	public static final SystemMessageId CANT_CONTROL_TOO_FAR;
-
+	
 	/**
 	 * ID: 2764<br>
 	 * Message: この連合チャンネルは人数超過のため入れません。
 	 */
 	public static final SystemMessageId YOU_CANNOT_ENTER_BECAUSE_MAXIMUM_ENTRANTS;
-
+	
 	/**
 	 * ID: 2765<br>
 	 * Message: 連合チャンネルリーダー以外は入れません。
@@ -13988,13 +13984,13 @@ public final class SystemMessageId
 	 * Message: 守護物を持っている状態では瞬間移動効果が適用されません。
 	 */
 	public static final SystemMessageId YOU_CANNOT_TELEPORT_WHILE_IN_POSSESSION_OF_A_WARD;
-
+	
 	/**
 	 * ID: 2793<br>
 	 * Message: インスタント ゾーンの最少人数（$s1人）に達していないため、入れません。
 	 */
 	public static final SystemMessageId YOU_MUST_HAVE_MINIMUM_OF_S1_PEOPLE_TO_ENTER;
-
+	
 	/**
 	 * ID: 2795<br>
 	 * Message: 既に他の領地戦を申し込んでいる状態です。
@@ -14096,13 +14092,13 @@ public final class SystemMessageId
 	 * Message: ブロックチェッカー終了3秒前！
 	 */
 	public static final SystemMessageId BLOCK_CHECKER_ENDS_3;
-
+	
 	/**
 	 * ID: 2926<br>
 	 * Message: ブロックチェッカー終了2秒前！
 	 */
 	public static final SystemMessageId BLOCK_CHECKER_ENDS_2;
-
+	
 	/**
 	 * ID: 2927<br>
 	 * Message: ブロックチェッカー終了1秒前！
@@ -14594,7 +14590,7 @@ public final class SystemMessageId
 	 * Message: アイテム分配タイプの変更がキャンセルされました。
 	 */
 	public static final SystemMessageId PARTY_LOOT_CHANGE_CANCELLED;
-
+	
 	/**
 	 * ID: 3138<br>
 	 * Message: アイテム分配タイプが$s1に変更されました。
@@ -14756,6 +14752,12 @@ public final class SystemMessageId
 	 * Message: 今週、参加できる競技の数は$s1です。(クラス別競技：$s2、無制限競技：$s3、チーム競技：$s4)
 	 */
 	public static final SystemMessageId YOU_HAVE_S1_MATCHES_REMAINING_THAT_YOU_CAN_PARTECIPATE_IN_THIS_WEEK_S2_CLASSED_S3_NON_CLASSED_S4_TEAM;
+	
+	/**
+	 * ID: 6004<br>
+	 * Message: エンチャントに失敗しました。当該アイテムのエンチャント値はそのままです。
+	 */
+	public static final SystemMessageId SAFE_ENCHANT_FAILED;
 	
 	/**
 	 * ID: 6501<br>
@@ -17238,6 +17240,7 @@ public final class SystemMessageId
 		YOU_EARNED_S1_EXP_BONUS_S2_AND_S3_SP_BONUS_S4 = new SystemMessageId(3259);
 		MP_BECAME_0_ARCANE_SHIELD_DISAPPEARING = new SystemMessageId(3256);
 		YOU_HAVE_S1_MATCHES_REMAINING_THAT_YOU_CAN_PARTECIPATE_IN_THIS_WEEK_S2_CLASSED_S3_NON_CLASSED_S4_TEAM = new SystemMessageId(3261);
+		SAFE_ENCHANT_FAILED = new SystemMessageId(6004);
 		YOU_CANNOT_BOOKMARK_THIS_LOCATION_BECAUSE_YOU_DO_NOT_HAVE_A_MY_TELEPORT_FLAG = new SystemMessageId(6501);
 		THOMAS_D_TURKEY_APPEARED = new SystemMessageId(6503);
 		THOMAS_D_TURKEY_DEFETED = new SystemMessageId(6504);
@@ -17285,10 +17288,10 @@ public final class SystemMessageId
 	{
 		int paramCount = 0;
 		char c1, c2;
-		for (int i = 0; i < name.length() - 1; i++)
+		for (int i = 0; i < (name.length() - 1); i++)
 		{
 			c1 = name.charAt(i);
-			if (c1 == 'C' || c1 == 'S')
+			if ((c1 == 'C') || (c1 == 'S'))
 			{
 				c2 = name.charAt(i + 1);
 				if (Character.isDigit(c2))
@@ -17306,11 +17309,13 @@ public final class SystemMessageId
 		final SystemMessageId smi = getSystemMessageIdInternal(id);
 		return smi == null ? new SystemMessageId(id) : smi;
 	}
-
+	
 	private static final SystemMessageId getSystemMessageIdInternal(final int id)
 	{
-		if (id < 0 || id >= VALUES.length)
+		if ((id < 0) || (id >= VALUES.length))
+		{
 			return null;
+		}
 		
 		return VALUES[id];
 	}
@@ -17332,7 +17337,9 @@ public final class SystemMessageId
 		for (final SystemMessageId smId : VALUES)
 		{
 			if (smId != null)
+			{
 				smId.removeAllLocalisations();
+			}
 		}
 		
 		if (!Config.L2JMOD_MULTILANG_SM_ENABLE)
@@ -17356,7 +17363,9 @@ public final class SystemMessageId
 		{
 			file = new File(Config.DATAPACK_ROOT, "/data/lang/" + lang + "/sm/SystemMessageLocalisation.xml");
 			if (!file.isFile())
+			{
 				continue;
+			}
 			
 			_log.log(Level.INFO, "SystemMessageId: Loading localisation for '" + lang + "'");
 			
@@ -17401,7 +17410,7 @@ public final class SystemMessageId
 								}
 								
 								text = node.getNodeValue();
-								if (text.isEmpty() || text.length() > 255)
+								if (text.isEmpty() || (text.length() > 255))
 								{
 									_log.log(Level.WARNING, "SystemMessageId: Invalid text defined for SMID '" + smId + "' (to long or empty), lang '" + lang + "'.");
 									continue;
@@ -17431,13 +17440,13 @@ public final class SystemMessageId
 		
 		char c, c2, c3;
 		LOOP:
-		for (;index1 < arrayLength; index1++)
+		for (; index1 < arrayLength; index1++)
 		{
 			c = array[index1];
-			if (c == '$' && index1 < arrayLength - 2)
+			if ((c == '$') && (index1 < (arrayLength - 2)))
 			{
 				c2 = array[index1 + 1];
-				if (c2 == 'c' || c2 == 's' || c2 == 'p' || c2 == 'C' || c2 == 'S' || c2 == 'P')
+				if ((c2 == 'c') || (c2 == 's') || (c2 == 'p') || (c2 == 'C') || (c2 == 'S') || (c2 == 'P'))
 				{
 					c3 = array[index1 + 2];
 					if (Character.isDigit(c3))
@@ -17445,7 +17454,9 @@ public final class SystemMessageId
 						paramId = Character.getNumericValue(c3);
 						subTextLen = index1 - index2;
 						if (subTextLen != 0)
+						{
 							builders.add(new BuilderText(new String(array, index2, subTextLen)));
+						}
 						
 						builders.add(new BuilderObject(paramId));
 						index1 += 2;
@@ -17460,7 +17471,9 @@ public final class SystemMessageId
 		{
 			subTextLen = index1 - index2;
 			if (subTextLen != 0)
+			{
 				builders.add(new BuilderText(new String(array, index2, subTextLen)));
+			}
 		}
 		
 		if (builders.size() == 1)
@@ -17504,19 +17517,24 @@ public final class SystemMessageId
 	
 	/**
 	 * You better don`t touch this!
-	 * 
 	 * @param params
 	 */
 	public final void setParamCount(final int params)
 	{
 		if (params < 0)
+		{
 			throw new IllegalArgumentException("Invalid negative param count: " + params);
+		}
 		
 		if (params > 10)
+		{
 			throw new IllegalArgumentException("Maximum param count exceeded: " + params);
+		}
 		
 		if (params != 0)
+		{
 			_staticSystemMessage = null;
+		}
 		
 		_params = (byte) params;
 	}
@@ -17528,7 +17546,9 @@ public final class SystemMessageId
 		{
 			sml = _localisations[i];
 			if (sml.getLanguage().hashCode() == lang.hashCode())
+			{
 				return sml;
+			}
 		}
 		return null;
 	}
@@ -17585,9 +17605,7 @@ public final class SystemMessageId
 	}
 	
 	/**
-	 * 
 	 * @author Forsaiken
-	 *
 	 */
 	private static interface Builder
 	{
@@ -17599,9 +17617,7 @@ public final class SystemMessageId
 	}
 	
 	/**
-	 * 
 	 * @author Forsaiken
-	 *
 	 */
 	private static final class BuilderContainer implements Builder
 	{
@@ -17615,7 +17631,10 @@ public final class SystemMessageId
 		@Override
 		public final String toString(final Object param)
 		{
-			return toString(new Object[]{param});
+			return toString(new Object[]
+			{
+				param
+			});
 		}
 		
 		@Override
@@ -17634,7 +17653,7 @@ public final class SystemMessageId
 				{
 					builder = _builders[i];
 					paramIndex = builder.getIndex();
-					build = paramIndex != -1 && paramIndex < paramsLength ? builder.toString(params[paramIndex]) : builder.toString();
+					build = (paramIndex != -1) && (paramIndex < paramsLength) ? builder.toString(params[paramIndex]) : builder.toString();
 					buildTextLen += build.length();
 					builds[i] = build;
 				}
@@ -17665,9 +17684,7 @@ public final class SystemMessageId
 	}
 	
 	/**
-	 * 
 	 * @author Forsaiken
-	 *
 	 */
 	private static final class BuilderText implements Builder
 	{
@@ -17704,9 +17721,7 @@ public final class SystemMessageId
 	}
 	
 	/**
-	 * 
 	 * @author Forsaiken
-	 *
 	 */
 	private static final class BuilderObject implements Builder
 	{
@@ -17714,8 +17729,10 @@ public final class SystemMessageId
 		
 		public BuilderObject(final int id)
 		{
-			if (id < 1 || id > 9)
+			if ((id < 1) || (id > 9))
+			{
 				throw new RuntimeException("Illegal id " + id);
+			}
 			
 			_index = id - 1;
 		}
@@ -17729,8 +17746,10 @@ public final class SystemMessageId
 		@Override
 		public final String toString(final Object... params)
 		{
-			if (params == null || params.length == 0)
+			if ((params == null) || (params.length == 0))
+			{
 				return "null";
+			}
 			
 			return params[0].toString();
 		}
@@ -17749,9 +17768,7 @@ public final class SystemMessageId
 	}
 	
 	/**
-	 * 
 	 * @author Forsaiken
-	 *
 	 */
 	private static final class FastStringBuilder
 	{
