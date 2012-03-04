@@ -1835,7 +1835,23 @@ public final class SystemMessageId
 	 */
 	public static final SystemMessageId PLAYER_DECLINED;
 	
-	// 306 - 308 empty
+	/**
+	 * ID: 306<br>
+	 * Message: キャラクターの削除に失敗しました。
+	 */
+	public static final SystemMessageId FAILED_TO_DELETE_CHAR;
+	
+	/**
+	 * ID: 307<br>
+	 * Message: 倉庫とのトレードに失敗しました。
+	 */
+	public static final SystemMessageId CANNOT_TRADE_WAREHOUSE_KEEPER;
+	
+	/**
+	 * ID: 308<br>
+	 * Message: 血盟の勧誘に失敗しました。
+	 */
+	public static final SystemMessageId PLAYER_DECLINED_CLAN_INVITATION;
 	
 	/**
 	 * ID: 309<br>
@@ -1843,7 +1859,11 @@ public final class SystemMessageId
 	 */
 	public static final SystemMessageId YOU_HAVE_SUCCEEDED_IN_EXPELLING_CLAN_MEMBER;
 	
-	// 310 empty
+	/**
+	 * ID: 310<br>
+	 * Message: 血盟員の除名に失敗しました。
+	 */
+	public static final SystemMessageId FAILED_TO_EXPEL_CLAN_MEMBER;
 	
 	/**
 	 * ID: 311<br>
@@ -2091,7 +2111,17 @@ public final class SystemMessageId
 	 */
 	public static final SystemMessageId NOT_ENOUGH_ITEMS;
 	
-	// 352 - 353: empty
+	/**
+	 * ID: 352<br>
+	 * Message: アイテムが正しくありません。
+	 */
+	public static final SystemMessageId INCORRECT_ITEM;
+	
+	/**
+	 * ID: 353<br>
+	 * Message: 購入に失敗しました。
+	 */
+	public static final SystemMessageId CANNOT_PURCHASE;
 	
 	/**
 	 * ID: 354<br>
@@ -2363,7 +2393,11 @@ public final class SystemMessageId
 	 */
 	public static final SystemMessageId NO_TIME_LEFT_ON_ACCOUNT;
 	
-	// 399: empty
+	/**
+	 * ID: 399<br>
+	 * Message: システムエラーです。
+	 */
+	public static final SystemMessageId SYSTEM_ERROR;
 	
 	/**
 	 * ID: 400<br>
@@ -3613,7 +3647,17 @@ public final class SystemMessageId
 	 */
 	public static final SystemMessageId APPLICATION_DENIED_BECAUSE_ALREADY_SUBMITTED_A_REQUEST_FOR_ANOTHER_SIEGE_BATTLE;
 	
-	// 640 - 641: empty
+	/**
+	 * ID: 640<br>
+	 * Message: 城守の拒否に失敗しました。
+	 */
+	public static final SystemMessageId FAILED_TO_REFUSE_CASTLE_DEFENSE_AID;
+	
+	/**
+	 * ID: 641<br>
+	 * Message: 城守の承認に失敗しました。
+	 */
+	public static final SystemMessageId FAILED_TO_APPROVE_CASTLE_DEFENSE_AID;
 	
 	/**
 	 * ID: 642<br>
@@ -3639,7 +3683,17 @@ public final class SystemMessageId
 	 */
 	public static final SystemMessageId ONLY_CLAN_LEVEL_5_ABOVE_MAY_SIEGE;
 	
-	// 646 - 647: empty
+	/**
+	 * ID: 646<br>
+	 * Message: 守備側のリストを変更する権限がありません。
+	 */
+	public static final SystemMessageId DO_NOT_HAVE_AUTHORITY_TO_MODIFY_CASTLE_DEFENDER_LIST;
+	
+	/**
+	 * ID: 647<br>
+	 * Message: 攻城時刻を設定する権限がありません。
+	 */
+	public static final SystemMessageId DO_NOT_HAVE_AUTHORITY_TO_MODIFY_SIEGE_TIME;
 	
 	/**
 	 * ID: 648<br>
@@ -3731,7 +3785,11 @@ public final class SystemMessageId
 	 */
 	public static final SystemMessageId THE_PLAYER_IS_REJECTING_FRIEND_INVITATIONS;
 	
-	// 663 will crash client
+	/**
+	 * ID: 663<br>
+	 * Message: 攻城時刻は$s1です。宣布後の変更はできません。よろしいですか。
+	 */
+	public static final SystemMessageId SIEGE_TIME_DECLARED_FOR_S1;
 	
 	/**
 	 * ID: 664<br>
@@ -3839,7 +3897,13 @@ public final class SystemMessageId
 	 * ID: 681<br>
 	 * Message: 血盟がアジトを所有していません。
 	 */
-	// CLAN_HAS_NO_CLAN_HALL(681) // Doesn't exist in Hellbound anymore
+	public static final SystemMessageId CLAN_HAS_NO_CLAN_HALL;
+	
+	/**
+	 * ID: 682<br>
+	 * Message: 指定した場所に移動しますか。
+	 */
+	public static final SystemMessageId MOVING_TO_ANOTHER_VILLAGE;
 	
 	/**
 	 * ID: 683<br>
@@ -11416,8 +11480,8 @@ public final class SystemMessageId
 	public static final SystemMessageId THE_ITEM_WAS_SUCCESSFULLY_AUGMENTED;
 	
 	/**
-	 * ID : 1963<br>
-	 * Message: Select the item from which you wish to remove augmentation.
+	 * ID: 1963<br>
+	 * Message: 精錬を解除するアイテムを置いてください。
 	 */
 	public static final SystemMessageId SELECT_THE_ITEM_FROM_WHICH_YOU_WISH_TO_REMOVE_AUGMENTATION;
 	
@@ -15093,7 +15157,11 @@ public final class SystemMessageId
 		SELECT_ITEM_TO_ENCHANT = new SystemMessageId(303);
 		CLAN_MEMBER_S1_LOGGED_IN = new SystemMessageId(304);
 		PLAYER_DECLINED = new SystemMessageId(305);
+		FAILED_TO_DELETE_CHAR = new SystemMessageId(306);
+		CANNOT_TRADE_WAREHOUSE_KEEPER = new SystemMessageId(307);
+		PLAYER_DECLINED_CLAN_INVITATION = new SystemMessageId(308);
 		YOU_HAVE_SUCCEEDED_IN_EXPELLING_CLAN_MEMBER = new SystemMessageId(309);
+		FAILED_TO_EXPEL_CLAN_MEMBER = new SystemMessageId(310);
 		CLAN_WAR_DECLARATION_ACCEPTED = new SystemMessageId(311);
 		CLAN_WAR_DECLARATION_REFUSED = new SystemMessageId(312);
 		CEASE_WAR_REQUEST_ACCEPTED = new SystemMessageId(313);
@@ -15135,6 +15203,8 @@ public final class SystemMessageId
 		PRIVATE_STORE_ALREADY_CLOSED = new SystemMessageId(349);
 		ITEM_OUT_OF_STOCK = new SystemMessageId(350);
 		NOT_ENOUGH_ITEMS = new SystemMessageId(351);
+		INCORRECT_ITEM = new SystemMessageId(352);
+		CANNOT_PURCHASE = new SystemMessageId(353);
 		CANCEL_ENCHANT = new SystemMessageId(354);
 		INAPPROPRIATE_ENCHANT_CONDITION = new SystemMessageId(355);
 		REJECT_RESURRECTION = new SystemMessageId(356);
@@ -15180,6 +15250,7 @@ public final class SystemMessageId
 		TRY_AGAIN_AFTER_CHANGING_PASSWORD = new SystemMessageId(396);
 		NO_PAID_ACCOUNT = new SystemMessageId(397);
 		NO_TIME_LEFT_ON_ACCOUNT = new SystemMessageId(398);
+		SYSTEM_ERROR = new SystemMessageId(399);
 		WISH_TO_DROP_S1 = new SystemMessageId(400);
 		TOO_MANY_QUESTS = new SystemMessageId(401);
 		NOT_CORRECT_BOAT_TICKET = new SystemMessageId(402);
@@ -15388,10 +15459,14 @@ public final class SystemMessageId
 		ALLY_REGISTERED_SELF_TO_OPPONENT = new SystemMessageId(637);
 		ALREADY_REQUESTED_SIEGE_BATTLE = new SystemMessageId(638);
 		APPLICATION_DENIED_BECAUSE_ALREADY_SUBMITTED_A_REQUEST_FOR_ANOTHER_SIEGE_BATTLE = new SystemMessageId(639);
+		FAILED_TO_REFUSE_CASTLE_DEFENSE_AID = new SystemMessageId(640);
+		FAILED_TO_APPROVE_CASTLE_DEFENSE_AID = new SystemMessageId(641);
 		ALREADY_ATTACKER_NOT_CANCEL = new SystemMessageId(642);
 		ALREADY_DEFENDER_NOT_CANCEL = new SystemMessageId(643);
 		NOT_REGISTERED_FOR_SIEGE = new SystemMessageId(644);
 		ONLY_CLAN_LEVEL_5_ABOVE_MAY_SIEGE = new SystemMessageId(645);
+		DO_NOT_HAVE_AUTHORITY_TO_MODIFY_CASTLE_DEFENDER_LIST = new SystemMessageId(646);
+		DO_NOT_HAVE_AUTHORITY_TO_MODIFY_SIEGE_TIME = new SystemMessageId(647);
 		ATTACKER_SIDE_FULL = new SystemMessageId(648);
 		DEFENDER_SIDE_FULL = new SystemMessageId(649);
 		YOU_MAY_NOT_SUMMON_FROM_YOUR_CURRENT_LOCATION = new SystemMessageId(650);
@@ -15407,6 +15482,7 @@ public final class SystemMessageId
 		NOT_SIEGE_REGISTRATION_TIME2 = new SystemMessageId(660);
 		SPOIL_CANNOT_USE = new SystemMessageId(661);
 		THE_PLAYER_IS_REJECTING_FRIEND_INVITATIONS = new SystemMessageId(662);
+		SIEGE_TIME_DECLARED_FOR_S1 = new SystemMessageId(663);
 		CHOOSE_PERSON_TO_RECEIVE = new SystemMessageId(664);
 		APPLYING_ALLIANCE_WAR = new SystemMessageId(665);
 		REQUEST_FOR_CEASEFIRE = new SystemMessageId(666);
@@ -15424,6 +15500,8 @@ public final class SystemMessageId
 		SUBMITTED_A_BID_OF_S1 = new SystemMessageId(678);
 		CANCELED_BID = new SystemMessageId(679);
 		CANNOT_PARTICIPATE_IN_AN_AUCTION = new SystemMessageId(680);
+		CLAN_HAS_NO_CLAN_HALL = new SystemMessageId(681);
+		MOVING_TO_ANOTHER_VILLAGE = new SystemMessageId(681);
 		SWEEP_NOT_ALLOWED = new SystemMessageId(683);
 		CANNOT_POSITION_MERCS_DURING_SIEGE = new SystemMessageId(684);
 		CANNOT_DECLARE_WAR_ON_ALLY = new SystemMessageId(685);
