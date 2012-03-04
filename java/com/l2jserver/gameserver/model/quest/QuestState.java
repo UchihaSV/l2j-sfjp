@@ -40,6 +40,7 @@ import com.l2jserver.gameserver.network.serverpackets.TutorialEnableClientEvent;
 import com.l2jserver.gameserver.network.serverpackets.TutorialShowHtml;
 import com.l2jserver.gameserver.network.serverpackets.TutorialShowQuestionMark;
 import com.l2jserver.gameserver.util.Util;
+import com.l2jserver.util.Rnd;
 
 /**
  * @author Luis Arias
@@ -673,6 +674,16 @@ public final class QuestState
 	public void addExpAndSp(int exp, int sp)
 	{
 		getQuest().addExpAndSp(getPlayer(), exp, sp);
+	}
+	
+	/**
+	 * Return random value
+	 * @param max : max value for randomisation
+	 * @return int
+	 */
+	public int getRandom(int max)
+	{
+		return Rnd.get(max);
 	}
 	
 	/**
