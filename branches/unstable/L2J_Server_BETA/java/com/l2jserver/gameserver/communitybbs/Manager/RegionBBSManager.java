@@ -298,8 +298,19 @@ public class RegionBBSManager extends BaseBBSManager
 		return SingletonHolder._instance;
 	}
 	
+	private boolean _shutdown = false;
+	public void shutdown()
+	{
+if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
+		_shutdown = true;
+}}
+	}
+	
 	public void changeCommunityBoard()
 	{
+if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
+		if (_shutdown) return;
+}}
 		final FastList<L2PcInstance> sortedPlayers = new FastList<L2PcInstance>();
 		final TIntObjectIterator<L2PcInstance> it = L2World.getInstance().getAllPlayers().iterator();
 		while (it.hasNext())
