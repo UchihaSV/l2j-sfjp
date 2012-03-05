@@ -225,6 +225,9 @@ public class Shutdown extends Thread
 				_log.log(Level.WARNING, "Error saving offline shops.",t);
 			}
 			
+if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
+			com.l2jserver.gameserver.communitybbs.Manager.RegionBBSManager.getInstance().shutdown();
+}}
 			try
 			{
 				disconnectAllCharacters();
