@@ -167,6 +167,8 @@ public final class ItemAuctionInstance
 					_log.log(Level.WARNING, "ItemAuctionInstance: Failed loading auction: " + auctionId, e);
 				}
 			}
+			rset.close();
+			statement.close();
 		}
 		catch (final SQLException e)
 		{
@@ -534,7 +536,8 @@ public final class ItemAuctionInstance
 			final long startingTime = rset.getLong(2);
 			final long endingTime = rset.getLong(3);
 			final byte auctionStateId = rset.getByte(4);
-			statement.close();
+			rset.close(); rset = null;
+			statement.close(); statement = null;
 			
 			if (startingTime >= endingTime)
 			{
@@ -585,6 +588,8 @@ public final class ItemAuctionInstance
 				final ItemAuctionBid bid = new ItemAuctionBid(playerObjId, playerBid);
 				auctionBids.add(bid);
 			}
+			rset.close();
+			statement.close();
 			
 			return new ItemAuction(auctionId, _instanceId, startingTime, endingTime, auctionItem, auctionBids, auctionState);
 		}
