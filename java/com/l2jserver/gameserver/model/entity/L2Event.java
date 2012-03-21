@@ -368,6 +368,7 @@ public class L2Event
 		//	BufferedReader inbr = new BufferedReader(new InputStreamReader(in));
 			_eventCreator = inbr.readLine();
 			_eventInfo = inbr.readLine();
+			inbr.close();
 			
 			List<L2PcInstance> temp = new FastList<L2PcInstance>();
 			for (L2PcInstance player : L2World.getInstance().getAllPlayersArray())
