@@ -185,6 +185,7 @@ public class InstanceManager
 					}
 				}
 			}
+			xpp.close();
 		}
 		catch (FileNotFoundException e)
 		{
