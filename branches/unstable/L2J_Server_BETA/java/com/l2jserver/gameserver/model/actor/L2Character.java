@@ -789,9 +789,11 @@ public abstract class L2Character extends L2Object
 	protected void doAttack(L2Character target)
 	{
 		if (target == null)
-		{
 			return;
-		}
+		
+		if (isAttackingDisabled())
+			return;
+		
 		for (AttackListener listener : attackListeners)
 		{
 			if (!listener.onAttack(target))
@@ -853,9 +855,6 @@ public abstract class L2Character extends L2Object
 				return;
 			}
 		}
-		
-		if (isAttackingDisabled())
-			return;
 		
 		if (getActingPlayer() != null)
 		{
