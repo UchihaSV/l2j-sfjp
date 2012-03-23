@@ -286,9 +286,9 @@ public class Castle
 	 */
 	public CastleFunction getFunction(int type)
 	{
-		if (_function.containsKey(type))
+	//	if (_function.containsKey(type))
 			return _function.get(type);
-		return null;
+	//	return null;
 	}
 	
 	public synchronized void engrave(L2Clan clan, L2Object target)
