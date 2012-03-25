@@ -248,7 +248,7 @@ public class EnterWorld extends L2GameClientPacket
 				{
 					//[JOJO]-------------------------------------------------
 					activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PAYMENT_FOR_YOUR_CLAN_HALL_HAS_NOT_BEEN_MADE_PLEASE_MAKE_PAYMENT_TO_YOUR_CLAN_WAREHOUSE_BY_S1_TOMORROW)
-						.addNumber(clanHall.getPaidTomorrow().get(GregorianCalendar.HOUR_OF_DAY)));
+						.addNumber(clanHall.getPaidTomorrow().get(java.util.Calendar.HOUR_OF_DAY)));
 					//-------------------------------------------------------
 				}
 			}
