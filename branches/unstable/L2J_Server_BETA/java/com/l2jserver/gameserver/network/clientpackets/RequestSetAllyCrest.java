@@ -15,7 +15,6 @@
 package com.l2jserver.gameserver.network.clientpackets;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.l2jserver.gameserver.cache.CrestCache;
 import com.l2jserver.gameserver.datatables.ClanTable;
@@ -30,7 +29,6 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 public final class RequestSetAllyCrest extends L2GameClientPacket
 {
 	private static final String _C__91_REQUESTSETALLYCREST = "[C] 91 RequestSetAllyCrest";
-	static Logger _log = Logger.getLogger(RequestSetAllyCrest.class.getName());
 	
 	private int _length;
 	private byte[] _data;
