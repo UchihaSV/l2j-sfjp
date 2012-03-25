@@ -125,7 +125,6 @@ import com.l2jserver.gameserver.network.L2GamePacketHandler;
 import com.l2jserver.gameserver.network.communityserver.CommunityServerThread;
 import com.l2jserver.gameserver.pathfinding.PathFinding;
 import com.l2jserver.gameserver.script.faenor.FaenorScriptEngine;
-import com.l2jserver.gameserver.scripting.CompiledScriptCache;
 import com.l2jserver.gameserver.scripting.L2ScriptEngineManager;
 import com.l2jserver.gameserver.scripting.Native2Ascii;
 import com.l2jserver.gameserver.taskmanager.AutoAnnounceTaskManager;
@@ -345,33 +344,7 @@ public class GameServer
 			TelnetHandler.getInstance().registerHandler(
 					new com.l2jserver.gameserver.handlers.telnethandlers.ServerHandler() );
 		//-------------------------------------------------------
-		try
-		{
-			CompiledScriptCache compiledScriptCache = L2ScriptEngineManager.getInstance().getCompiledScriptCache();
-			if (compiledScriptCache == null)
-			{
-				_log.info("Compiled Scripts Cache is disabled.");
-			}
-			else
-			{
-				compiledScriptCache.purge();
-				
-				if (compiledScriptCache.isModified())
-				{
-					compiledScriptCache.save();
-					_log.info("Compiled Scripts Cache was saved.");
-				}
-				else
-				{
-					_log.info("Compiled Scripts Cache is up-to-date.");
-				}
-			}
-			
-		}
-		catch (IOException e)
-		{
-			_log.log(Level.SEVERE, "Failed to store Compiled Scripts Cache.", e);
-		}
+		
 		QuestManager.getInstance().report();
 		TransformationManager.getInstance().report();
 		
