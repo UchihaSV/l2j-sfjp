@@ -15,7 +15,6 @@
 package com.l2jserver.gameserver.network.clientpackets;
 
 import java.io.UnsupportedEncodingException;
-import java.util.GregorianCalendar;
 
 import javolution.util.FastList;
 
