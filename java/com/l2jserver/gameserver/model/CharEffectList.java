@@ -1272,6 +1272,7 @@ public class CharEffectList
 			_debuffs = null;
 			_stackedEffects = null;
 			_queuesInitialized = false;
+			_effectCache = null;
 		}
 		catch (Exception e)
 		{
