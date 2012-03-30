@@ -1213,13 +1213,15 @@ public class TvTEvent
 	 * @param victim
 	 * @param killerTeam
 	 */
-	private static void fireTvtKillListeners(L2PcInstance killer, L2PcInstance victim, TvTEventTeam killerTeam){
-		if(!tvtListeners.isEmpty() && killer != null && victim != null && killerTeam != null){
+	private static void fireTvtKillListeners(L2PcInstance killer, L2PcInstance victim, TvTEventTeam killerTeam)
+	{
+		if (!tvtListeners.isEmpty() && killer != null && victim != null && killerTeam != null)
+		{
 			TvtKillEvent event = new TvtKillEvent();
 			event.setKiller(killer);
 			event.setVictim(victim);
 			event.setKillerTeam(killerTeam);
-			for(TvTListener listener : tvtListeners)
+			for (TvTListener listener : tvtListeners)
 			{
 				listener.onKill(event);
 			}
@@ -1230,12 +1232,15 @@ public class TvTEvent
 	 * Fires the appropriate TvtEventListeners, if any
 	 * @param stage
 	 */
-	private static void fireTvtEventListeners(EventStage stage){
-		if(!tvtListeners.isEmpty()){
-			switch(stage){
+	private static void fireTvtEventListeners(EventStage stage)
+	{
+		if (!tvtListeners.isEmpty())
+		{
+			switch (stage)
+			{
 				case REGISTRATION_BEGIN:
 				{
-					for(TvTListener listener : tvtListeners)
+					for (TvTListener listener : tvtListeners)
 					{
 						listener.onRegistrationStart();
 					}
@@ -1243,7 +1248,7 @@ public class TvTEvent
 				}
 				case START:
 				{
-					for(TvTListener listener : tvtListeners)
+					for (TvTListener listener : tvtListeners)
 					{
 						listener.onBegin();
 					}
@@ -1251,7 +1256,7 @@ public class TvTEvent
 				}
 				case END:
 				{
-					for(TvTListener listener : tvtListeners)
+					for (TvTListener listener : tvtListeners)
 					{
 						listener.onEnd();
 					}
