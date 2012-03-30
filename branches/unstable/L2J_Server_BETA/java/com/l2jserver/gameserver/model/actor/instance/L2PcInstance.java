@@ -5082,7 +5082,8 @@ public final class L2PcInstance extends L2Playable
 			sendPacket(msg);
 			return;
 		}
-		if(!fireTransformListeners(transformation,true)){
+		if (!fireTransformListeners(transformation, true))
+		{
 			return;
 		}
 
@@ -5107,7 +5108,8 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (_transformation != null)
 		{
-			if(!fireTransformListeners(_transformation,false)){
+			if (!fireTransformListeners(_transformation, false))
+			{
 				return;
 			}
 			setQueuedSkill(null, false, false);
@@ -8652,7 +8654,8 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public boolean removeHenna(int slot)
 	{
-		if(!fireHennaListeners(getHenna(slot+1),false)){
+		if (!fireHennaListeners(getHenna(slot + 1), false))
+		{
 			return false;
 		}
 		if (slot < 1 || slot > 3)
@@ -8720,7 +8723,8 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public boolean addHenna(L2HennaInstance henna)
 	{
-		if(!fireHennaListeners(henna,true)){
+		if (!fireHennaListeners(henna, true))
+		{
 			return false;
 		}
 		for (int i = 0; i < 3; i++)
@@ -15677,19 +15681,21 @@ public final class L2PcInstance extends L2Playable
 	 * @param item
 	 * @return
 	 */
-	private boolean fireEquipmentListeners(boolean isEquiped, L2ItemInstance item){
-		if(item != null){
+	private boolean fireEquipmentListeners(boolean isEquiped, L2ItemInstance item)
+	{
+		if (item != null)
+		{
 			EquipmentEvent event = new EquipmentEvent();
 			event.setEquipped(!isEquiped);
 			event.setItem(item);
-			for(EquipmentListener listener : equipmentListeners)
+			for (EquipmentListener listener : equipmentListeners)
 			{
-				if(!listener.onEquip(event))
+				if (!listener.onEquip(event))
 					return false;
 			}
-			for(EquipmentListener listener : globalEquipmentListeners)
+			for (EquipmentListener listener : globalEquipmentListeners)
 			{
-				if(!listener.onEquip(event))
+				if (!listener.onEquip(event))
 					return false;
 			}
 		}
@@ -15703,14 +15709,16 @@ public final class L2PcInstance extends L2Playable
 	 * @param isTransforming
 	 * @return
 	 */
-	private boolean fireTransformListeners(L2Transformation transformation, boolean isTransforming){
-		if(transformation != null && !transformListeners.isEmpty()){
+	private boolean fireTransformListeners(L2Transformation transformation, boolean isTransforming)
+	{
+		if (transformation != null && !transformListeners.isEmpty())
+		{
 			TransformEvent event = new TransformEvent();
 			event.setTransformation(transformation);
 			event.setTransforming(isTransforming);
-			for(TransformListener listener : transformListeners)
+			for (TransformListener listener : transformListeners)
 			{
-				if(!listener.onTransform(event))
+				if (!listener.onTransform(event))
 					return false;
 			}
 		}
@@ -15724,27 +15732,31 @@ public final class L2PcInstance extends L2Playable
 	 * @param isAdding
 	 * @return
 	 */
-	private boolean fireHennaListeners(L2HennaInstance henna, boolean isAdding){
-		if(henna != null && !hennaListeners.isEmpty()){
+	private boolean fireHennaListeners(L2HennaInstance henna, boolean isAdding)
+	{
+		if (henna != null && !hennaListeners.isEmpty())
+		{
 			HennaEvent event = new HennaEvent();
 			event.setAdd(isAdding);
 			event.setHenna(henna);
 			event.setPlayer(this);
-			for(HennaListener listener : hennaListeners)
+			for (HennaListener listener : hennaListeners)
 			{
-				if(!listener.onRemoveHenna(event))
+				if (!listener.onRemoveHenna(event))
 					return false;
 			}
 		}
-		return true;	
+		return true;
 	}
 	
 	/**
 	 * Fires all the profession change listeners
 	 * @param t
 	 */
-	private void fireProfessionChangeListeners(L2PcTemplate t){
-		if(!professionChangeListeners.isEmpty() || !globalProfessionChangeListeners.isEmpty()){
+	private void fireProfessionChangeListeners(L2PcTemplate t)
+	{
+		if (!professionChangeListeners.isEmpty() || !globalProfessionChangeListeners.isEmpty())
+		{
 			ProfessionChangeEvent event = null;
 			event = new ProfessionChangeEvent();
 			event.setPlayer(this);

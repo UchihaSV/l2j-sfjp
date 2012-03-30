@@ -1675,7 +1675,9 @@ public class Siege implements Siegable
 	}
 	
 	@Override
-	public void updateSiege() { }
+	public void updateSiege()
+	{
+	}
 	
 	// Listeners
 	/**
@@ -1684,17 +1686,20 @@ public class Siege implements Siegable
 	 * @param stage
 	 * @return
 	 */
-	private boolean fireSiegeListeners(EventStage stage){
-		if(!siegeListeners.isEmpty()){
+	private boolean fireSiegeListeners(EventStage stage)
+	{
+		if (!siegeListeners.isEmpty())
+		{
 			SiegeEvent event = new SiegeEvent();
 			event.setSiege(this);
 			event.setStage(stage);
-			switch(stage){
+			switch (stage)
+			{
 				case START:
 				{
-					for(SiegeListener listener : siegeListeners)
+					for (SiegeListener listener : siegeListeners)
 					{
-						if(!listener.onStart(event))
+						if (!listener.onStart(event))
 						{
 							return false;
 						}
@@ -1703,7 +1708,7 @@ public class Siege implements Siegable
 				}
 				case END:
 				{
-					for(SiegeListener listener : siegeListeners)
+					for (SiegeListener listener : siegeListeners)
 					{
 						listener.onEnd(event);
 					}
@@ -1711,7 +1716,7 @@ public class Siege implements Siegable
 				}
 				case CONTROL_CHANGE:
 				{
-					for(SiegeListener listener : siegeListeners)
+					for (SiegeListener listener : siegeListeners)
 					{
 						listener.onControlChange(event);
 					}
@@ -1728,7 +1733,7 @@ public class Siege implements Siegable
 	 */
 	public static void addSiegeListener(SiegeListener listener)
 	{
-		if(!siegeListeners.contains(listener))
+		if (!siegeListeners.contains(listener))
 		{
 			siegeListeners.add(listener);
 		}
