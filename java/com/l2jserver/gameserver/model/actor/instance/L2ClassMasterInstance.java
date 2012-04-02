@@ -16,7 +16,7 @@ package com.l2jserver.gameserver.model.actor.instance;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.cache.HtmCache;
-import com.l2jserver.gameserver.datatables.CharTemplateTable;
+import com.l2jserver.gameserver.datatables.ClassListData;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
@@ -85,7 +85,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 			{
 				NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 				html.setFile(player.getHtmlPrefix(), "data/html/classmaster/ok.htm");
-				html.replace("%name%", CharTemplateTable.getInstance().getClassNameById(val));
+				html.replace("%name%", ClassListData.getInstance().getClass(val).getClassName(true));
 				player.sendPacket(html);
 			}
 		}
@@ -243,7 +243,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 									"<a action=\"bypass -h npc_%objectId%_change_class ",
 									String.valueOf(cid.getId()),
 									"\">",
-									CharTemplateTable.getInstance().getClassNameById(cid.getId()),
+									ClassListData.getInstance().getClass(cid).getClassName(true),
 									"</a><br>"
 							);
 						}
@@ -252,7 +252,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 					if (menu.length() > 0)
 					{
 						html.setFile(player.getHtmlPrefix(), "data/html/classmaster/template.htm");
-						html.replace("%name%", CharTemplateTable.getInstance().getClassNameById(currentClassId.getId()));
+						html.replace("%name%", ClassListData.getInstance().getClass(currentClassId).getClassName(true));
 						html.replace("%menu%", menu.toString());
 					}
 					else
@@ -288,7 +288,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 		
 		String msg = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/classmaster/tutorialtemplate.htm");
 		
-		msg = msg.replaceAll("%name%", CharTemplateTable.getInstance().getClassNameById(currentClassId.getId()));
+		msg = msg.replaceAll("%name%", ClassListData.getInstance().getClass(currentClassId).getClassName(true));
 		
 		final StringBuilder menu = new StringBuilder(100);
 		for (ClassId cid : ClassId.values())
@@ -301,7 +301,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 						"<a action=\"link CO",
 						String.valueOf(cid.getId()),
 						"\">",
-						CharTemplateTable.getInstance().getClassNameById(cid.getId()),
+						ClassListData.getInstance().getClass(cid).getClassName(true),
 						"</a><br>"
 				);
 			}
@@ -405,7 +405,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 	{
 		try
 		{
-			return validateClassId(oldCID, ClassId.values()[val]);
+			return validateClassId(oldCID, ClassId.getClassId(val));
 		}
 		catch (Exception e)
 		{
