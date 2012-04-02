@@ -100,13 +100,19 @@ public class L2PcTemplate extends L2CharTemplate
 		return _race;
 	}
 	
-	/**
-	 * @return the template server side class name.
-	 */
-	public String getClassName()
+ //	/**
+ //	 * @return the template server side class name.
+ //	 */
+ //	public String getClassName()
+ //	{
+ //		return _className;
+ //	}
+	//[JOJO]-------------------------------------------------
+	public String getClassNameHtm()
 	{
-		return _className;
+		return com.l2jserver.gameserver.datatables.ClassListData.getInstance().getClass(getClassId()).getClassName(true);
 	}
+	//-------------------------------------------------------
 	
 	/**
 	 * @return the template X spawn coordinate.
