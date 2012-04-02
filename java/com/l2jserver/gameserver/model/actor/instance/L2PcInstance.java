@@ -1369,7 +1369,7 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public final L2PcTemplate getBaseTemplate()
 	{
-		return CharTemplateTable.getInstance().getTemplate(_baseClass, getAppearance().getSex());	// [L2J_JP EDIT - TSL]
+		return CharTemplateTable.getInstance().getTemplate(_baseClass);
 	}
 	
 	/**
@@ -1386,7 +1386,7 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public void setTemplate(ClassId newclass)
 	{
-		super.setTemplate(CharTemplateTable.getInstance().getTemplate(newclass, getAppearance().getSex()));	// [L2J_JP EDIT - TSL]
+		super.setTemplate(CharTemplateTable.getInstance().getTemplate(newclass));
 	}
 	
 	/**
@@ -3020,7 +3020,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			return getTemplate().getRace();
 		}
-		return CharTemplateTable.getInstance().getTemplate(_baseClass, getAppearance().getSex()).getRace();	// [L2J_JP EDIT - TSL]
+		return CharTemplateTable.getInstance().getTemplate(_baseClass).getRace();
 	}
 	
 	public L2Radar getRadar()
@@ -7372,7 +7372,7 @@ public final class L2PcInstance extends L2Playable
 			{
 				final int activeClassId = rset.getInt("classid");
 				final boolean female = rset.getInt("sex") != 0;
-				final L2PcTemplate template = CharTemplateTable.getInstance().getTemplate(activeClassId, female);	// [L2J_JP EDIT - TSL]
+				final L2PcTemplate template = CharTemplateTable.getInstance().getTemplate(activeClassId);
 				PcAppearance app = new PcAppearance(rset.getByte("face"), rset.getByte("hairColor"), rset.getByte("hairStyle"), female);
 				
 				player = new L2PcInstance(objectId, template, rset.getString("account_name"), app);
@@ -11122,7 +11122,7 @@ public final class L2PcInstance extends L2Playable
 	{
 		_activeClass = classId;
 		
-		final L2PcTemplate pcTemplate = CharTemplateTable.getInstance().getTemplate(classId, getAppearance().getSex());	// [L2J_JP EDIT - TSL]
+		final L2PcTemplate pcTemplate = CharTemplateTable.getInstance().getTemplate(classId);
 		if (pcTemplate == null)
 		{
 			_log.severe("Missing template for classId: " + classId);
