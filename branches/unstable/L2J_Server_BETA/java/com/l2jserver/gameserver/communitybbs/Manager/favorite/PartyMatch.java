@@ -760,7 +760,7 @@ public class PartyMatch extends BaseFavoriteManager
 					L2PcInstance member = (L2PcInstance)obj;
 					memberList.append("<table width=610><tr>");
 					memberList.append("<td width=120>" + member.getName() + "</td>");
-					memberList.append("<td width=130 align=center>" + member.getTemplate().className + "</td>");
+					memberList.append("<td width=130 align=center>" + member.getTemplate().getClassNameHtm() + "</td>");
 					memberList.append("<td width=40 align=center>" + member.getLevel() + "</td>");
 					memberList.append("<td width=130 align=center>" + MapRegionManager.getInstance().getClosestTownName(member) + "</td>");
 					if (result.getInt(3) == 0)
