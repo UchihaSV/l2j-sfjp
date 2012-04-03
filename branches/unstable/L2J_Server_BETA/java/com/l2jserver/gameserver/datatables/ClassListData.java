@@ -50,29 +50,24 @@ public final class ClassListData extends DocumentParser
 	@Override
 	protected void parseDocument(Document doc)
 	{
-		NamedNodeMap attrs;
-		Node attr;
-		ClassId classId;
-		String className;
-		String classServName;
-		ClassId parentClassId;
 		for (Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
 		{
 			if ("list".equals(n.getNodeName()))
 			{
 				for (Node d = n.getFirstChild(); d != null; d = d.getNextSibling())
 				{
-					attrs = d.getAttributes();
+					NamedNodeMap attrs = d.getAttributes();
 					if ("class".equals(d.getNodeName()))
 					{
+						Node attr;
 						attr = attrs.getNamedItem("classId");
-						classId = ClassId.getClassId(parseInt(attr));
+						ClassId classId = ClassId.getClassId(parseInt(attr));
 						attr = attrs.getNamedItem("name");
-						className = attr.getNodeValue();
+						String className = attr.getNodeValue();
 						attr = attrs.getNamedItem("serverName");
-						classServName = attr.getNodeValue();
+						String classServName = attr.getNodeValue();
 						attr = attrs.getNamedItem("parentClassId");
-						parentClassId = (attr != null) ? ClassId.getClassId(parseInt(attr)) : null;
+						ClassId parentClassId = (attr != null) ? ClassId.getClassId(parseInt(attr)) : null;
 						_classData.put(classId, new ClassInfo(classId, className, classServName, parentClassId));
 					}
 				}

@@ -711,12 +711,10 @@ public class L2VillageMasterInstance extends L2NpcInstance
 				// scan for already used subclasses
 				int availClassId = pclass.ordinal();
 				ClassId cid = ClassId.getClassId(availClassId);
-				SubClass prevSubClass;
-				ClassId subClassId;
 				for (Iterator<SubClass> subList = iterSubClasses(player); subList.hasNext();)
 				{
-					prevSubClass = subList.next();
-					subClassId = ClassId.getClassId(prevSubClass.getClassId());
+					SubClass prevSubClass = subList.next();
+					ClassId subClassId = ClassId.getClassId(prevSubClass.getClassId());
 					
 					if (subClassId.equalsOrChildOf(cid))
 					{
@@ -745,12 +743,10 @@ public class L2VillageMasterInstance extends L2NpcInstance
 			return false;
 		
 		final ClassId cid = ClassId.values()[classId];
-		SubClass sub;
-		ClassId subClassId;
 		for (Iterator<SubClass> subList = iterSubClasses(player); subList.hasNext();)
 		{
-			sub = subList.next();
-			subClassId = ClassId.values()[sub.getClassId()];
+			SubClass sub = subList.next();
+			ClassId subClassId = ClassId.values()[sub.getClassId()];
 			
 			if (subClassId.equalsOrChildOf(cid))
 			{

@@ -301,12 +301,11 @@ public class L2Clan
 			// Transferring siege skills TimeStamps from old leader to new leader to prevent unlimited headquarters
 			if (!exLeader.getSkillReuseTimeStamps().isEmpty())
 			{
-				TimeStamp t;
 				for (L2Skill sk : SkillTable.getInstance().getSiegeSkills(newLeader.isNoble(), getCastleId() > 0))
 				{
 					if (exLeader.hasSkillReuse(sk.getReuseHashCode()))
 					{
-						t = exLeader.getSkillReuseTimeStamp(sk.getReuseHashCode());
+						TimeStamp t = exLeader.getSkillReuseTimeStamp(sk.getReuseHashCode());
 						newLeader.addTimeStamp(sk, t.getReuse(), t.getStamp());
 					}
 				}
@@ -1907,10 +1906,9 @@ public class L2Clan
 	
 	public void initializePrivs()
 	{
-		RankPrivs privs;
 		for (int i = 1; i < 10; i++)
 		{
-			privs = new RankPrivs(i, 0, CP_NOTHING);
+			RankPrivs privs = new RankPrivs(i, 0, CP_NOTHING);
 			_privs.put(i, privs);
 		}
 		

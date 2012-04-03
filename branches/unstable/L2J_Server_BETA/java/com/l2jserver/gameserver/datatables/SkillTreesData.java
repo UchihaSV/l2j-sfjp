@@ -1008,18 +1008,14 @@ public final class SkillTreesData extends DocumentParser
 	 */
 	private void generateCheckArrays()
 	{
-		int i;
-		int[] array;
-		
 		// Class specific skills:
-		FastMap<Integer, L2SkillLearn> tempMap;
 		final Set<ClassId> keySet = getClassSkillTrees().keySet();
 		_skillsByClassIdHashCodes = new TIntObjectHashMap<int[]>(keySet.size());
 		for (ClassId cls : keySet)
 		{
-			i = 0;
-			tempMap = getCompleteClassSkillTree(cls);
-			array = new int[tempMap.size()];
+			int i = 0;
+			FastMap<Integer, L2SkillLearn> tempMap = getCompleteClassSkillTree(cls);
+			int[] array = new int[tempMap.size()];
 			for (int h : tempMap.keySet())
 			{
 				array[i++] = h;
@@ -1050,8 +1046,8 @@ public final class SkillTreesData extends DocumentParser
 				}
 			}
 			
-			i = 0;
-			array = new int[list.size()];
+			int i = 0;
+			int[] array = new int[list.size()];
 			for (int s : list)
 			{
 				array[i++] = s;

@@ -2984,10 +2984,9 @@ public final class L2PcInstance extends L2Playable
 		// Get available skills
 		final FastList<L2SkillLearn> autoGetSkills = SkillTreesData.getInstance().getAvailableAutoGetSkills(this);
 		final SkillTable st = SkillTable.getInstance();
-		L2Skill skill;
 		for (L2SkillLearn s : autoGetSkills)
 		{
-			skill = st.getInfo(s.getSkillId(), s.getSkillLevel());
+			L2Skill skill = st.getInfo(s.getSkillId(), s.getSkillLevel());
 			if (skill != null)
 			{
 				addSkill(skill, true);
@@ -8098,16 +8097,14 @@ public final class L2PcInstance extends L2Playable
 			
 			// Store the reuse delays of remaining skills which
 			// lost effect but still under reuse delay. 'restore_type' 1.
-			int hash;
-			TimeStamp t;
 			for (Entry<Integer, TimeStamp> ts : _reuseTimeStampsSkills.entrySet())
 			{
-				hash = ts.getKey();
+				int hash = ts.getKey();
 				if (storedSkills.contains(hash))
 				{
 					continue;
 				}
-				t = ts.getValue();
+				TimeStamp t = ts.getValue();
 				if ((t != null) && t.hasNotPassed())
 				{
 					storedSkills.add(hash);
@@ -8472,10 +8469,9 @@ public final class L2PcInstance extends L2Playable
 					env.setTarget(this);
 					env.setSkill(skill);
 					
-					L2Effect ef;
 					for (EffectTemplate et : skill.getEffectTemplates())
 					{
-						ef = et.getEffect(env);
+						L2Effect ef = et.getEffect(env);
 						if (ef != null)
 						{
 							ef.setCount(effectCount);
@@ -8597,17 +8593,15 @@ public final class L2PcInstance extends L2Playable
 				_henna[i] = null;
 			}
 			
-			int slot;
-			int symbolId;
 			while (rset.next())
 			{
-				slot = rset.getInt("slot");
+				int slot = rset.getInt("slot");
 				if ((slot < 1) || (slot > 3))
 				{
 					continue;
 				}
 				
-				symbolId = rset.getInt("symbol_id");
+				int symbolId = rset.getInt("symbol_id");
 				if (symbolId == 0)
 				{
 					continue;
@@ -10074,9 +10068,6 @@ public final class L2PcInstance extends L2Playable
 	
 	public void rechargeAutoSoulShot(boolean physical, boolean magic, boolean summon)
 	{
-		L2ItemInstance item;
-		IItemHandler handler;
-		
 		if (_activeSoulShots == null || _activeSoulShots.isEmpty())
 			return;
 		
@@ -10084,7 +10075,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			for (int itemId : _activeSoulShots)
 			{
-				item = getInventory().getItemByItemId(itemId);
+				L2ItemInstance item = getInventory().getItemByItemId(itemId);
 				
 				if (item != null)
 				{
@@ -10102,7 +10093,7 @@ public final class L2PcInstance extends L2Playable
 								case 22075: case 22076: case 22077:
 								case 22078: case 22079: case 22080:
 								case 22081:
-									handler = ItemHandler.getInstance().getHandler(item.getEtcItem());
+									IItemHandler handler = ItemHandler.getInstance().getHandler(item.getEtcItem());
 									
 									if (handler != null)
 										handler.useItem(this, item, false);
@@ -10116,7 +10107,7 @@ public final class L2PcInstance extends L2Playable
 							{
 								case 6646: case 6647:
 								case 20333: case 20334:
-									handler = ItemHandler.getInstance().getHandler(item.getEtcItem());
+									IItemHandler handler = ItemHandler.getInstance().getHandler(item.getEtcItem());
 									
 									if (handler != null)
 										handler.useItem(this, item, false);
@@ -10136,7 +10127,7 @@ public final class L2PcInstance extends L2Playable
 								case 5789: case 22082: case 22083:
 								case 22084: case 22085: case 22086:
 									
-									handler = ItemHandler.getInstance().getHandler(item.getEtcItem());
+									IItemHandler handler = ItemHandler.getInstance().getHandler(item.getEtcItem());
 									
 									if (handler != null)
 										handler.useItem(this, item, false);
@@ -10148,7 +10139,7 @@ public final class L2PcInstance extends L2Playable
 						{
 							if (itemId == 6645 || itemId == 20332)
 							{
-								handler = ItemHandler.getInstance().getHandler(item.getEtcItem());
+								IItemHandler handler = ItemHandler.getInstance().getHandler(item.getEtcItem());
 								
 								if (handler != null)
 									handler.useItem(this, item, false);
