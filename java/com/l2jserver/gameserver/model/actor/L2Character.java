@@ -1479,7 +1479,6 @@ public abstract class L2Character extends L2Object
 		
 		boolean hitted = doAttackHitSimple(attack, target, 100, sAtk);
 		double attackpercent = 85;
-		L2Character temp;
 		Collection<L2Object> objs = getKnownList().getKnownObjects().values();
 		
 		for (L2Object obj : objs)
@@ -1511,7 +1510,7 @@ public abstract class L2Character extends L2Object
 				if (this instanceof L2Attackable && obj instanceof L2Attackable && !((L2Attackable) this).getEnemyClan().equals(((L2Attackable) obj).getClan()) && ((L2Attackable) this).getIsChaos() == 0)
 					continue;
 				
-				temp = (L2Character) obj;
+				L2Character temp = (L2Character) obj;
 				
 				// Launch a simple attack against the L2Character targeted
 				if (!temp.isAlikeDead())

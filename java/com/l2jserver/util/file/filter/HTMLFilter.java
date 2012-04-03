@@ -31,7 +31,8 @@ public class HTMLFilter implements FileFilter
 		{
 			return false;
 		}
-		final String name = f.getName().toLowerCase();
+		final String name = f.getPath();	//[JOJO]
+	//	final String name = f.getName().toLowerCase();
 		return name.endsWith(".htm") || name.endsWith(".html");
 	}
 }
