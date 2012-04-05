@@ -335,7 +335,7 @@ public class Fort
 	 */
 	public void banishForeigners()
 	{
-		getFortZone().banishForeigners(getOwnerClan());
+		getFortZone().banishForeigners(getOwnerClan().getClanId());
 	}
 	
 	/**
