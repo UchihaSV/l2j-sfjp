@@ -101,13 +101,15 @@ public class L2PcTemplate extends L2CharTemplate
 		return _race;
 	}
 	
- //	/**
- //	 * @return the template server side class name.
- //	 */
- //	public String getClassName()
- //	{
- //		return _className;
- //	}
+	/**
+	 * @return the template server side class name.
+	 * @deprecated replaced by {@link ClassInfo#getClassName(boolean)}
+	 */
+	@Deprecated
+	public String getClassName()
+	{
+		return _className;
+	}
 	//[JOJO]-------------------------------------------------
 	public String getClassNameHtm()
 	{
