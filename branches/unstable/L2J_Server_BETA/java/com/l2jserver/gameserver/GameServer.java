@@ -268,9 +268,9 @@ public class GameServer
 		NpcTable.getInstance();
 		NpcWalkerRoutesTable.getInstance();
 		WalkingManager.getInstance();
+		StaticObjects.getInstance();
 		ZoneManager.getInstance();
 		DoorTable.getInstance();
-		StaticObjects.getInstance();
 		ItemAuctionManager.getInstance();
 		CastleManager.getInstance().loadInstances();
 		FortManager.getInstance().loadInstances();
