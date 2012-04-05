@@ -54,15 +54,20 @@ public final class ClassInfo
 	 */
 	public String getClassName(boolean displayClientName)
 	{
-		return displayClientName ? getClassClientCode() : _className;
+		return displayClientName ? toHtm(_classId.getId()) : _className;
+	}
+	
+	public String getClassName()	//[JOJO]
+	{
+		return _className;
 	}
 	
 	/**
-	 * @return the class client Id.
+	 * @return the class client Id formatted to be displayed on a HTML.
 	 */
-	private int getClassClientId()
+	public static String toHtm(int id)
 	{
-		int classClientId = _classId.getId();
+		int classClientId = id;
 		if ((classClientId >= 0) && (classClientId <= 57))
 		{
 			classClientId += 247;
@@ -75,15 +80,19 @@ public final class ClassInfo
 		{
 			classClientId += 1438;
 		}
-		return classClientId;
+		else
+			return null;
+		return "&$" + classClientId + ";";
 	}
 	
-	/**
-	 * @return the class client Id formatted to be displayed on a HTML.
-	 */
-	private String getClassClientCode()
+	public static String toHtm(PlayerClass playerClass)	//[JOJO]
 	{
-		return "&$" + getClassClientId() + ";";
+		return toHtm(playerClass.ordinal());
+	}
+	
+	public static String toHtm(ClassId playerClass)	//[JOJO]
+	{
+		return toHtm(playerClass.getId());
 	}
 	
 	/**
