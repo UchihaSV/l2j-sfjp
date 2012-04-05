@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.base.ClassId;
+import com.l2jserver.gameserver.model.base.ClassInfo;
 import com.l2jserver.gameserver.model.base.Race;
 import com.l2jserver.gameserver.model.items.PcItemTemplate;
 
@@ -110,7 +111,7 @@ public class L2PcTemplate extends L2CharTemplate
 	//[JOJO]-------------------------------------------------
 	public String getClassNameHtm()
 	{
-		return com.l2jserver.gameserver.datatables.ClassListData.getInstance().getClass(getClassId()).getClassName(true);
+		return ClassInfo.toHtm(getClassId());
 	}
 	//-------------------------------------------------------
 	

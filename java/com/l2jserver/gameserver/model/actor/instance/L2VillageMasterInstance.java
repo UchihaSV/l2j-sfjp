@@ -38,6 +38,7 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.base.AcquireSkillType;
 import com.l2jserver.gameserver.model.base.ClassId;
+import com.l2jserver.gameserver.model.base.ClassInfo;
 import com.l2jserver.gameserver.model.base.PlayerClass;
 import com.l2jserver.gameserver.model.base.Race;
 import com.l2jserver.gameserver.model.base.SubClass;
@@ -306,9 +307,9 @@ public class L2VillageMasterInstance extends L2NpcInstance
 									"<a action=\"bypass -h npc_%objectId%_Subclass 4 ",
 									String.valueOf(subClass.ordinal()),
 									"\" msg=\"1268;",	/*$s1クラスをサブ クラスに追加しますか？*/
-									ClassListData.getInstance().getClass(subClass.ordinal()).getClassName(true),
+									formatClassForDisplay(subClass),
 									"\">",
-									ClassListData.getInstance().getClass(subClass.ordinal()).getClassName(true),
+									ClassInfo.toHtm(subClass),
 									"</a><br>");
 						}
 						html.replace("%list%", content1.toString());
@@ -814,6 +815,17 @@ public class L2VillageMasterInstance extends L2NpcInstance
 		
 		return checkVillageMasterRace(pclass) && checkVillageMasterTeachType(pclass);
 	}
+	
+	//[JOJO]-------------------------------------------------
+	private final String formatClassForDisplay(PlayerClass className)
+	{
+		String classNameStr;
+		if ((classNameStr = className.toJapanese()) != null)
+			return classNameStr;
+		else
+			return ClassListData.getInstance().getClass(className.ordinal()).getClassName();
+	}
+	//-------------------------------------------------------
 	
 	private static final Iterator<SubClass> iterSubClasses(L2PcInstance player)
 	{
