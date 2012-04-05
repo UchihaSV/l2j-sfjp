@@ -46,13 +46,11 @@ public final class CharTemplateTable
 			con = L2DatabaseFactory.getInstance().getConnection();
 			final PreparedStatement statement = con.prepareStatement("SELECT * FROM char_templates, lvlupgain WHERE char_templates.classId = lvlupgain.classId ORDER BY char_templates.ClassId");
 			final ResultSet rset = statement.executeQuery();
-			StatsSet set;
-			int cId;
 			StringIntern.begin();
 			while (rset.next())
 			{
-				set = new StatsSet();
-				cId = rset.getInt("ClassId");
+				StatsSet set = new StatsSet();
+				int cId = rset.getInt("ClassId");
 				set.set("classId", cId);
 				set.set("className", rset.getString("className"));
 				set.set("raceId", rset.getInt("raceId"));
