@@ -71,17 +71,15 @@ public final class HennaData extends DocumentParser
 		final StatsSet set = new StatsSet();
 		final List<ClassId> wearClassIds = new ArrayList<>();
 		NamedNodeMap attrs = d.getAttributes();
-		Node attr;
-		String name;
 		for (int i = 0; i < attrs.getLength(); i++)
 		{
-			attr = attrs.item(i);
+			Node attr = attrs.item(i);
 			set.set(attr.getNodeName(), attr.getNodeValue());
 		}
 		
 		for (Node c = d.getFirstChild(); c != null; c = c.getNextSibling())
 		{
-			name = c.getNodeName();
+			String name = c.getNodeName();
 			attrs = c.getAttributes();
 			switch (name)
 			{
@@ -89,14 +87,14 @@ public final class HennaData extends DocumentParser
 				{
 					for (int i = 0; i < attrs.getLength(); i++)
 					{
-						attr = attrs.item(i);
+						Node attr = attrs.item(i);
 						set.set(attr.getNodeName(), attr.getNodeValue());
 					}
 					break;
 				}
 				case "wear":
 				{
-					attr = attrs.getNamedItem("count");
+					Node attr = attrs.getNamedItem("count");
 					set.set("wear_count", attr.getNodeValue());
 					attr = attrs.getNamedItem("fee");
 					set.set("wear_fee", attr.getNodeValue());
@@ -104,7 +102,7 @@ public final class HennaData extends DocumentParser
 				}
 				case "cancel":
 				{
-					attr = attrs.getNamedItem("count");
+					Node attr = attrs.getNamedItem("count");
 					set.set("cancel_count", attr.getNodeValue());
 					attr = attrs.getNamedItem("fee");
 					set.set("cancel_fee", attr.getNodeValue());
