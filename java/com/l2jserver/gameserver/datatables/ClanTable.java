@@ -80,7 +80,6 @@ public class ClanTable
 			ForumsBBSManager.getInstance().initRoot();
 		
 		_clans = new FastMap<Integer, L2Clan>();
-		L2Clan clan;
 		Connection con = null;
 		try
 		{
@@ -95,7 +94,7 @@ public class ClanTable
 			{
 				int clanId = result.getInt("clan_id");
 				_clans.put(clanId, new L2Clan(clanId));
-				clan = getClan(clanId);
+				L2Clan clan = getClan(clanId);
 				if (clan.getDissolvingExpiryTime() != 0)
 					scheduleRemoveClan(clan.getClanId());
 				clanCount++;
@@ -481,7 +480,6 @@ public class ClanTable
 	private void restorewars()
 	{
 		Connection con = null;
-		L2Clan clan1, clan2;
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
@@ -489,8 +487,8 @@ public class ClanTable
 			ResultSet rset = statement.executeQuery();
 			while (rset.next())
 			{
-				clan1 = getClan(rset.getInt("clan1"));
-				clan2 = getClan(rset.getInt("clan2"));
+				L2Clan clan1 = getClan(rset.getInt("clan1"));
+				L2Clan clan2 = getClan(rset.getInt("clan2"));
 				if (clan1 != null && clan2 != null)
 				{
 					clan1.setEnemyClan(rset.getInt("clan2"));
