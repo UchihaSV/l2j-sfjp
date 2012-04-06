@@ -14,8 +14,6 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
-import java.util.regex.Matcher;
-
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.datatables.ClassListData;
@@ -87,7 +85,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 			{
 				NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 				html.setFile(player.getHtmlPrefix(), "data/html/classmaster/ok.htm");
-				html.replace("%name%", Matcher.quoteReplacement(ClassListData.getInstance().getClass(val).getClassName(true)));
+				html.replace("%name%", ClassListData.getInstance().getClass(val).getClassName(true));
 				player.sendPacket(html);
 			}
 		}
@@ -254,8 +252,8 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 					if (menu.length() > 0)
 					{
 						html.setFile(player.getHtmlPrefix(), "data/html/classmaster/template.htm");
-						html.replace("%name%", Matcher.quoteReplacement(ClassListData.getInstance().getClass(currentClassId).getClassName(true)));
-						html.replace("%menu%", Matcher.quoteReplacement(menu.toString()));
+						html.replace("%name%", ClassListData.getInstance().getClass(currentClassId).getClassName(true));
+						html.replace("%menu%", menu.toString());
 					}
 					else
 					{
@@ -290,7 +288,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 		
 		String msg = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/classmaster/tutorialtemplate.htm");
 		
-		msg = msg.replaceAll("%name%", Matcher.quoteReplacement(ClassListData.getInstance().getClass(currentClassId).getClassName(true)));
+		msg = msg.replace("%name%", ClassListData.getInstance().getClass(currentClassId).getClassName(true));
 		
 		final StringBuilder menu = new StringBuilder(100);
 		for (ClassId cid : ClassId.values())
@@ -309,8 +307,8 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 			}
 		}
 		
-		msg = msg.replaceAll("%menu%", Matcher.quoteReplacement(menu.toString()));
-		msg = msg.replace("%req_items%", Matcher.quoteReplacement(getRequiredItems(currentClassId.level()+1)));
+		msg = msg.replace("%menu%", menu.toString());
+		msg = msg.replace("%req_items%", getRequiredItems(currentClassId.level()+1));
 		player.sendPacket(new TutorialShowHtml(msg));
 	}
 	
