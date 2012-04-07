@@ -26,6 +26,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.SevenSignsFestival;
 import com.l2jserver.gameserver.ThreadPoolManager;
+import com.l2jserver.gameserver.communitybbs.Manager.favorite.PartyMatch;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.instancemanager.DuelManager;
@@ -93,7 +94,7 @@ public class L2Party extends AbstractPlayerGroup
 	private L2CommandChannel _commandChannel = null;
 	private DimensionalRift _dr;
 	private byte _requestChangeLoot = -1;
-	private List<Integer> _changeLootAnswers = null;
+	private FastList<Integer> _changeLootAnswers = null;
 	private long _requestChangeLootTimer = 0;
 	private Future<?> _checkTask = null;
 	private Future<?> _positionBroadcastTask = null;
@@ -376,6 +377,11 @@ public class L2Party extends AbstractPlayerGroup
 			broadcastPacket(new ExPartyPetWindowAdd(player.getPet()));
 		}
 		
+		// [L2J_JP ADD - TSL][JOJO]
+		int roomId = PartyMatch.getInstance().getRoomIdByCharId(player.getObjectId());
+		if (roomId != -1)
+			PartyMatch.getInstance().brodeCastRoomInfo(player, roomId);
+		
 		// add player to party, adjust party level
 		getMembers().add(player);
 		if (player.getLevel() > _partyLvl)
@@ -502,6 +508,11 @@ public class L2Party extends AbstractPlayerGroup
 			{
 				broadcastPacket(new ExPartyPetWindowDelete(summon));
 			}
+			
+			// [L2J_JP ADD - TSL][JOJO]
+			int roomId = PartyMatch.getInstance().getRoomIdByCharId(player.getObjectId());
+			if (roomId != -1)
+				PartyMatch.getInstance().brodeCastRoomInfo(player, roomId);
 			
 			if (isInDimensionalRift())
 			{
@@ -735,7 +746,7 @@ public class L2Party extends AbstractPlayerGroup
 		
 		// Check the number of party members that must be rewarded
 		// (The party member must be in range to receive its reward)
-		List<L2PcInstance> ToReward = FastList.newInstance();
+		FastList<L2PcInstance> ToReward = FastList.newInstance();
 		for (L2PcInstance member : membersList)
 		{
 			if (!Util.checkIfInRange(Config.ALT_PARTY_RANGE2, target, member, true))
@@ -746,8 +757,9 @@ public class L2Party extends AbstractPlayerGroup
 		}
 		
 		// Avoid null exceptions, if any
-		if (ToReward.isEmpty())
+		if (ToReward.size() == 0)
 		{
+			FastList.recycle(ToReward);
 			return;
 		}
 		
@@ -759,7 +771,7 @@ public class L2Party extends AbstractPlayerGroup
 			member.addAdena("Party", count, player, true);
 		}
 		
-		FastList.recycle((FastList<?>) ToReward);
+		FastList.recycle(ToReward);
 	}
 	
 	/**
@@ -842,19 +854,20 @@ public class L2Party extends AbstractPlayerGroup
 						int addsp = (int) member.calcStat(Stats.EXPSP_RATE, spReward * preCalculation, null, null);
 						if (member instanceof L2PcInstance)
 						{
-							if (((L2PcInstance) member).getSkillLevel(467) > 0)
+							L2PcInstance player = (L2PcInstance) member;
+							if (player.getSkillLevel(467) > 0)
 							{
-								L2Skill skill = SkillTable.getInstance().getInfo(467, ((L2PcInstance) member).getSkillLevel(467));
+								L2Skill skill = SkillTable.getInstance().getInfo(467, player.getSkillLevel(467));
 								
 								if (skill.getExpNeeded() <= addexp)
 								{
-									((L2PcInstance) member).absorbSoul(skill, target);
+									player.absorbSoul(skill, target);
 								}
 							}
-							((L2PcInstance) member).addExpAndSp(addexp, addsp, useVitalityRate);
+							player.addExpAndSp(addexp, addsp, useVitalityRate);
 							if (addexp > 0)
 							{
-								((L2PcInstance) member).updateVitalityPoints(vitalityPoints, true, false);
+								player.updateVitalityPoints(vitalityPoints, true, false);
 							}
 						}
 						else
@@ -1121,7 +1134,8 @@ public class L2Party extends AbstractPlayerGroup
 			broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.PARTY_LOOT_CHANGE_CANCELLED));
 		}
 		_requestChangeLoot = -1;
-		FastList.recycle((FastList<?>) _changeLootAnswers);
+		FastList.recycle(_changeLootAnswers);
+		_changeLootAnswers = null;	//[JOJO]
 		_requestChangeLootTimer = 0;
 	}
 	
