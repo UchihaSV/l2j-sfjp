@@ -32,7 +32,6 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.CharSelectionInfo;
 import com.l2jserver.gameserver.network.serverpackets.RestartResponse;
-import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.scripting.scriptengine.listeners.player.PlayerDespawnListener;
 import com.l2jserver.gameserver.taskmanager.AttackStanceTaskManager;
 
