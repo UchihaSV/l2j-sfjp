@@ -93,7 +93,7 @@ public class AttackStanceTaskManager
 		@Override
 		public void run()
 		{
-			Long current = System.currentTimeMillis();
+			long current = System.currentTimeMillis();
 			try
 			{
 				if (_attackStanceTasks != null)
