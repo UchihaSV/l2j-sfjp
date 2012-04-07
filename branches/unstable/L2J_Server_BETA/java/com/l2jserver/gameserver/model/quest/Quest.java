@@ -2168,11 +2168,11 @@ public class Quest extends ManagedScript
 			return null;
 		}
 		final L2Party party = player.getParty();
-		if ((party == null) || (party.getPartyMembers().isEmpty()))
+		if ((party == null) || (party.getMembers().isEmpty()))
 		{
 			return player;
 		}
-		return party.getPartyMembers().get(Rnd.get(party.getPartyMembers().size()));
+		return party.getMembers().get(Rnd.get(party.getMembers().size()));
 	}
 	
 	/**
@@ -2216,7 +2216,7 @@ public class Quest extends ManagedScript
 		QuestState temp = null;
 		L2Party party = player.getParty();
 		// if this player is not in a party, just check if this player instance matches the conditions itself
-		if ((party == null) || (party.getPartyMembers().isEmpty()))
+		if ((party == null) || (party.getMembers().isEmpty()))
 		{
 			temp = player.getQuestState(getName());
 			if ((temp != null) && (temp.get(var) != null) && (temp.get(var)).equalsIgnoreCase(value))
@@ -2238,7 +2238,7 @@ public class Quest extends ManagedScript
 			target = player;
 		}
 		
-		for (L2PcInstance partyMember : party.getPartyMembers())
+		for (L2PcInstance partyMember : party.getMembers())
 		{
 			if (partyMember == null)
 			{
@@ -2280,7 +2280,7 @@ public class Quest extends ManagedScript
 		QuestState temp = null;
 		L2Party party = player.getParty();
 		// if this player is not in a party, just check if this player instance matches the conditions itself
-		if ((party == null) || (party.getPartyMembers().isEmpty()))
+		if ((party == null) || (party.getMembers().isEmpty()))
 		{
 			temp = player.getQuestState(getName());
 			if ((temp != null) && (temp.getState() == state))
@@ -2302,7 +2302,7 @@ public class Quest extends ManagedScript
 			target = player;
 		}
 		
-		for (L2PcInstance partyMember : party.getPartyMembers())
+		for (L2PcInstance partyMember : party.getMembers())
 		{
 			if (partyMember == null)
 			{

@@ -116,7 +116,7 @@ public final class RequestRestart extends L2GameClientPacket
 			final L2Party playerParty = player.getParty();
 			
 			if (playerParty != null)
-				player.getParty().broadcastToPartyMembers(SystemMessage.sendString(player.getName() + " has been removed from the upcoming festival."));
+				player.getParty().broadcastString(player.getName() + " has been removed from the upcoming festival.");
 		}
 
 		for (PlayerDespawnListener listener : despawnListeners)
