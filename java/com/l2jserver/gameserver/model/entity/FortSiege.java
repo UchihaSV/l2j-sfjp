@@ -254,7 +254,7 @@ public class FortSiege implements Siegable
 			if (getFort().getOwnerClan() != null)
 				ownerId = getFort().getOwnerClan().getClanId();
 			else
-				ownerId = 0;
+				ownerId = -1;
 			getFort().getZone().banishForeigners(ownerId);
 			getFort().getZone().setIsActive(false);
 			getFort().getZone().updateZoneStatusForCharactersInside();
