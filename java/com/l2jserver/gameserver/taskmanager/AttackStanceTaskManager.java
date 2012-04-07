@@ -101,6 +101,7 @@ public class AttackStanceTaskManager
 					{
 						for (L2Character actor : _attackStanceTasks.keySet())
 						{
+							if (actor == null) continue;
 							if ((current - _attackStanceTasks.get(actor)) > 15000)
 							{
 								actor.broadcastPacket(new AutoAttackStop(actor.getObjectId()));
