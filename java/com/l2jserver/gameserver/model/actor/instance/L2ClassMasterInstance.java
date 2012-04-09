@@ -83,9 +83,9 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 			
 			if (checkAndChangeClass(player, val))
 			{
-				NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+				final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 				html.setFile(player.getHtmlPrefix(), "data/html/classmaster/ok.htm");
-				html.replace("%name%", ClassListData.getInstance().getClass(val).getClassName(true));
+				html.replace("%name%", ClassListData.getInstance().getClass(val).getClientCode());
 				player.sendPacket(html);
 			}
 		}
@@ -243,7 +243,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 									"<a action=\"bypass -h npc_%objectId%_change_class ",
 									String.valueOf(cid.getId()),
 									"\">",
-									ClassListData.getInstance().getClass(cid).getClassName(true),
+									ClassListData.getInstance().getClass(cid).getClientCode(),
 									"</a><br>"
 							);
 						}
@@ -252,7 +252,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 					if (menu.length() > 0)
 					{
 						html.setFile(player.getHtmlPrefix(), "data/html/classmaster/template.htm");
-						html.replace("%name%", ClassListData.getInstance().getClass(currentClassId).getClassName(true));
+						html.replace("%name%", ClassListData.getInstance().getClass(currentClassId).getClientCode());
 						html.replace("%menu%", menu.toString());
 					}
 					else
@@ -287,8 +287,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 			return;
 		
 		String msg = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/classmaster/tutorialtemplate.htm");
-		
-		msg = msg.replace("%name%", ClassListData.getInstance().getClass(currentClassId).getClassName(true));
+		msg = msg.replace("%name%", ClassListData.getInstance().getClass(currentClassId).getClientCode());
 		
 		final StringBuilder menu = new StringBuilder(100);
 		for (ClassId cid : ClassId.values())
@@ -301,14 +300,14 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 						"<a action=\"link CO",
 						String.valueOf(cid.getId()),
 						"\">",
-						ClassListData.getInstance().getClass(cid).getClassName(true),
+						ClassListData.getInstance().getClass(cid).getClientCode(),
 						"</a><br>"
 				);
 			}
 		}
 		
 		msg = msg.replace("%menu%", menu.toString());
-		msg = msg.replace("%req_items%", getRequiredItems(currentClassId.level()+1));
+		msg = msg.replace("%req_items%", getRequiredItems(currentClassId.level() + 1));
 		player.sendPacket(new TutorialShowHtml(msg));
 	}
 	
