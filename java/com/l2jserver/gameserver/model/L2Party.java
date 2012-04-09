@@ -267,7 +267,7 @@ public class L2Party extends AbstractPlayerGroup
 	 */
 	public boolean isLeader(L2PcInstance player)
 	{
-		return getLeader().equals(player);
+		return getLeader().getObjectId() == player.getObjectId();
 	}
 	
 	/**
@@ -322,7 +322,7 @@ public class L2Party extends AbstractPlayerGroup
 	{
 		for (L2PcInstance member : getMembers())
 		{
-			if ((member != null) && !member.equals(player))
+			if ((member != null) && member.getObjectId() != player.getObjectId())
 			{
 				member.sendPacket(msg);
 			}
@@ -536,7 +536,7 @@ public class L2Party extends AbstractPlayerGroup
 				if (isInCommandChannel())
 				{
 					// delete the whole command channel when the party who opened the channel is disbanded
-					if (getCommandChannel().getLeader().equals(getLeader()))
+					if (getCommandChannel().getLeader().getObjectId() == getLeader().getObjectId())
 					{
 						getCommandChannel().disbandChannel();
 					}
@@ -617,7 +617,7 @@ public class L2Party extends AbstractPlayerGroup
 					msg.addString(getLeader().getName());
 					broadcastPacket(msg);
 					broadcastToPartyMembersNewLeader();
-					if (isInCommandChannel() && temp.equals(_commandChannel.getLeader()))
+					if (isInCommandChannel() && temp.getObjectId() == _commandChannel.getLeader().getObjectId())
 					{
 						_commandChannel.setChannelLeader(getLeader());
 						msg = SystemMessage.getSystemMessage(SystemMessageId.COMMAND_CHANNEL_LEADER_NOW_C1);
