@@ -14,9 +14,6 @@
  */
 package com.l2jserver.gameserver.model.base;
 
-import java.util.regex.Matcher;
-
-import com.l2jserver.gameserver.datatables.ClassListData;
 
 /**
  * This class will hold the information of the player classes.
