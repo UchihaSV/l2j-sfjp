@@ -14,6 +14,10 @@
  */
 package com.l2jserver.gameserver.model.base;
 
+import java.util.regex.Matcher;
+
+import com.l2jserver.gameserver.datatables.ClassListData;
+
 /**
  * This class will hold the information of the player classes.
  * @author Zoey76
@@ -49,15 +53,9 @@ public final class ClassInfo
 	}
 	
 	/**
-	 * @param displayClientName if {@code true} the code to display the client side name will be returned, <b>HTMLs only</b>.
-	 * @return the in-game class name.
+	 * @return the hardcoded in-game class name.
 	 */
-	public String getClassName(boolean displayClientName)
-	{
-		return displayClientName ? toHtm(_classId.getId()) : _className;
-	}
-	
-	public String getClassName()	//[JOJO]
+	public String getClassName()
 	{
 		return _className;
 	}
@@ -85,14 +83,45 @@ public final class ClassInfo
 		return "&$" + classClientId + ";";
 	}
 	
+	/**
+	 * @return the class client Id formatted to be displayed on a HTML.
+	 */
 	public static String toHtm(PlayerClass playerClass)	//[JOJO]
 	{
 		return toHtm(playerClass.ordinal());
 	}
 	
+	/**
+	 * @return the class client Id formatted to be displayed on a HTML.
+	 */
 	public static String toHtm(ClassId playerClass)	//[JOJO]
 	{
 		return toHtm(playerClass.getId());
+	}
+	
+	/**
+	 * @return the class client Id formatted to be displayed on a HTML.
+	 */
+	public String toHtm()	//[JOJO]
+	{
+		return toHtm(_classId);
+	}
+	
+	/**
+	 * @return the class client Id formatted to be displayed on a HTML.
+	 */
+	public String getClientCode()	//[JOJO]
+	{
+		return toHtm();
+	}
+	
+	/**
+	 * @return the escaped class client Id formatted to be displayed on a HTML.
+	 */
+	public String getEscapedClientCode()
+	{
+		return toHtm();
+	//	return Matcher.quoteReplacement(toHtm());
 	}
 	
 	/**
