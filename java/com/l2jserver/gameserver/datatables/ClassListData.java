@@ -14,8 +14,7 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Map;
+import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -33,11 +32,10 @@ import com.l2jserver.gameserver.model.base.PlayerClass;
  */
 public final class ClassListData extends DocumentParser
 {
-	private static final Map<ClassId, ClassInfo> _classData = new HashMap<>();
+	private static final TIntObjectHashMap<ClassInfo> _classData = new TIntObjectHashMap<ClassInfo>();
 	
 	private ClassListData()
 	{
-		_classData.clear();
 		parseDatapackFile("data/stats/chars/classList.xml");
 		_log.info(getClass().getSimpleName() + ": Loaded " + _classData.size() + " Class data.");
 	}
@@ -63,19 +61,11 @@ public final class ClassListData extends DocumentParser
 						String classServName = attr.getNodeValue();
 						attr = attrs.getNamedItem("parentClassId");
 						ClassId parentClassId = (attr != null) ? ClassId.getClassId(parseInt(attr)) : null;
-						_classData.put(classId, new ClassInfo(classId, className, classServName, parentClassId));
+						_classData.put(classId.getId(), new ClassInfo(classId, className, classServName, parentClassId));
 					}
 				}
 			}
 		}
-	}
-	
-	/**
-	 * @return the complete class list.
-	 */
-	public Map<ClassId, ClassInfo> getClassList()
-	{
-		return _classData;
 	}
 	
 	/**
@@ -84,7 +74,12 @@ public final class ClassListData extends DocumentParser
 	 */
 	public ClassInfo getClass(final ClassId classId)
 	{
-		return _classData.get(classId);
+		return _classData.get(classId.getId());
+	}
+	
+	public ClassInfo getClass(final PlayerClass playerClass)	//[JOJO]
+	{
+		return _classData.get(playerClass.ordinal());
 	}
 	
 	/**
@@ -93,24 +88,7 @@ public final class ClassListData extends DocumentParser
 	 */
 	public ClassInfo getClass(final int classId)
 	{
-		final ClassId id = ClassId.getClassId(classId);
-		return (id != null) ? _classData.get(id) : null;
-	}
-	
-	/**
-	 * @param classServName the server side class name.
-	 * @return the class info related to the given {@code classServName}.
-	 */
-	public ClassInfo getClass(final String classServName)
-	{
-		for (final ClassInfo classInfo : _classData.values())
-		{
-			if (classInfo.getClassServName().equals(classServName))
-			{
-				return classInfo;
-			}
-		}
-		return null;
+		return _classData.get(classId);
 	}
 	
 	public static ClassListData getInstance()

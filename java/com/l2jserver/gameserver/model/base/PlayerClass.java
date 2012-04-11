@@ -38,6 +38,7 @@ import java.util.Set;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
+import com.l2jserver.gameserver.datatables.ClassListData;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
@@ -336,34 +337,47 @@ public enum PlayerClass
 		return _level;
 	}
 	
+	/**
+	 * @return the class client Id formatted to be displayed on a HTML.
+	 */
+	public String toHtm()	//[JOJO]
+	{
+		return ClassInfo.toHtm(ordinal());
+	}
+	public String toHtmW()	//[JOJO]
+	{
+		return ClassInfo.toHtmW(ordinal());
+	}
+	public String toHtmN()	//[JOJO]
+	{
+		return ClassInfo.toHtmN(ordinal());
+	}
+	
+	/**
+	 * @return the hardcoded in-game class name.
+	 */
 	public String toJapanese() // [JOJO]
 	{
 		return toJapanese("name");
 	}
-	public String toJapanese(String columnLabel) // [JOJO]
+	private String toJapanese(String columnLabel) // [JOJO]
 	{
+		final int id = this.ordinal();
 		String name = null;
-		Connection con = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+		     PreparedStatement statement = con.prepareStatement("SELECT `" + columnLabel + "` FROM classname_ja WHERE id=?"))
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			
-			PreparedStatement statement = con.prepareStatement("SELECT `" + columnLabel + "` FROM classname_ja WHERE id=?");
-			statement.setInt(1, ordinal());
+			statement.setInt(1, id);
 			ResultSet rset = statement.executeQuery();
 			if (rset.next())
 				name = rset.getString(columnLabel);
-			rset.close();
-			statement.close();
+			else
+				name = ClassListData.getInstance().getClass(id).getClassName();
 		}
 		catch (SQLException e)
 		{
-			System.err.println("__BASENAME__:__LINE__: " + ordinal() + " " + name());
+			System.err.println("__BASENAME__:__LINE__: " + id + " " + name());
 			e.printStackTrace();
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 		return name;
 	}

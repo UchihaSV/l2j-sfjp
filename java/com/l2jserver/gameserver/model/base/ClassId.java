@@ -330,4 +330,20 @@ public enum ClassId
 			return null;
 		}
 	}
+	
+	/**
+	 * @return the class client Id formatted to be displayed on a HTML.
+	 */
+	public String toHtm()	//[JOJO]
+	{
+		return ClassInfo.toHtm(getId());
+	}
+	public String toHtmW()	//[JOJO]
+	{
+		return ClassInfo.toHtmW(getId());
+	}
+	public String toHtmN()	//[JOJO]
+	{
+		return ClassInfo.toHtmN(getId());
+	}
 }
