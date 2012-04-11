@@ -60,8 +60,22 @@ public final class ClassInfo
 	/**
 	 * @return the class client Id formatted to be displayed on a HTML.
 	 */
-	public static String toHtm(int id)
+	public static String toHtm(int id)	//[JOJO]
 	{
+		return toHtmW(id);
+	}
+	public static String toHtmW(int id)	//[JOJO]
+	{
+		//英語   55 "<FSTRING>1811055</FSTRING>" (Bounty Hunter)
+		//台湾語 55 "<FSTRING>1811055</FSTRING>" (賞金獵人)
+		//日本語 55 "<FSTRING>1811055</FSTRING>" (バウンティ ハンター) -- 全角文字
+		return "<FSTRING>" + (1811000 + id) + "</FSTRING>";
+	}
+	public static String toHtmN(int id)	//[JOJO]
+	{
+		//英語   55 "&$302;" (Bounty Hunter)
+		//台湾語 55 "&$302;" (賞金獵人)
+		//日本語 55 "&$302;" (ﾊﾞｳﾝﾃｨｰ ﾊﾝﾀｰ) -- ﾊﾝｶｸ文字
 		int classClientId = id;
 		if ((classClientId >= 0) && (classClientId <= 57))
 		{
@@ -83,33 +97,25 @@ public final class ClassInfo
 	/**
 	 * @return the class client Id formatted to be displayed on a HTML.
 	 */
-	public static String toHtm(PlayerClass playerClass)	//[JOJO]
-	{
-		return toHtm(playerClass.ordinal());
-	}
-	
-	/**
-	 * @return the class client Id formatted to be displayed on a HTML.
-	 */
-	public static String toHtm(ClassId playerClass)	//[JOJO]
-	{
-		return toHtm(playerClass.getId());
-	}
-	
-	/**
-	 * @return the class client Id formatted to be displayed on a HTML.
-	 */
 	public String toHtm()	//[JOJO]
 	{
-		return toHtm(_classId);
+		return toHtm(getClassId().getId());
+	}
+	public String toHtmW()	//[JOJO]
+	{
+		return toHtmW(getClassId().getId());
+	}
+	public String toHtmN()	//[JOJO]
+	{
+		return toHtmN(getClassId().getId());
 	}
 	
 	/**
 	 * @return the class client Id formatted to be displayed on a HTML.
 	 */
-	public String getClientCode()	//[JOJO]
+	public String getClientCode()
 	{
-		return toHtm();
+		return toHtm();	//[JOJO]
 	}
 	
 	/**

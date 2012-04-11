@@ -110,12 +110,6 @@ public class L2PcTemplate extends L2CharTemplate
 	{
 		return _className;
 	}
-	//[JOJO]-------------------------------------------------
-	public String getClassNameHtm()
-	{
-		return ClassInfo.toHtm(getClassId());
-	}
-	//-------------------------------------------------------
 	
 	/**
 	 * @return the template X spawn coordinate.
