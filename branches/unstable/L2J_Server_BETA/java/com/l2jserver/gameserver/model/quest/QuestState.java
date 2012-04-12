@@ -79,8 +79,8 @@ public final class QuestState
 	 */
 	public static enum QuestType
 	{
-		REPEATABLE,
 		ONE_TIME,
+		REPEATABLE,
 		DAILY
 	}
 	
@@ -922,18 +922,16 @@ public final class QuestState
 	{
 		switch (type)
 		{
-			case REPEATABLE:
 			case ONE_TIME:
-			{
-				exitQuest(type == QuestType.REPEATABLE);
+				exitQuest(false);
 				break;
-			}
+			case REPEATABLE:
+				exitQuest(true);
+				break;
 			case DAILY:
-			{
 				exitQuest(false);
 				setRestartTime();
 				break;
-			}
 		}
 		return this;
 	}
