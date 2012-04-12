@@ -51,7 +51,7 @@ public class DecayTaskManager
 	
 	public void addDecayTask(L2Character actor)
 	{
-		addDecayTask(actor, 0); 
+		addDecayTask(actor, 0);
 	}
 	
 	public void addDecayTask(L2Character actor, int interval)
@@ -87,14 +87,22 @@ public class DecayTaskManager
 					e = it.next();
 					actor = e.getKey();
 					next = e.getValue();
-					if (actor == null || next == null)
+					if ((actor == null) || (next == null))
+					{
 						continue;
+					}
 					if (actor.isRaid() && !actor.isRaidMinion())
+					{
 						delay = Config.RAID_BOSS_DECAY_TIME;
+					}
 					else if ((actor instanceof L2Attackable) && (((L2Attackable) actor).isSpoil() || ((L2Attackable) actor).isSeeded()))
+					{
 						delay = Config.SPOILED_DECAY_TIME;
+					}
 					else
+					{
 						delay = Config.NPC_DECAY_TIME;
+					}
 					if (GRAND_BOSS_DECAY_TIME_L2J_JP)	//TODO:[JOJO] 〓チェック中〓
 					{
 						// [L2J_JP ADD SANDMAN][MODIFY JOJO]
@@ -170,7 +178,7 @@ public class DecayTaskManager
 	
 	/**
 	 * <u><b><font color="FF0000">Read only</font></b></u>
-	 * @return 
+	 * @return
 	 */
 	public Map<L2Character, Long> getTasks()
 	{
