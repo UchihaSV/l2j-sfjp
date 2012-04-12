@@ -14,6 +14,8 @@
  */
 package com.l2jserver.gameserver.model.base;
 
+import com.l2jserver.gameserver.datatables.ClassListData;
+
 
 /**
  * This class will hold the information of the player classes.
@@ -55,6 +57,10 @@ public final class ClassInfo
 	public String getClassName()
 	{
 		return _className;
+	}
+	public static String getClassName(int id) // [JOJO]
+	{
+		return ClassListData.getInstance().getClass(id).getClassName();
 	}
 	
 	/**

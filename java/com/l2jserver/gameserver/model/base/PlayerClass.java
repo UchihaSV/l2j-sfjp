@@ -28,16 +28,11 @@ import static com.l2jserver.gameserver.model.base.Race.Human;
 import static com.l2jserver.gameserver.model.base.Race.Kamael;
 import static com.l2jserver.gameserver.model.base.Race.Orc;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Set;
 
 import com.l2jserver.Config;
-import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.datatables.ClassListData;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
@@ -338,47 +333,33 @@ public enum PlayerClass
 	}
 	
 	/**
+	 * @return the Id of the Class.
+	 */
+	public final int getId()
+	{
+		return ordinal();
+	}
+	/**
+	 * @return the hardcoded in-game class name.
+	 */
+	public String getClassName() // [JOJO]
+	{
+		return ClassInfo.getClassName(getId());
+	}
+	/**
 	 * @return the class client Id formatted to be displayed on a HTML.
 	 */
 	public String toHtm()	//[JOJO]
 	{
-		return ClassInfo.toHtm(ordinal());
+		return ClassInfo.toHtm(getId());
 	}
 	public String toHtmW()	//[JOJO]
 	{
-		return ClassInfo.toHtmW(ordinal());
+		return ClassInfo.toHtmW(getId());
 	}
 	public String toHtmN()	//[JOJO]
 	{
-		return ClassInfo.toHtmN(ordinal());
+		return ClassInfo.toHtmN(getId());
 	}
 	
-	/**
-	 * @return the hardcoded in-game class name.
-	 */
-	public String toJapanese() // [JOJO]
-	{
-		return toJapanese("name");
-	}
-	private String toJapanese(String columnLabel) // [JOJO]
-	{
-		final int id = this.ordinal();
-		String name = null;
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-		     PreparedStatement statement = con.prepareStatement("SELECT `" + columnLabel + "` FROM classname_ja WHERE id=?"))
-		{
-			statement.setInt(1, id);
-			ResultSet rset = statement.executeQuery();
-			if (rset.next())
-				name = rset.getString(columnLabel);
-			else
-				name = ClassListData.getInstance().getClass(id).getClassName();
-		}
-		catch (SQLException e)
-		{
-			System.err.println("__BASENAME__:__LINE__: " + id + " " + name());
-			e.printStackTrace();
-		}
-		return name;
-	}
 }

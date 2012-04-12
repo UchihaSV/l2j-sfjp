@@ -79,7 +79,7 @@ public final class ClassListData extends DocumentParser
 	
 	public ClassInfo getClass(final PlayerClass playerClass)	//[JOJO]
 	{
-		return _classData.get(playerClass.ordinal());
+		return _classData.get(playerClass.getId());
 	}
 	
 	/**
