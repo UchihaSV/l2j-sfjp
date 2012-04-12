@@ -21,7 +21,6 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -39,12 +38,8 @@ import com.l2jserver.gameserver.taskmanager.TaskTypes;
  */
 public class TaskBirthday extends Task
 {
-	private static final Logger _log = Logger.getLogger(TaskBirthday.class.getName());
-	
 	private static final String NAME = "birthday";
-	
 	private static final String QUERY = "SELECT charId, createDate FROM characters WHERE createDate LIKE ?";
-	
 	@Override
 	public String getName()
 	{
@@ -87,11 +82,9 @@ public class TaskBirthday extends Task
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement(QUERY);
+			final PreparedStatement statement = con.prepareStatement(QUERY);
 			statement.setString(1, "%-" + getNum(month) + "-" + getNum(day));
-			
-			ResultSet rset = statement.executeQuery();
-			
+			final ResultSet rset = statement.executeQuery();
 			while (rset.next())
 			{
 				int playerId = rset.getInt("charId");
@@ -99,16 +92,21 @@ public class TaskBirthday extends Task
 				createDate.setTime(rset.getDate("createDate"));
 				
 				int age = year - createDate.get(Calendar.YEAR);
-				
-				if (age <= 0) // Player births this year
+				if (age <= 0)
+				{
 					continue;
+				}
 				
 				String text = Config.ALT_BIRTHDAY_MAIL_TEXT;
 				
 				if (text.contains("$c1"))
+				{
 					text = text.replace("$c1", CharNameTable.getInstance().getNameById(playerId));
+				}
 				if (text.contains("$s1"))
+				{
 					text = text.replace("$s1", String.valueOf(age));
+				}
 				
 				Message msg = new Message(playerId, Config.ALT_BIRTHDAY_MAIL_SUBJECT, text, Message.SendBySystem.ALEGRIA);
 				
@@ -130,17 +128,15 @@ public class TaskBirthday extends Task
 		}
 	}
 	
+	/**
+	 * @param num the number to format.
+	 * @return the formatted number starting with a 0 if it is lower or equal than 10.
+	 */
 	private String getNum(int num)
 	{
-		if (num <= 9)
-			return "0" + num;
-		
-		return String.valueOf(num);
+		return (num <= 9) ? "0" + num : String.valueOf(num);
 	}
 	
-	/**
-	 * @see com.l2jserver.gameserver.taskmanager.Task#initializate()
-	 */
 	@Override
 	public void initializate()
 	{
@@ -148,4 +144,3 @@ public class TaskBirthday extends Task
 		TaskManager.addUniqueTask(NAME, TaskTypes.TYPE_GLOBAL_TASK, "1", "06:30:00", "");
 	}
 }
-
