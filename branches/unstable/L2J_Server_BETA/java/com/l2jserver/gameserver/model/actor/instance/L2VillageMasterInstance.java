@@ -306,7 +306,7 @@ public class L2VillageMasterInstance extends L2NpcInstance
 									"<a action=\"bypass -h npc_%objectId%_Subclass 4 ",
 									String.valueOf(subClass.ordinal()),
 									"\" msg=\"1268;",	/*$s1クラスをサブ クラスに追加しますか？*/
-									subClass.toJapanese(),
+									subClass.getClassName(),
 									"\">",
 									subClass.toHtm(),
 									"</a><br>");

@@ -14,6 +14,8 @@
  */
 package com.l2jserver.gameserver.model.base;
 
+import com.l2jserver.gameserver.datatables.ClassListData;
+
 /**
  * This class defines all classes (ex : human fighter, darkFighter...) that a player can chose.<BR><BR>
  *
@@ -331,6 +333,13 @@ public enum ClassId
 		}
 	}
 	
+	/**
+	 * @return the hardcoded in-game class name.
+	 */
+	public String getClassName() // [JOJO]
+	{
+		return ClassInfo.getClassName(getId());
+	}
 	/**
 	 * @return the class client Id formatted to be displayed on a HTML.
 	 */
