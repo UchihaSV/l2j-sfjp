@@ -33,7 +33,6 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import com.l2jserver.Config;
-import com.l2jserver.gameserver.datatables.ClassListData;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
