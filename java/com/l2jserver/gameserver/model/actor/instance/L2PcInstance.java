@@ -3189,7 +3189,6 @@ public final class L2PcInstance extends L2Playable
 			PreparedStatement statement = con.prepareStatement(LOAD_ZONE_RESTART_LIMIT);
 			statement.setInt(1, getObjectId());
 			final ResultSet rset = statement.executeQuery();
-			
 			if (rset.next())
 			{
 				setZoneRestartLimitTime(rset.getLong("time_limit"));
@@ -7648,15 +7647,12 @@ public final class L2PcInstance extends L2Playable
 	private static boolean restoreSubClassData(L2PcInstance player)
 	{
 		Connection con = null;
-		
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement(RESTORE_CHAR_SUBCLASSES);
 			statement.setInt(1, player.getObjectId());
-			
 			ResultSet rset = statement.executeQuery();
-			
 			while (rset.next())
 			{
 				SubClass subClass = new SubClass();
@@ -7680,7 +7676,6 @@ public final class L2PcInstance extends L2Playable
 		{
 			L2DatabaseFactory.close(con);
 		}
-		
 		return true;
 	}
 	
@@ -7892,7 +7887,6 @@ public final class L2PcInstance extends L2Playable
 	private void storeCharBase()
 	{
 		Connection con = null;
-		
 		try
 		{
 			// Get the exp, level, and sp of base class to store in base table
@@ -11010,14 +11004,12 @@ public final class L2PcInstance extends L2Playable
 				_log.info(getName() + " has requested to modify sub class index " + classIndex + " from class ID " + oldClassId + " to " + newClassId + ".");
 			
 			Connection con = null;
-			PreparedStatement statement = null;
-			
 			try
 			{
 				con = L2DatabaseFactory.getInstance().getConnection();
 				
 				// Remove all henna info stored for this sub-class.
-				statement = con.prepareStatement(DELETE_CHAR_HENNAS);
+				PreparedStatement statement = con.prepareStatement(DELETE_CHAR_HENNAS);
 				statement.setInt(1, getObjectId());
 				statement.setInt(2, classIndex);
 				statement.execute();
@@ -14411,7 +14403,6 @@ public final class L2PcInstance extends L2Playable
 				tpbookmark.get(count)._name = name;
 				
 				Connection con = null;
-				
 				try
 				{
 					
@@ -14435,7 +14426,6 @@ public final class L2PcInstance extends L2Playable
 				{
 					L2DatabaseFactory.close(con);
 				}
-				
 			}
 			count++;
 		}
@@ -14668,7 +14658,6 @@ public final class L2PcInstance extends L2Playable
 		{
 			L2DatabaseFactory.close(con);
 		}
-		
 		sendPacket(new ExGetBookMarkInfoPacket(this));
 	}
 	
@@ -14677,7 +14666,6 @@ public final class L2PcInstance extends L2Playable
 		if(tpbookmark == null)
 			tpbookmark = new FastList<TeleportBookmark>();
 		Connection con = null;
-		
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
