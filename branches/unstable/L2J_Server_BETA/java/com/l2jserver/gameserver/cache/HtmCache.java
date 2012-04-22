@@ -123,7 +123,7 @@ public class HtmCache
 	
 	private void parseDir(File dir)
 	{
-		final File[] files = dir.listFiles(htmlFilter);
+		final File[] files = dir.listFiles();
 		for (File file : files)
 		{
 			if (!file.isDirectory())
@@ -143,37 +143,39 @@ public class HtmCache
 	}
 	private String loadFile(File file, boolean checked)
 	{
+		if (!htmlFilter.accept(file))
+		{
+			return null;
+		}
+		
 		final String relpath = Util.getRelativePath(Config.DATAPACK_ROOT, file);
 		final int hashcode = relpath.hashCode();
 		String content = null;
-		if (htmlFilter.accept(file))
+		try (FileInputStream fis = new FileInputStream(file);)
 		{
-			try (FileInputStream fis = new FileInputStream(file);)
+			byte[] raw = new byte[fis.available()];
+			
+			fis.read(raw);
+			content = new String(raw, "UTF-8");
+		/*	if (! TIMED_CACHE) */
+				content = content.replaceAll("[\uFEFF\r\n]", "");
+			
+			String oldContent = checked ? null : _cache_get(hashcode);
+			if (oldContent == null)
 			{
-				byte[] raw = new byte[fis.available()];
-				
-				fis.read(raw);
-				content = new String(raw, "UTF-8");
-			/*	if (! TIMED_CACHE) */
-					content = content.replaceAll("[\uFEFF\r\n]", "");
-				
-				String oldContent = checked ? null : _cache_get(hashcode);
-				if (oldContent == null)
-				{
-					_bytesBuffLen += content.length() * 2;	// unicode (16 bit) = 2 bytes.
-					_loadedFiles++;
-				}
-				else
-				{
-					_bytesBuffLen = _bytesBuffLen - oldContent.length() * 2 + content.length() * 2;
-				}
-				_cache_put(hashcode, content);
+				_bytesBuffLen += content.length() * 2;	// unicode (16 bit) = 2 bytes.
+				_loadedFiles++;
 			}
-			catch (Exception e)
+			else
 			{
-				_log.log(Level.WARNING, "Problem with htm file " + e.getMessage(), e);
-				e.printStackTrace();
+				_bytesBuffLen = _bytesBuffLen - oldContent.length() * 2 + content.length() * 2;
 			}
+			_cache_put(hashcode, content);
+		}
+		catch (Exception e)
+		{
+			_log.log(Level.WARNING, "Problem with htm file " + e.getMessage(), e);
+			e.printStackTrace();
 		}
 		return content;
 	}
