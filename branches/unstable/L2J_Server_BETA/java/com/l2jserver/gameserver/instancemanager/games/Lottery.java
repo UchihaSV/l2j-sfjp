@@ -97,8 +97,7 @@ public class Lottery
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement;
-			statement = con.prepareStatement(UPDATE_PRICE);
+			PreparedStatement statement = con.prepareStatement(UPDATE_PRICE);
 			statement.setLong(1, getPrize());
 			statement.setLong(2, getPrize());
 			statement.setInt(3, getId());
@@ -521,7 +520,6 @@ public class Lottery
 		{
 			L2DatabaseFactory.close(con);
 		}
-		
 		return res;
 	}
 	

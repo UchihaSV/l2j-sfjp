@@ -1066,7 +1066,6 @@ public class Hero
 	private void deleteItemsInDb()
 	{
 		Connection con = null;
-		
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
