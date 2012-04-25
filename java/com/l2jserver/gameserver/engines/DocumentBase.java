@@ -263,6 +263,7 @@ public abstract class DocumentBase
 		{
 			count = Integer.decode(getValue(attrs.getNamedItem("count").getNodeValue(), template));
 		}
+		
 		if (attrs.getNamedItem("abnormalTime") != null)
 		{
 			abnormalTime = Integer.decode(getValue(attrs.getNamedItem("abnormalTime").getNodeValue(),template));
@@ -281,8 +282,6 @@ public abstract class DocumentBase
 				}
 			}
 		}
-		else if (((L2Skill) template).getBuffDuration() > 0)
-			abnormalTime = ((L2Skill) template).getBuffDuration() / 1000 / count;
 		
 		boolean passiveEffect = false;
 		if (attrs.getNamedItem("passive") != null)
