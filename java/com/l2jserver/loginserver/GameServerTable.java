@@ -69,7 +69,7 @@ public final class GameServerTable
 		_log.info(getClass().getSimpleName() + ": Loaded " + _gameServerTable.size() + " registered Game Servers");
 		
 		initRSAKeys();
-		_log.info(getClass().getSimpleName() + ": Cached " + _keyPairs.length + " RSA keys for Game Server communication.");
+		_log.info(getClass().getSimpleName() + ": Cached " + (_keyPairs == null ? 0 : _keyPairs.length) + " RSA keys for Game Server communication.");
 	}
 	
 	/**
@@ -98,7 +98,7 @@ public final class GameServerTable
 		}
 		catch (Exception e)
 		{
-			_log.info(getClass().getSimpleName() + ": Cannot load " + xml.getAbsolutePath() + "!");
+			e.printStackTrace();
 		}
 	}
 	
@@ -119,7 +119,7 @@ public final class GameServerTable
 		}
 		catch (Exception e)
 		{
-			_log.severe(getClass().getSimpleName() + ": Error loading RSA keys for Game Server communication!");
+			e.printStackTrace();
 		}
 	}
 	
@@ -145,7 +145,7 @@ public final class GameServerTable
 		}
 		catch (Exception e)
 		{
-			_log.severe(getClass().getSimpleName() + ": Error loading registered game servers!");
+			e.printStackTrace();
 		}
 		finally
 		{
@@ -257,7 +257,7 @@ public final class GameServerTable
 		}
 		catch (Exception e)
 		{
-			_log.severe(getClass().getSimpleName() + ": Error while saving gameserver!");
+			e.printStackTrace();
 		}
 		finally
 		{
