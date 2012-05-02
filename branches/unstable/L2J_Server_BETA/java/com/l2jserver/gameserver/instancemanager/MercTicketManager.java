@@ -46,7 +46,7 @@ public class MercTicketManager
 {
 	private static final Logger _log = Logger.getLogger(MercTicketManager.class.getName());
 	
-	private static final FastList<L2ItemInstance> _droppedTickets = new FastList<>();
+	private static final FastList<L2ItemInstance> _droppedTickets = new FastList<L2ItemInstance>().shared();
 	
 	//TODO move all these values into siege.properties
 	// max tickets per merc type = 10 + (castleid * 2)?
@@ -104,7 +104,6 @@ public class MercTicketManager
 	private MercTicketManager()
 	{
 		_log.info("Initializing MercTicketManager.");
-		_droppedTickets.shared();
 		load();
 	}
 	
@@ -141,9 +140,6 @@ public class MercTicketManager
 			PreparedStatement statement = con.prepareStatement("SELECT * FROM castle_siege_guards Where isHired = 1");
 			ResultSet rs = statement.executeQuery();
 			
-			int npcId;
-			int itemId;
-			int x, y, z;
 			int mercPlaced[] = new int[20];
 			// start index to begin the search for the itemId corresponding to this NPC
 			// this will help with:
@@ -153,10 +149,10 @@ public class MercTicketManager
 			
 			while (rs.next())
 			{
-				npcId = rs.getInt("npcId");
-				x = rs.getInt("x");
-				y = rs.getInt("y");
-				z = rs.getInt("z");
+				int npcId = rs.getInt("npcId");
+				int x = rs.getInt("x");
+				int y = rs.getInt("y");
+				int z = rs.getInt("z");
 				Castle castle = CastleManager.getInstance().getCastle(x, y, z);
 				if (castle != null)
 				{
@@ -173,7 +169,7 @@ public class MercTicketManager
 						// only handle tickets if a siege is not ongoing in this npc's castle
 						if ((castle != null) && !(castle.getSiege().getIsInProgress()))
 						{
-							itemId = ITEM_IDS[i];
+							int itemId = ITEM_IDS[i];
 							// create the ticket in the gameworld
 							L2ItemInstance dropticket = new L2ItemInstance(IdFactory.getInstance().getNextId(), itemId);
 							dropticket.setLocation(L2ItemInstance.ItemLocation.VOID);
