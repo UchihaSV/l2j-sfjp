@@ -32,7 +32,7 @@ import com.l2jserver.gameserver.script.Parser;
 public abstract class FaenorParser extends Parser
 {
 	protected static FaenorInterface _bridge = FaenorInterface.getInstance();
-	protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy", Locale.US);
+	protected final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy", Locale.US);
 	
 	public final static boolean DEBUG = true;
 	
@@ -90,7 +90,7 @@ public abstract class FaenorParser extends Parser
 		return node.getNodeName().equalsIgnoreCase(name);
 	}
 	
- //	public static Date getDate(String date) throws ParseException
+ //	public Date getDate(String date) throws ParseException
  //	{
  //		return DATE_FORMAT.parse(date);
  //	}

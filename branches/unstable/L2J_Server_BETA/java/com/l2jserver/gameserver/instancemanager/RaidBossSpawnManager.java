@@ -513,7 +513,8 @@ public class RaidBossSpawnManager
 
 		_bosses.clear();
 		
-		_schedules.clear();
+		if (_schedules != null)
+			_schedules.clear();
 		_storedInfo.clear();
 		_spawns.clear();
 	}
