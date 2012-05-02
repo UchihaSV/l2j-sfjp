@@ -55,17 +55,11 @@ public class LanguageControl extends Control
 			format = "properties";
 			String bundleName = toBundleName(baseName, locale);
 			String resourceName = LANGUAGES_DIRECTORY + toResourceName(bundleName, format);
-			BufferedReader bis = null;
-		//	BufferedInputStream bis = null;
-			try
+			try (BufferedReader bis = new BufferedReader(new UTF8StreamReader().setInput(new FileInputStream(resourceName))))	//[JOJO] UTF-8
+		//	try (FileInputStream fis = new FileInputStream(resourceName);
+		//		BufferedInputStream bis = new BufferedInputStream(fis))
 			{
-				bis = new BufferedReader(new UTF8StreamReader().setInput(new FileInputStream(resourceName)));	//[JOJO] UTF-8
-		//		bis = new BufferedInputStream(new FileInputStream(resourceName));
 				bundle = new PropertyResourceBundle(bis);
-			}
-			finally
-			{
-				bis.close();
 			}
 		}
 		return bundle;
