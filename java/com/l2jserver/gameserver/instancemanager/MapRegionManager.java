@@ -73,13 +73,6 @@ public class MapRegionManager extends DocumentParser
 	@Override
 	protected void parseDocument(Document doc)
 	{
-		NamedNodeMap attrs;
-		String name;
-		String town;
-		int locId;
-		int castle;
-		int bbs;
-		
 		for (Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
 		{
 			if ("list".equalsIgnoreCase(n.getNodeName()))
@@ -88,12 +81,12 @@ public class MapRegionManager extends DocumentParser
 				{
 					if ("region".equalsIgnoreCase(d.getNodeName()))
 					{
-						attrs = d.getAttributes();
-						name = attrs.getNamedItem("name").getNodeValue();
-						town = attrs.getNamedItem("town").getNodeValue();
-						locId = parseInt(attrs, "locId");
-						castle = parseInt(attrs, "castle");
-						bbs = parseInt(attrs, "bbs");
+						NamedNodeMap attrs = d.getAttributes();
+						String name = attrs.getNamedItem("name").getNodeValue();
+						String town = attrs.getNamedItem("town").getNodeValue();
+						int locId = parseInt(attrs, "locId");
+						int castle = parseInt(attrs, "castle");
+						int bbs = parseInt(attrs, "bbs");
 						
 						L2MapRegion region = new L2MapRegion(name, town, locId, castle, bbs);
 						for (Node c = d.getFirstChild(); c != null; c = c.getNextSibling())
@@ -277,8 +270,6 @@ public class MapRegionManager extends DocumentParser
 	 */
 	public Location getTeleToLocation(L2Character activeChar, TeleportWhereType teleportWhere)
 	{
-		int[] coord;
-		
 		if (activeChar instanceof L2PcInstance)
 		{
 			L2PcInstance player = ((L2PcInstance) activeChar);
@@ -477,7 +468,7 @@ public class MapRegionManager extends DocumentParser
 				Instance inst = InstanceManager.getInstance().getInstance(player.getInstanceId());
 				if (inst != null)
 				{
-					coord = inst.getSpawnLoc();
+					int[] coord = inst.getSpawnLoc();
 					if ((coord[0] != 0) && (coord[1] != 0) && (coord[2] != 0))
 					{
 						return new Location(coord[0], coord[1], coord[2]);
