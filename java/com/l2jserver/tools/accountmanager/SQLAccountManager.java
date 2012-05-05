@@ -14,6 +14,8 @@
  */
 package com.l2jserver.tools.accountmanager;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -183,12 +185,12 @@ public class SQLAccountManager
 		cl.println("functListAccountDisplayed", count);
 	}
 	
-	private static void addOrUpdateAccount(String account, String password, String level) throws IOException, SQLException, NoSuchAlgorithmException
+	private static void addOrUpdateAccount(String account, String password, String level) throws SQLException, NoSuchAlgorithmException
 	{
 		// Encode Password
 		MessageDigest md = MessageDigest.getInstance("SHA");
 		byte[] newpass;
-		newpass = password.getBytes("UTF-8");
+		newpass = password.getBytes(UTF_8);
 		newpass = md.digest(newpass);
 		
 		// Add to Base

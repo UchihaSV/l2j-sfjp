@@ -14,10 +14,14 @@
  */
 package com.l2jserver.loginserver.network.gameserverpackets;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,7 +69,7 @@ public class ChangePassword extends BaseRecievePacket
 			{
 				MessageDigest md = MessageDigest.getInstance("SHA");
 				
-				byte[] raw = curpass.getBytes("UTF-8");
+				byte[] raw = curpass.getBytes(UTF_8);
 				raw = md.digest(raw);
 				String curpassEnc = Base64.encodeBytes(raw);
 				String pass = null;
@@ -83,7 +87,7 @@ public class ChangePassword extends BaseRecievePacket
 				
 				if (curpassEnc.equals(pass))
 				{
-					byte[] password = newpass.getBytes("UTF-8");
+					byte[] password = newpass.getBytes(UTF_8);
 					password = md.digest(password);
 					
 					// SQL connection
@@ -104,7 +108,7 @@ public class ChangePassword extends BaseRecievePacket
 				else
 					gst.ChangePasswordResponse((byte) 0, characterName, "The typed current password doesn't match with your current one.");
 			}
-			catch (Exception e)
+			catch (SQLException | NoSuchAlgorithmException e)
 			{
 				_log.warning("Error while changing password for account " + accountName + " requested by player " + characterName + "! " + e);
 			}

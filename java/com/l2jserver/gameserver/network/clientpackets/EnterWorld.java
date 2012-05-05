@@ -14,8 +14,7 @@
  */
 package com.l2jserver.gameserver.network.clientpackets;
 
-import java.io.UnsupportedEncodingException;
-
+import static java.nio.charset.StandardCharsets.UTF_8;
 import javolution.util.FastList;
 
 import com.l2jserver.Config;
@@ -749,15 +748,7 @@ public class EnterWorld extends L2GameClientPacket
 	 */
 	private String getText(String string)
 	{
-		try
-		{
-			String result = new String(Base64.decode(string), "UTF-8");
-			return result;
-		}
-		catch (UnsupportedEncodingException e)
-		{
-			return null;
-		}
+		return new String(Base64.decode(string), UTF_8);
 	}
 	
 	private void loadTutorial(L2PcInstance player)

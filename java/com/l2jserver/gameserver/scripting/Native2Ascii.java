@@ -15,6 +15,9 @@
 
 package com.l2jserver.gameserver.scripting;
 
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.US_ASCII;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -93,11 +96,11 @@ public class Native2Ascii
 								&& byteBuffer[1] == (byte)0xBB
 								&& byteBuffer[2] == (byte)0xBF)	//UTF8 BOM?
 						{
-							encoding = "UTF8";
+							encoding = "UTF-8";
 						}
 						else
 						{
-							Matcher m = _patternCoding.matcher(new String(byteBuffer, "ISO-8859-1"));
+							Matcher m = _patternCoding.matcher(new String(byteBuffer, ISO_8859_1));
 							if (m.find())
 								encoding = m.group(1);
 						}
@@ -143,7 +146,7 @@ public class Native2Ascii
 						final String asciiString = asciiBuffer.toString();
 						//System.out.println("__FILE__:__LINE__: [" + encoding1 + "] " + file.getPath());
 						long mtime = file.lastModified();
-						OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), "US-ASCII");
+						OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), US_ASCII);
 						osw.write(asciiString);
 						osw.close();
 						file.setLastModified(mtime);

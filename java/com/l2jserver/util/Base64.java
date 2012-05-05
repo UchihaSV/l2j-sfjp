@@ -14,6 +14,8 @@
  */
 package com.l2jserver.util;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -24,7 +26,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -79,21 +81,21 @@ public class Base64
 	private final static byte NEW_LINE = (byte) '\n';
 	
 	/** Preferred encoding. */
-	private final static String PREFERRED_ENCODING = "UTF-8";
+	private final static Charset PREFERRED_ENCODING = UTF_8;
 	
 	/** The 64 valid Base64 values. */
-	private final static byte[] ALPHABET;
-	private final static byte[] _NATIVE_ALPHABET = /* May be something funny like EBCDIC */
-	{ (byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G',
-		(byte) 'H', (byte) 'I', (byte) 'J', (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N',
-		(byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U',
-		(byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z', (byte) 'a', (byte) 'b',
-		(byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i',
-		(byte) 'j', (byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n', (byte) 'o', (byte) 'p',
-		(byte) 'q', (byte) 'r', (byte) 's', (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w',
-		(byte) 'x', (byte) 'y', (byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3',
-		(byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9', (byte) '+',
-		(byte) '/' };
+	private final static byte[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".getBytes(PREFERRED_ENCODING);
+ //	private final static byte[] _NATIVE_ALPHABET = /* May be something funny like EBCDIC */
+ //	{ (byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G',
+ //		(byte) 'H', (byte) 'I', (byte) 'J', (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N',
+ //		(byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U',
+ //		(byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z', (byte) 'a', (byte) 'b',
+ //		(byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i',
+ //		(byte) 'j', (byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n', (byte) 'o', (byte) 'p',
+ //		(byte) 'q', (byte) 'r', (byte) 's', (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w',
+ //		(byte) 'x', (byte) 'y', (byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3',
+ //		(byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9', (byte) '+',
+ //		(byte) '/' };
 	
 	public static void main(String[] args) throws IOException
 	{
@@ -104,21 +106,6 @@ public class Base64
 		{
 			System.out.println(Base64.encodeBytes(line.getBytes()));
 		}
-	}
-	
-	/** Determine which ALPHABET to use. */
-	static
-	{
-		byte[] __bytes;
-		try
-		{
-			__bytes = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".getBytes(PREFERRED_ENCODING);
-		}
-		catch (UnsupportedEncodingException use)
-		{
-			__bytes = _NATIVE_ALPHABET; // Fall back to native encoding
-		}
-		ALPHABET = __bytes;
 	}
 	
 	/**
@@ -362,14 +349,7 @@ public class Base64
 		// Return value according to relevant encoding.
 		if (value != null)
 		{
-			try
-			{
-				return new String(value, PREFERRED_ENCODING);
-			}
-			catch (UnsupportedEncodingException uue)
-			{
-				return new String(value);
-			}
+			return new String(value, PREFERRED_ENCODING);
 		}
 		return null;
 	}
@@ -492,14 +472,7 @@ public class Base64
 			// Return value according to relevant encoding.
 			if (value != null)
 			{
-				try
-				{
-					return new String(value, PREFERRED_ENCODING);
-				}
-				catch (UnsupportedEncodingException uue)
-				{
-					return new String(value);
-				}
+				return new String(value, PREFERRED_ENCODING);
 			}
 		}
 		
@@ -534,14 +507,7 @@ public class Base64
 		}
 		
 		// Return value according to relevant encoding.
-		try
-		{
-			return new String(outBuff, 0, e, PREFERRED_ENCODING);
-		}
-		catch (UnsupportedEncodingException uue)
-		{
-			return new String(outBuff, 0, e);
-		}
+		return new String(outBuff, 0, e, PREFERRED_ENCODING);
 	}
 	
 	/*  D E C O D I N G M E T H O D S */
@@ -728,14 +694,7 @@ public class Base64
 	public static byte[] decode(String s)
 	{
 		byte[] bytes;
-		try
-		{
-			bytes = s.getBytes(PREFERRED_ENCODING);
-		}
-		catch (UnsupportedEncodingException uee)
-		{
-			bytes = s.getBytes();
-		}
+		bytes = s.getBytes(PREFERRED_ENCODING);
 		
 		// Decode
 		bytes = decode(bytes, 0, bytes.length);
