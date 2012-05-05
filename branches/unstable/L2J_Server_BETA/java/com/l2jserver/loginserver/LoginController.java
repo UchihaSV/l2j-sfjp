@@ -14,16 +14,20 @@
  */
 package com.l2jserver.loginserver;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.GeneralSecurityException;
 import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.spec.RSAKeyGenParameterSpec;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -550,7 +554,7 @@ public class LoginController
 		try
 		{
 			MessageDigest md = MessageDigest.getInstance("SHA");
-			byte[] raw = password.getBytes("UTF-8");
+			byte[] raw = password.getBytes(UTF_8);
 			byte[] hash = md.digest(raw);
 			
 			byte[] expected = null;
@@ -690,7 +694,7 @@ public class LoginController
 				statement.close();
 			}
 		}
-		catch (Exception e)
+		catch (SQLException | NoSuchAlgorithmException e)
 		{
 			_log.log(Level.WARNING, "Could not check password:" + e.getMessage(), e);
 			ok = false;

@@ -14,6 +14,8 @@
  */
 package com.l2jserver.util.network;
 
+import static java.nio.charset.StandardCharsets.UTF_16LE;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -72,10 +74,10 @@ public abstract class BaseSendablePacket
 		{
 			if (text != null)
 			{
-				_bao.write(text.getBytes("UTF-16LE"));
+				_bao.write(text.getBytes(UTF_16LE));
 			}
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
 			_log.warning(getClass().getSimpleName() + ": " + e.getMessage());
 		}

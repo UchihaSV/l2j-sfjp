@@ -14,10 +14,12 @@
  */
 package com.l2jserver.gameserver.cache;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -156,7 +158,7 @@ public class HtmCache
 			byte[] raw = new byte[fis.available()];
 			
 			fis.read(raw);
-			content = new String(raw, "UTF-8");
+			content = new String(raw, UTF_8);
 		/*	if (! TIMED_CACHE) */
 				content = content.replaceAll("[\uFEFF\r\n]", "");
 			
@@ -172,7 +174,7 @@ public class HtmCache
 			}
 			_cache_put(hashcode, content);
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
 			_log.log(Level.WARNING, "Problem with htm file " + e.getMessage(), e);
 			e.printStackTrace();

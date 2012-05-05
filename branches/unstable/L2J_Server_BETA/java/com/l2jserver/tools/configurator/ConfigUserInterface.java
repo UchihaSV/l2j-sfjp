@@ -14,6 +14,8 @@
  */
 package com.l2jserver.tools.configurator;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -277,7 +279,7 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 	 */
 	private void parsePropertiesFile(File file) throws IOException
 	{
-		LineNumberReader lnr = new LineNumberReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));	//[JOJO] UTF-8
+		LineNumberReader lnr = new LineNumberReader(new InputStreamReader(new FileInputStream(file), UTF_8));	//[JOJO] UTF-8
 		
 		String line;
 		StringBuilder commentBuffer = new StringBuilder();
@@ -449,7 +451,7 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 			BufferedWriter bufWriter = null;
 			try
 			{
-				bufWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(_file), "UTF-8"));	//[JOJO] UTF-8
+				bufWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(_file), UTF_8));	//[JOJO] UTF-8
 				for (ConfigComment cc : _configs)
 				{
 					cc.save(bufWriter);

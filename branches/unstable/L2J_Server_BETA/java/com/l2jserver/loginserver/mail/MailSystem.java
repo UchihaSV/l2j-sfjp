@@ -14,6 +14,8 @@
  */
 package com.l2jserver.loginserver.mail;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -91,7 +93,7 @@ public class MailSystem
 						byte[] raw = new byte[bytes];
 						
 						bis.read(raw);
-						String html = new String(raw, "UTF-8");
+						String html = new String(raw, UTF_8);
 						html = html.replaceAll("\r\n", "\n");
 						html = html.replace("%servermail%", Config.EMAIL_SERVERINFO_ADDRESS);
 						html = html.replace("%servername%", Config.EMAIL_SERVERINFO_NAME);
