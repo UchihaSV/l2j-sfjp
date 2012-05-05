@@ -346,7 +346,7 @@ public class TerritoryWarManager implements Siegable
 				{
 					for(int wardId : terNew.getOwnedWardIds())
 					{
-						final FastList<L2SkillLearn> residentialSkills = SkillTreesData.getInstance().getAvailableResidentialSkills(wardId);
+						final List<L2SkillLearn> residentialSkills = SkillTreesData.getInstance().getAvailableResidentialSkills(wardId);
 						for (L2SkillLearn s : residentialSkills)
 						{
 							final L2Skill sk = SkillTable.getInstance().getInfo(s.getSkillId(), s.getSkillLevel());
@@ -403,7 +403,7 @@ public class TerritoryWarManager implements Siegable
 				}
 				if (terOld.getOwnerClan() != null)
 				{
-					final FastList<L2SkillLearn> territorySkills = SkillTreesData.getInstance().getAvailableResidentialSkills(territoryId);
+					final List<L2SkillLearn> territorySkills = SkillTreesData.getInstance().getAvailableResidentialSkills(territoryId);
 					for (L2SkillLearn s : territorySkills)
 					{
 						final L2Skill sk = SkillTable.getInstance().getInfo(s.getSkillId(), s.getSkillLevel());
@@ -420,7 +420,7 @@ public class TerritoryWarManager implements Siegable
 					{
 						for(int wardId : terOld.getOwnedWardIds())
 						{
-							final FastList<L2SkillLearn> wardSkills = SkillTreesData.getInstance().getAvailableResidentialSkills(wardId);
+							final List<L2SkillLearn> wardSkills = SkillTreesData.getInstance().getAvailableResidentialSkills(wardId);
 							for (L2SkillLearn s : wardSkills)
 							{
 								final L2Skill sk = SkillTable.getInstance().getInfo(s.getSkillId(), s.getSkillLevel());

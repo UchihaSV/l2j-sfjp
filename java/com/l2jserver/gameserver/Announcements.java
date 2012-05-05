@@ -172,16 +172,14 @@ public class Announcements
 	
 	private void readFromDisk(String path, List<String> list)
 	{
-		File file = new File(Config.DATAPACK_ROOT, path);
-		
+		final File file = new File(Config.DATAPACK_ROOT, path);
 		if (file.exists())
 		{
-			BufferedReader lnr = null;	//[JOJO]
-			try
+			
+			try (BufferedReader lnr = com.l2jserver.util.Util.utf8BufferedReader(file))	//[JOJO]
 			{
 				//[JOJO] UTF-8
-				String line = null;
-				lnr = com.l2jserver.util.Util.utf8BufferedReader(file);
+				String line;
 				while ((line = lnr.readLine()) != null)
 				{
 					list.add(line);
@@ -191,17 +189,6 @@ public class Announcements
 			catch (IOException e1)
 			{
 				_log.log(Level.SEVERE, "Error reading announcements: ", e1);
-			}
-			finally
-			{
-				try
-				{
-					lnr.close();
-				}
-				catch (Exception e2)
-				{
-					// nothing
-				}
 			}
 		}
 		else
@@ -224,12 +211,9 @@ public class Announcements
 			list = _announcements;
 		}
 		
-		File file = new File(path);
-		UTF8StreamWriter save = null;	//[JOJO]
-		
-		try
+		final File file = new File(path);
+		try (UTF8StreamWriter save = com.l2jserver.util.Util.utf8StreamWriter(file))	//[JOJO] UTF-8
 		{
-			save = com.l2jserver.util.Util.utf8StreamWriter(file);	//[JOJO] UTF-8
 			for (String announce : list)
 			{
 				save.write(announce);
@@ -239,16 +223,6 @@ public class Announcements
 		catch (IOException e)
 		{
 			_log.log(Level.SEVERE, "Saving to the announcements file has failed: ", e);
-		}
-		finally
-		{
-			try
-			{
-				save.close();
-			}
-			catch (Exception e)
-			{
-			}
 		}
 	}
 	
