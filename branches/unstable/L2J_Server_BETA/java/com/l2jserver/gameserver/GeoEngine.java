@@ -702,13 +702,13 @@ public class GeoEngine extends GeoData
 		short regionoffset = (short) ((rx << 5) + ry);
 		_log.info("Geo Engine: - Loading: " + fname + " -> region offset: " + regionoffset + "X: " + rx + " Y: " + ry);
 		
-		int size, index = 0, block = 0, flor = 0;
+		int index = 0, block = 0, flor = 0;
 		// Create a read-only memory-mapped file
 		final File Geo = new File(fname);
 		try (RandomAccessFile raf = new RandomAccessFile(Geo, "r");
 			FileChannel roChannel = raf.getChannel())
 		{
-			size = (int) roChannel.size();
+			int size = (int) roChannel.size();
 			MappedByteBuffer geo;
 			if (Config.FORCE_GEODATA) //Force O/S to Loads this buffer's content into physical memory.
 				//it is not guarantee, because the underlying operating system may have paged out some of the buffer's data
@@ -800,7 +800,7 @@ public class GeoEngine extends GeoData
 		short region = getRegionOffset(x, y);
 		int blockX = getBlock(x);
 		int blockY = getBlock(y);
-		int index = 0;
+		int index;
 		final IntBuffer idx = _geodataIndex.get(region);
 		//Geodata without index - it is just empty so index can be calculated on the fly
 		if (idx == null)
@@ -1088,7 +1088,7 @@ public class GeoEngine extends GeoData
 		int cellX, cellY;
 		short NSWE = 0;
 		
-		int index = 0;
+		int index;
 		final IntBuffer idx = _geodataIndex.get(region);
 		//Geodata without index - it is just empty so index can be calculated on the fly
 		if (idx == null)
@@ -1330,7 +1330,7 @@ public class GeoEngine extends GeoData
 		int cellX, cellY;
 		short NSWE = 0;
 		
-		int index = 0;
+		int index;
 		final IntBuffer idx = _geodataIndex.get(region);
 		//Geodata without index - it is just empty so index can be calculated on the fly
 		if (idx == null)
@@ -1413,7 +1413,7 @@ public class GeoEngine extends GeoData
 		int blockY = getBlock(y);
 		int cellX, cellY;
 		
-		int index = 0;
+		int index;
 		final IntBuffer idx = _geodataIndex.get(region);
 		//Geodata without index - it is just empty so index can be calculated on the fly
 		if (idx == null)

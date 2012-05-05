@@ -68,7 +68,6 @@ public class CrestCache
 		final FileFilter filter = new BMPFilter();
 		final File dir = new File(Config.DATAPACK_ROOT, "data/crests/");
 		final File[] files = dir.listFiles(filter);
-		byte[] content;
 		synchronized (this)
 		{
 			_loadedFiles = 0;
@@ -90,7 +89,7 @@ public class CrestCache
 			{
 				try (RandomAccessFile rfa = new RandomAccessFile(file, "r"))
 				{
-					content = new byte[(int) rfa.length()];
+					byte[] content = new byte[(int) rfa.length()];
 					rfa.readFully(content);
 					
 					boolean erase = true;
