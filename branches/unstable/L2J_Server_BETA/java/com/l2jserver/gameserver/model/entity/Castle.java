@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javolution.util.FastList;
 import javolution.util.FastMap;
 
 import com.l2jserver.Config;
@@ -65,10 +64,10 @@ public class Castle
 {
 	protected static final Logger _log = Logger.getLogger(Castle.class.getName());
 	
-	private List<CropProcure> _procure = new ArrayList<CropProcure>();
-	private List<SeedProduction> _production = new ArrayList<SeedProduction>();
-	private List<CropProcure> _procureNext = new ArrayList<CropProcure>();
-	private List<SeedProduction> _productionNext = new ArrayList<SeedProduction>();
+	private List<CropProcure> _procure = new ArrayList<>();
+	private List<SeedProduction> _production = new ArrayList<>();
+	private List<CropProcure> _procureNext = new ArrayList<>();
+	private List<SeedProduction> _productionNext = new ArrayList<>();
 	private boolean _isNextPeriodApproved = false;
 	
 	private static final String CASTLE_MANOR_DELETE_PRODUCTION = "DELETE FROM castle_manor_production WHERE castle_id=?;";
@@ -79,8 +78,8 @@ public class Castle
 	private static final String CASTLE_UPDATE_SEED = "UPDATE castle_manor_production SET can_produce=? WHERE seed_id=? AND castle_id=? AND period=?";
 	
 	private int _castleId = 0;
-	private List<L2DoorInstance> _doors = new FastList<L2DoorInstance>();
-	private List<String> _doorDefault = new FastList<String>();
+	private List<L2DoorInstance> _doors = new ArrayList<>();
+	private List<String> _doorDefault = new ArrayList<>();
 	private String _name = "";
 	private String _castleName, _locName;	//+[JOJO]
 	private int _ownerId = 0;
@@ -96,10 +95,10 @@ public class Castle
 	private L2CastleZone _castleZone = null;
 	private L2ResidenceTeleportZone _teleZone;
 	private L2Clan _formerOwner = null;
-	private List<L2ArtefactInstance> _artefacts = new ArrayList<L2ArtefactInstance>(1);
+	private List<L2ArtefactInstance> _artefacts = new ArrayList<>(1);
 	private TIntIntHashMap _engrave = new TIntIntHashMap(1);
 	private Map<Integer, CastleFunction> _function;
-	private FastList<L2Skill> _residentialSkills = new FastList<L2Skill>();
+	private List<L2Skill> _residentialSkills = new ArrayList<>();
 	private int _bloodAlliance = 0;
 	
 	/** Castle Functions */
@@ -260,7 +259,7 @@ public class Castle
 		load();
 		loadDoor();
 		_function = new FastMap<Integer, CastleFunction>();
-		final FastList<L2SkillLearn> residentialSkills = SkillTreesData.getInstance().getAvailableResidentialSkills(castleId);
+		final List<L2SkillLearn> residentialSkills = SkillTreesData.getInstance().getAvailableResidentialSkills(castleId);
 		for (L2SkillLearn s : residentialSkills)
 		{
 			final L2Skill sk = SkillTable.getInstance().getInfo(s.getSkillId(), s.getSkillLevel());
@@ -1361,7 +1360,7 @@ public class Castle
 			statement.setInt(1, getCastleId());
 			statement.execute();
 			statement.close();
-			if (_procure != null && _procure.size() > 0)
+			if (!_procure.isEmpty())
 			{
 				int count = 0;
 				StringBuilder query = new StringBuilder().append("INSERT INTO castle_manor_procure VALUES ");
@@ -1382,7 +1381,7 @@ public class Castle
 					statement.close();
 				}
 			}
-			if (_procureNext != null && _procureNext.size() > 0)
+			if (!_procureNext.isEmpty())
 			{
 				int count = 0;
 				StringBuilder query = new StringBuilder().append("INSERT INTO castle_manor_procure VALUES ");
@@ -1572,26 +1571,23 @@ public class Castle
 		}
 	}
 	
-	public FastList<L2Skill> getResidentialSkills()
+	public List<L2Skill> getResidentialSkills()
 	{
 		return _residentialSkills;
 	}
 	
 	public void giveResidentialSkills(L2PcInstance player)
 	{
-		if ((_residentialSkills != null) && !_residentialSkills.isEmpty())
+		for (L2Skill sk : _residentialSkills)
 		{
-			for (L2Skill sk : _residentialSkills)
-			{
-				player.addSkill(sk, false);
-			}
+			player.addSkill(sk, false);
 		}
 		Territory territory = TerritoryWarManager.getInstance().getTerritory(getCastleId());
 		if (territory != null && territory.getOwnedWardIds().contains(getCastleId() + 80))
 		{
 			for (int wardId : territory.getOwnedWardIds())
 			{
-				final FastList<L2SkillLearn> territorySkills = SkillTreesData.getInstance().getAvailableResidentialSkills(wardId);
+				final List<L2SkillLearn> territorySkills = SkillTreesData.getInstance().getAvailableResidentialSkills(wardId);
 				for (L2SkillLearn s : territorySkills)
 				{
 					final L2Skill sk = SkillTable.getInstance().getInfo(s.getSkillId(), s.getSkillLevel());
@@ -1610,18 +1606,15 @@ public class Castle
 	
 	public void removeResidentialSkills(L2PcInstance player)
 	{
-		if (_residentialSkills != null && !_residentialSkills.isEmpty())
+		for (L2Skill sk : _residentialSkills)
 		{
-			for (L2Skill sk : _residentialSkills)
-			{
-				player.removeSkill(sk, false, true);
-			}
+			player.removeSkill(sk, false, true);
 		}
 		if (TerritoryWarManager.getInstance().getTerritory(getCastleId()) != null)
 		{
 			for (int wardId : TerritoryWarManager.getInstance().getTerritory(getCastleId()).getOwnedWardIds())
 			{
-				final FastList<L2SkillLearn> territorySkills = SkillTreesData.getInstance().getAvailableResidentialSkills(wardId);
+				final List<L2SkillLearn> territorySkills = SkillTreesData.getInstance().getAvailableResidentialSkills(wardId);
 				for (L2SkillLearn s : territorySkills)
 				{
 					final L2Skill sk = SkillTable.getInstance().getInfo(s.getSkillId(), s.getSkillLevel());
@@ -1656,10 +1649,10 @@ public class Castle
 	
 	public void resetManor()
 	{
-		setCropProcure(new FastList<CropProcure>(), CastleManorManager.PERIOD_CURRENT);
-		setCropProcure(new FastList<CropProcure>(), CastleManorManager.PERIOD_NEXT);
-		setSeedProduction(new FastList<SeedProduction>(), CastleManorManager.PERIOD_CURRENT);
-		setSeedProduction(new FastList<SeedProduction>(), CastleManorManager.PERIOD_NEXT);
+		setCropProcure(new ArrayList<CropProcure>(), CastleManorManager.PERIOD_CURRENT);
+		setCropProcure(new ArrayList<CropProcure>(), CastleManorManager.PERIOD_NEXT);
+		setSeedProduction(new ArrayList<SeedProduction>(), CastleManorManager.PERIOD_CURRENT);
+		setSeedProduction(new ArrayList<SeedProduction>(), CastleManorManager.PERIOD_NEXT);
 		if (Config.ALT_MANOR_SAVE_ALL_ACTIONS)
 		{
 			saveCropData();

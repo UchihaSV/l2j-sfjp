@@ -14,17 +14,18 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import javolution.util.FastList;
-import javolution.util.FastMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -70,21 +71,21 @@ import com.l2jserver.gameserver.model.skills.L2Skill;
 public final class SkillTreesData extends DocumentParser
 {
 	// ClassId, FastMap of Skill Hash Code, L2SkillLearn
-	private static final FastMap<ClassId, FastMap<Integer, L2SkillLearn>> _classSkillTrees = new FastMap<>();
-	private static final FastMap<ClassId, FastMap<Integer, L2SkillLearn>> _transferSkillTrees = new FastMap<>();
+	private static final Map<ClassId, Map<Integer, L2SkillLearn>> _classSkillTrees = new HashMap<>();
+	private static final Map<ClassId, Map<Integer, L2SkillLearn>> _transferSkillTrees = new HashMap<>();
 	// Skill Hash Code, L2SkillLearn
-	private static final FastMap<Integer, L2SkillLearn> _collectSkillTree = new FastMap<>();
-	private static final FastMap<Integer, L2SkillLearn> _fishingSkillTree = new FastMap<>();
-	private static final FastMap<Integer, L2SkillLearn> _pledgeSkillTree = new FastMap<>();
-	private static final FastMap<Integer, L2SkillLearn> _subClassSkillTree = new FastMap<>();
-	private static final FastMap<Integer, L2SkillLearn> _subPledgeSkillTree = new FastMap<>();
-	private static final FastMap<Integer, L2SkillLearn> _transformSkillTree = new FastMap<>();
-	private static final FastMap<Integer, L2SkillLearn> _commonSkillTree = new FastMap<>();
+	private static final Map<Integer, L2SkillLearn> _collectSkillTree = new HashMap<>();
+	private static final Map<Integer, L2SkillLearn> _fishingSkillTree = new HashMap<>();
+	private static final Map<Integer, L2SkillLearn> _pledgeSkillTree = new HashMap<>();
+	private static final Map<Integer, L2SkillLearn> _subClassSkillTree = new HashMap<>();
+	private static final Map<Integer, L2SkillLearn> _subPledgeSkillTree = new HashMap<>();
+	private static final Map<Integer, L2SkillLearn> _transformSkillTree = new HashMap<>();
+	private static final Map<Integer, L2SkillLearn> _commonSkillTree = new HashMap<>();
 	// Other skill trees
-	private static final FastMap<Integer, L2SkillLearn> _nobleSkillTree = new FastMap<>();
-	private static final FastMap<Integer, L2SkillLearn> _heroSkillTree = new FastMap<>();
-	private static final FastMap<Integer, L2SkillLearn> _gameMasterSkillTree = new FastMap<>();
-	private static final FastMap<Integer, L2SkillLearn> _gameMasterAuraSkillTree = new FastMap<>();
+	private static final Map<Integer, L2SkillLearn> _nobleSkillTree = new HashMap<>();
+	private static final Map<Integer, L2SkillLearn> _heroSkillTree = new HashMap<>();
+	private static final Map<Integer, L2SkillLearn> _gameMasterSkillTree = new HashMap<>();
+	private static final Map<Integer, L2SkillLearn> _gameMasterAuraSkillTree = new HashMap<>();
 	
 	// Checker, sorted arrays of hash codes
 	private TIntObjectHashMap<int[]> _skillsByClassIdHashCodes; // Occupation skills
@@ -96,7 +97,7 @@ public final class SkillTreesData extends DocumentParser
 	/**
 	 * Parent class IDs are read from XML and stored in this map, to allow easy customization.
 	 */
-	private static final FastMap<ClassId, ClassId> _parentClassMap = new FastMap<ClassId, ClassId>();
+	private static final Map<ClassId, ClassId> _parentClassMap = new HashMap<>();
 	
 	private SkillTreesData()
 	{
@@ -153,8 +154,8 @@ public final class SkillTreesData extends DocumentParser
 				{
 					if ("skillTree".equalsIgnoreCase(d.getNodeName()))
 					{
-						final FastMap<Integer, L2SkillLearn> classSkillTree = new FastMap<Integer, L2SkillLearn>();
-						final FastMap<Integer, L2SkillLearn> trasferSkillTree = new FastMap<Integer, L2SkillLearn>();
+						final Map<Integer, L2SkillLearn> classSkillTree = new HashMap<>();
+						final Map<Integer, L2SkillLearn> trasferSkillTree = new HashMap<>();
 						
 						type = d.getAttributes().getNamedItem("type").getNodeValue();
 						attr = d.getAttributes().getNamedItem("classId");
@@ -172,9 +173,9 @@ public final class SkillTreesData extends DocumentParser
 						if (attr != null)
 						{
 							parentClassId = Integer.parseInt(attr.getNodeValue());
-							if ((cId > -1) && (cId != parentClassId) && (parentClassId > -1))
+							if ((cId > -1) && (cId != parentClassId) && (parentClassId > -1) && !_parentClassMap.containsKey(classId))
 							{
-								_parentClassMap.putIfAbsent(classId, ClassId.values()[parentClassId]);
+								_parentClassMap.put(classId, ClassId.values()[parentClassId]);
 							}
 						}
 						
@@ -317,29 +318,20 @@ public final class SkillTreesData extends DocumentParser
 	}
 	
 	/**
-	 * Wrapper for class skill trees.
-	 * @return the {@code _classSkillTrees}, if it's null allocate a new map and returns it.
-	 */
-	private FastMap<ClassId, FastMap<Integer, L2SkillLearn>> getClassSkillTrees()
-	{
-		return _classSkillTrees;
-	}
-	
-	/**
 	 * Method to get the complete skill tree for a given class id.<br>
 	 * Include all skills common to all classes.<br>
 	 * Includes all parent skill trees.
 	 * @param classId the class skill tree ID.
 	 * @return the complete Class Skill Tree including skill trees from parent class for a given {@code classId}.
 	 */
-	public FastMap<Integer, L2SkillLearn> getCompleteClassSkillTree(ClassId classId)
+	public Map<Integer, L2SkillLearn> getCompleteClassSkillTree(ClassId classId)
 	{
-		final FastMap<Integer, L2SkillLearn> skillTree = new FastMap<Integer, L2SkillLearn>();
+		final Map<Integer, L2SkillLearn> skillTree = new HashMap<>();
 		// Add all skills that belong to all classes.
 		skillTree.putAll(_commonSkillTree);
-		while ((classId != null) && (getClassSkillTrees().get(classId) != null))
+		while ((classId != null) && (_classSkillTrees.get(classId) != null))
 		{
-			skillTree.putAll(getClassSkillTrees().get(classId));
+			skillTree.putAll(_classSkillTrees.get(classId));
 			classId = _parentClassMap.get(classId);
 		}
 		return skillTree;
@@ -349,7 +341,7 @@ public final class SkillTreesData extends DocumentParser
 	 * @param classId the transfer skill tree ID.
 	 * @return the complete Transfer Skill Tree for a given {@code classId}.
 	 */
-	public FastMap<Integer, L2SkillLearn> getTransferSkillTree(ClassId classId)
+	public Map<Integer, L2SkillLearn> getTransferSkillTree(ClassId classId)
 	{
 		// If new classes are implemented over 3rd class, we use a recursive call.
 		if (classId.level() >= 3)
@@ -362,7 +354,7 @@ public final class SkillTreesData extends DocumentParser
 	/**
 	 * @return the complete Common Skill Tree.
 	 */
-	public FastMap<Integer, L2SkillLearn> getCommonSkillTree()
+	public Map<Integer, L2SkillLearn> getCommonSkillTree()
 	{
 		return _commonSkillTree;
 	}
@@ -370,7 +362,7 @@ public final class SkillTreesData extends DocumentParser
 	/**
 	 * @return the complete Collect Skill Tree.
 	 */
-	public FastMap<Integer, L2SkillLearn> getCollectSkillTree()
+	public Map<Integer, L2SkillLearn> getCollectSkillTree()
 	{
 		return _collectSkillTree;
 	}
@@ -378,7 +370,7 @@ public final class SkillTreesData extends DocumentParser
 	/**
 	 * @return the complete Fishing Skill Tree.
 	 */
-	public FastMap<Integer, L2SkillLearn> getFishingSkillTree()
+	public Map<Integer, L2SkillLearn> getFishingSkillTree()
 	{
 		return _fishingSkillTree;
 	}
@@ -386,7 +378,7 @@ public final class SkillTreesData extends DocumentParser
 	/**
 	 * @return the complete Pledge Skill Tree.
 	 */
-	public FastMap<Integer, L2SkillLearn> getPledgeSkillTree()
+	public Map<Integer, L2SkillLearn> getPledgeSkillTree()
 	{
 		return _pledgeSkillTree;
 	}
@@ -394,7 +386,7 @@ public final class SkillTreesData extends DocumentParser
 	/**
 	 * @return the complete Sub-Class Skill Tree.
 	 */
-	public FastMap<Integer, L2SkillLearn> getSubClassSkillTree()
+	public Map<Integer, L2SkillLearn> getSubClassSkillTree()
 	{
 		return _subClassSkillTree;
 	}
@@ -402,7 +394,7 @@ public final class SkillTreesData extends DocumentParser
 	/**
 	 * @return the complete Sub-Pledge Skill Tree.
 	 */
-	public FastMap<Integer, L2SkillLearn> getSubPledgeSkillTree()
+	public Map<Integer, L2SkillLearn> getSubPledgeSkillTree()
 	{
 		return _subPledgeSkillTree;
 	}
@@ -410,7 +402,7 @@ public final class SkillTreesData extends DocumentParser
 	/**
 	 * @return the complete Transform Skill Tree.
 	 */
-	public FastMap<Integer, L2SkillLearn> getTransformSkillTree()
+	public Map<Integer, L2SkillLearn> getTransformSkillTree()
 	{
 		return _transformSkillTree;
 	}
@@ -418,9 +410,9 @@ public final class SkillTreesData extends DocumentParser
 	/**
 	 * @return the complete Noble Skill Tree.
 	 */
-	public FastMap<Integer, L2Skill> getNobleSkillTree()
+	public Map<Integer, L2Skill> getNobleSkillTree()
 	{
-		final FastMap<Integer, L2Skill> tree = new FastMap<>();
+		final Map<Integer, L2Skill> tree = new HashMap<>();
 		final SkillTable st = SkillTable.getInstance();
 		for (Entry<Integer, L2SkillLearn> e : _nobleSkillTree.entrySet())
 		{
@@ -432,9 +424,9 @@ public final class SkillTreesData extends DocumentParser
 	/**
 	 * @return the complete Hero Skill Tree.
 	 */
-	public FastMap<Integer, L2Skill> getHeroSkillTree()
+	public Map<Integer, L2Skill> getHeroSkillTree()
 	{
-		final FastMap<Integer, L2Skill> tree = new FastMap<>();
+		final Map<Integer, L2Skill> tree = new HashMap<>();
 		final SkillTable st = SkillTable.getInstance();
 		for (Entry<Integer, L2SkillLearn> e : _heroSkillTree.entrySet())
 		{
@@ -446,9 +438,9 @@ public final class SkillTreesData extends DocumentParser
 	/**
 	 * @return the complete Game Master Skill Tree.
 	 */
-	public FastMap<Integer, L2Skill> getGMSkillTree()
+	public Map<Integer, L2Skill> getGMSkillTree()
 	{
-		final FastMap<Integer, L2Skill> tree = new FastMap<>();
+		final Map<Integer, L2Skill> tree = new HashMap<>();
 		final SkillTable st = SkillTable.getInstance();
 		for (Entry<Integer, L2SkillLearn> e : _gameMasterSkillTree.entrySet())
 		{
@@ -460,9 +452,9 @@ public final class SkillTreesData extends DocumentParser
 	/**
 	 * @return the complete Game Master Aura Skill Tree.
 	 */
-	public FastMap<Integer, L2Skill> getGMAuraSkillTree()
+	public Map<Integer, L2Skill> getGMAuraSkillTree()
 	{
-		final FastMap<Integer, L2Skill> tree = new FastMap<>();
+		final Map<Integer, L2Skill> tree = new HashMap<>();
 		final SkillTable st = SkillTable.getInstance();
 		for (Entry<Integer, L2SkillLearn> e : _gameMasterAuraSkillTree.entrySet())
 		{
@@ -478,10 +470,10 @@ public final class SkillTreesData extends DocumentParser
 	 * @param includeAutoGet if {@code true} Auto-Get skills will be included.
 	 * @return all available skills for a given {@code player}, {@code classId}, {@code includeByFs} and {@code includeAutoGet}.
 	 */
-	public FastList<L2SkillLearn> getAvailableSkills(L2PcInstance player, ClassId classId, boolean includeByFs, boolean includeAutoGet)
+	public List<L2SkillLearn> getAvailableSkills(L2PcInstance player, ClassId classId, boolean includeByFs, boolean includeAutoGet)
 	{
-		final FastList<L2SkillLearn> result = new FastList<L2SkillLearn>();
-		final FastMap<Integer, L2SkillLearn> skills = getCompleteClassSkillTree(classId);
+		final List<L2SkillLearn> result = new ArrayList<>();
+		final Map<Integer, L2SkillLearn> skills = getCompleteClassSkillTree(classId);
 		if (skills.isEmpty())
 		{
 			// The Skill Tree for this class is undefined.
@@ -514,10 +506,10 @@ public final class SkillTreesData extends DocumentParser
 	 * @param player the player requesting the Auto-Get skills.
 	 * @return all the available Auto-Get skills for a given {@code player}.
 	 */
-	public FastList<L2SkillLearn> getAvailableAutoGetSkills(L2PcInstance player)
+	public List<L2SkillLearn> getAvailableAutoGetSkills(L2PcInstance player)
 	{
-		final FastList<L2SkillLearn> result = new FastList<L2SkillLearn>();
-		final FastMap<Integer, L2SkillLearn> skills = getCompleteClassSkillTree(player.getClassId());
+		final List<L2SkillLearn> result = new ArrayList<>();
+		final Map<Integer, L2SkillLearn> skills = getCompleteClassSkillTree(player.getClassId());
 		if (skills.isEmpty())
 		{
 			// The Skill Tree for this class is undefined, so we return an empty list.
@@ -557,9 +549,9 @@ public final class SkillTreesData extends DocumentParser
 	 * @param player
 	 * @return all the available Fishing skills for a given {@code player}.
 	 */
-	public FastList<L2SkillLearn> getAvailableFishingSkills(L2PcInstance player)
+	public List<L2SkillLearn> getAvailableFishingSkills(L2PcInstance player)
 	{
-		final FastList<L2SkillLearn> result = new FastList<L2SkillLearn>();
+		final List<L2SkillLearn> result = new ArrayList<>();
 		final Race playerRace = player.getRace();
 		for (L2SkillLearn skill : _fishingSkillTree.values())
 		{
@@ -593,9 +585,9 @@ public final class SkillTreesData extends DocumentParser
 	 * @param player the collecting skill learning player.
 	 * @return all the available Collecting skills for a given {@code player}.
 	 */
-	public FastList<L2SkillLearn> getAvailableCollectSkills(L2PcInstance player)
+	public List<L2SkillLearn> getAvailableCollectSkills(L2PcInstance player)
 	{
-		final FastList<L2SkillLearn> result = new FastList<L2SkillLearn>();
+		final List<L2SkillLearn> result = new ArrayList<>();
 		for (L2SkillLearn skill : _collectSkillTree.values())
 		{
 			final L2Skill oldSkill = player.getSkills().get(skill.getSkillId());
@@ -618,9 +610,9 @@ public final class SkillTreesData extends DocumentParser
 	 * @param player the transfer skill learning player.
 	 * @return all the available Transfer skills for a given {@code player}.
 	 */
-	public FastList<L2SkillLearn> getAvailableTransferSkills(L2PcInstance player)
+	public List<L2SkillLearn> getAvailableTransferSkills(L2PcInstance player)
 	{
-		final FastList<L2SkillLearn> result = new FastList<L2SkillLearn>();
+		final List<L2SkillLearn> result = new ArrayList<>();
 		ClassId classId = player.getClassId();
 		// If new classes are implemented over 3rd class, a different way should be implemented.
 		if (classId.level() == 3)
@@ -649,9 +641,9 @@ public final class SkillTreesData extends DocumentParser
 	 * @param player the transformation skill learning player.
 	 * @return all the available Transformation skills for a given {@code player}.
 	 */
-	public FastList<L2SkillLearn> getAvailableTransformSkills(L2PcInstance player)
+	public List<L2SkillLearn> getAvailableTransformSkills(L2PcInstance player)
 	{
-		final FastList<L2SkillLearn> result = new FastList<L2SkillLearn>();
+		final List<L2SkillLearn> result = new ArrayList<>();
 		final Race race = player.getRace();
 		for (L2SkillLearn skill : _transformSkillTree.values())
 		{
@@ -678,9 +670,9 @@ public final class SkillTreesData extends DocumentParser
 	 * @param clan the pledge skill learning clan.
 	 * @return all the available Pledge skills for a given {@code clan}.
 	 */
-	public FastList<L2SkillLearn> getAvailablePledgeSkills(L2Clan clan)
+	public List<L2SkillLearn> getAvailablePledgeSkills(L2Clan clan)
 	{
-		final FastList<L2SkillLearn> result = new FastList<L2SkillLearn>();
+		final List<L2SkillLearn> result = new ArrayList<>();
 		for (L2SkillLearn skill : _pledgeSkillTree.values())
 		{
 			if (!skill.isResidencialSkill() && (clan.getLevel() >= skill.getGetLevel()))
@@ -706,9 +698,9 @@ public final class SkillTreesData extends DocumentParser
 	 * @param clan the sub-pledge skill learning clan.
 	 * @return all the available Sub-Pledge skills for a given {@code clan}.
 	 */
-	public FastList<L2SkillLearn> getAvailableSubPledgeSkills(L2Clan clan)
+	public List<L2SkillLearn> getAvailableSubPledgeSkills(L2Clan clan)
 	{
-		final FastList<L2SkillLearn> result = new FastList<L2SkillLearn>();
+		final List<L2SkillLearn> result = new ArrayList<>();
 		for (L2SkillLearn skill : _subPledgeSkillTree.values())
 		{
 			if ((clan.getLevel() >= skill.getGetLevel()) && clan.isLearnableSubSkill(skill.getSkillId(), skill.getSkillLevel()))
@@ -723,9 +715,9 @@ public final class SkillTreesData extends DocumentParser
 	 * @param player the sub-class skill learning player.
 	 * @return all the available Sub-Class skills for a given {@code player}.
 	 */
-	public FastList<L2SkillLearn> getAvailableSubClassSkills(L2PcInstance player)
+	public List<L2SkillLearn> getAvailableSubClassSkills(L2PcInstance player)
 	{
-		final FastList<L2SkillLearn> result = new FastList<L2SkillLearn>();
+		final List<L2SkillLearn> result = new ArrayList<>();
 		for (L2SkillLearn skill : _subClassSkillTree.values())
 		{
 			if (player.getLevel() >= skill.getGetLevel())
@@ -759,9 +751,9 @@ public final class SkillTreesData extends DocumentParser
 	 * @param residenceId the id of the Castle, Fort, Territory.
 	 * @return all the available Residential skills for a given {@code residenceId}.
 	 */
-	public FastList<L2SkillLearn> getAvailableResidentialSkills(int residenceId)
+	public List<L2SkillLearn> getAvailableResidentialSkills(int residenceId)
 	{
-		final FastList<L2SkillLearn> result = new FastList<L2SkillLearn>();
+		final List<L2SkillLearn> result = new ArrayList<>();
 		for (L2SkillLearn skill : _pledgeSkillTree.values())
 		{
 			if (skill.isResidencialSkill() && skill.getResidenceIds().contains(residenceId))
@@ -831,8 +823,7 @@ public final class SkillTreesData extends DocumentParser
 	 */
 	public L2SkillLearn getClassSkill(int id, int lvl, ClassId classId)
 	{
-		final FastMap<Integer, L2SkillLearn> skills = getCompleteClassSkillTree(classId);
-		return skills.get(SkillTable.getSkillHashCode(id, lvl));
+		return getCompleteClassSkillTree(classId).get(SkillTable.getSkillHashCode(id, lvl));
 	}
 	
 	/**
@@ -919,7 +910,7 @@ public final class SkillTreesData extends DocumentParser
 	 * @param skillTree the skill tree to search the minimum get level.
 	 * @return the minimum level for a new skill for a given {@code player} and {@code skillTree}.
 	 */
-	public int getMinLevelForNewSkill(L2PcInstance player, FastMap<Integer, L2SkillLearn> skillTree)
+	public int getMinLevelForNewSkill(L2PcInstance player, Map<Integer, L2SkillLearn> skillTree)
 	{
 		int minLevel = 0;
 		if (skillTree.isEmpty())
@@ -971,7 +962,7 @@ public final class SkillTreesData extends DocumentParser
 	 */
 	public boolean isGMSkill(int skillId, int skillLevel)
 	{
-		final FastMap<Integer, L2SkillLearn> gmSkills = new FastMap<>();
+		final Map<Integer, L2SkillLearn> gmSkills = new HashMap<>();
 		gmSkills.putAll(_gameMasterSkillTree);
 		gmSkills.putAll(_gameMasterAuraSkillTree);
 		if (gmSkills.containsKey(SkillTable.getSkillHashCode(skillId, skillLevel)))
@@ -1009,12 +1000,12 @@ public final class SkillTreesData extends DocumentParser
 	private void generateCheckArrays()
 	{
 		// Class specific skills:
-		final Set<ClassId> keySet = getClassSkillTrees().keySet();
+		final Set<ClassId> keySet = _classSkillTrees.keySet();
 		_skillsByClassIdHashCodes = new TIntObjectHashMap<int[]>(keySet.size());
 		for (ClassId cls : keySet)
 		{
 			int i = 0;
-			FastMap<Integer, L2SkillLearn> tempMap = getCompleteClassSkillTree(cls);
+			Map<Integer, L2SkillLearn> tempMap = getCompleteClassSkillTree(cls);
 			int[] array = new int[tempMap.size()];
 			for (int h : tempMap.keySet())
 			{
@@ -1026,7 +1017,7 @@ public final class SkillTreesData extends DocumentParser
 		}
 		
 		// Race specific skills from Fishing and Transformation skill trees.
-		final FastList<Integer> list = new FastList<Integer>();
+		final List<Integer> list = new ArrayList<>();
 		_skillsByRaceHashCodes = new TIntObjectHashMap<int[]>(Race.values().length);
 		for (Race r : Race.values())
 		{
@@ -1153,13 +1144,13 @@ public final class SkillTreesData extends DocumentParser
 	private void report()
 	{
 		int classSkillTreeCount = 0;
-		for (FastMap<Integer, L2SkillLearn> classSkillTree : _classSkillTrees.values())
+		for (Map<Integer, L2SkillLearn> classSkillTree : _classSkillTrees.values())
 		{
 			classSkillTreeCount += classSkillTree.size();
 		}
 		
 		int trasferSkillTreeCount = 0;
-		for (FastMap<Integer, L2SkillLearn> trasferSkillTree : _transferSkillTrees.values())
+		for (Map<Integer, L2SkillLearn> trasferSkillTree : _transferSkillTrees.values())
 		{
 			trasferSkillTreeCount += trasferSkillTree.size();
 		}

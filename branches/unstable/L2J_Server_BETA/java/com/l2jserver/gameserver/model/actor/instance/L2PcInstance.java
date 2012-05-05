@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -2939,8 +2940,7 @@ public final class L2PcInstance extends L2Playable
 		int skillCounter = 0;
 		
 		// Get available skills
-		FastList<L2SkillLearn> skills = SkillTreesData.getInstance().getAvailableSkills(this, getClassId(), includedByFs, includeAutoGet);
-		
+		List<L2SkillLearn> skills = SkillTreesData.getInstance().getAvailableSkills(this, getClassId(), includedByFs, includeAutoGet);
 		while (skills.size() > unLearnable)
 		{
 			for (L2SkillLearn s: skills)
@@ -2986,7 +2986,7 @@ public final class L2PcInstance extends L2Playable
 	public void giveAvailableAutoGetSkills()
 	{
 		// Get available skills
-		final FastList<L2SkillLearn> autoGetSkills = SkillTreesData.getInstance().getAvailableAutoGetSkills(this);
+		final List<L2SkillLearn> autoGetSkills = SkillTreesData.getInstance().getAvailableAutoGetSkills(this);
 		final SkillTable st = SkillTable.getInstance();
 		for (L2SkillLearn s : autoGetSkills)
 		{
@@ -10961,9 +10961,8 @@ public final class L2PcInstance extends L2Playable
 			}
 			
 			final ClassId subTemplate = ClassId.getClassId(classId);
-			final FastMap<Integer, L2SkillLearn> skillTree = SkillTreesData.getInstance().getCompleteClassSkillTree(subTemplate);
-			final FastMap<Integer, L2Skill> prevSkillList = new FastMap<Integer, L2Skill>();
-			
+			final Map<Integer, L2SkillLearn> skillTree = SkillTreesData.getInstance().getCompleteClassSkillTree(subTemplate);
+			final Map<Integer, L2Skill> prevSkillList = new HashMap<>();
 			for (L2SkillLearn skillInfo : skillTree.values())
 			{
 				if (skillInfo.getGetLevel() <= 40)
@@ -15264,8 +15263,7 @@ public final class L2PcInstance extends L2Playable
 	private void deacreaseSkillLevel(int id)
 	{
 		int nextLevel = -1;
-		final FastMap<Integer, L2SkillLearn> skillTree = SkillTreesData.getInstance().getCompleteClassSkillTree(getClassId());
-		
+		final Map<Integer, L2SkillLearn> skillTree = SkillTreesData.getInstance().getCompleteClassSkillTree(getClassId());
 		for (L2SkillLearn sl : skillTree.values())
 		{
 			if (sl.getSkillId() == id && nextLevel < sl.getSkillLevel() && getLevel() >= (sl.getGetLevel() - 9))
