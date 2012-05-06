@@ -142,7 +142,7 @@ public final class L2ScriptEngineManager
 		// java class path
 		
 		// Jython sys.path
-		String dataPackDirForwardSlashes = SCRIPT_FOLDER.getPath().replaceAll("\\\\", "/");
+		String dataPackDirForwardSlashes = SCRIPT_FOLDER.getPath().replace('\\', '/');
 		String configScript = "import sys;sys.path.insert(0,'" + dataPackDirForwardSlashes + "');";
 		try
 		{
