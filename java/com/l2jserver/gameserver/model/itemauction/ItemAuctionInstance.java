@@ -51,7 +51,7 @@ import com.l2jserver.util.Rnd;
 public final class ItemAuctionInstance
 {
 	static final Logger _log = Logger.getLogger(ItemAuctionInstance.class.getName());
-	private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss dd.MM.yy");
+	private static final String DATE_FORMAT = "HH:mm:ss dd.MM.yy";
 	
 	private static final long START_TIME_SPACE = TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES);
 	private static final long FINISH_TIME_SPACE = TimeUnit.MILLISECONDS.convert(10, TimeUnit.MINUTES);
@@ -350,7 +350,7 @@ public final class ItemAuctionInstance
 		else
 		{
 			setStateTask(ThreadPoolManager.getInstance().scheduleGeneral(new ScheduleAuctionTask(nextAuction), Math.max(nextAuction.getStartingTime() - System.currentTimeMillis(), 0L)));
-			_log.log(Level.INFO, "L2ItemAuctionInstance: Schedule next auction " + nextAuction.getAuctionId() + " on " + DATE_FORMAT.format(new Date(nextAuction.getStartingTime())) + " for instance " + _instanceId);
+			_log.log(Level.INFO, "L2ItemAuctionInstance: Schedule next auction " + nextAuction.getAuctionId() + " on " + new SimpleDateFormat(DATE_FORMAT).format(new Date(nextAuction.getStartingTime())) + " for instance " + _instanceId);
 		}
 	}
 	
