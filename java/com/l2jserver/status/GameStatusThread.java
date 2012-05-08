@@ -78,8 +78,7 @@ public class GameStatusThread extends Thread
 		if (Config.DEVELOPER)
 			telnetOutput(2, "");
 		
-		final File file = new File(Config.TELNET_FILE);
-		try (InputStream telnetIS = new FileInputStream(file);)
+		try (InputStream telnetIS = new FileInputStream(Config.TELNET_FILE);)
 		{
 			Properties telnetSettings = new Properties();
 			telnetSettings.load(telnetIS);

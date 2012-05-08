@@ -159,8 +159,7 @@ public class SiegeManager
 	
 	private final void load()
 	{
-		final File file = new File(Config.SIEGE_CONFIGURATION_FILE);
-		try (InputStream is = new FileInputStream(file))
+		try (InputStream is = new FileInputStream(Config.SIEGE_CONFIGURATION_FILE))
 		{
 			Properties siegeSettings = new Properties();
 			siegeSettings.load(is);

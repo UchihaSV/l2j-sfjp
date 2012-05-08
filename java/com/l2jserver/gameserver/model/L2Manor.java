@@ -376,7 +376,7 @@ public class L2Manor
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setValidating(false);
 		factory.setIgnoringComments(true);
-		File file = new File(Config.DATAPACK_ROOT, "/data/seeds.xml");
+		File file = new File(Config.DATAPACK_ROOT, "data/seeds.xml");
 		Document doc = null;
 		
 		try

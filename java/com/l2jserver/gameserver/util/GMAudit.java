@@ -41,7 +41,7 @@ public class GMAudit
 	 */
 	public static void auditGMAction(String gmName, String action, String target, String params)
 	{
-		final File file = new File("log/GMAudit/" + gmName + ".txt");
+		final File file = new File("log/GMAudit", gmName + ".txt");
 		final SimpleDateFormat _formatter = new SimpleDateFormat("dd/MM/yyyy H:mm:ss");
 		try (FileWriter save = new FileWriter(file, true))
 		{
