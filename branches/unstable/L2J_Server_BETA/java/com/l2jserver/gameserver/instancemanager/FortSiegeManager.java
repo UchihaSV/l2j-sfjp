@@ -153,8 +153,7 @@ public class FortSiegeManager
 	
 	private final void load()
 	{
-		final File file = new File(Config.FORTSIEGE_CONFIGURATION_FILE);
-		try (InputStream is = new FileInputStream(file))
+		try (InputStream is = new FileInputStream(Config.FORTSIEGE_CONFIGURATION_FILE))
 		{
 			Properties siegeSettings = new Properties();
 			siegeSettings.load(is);

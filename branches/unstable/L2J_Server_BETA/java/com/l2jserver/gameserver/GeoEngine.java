@@ -673,9 +673,7 @@ public class GeoEngine extends GeoData
 		}
 		try
 		{
-			File geo_bugs = new File("./data/geodata/geo_bugs.txt");
-			
-			_geoBugsOut = new BufferedOutputStream(new FileOutputStream(geo_bugs, true));
+			_geoBugsOut = new BufferedOutputStream(new FileOutputStream("./data/geodata/geo_bugs.txt", true));
 		}
 		catch (Exception e)
 		{
@@ -698,14 +696,13 @@ public class GeoEngine extends GeoData
 			_log.warning("Failed to Load GeoFile: invalid region " + rx +","+ ry + "\n");
 			return false;
 		}
-		String fname = "./data/geodata/" + rx + "_" + ry + ".l2j";
+		File fname = new File("./data/geodata/" + rx + "_" + ry + ".l2j");
 		short regionoffset = (short) ((rx << 5) + ry);
 		_log.info("Geo Engine: - Loading: " + fname + " -> region offset: " + regionoffset + "X: " + rx + " Y: " + ry);
 		
 		int index = 0, block = 0, flor = 0;
 		// Create a read-only memory-mapped file
-		final File Geo = new File(fname);
-		try (RandomAccessFile raf = new RandomAccessFile(Geo, "r");
+		try (RandomAccessFile raf = new RandomAccessFile(fname, "r");
 			FileChannel roChannel = raf.getChannel())
 		{
 			int size = (int) roChannel.size();

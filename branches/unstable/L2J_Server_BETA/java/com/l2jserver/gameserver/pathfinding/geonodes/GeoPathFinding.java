@@ -398,14 +398,13 @@ public class GeoPathFinding extends PathFinding
 			_log.warning("Failed to Load PathNode File: invalid region " + rx +","+ ry + "\n");
 			return;
 		}
-		String fname = "./data/pathnode/" + rx + "_" + ry + ".pn";
+		File fname = new File("./data/pathnode/" + rx + "_" + ry + ".pn");
 		short regionoffset = getRegionOffset(rx, ry);
 		_log.info("PathFinding Engine: - Loading: " + fname + " -> region offset: " + regionoffset + "X: " + rx + " Y: " + ry);
-		File Pn = new File(fname);
 		int node = 0, size, index = 0;
 		
 		// Create a read-only memory-mapped file
-		try (RandomAccessFile raf = new RandomAccessFile(Pn, "r");
+		try (RandomAccessFile raf = new RandomAccessFile(fname, "r");
 			FileChannel roChannel = raf.getChannel())
 		{
 			size = (int) roChannel.size();

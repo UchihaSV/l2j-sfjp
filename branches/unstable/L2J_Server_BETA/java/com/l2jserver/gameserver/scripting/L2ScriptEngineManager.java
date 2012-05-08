@@ -166,10 +166,8 @@ public final class L2ScriptEngineManager
 	
 	public void executeScriptList(File list) throws IOException
 	{
-		File file;
-		
 		if(!Config.ALT_DEV_NO_HANDLERS && Config.ALT_DEV_NO_QUESTS) {
-			file = new File(SCRIPT_FOLDER, "handlers/MasterHandler.java");
+			File file = new File(SCRIPT_FOLDER, "handlers/MasterHandler.java");
 			
 			try {
 				executeScript(file);
@@ -210,7 +208,7 @@ public final class L2ScriptEngineManager
 						line = line.substring(0, line.length() - 2);
 					}
 					
-					file = new File(SCRIPT_FOLDER, line);
+					File file = new File(SCRIPT_FOLDER, line);
 					
 					if (file.isDirectory() && parts[0].endsWith("/**"))
 					{
@@ -474,7 +472,7 @@ public final class L2ScriptEngineManager
 		String name = script.getName() + ".error.log";
 		if (dir != null)
 		{
-			final File file = new File(dir + "/" + name);
+			final File file = new File(dir, name);
 			try (FileOutputStream fos = new FileOutputStream(file))
 			{
 				String errorHeader = "Error on: " + file.getCanonicalPath() + "\r\nLine: " + e.getLineNumber() + " - Column: "
