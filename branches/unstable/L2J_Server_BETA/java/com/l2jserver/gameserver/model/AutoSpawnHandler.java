@@ -541,12 +541,13 @@ if (TEST1) {{
 				
 				// Announce to all players that the spawn has taken place, with
 				// the nearest town location.
-				if (spawnInst.isBroadcasting())
+				if (spawnInst.isBroadcasting() && (npcInst != null))
+				{
 					Announcements.getInstance().announceToAll( SystemMessage.getSystemMessage(SystemMessageId.S2_S1)
 								.addString("Ç…" + npcInst.getName() + "Ç™Ç‚Ç¡ÇƒÇ‹Ç¢ÇËÇ‹ÇµÇΩÅI")
 								.addZoneName(x, y, z) );	//[JOJO]
 				//	Announcements.getInstance().announceToAll("The " + npcInst.getName() + " has spawned near " + nearestTown + "!");
-				
+				}
 				if (Config.DEBUG)
 					_log.info("AutoSpawnHandler: Spawned NPC ID " + spawnInst.getNpcId() + " at " + x + ", " + y + ", " + z + " (Near "
 							+ nearestTown + ") for " + (spawnInst._resDelay / 60000) + " minute(s).");

@@ -328,6 +328,7 @@ public class TerritoryWarManager implements Siegable
 			door.openMe();
 	}
 	
+	@SuppressWarnings("null")
 	public L2Npc addTerritoryWard(int territoryId, int newOwnerId, int oldOwnerId, boolean broadcastMessage)
 	{
 		L2Npc ret = null;
@@ -398,6 +399,7 @@ public class TerritoryWarManager implements Siegable
 				{
 					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.CLAN_S1_HAS_SUCCEDED_IN_CAPTURING_S2_TERRITORY_WARD);
 					sm.addString(terNew.getOwnerClan().getName());
+					// TODO: Unhardcode using territory Id.
 					sm.addString(ward.getNpc().getName().replace(" Ward", "").replace("‚ÌŽçŒì•¨", "—Ì’n"));
 					announceToParticipants(sm, 135000, 13500);
 				}
