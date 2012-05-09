@@ -1209,8 +1209,7 @@ public final class Config
 			FLOOD_PROTECTOR_ITEM_AUCTION = new FloodProtectorConfig("ItemAuctionFloodProtector");
 			
 			_log.info("Loading GameServer Configuration Files...");
-			final File server = new File(CONFIGURATION_FILE);
-			try (InputStream is = new FileInputStream(server))
+			try (InputStream is = new FileInputStream(CONFIGURATION_FILE))
 			{
 				L2Properties serverSettings = new L2Properties();
 				
@@ -1262,16 +1261,14 @@ public final class Config
 				throw new Error("Failed to Load " + CONFIGURATION_FILE + " File.");
 			}
 			
-			File file = new File(IP_CONFIG_FILE);
-			Document doc = null;
-			ArrayList<String> subnets = new ArrayList<>(5);
-			ArrayList<String> hosts = new ArrayList<>(5);
 			try
 			{
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				factory.setValidating(false);
 				factory.setIgnoringComments(true);
-				doc = factory.newDocumentBuilder().parse(file);
+				Document doc = factory.newDocumentBuilder().parse(IP_CONFIG_FILE);
+				ArrayList<String> subnets = new ArrayList<>(5);
+				ArrayList<String> hosts = new ArrayList<>(5);
 				
 				for (Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
 				{
@@ -1331,8 +1328,7 @@ public final class Config
 			}
 			
 			// Load Community Properties file (if exists)
-			final File community = new File(COMMUNITY_CONFIGURATION_FILE);
-			try (InputStream is = new FileInputStream(community))
+			try (InputStream is = new FileInputStream(COMMUNITY_CONFIGURATION_FILE))
 			{
 				L2Properties communityServerSettings = new L2Properties();
 				communityServerSettings.load(is);
@@ -1349,8 +1345,7 @@ public final class Config
 			}
 			
 			// Load Feature L2Properties file (if exists)
-			final File feature = new File(FEATURE_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(feature))
+			try (InputStream is = new FileInputStream(FEATURE_CONFIG_FILE))
 			{
 				L2Properties Feature = new L2Properties();
 				Feature.load(is);
@@ -1575,8 +1570,7 @@ public final class Config
 			}
 			
 			// Load Character L2Properties file (if exists)
-			final File chars = new File(CHARACTER_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(chars))
+			try (InputStream is = new FileInputStream(CHARACTER_CONFIG_FILE))
 			{
 				L2Properties Character = new L2Properties();
 				Character.load(is);
@@ -1863,8 +1857,7 @@ public final class Config
 			}
 			
 			// Load L2J Server Version L2Properties file (if exists)
-			final File server_ver = new File(SERVER_VERSION_FILE);
-			try (InputStream is = new FileInputStream(server_ver))
+			try (InputStream is = new FileInputStream(SERVER_VERSION_FILE))
 			{
 				L2Properties serverVersion = new L2Properties();
 				serverVersion.load(is);
@@ -1883,8 +1876,7 @@ public final class Config
 			}
 			
 			// Load L2J Datapack Version L2Properties file (if exists)
-			final File dp_ver = new File(DATAPACK_VERSION_FILE);
-			try (InputStream is = new FileInputStream(dp_ver))
+			try (InputStream is = new FileInputStream(DATAPACK_VERSION_FILE))
 			{
 				L2Properties serverVersion = new L2Properties();
 				serverVersion.load(is);
@@ -1901,8 +1893,7 @@ public final class Config
 			}
 			
 			// Load Telnet L2Properties file (if exists)
-			final File telnet = new File(TELNET_FILE);
-			try (InputStream is = new FileInputStream(telnet))
+			try (InputStream is = new FileInputStream(TELNET_FILE))
 			{
 				L2Properties telnetSettings = new L2Properties();
 				telnetSettings.load(is);
@@ -1916,8 +1907,7 @@ public final class Config
 			}
 			
 			// MMO
-			final File mmo = new File(MMO_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(mmo))
+			try (InputStream is = new FileInputStream(MMO_CONFIG_FILE))
 			{
 				L2Properties mmoSettings = new L2Properties();
 				mmoSettings.load(is);
@@ -1934,8 +1924,7 @@ public final class Config
 			}
 			
 			// Load IdFactory L2Properties file (if exists)
-			final File Id = new File(ID_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(Id))
+			try (InputStream is = new FileInputStream(ID_CONFIG_FILE))
 			{
 				L2Properties idSettings = new L2Properties();
 				idSettings.load(is);
@@ -1952,8 +1941,7 @@ public final class Config
 			}
 			
 			// Load General L2Properties file (if exists)
-			final File general = new File(GENERAL_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(general))
+			try (InputStream is = new FileInputStream(GENERAL_CONFIG_FILE))
 			{
 				L2Properties General = new L2Properties();
 				General.load(is);
@@ -2223,8 +2211,7 @@ public final class Config
 			}
 			
 			// Load FloodProtector L2Properties file
-			final File flood = new File(FLOOD_PROTECTOR_FILE);
-			try (InputStream is = new FileInputStream(flood))
+			try (InputStream is = new FileInputStream(FLOOD_PROTECTOR_FILE))
 			{
 				L2Properties security = new L2Properties();
 				security.load(is);
@@ -2238,8 +2225,7 @@ public final class Config
 			}
 			
 			// Load NPC L2Properties file (if exists)
-			final File npc = new File(NPC_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(npc))
+			try (InputStream is = new FileInputStream(NPC_CONFIG_FILE))
 			{
 				L2Properties NPC = new L2Properties();
 				NPC.load(is);
@@ -2336,8 +2322,7 @@ public final class Config
 			}
 			
 			// Load Rates L2Properties file (if exists)
-			final File rates = new File(RATES_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(rates))
+			try (InputStream is = new FileInputStream(RATES_CONFIG_FILE))
 			{
 				L2Properties ratesSettings = new L2Properties();
 				ratesSettings.load(is);
@@ -2472,8 +2457,7 @@ public final class Config
 			}
 			
 			// Load L2JMod L2Properties file (if exists)
-			final File l2jmods = new File(L2JMOD_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(l2jmods))
+			try (InputStream is = new FileInputStream(L2JMOD_CONFIG_FILE))
 			{
 				L2Properties L2JModSettings = new L2Properties();
 				L2JModSettings.load(is);
@@ -2830,8 +2814,7 @@ public final class Config
 			}
 			
 			// Load PvP L2Properties file (if exists)
-			final File pvp = new File(PVP_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(pvp))
+			try (InputStream is = new FileInputStream(PVP_CONFIG_FILE))
 			{
 				L2Properties pvpSettings = new L2Properties();
 				pvpSettings.load(is);
@@ -2876,8 +2859,7 @@ public final class Config
 			}
 			
 			// Load Olympiad L2Properties file (if exists)
-			final File oly = new File(OLYMPIAD_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(oly))
+			try (InputStream is = new FileInputStream(OLYMPIAD_CONFIG_FILE))
 			{
 				L2Properties olympiad = new L2Properties();
 				olympiad.load(is);
@@ -2931,8 +2913,7 @@ public final class Config
 				throw new Error("Failed to Load " + OLYMPIAD_CONFIG_FILE + " File.");
 			}
 			
-			final File hex = new File(HEXID_FILE);
-			try (InputStream is = new FileInputStream(hex))
+			try (InputStream is = new FileInputStream(HEXID_FILE))
 			{
 				L2Properties Settings = new L2Properties();
 				Settings.load(is);
@@ -3012,8 +2993,7 @@ public final class Config
 			//////////////////////////////////////////////////////////////
 			
 			// Grandboss
-			final File grandboss = new File(GRANDBOSS_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(grandboss))
+			try (InputStream is = new FileInputStream(GRANDBOSS_CONFIG_FILE))
 			{
 				L2Properties grandbossSettings = new L2Properties();
 				grandbossSettings.load(is);
@@ -3154,8 +3134,7 @@ public final class Config
 			}
 			
 			// Gracia Seeds
-			final File graciaseeds = new File(GRACIASEEDS_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(graciaseeds))
+			try (InputStream is = new FileInputStream(GRACIASEEDS_CONFIG_FILE))
 			{
 				L2Properties graciaseedsSettings = new L2Properties();
 				graciaseedsSettings.load(is);
@@ -3170,11 +3149,9 @@ public final class Config
 				throw new Error("Failed to Load " + GRACIASEEDS_CONFIG_FILE + " File.");
 			}
 			
-			try
+			try (BufferedReader lnr = com.l2jserver.util.Util.utf8BufferedReader(CHAT_FILTER_FILE))	//[JOJO] UTF-8
 			{
 				FILTER_LIST = new ArrayList<String>();
-				BufferedReader lnr = com.l2jserver.util.Util.utf8BufferedReader(CHAT_FILTER_FILE);	//[JOJO] UTF-8
-			//	LineNumberReader lnr = new LineNumberReader(new BufferedReader(new FileReader(new File(CHAT_FILTER_FILE))));
 				String line = null;
 				while ((line = lnr.readLine()) != null)
 				{
@@ -3194,8 +3171,7 @@ public final class Config
 			}
 			
 			// Security
-			final File security = new File(SECURITY_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(security))
+			try (InputStream is = new FileInputStream(SECURITY_CONFIG_FILE))
 			{
 				L2Properties securitySettings = new L2Properties();
 				securitySettings.load(is);
@@ -3212,8 +3188,7 @@ public final class Config
 				throw new Error("Failed to Load " + SECURITY_CONFIG_FILE + " File.");
 			}
 			
-			final File ch_siege = new File(CH_SIEGE_FILE);
-			try (InputStream is = new FileInputStream(ch_siege))
+			try (InputStream is = new FileInputStream(CH_SIEGE_FILE))
 			{
 				L2Properties chSiege = new L2Properties();
 				chSiege.load(is);
@@ -3233,8 +3208,7 @@ public final class Config
 		else if (Server.serverMode == Server.MODE_LOGINSERVER)
 		{
 			_log.info("loading login config");
-			final File login = new File(LOGIN_CONFIGURATION_FILE);
-			try (InputStream is = new FileInputStream(login))
+			try (InputStream is = new FileInputStream(LOGIN_CONFIGURATION_FILE))
 			{
 				L2Properties serverSettings = new L2Properties();
 				serverSettings.load(is);
@@ -3282,8 +3256,7 @@ public final class Config
 				throw new Error("Failed to Load " + LOGIN_CONFIGURATION_FILE + " File.");
 			}
 			// MMO
-			final File mmo = new File(MMO_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(mmo))
+			try (InputStream is = new FileInputStream(MMO_CONFIG_FILE))
 			{
 				_log.info("Loading " + MMO_CONFIG_FILE.replaceAll("./config/", ""));
 				L2Properties mmoSettings = new L2Properties();
@@ -3301,8 +3274,7 @@ public final class Config
 			}
 			
 			// Load Telnet L2Properties file (if exists)
-			final File telnet = new File(TELNET_FILE);
-			try (InputStream is = new FileInputStream(telnet))
+			try (InputStream is = new FileInputStream(TELNET_FILE))
 			{
 				L2Properties telnetSettings = new L2Properties();
 				telnetSettings.load(is);
@@ -3316,8 +3288,7 @@ public final class Config
 			}
 			
 			// Email
-			final File email = new File(EMAIL_CONFIG_FILE);
-			try (InputStream is = new FileInputStream(email))
+			try (InputStream is = new FileInputStream(EMAIL_CONFIG_FILE))
 			{
 				L2Properties emailSettings = new L2Properties();
 				emailSettings.load(is);
