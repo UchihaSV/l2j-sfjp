@@ -84,8 +84,6 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 	private int timepass = 0;
 	private int chaostime = 0;
 	private final L2NpcTemplate _skillrender;
-	private FastList<L2Skill> shortRangeSkills = new FastList<>();
-	private FastList<L2Skill> longRangeSkills = new FastList<>();
 	int lastBuffTick;
 	
 	/**
@@ -1165,14 +1163,11 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			{
 				case -1:
 				{
-					if (_skillrender.getGeneralskills() != null)
+					for (L2Skill sk : _skillrender.getGeneralskills())
 					{
-						for (L2Skill sk : _skillrender.getGeneralskills())
+						if (cast(sk))
 						{
-							if (cast(sk))
-							{
-								return;
-							}
+							return;
 						}
 					}
 					break;
@@ -2366,7 +2361,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 	
 	private FastList<L2Skill> longRangeSkillRender()
 	{
-		longRangeSkills = _skillrender.getLongRangeSkills();
+		FastList<L2Skill> longRangeSkills = _skillrender.getLongRangeSkills();
 		if (longRangeSkills.isEmpty())
 		{
 			longRangeSkills = getActiveChar().getLongRangeSkill();
@@ -2376,7 +2371,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 	
 	private FastList<L2Skill> shortRangeSkillRender()
 	{
-		shortRangeSkills = _skillrender.getShortRangeSkills();
+		FastList<L2Skill> shortRangeSkills = _skillrender.getShortRangeSkills();
 		if (shortRangeSkills.isEmpty())
 		{
 			shortRangeSkills = getActiveChar().getShortRangeSkill();
