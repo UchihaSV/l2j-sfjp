@@ -32,6 +32,10 @@ public class ExtFilter implements FileFilter
 	@Override
 	public boolean accept(File f)
 	{
+if (com.l2jserver.Config.FILE_FILTER_CASE_SENSITIVE) {{
+		return f.getPath().endsWith(_ext);
+}} else {{
 		return f.getName().toLowerCase().endsWith(_ext);
+}}
 	}
 }

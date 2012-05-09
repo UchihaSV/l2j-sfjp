@@ -31,6 +31,10 @@ public class BMPFilter implements FileFilter
 		{
 			return false;
 		}
+if (com.l2jserver.Config.FILE_FILTER_CASE_SENSITIVE) {{
+		return f.getPath().endsWith(".bmp");
+}} else {{
 		return f.getName().toLowerCase().endsWith(".bmp");
+}}
 	}
 }
