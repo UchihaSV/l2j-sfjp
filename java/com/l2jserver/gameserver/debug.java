@@ -9,7 +9,7 @@ public class debug
 //		 * example 1
 //		 */
 //		com.l2jserver.gameserver.network.serverpackets.CreatureSay cs = new com.l2jserver.gameserver.network.serverpackets.CreatureSay(0, com.l2jserver.gameserver.network.clientpackets.Say2.TELL, title, message);
-//		for (com.l2jserver.gameserver.model.actor.instance.L2PcInstance pc : com.l2jserver.gameserver.GmListTable.getInstance().getAllGms(true))
+//		for (com.l2jserver.gameserver.model.actor.instance.L2PcInstance pc : com.l2jserver.gameserver.datatables.AdminTable.getInstance().getAllGms(true))
 //			pc.sendPacket(cs);
 
 //		/**

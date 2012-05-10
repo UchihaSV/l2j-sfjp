@@ -7132,7 +7132,7 @@ public final class L2PcInstance extends L2Playable
 		if (_gmEnable)
 			return getL2AccessLevel();
 		else
-			return AccessLevels._userAccessLevel;
+			return AdminTable.getInstance().getAccessLevel(0);
 	}
 	//-------------------------------------------------------
 
