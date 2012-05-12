@@ -25,8 +25,7 @@ import java.util.ResourceBundle.Control;
 import javolution.io.UTF8StreamReader;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class LanguageControl extends Control
 {
@@ -45,7 +44,7 @@ public class LanguageControl extends Control
 	@Override
 	public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) throws IOException
 	{
-		if (baseName == null || locale == null || format == null || loader == null)
+		if ((baseName == null) || (locale == null) || (format == null) || (loader == null))
 		{
 			throw new NullPointerException();
 		}
@@ -56,13 +55,11 @@ public class LanguageControl extends Control
 			String bundleName = toBundleName(baseName, locale);
 			String resourceName = LANGUAGES_DIRECTORY + toResourceName(bundleName, format);
 			try (BufferedReader bis = new BufferedReader(new UTF8StreamReader().setInput(new FileInputStream(resourceName))))	//[JOJO] UTF-8
-		//	try (FileInputStream fis = new FileInputStream(resourceName);
-		//		BufferedInputStream bis = new BufferedInputStream(fis))
+		//	try (FileInputStream fis = new FileInputStream(resourceName); BufferedInputStream bis = new BufferedInputStream(fis))
 			{
 				bundle = new PropertyResourceBundle(bis);
 			}
 		}
 		return bundle;
 	}
-	
 }

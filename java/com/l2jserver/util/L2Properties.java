@@ -27,7 +27,6 @@ import javolution.io.UTF8StreamReader;
 /**
  * Specialized {@link java.util.Properties} class.<br>
  * Simplifies loading of property files and adds logging if a non existing property is requested.<br>
- * 
  * @author Noctarius
  */
 public final class L2Properties extends Properties
@@ -36,7 +35,10 @@ public final class L2Properties extends Properties
 	
 	private static Logger _log = Logger.getLogger(L2Properties.class.getName());
 	
-	public L2Properties() { }
+	public L2Properties()
+	{
+		
+	}
 	
 	public L2Properties(String name) throws IOException
 	{
@@ -83,7 +85,9 @@ public final class L2Properties extends Properties
 		{
 			inStream.close();
 			if (reader != null)
+			{
 				reader.close();
+			}
 		}
 	}
 	
@@ -99,7 +103,7 @@ public final class L2Properties extends Properties
 			reader.close();
 		}
 	}
-
+	
 	/**
 	 * @see Properties#getProperty(String)
 	 */
@@ -117,7 +121,7 @@ public final class L2Properties extends Properties
 		
 		return property.trim();
 	}
-
+	
 	/**
 	 * @see Properties#getProperty(String,String)
 	 */

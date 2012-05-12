@@ -32,9 +32,9 @@ import com.l2jserver.gameserver.Shutdown;
 public class DeadLockDetector extends Thread
 {
 	private static Logger _log = Logger.getLogger(DeadLockDetector.class.getName());
-
+	
 	/** Interval to check for deadlocked threads */
-	private static final int _sleepTime = Config.DEADLOCK_CHECK_INTERVAL*1000;
+	private static final int _sleepTime = Config.DEADLOCK_CHECK_INTERVAL * 1000;
 	
 	private final ThreadMXBean tmx;
 	
@@ -48,19 +48,19 @@ public class DeadLockDetector extends Thread
 	public final void run()
 	{
 		boolean deadlock = false;
-		while(!deadlock)
+		while (!deadlock)
 		{
 			try
 			{
 				long[] ids = tmx.findDeadlockedThreads();
 				
-				if(ids != null)
+				if (ids != null)
 				{
 					deadlock = true;
-					ThreadInfo[] tis = tmx.getThreadInfo(ids,true,true);
+					ThreadInfo[] tis = tmx.getThreadInfo(ids, true, true);
 					StringBuilder info = new StringBuilder()
 						.append("DeadLock Found!\n");
-					for(ThreadInfo ti : tis)
+					for (ThreadInfo ti : tis)
 					{
 if (Config.FIX_THREADINFO_TO_STRING) {{
 						appendThreadInfo(info, ti);
@@ -69,11 +69,11 @@ if (Config.FIX_THREADINFO_TO_STRING) {{
 }}
 					}
 					
-					for(ThreadInfo ti : tis)
+					for (ThreadInfo ti : tis)
 					{
 						LockInfo[] locks = ti.getLockedSynchronizers();
 						MonitorInfo[] monitors = ti.getLockedMonitors();
-						if(locks.length == 0 && monitors.length == 0)
+						if ((locks.length == 0) && (monitors.length == 0))
 						{
 							continue;
 						}
@@ -87,7 +87,10 @@ if (Config.FIX_THREADINFO_TO_STRING) {{
 						    .append(" which is held by ")
 						    .append(dl.getLockOwnerName())
 						    .append("\n");
-						while((dl = tmx.getThreadInfo(new long[]{dl.getLockOwnerId()},true,true)[0]).getThreadId() != ti.getThreadId())
+						while ((dl = tmx.getThreadInfo(new long[]
+						{
+							dl.getLockOwnerId()
+						}, true, true)[0]).getThreadId() != ti.getThreadId())
 						{
 							info.append("\t")
 							    .append(dl.getThreadName())
@@ -100,19 +103,19 @@ if (Config.FIX_THREADINFO_TO_STRING) {{
 					}
 					_log.warning(info.toString());
 					
-					if(Config.RESTART_ON_DEADLOCK)
+					if (Config.RESTART_ON_DEADLOCK)
 					{
 						Announcements an = Announcements.getInstance();
 						an.announceToAll("Server has stability issues - restarting now.");
-						Shutdown.getInstance().startTelnetShutdown("DeadLockDetector - Auto Restart",60,true);
+						Shutdown.getInstance().startTelnetShutdown("DeadLockDetector - Auto Restart", 60, true);
 					}
 					
 				}
 				Thread.sleep(_sleepTime);
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
-				_log.log(Level.WARNING,"DeadLockDetector: ",e);
+				_log.log(Level.WARNING, "DeadLockDetector: ", e);
 			}
 		}
 	}
