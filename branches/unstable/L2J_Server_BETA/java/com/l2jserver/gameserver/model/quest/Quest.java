@@ -17,7 +17,9 @@ package com.l2jserver.gameserver.model.quest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
@@ -80,10 +82,12 @@ public class Quest extends ManagedScript
 	 * HashMap containing events from String value of the event.
 	 */
 	private static Map<String, Quest> _allEventsS = new FastMap<String, Quest>();
+	
 	/**
 	 * HashMap containing lists of timers from the name of the timer.
 	 */
 	private final FastMap<String, FastList<QuestTimer>> _allEventTimers = new FastMap<String, FastList<QuestTimer>>();
+	private final List<Integer> _questInvolvedNpcs = new ArrayList<>();
 	
 	private final ReentrantReadWriteLock _rwLock = new ReentrantReadWriteLock();
 	
@@ -1793,6 +1797,12 @@ public class Quest extends ManagedScript
 			{
 				t.addQuestEvent(eventType, this);
 			}
+			
+			if (!_questInvolvedNpcs.contains(Integer.valueOf(npcId)))
+			{
+				_questInvolvedNpcs.add(npcId);
+			}
+			
 			return t;
 		}
 		catch (Exception e)
@@ -2622,6 +2632,15 @@ public class Quest extends ManagedScript
 			}
 		}
 		_allEventTimers.clear();
+		
+		for (Integer npcId : _questInvolvedNpcs)
+		{
+			L2NpcTemplate template = NpcTable.getInstance().getTemplate(npcId);
+			if (template != null)
+				template.removeQuest(this);
+		}
+		_questInvolvedNpcs.clear();
+		
 		if (removeFromList)
 		{
 			return QuestManager.getInstance().removeQuest(this);
