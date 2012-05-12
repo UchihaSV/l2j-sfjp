@@ -31,6 +31,10 @@ public class SQLFilter implements FileFilter
 		{
 			return false;
 		}
+if (com.l2jserver.Config.FILE_FILTER_CASE_SENSITIVE) {{
+		return f.getPath().endsWith(".sql");
+}} else {{
 		return f.getName().toLowerCase().endsWith(".sql");
+}}
 	}
 }
