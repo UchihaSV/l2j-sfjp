@@ -70,41 +70,41 @@ public final class L2NpcTemplate extends L2CharTemplate
 	private final float _baseVitalityDivider;
 	
 	// Skill AI
-	private final List<L2Skill> _buffSkills = new ArrayList<>();
-	private final List<L2Skill> _negativeSkills = new ArrayList<>();
-	private final List<L2Skill> _debuffSkills = new ArrayList<>();
-	private final List<L2Skill> _atkSkills = new ArrayList<>();
-	private final List<L2Skill> _rootSkills = new ArrayList<>();
-	private final List<L2Skill> _stunskills = new ArrayList<>();
-	private final List<L2Skill> _sleepSkills = new ArrayList<>();
-	private final List<L2Skill> _paralyzeSkills = new ArrayList<>();
-	private final List<L2Skill> _fossilSkills = new ArrayList<>();
-	private final List<L2Skill> _floatSkills = new ArrayList<>();
-	private final List<L2Skill> _immobilizeSkills = new ArrayList<>();
-	private final List<L2Skill> _healSkills = new ArrayList<>();
-	private final List<L2Skill> _resSkills = new ArrayList<>();
-	private final List<L2Skill> _dotSkills = new ArrayList<>();
-	private final List<L2Skill> _cotSkills = new ArrayList<>();
-	private final List<L2Skill> _universalSkills = new ArrayList<>();
-	private final List<L2Skill> _manaSkills = new ArrayList<>();
-	private final List<L2Skill> _longRangeSkills = new ArrayList<>();
-	private final List<L2Skill> _shortRangeSkills = new ArrayList<>();
-	private final List<L2Skill> _generalSkills = new ArrayList<>();
-	private final List<L2Skill> _suicideSkills = new ArrayList<>();
+	private final List<L2Skill> _buffSkills = new ArrayList<>(0);
+	private final List<L2Skill> _negativeSkills = new ArrayList<>(0);
+	private final List<L2Skill> _debuffSkills = new ArrayList<>(0);
+	private final List<L2Skill> _atkSkills = new ArrayList<>(0);
+	private final List<L2Skill> _rootSkills = new ArrayList<>(0);
+	private final List<L2Skill> _stunskills = new ArrayList<>(0);
+	private final List<L2Skill> _sleepSkills = new ArrayList<>(0);
+	private final List<L2Skill> _paralyzeSkills = new ArrayList<>(0);
+	private final List<L2Skill> _fossilSkills = new ArrayList<>(0);
+	private final List<L2Skill> _floatSkills = new ArrayList<>(0);
+	private final List<L2Skill> _immobilizeSkills = new ArrayList<>(0);
+	private final List<L2Skill> _healSkills = new ArrayList<>(0);
+	private final List<L2Skill> _resSkills = new ArrayList<>(0);
+	private final List<L2Skill> _dotSkills = new ArrayList<>(0);
+	private final List<L2Skill> _cotSkills = new ArrayList<>(0);
+	private final List<L2Skill> _universalSkills = new ArrayList<>(0);
+	private final List<L2Skill> _manaSkills = new ArrayList<>(0);
+	private final List<L2Skill> _longRangeSkills = new ArrayList<>(0);
+	private final List<L2Skill> _shortRangeSkills = new ArrayList<>(0);
+	private final List<L2Skill> _generalSkills = new ArrayList<>(0);
+	private final List<L2Skill> _suicideSkills = new ArrayList<>(0);
 	
 	private L2NpcAIData _AIdataStatic = new L2NpcAIData();
 	
 	/**
 	 * The table containing all Item that can be dropped by L2NpcInstance using this L2NpcTemplate
 	 */
-	private final List<L2DropCategory> _categories = new ArrayList<>();
+	private final List<L2DropCategory> _categories = new ArrayList<>(0);
 	
 	/**
 	 * The table containing all Minions that must be spawn with the L2NpcInstance using this L2NpcTemplate
 	 */
-	private final List<L2MinionData> _minions = new ArrayList<>();
+	private final List<L2MinionData> _minions = new ArrayList<>(0);
 	
-	private final List<ClassId> _teachInfo = new ArrayList<>();
+	private final List<ClassId> _teachInfo = new ArrayList<>(0);
 	
 	private final Map<Integer, L2Skill> _skills = new FastMap<Integer, L2Skill>().shared();
 	
