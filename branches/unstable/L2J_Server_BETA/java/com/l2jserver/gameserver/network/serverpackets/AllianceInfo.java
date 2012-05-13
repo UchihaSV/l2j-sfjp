@@ -19,7 +19,6 @@ import java.util.Collection;
 import com.l2jserver.gameserver.datatables.ClanTable;
 import com.l2jserver.gameserver.model.ClanInfo;
 import com.l2jserver.gameserver.model.L2Clan;
-import com.l2jserver.gameserver.network.clientpackets.RequestAllyInfo;
 
 /**
  * Sent in response to {@link RequestAllyInfo}, if applicable.<BR>

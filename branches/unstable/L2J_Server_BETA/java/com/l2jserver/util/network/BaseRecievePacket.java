@@ -16,16 +16,12 @@ package com.l2jserver.util.network;
 
 import static java.nio.charset.StandardCharsets.UTF_16LE;
 
-import java.util.logging.Logger;
-
 /**
  * This class ...
  * @version $Revision: 1.2.4.1 $ $Date: 2005/03/27 15:30:12 $
  */
 public abstract class BaseRecievePacket
 {
-	private static final Logger _log = Logger.getLogger(BaseRecievePacket.class.getName());
-	
 	private final byte[] _decrypt;
 	private int _off;
 	
