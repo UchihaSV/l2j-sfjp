@@ -16,7 +16,6 @@ package com.l2jserver.gameserver.instancemanager;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
