@@ -33,6 +33,8 @@ public abstract class FaenorParser extends Parser
 	protected static FaenorInterface _bridge = FaenorInterface.getInstance();
 	protected final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy", Locale.US);
 	
+	public final static boolean DEBUG = true;
+	
 	/*
 	 * UTILITY FUNCTIONS
 	 */
