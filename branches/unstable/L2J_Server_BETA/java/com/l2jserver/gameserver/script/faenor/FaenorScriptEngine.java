@@ -17,9 +17,7 @@ package com.l2jserver.gameserver.script.faenor;
 import static com.l2jserver.util.Util.dateFormat;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -41,65 +39,38 @@ import com.l2jserver.gameserver.script.Parser;
 import com.l2jserver.gameserver.script.ParserNotCreatedException;
 import com.l2jserver.gameserver.script.ScriptDocument;
 import com.l2jserver.gameserver.script.ScriptEngine;
+import com.l2jserver.util.file.filter.XMLFilter;
 
 /**
  * @author Luis Arias
- *
  */
 public class FaenorScriptEngine extends ScriptEngine
 {
-	static Logger _log = Logger.getLogger(FaenorScriptEngine.class.getName());
+	private static Logger _log = Logger.getLogger(FaenorScriptEngine.class.getName());
 	public final static String PACKAGE_DIRECTORY = "data/faenor/";
-	public final static boolean DEBUG = true;
-	
-	public static FaenorScriptEngine getInstance()
-	{
-		return SingletonHolder._instance;
-	}
 	
 	private FaenorScriptEngine()
 	{
-		File packDirectory = new File(Config.DATAPACK_ROOT, PACKAGE_DIRECTORY);//_log.sss(packDirectory.getAbsolutePath());
+		File packDirectory = new File(Config.DATAPACK_ROOT, PACKAGE_DIRECTORY);
 		
-		FileFilter fileFilter = new FileFilter() {
-			@Override
-			public boolean accept(File file)
-			{
-				return file.getName().endsWith(".xml");
-			}
-		};
-		
-		File[] files = packDirectory.listFiles(fileFilter);
-		if (files == null)
-			return;
+		File[] files = packDirectory.listFiles(new XMLFilter());
 		
 		for (File file : files)
 		{
-			try
+			_log.info("FaenorScriptEngine: " + file.getPath());
+			try (InputStream in = new FileInputStream(file))
 			{
-				_log.info("FaenorScriptEngine: " + file.getPath());
-				InputStream in = new FileInputStream(file);
 				parseScript(new ScriptDocument(file.getName(), in), null);
-				in.close();
-			}
-			catch (FileNotFoundException e)
-			{
-				e.printStackTrace();
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				_log.log(Level.WARNING, e.getMessage(), e);
 			}
 		}
 	}
 	
 	public void parseScript(ScriptDocument script, ScriptContext context)
 	{
-		if (DEBUG)
-		{
-			_log.fine("Parsing Script: " + script.getName());
-		}
-		
 		Node node = script.getDocument().getFirstChild();
 		String parserClass = "faenor.Faenor" + node.getNodeName() + "Parser";
 		
@@ -122,12 +93,17 @@ public class FaenorScriptEngine extends ScriptEngine
 		try
 		{
 			parser.parseScript(node, context);
-			_log.fine(script.getName() + "Script Sucessfullty Parsed.");
+			_log.info(getClass().getSimpleName() + ": Loaded  " + script.getName() + " Sucessfullty.");
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Script Parsing Failed: " + e.getMessage(), e);
 		}
+	}
+	
+	public static FaenorScriptEngine getInstance()
+	{
+		return SingletonHolder._instance;
 	}
 	
 	@SuppressWarnings("synthetic-access")
