@@ -27,14 +27,11 @@ import com.l2jserver.gameserver.script.Parser;
 
 /**
  * @author Luis Arias
- *
  */
 public abstract class FaenorParser extends Parser
 {
 	protected static FaenorInterface _bridge = FaenorInterface.getInstance();
 	protected final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy", Locale.US);
-	
-	public final static boolean DEBUG = true;
 	
 	/*
 	 * UTILITY FUNCTIONS
@@ -58,7 +55,9 @@ public abstract class FaenorParser extends Parser
 		catch (Exception e)
 		{
 			if (defaultValue != null)
+			{
 				return defaultValue;
+			}
 			throw new NullPointerException(e.getMessage());
 		}
 	}
@@ -68,9 +67,9 @@ public abstract class FaenorParser extends Parser
 		try
 		{
 			NodeList list = parentNode.getChildNodes();
-			for (int i=0; i<list.getLength(); i++)
+			for (int i = 0; i < list.getLength(); i++)
 			{
-				Node node   = list.item(i);
+				Node node = list.item(i);
 				if (node.getNodeName().equalsIgnoreCase(elementName))
 				{
 					return node.getTextContent();
@@ -78,11 +77,13 @@ public abstract class FaenorParser extends Parser
 			}
 		}
 		catch (Exception e)
-		{}
+		{
+		}
 		if (defaultValue != null)
+		{
 			return defaultValue;
+		}
 		throw new NullPointerException();
-		
 	}
 	
 	public static boolean isNodeName(Node node, String name)
@@ -117,9 +118,9 @@ public abstract class FaenorParser extends Parser
 	
 	protected static String getParserName(String name)
 	{
-		return "faenor.Faenor"+name+"Parser";
+		return "faenor.Faenor" + name + "Parser";
 	}
-
+	
 	/**
 	 * @param node
 	 * @param context
