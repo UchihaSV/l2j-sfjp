@@ -34,7 +34,7 @@ public class ScriptPackage
 {
 	private static final Logger _log = Logger.getLogger(ScriptPackage.class.getName());
 	
-	private List<ScriptDocument> _scriptFiles;
+	private final List<ScriptDocument> _scriptFiles;
 	
 	public ScriptPackage(ZipFile pack)
 	{
@@ -43,7 +43,7 @@ public class ScriptPackage
 	}
 	
 	/**
-	 * @param pack 
+	 * @param pack
 	 */
 	private void addFiles(ZipFile pack)
 	{
@@ -86,4 +86,5 @@ public class ScriptPackage
 			}
 		}
 	}
+	
 }
