@@ -44,10 +44,6 @@ public final class FishingRodsData extends DocumentParser
 	@Override
 	protected void parseDocument(Document doc)
 	{
-		NamedNodeMap attrs;
-		Node att;
-		L2FishingRod fishingRod;
-		StatsSet set;
 		for (Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
 		{
 			if ("list".equalsIgnoreCase(n.getNodeName()))
@@ -57,15 +53,15 @@ public final class FishingRodsData extends DocumentParser
 					if ("fishingRod".equalsIgnoreCase(d.getNodeName()))
 					{
 						
-						attrs = d.getAttributes();
+						NamedNodeMap attrs = d.getAttributes();
 						
-						set = new StatsSet();
+						StatsSet set = new StatsSet();
 						for (int i = 0; i < attrs.getLength(); i++)
 						{
-							att = attrs.item(i);
+							Node att = attrs.item(i);
 							set.set(att.getNodeName(), att.getNodeValue());
 						}
-						fishingRod = new L2FishingRod(set);
+						L2FishingRod fishingRod = new L2FishingRod(set);
 						_fishingRods.put(fishingRod.getFishingRodItemId(), fishingRod);
 					}
 				}

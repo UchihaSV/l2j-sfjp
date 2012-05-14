@@ -50,10 +50,6 @@ public final class FishData extends DocumentParser
 	@Override
 	protected void parseDocument(Document doc)
 	{
-		NamedNodeMap attrs;
-		Node att;
-		L2Fish fish;
-		StatsSet set;
 		for (Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
 		{
 			if ("list".equalsIgnoreCase(n.getNodeName()))
@@ -63,15 +59,15 @@ public final class FishData extends DocumentParser
 					if ("fish".equalsIgnoreCase(d.getNodeName()))
 					{
 						
-						attrs = d.getAttributes();
+						NamedNodeMap attrs = d.getAttributes();
 						
-						set = new StatsSet();
+						StatsSet set = new StatsSet();
 						for (int i = 0; i < attrs.getLength(); i++)
 						{
-							att = attrs.item(i);
+							Node att = attrs.item(i);
 							set.set(att.getNodeName(), att.getNodeValue());
 						}
-						fish = new L2Fish(set);
+						L2Fish fish = new L2Fish(set);
 						switch (fish.getFishGrade())
 						{
 							case 0:
@@ -104,33 +100,30 @@ public final class FishData extends DocumentParser
 	 */
 	public List<L2Fish> getFish(int level, int group, int grade)
 	{
-		ArrayList<L2Fish> result = new ArrayList<L2Fish>();
-		Map<Integer, L2Fish> _Fishs = null;
+		Map<Integer, L2Fish> fishs = null;
 		switch (grade)
 		{
 			case 0:
 			{
-				_Fishs = _fishsEasy;
+				fishs = _fishsEasy;
 				break;
 			}
 			case 1:
 			{
-				_Fishs = _fishsNormal;
+				fishs = _fishsNormal;
 				break;
 			}
 			case 2:
 			{
-				_Fishs = _fishsHard;
+				fishs = _fishsHard;
 				break;
 			}
+			default:
+				_log.warning(getClass().getSimpleName() + ": Fish are not defined !");
+				return null;
 		}
-		if (_Fishs == null)
-		{
-			// the fish list is empty
-			_log.warning(getClass().getSimpleName() + ": Fish are not defined !");
-			return null;
-		}
-		for (L2Fish f : _Fishs.values())
+		ArrayList<L2Fish> result = new ArrayList<L2Fish>();
+		for (L2Fish f : fishs.values())
 		{
 			if (f.getFishLevel() != level)
 			{
