@@ -12,12 +12,13 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.model;
+package com.l2jserver.gameserver.model.fishing;
 
 import java.util.concurrent.Future;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PenaltyMonsterInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
@@ -223,7 +224,7 @@ public class L2Fishing implements Runnable
 		}
 	}
 	
-	public void useRealing(int dmg, int pen)
+	public void useReeling(int dmg, int pen)
 	{
 		_anim = 2;
 		if (Rnd.get(100) > 90)
@@ -245,7 +246,7 @@ public class L2Fishing implements Runnable
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.REELING_SUCCESFUL_S1_DAMAGE);
 				sm.addNumber(dmg);
 				_fisher.sendPacket(sm);
-				if (pen == 50)
+				if (pen > 0)
 				{
 					sm = SystemMessage.getSystemMessage(SystemMessageId.REELING_SUCCESSFUL_PENALTY_S1);
 					sm.addNumber(pen);
@@ -281,7 +282,7 @@ public class L2Fishing implements Runnable
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.REELING_SUCCESFUL_S1_DAMAGE);
 				sm.addNumber(dmg);
 				_fisher.sendPacket(sm);
-				if (pen == 50)
+				if (pen > 0)
 				{
 					sm = SystemMessage.getSystemMessage(SystemMessageId.REELING_SUCCESSFUL_PENALTY_S1);
 					sm.addNumber(pen);
@@ -293,7 +294,7 @@ public class L2Fishing implements Runnable
 		}
 	}
 	
-	public void usePomping(int dmg, int pen)
+	public void usePumping(int dmg, int pen)
 	{
 		_anim = 1;
 		if (Rnd.get(100) > 90)
@@ -315,7 +316,7 @@ public class L2Fishing implements Runnable
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.PUMPING_SUCCESFUL_S1_DAMAGE);
 				sm.addNumber(dmg);
 				_fisher.sendPacket(sm);
-				if (pen == 50)
+				if (pen > 0)
 				{
 					sm = SystemMessage.getSystemMessage(SystemMessageId.PUMPING_SUCCESSFUL_PENALTY_S1);
 					sm.addNumber(pen);
@@ -351,7 +352,7 @@ public class L2Fishing implements Runnable
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.PUMPING_SUCCESFUL_S1_DAMAGE);
 				sm.addNumber(dmg);
 				_fisher.sendPacket(sm);
-				if (pen == 50)
+				if (pen > 0)
 				{
 					sm = SystemMessage.getSystemMessage(SystemMessageId.PUMPING_SUCCESSFUL_PENALTY_S1);
 					sm.addNumber(pen);
