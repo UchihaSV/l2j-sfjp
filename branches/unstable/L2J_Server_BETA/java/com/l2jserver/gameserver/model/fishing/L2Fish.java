@@ -24,7 +24,7 @@ public class L2Fish implements Cloneable
 {
 	private final int _fishId;
 	private final int _itemId;
-	private final String _itemName;
+ //	private final String _itemName;	//-[JOJO]
 	private int _fishGroup;
 	private final int _fishLevel;
 	private final double _fishBiteRate;
@@ -44,7 +44,7 @@ public class L2Fish implements Cloneable
 	{
 		_fishId = set.getInteger("fishId");
 		_itemId = set.getInteger("itemId");
-		_itemName = set.getString("itemName");
+ //		_itemName = set.getString("itemName");
 		_fishGroup = getGroupId(set.getString("fishGroup"));
 		_fishLevel = set.getInteger("fishLevel");
 		_fishBiteRate = set.getDouble("fishBiteRate"); // TODO: Support needed.
@@ -90,13 +90,13 @@ public class L2Fish implements Cloneable
 		return _itemId;
 	}
 	
-	/**
-	 * @return the fish Item name Id.
-	 */
-	public String getItemName()
-	{
-		return _itemName;
-	}
+ //	/**
+ //	 * @return the fish Item name Id.
+ //	 */
+ //	public String getItemName()
+ //	{
+ //		return _itemName;
+ //	}
 	
 	/**
 	 * @return the fish Group.
