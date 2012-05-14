@@ -766,4 +766,12 @@ public abstract class L2Object
 	{
 		return false;
 	}
+	
+	/**
+	 * @return {@code true} if object Npc Walker
+	 */
+	public boolean isWalker()
+	{
+		return false;
+	}
 }
