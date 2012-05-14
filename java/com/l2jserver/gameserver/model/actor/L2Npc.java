@@ -1791,6 +1791,12 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 			player.sendPacket(new AbstractNpcInfo.NpcInfo(this, player));
 		}
 	}
+	
+	@Override
+	public boolean isWalker()
+	{
+		return WalkingManager.getInstance().isRegistered(this);
+	}
 }
 
 // L2J r2884:
