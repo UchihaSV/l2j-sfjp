@@ -25,7 +25,7 @@ public class L2FishingRod
 	private final int _fishingRodId;
 	private final int _fishingRodItemId;
 	private final int _fishingRodLevel;
-	private final String _fishingRodName;
+ //	private final String _fishingRodName;	//-[JOJO]
 	private final double _fishingRodDamage;
 	
 	public L2FishingRod(StatsSet set)
@@ -33,7 +33,7 @@ public class L2FishingRod
 		_fishingRodId = set.getInteger("fishingRodId");
 		_fishingRodItemId = set.getInteger("fishingRodItemId");
 		_fishingRodLevel = set.getInteger("fishingRodLevel");
-		_fishingRodName = set.getString("fishingRodName");
+ //		_fishingRodName = set.getString("fishingRodName");
 		_fishingRodDamage = set.getDouble("fishingRodDamage");
 	}
 	
@@ -61,13 +61,13 @@ public class L2FishingRod
 		return _fishingRodLevel;
 	}
 	
-	/**
-	 * @return the fishing rod Item Name.
-	 */
-	public String getFishingRodItemName()
-	{
-		return _fishingRodName;
-	}
+ //	/**
+ //	 * @return the fishing rod Item Name.
+ //	 */
+ //	public String getFishingRodItemName()
+ //	{
+ //		return _fishingRodName;
+ //	}
 	
 	/**
 	 * @return the fishing rod Damage.
