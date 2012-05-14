@@ -93,7 +93,7 @@ public class FaenorScriptEngine extends ScriptEngine
 		try
 		{
 			parser.parseScript(node, context);
-			_log.info(getClass().getSimpleName() + ": Loaded  " + script.getName() + " Sucessfullty.");
+		//	_log.info(getClass().getSimpleName() + ": Loaded  " + script.getName() + " Sucessfullty.");
 		}
 		catch (Exception e)
 		{
