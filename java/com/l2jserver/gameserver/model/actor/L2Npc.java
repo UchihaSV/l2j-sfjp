@@ -1627,6 +1627,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		return _staticAIData.showName();
 	}
 	
+	@Override
 	public boolean isTargetable()
 	{
 		return _staticAIData.isTargetable();
