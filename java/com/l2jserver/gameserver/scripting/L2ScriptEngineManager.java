@@ -45,7 +45,7 @@ import com.l2jserver.Config;
 
 /**
  * Caches script engines and provides functionality for executing and managing scripts.
- * @author  KenM
+ * @author KenM
  */
 public final class L2ScriptEngineManager
 {
@@ -61,7 +61,7 @@ public final class L2ScriptEngineManager
 	private final Map<String, ScriptEngine> _nameEngines = new FastMap<String, ScriptEngine>();
 	private final Map<String, ScriptEngine> _extEngines = new FastMap<String, ScriptEngine>();
 	private final List<ScriptManager<?>> _scriptManagers = new LinkedList<ScriptManager<?>>();
-		
+	
 	private File _currentLoadingScript;
 	
 	// Configs
@@ -116,8 +116,7 @@ public final class L2ScriptEngineManager
 				
 				if (reg)
 				{
-					_log.info("Script Engine: " + factory.getEngineName() + " " + factory.getEngineVersion() + " - Language: "
-							+ factory.getLanguageName() + " - Language Version: " + factory.getLanguageVersion());
+					_log.info("Script Engine: " + factory.getEngineName() + " " + factory.getEngineVersion() + " - Language: " + factory.getLanguageName() + " - Language Version: " + factory.getLanguageVersion());
 				}
 				
 				for (String ext : factory.getExtensions())
@@ -166,22 +165,26 @@ public final class L2ScriptEngineManager
 	
 	public void executeScriptList(File list) throws IOException
 	{
-		if(!Config.ALT_DEV_NO_HANDLERS && Config.ALT_DEV_NO_QUESTS) {
+		if (!Config.ALT_DEV_NO_HANDLERS && Config.ALT_DEV_NO_QUESTS)
+		{
 			File file = new File(SCRIPT_FOLDER, "handlers/MasterHandler.java");
 			
-			try {
+			try
+			{
 				executeScript(file);
 				_log.info("Handlers loaded, all other scripts skipped");
 				return;
 			}
-			catch(ScriptException se)
+			catch (ScriptException se)
 			{
 				_log.log(Level.WARNING, "", se);
 			}
 		}
 		
 		if (Config.ALT_DEV_NO_QUESTS)
+		{
 			return;
+		}
 		
 		if (list.isFile())
 		{
@@ -191,11 +194,13 @@ public final class L2ScriptEngineManager
 			while ((line = lnr.readLine()) != null)
 			{
 				if (Config.ALT_DEV_NO_HANDLERS && line.contains("MasterHandler.java"))
+				{
 					continue;
+				}
 				
 				String[] parts = line.trim().split("#");
 				
-				if (parts.length > 0 && !parts[0].startsWith("#") && parts[0].length() > 0)
+				if ((parts.length > 0) && !parts[0].startsWith("#") && (parts[0].length() > 0))
 				{
 					line = parts[0];
 					
@@ -231,8 +236,7 @@ public final class L2ScriptEngineManager
 					}
 					else
 					{
-						_log.warning("Failed loading: (" + file.getCanonicalPath() + ") @ " + list.getName() + ":" + lnr.getLineNumber()
-								+ " - Reason: doesnt exists or is not a file.");
+						_log.warning("Failed loading: (" + file.getCanonicalPath() + ") @ " + list.getName() + ":" + lnr.getLineNumber() + " - Reason: doesnt exists or is not a file.");
 					}
 				}
 			}
@@ -260,7 +264,7 @@ public final class L2ScriptEngineManager
 		{
 			for (File file : dir.listFiles())
 			{
-				if (file.isDirectory() && recurseDown && maxDepth > currentDepth)
+				if (file.isDirectory() && recurseDown && (maxDepth > currentDepth))
 				{
 					if (VERBOSE_LOADING)
 					{
@@ -293,7 +297,7 @@ public final class L2ScriptEngineManager
 					catch (ScriptException e)
 					{
 						reportScriptFileError(file, e);
-						//_log.log(Level.WARNING, "", e);
+						// _log.log(Level.WARNING, "", e);
 					}
 				}
 			}
@@ -358,7 +362,7 @@ public final class L2ScriptEngineManager
 			}
 		}
 		
-		if (engine instanceof Compilable && ATTEMPT_COMPILATION)
+		if ((engine instanceof Compilable) && ATTEMPT_COMPILATION)
 		{
 			ScriptContext context = new SimpleScriptContext();
 			context.setAttribute("mainClass", getClassForFile(file).replace('/', '.').replace('\\', '.'), ScriptContext.ENGINE_SCOPE);
@@ -376,7 +380,7 @@ public final class L2ScriptEngineManager
 				System.out.println(" script compiling: " + relativeName); //[JOJO]
 				Compilable eng = (Compilable) engine;
 				CompiledScript cs = eng.compile(reader);
-				cs.eval(context);	
+				cs.eval(context);
 			}
 			finally
 			{
@@ -437,7 +441,7 @@ public final class L2ScriptEngineManager
 	
 	public Object eval(ScriptEngine engine, String script, ScriptContext context) throws ScriptException
 	{
-		if (engine instanceof Compilable && ATTEMPT_COMPILATION)
+		if ((engine instanceof Compilable) && ATTEMPT_COMPILATION)
 		{
 			Compilable eng = (Compilable) engine;
 			CompiledScript cs = eng.compile(script);
@@ -475,22 +479,19 @@ public final class L2ScriptEngineManager
 			final File file = new File(dir, name);
 			try (FileOutputStream fos = new FileOutputStream(file))
 			{
-				String errorHeader = "Error on: " + file.getCanonicalPath() + "\r\nLine: " + e.getLineNumber() + " - Column: "
-				+ e.getColumnNumber() + "\r\n\r\n";
+				String errorHeader = "Error on: " + file.getCanonicalPath() + "\r\nLine: " + e.getLineNumber() + " - Column: " + e.getColumnNumber() + "\r\n\r\n";
 				fos.write(errorHeader.getBytes());
 				fos.write(e.getMessage().getBytes());
 				_log.warning("Failed executing script: " + script.getAbsolutePath() + ". See " + file.getName() + " for details.");
 			}
 			catch (IOException ioe)
 			{
-				_log.log(Level.WARNING, "Failed executing script: " + script.getAbsolutePath() + "\r\n" + e.getMessage()
-						+ "Additionally failed when trying to write an error report on script directory. Reason: " + ioe.getMessage(), ioe);
+				_log.log(Level.WARNING, "Failed executing script: " + script.getAbsolutePath() + "\r\n" + e.getMessage() + "Additionally failed when trying to write an error report on script directory. Reason: " + ioe.getMessage(), ioe);
 			}
 		}
 		else
 		{
-			_log.log(Level.WARNING, "Failed executing script: " + script.getAbsolutePath() + "\r\n" + e.getMessage()
-					+ "Additionally failed when trying to write an error report on script directory.", e);
+			_log.log(Level.WARNING, "Failed executing script: " + script.getAbsolutePath() + "\r\n" + e.getMessage() + "Additionally failed when trying to write an error report on script directory.", e);
 		}
 	}
 	
