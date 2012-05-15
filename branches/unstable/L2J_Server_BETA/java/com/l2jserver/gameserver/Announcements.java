@@ -205,8 +205,7 @@ public class Announcements
 			list = _announcements;
 		}
 		
-		final File file = new File(path);
-		try (UTF8StreamWriter save = com.l2jserver.util.Util.utf8StreamWriter(file))	//[JOJO] UTF-8
+		try (UTF8StreamWriter save = com.l2jserver.util.Util.utf8StreamWriter(path))	//[JOJO] UTF-8
 		{
 			for (String announce : list)
 			{

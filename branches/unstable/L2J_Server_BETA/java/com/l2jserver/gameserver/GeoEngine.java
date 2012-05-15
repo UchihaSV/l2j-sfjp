@@ -610,8 +610,7 @@ public class GeoEngine extends GeoData
 	//GeoEngine
 	private static void nInitGeodata()
 	{
-		final File file = new File("./data/geodata/geo_index.txt");
-		try (FileReader fr = new FileReader(file);
+		try (FileReader fr = new FileReader("./data/geodata/geo_index.txt");
 			BufferedReader br = new BufferedReader(fr);
 			LineNumberReader lnr = new LineNumberReader(br))
 		{

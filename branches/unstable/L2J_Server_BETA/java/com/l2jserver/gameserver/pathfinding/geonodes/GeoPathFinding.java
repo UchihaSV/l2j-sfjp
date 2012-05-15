@@ -384,8 +384,7 @@ public class GeoPathFinding extends PathFinding
 	
 	protected GeoPathFinding()
 	{
-		final File file = new File("./data/pathnode/pn_index.txt");
-		try (FileReader fr = new FileReader(file);
+		try (FileReader fr = new FileReader("./data/pathnode/pn_index.txt");
 			BufferedReader br = new BufferedReader(fr);
 			LineNumberReader lnr = new LineNumberReader(br))
 		{
