@@ -35,21 +35,21 @@ import com.l2jserver.util.Rnd;
 public final class L2EventChestInstance extends L2EventMonsterInstance
 {
 	private boolean _isVisible = false;
-	private boolean _isTriggered = false;
+	boolean _isTriggered = false;
 	
 	//[JOJO]-------------------------------------------------
 	private static final int TRANSFORMATION_ID = 105;	//skill 2428 "Scroll of Transformation - Rabbit"
 	private static final int BONUS_RATE = 20;
-	private boolean _bonus;
+	boolean _bonus;
 	
-	private Runnable _hideTask = null;
+	Runnable _hideTask = null;
 	
 	/** Time of last social packet broadcast*/
-	private long _lastSocialBroadcast = 0;
+	long _lastSocialBroadcast = 0;
 	/** Minimum interval between social packets*/
 	private static final int _minimalSocialInterval = 5000;
 	
-	private static final int[] TRIGGERE_SAY = 
+	static final int[] TRIGGERE_SAY = 
 	{
 		1600008,	//Did you see that Firecracker explode?	私を選んで！他のはクズよ！
 		1600009,	//I am nothing.	いやいやっ！私にさわらないで！
@@ -62,13 +62,13 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 		1600022,	//You will regret this.	後悔しますよ。
 	};
 	
-	private static final int[] HIDE_SAY =
+	static final int[] HIDE_SAY =
 	{
 		1600004,	//Boo-hoo... I hate...	くすん．．．嫌い．．．
 		1600005,	//See you later.	またね～っ！
 	};
 	
-	private void autoChat(int[] stringId, int type)
+	void autoChat(int[] stringId, int type)
 	{
 		autoChat(L2EventChestInstance.this, stringId, type);
 	}

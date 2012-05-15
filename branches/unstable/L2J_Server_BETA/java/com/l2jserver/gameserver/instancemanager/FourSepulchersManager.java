@@ -141,7 +141,7 @@ public class FourSepulchersManager
  //	protected long _coolDownTimeEnd = 0;	//-[JOJO]
  //	protected long _entryTimeEnd = 0;	//-[JOJO]
  //	protected long _warmUpTimeEnd = 0;	//-[JOJO]
-	private long _attackTimeStart;	//+[JOJO]
+	long _attackTimeStart;	//+[JOJO]
 	
 	private static final int NEW_CYCLE_MINUTE = 55;
 	private static final int OUST_PLAYER_MARGIN_TIME = 60000;

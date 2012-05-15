@@ -666,7 +666,7 @@ public final class GameServerTable
 			@Override
 			public String toString()
 			{
-				return _serverAddress + ":" + _port + super.toString();	//[JOJO]
+				return _serverAddress + ":" + getPort() + super.toString();	//[JOJO]
 			}
 		}
 	}

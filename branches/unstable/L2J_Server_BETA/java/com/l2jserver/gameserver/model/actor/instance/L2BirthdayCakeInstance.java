@@ -54,7 +54,7 @@ public class L2BirthdayCakeInstance extends L2Npc
 		setInstanceType(InstanceType.L2BirthdayCakeInstance);
 	}
 	
-	private class BuffTask implements Runnable
+	class BuffTask implements Runnable
 	{
 		@Override
 		public void run()
