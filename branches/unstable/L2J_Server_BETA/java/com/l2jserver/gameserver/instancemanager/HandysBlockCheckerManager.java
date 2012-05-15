@@ -52,7 +52,7 @@ public final class HandysBlockCheckerManager
 	private static final Map<Integer, Boolean> _arenaStatus = new HashMap<>();
 	
 	// Registration request penalty (10 seconds)
-	private static List<Integer> _registrationPenalty = new ArrayList<>();
+	protected static List<Integer> _registrationPenalty = new ArrayList<>();
 	
 	/**
 	 * Return the number of event-start votes for the specified
@@ -100,7 +100,7 @@ public final class HandysBlockCheckerManager
 		_arenaVotes.put(arena, 0);
 	}
 
-	private HandysBlockCheckerManager()
+	protected HandysBlockCheckerManager()
 	{
 		// Initialize arena status
 		_arenaStatus.put(0, false);
@@ -351,16 +351,6 @@ public final class HandysBlockCheckerManager
 		}
 	}
 	
-	public static HandysBlockCheckerManager getInstance()
-	{
-		return SingletonHolder._instance;
-	}
-	
-	private static class SingletonHolder
-	{
-		private static HandysBlockCheckerManager _instance = new HandysBlockCheckerManager();
-	}
-	
 	public class ArenaParticipantsHolder
 	{
 		int _arena;
@@ -454,7 +444,7 @@ public final class HandysBlockCheckerManager
 			_engine.updatePlayersOnStart(this);
 		}
 		
-		private void checkAndShuffle()
+		protected void checkAndShuffle()
 		{
 			int redSize = _redPlayers.size();
 			int blueSize = _bluePlayers.size();
@@ -501,5 +491,15 @@ public final class HandysBlockCheckerManager
 		{
 			_registrationPenalty.remove(objectId);
 		}
+	}
+	
+	public static HandysBlockCheckerManager getInstance()
+	{
+		return SingletonHolder._instance;
+	}
+	
+	private static class SingletonHolder
+	{
+		protected static final HandysBlockCheckerManager _instance = new HandysBlockCheckerManager();
 	}
 }

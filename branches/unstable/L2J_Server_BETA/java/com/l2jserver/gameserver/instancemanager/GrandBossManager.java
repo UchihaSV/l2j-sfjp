@@ -113,7 +113,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		return SingletonHolder._instance;
 	}
 	
-	private GrandBossManager()
+	protected GrandBossManager()
 	{
 		_log.info("Initializing GrandBossManager");
 		init();
@@ -508,7 +508,6 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		return com.l2jserver.util.Util.dateFormat(info.getLong("respawn_time"));
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final GrandBossManager _instance = new GrandBossManager();

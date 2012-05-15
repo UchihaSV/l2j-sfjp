@@ -1695,11 +1695,11 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	
 	public L2Npc scheduleDespawn(long delay)
 	{
-		ThreadPoolManager.getInstance().scheduleGeneral(this.new DespawnTask(), delay);
+		ThreadPoolManager.getInstance().scheduleGeneral(new DespawnTask(), delay);
 		return this;
 	}
 	
-	private class DespawnTask implements Runnable
+	protected class DespawnTask implements Runnable
 	{
 		@Override
 		public void run()

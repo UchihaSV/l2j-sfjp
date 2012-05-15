@@ -945,7 +945,7 @@ public class Fort
 			statement.execute();
 			statement.close();
 			
-			// Announce to clan memebers
+			// Announce to clan members
 			if (clan != null)
 			{
 				clan.setFortId(getFortId()); // Set has fort flag for new owner
@@ -1483,10 +1483,12 @@ public class Fort
 	private final class ForEachPlayerSendMessage implements TObjectProcedure<L2PcInstance>
 	{
 		SystemMessage _sm;
-		private ForEachPlayerSendMessage(SystemMessage sm)
+		
+		protected ForEachPlayerSendMessage(SystemMessage sm)
 		{
 			_sm = sm;
 		}
+		
 		@Override
 		public final boolean execute(final L2PcInstance character)
 		{

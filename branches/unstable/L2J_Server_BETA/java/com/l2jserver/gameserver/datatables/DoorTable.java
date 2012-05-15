@@ -46,7 +46,7 @@ public class DoorTable
 	private final TIntObjectHashMap<L2DoorInstance> _staticItems;
 	private final TIntObjectHashMap<ArrayList<L2DoorInstance>> _regions;
 	
-	private DoorTable()
+	protected DoorTable()
 	{
 		_log.info("Initializing Door Table");
 		_staticItems = new TIntObjectHashMap<L2DoorInstance>();
@@ -379,7 +379,6 @@ public class DoorTable
 		return SingletonHolder._instance;
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final DoorTable _instance = new DoorTable();

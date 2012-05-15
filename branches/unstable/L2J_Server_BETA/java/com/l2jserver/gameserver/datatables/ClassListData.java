@@ -34,7 +34,7 @@ public final class ClassListData extends DocumentParser
 {
 	private static final TIntObjectHashMap<ClassInfo> _classData = new TIntObjectHashMap<ClassInfo>();
 	
-	private ClassListData()
+	protected ClassListData()
 	{
 		parseDatapackFile("data/stats/chars/classList.xml");
 		_log.info(getClass().getSimpleName() + ": Loaded " + _classData.size() + " Class data.");
@@ -96,7 +96,6 @@ public final class ClassListData extends DocumentParser
 		return SingletonHolder._instance;
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final ClassListData _instance = new ClassListData();

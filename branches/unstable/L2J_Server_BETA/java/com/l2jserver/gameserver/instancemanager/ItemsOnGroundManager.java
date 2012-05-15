@@ -44,7 +44,7 @@ public class ItemsOnGroundManager
 	protected List<L2ItemInstance> _items = null;
 	private final StoreInDb _task = new StoreInDb();
 	
-	private ItemsOnGroundManager()
+	protected ItemsOnGroundManager()
 	{
 		if (Config.SAVE_DROPPED_ITEM)
 		{
@@ -315,7 +315,6 @@ public class ItemsOnGroundManager
 		}
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final ItemsOnGroundManager _instance = new ItemsOnGroundManager();

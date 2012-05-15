@@ -187,7 +187,7 @@ public class ItemTable
 	/**
 	 * Constructor.
 	 */
-	private ItemTable()
+	protected ItemTable()
 	{
 		_etcItems = new FastMap<Integer, L2EtcItem>();
 		_armors = new FastMap<Integer, L2Armor>();
@@ -490,7 +490,6 @@ public class ItemTable
 		return _allTemplates.length;
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final ItemTable _instance = new ItemTable();

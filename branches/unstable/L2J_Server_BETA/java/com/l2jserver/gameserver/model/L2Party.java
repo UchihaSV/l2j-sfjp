@@ -95,10 +95,10 @@ public class L2Party extends AbstractPlayerGroup
 	private DimensionalRift _dr;
 	private byte _requestChangeLoot = -1;
 	private FastList<Integer> _changeLootAnswers = null;
-	private long _requestChangeLootTimer = 0;
+	protected long _requestChangeLootTimer = 0;
 	private Future<?> _checkTask = null;
 	private Future<?> _positionBroadcastTask = null;
-	private PartyMemberPosition _positionPacket;
+	protected PartyMemberPosition _positionPacket;
 	private boolean _disbanding = false;
 	
 	/**
@@ -1109,7 +1109,7 @@ public class L2Party extends AbstractPlayerGroup
 		}
 	}
 	
-	private synchronized void finishLootRequest(boolean success)
+	protected synchronized void finishLootRequest(boolean success)
 	{
 		if (_requestChangeLoot == -1)
 		{
@@ -1139,7 +1139,7 @@ public class L2Party extends AbstractPlayerGroup
 		_requestChangeLootTimer = 0;
 	}
 	
-	private class ChangeLootCheck implements Runnable
+	protected class ChangeLootCheck implements Runnable
 	{
 		@Override
 		public void run()
@@ -1151,7 +1151,7 @@ public class L2Party extends AbstractPlayerGroup
 		}
 	}
 	
-	private class PositionBroadcast implements Runnable
+	protected class PositionBroadcast implements Runnable
 	{
 		@Override
 		public void run()

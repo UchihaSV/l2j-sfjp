@@ -63,7 +63,7 @@ public class DimensionalRiftManager
 		return SingletonHolder._instance;
 	}
 	
-	private DimensionalRiftManager()
+	protected DimensionalRiftManager()
 	{
 		loadRooms();
 		loadSpawns();
@@ -560,7 +560,6 @@ public class DimensionalRiftManager
 		return list;
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final DimensionalRiftManager _instance = new DimensionalRiftManager();

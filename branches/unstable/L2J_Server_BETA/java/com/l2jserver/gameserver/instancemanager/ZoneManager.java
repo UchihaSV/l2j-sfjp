@@ -72,7 +72,7 @@ public class ZoneManager
 		return SingletonHolder._instance;
 	}
 	
-	private ZoneManager()
+	protected ZoneManager()
 	{
 		_log.info("Initializing ZoneManager");
 		load();
@@ -101,7 +101,7 @@ public class ZoneManager
 
 	}
 	
-	private final class ForEachCharacterRevalidateZone implements TObjectProcedure<L2Object>
+	protected final class ForEachCharacterRevalidateZone implements TObjectProcedure<L2Object>
 	{	
 		@Override
 		public final boolean execute(final L2Object o)
@@ -668,7 +668,6 @@ public class ZoneManager
 		}
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final ZoneManager _instance = new ZoneManager();
