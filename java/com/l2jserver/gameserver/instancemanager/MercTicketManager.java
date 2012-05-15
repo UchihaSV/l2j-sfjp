@@ -101,7 +101,7 @@ public class MercTicketManager
 	
 	private static final int GUARDIAN_TYPES_COUNT = 52;
 	
-	private MercTicketManager()
+	protected MercTicketManager()
 	{
 		_log.info("Initializing MercTicketManager.");
 		load();
@@ -400,7 +400,6 @@ public class MercTicketManager
 		return SingletonHolder._instance;
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final MercTicketManager _instance = new MercTicketManager();

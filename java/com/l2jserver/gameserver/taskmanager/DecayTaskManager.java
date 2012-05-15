@@ -39,7 +39,7 @@ public class DecayTaskManager
 	
 	private static final boolean GRAND_BOSS_DECAY_TIME_L2J_JP = true;
 	
-	private DecayTaskManager()
+	protected DecayTaskManager()
 	{
 		ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new DecayScheduler(), 10000, Config.DECAY_TIME_TASK);
 	}
@@ -185,7 +185,6 @@ public class DecayTaskManager
 		return _decayTasks;
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final DecayTaskManager _instance = new DecayTaskManager();

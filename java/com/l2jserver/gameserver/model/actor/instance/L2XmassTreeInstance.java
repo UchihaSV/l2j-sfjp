@@ -60,7 +60,7 @@ public class L2XmassTreeInstance extends L2Npc
 		"CC_01", "CC_02", "CC_03", "CC_04", "CC_05", "CC_06"
 	};
 	
-	protected/*private*/ ScheduledFuture<?> _aiTask;
+	protected ScheduledFuture<?> _aiTask;
 
 	protected class XmassAI implements Runnable
 	{

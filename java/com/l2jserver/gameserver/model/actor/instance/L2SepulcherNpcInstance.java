@@ -474,11 +474,12 @@ public class L2SepulcherNpcInstance extends L2Npc
 		L2SepulcherNpcInstance _npc;
 		L2GameServerPacket _packet;
 		
-		private SayInShout(L2SepulcherNpcInstance npc, L2GameServerPacket packet)
+		protected SayInShout(L2SepulcherNpcInstance npc, L2GameServerPacket packet)
 		{
 			_npc = npc;
 			_packet = packet;
 		}
+		
 		@Override
 		public final boolean execute(final L2PcInstance player)
 		{

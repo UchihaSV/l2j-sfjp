@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -34,9 +35,9 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 public final class AuctionableHall extends ClanHall
 {
-	private long _paidUntil;
+	protected long _paidUntil;
 	private int _grade;
-	private boolean _paid;
+	protected boolean _paid;
 	private int _lease;
 	
 	protected final int _chRate = 604800000;
@@ -131,8 +132,10 @@ public final class AuctionableHall extends ClanHall
 	}
 	
 	/** Fee Task */
-	private class FeeTask implements Runnable
+	protected class FeeTask implements Runnable
 	{
+		private final Logger _log = Logger.getLogger(FeeTask.class.getName());
+		
 		@Override
 		public void run()
 		{
@@ -140,7 +143,7 @@ public final class AuctionableHall extends ClanHall
 			{
 				long _time = System.currentTimeMillis();
 				
-				if (_isFree)
+				if (isFree())
 					return;
 				
 				if(_paidUntil > _time)

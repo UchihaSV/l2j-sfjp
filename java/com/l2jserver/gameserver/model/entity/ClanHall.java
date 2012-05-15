@@ -547,5 +547,10 @@ public abstract class ClanHall
 		return false;
 	}
 	
+	public boolean isFree()
+	{
+		return _isFree;
+	}
+	
 	public abstract void updateDb();
 }

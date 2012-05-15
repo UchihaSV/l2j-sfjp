@@ -54,7 +54,7 @@ public class HtmCache
 		return SingletonHolder._instance;
 	}
 	
-	private HtmCache()
+	protected HtmCache()
 	{
 		if (TIMED_CACHE)
 		{
@@ -326,7 +326,6 @@ public class HtmCache
 		}
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final HtmCache _instance = new HtmCache();

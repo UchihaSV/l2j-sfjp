@@ -30,10 +30,6 @@ import com.l2jserver.gameserver.network.serverpackets.ShowBoard;
 
 public class CommunityBoard
 {
-	private CommunityBoard()
-	{
-	}
-	
 	public static CommunityBoard getInstance()
 	{
 		return SingletonHolder._instance;
@@ -194,7 +190,6 @@ public class CommunityBoard
 		}
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final CommunityBoard _instance = new CommunityBoard();

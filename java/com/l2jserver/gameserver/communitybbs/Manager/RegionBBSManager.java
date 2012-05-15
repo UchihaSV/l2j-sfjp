@@ -59,10 +59,6 @@ public class RegionBBSManager extends BaseBBSManager
 		}
 	};
 	
-	private RegionBBSManager()
-	{
-	}
-	
 	/**
 	 * 
 	 * @see com.l2jserver.gameserver.communitybbs.Manager.BaseBBSManager#parsecmd(java.lang.String, com.l2jserver.gameserver.model.actor.instance.L2PcInstance)
@@ -556,7 +552,6 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 					;
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final RegionBBSManager _instance = new RegionBBSManager();

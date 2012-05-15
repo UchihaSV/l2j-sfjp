@@ -53,7 +53,7 @@ public class SpawnTable
 		return SingletonHolder._instance;
 	}
 	
-	private SpawnTable()
+	protected SpawnTable()
 	{
 		if (!Config.ALT_DEV_NO_SPAWNS)
 			fillSpawnTable();
@@ -449,7 +449,6 @@ public class SpawnTable
 	    }
     }
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final SpawnTable _instance = new SpawnTable();

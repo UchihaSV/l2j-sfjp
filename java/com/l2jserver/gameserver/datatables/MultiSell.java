@@ -61,7 +61,7 @@ public class MultiSell
 		return SingletonHolder._instance;
 	}
 	
-	private MultiSell()
+	protected MultiSell()
 	{
 		_entries = new TIntObjectHashMap<ListContainer>();
 		load();
@@ -415,7 +415,6 @@ public class MultiSell
 		return false;
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final MultiSell _instance = new MultiSell();

@@ -146,10 +146,6 @@ public class FourSepulchersManager
 	private static final int NEW_CYCLE_MINUTE = 55;
 	private static final int OUST_PLAYER_MARGIN_TIME = 60000;
 	
-	private FourSepulchersManager()
-	{
-	}
-	
 	public static final FourSepulchersManager getInstance()
 	{
 		return SingletonHolder._instance;
@@ -1541,7 +1537,6 @@ public class FourSepulchersManager
 		player.sendPacket(html);
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final FourSepulchersManager _instance = new FourSepulchersManager();

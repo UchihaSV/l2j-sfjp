@@ -43,7 +43,7 @@ public class DocumentEngine
 		return SingletonHolder._instance;
 	}
 	
-	private DocumentEngine()
+	protected DocumentEngine()
 	{
 	}
 	
@@ -122,7 +122,6 @@ public class DocumentEngine
 		return list;
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final DocumentEngine _instance = new DocumentEngine();

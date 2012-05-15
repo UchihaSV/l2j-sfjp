@@ -89,19 +89,19 @@ public class TerritoryWarManager implements Siegable
 	private FastMap<Integer, FastList<L2Clan>> _registeredClans;
 	private FastMap<Integer, FastList<Integer>> _registeredMercenaries;
 	private FastMap<Integer, Territory> _territoryList;
-	private FastList<Integer> _disguisedPlayers;
+	protected FastList<Integer> _disguisedPlayers;
 	private FastList<TerritoryWard> _territoryWards;
 	private FastMap<L2Clan, L2SiegeFlagInstance> _clanFlags;
 	private Map<Integer,Integer[]> _participantPoints = new FastMap<Integer,Integer[]>();
-	private Calendar _startTWDate = Calendar.getInstance();
-	private boolean _isRegistrationOver = true;
-	private boolean _isTWChannelOpen = false;
+	protected Calendar _startTWDate = Calendar.getInstance();
+	protected boolean _isRegistrationOver = true;
+	protected boolean _isTWChannelOpen = false;
 	private boolean _isTWInProgress = false;
 	protected ScheduledFuture<?> _scheduledStartTWTask = null;
 	protected ScheduledFuture<?> _scheduledEndTWTask = null;
 	protected ScheduledFuture<?> _scheduledRewardOnlineTask = null;
 	
-	private TerritoryWarManager()
+	protected TerritoryWarManager()
 	{
 		_log.info("Initializing TerritoryWarManager");
 		
@@ -869,7 +869,7 @@ public class TerritoryWarManager implements Siegable
 		}
 	}
 	
-	private void startTerritoryWar()
+	protected void startTerritoryWar()
 	{
 		if (_territoryList == null)
 		{
@@ -947,7 +947,7 @@ public class TerritoryWarManager implements Siegable
 		Announcements.getInstance().announceToAll(sm);
 	}
 	
-	private void endTerritoryWar()
+	protected void endTerritoryWar()
 	{
 		_isTWInProgress = false;
 		if (_territoryList == null)
@@ -1034,7 +1034,7 @@ public class TerritoryWarManager implements Siegable
 		Announcements.getInstance().announceToAll(sm);
 	}
 	
-	private boolean updatePlayerTWStateFlags(boolean clear)
+	protected boolean updatePlayerTWStateFlags(boolean clear)
 	{
 		Quest twQuest = QuestManager.getInstance().getQuest(qn);
 		if (twQuest == null)
@@ -1116,12 +1116,8 @@ public class TerritoryWarManager implements Siegable
 		return true;
 	}
 	
-	private class RewardOnlineParticipants implements Runnable
+	protected class RewardOnlineParticipants implements Runnable
 	{
-		public RewardOnlineParticipants()
-		{
-		}
-		
 		@Override
 		public void run()
 		{
@@ -1136,11 +1132,9 @@ public class TerritoryWarManager implements Siegable
 		}
 	}
 	
-	private class ScheduleStartTWTask implements Runnable
+	protected class ScheduleStartTWTask implements Runnable
 	{
-		public ScheduleStartTWTask()
-		{
-		}
+		private final Logger _log = Logger.getLogger(ScheduleStartTWTask.class.getName());
 		
 		@Override
 		public void run()
@@ -1215,7 +1209,9 @@ public class TerritoryWarManager implements Siegable
 	
 	private class ScheduleEndTWTask implements Runnable
 	{
-		public ScheduleEndTWTask()
+		private final Logger _log = Logger.getLogger(ScheduleEndTWTask.class.getName());
+		
+		protected ScheduleEndTWTask()
 		{
 		}
 		
@@ -1326,7 +1322,7 @@ public class TerritoryWarManager implements Siegable
 	public static class TerritoryNPCSpawn
 	{
 		private Location _location;
-		private int _npcId;
+		protected int _npcId;
 		private int _castleId;
 		private int _type;
 		private L2Npc _npc;
@@ -1375,9 +1371,11 @@ public class TerritoryWarManager implements Siegable
 	
 	public class Territory
 	{
+		private final Logger _log = Logger.getLogger(Territory.class.getName());
+		
 		private final int _territoryId;
 		private final int _castleId; // territory Castle
-		private int _fortId; // territory Fortress
+		protected int _fortId; // territory Fortress
 		private L2Clan _ownerClan;
 		private FastList<TerritoryNPCSpawn> _spawnList;
 		private TerritoryNPCSpawn[] _territoryWardSpawnPlaces;
@@ -1394,7 +1392,7 @@ public class TerritoryWarManager implements Siegable
 			_questDone = new int[2];
 		}
 		
-		private void addWardSpawnPlace(Location loc)
+		protected void addWardSpawnPlace(Location loc)
 		{
 			for(int i = 0; i < _territoryWardSpawnPlaces.length; i++)
 				if (_territoryWardSpawnPlaces[i] == null)
@@ -1404,7 +1402,7 @@ public class TerritoryWarManager implements Siegable
 				}
 		}
 		
-		private TerritoryNPCSpawn getFreeWardSpawnPlace()
+		protected TerritoryNPCSpawn getFreeWardSpawnPlace()
 		{
 			for(int i = 0; i < _territoryWardSpawnPlaces.length; i++)
 				if (_territoryWardSpawnPlaces[i] != null && _territoryWardSpawnPlaces[i].getNpc() == null)
@@ -1425,7 +1423,7 @@ public class TerritoryWarManager implements Siegable
 			return _spawnList;
 		}
 		
-		private void changeNPCsSpawn(int type, boolean isSpawn)
+		protected void changeNPCsSpawn(int type, boolean isSpawn)
 		{
 			if (type < 0 || type > 3)
 			{
@@ -1448,7 +1446,7 @@ public class TerritoryWarManager implements Siegable
 			}
 		}
 		
-		private void removeWard(int wardId)
+		protected void removeWard(int wardId)
 		{
 			for(TerritoryNPCSpawn wardSpawn : _territoryWardSpawnPlaces)
 				if (wardSpawn.getNpcId() == wardId)
@@ -1525,7 +1523,7 @@ public class TerritoryWarManager implements Siegable
 			_isInProgress = val;
 		}
 	}
-	@SuppressWarnings("synthetic-access")
+	
 	private static class SingletonHolder
 	{
 		protected static final TerritoryWarManager _instance = new TerritoryWarManager();
