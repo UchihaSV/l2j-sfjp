@@ -50,7 +50,7 @@ public class Announcements
 	private List<String> _critAnnouncements = new FastList<String>();
 	private List<List<Object>> _eventAnnouncements = new FastList<List<Object>>();
 	
-	private Announcements()
+	protected Announcements()
 	{
 		loadAnnouncements();
 	}
@@ -173,26 +173,20 @@ public class Announcements
 	private void readFromDisk(String path, List<String> list)
 	{
 		final File file = new File(Config.DATAPACK_ROOT, path);
-		if (file.exists())
+		try (BufferedReader lnr = com.l2jserver.util.Util.utf8BufferedReader(file))	//[JOJO]
 		{
-			
-			try (BufferedReader lnr = com.l2jserver.util.Util.utf8BufferedReader(file))	//[JOJO]
+			//[JOJO] UTF-8
+			String line;
+			while ((line = lnr.readLine()) != null)
 			{
-				//[JOJO] UTF-8
-				String line;
-				while ((line = lnr.readLine()) != null)
-				{
-					list.add(line);
-				}
-				//[JOJO]
+				list.add(line);
 			}
-			catch (IOException e1)
-			{
-				_log.log(Level.SEVERE, "Error reading announcements: ", e1);
-			}
+			//[JOJO]
 		}
-		else
-			_log.warning(file.getAbsolutePath() + " doesn't exist");
+		catch (IOException e1)
+		{
+			_log.log(Level.SEVERE, "Error reading announcements: ", e1);
+		}
 	}
 	
 	private void saveToDisk(boolean isCritical)
@@ -268,7 +262,6 @@ public class Announcements
 		}
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final Announcements _instance = new Announcements();
