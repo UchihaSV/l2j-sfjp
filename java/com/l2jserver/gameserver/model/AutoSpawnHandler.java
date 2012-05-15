@@ -649,7 +649,7 @@ if (TEST1) {{
 		
 		protected int _lastLocIndex = -1;
 		
-		private List<L2Npc> _npcList = new FastList<L2Npc>();
+		/*private*/ List<L2Npc> _npcList = new FastList<L2Npc>();
 		
 		private List<Location> _locList = new FastList<Location>();
 		
@@ -740,7 +740,7 @@ if (TEST1) {{
 	//		return npcSpawns.toArray(new L2Spawn[npcSpawns.size()]);
 	//	}
 		
-		private/*public*/ void setSpawnCount(int spawnCount)
+		/*public*/ void setSpawnCount(int spawnCount)
 		{
 			_spawnCount = spawnCount;
 		}

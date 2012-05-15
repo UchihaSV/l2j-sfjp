@@ -36,18 +36,18 @@ import com.l2jserver.util.file.filter.HTMLFilter;
  */
 public class HtmCache
 {
-	private static Logger _log = Logger.getLogger(HtmCache.class.getName());
+	static Logger _log = Logger.getLogger(HtmCache.class.getName());
 	
 	private static final HTMLFilter htmlFilter = new HTMLFilter();
 	
 	static final boolean TIMED_CACHE = true;
 	private static final int EXPIRE_TIME = 60;	//[min]
-	private final L2TIntObjectHashMap<TimedCache> _timedCache;
+	final L2TIntObjectHashMap<TimedCache> _timedCache;
 
 	private final TIntObjectHashMap<String> _cache;
 	
-	private int _loadedFiles;
-	private long _bytesBuffLen;
+	int _loadedFiles;
+	long _bytesBuffLen;
 	
 	public static HtmCache getInstance()
 	{

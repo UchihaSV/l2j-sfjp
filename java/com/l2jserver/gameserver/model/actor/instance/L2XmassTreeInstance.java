@@ -48,7 +48,7 @@ import com.l2jserver.util.Rnd;
  */
 public class L2XmassTreeInstance extends L2Npc
 {
-	private static final int[][] _buffs = {
+	static final int[][] _buffs = {
 		 { 4262, 2 }	// クリスマス ウィンド ウォーク／一定時間、移動速度が向上した状態。効力2。
 		,{ 4263, 1 }	// クリスマス ヘイスト／一時的に攻撃速度を向上させる。効力1。
 		,{ 4264, 1 }	// クリスマス エンパワー／一時的に魔力が向上した状態。効力1。

@@ -27,7 +27,7 @@ public class L2PenaltyMonsterInstance extends L2MonsterInstance
 	private L2PcInstance _ptk;
 	
 	//[JOJO]-------------------------------------------------
-	private final int[] _randomNpcStrings;
+	final int[] _randomNpcStrings;
 	/*
 	 * [0-2] onSpawn
 	 * [3-5] random timer
