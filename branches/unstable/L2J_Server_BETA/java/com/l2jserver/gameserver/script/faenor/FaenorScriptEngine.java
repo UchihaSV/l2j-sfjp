@@ -67,7 +67,7 @@ public class FaenorScriptEngine extends ScriptEngine
 		}
 	}
 	
-	public void parseScript(ScriptDocument script, ScriptContext context)
+	private void parseScript(ScriptDocument script, ScriptContext context)
 	{
 		Node node = script.getDocument().getFirstChild();
 		String parserClass = "faenor.Faenor" + node.getNodeName() + "Parser";
@@ -88,15 +88,7 @@ public class FaenorScriptEngine extends ScriptEngine
 			return;
 		}
 		
-		try
-		{
-			parser.parseScript(node, context);
-		//	_log.info(getClass().getSimpleName() + ": Loaded  " + script.getName() + " successfully.");
-		}
-		catch (Exception e)
-		{
-			_log.log(Level.WARNING, "Script Parsing Failed: " + e.getMessage(), e);
-		}
+		parser.parseScript(node, context);
 	}
 	
 	public static FaenorScriptEngine getInstance()
