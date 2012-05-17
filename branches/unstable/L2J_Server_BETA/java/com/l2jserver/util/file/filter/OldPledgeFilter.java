@@ -34,7 +34,7 @@ public class OldPledgeFilter implements FileFilter
 if (com.l2jserver.Config.FILE_FILTER_CASE_SENSITIVE) {{
 		return f.getName().startsWith("Pledge_");
 }} else {{
-		return f.getName().toLowerCase().startsWith("Pledge_");
+		return f.getName().startsWith("Pledge_");
 }}
 	}
 }
