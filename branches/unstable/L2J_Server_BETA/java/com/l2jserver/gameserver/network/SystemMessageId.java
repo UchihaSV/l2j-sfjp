@@ -13346,6 +13346,12 @@ public final class SystemMessageId
 	public static final SystemMessageId NPCS_RECAPTURED_FORTRESS;
 	
 	/**
+	 * ID: 2283<br>
+	 * Message: 座った状態では変身できません。
+	 */
+	public static final SystemMessageId CANNOT_TRANSFORM_WHILE_SITTING;
+	
+	/**
 	 * ID: 2291<br>
 	 * Message: パーティに参加した状態でのみ機械操作が可能です。
 	 */
@@ -17075,6 +17081,7 @@ public final class SystemMessageId
 		USE_SHORTCUT_CONFIRM = new SystemMessageId(2272);
 		SKILL_NOT_FOR_SUBCLASS = new SystemMessageId(2273);
 		NPCS_RECAPTURED_FORTRESS = new SystemMessageId(2276);
+		CANNOT_TRANSFORM_WHILE_SITTING = new SystemMessageId(2283);
 		CAN_OPERATE_MACHINE_WHEN_IN_PARTY = new SystemMessageId(2291);
 		LOC_IN_STEEL_CITADEL_S1_S2_S3 = new SystemMessageId(2293);
 		GAINED_VITALITY_POINTS = new SystemMessageId(2296);
