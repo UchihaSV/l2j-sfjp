@@ -297,93 +297,94 @@ public class DoorTable
 	{
 		for (L2DoorInstance doorInst : getDoors())
 		{
+			final String doorName = doorInst.getDoorName();
 			// Tower of Insolence (open_time 120 seconds)
 			// TODO: (close_time 120 seconds & random_time 120 seconds)
-			if (doorInst.getDoorName().startsWith("toi_"))
+			if (doorName.startsWith("toi_"))
 			{
 				doorInst.setAutoActionDelay(120000);
 			}
 			
 			// devils (open_time 2 minutes)
 			// TODO: (close_time 120 seconds & random_time 30 seconds)
-			else if (doorInst.getDoorName().startsWith("di_"))
+			else if (doorName.startsWith("di_"))
 			{
 				doorInst.setAutoActionDelay(120000);
 			}
 			
 			// Garden of Eva (open_time 300 seconds)
 			// TODO: (close_time 20 seconds & random_time 120 seconds)
-			else if (doorInst.getDoorName().startsWith("goe_"))
+			else if (doorName.startsWith("goe_"))
 			{
 				doorInst.setAutoActionDelay(300000);
 			}
 			
 			// Kratei's Cube (open_time 20 seconds)
 			// TODO: (close_time 15 seconds & random_time 10 seconds)
-			else if (doorInst.getDoorName().startsWith("kc20_"))
+			else if (doorName.startsWith("kc20_"))
 			{
 				doorInst.setAutoActionDelay(20000);
 			}
 			
 			// Kratei's Cube (open_time 30 seconds)
 			// TODO: (close_time 15 seconds & random_time 10 seconds)
-			else if (doorInst.getDoorName().startsWith("kc30_"))
+			else if (doorName.startsWith("kc30_"))
 			{
 				doorInst.setAutoActionDelay(30000);
 			}
 			
 			// Kratei's Cube (open_time 25 seconds)
 			// TODO: (close_time 15 seconds & random_time 10 seconds)
-			else if (doorInst.getDoorName().startsWith("kc25_"))
+			else if (doorName.startsWith("kc25_"))
 			{
 				doorInst.setAutoActionDelay(25000);
 			}
 			
 			// Kratei's Cube (open_time 15 seconds)
 			// TODO: (close_time 15 seconds & random_time 10 seconds)
-			else if (doorInst.getDoorName().startsWith("kc15_"))
+			else if (doorName.startsWith("kc15_"))
 			{
 				doorInst.setAutoActionDelay(15000);
 			}
 			
 			// Kratei's Cube (open_time 10 seconds)
 			// TODO: (close_time 15 seconds & random_time 5 seconds)
-			else if (doorInst.getDoorName().startsWith("kc10_"))
+			else if (doorName.startsWith("kc10_"))
 			{
 				doorInst.setAutoActionDelay(10000);
 			}
 			
 			// Kratei's Cube (open_time 10 seconds)
 			// TODO: (close_time 15 seconds & random_time 10 seconds)
-			else if (doorInst.getDoorName().startsWith("kc10b_"))
+			else if (doorName.startsWith("kc10b_"))
 			{
 				doorInst.setAutoActionDelay(10000);
 			}
 			
 			// Kratei's Cube (open_time 14 seconds)
 			// TODO: (close_time 15 seconds & random_time 10 seconds)
-			else if (doorInst.getDoorName().startsWith("kc14_"))
+			else if (doorName.startsWith("kc14_"))
 			{
 				doorInst.setAutoActionDelay(14000);
 			}
 			
 			// Kratei's Cube (open_time 23 seconds)
 			// TODO: (close_time 15 seconds & random_time 10 seconds)
-			else if (doorInst.getDoorName().startsWith("kc23_"))
+			else if (doorName.startsWith("kc23_"))
 			{
 				doorInst.setAutoActionDelay(23000);
 			}
 			
 			// Kratei's Cube (open_time 18 seconds)
 			// TODO: (close_time 15 seconds & random_time 10 seconds)
-			else if (doorInst.getDoorName().startsWith("kc18_"))
+			else if (doorName.startsWith("kc18_"))
 			{
 				doorInst.setAutoActionDelay(18000);
 			}
 			
 			// Kratei's Cube (open_time 26 seconds)
 			// TODO: (close_time 15 seconds & random_time 10 seconds)
-			else if (doorInst.getDoorName().startsWith("kc26_"))
+			else if (doorName.startsWith("kc26_"))
 			{
 				doorInst.setAutoActionDelay(26000);
 			}
