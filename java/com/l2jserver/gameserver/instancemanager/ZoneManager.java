@@ -111,10 +111,6 @@ public class ZoneManager extends DocumentParser
 		L2WorldRegion[][] worldRegions = L2World.getInstance().getAllWorldRegions();
 		NamedNodeMap attrs;
 		Node attribute;
-		String zoneName;
-		int[][] coords;
-		int zoneId, minZ, maxZ;
-		String zoneType, zoneShape;
 		List<int[]> rs = new ArrayList<>();
 		
 		for (Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
@@ -132,32 +128,33 @@ public class ZoneManager extends DocumentParser
 					{
 						attrs = d.getAttributes();
 						
+						final int zoneId;
 						attribute = attrs.getNamedItem("id");
 						if (attribute != null)
 							zoneId = Integer.parseInt(attribute.getNodeValue());
 						else
 							zoneId = _lastDynamicId++;
 						
+						final String zoneName;
 						attribute = attrs.getNamedItem("name");
 						if (attribute != null)
 							zoneName = attribute.getNodeValue();
 						else
 							zoneName = null;
 						
-						minZ = parseInt(attrs, "minZ");
-						maxZ = parseInt(attrs, "maxZ");
+						int minZ = parseInt(attrs, "minZ");
+						int maxZ = parseInt(attrs, "maxZ");
 						
-						zoneType = attrs.getNamedItem("type").getNodeValue();
-						zoneShape = attrs.getNamedItem("shape").getNodeValue();
+						String zoneType = attrs.getNamedItem("type").getNodeValue();
+						String zoneShape = attrs.getNamedItem("shape").getNodeValue();
+					//	System.out.println("<zone" + " name=" + zoneName + " id=" + zoneId + " type=" + zoneType + " shape=" + zoneShape + " minZ=" + minZ + " maxZ=" + maxZ + ">");
 						
 						// Create the zone
-						Class<?> newZone = null;
-						Constructor<?> zoneConstructor = null;
-						L2ZoneType temp = null;
+						final L2ZoneType temp;
 						try
 						{
-							newZone = Class.forName("com.l2jserver.gameserver.model.zone.type.L2" + zoneType);
-							zoneConstructor = newZone.getConstructor(int.class);
+							Class<?> newZone = Class.forName("com.l2jserver.gameserver.model.zone.type.L2" + zoneType);
+							Constructor<?> zoneConstructor = newZone.getConstructor(int.class);
 							temp = (L2ZoneType) zoneConstructor.newInstance(zoneId);
 						}
 						catch (Exception e)
@@ -169,8 +166,6 @@ public class ZoneManager extends DocumentParser
 						// Get the zone shape from xml
 						try
 						{
-							coords = null;
-							int[] point;
 							rs.clear();
 							
 							for (Node cd = d.getFirstChild(); cd != null; cd = cd.getNextSibling())
@@ -178,20 +173,20 @@ public class ZoneManager extends DocumentParser
 								if ("node".equalsIgnoreCase(cd.getNodeName()))
 								{
 									attrs = cd.getAttributes();
-									point = new int[2];
+									int[] point = new int[2];
 									point[0] = parseInt(attrs, "X");
 									point[1] = parseInt(attrs, "Y");
 									rs.add(point);
 								}
 							}
 							
-							coords = rs.toArray(new int[rs.size()][2]);
-							
-							if (coords == null || coords.length == 0)
+							if (rs.size() == 0)
 							{
 								_log.warning("ZoneData: missing data for zone: " + zoneId + " XML file: " + getCurrentFile().getName());
 								continue;
 							}
+							
+							int[][] coords = rs.toArray(new int[rs.size()][2]);
 							
 							// Create this zone. Parsing for cuboids is a
 							// bit different than for other polygons
