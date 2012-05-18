@@ -276,8 +276,8 @@ public final class L2TeleporterInstance extends L2Npc
 			{
 				// TODO: setting_bossaction.sql
 				//   INSERT IGNORE INTO teleport (Description, id, loc_x, loc_y, loc_z, price, fornoble) VALUES ('Closest Town',0,0,0,0,0,0);
-				//   UPDATE npc SET type='L2Teleporter' WHERE id=32467;
-				// TODO: data/html/teleporter/32467.htm
+				//   UPDATE npc SET type='L2Teleporter' WHERE id=1032467;
+				// TODO: data/html/teleporter/1032467.htm
 				//   <a action="bypass -h npc_%objectId%_goto 0" msg="811;ç≈äÒÇÃë∫Ç÷">ç≈äÒÇÃë∫Ç÷</a>
 				player.teleToLocation(MapRegionManager.TeleportWhereType.Town);
 			}
