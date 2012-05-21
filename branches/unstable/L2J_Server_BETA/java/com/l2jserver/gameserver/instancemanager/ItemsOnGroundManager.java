@@ -200,7 +200,7 @@ public class ItemsOnGroundManager
 		}
 	}
 	
-	private L2ItemInstance[] itemstoArray()
+	L2ItemInstance[] itemstoArray()
 	{
 		synchronized (_items) { return _items.toArray(new L2ItemInstance[_items.size()]); }	//[JOJO]‘„E”ÍˆÍë‘Îô
 	}
