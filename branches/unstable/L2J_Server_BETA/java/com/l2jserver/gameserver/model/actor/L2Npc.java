@@ -16,10 +16,10 @@ package com.l2jserver.gameserver.model.actor;
 
 import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ACTIVE;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
-
-import javolution.util.FastList;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.SevenSigns;
@@ -307,9 +307,9 @@ public class L2Npc extends L2Character
 		return true;
 	}
 	
-	public FastList<L2Skill> getLongRangeSkill()
+	public List<L2Skill> getLongRangeSkill()
 	{
-		final FastList<L2Skill> skilldata = new FastList<>();
+		final List<L2Skill> skilldata = new ArrayList<>();
 		if (_staticAIData == null || _staticAIData.getLongRangeSkill() == 0)
 		{
 			return skilldata;
@@ -319,8 +319,7 @@ public class L2Npc extends L2Character
 		{
 			case -1:
 			{
-				L2Skill[] skills = null;
-				skills = getAllSkills();
+				Collection<L2Skill> skills = getAllSkills();
 				if (skills != null)
 				{
 					for (L2Skill sk : skills)
@@ -364,9 +363,9 @@ public class L2Npc extends L2Character
 		return skilldata;
 	}
 	
-	public FastList<L2Skill> getShortRangeSkill()
+	public List<L2Skill> getShortRangeSkill()
 	{
-		final FastList<L2Skill> skilldata = new FastList<>();
+		final List<L2Skill> skilldata = new ArrayList<>();
 		if (_staticAIData == null || _staticAIData.getShortRangeSkill() == 0)
 		{
 			return skilldata;
@@ -376,8 +375,7 @@ public class L2Npc extends L2Character
 		{
 			case -1:
 			{
-				L2Skill[] skills = null;
-				skills = getAllSkills();
+				Collection<L2Skill> skills = getAllSkills();
 				if (skills != null)
 				{
 					for (L2Skill sk : skills)
