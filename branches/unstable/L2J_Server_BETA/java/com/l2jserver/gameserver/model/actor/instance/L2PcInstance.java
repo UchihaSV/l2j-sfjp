@@ -759,7 +759,7 @@ public final class L2PcInstance extends L2Playable
 	
 	protected boolean _inventoryDisable = false;
 	
-	private final FastMap<Integer, L2CubicInstance> _cubics = new FastMap<>();
+	private final FastMap<Integer, L2CubicInstance> _cubics = new FastMap<Integer, L2CubicInstance>().shared();
 	
 	/** Active shots. */
 	protected FastSet<Integer> _activeSoulShots = new FastSet<Integer>().shared();
@@ -1301,8 +1301,6 @@ public final class L2PcInstance extends L2Playable
  //		_radar = new L2Radar(this);
 		
 		startVitalityTask();
-		
-		_cubics.shared();
 	}
 	
 	private L2PcInstance(int objectId)
