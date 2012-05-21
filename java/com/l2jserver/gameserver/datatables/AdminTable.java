@@ -45,12 +45,11 @@ public class AdminTable extends DocumentParser
 {
 	private static final Map<Integer, L2AccessLevel> _accessLevels = new HashMap<>();
 	private static final Map<String, L2AdminCommandAccessRight> _adminCommandAccessRights = new HashMap<>();
-	private static final FastMap<L2PcInstance, Boolean> _gmList = new FastMap<L2PcInstance, Boolean>();
+	private static final FastMap<L2PcInstance, Boolean> _gmList = new FastMap<L2PcInstance, Boolean>().shared();
 	private int _highestLevel = 0;
 	
 	protected AdminTable()
 	{
-		_gmList.shared();
 		load();
 	}
 	

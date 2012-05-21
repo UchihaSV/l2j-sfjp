@@ -194,12 +194,12 @@ public abstract class L2Character extends L2Object
 	/**
 	 * Map containing all skills of this character.
 	 */
-	private final FastMap<Integer, L2Skill> _skills = new FastMap<>();
+	private final FastMap<Integer, L2Skill> _skills = new FastMap<Integer, L2Skill>().shared();
 	
 	/**
 	 * Map containing all custom skills of this character.
 	 */
-	private final FastMap<Integer, SkillHolder> _customSkills = new FastMap<>();
+	private final FastMap<Integer, SkillHolder> _customSkills = new FastMap<Integer, SkillHolder>().shared();
 	
 	/** FastMap containing the active chance skills on this character */
 	private volatile ChanceSkillList _chanceSkills;
@@ -403,9 +403,6 @@ public abstract class L2Character extends L2Object
 		setInstanceType(InstanceType.L2Character);
 		initCharStat();
 		initCharStatus();
-		
-		_skills.shared();
-		_customSkills.shared();
 		
 		// Set its template to the new L2Character
 		_template = template;

@@ -42,7 +42,7 @@ public abstract class L2ZoneType
 	
 	private final int _id;
 	protected L2ZoneForm _zone;
-	protected FastMap<Integer, L2Character> _characterList;
+	protected final FastMap<Integer, L2Character> _characterList = new FastMap<Integer, L2Character>().shared();
 	
 	/** Parameters to affect specific characters */
 	private boolean _checkAffected = false;
@@ -62,8 +62,6 @@ public abstract class L2ZoneType
 	protected L2ZoneType(int id)
 	{
 		_id = id;
-		_characterList = new FastMap<>();
-		_characterList.shared();
 		
 		_minLvl = 0;
 		_maxLvl = 0xFF;
