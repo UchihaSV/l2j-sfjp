@@ -108,7 +108,7 @@ public class LoginServerThread extends Thread
 	private final boolean _reserveHost;
 	private int _maxPlayer;
 	private final List<WaitingClient> _waitingClients;
-	private final FastMap<String, L2GameClient> _accountsInGameServer = new FastMap<>();
+	private final FastMap<String, L2GameClient> _accountsInGameServer = new FastMap<String, L2GameClient>().shared();
 	private int _status;
 	private String _serverName;
 	private final String[] _subnets;
@@ -135,7 +135,6 @@ public class LoginServerThread extends Thread
 		_subnets = Config.GAME_SERVER_SUBNETS;
 		_hosts = Config.GAME_SERVER_HOSTS;
 		_waitingClients = new FastList<WaitingClient>();
-		_accountsInGameServer.shared();
 		_maxPlayer = Config.MAXIMUM_ONLINE_USERS;
 	}
 	
