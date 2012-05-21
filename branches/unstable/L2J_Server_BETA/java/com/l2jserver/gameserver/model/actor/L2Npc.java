@@ -488,7 +488,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	{
 		startRandomAnimationTimer(null);
 	}
-	private void startRandomAnimationTimer(RandomAnimationTask r)
+	void startRandomAnimationTimer(RandomAnimationTask r)
 	{
 if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		if (isDead() || !isVisible())	//+[JOJO]
