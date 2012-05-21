@@ -390,7 +390,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 					statement.setInt(2, _bossStatus.get(bossId));
 					statement.setInt(3, bossId);
 				}
-				else /*if (boss != null && info != null)*/
+				else if (boss != null && info != null)
 				{
 					statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA);
 					statement.setInt(1, boss.getX());
@@ -410,6 +410,8 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 					statement.setInt(8, _bossStatus.get(bossId));
 					statement.setInt(9, bossId);
 				}
+				else /*if (boss != null && info == null)*/
+					throw new RuntimeException();
 				statement.executeUpdate();
 				statement.clearParameters();
 				statement.close();
@@ -450,7 +452,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 				statement.setInt(2, _bossStatus.get(bossId));
 				statement.setInt(3, bossId);
 			}
-			else /*if (boss != null && info != null)*/
+			else if (boss != null && info != null)
 			{
 				statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA);
 				statement.setInt(1, boss.getX());
@@ -470,6 +472,8 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 				statement.setInt(8, _bossStatus.get(bossId));
 				statement.setInt(9, bossId);
 			}
+			else /*if (boss != null && info == null)*/
+				throw new RuntimeException();
 			statement.executeUpdate();
 			statement.close();
 		}

@@ -523,7 +523,7 @@ public class Lottery
 		return res;
 	}
 	
-	private void shout(int npcString, String ... param)
+	void shout(int npcString, String ... param)
 	{
 		for (L2Spawn s : SpawnTable.getInstance().getSpawnTable())
 		{

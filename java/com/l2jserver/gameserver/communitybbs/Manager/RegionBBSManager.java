@@ -140,8 +140,8 @@ public class RegionBBSManager extends BaseBBSManager
 			StringUtil.append(htmlCode, "<table border=0><tr><td>", player.getName(), " (", sex, " ", ClassListData.getInstance().getClass(player.getClassId()).getClientCode(), "):</td></tr>"
 					+ "<tr><td>ƒŒƒxƒ‹: ", levelApprox, "</td></tr>" + "<tr><td><br></td></tr>");
 			
-			if (activeChar != null
-					&& (activeChar.isGM() || player.getObjectId() == activeChar.getObjectId() || Config.SHOW_LEVEL_COMMUNITYBOARD))
+			if (/*activeChar != null
+					&&*/ (activeChar.isGM() || player.getObjectId() == activeChar.getObjectId() || Config.SHOW_LEVEL_COMMUNITYBOARD))
 			{
 				int level = player.getLevel();
 				long currentExp = player.getExp() - ExperienceTable.getInstance().getExpForLevel(level);

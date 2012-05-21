@@ -16,7 +16,6 @@ package com.l2jserver.tools.accountmanager;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -47,7 +46,7 @@ public class SQLAccountManager
 	private static String _mode = "";
 	private static ConsoleLocalizator cl;
 	
-	public static void main(String[] args) throws SQLException, IOException, NoSuchAlgorithmException
+	public static void main(String[] args) throws SQLException, NoSuchAlgorithmException
 	{
 		Server.serverMode = Server.MODE_LOGINSERVER;
 		Config.load();
