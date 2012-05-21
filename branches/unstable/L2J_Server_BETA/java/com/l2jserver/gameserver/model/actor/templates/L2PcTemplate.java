@@ -18,6 +18,7 @@ import static com.l2jserver.gameserver.datatables.StringIntern.intern;
 
 import java.util.List;
 
+import com.l2jserver.gameserver.datatables.InitialEquipmentData;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.base.ClassId;
 import com.l2jserver.gameserver.model.base.Race;
@@ -54,7 +55,7 @@ public class L2PcTemplate extends L2CharTemplate
 	
 	private final List<PcItemTemplate> _initialEquipment;
 	
-	public L2PcTemplate(StatsSet set, List<PcItemTemplate> initialEquipment)
+	public L2PcTemplate(StatsSet set)
 	{
 		super(set);
 		_classId = ClassId.getClassId(set.getInteger("classId"));
@@ -81,7 +82,7 @@ public class L2PcTemplate extends L2CharTemplate
 		
 		_fallHeight = 333; // TODO: Unhardcode it.
 		
-		_initialEquipment = initialEquipment;
+		_initialEquipment = InitialEquipmentData.getInstance().getEquipmentList(_classId);
 	}
 	
 	/**
