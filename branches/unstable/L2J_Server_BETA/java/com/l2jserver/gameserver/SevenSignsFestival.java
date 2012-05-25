@@ -1683,25 +1683,28 @@ public class SevenSignsFestival implements SpawnListener
 	 * @param senderName
 	 * @param npcString
 	 */
-	//[JOJO]-------------------------------------------------
-	private void sendMessageToAll(int npcString)
+	void sendMessageToAll(int senderName, NpcStringId npcString)
 	{
 		if (_dawnChatGuide == null || _duskChatGuide == null)
 			return;
 		
-		_dawnChatGuide.broadcastPacket(new NpcSay(_dawnChatGuide.getObjectId(), Say2.SHOUT, _dawnChatGuide.getNpcId(), npcString));
-		_duskChatGuide.broadcastPacket(new NpcSay(_duskChatGuide.getObjectId(), Say2.SHOUT, _duskChatGuide.getNpcId(), npcString));
+		sendMessageToAll(senderName, npcString, _dawnChatGuide);
+		sendMessageToAll(senderName, npcString, _duskChatGuide);
 	}
 	
 	/**
 	 * @param senderName
 	 * @param npcString
+	 * @param npc
 	 */
-	private void sendMessageToAll(String senderName, NpcStringId npcString)
+	private void sendMessageToAll(int senderName, NpcStringId npcString, L2Npc npc)
 	{
-		sendMessageToAll(npcString.getId());
+		NpcSay cs = new NpcSay(npc.getObjectId(), Say2.SHOUT, senderName, npcString);
+		if (npcString.getParamCount() == 1)
+			cs.addStringParameter(String.valueOf(getMinsToNextFestival()));
+		
+		npc.broadcastPacket(cs);
 	}
-	//-------------------------------------------------------
 	
 	/**
 	 * Basically a wrapper-call to signal to increase the challenge of the specified festival.
@@ -1791,7 +1794,7 @@ public class SevenSignsFestival implements SpawnListener
 							+ " minute(s) to sign up.");
 				
 				if (getMinsToNextFestival() == 2)
-					sendMessageToAll("Festival Guide", NpcStringId.THE_MAIN_EVENT_WILL_START_IN_2_MINUTES_PLEASE_REGISTER_NOW);
+					sendMessageToAll(31127/*"Festival Guide"*/, NpcStringId.THE_MAIN_EVENT_WILL_START_IN_2_MINUTES_PLEASE_REGISTER_NOW);
 				
 				// Stand by until the allowed signup period has elapsed.
 				try
@@ -1859,7 +1862,7 @@ public class SevenSignsFestival implements SpawnListener
 				_festivalInitialized = true;
 				
 				setNextFestivalStart(Config.ALT_FESTIVAL_CYCLE_LENGTH);
-				sendMessageToAll("Festival Guide", NpcStringId.THE_MAIN_EVENT_IS_NOW_STARTING);
+				sendMessageToAll(31127/*"Festival Guide"*/, NpcStringId.THE_MAIN_EVENT_IS_NOW_STARTING);
 				
 				if (Config.DEBUG)
 					_log.info("SevenSignsFestival: The current set of festivals will begin in " + (Config.ALT_FESTIVAL_FIRST_SPAWN / 60000)
@@ -1987,7 +1990,7 @@ public class SevenSignsFestival implements SpawnListener
 				// Allow signups for the next festival cycle.
 				_festivalInitialized = false;
 				
-				sendMessageToAll("Festival Witch", NpcStringId.THAT_WILL_DO_ILL_MOVE_YOU_TO_THE_OUTSIDE_SOON);
+				sendMessageToAll(31132/*"Festival Witch"*/, NpcStringId.THAT_WILL_DO_ILL_MOVE_YOU_TO_THE_OUTSIDE_SOON);
 				
 				if (Config.DEBUG)
 					_log.info("SevenSignsFestival: The next set of festivals begin in " + getMinsToNextFestival() + " minute(s).");
