@@ -18,7 +18,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -34,6 +33,9 @@ public final class ArmorSetsData extends DocumentParser
 {
 	private static final Map<Integer, L2ArmorSet> _armorSets = new HashMap<>();
 	
+	/**
+	 * Instantiates a new armor sets data.
+	 */
 	protected ArmorSetsData()
 	{
 		load();
@@ -48,9 +50,9 @@ public final class ArmorSetsData extends DocumentParser
 	}
 	
 	@Override
-	protected void parseDocument(Document doc)
+	protected void parseDocument()
 	{
-		for (Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
+		for (Node n = getCurrentDocument().getFirstChild(); n != null; n = n.getNextSibling())
 		{
 			if ("list".equalsIgnoreCase(n.getNodeName()))
 			{
@@ -155,6 +157,7 @@ public final class ArmorSetsData extends DocumentParser
 	}
 	
 	/**
+	 * Checks if is armor set.
 	 * @param chestId the chest Id to verify.
 	 * @return {@code true} if the chest Id belongs to a registered armor set, {@code false} otherwise.
 	 */
@@ -164,6 +167,7 @@ public final class ArmorSetsData extends DocumentParser
 	}
 	
 	/**
+	 * Gets the sets the.
 	 * @param chestId the chest Id identifying the armor set.
 	 * @return the armor set associated to the give chest Id.
 	 */
@@ -172,6 +176,10 @@ public final class ArmorSetsData extends DocumentParser
 		return _armorSets.get(chestId);
 	}
 	
+	/**
+	 * Gets the single instance of ArmorSetsData.
+	 * @return single instance of ArmorSetsData
+	 */
 	public static ArmorSetsData getInstance()
 	{
 		return SingletonHolder._instance;
