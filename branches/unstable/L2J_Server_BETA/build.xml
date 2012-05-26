@@ -54,6 +54,19 @@
 
 	<target name="dist ALL" depends="cleanAll,dist"/><!-- [JOJO] -->
 	<target name="dist" depends="init" description="Export the files to the output directory.">
+		<defaultexcludes add="**/.*" />
+		<defaultexcludes add="**/.*/**" />
+		<defaultexcludes add="**/#*" />
+		<defaultexcludes add="**/#*/**" />
+		<defaultexcludes add="**/*.#*" />
+		<defaultexcludes add="**/*.BAK" />
+		<defaultexcludes add="**/*.bak" />
+		<defaultexcludes add="**/*.lnk" />
+		<defaultexcludes add="**/*.url" />
+		<defaultexcludes add="**/* - *" />
+		<defaultexcludes add="**/* &#45;&#45;*" />
+		<defaultexcludes add="**/*��" />
+
 		<sync todir="${build.dist}" includeemptydirs="true">
 			<fileset dir="dist" />
 		</sync>
