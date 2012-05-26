@@ -48,30 +48,30 @@ public final class Say2 extends L2GameClientPacket
 	private static FastList<ChatListener> chatListeners = new FastList<ChatListener>().shared();
 	private static FastList<ChatFilterListener> chatFilterListeners = new FastList<ChatFilterListener>().shared();
 	
-	public final static int ALL = 0; //(White)
-	public final static int SHOUT = 1; //!(Brown)
-	public final static int TELL = 2; //"(Magenta)
-	public final static int PARTY = 3; //#(Green)
-	public final static int CLAN = 4;  //@(Blue)
-	public final static int GM = 5; //(White)
-	public final static int PETITION_PLAYER = 6; //(White) used for petition
-	public final static int PETITION_GM = 7; //*(Cyan) used for petition
-	public final static int TRADE = 8; //+(Pink)
-	public final static int ALLIANCE = 9; //$(Light green)
-	public final static int ANNOUNCEMENT = 10; //(Cyan) "Announce: xxxx"
-	public final static int BOAT = 11;
-	public final static int L2FRIEND = 12;
-	public final static int MSNCHAT = 13;
-	public final static int PARTYMATCH_ROOM = 14;
-	public final static int PARTYROOM_COMMANDER = 15; //(Peach) large text
-	public final static int PARTYROOM_ALL = 16; //(Ivory)
-	public final static int HERO_VOICE = 17; //%(Blue)
-	public final static int CRITICAL_ANNOUNCE = 18; //(Cyan) no title
-	public final static int SCREEN_ANNOUNCE = 19; //(Peach) large text
-	public final static int BATTLEFIELD = 20; //(Yellow)
-	public final static int MPCC_ROOM = 21;
+	public static final int ALL = 0; //(White)
+	public static final int SHOUT = 1; //!(Brown)
+	public static final int TELL = 2; //"(Magenta)
+	public static final int PARTY = 3; //#(Green)
+	public static final int CLAN = 4;  //@(Blue)
+	public static final int GM = 5; //(White)
+	public static final int PETITION_PLAYER = 6; //(White) used for petition
+	public static final int PETITION_GM = 7; //*(Cyan) used for petition
+	public static final int TRADE = 8; //+(Pink)
+	public static final int ALLIANCE = 9; //$(Light green)
+	public static final int ANNOUNCEMENT = 10; //(Cyan) "Announce: xxxx"
+	public static final int BOAT = 11;
+	public static final int L2FRIEND = 12;
+	public static final int MSNCHAT = 13;
+	public static final int PARTYMATCH_ROOM = 14;
+	public static final int PARTYROOM_COMMANDER = 15; //(Peach) large text
+	public static final int PARTYROOM_ALL = 16; //(Ivory)
+	public static final int HERO_VOICE = 17; //%(Blue)
+	public static final int CRITICAL_ANNOUNCE = 18; //(Cyan) no title
+	public static final int SCREEN_ANNOUNCE = 19; //(Peach) large text
+	public static final int BATTLEFIELD = 20; //(Yellow)
+	public static final int MPCC_ROOM = 21;
 	
-	private final static String[] CHAT_NAMES =
+	private static final String[] CHAT_NAMES =
 	{
 		"ALL",
 		"SHOUT",
