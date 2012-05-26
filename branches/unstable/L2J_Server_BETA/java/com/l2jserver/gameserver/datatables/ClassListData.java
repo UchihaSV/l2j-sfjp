@@ -16,7 +16,6 @@ package com.l2jserver.gameserver.datatables;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -34,6 +33,9 @@ public final class ClassListData extends DocumentParser
 {
 	private static final TIntObjectHashMap<ClassInfo> _classData = new TIntObjectHashMap<ClassInfo>();
 	
+	/**
+	 * Instantiates a new class list data.
+	 */
 	protected ClassListData()
 	{
 		load();
@@ -48,9 +50,9 @@ public final class ClassListData extends DocumentParser
 	}
 	
 	@Override
-	protected void parseDocument(Document doc)
+	protected void parseDocument()
 	{
-		for (Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
+		for (Node n = getCurrentDocument().getFirstChild(); n != null; n = n.getNextSibling())
 		{
 			if ("list".equals(n.getNodeName()))
 			{
@@ -76,6 +78,7 @@ public final class ClassListData extends DocumentParser
 	}
 	
 	/**
+	 * Gets the class info.
 	 * @param classId the class Id.
 	 * @return the class info related to the given {@code classId}.
 	 */
@@ -90,6 +93,7 @@ public final class ClassListData extends DocumentParser
 	}
 	
 	/**
+	 * Gets the class info.
 	 * @param classId the class Id as integer.
 	 * @return the class info related to the given {@code classId}.
 	 */
@@ -98,6 +102,10 @@ public final class ClassListData extends DocumentParser
 		return _classData.get(classId);
 	}
 	
+	/**
+	 * Gets the single instance of ClassListData.
+	 * @return single instance of ClassListData
+	 */
 	public static ClassListData getInstance()
 	{
 		return SingletonHolder._instance;
