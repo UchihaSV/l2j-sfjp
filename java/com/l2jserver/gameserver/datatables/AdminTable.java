@@ -72,8 +72,6 @@ public class AdminTable extends DocumentParser
 		NamedNodeMap attrs;
 		Node attr;
 		StatsSet set;
-		L2AccessLevel level;
-		L2AdminCommandAccessRight command;
 		for (Node n = getCurrentDocument().getFirstChild(); n != null; n = n.getNextSibling())
 		{
 			if ("list".equalsIgnoreCase(n.getNodeName()))
@@ -89,7 +87,7 @@ public class AdminTable extends DocumentParser
 							attr = attrs.item(i);
 							set.set(attr.getNodeName(), attr.getNodeValue());
 						}
-						level = new L2AccessLevel(set);
+						L2AccessLevel level = new L2AccessLevel(set);
 						if (level.getLevel() > _highestLevel)
 						{
 							_highestLevel = level.getLevel();
@@ -105,7 +103,7 @@ public class AdminTable extends DocumentParser
 							attr = attrs.item(i);
 							set.set(attr.getNodeName(), attr.getNodeValue());
 						}
-						command = new L2AdminCommandAccessRight(set);
+						L2AdminCommandAccessRight command = new L2AdminCommandAccessRight(set);
 						_adminCommandAccessRights.put(command.getAdminCommand(), command);
 					}
 				}
