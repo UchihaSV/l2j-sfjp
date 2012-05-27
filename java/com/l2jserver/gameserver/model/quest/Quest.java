@@ -734,6 +734,7 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
+	 * TODO: Remove and replace with listeners.
 	 * @param npc
 	 * @param player
 	 * @return
@@ -753,6 +754,7 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
+	 * TODO: Remove and replace with listeners.
 	 * @param npc
 	 * @param player
 	 * @param skill
@@ -773,6 +775,7 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
+	 * TODO: Remove and replace with listeners.
 	 * @param npc
 	 * @param player
 	 * @param skill
@@ -784,13 +787,16 @@ public class Quest extends ManagedScript
 		try
 		{
 			res = onAcquireSkill(npc, player, skill);
-			if (res == "true")
+			if (res != null)
 			{
-				return true;
-			}
-			else if (res == "false")
-			{
-				return false;
+				if (res.equals("true"))
+				{
+					return true;
+				}
+				else if (res.equals("false"))
+				{
+					return false;
+				}
 			}
 		}
 		catch (Exception e)
@@ -2529,7 +2535,7 @@ public class Quest extends ManagedScript
 		}
 		catch (Exception e1)
 		{
-			_log.warning("Could not spawn Npc " + npcId);
+			_log.warning("Could not spawn Npc " + npcId + " Error: " + e1.getMessage());
 		}
 		
 		return null;
