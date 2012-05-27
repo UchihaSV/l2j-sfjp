@@ -1668,10 +1668,9 @@ public final class L2PcInstance extends L2Playable
 	
 	private QuestState[] addToQuestStateArray(QuestState[] questStateArray, QuestState state)
 	{
-		int len = questStateArray.length;
-		QuestState[] tmp = new QuestState[len+1];
-		for (int i=0; i < len; i++)
-			tmp[i] = questStateArray[i];
+		final int len = questStateArray.length;
+		QuestState[] tmp = new QuestState[len + 1];
+		System.arraycopy(questStateArray, 0, tmp, 0, len);
 		tmp[len] = state;
 		return tmp;
 	}
@@ -4729,29 +4728,6 @@ public final class L2PcInstance extends L2Playable
 		return getClan().getAllyCrestId();
 	}
 	
-	/**
-	 * Manage hit process (called by Hit Task of L2Character).<BR><BR>
-	 *
-	 * <B><U> Actions</U> :</B><BR><BR>
-	 * <li>If the attacker/target is dead or use fake death, notify the AI with EVT_CANCEL and send a Server->Client packet ActionFailed (if attacker is a L2PcInstance)</li>
-	 * <li>If attack isn't aborted, send a message system (critical hit, missed...) to attacker/target if they are L2PcInstance </li>
-	 * <li>If attack isn't aborted and hit isn't missed, reduce HP of the target and calculate reflection damage to reduce HP of attacker if necessary </li>
-	 * <li>if attack isn't aborted and hit isn't missed, manage attack or cast break of the target (calculating rate, sending message...) </li><BR><BR>
-	 *
-	 * @param target The L2Character targeted
-	 * @param damage Nb of HP to reduce
-	 * @param crit True if hit is critical
-	 * @param miss True if hit is missed
-	 * @param soulshot True if SoulShot are charged
-	 * @param shld True if shield is efficient
-	 *
-	 */
-	@Override
-	protected void onHitTimer(L2Character target, int damage, boolean crit, boolean miss, boolean soulshot, byte shld)
-	{
-		super.onHitTimer(target, damage, crit, miss, soulshot, shld);
-	}
-	
 	public void queryGameGuard()
 	{
 		this.getClient().setGameGuardOk(false);
@@ -5531,7 +5507,7 @@ public final class L2PcInstance extends L2Playable
 	
 	public void engageAnswer(int answer)
 	{
-		if(_engagerequest==false)
+		if(!_engagerequest)
 			return;
 		else if(_engageid==0)
 			return;
@@ -7491,13 +7467,20 @@ public final class L2PcInstance extends L2Playable
 				currentHp = rset.getDouble("curHp");
 				currentCp = rset.getDouble("curCp");
 				currentMp = rset.getDouble("curMp");
-								
+				
 				//restore Hero Status
 				player.setHero((rset.getInt("hero") == 1) ? true : false);	// [L2J_JP ADD]
 
 				player._classIndex = 0;
-				try { player.setBaseClass(rset.getInt("base_class")); }
-				catch (Exception e) { player.setBaseClass(activeClassId); }
+				try
+				{
+					player.setBaseClass(rset.getInt("base_class"));
+				}
+				catch (Exception e)
+				{
+					// TODO: Should this be logged?
+					player.setBaseClass(activeClassId);
+				}
 				
 				// Restore Subclass Data (cannot be done earlier in function)
 				if (restoreSubClassData(player))
