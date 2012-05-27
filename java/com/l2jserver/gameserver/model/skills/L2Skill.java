@@ -300,7 +300,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		_attribute = intern(set.getString("attribute",""));
 		String str = set.getString("negateStats", "");
 		
-		if (str == "")
+		if (str.isEmpty())
 			_negateStats = new L2SkillType[0];
 		else
 		{
@@ -325,7 +325,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		}
 		
 		String negateAbnormals = set.getString("negateAbnormals", null);
-		if (negateAbnormals != null && negateAbnormals != "")
+		if (negateAbnormals != null && !negateAbnormals.isEmpty())
 		{
 			_negateAbnormals = new FastMap<String, Byte>();
 			for (String ngtStack : negateAbnormals.split(";"))
@@ -475,7 +475,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		_triggeredId = set.getInteger("triggeredId", 0);
 		_triggeredLevel = set.getInteger("triggeredLevel", 0);
 		_chanceType = intern(set.getString("chanceType", ""));
-		if (_chanceType != "" && !_chanceType.isEmpty())
+		if (!_chanceType.isEmpty() && !_chanceType.isEmpty())
 			_chanceCondition = ChanceCondition.parse(set);
 		
 		_numSouls = set.getInteger("num_souls", 0);

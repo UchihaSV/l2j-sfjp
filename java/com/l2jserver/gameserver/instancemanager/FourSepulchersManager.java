@@ -1421,7 +1421,7 @@ public class FourSepulchersManager
 			_inAttackTime = false;
 			_inCoolDownTime = false;
 			
-			long interval = Config.FS_TIME_ENTRY * 60000l;
+			long interval = Config.FS_TIME_ENTRY * 60000L;
 			ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), 0);
 			_changeWarmUpTimeTask = ThreadPoolManager.getInstance().scheduleEffect(new ChangeWarmUpTime(), interval);
 			if (_changeEntryTimeTask != null)
@@ -1444,7 +1444,7 @@ public class FourSepulchersManager
 			_inAttackTime = false;
 			_inCoolDownTime = false;
 			
-			long interval = Config.FS_TIME_WARMUP * 60000l;
+			long interval = Config.FS_TIME_WARMUP * 60000L;
 			_changeAttackTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeAttackTime(), interval);
 			
 			if (_changeWarmUpTimeTask != null)
@@ -1478,7 +1478,7 @@ public class FourSepulchersManager
 			// say task
 			ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), 5 * 60400);
 			
-			long interval = Config.FS_TIME_ATTACK * 60000l;
+			long interval = Config.FS_TIME_ATTACK * 60000L;
 			_changeCoolDownTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeCoolDownTime(), interval + OUST_PLAYER_MARGIN_TIME);
 			
 			if (_changeAttackTimeTask != null)
