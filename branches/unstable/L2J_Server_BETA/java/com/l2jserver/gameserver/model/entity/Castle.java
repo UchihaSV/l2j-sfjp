@@ -1259,7 +1259,7 @@ public class Castle
 					query.append(values[0]);
 					for (int i = 1; i < values.length; i++)
 					{
-						query.append(",").append(values[i]);
+						query.append(',').append(values[i]);
 					}
 					statement = con.prepareStatement(query.toString());
 					statement.execute();
@@ -1281,7 +1281,7 @@ public class Castle
 					query.append(values[0]);
 					for (int i = 1; i < values.length; i++)
 					{
-						query.append(",").append(values[i]);
+						query.append(',').append(values[i]);
 					}
 					statement = con.prepareStatement(query.toString());
 					statement.execute();
@@ -1330,7 +1330,7 @@ public class Castle
 					query.append(values[0]);
 					for (int i = 1; i < values.length; i++)
 					{
-						query.append(",").append(values[i]);
+						query.append(',').append(values[i]);
 					}
 					statement = con.prepareStatement(query.toString());
 					statement.execute();
@@ -1374,7 +1374,7 @@ public class Castle
 					query.append(values[0]);
 					for (int i = 1; i < values.length; i++)
 					{
-						query.append(",").append(values[i]);
+						query.append(',').append(values[i]);
 					}
 					statement = con.prepareStatement(query.toString());
 					statement.execute();
@@ -1395,7 +1395,7 @@ public class Castle
 					query.append(values[0]);
 					for (int i = 1; i < values.length; i++)
 					{
-						query.append(",").append(values[i]);
+						query.append(',').append(values[i]);
 					}
 					statement = con.prepareStatement(query.toString());
 					statement.execute();
@@ -1445,7 +1445,7 @@ public class Castle
 					query.append(values[0]);
 					for (int i = 1; i < values.length; i++)
 					{
-						query.append(",").append(values[i]);
+						query.append(',').append(values[i]);
 					}
 					statement = con.prepareStatement(query.toString());
 					statement.execute();

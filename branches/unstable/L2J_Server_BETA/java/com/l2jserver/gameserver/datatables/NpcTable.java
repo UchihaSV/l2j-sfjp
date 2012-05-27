@@ -266,7 +266,7 @@ public class NpcTable
 		sb.append(attribute);
 		sb.append(" = '");
 		sb.append(value);
-		sb.append("'");
+		sb.append('\'');
 	}
 	
 	/**

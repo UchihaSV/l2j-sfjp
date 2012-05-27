@@ -80,25 +80,25 @@ if (Config.FIX_THREADINFO_TO_STRING) {{
 						
 						ThreadInfo dl = ti;
 						info.append("Java-level deadlock:\n")
-						    .append("\t")
+						    .append('\t')
 						    .append(dl.getThreadName())
 						    .append(" is waiting to lock ")
 						    .append(dl.getLockInfo().toString())
 						    .append(" which is held by ")
 						    .append(dl.getLockOwnerName())
-						    .append("\n");
+						    .append('\n');
 						while ((dl = tmx.getThreadInfo(new long[]
 						{
 							dl.getLockOwnerId()
 						}, true, true)[0]).getThreadId() != ti.getThreadId())
 						{
-							info.append("\t")
+							info.append('\t')
 							    .append(dl.getThreadName())
 							    .append(" is waiting to lock ")
 							    .append(dl.getLockInfo().toString())
 							    .append(" which is held by ")
 							    .append(dl.getLockOwnerName())
-							    .append("\n");
+							    .append('\n');
 						}
 					}
 					_log.warning(info.toString());
@@ -137,8 +137,8 @@ if (Config.FIX_THREADINFO_TO_STRING) {{
         MonitorInfo[]       lockedMonitors = ti.getLockedMonitors();
         StackTraceElement[] stackTrace = ti.getStackTrace();
         
-        sb.append("\"").append(ti.getThreadName()).append("\"" +
-                                             " Id=").append(ti.getThreadId()).append(" ")
+        sb.append('\"').append(ti.getThreadName()).append("\"" +
+                                             " Id=").append(ti.getThreadId()).append(' ')
                                              .append(ti.getThreadState());
         if (ti.getLockName() != null) {
             sb.append(" on ").append(ti.getLockName());
