@@ -23,7 +23,7 @@ public class debug
 	@Deprecated public static String STR(com.l2jserver.gameserver.model.L2Object[] targets) {
 		if (targets == null) return "NULL";
 		if (targets.length == 0) return "EMPTY";
-		StringBuilder s = new StringBuilder(256).append("{");
+		StringBuilder s = new StringBuilder(256).append('{');
 		for (com.l2jserver.gameserver.model.L2Object o : targets)
 			s.append(o == null ? "NULL" : o.getName()).append(',');
 		s.setCharAt(s.length()-1, '}');

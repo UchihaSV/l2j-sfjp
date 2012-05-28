@@ -461,7 +461,7 @@ public class GameServer
 		//[JOJO]-------------------------------------------------
 		StringBuilder sb = new StringBuilder(256).append("AllowedProtocolRevisions: ");
 		for (int i = 0, size = Config.PROTOCOL_LIST.size(); i < size; i++)
-			sb.append(Config.PROTOCOL_LIST.getQuick(i)).append(";");
+			sb.append(Config.PROTOCOL_LIST.getQuick(i)).append(';');
 		sb.setLength(sb.length() - 1);
 		_log.info(sb.toString());
 		sb = null;
