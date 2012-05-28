@@ -465,7 +465,7 @@ public class ClanBBSManager extends BaseBBSManager
 				+ "<td><img src=\"l2ui.mini_logo\" width=5 height=1></td>"
 				+ "<td align=center FIXWIDTH=60 height=29>&nbsp;</td>"
 				+ "<td align=center FIXWIDTH=70><button value=\"&$424;\" action=\"Write Clan ").append(msgType).append(' ').append(clanId).append(" Content Content Content\" back=\"L2UI_CT1.BUTTON_DF_DOWN\" width=65 height=20 fore=\"L2UI_CT1.BUTTON_DF\"></td>"
-				+ "<td align=center FIXWIDTH=70><button value=\"&$425;\" action=\"bypass _bbsclan_clanadmin;").append(msgType.equals("comment") ? "delcomm" : "delanno").append(";").append(clanId).append("\" back=\"L2UI_CT1.BUTTON_DF_DOWN\" width=65 height=20 fore=\"L2UI_CT1.BUTTON_DF\" ></td>&nbsp;"
+				+ "<td align=center FIXWIDTH=70><button value=\"&$425;\" action=\"bypass _bbsclan_clanadmin;").append(msgType.equals("comment") ? "delcomm" : "delanno").append(';').append(clanId).append("\" back=\"L2UI_CT1.BUTTON_DF_DOWN\" width=65 height=20 fore=\"L2UI_CT1.BUTTON_DF\" ></td>&nbsp;"
 				+ "<td align=center FIXWIDTH=70><button value=\"&$141;\" action=\"bypass _bbsclan_clanhome\" back=\"L2UI_CT1.BUTTON_DF_DOWN\" width=65 height=20 fore=\"L2UI_CT1.BUTTON_DF\"></td>"
 				+ "<td align=center FIXWIDTH=330>&nbsp;</td>"
 				+ "<td><img src=\"l2ui.mini_logo\" width=5 height=1></td>"

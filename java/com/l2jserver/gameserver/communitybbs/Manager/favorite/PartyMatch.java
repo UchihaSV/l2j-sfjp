@@ -692,7 +692,7 @@ public class PartyMatch extends BaseFavoriteManager
 				if (leader == null)
 				{
 					if (DelRoom.length() != 0)
-						DelRoom.append(",");
+						DelRoom.append(',');
 					DelRoom.append(pi.roomId);
 				}
 				else if (pi.roomId != -1 && pi.owner_id != -1)
