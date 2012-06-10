@@ -1175,6 +1175,7 @@ public final class Config
 	public static final boolean FIX_THREADINFO_TO_STRING = true;		//[JOJO]ThreadInfo#toString()が8行しか表示されないバグの修正.
 	public static final boolean FIX_DEADLOCK_ON_SHUTDOWN = true;		//[JOJO]L2TIntObjectHashMapがスレッドセーフでは無いので.
 	public static final boolean FILE_FILTER_CASE_SENSITIVE = true;		//[JOJO]ファイル名の大文字小文字を区別する
+	public static final boolean DEBUG_object_already_exist_in_OID_map = true;		//[JOJO]L2World#storeObjectのデバッグモードON/OFF
 	
 
 	//

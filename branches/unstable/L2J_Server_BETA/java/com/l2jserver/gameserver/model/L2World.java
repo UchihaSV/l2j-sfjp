@@ -94,7 +94,11 @@ public final class L2World
 	{
 		_allPlayers = new L2TIntObjectHashMap<L2PcInstance>();
 		_allObjects = new L2TIntObjectHashMap<L2Object>();
+if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 		_allObjectsDebug = new L2TIntObjectHashMap<String>();
+}} else {{
+		_allObjectsDebug = null;
+}}
 		_petsInstance = new L2TIntObjectHashMap<L2PetInstance>();
 		
 		initRegions();
@@ -122,14 +126,18 @@ public final class L2World
 		{
 			_log.log(Level.WARNING, "--------[L2World] object: " + object + " already exist in OID map!--------");
 			_log.log(Level.WARNING, "New object: " + StringUtil.getTraceString(Thread.currentThread().getStackTrace()));
+if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 			_log.log(Level.WARNING, "----------------- Previous Put -----------------");
 			_log.log(Level.WARNING, "Previous: " + _allObjectsDebug.get(object.getObjectId()));
+}}
 			_log.log(Level.WARNING, "---------------------- End ---------------------");
 			return;
 		}
 		
 		_allObjects.put(object.getObjectId(), object);
+if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 		_allObjectsDebug.put(object.getObjectId(), StringUtil.getTraceString(Thread.currentThread().getStackTrace()));
+}}
 	}
 	
 	/**
@@ -146,7 +154,9 @@ public final class L2World
 	public void removeObject(L2Object object)
 	{
 		_allObjects.remove(object.getObjectId()); // suggestion by whatev
+if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 		_allObjectsDebug.remove(object.getObjectId());
+}}
 	}
 	
 	public void removeObjects(List<L2Object> list)
@@ -156,7 +166,9 @@ public final class L2World
 			if (o != null)
 			{
 				_allObjects.remove(o.getObjectId()); // suggestion by whatev
+if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 				_allObjectsDebug.remove(o.getObjectId());
+}}
 			}
 		}
 	}
@@ -166,7 +178,9 @@ public final class L2World
 		for (L2Object o : objects)
 		{
 			_allObjects.remove(o.getObjectId()); // suggestion by whatev
+if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 			_allObjectsDebug.remove(o.getObjectId());
+}}
 		}
 	}
 	
