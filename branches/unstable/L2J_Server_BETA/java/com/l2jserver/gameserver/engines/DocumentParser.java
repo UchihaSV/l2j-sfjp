@@ -70,9 +70,10 @@ public abstract class DocumentParser
 	 */
 	protected void parseFile(File f)
 	{
+	  try {
 		if (!xmlFilter.accept(f))
 		{
-			_log.warning(getClass().getSimpleName() + ": Could not parse " + f.getName() + " is not a file or it doesn't exist!");
+			_log.warning(getClass().getSimpleName() + ": Could not parse " + f.getPath() + " is not a file or it doesn't exist!");	//[JOJO]
 			return;
 		}
 		
@@ -91,10 +92,15 @@ public abstract class DocumentParser
 		}
 		catch (Exception e)
 		{
-			_log.warning(getClass().getSimpleName() + ": Could not parse " + f.getName() + " file: " + e.getMessage());
+			_log.warning(getClass().getSimpleName() + ": Could not parse " + f.getPath() + " file. " + e.getMessage());	//[JOJO]
 			return;
 		}
 		parseDocument();
+	  }
+	  finally {	//[JOJO]
+		_currentDocument = null;
+		_currentFile = null;
+	  }
 	}
 	
 	/**
