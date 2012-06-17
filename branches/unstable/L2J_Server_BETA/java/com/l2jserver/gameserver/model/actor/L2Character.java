@@ -7935,7 +7935,7 @@ public abstract class L2Character extends L2Object
 	{
 		if (!globalDeathListeners.contains(listener))
 		{
-			globalDeathListeners.remove(listener);
+			globalDeathListeners.add(listener);
 		}
 	}
 	
