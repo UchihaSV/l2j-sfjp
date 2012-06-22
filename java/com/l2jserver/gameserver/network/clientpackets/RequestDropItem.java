@@ -65,31 +65,41 @@ public final class RequestDropItem extends L2GameClientPacket
 		
 		L2ItemInstance item = activeChar.getInventory().getItemByObjectId(_objectId);
 		
-		if (item == null
-				|| _count == 0
-				|| !activeChar.validateItemManipulation(_objectId, "drop")
-				|| (!Config.ALLOW_DISCARDITEM && !activeChar.isGM())
-				|| (!item.isDropable() && !(activeChar.isGM() && Config.GM_TRADE_RESTRICTED_ITEMS))
-				|| (item.getItemType() == L2EtcItemType.PET_COLLAR && activeChar.havePetInvItems())
-				|| activeChar.isInsideZone(L2Character.ZONE_NOITEMDROP))
+		if (item == null)
 		{
-			activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_THIS_ITEM);
+			activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);
 			return;
 		}
 		if (item.isQuestItem() && !(activeChar.isGM() && Config.GM_TRADE_RESTRICTED_ITEMS))
 		{
+			activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_THIS_ITEM);
 			return;
 		}
-		
-		if (_count > item.getCount())
+		if (activeChar.isInsideZone(L2Character.ZONE_NOITEMDROP))
 		{
-			activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_THIS_ITEM);
+			activeChar.sendPacket(SystemMessageId.CANT_DISCARD_HERE);
+			return;
+		}
+		if (item.getItemType() == L2EtcItemType.PET_COLLAR && activeChar.havePetInvItems())
+		{
+			activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_EXCHANGE_ITEM);
+		//	activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);
+		//	activeChar.sendPacket(SystemMessageId.ITEMS_IN_PET_INVENTORY);		//TODO:未確認
+		//	activeChar.sendPacket(SystemMessageId.PET_SUMMONED_MAY_NOT_LET_GO);	//TODO:未確認
+			return;
+		}
+		if (_count == 0 || _count > item.getCount()
+			|| !activeChar.validateItemManipulation(_objectId, "drop")
+			|| (!Config.ALLOW_DISCARDITEM && !activeChar.isGM())
+			|| (!item.isDropable() && !(activeChar.isGM() && Config.GM_TRADE_RESTRICTED_ITEMS)) )
+		{
+			activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);
 			return;
 		}
 		
 		if (Config.PLAYER_SPAWN_PROTECTION > 0 && activeChar.isInvul() && !activeChar.isGM())
 		{
-			activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_THIS_ITEM);
+			activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);
 			return;
 		}
 		
@@ -139,7 +149,7 @@ public final class RequestDropItem extends L2GameClientPacket
 		{
 			if (activeChar.getCurrentSkill() != null && activeChar.getCurrentSkill().getSkill().getItemConsumeId() == item.getItemId())
 			{
-				activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_THIS_ITEM);
+				activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);
 				return;
 			}
 		}
@@ -149,7 +159,7 @@ public final class RequestDropItem extends L2GameClientPacket
 		{
 			if (activeChar.getLastSimultaneousSkillCast() != null && activeChar.getLastSimultaneousSkillCast().getItemConsumeId() == item.getItemId())
 			{
-				activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_THIS_ITEM);
+				activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);
 				return;
 			}
 		}

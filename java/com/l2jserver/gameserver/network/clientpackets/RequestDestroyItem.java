@@ -80,7 +80,7 @@ public final class RequestDestroyItem extends L2GameClientPacket
 		// if we can't find the requested item, its actually a cheat
 		if (itemToRemove == null)
 		{
-			activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_THIS_ITEM);
+			activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);
 			return;
 		}
 		
@@ -89,7 +89,7 @@ public final class RequestDestroyItem extends L2GameClientPacket
 		{
 			if (activeChar.getCurrentSkill() != null && activeChar.getCurrentSkill().getSkill().getItemConsumeId() == itemToRemove.getItemId())
 			{
-				activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_THIS_ITEM);
+				activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);
 				return;
 			}
 		}
@@ -98,7 +98,7 @@ public final class RequestDestroyItem extends L2GameClientPacket
 		{
 			if (activeChar.getLastSimultaneousSkillCast() != null && activeChar.getLastSimultaneousSkillCast().getItemConsumeId() == itemToRemove.getItemId())
 			{
-				activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_THIS_ITEM);
+				activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);
 				return;
 			}
 		}
@@ -110,7 +110,7 @@ public final class RequestDestroyItem extends L2GameClientPacket
 			if (itemToRemove.isHeroItem())
 				activeChar.sendPacket(SystemMessageId.HERO_WEAPONS_CANT_DESTROYED);
 			else
-				activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_THIS_ITEM);
+				activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);
 			return;
 		}
 		
