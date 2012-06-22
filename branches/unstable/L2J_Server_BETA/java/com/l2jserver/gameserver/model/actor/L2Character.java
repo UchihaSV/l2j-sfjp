@@ -4109,8 +4109,8 @@ public abstract class L2Character extends L2Object
 	 */
 	public final void addStatFuncs(Func[] funcs)
 	{
-		
-		List<Stats> modifiedStats = new ArrayList<Stats>();
+		if (funcs.length == 0) return;	//[JOJO]
+		List<Stats> modifiedStats = new ArrayList<Stats>(funcs.length);
 		
 		for (Func f : funcs)
 		{
@@ -4192,8 +4192,8 @@ public abstract class L2Character extends L2Object
 	 */
 	public final void removeStatFuncs(Func[] funcs)
 	{
-		
-		List<Stats> modifiedStats = new ArrayList<Stats>();
+		if (funcs.length == 0) return;	//[JOJO]
+		List<Stats> modifiedStats = new ArrayList<Stats>(funcs.length);
 		
 		for (Func f : funcs)
 		{
