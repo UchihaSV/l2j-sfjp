@@ -429,7 +429,7 @@ public abstract class L2Character extends L2Object
 				{
 					if (skill.getDisplayId() != skill.getId())
 					{
-						_customSkills.put(Integer.valueOf(skill.getDisplayId()), new SkillHolder(skill));
+						_customSkills.put(skill.getDisplayId(), new SkillHolder(skill));
 					}
 					addStatFuncs(skill.getStatFuncs(null, this));
 				}
@@ -6775,7 +6775,7 @@ public abstract class L2Character extends L2Object
 		if (skill == null || _disabledSkills == null)
 			return;
 		
-		_disabledSkills.remove(Integer.valueOf(skill.getReuseHashCode()));
+		_disabledSkills.remove(skill.getReuseHashCode());
 	}
 	
 	/**
@@ -6791,7 +6791,7 @@ public abstract class L2Character extends L2Object
 		if (_disabledSkills == null)
 			_disabledSkills = new L2TIntObjectHashMap<Long>();
 		
-		_disabledSkills.put(Integer.valueOf(skill.getReuseHashCode()), delay > 10 ? System.currentTimeMillis() + delay : Long.MAX_VALUE);
+		_disabledSkills.put(skill.getReuseHashCode(), delay > 10 ? System.currentTimeMillis() + delay : Long.MAX_VALUE);
 	}
 	
 	/**
@@ -6824,13 +6824,13 @@ public abstract class L2Character extends L2Object
 		if (_disabledSkills == null)
 			return false;
 		
-		final Long timeStamp = _disabledSkills.get(Integer.valueOf(reuseHashcode));
+		final Long timeStamp = _disabledSkills.get(reuseHashcode);
 		if (timeStamp == null)
 			return false;
 		
 		if (timeStamp < System.currentTimeMillis())
 		{
-			_disabledSkills.remove(Integer.valueOf(reuseHashcode));
+			_disabledSkills.remove(reuseHashcode);
 			return false;
 		}
 		
