@@ -156,9 +156,9 @@ public abstract class L2Character extends L2Object
 	
 	private static List<DeathListener> globalDeathListeners = new FastList<DeathListener>().shared();
 	private static List<SkillUseListener> globalSkillUseListeners = new FastList<SkillUseListener>().shared();
-	private List<AttackListener> attackListeners = new FastList<AttackListener>().shared();
-	private List<DeathListener> deathListeners = new FastList<DeathListener>().shared();
-	private List<SkillUseListener> skillUseListeners = new FastList<SkillUseListener>().shared();
+	private List<AttackListener> attackListeners;// = new FastList<AttackListener>().shared();
+	private List<DeathListener> deathListeners;// = new FastList<DeathListener>().shared();
+	private List<SkillUseListener> skillUseListeners;// = new FastList<SkillUseListener>().shared();
 	
 	private volatile Set<L2Character> _attackByList;
 	private volatile boolean _isCastingNow = false;
@@ -199,7 +199,14 @@ public abstract class L2Character extends L2Object
 	/**
 	 * Map containing all custom skills of this character.
 	 */
-	private final FastMap<Integer, SkillHolder> _customSkills = new FastMap<Integer, SkillHolder>().shared();
+	private Map<Integer, SkillHolder> _customSkills;// = new FastMap<Integer, SkillHolder>().shared();
+	private void _customSkills_put(Integer key, SkillHolder value)	//[JOJO]
+	{
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+		if (_customSkills == Collections.EMPTY_MAP) _customSkills = new FastMap<Integer, SkillHolder>().shared();
+}}
+		_customSkills.put(key, value);
+	}
 	
 	/** FastMap containing the active chance skills on this character */
 	private volatile ChanceSkillList _chanceSkills;
@@ -400,6 +407,19 @@ public abstract class L2Character extends L2Object
 	public L2Character(int objectId, L2CharTemplate template)
 	{
 		super(objectId);
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+		attackListeners = Collections.emptyList();		// = Collections.EMPTY_LIST
+		deathListeners = Collections.emptyList();		// = Collections.EMPTY_LIST
+		skillUseListeners = Collections.emptyList();	// = Collections.EMPTY_LIST
+		
+		_customSkills = Collections.emptyMap(); // = Collections.EMPTY_MAP
+}} else {{
+		attackListeners = new FastList<AttackListener>().shared();
+		deathListeners = new FastList<DeathListener>().shared();
+		skillUseListeners = new FastList<SkillUseListener>().shared();
+		
+		_customSkills = new FastMap<Integer, SkillHolder>().shared();
+}}
 		setInstanceType(InstanceType.L2Character);
 		initCharStat();
 		initCharStatus();
@@ -432,7 +452,7 @@ public abstract class L2Character extends L2Object
 				{
 					if (skill.getDisplayId() != skill.getId())
 					{
-						_customSkills.put(skill.getDisplayId(), new SkillHolder(skill));
+						_customSkills_put(skill.getDisplayId(), new SkillHolder(skill));
 					}
 					addStatFuncs(skill.getStatFuncs(null, this));
 				}
@@ -460,7 +480,7 @@ public abstract class L2Character extends L2Object
 					{
 						if (skill.getDisplayId() != skill.getId())
 						{
-							_customSkills.put(Integer.valueOf(skill.getDisplayId()), new SkillHolder(skill));
+							_customSkills_put(skill.getDisplayId(), new SkillHolder(skill));
 						}
 						addStatFuncs(skill.getStatFuncs(null, this));
 					}
@@ -6067,7 +6087,7 @@ public abstract class L2Character extends L2Object
 			oldSkill = _skills.put(newSkill.getId(), newSkill);
 			if (newSkill.getDisplayId() != newSkill.getId())
 			{
-				_customSkills.put(Integer.valueOf(newSkill.getDisplayId()), new SkillHolder(newSkill));
+				_customSkills_put(newSkill.getDisplayId(), new SkillHolder(newSkill));
 			}
 			// If an old skill has been replaced, remove all its Func objects
 			if (oldSkill != null)
@@ -6161,7 +6181,7 @@ public abstract class L2Character extends L2Object
 		{
 			if (oldSkill.getDisplayId() != oldSkill.getId())
 			{
-				_customSkills.remove(Integer.valueOf(oldSkill.getDisplayId()));
+				_customSkills.remove(oldSkill.getDisplayId());
 			}
 			//this is just a fail-safe againts buggers and gm dummies...
 			if ((oldSkill.triggerAnotherSkill()) && oldSkill.getTriggeredId() > 0)
@@ -7879,6 +7899,9 @@ public abstract class L2Character extends L2Object
 	{
 		if (!attackListeners.contains(listener))
 		{
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+			if (attackListeners == Collections.EMPTY_LIST) attackListeners = new FastList<AttackListener>().shared();
+}}
 			attackListeners.add(listener);
 		}
 	}
@@ -7910,6 +7933,9 @@ public abstract class L2Character extends L2Object
 	{
 		if (!deathListeners.contains(listener))
 		{
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+			if (deathListeners == Collections.EMPTY_LIST) deathListeners = new FastList<DeathListener>().shared();
+}}
 			deathListeners.add(listener);
 		}
 	}
@@ -7965,6 +7991,9 @@ public abstract class L2Character extends L2Object
 	{
 		if (!skillUseListeners.contains(listener))
 		{
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+			if (skillUseListeners == Collections.EMPTY_LIST) skillUseListeners = new FastList<SkillUseListener>().shared();
+}}
 			skillUseListeners.add(listener);
 		}
 	}

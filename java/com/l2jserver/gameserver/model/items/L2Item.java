@@ -18,6 +18,7 @@ import static com.l2jserver.gameserver.datatables.StringIntern.intern;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -207,7 +208,7 @@ public abstract class L2Item
 	protected static final Func[] _emptyFunctionSet = new Func[0];
 	protected static final L2Effect[] _emptyEffectSet = new L2Effect[0];
 	
-	private final List<Quest> _questEvents = new FastList<Quest>();
+	private List<Quest> _questEvents;// = new FastList<Quest>();
 	private final int _useSkillDisTime;
 	private final int _reuseDelay;
 	private int _sharedReuseGroup;
@@ -218,6 +219,11 @@ public abstract class L2Item
 	 */
 	protected L2Item(StatsSet set)
 	{
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+		_questEvents = Collections.emptyList();		// = Collections.EMPTY_LIST
+}} else {{
+		_questEvents = new FastList<Quest>();
+}}
 		_itemId = set.getInteger("item_id");
 		_displayId = set.getInteger("displayId", _itemId);
 		_name = intern(set.getString("name"));
@@ -1035,6 +1041,9 @@ public abstract class L2Item
 	
 	public void addQuestEvent(Quest q)
 	{
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+		if (_questEvents == Collections.EMPTY_LIST) _questEvents = new FastList<Quest>();
+}}
 		_questEvents.add(q);
 	}
 	

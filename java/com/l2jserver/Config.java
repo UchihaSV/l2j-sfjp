@@ -1177,6 +1177,7 @@ public final class Config
 	public static final boolean FILE_FILTER_CASE_SENSITIVE = true;		//[JOJO]ファイル名の大文字小文字を区別する
 	public static final boolean TEST_GET_AI = false;
 	public static final boolean DEBUG_object_already_exist_in_OID_map = true;		//[JOJO]L2World#storeObjectのデバッグモードON/OFF
+	public static final boolean INITIALIZE_EMPTY_COLLECTION = true;		//[JOJO]遅延初期化する
 	
 
 	//
