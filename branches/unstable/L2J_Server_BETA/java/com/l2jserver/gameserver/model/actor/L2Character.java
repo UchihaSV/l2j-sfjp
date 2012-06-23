@@ -19,6 +19,7 @@ import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_FOLLOW;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -193,7 +194,7 @@ public abstract class L2Character extends L2Object
 	/**
 	 * Map containing all skills of this character.
 	 */
-	private final FastMap<Integer, L2Skill> _skills = new FastMap<Integer, L2Skill>().shared();
+	private final Map<Integer, L2Skill> _skills;// = new FastMap<Integer, L2Skill>().shared();
 	
 	/**
 	 * Map containing all custom skills of this character.
@@ -409,11 +410,13 @@ public abstract class L2Character extends L2Object
 		if (isDoor())
 		{
 			_calculators = Formulas.getStdDoorCalculators();
+			_skills = Collections.emptyMap();
 		}
 		else if (template != null && isNpc())
 		{
 			// Copy the Standard Calculators of the L2NPCInstance in _calculators
 			_calculators = NPC_STD_CALCULATOR;
+			_skills = new FastMap<Integer, L2Skill>().shared();
 			
 			// Copy the skills of the L2NPCInstance from its template to the L2Character Instance
 			// The skills list can be affected by spell effects so it's necessary to make a copy
@@ -425,7 +428,7 @@ public abstract class L2Character extends L2Object
 			
 			if (!_skills.isEmpty())
 			{
-				for (L2Skill skill : getAllSkills())
+				for (L2Skill skill : _skills.values())
 				{
 					if (skill.getDisplayId() != skill.getId())
 					{
@@ -438,7 +441,9 @@ public abstract class L2Character extends L2Object
 		else
 		{
 			// If L2Character is a L2PcInstance or a L2Summon, create the basic calculator set
+			//    or a L2StaticObjectInstance or a L2BoatInstance or a L2AirShipInstance +[JOJO]
 			_calculators = new Calculator[Stats.NUM_STATS];
+			_skills = new FastMap<Integer, L2Skill>().shared();
 			
 			if (isSummon())
 			{
@@ -451,7 +456,7 @@ public abstract class L2Character extends L2Object
 				}
 				if (!_skills.isEmpty())
 				{
-					for (L2Skill skill : getAllSkills())
+					for (L2Skill skill : _skills.values())
 					{
 						if (skill.getDisplayId() != skill.getId())
 						{
@@ -6284,7 +6289,7 @@ public abstract class L2Character extends L2Object
 	 */
 	public final Collection<L2Skill> getAllSkills()
 	{
-		return new ArrayList<>(_skills.values());
+		return _skills.size() == 0 ? Collections.<L2Skill>emptyList() : new ArrayList<>(_skills.values());
 	}
 	
 	/**
