@@ -43,6 +43,7 @@ public class DoorTable extends DocumentParser
 	
 	protected DoorTable()
 	{
+		_log.info("Initializing Door Table");
 		load();
 	}
 	
