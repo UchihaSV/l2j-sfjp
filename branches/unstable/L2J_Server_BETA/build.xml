@@ -74,7 +74,8 @@
 		<copy todir="${build.dist.game}" preservelastmodified="true">
 			<fileset dir="misc" />
 		</copy>
-		<concat destfile="${build.dist.game}/config/l2j-version.properties">version=${l2j.version}${line.separator}builddate=${build.tstamp}</concat>
+		<copy file="dist/game/config/l2j-version.txt" tofile="${build.dist.game}/config/l2j-version.properties" overwrite="true"/><!--[JOJO]-->
+		<concat destfile="${build.dist.game}/config/l2j-version.properties" append="true">revision=${l2j.version}${line.separator}builddate=${build.tstamp}${line.separator}</concat>
 		<copy todir="${build.dist.login}" preservelastmodified="true">
 			<fileset dir="misc" />
 		</copy>
