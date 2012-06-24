@@ -19,14 +19,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javolution.util.FastList;
-import javolution.util.FastMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -81,12 +79,12 @@ public class Quest extends ManagedScript
 	/**
 	 * Map containing events from String value of the event.
 	 */
-	private static Map<String, Quest> _allEventsS = new FastMap<>();
+	private static Map<String, Quest> _allEventsS = new HashMap<>();
 	
 	/**
 	 * Map containing lists of timers from the name of the timer.
 	 */
-	private final FastMap<String, FastList<QuestTimer>> _allEventTimers = new FastMap<String, FastList<QuestTimer>>();
+	private final Map<String, List<QuestTimer>> _allEventTimers = new HashMap<>();
 	private final List<Integer> _questInvolvedNpcs = new ArrayList<>();
 	
 	private final ReentrantReadWriteLock _rwLock = new ReentrantReadWriteLock();
@@ -149,8 +147,6 @@ public class Quest extends ManagedScript
 		_questId = questId;
 		_name = name;
 		_descr = descr;
-		if (com.l2jserver.Config.QUEST_TIMER_SHARED) _allEventTimers.shared();
-		
 		if (questId != 0)
 		{
 			QuestManager.getInstance().addQuest(this);
@@ -291,7 +287,7 @@ public class Quest extends ManagedScript
 			return _descr;
 	}
 	
-	public FastMap<String, FastList<QuestTimer>> getAllQuestTimers()
+	public Map<String, List<QuestTimer>> getAllQuestTimers()
 	{
 		return _allEventTimers;
 	}
@@ -327,11 +323,11 @@ public class Quest extends ManagedScript
 	 */
 	public void startQuestTimer(String name, long time, L2Npc npc, L2PcInstance player, boolean repeating)
 	{
-		FastList<QuestTimer> timers = getQuestTimers(name);
+		List<QuestTimer> timers = getQuestTimers(name);
 		// Add quest timer if timer doesn't already exist
 		if (timers == null)
 		{
-			timers = new FastList<>();
+			timers = new ArrayList<>();
 			timers.add(new QuestTimer(this, name, time, npc, player, repeating));
 			_allEventTimers.put(name, timers);
 		}
@@ -364,7 +360,7 @@ public class Quest extends ManagedScript
 	 */
 	public QuestTimer getQuestTimer(String name, L2Npc npc, L2PcInstance player)
 	{
-		final FastList<QuestTimer> qt = getQuestTimers(name);
+		final List<QuestTimer> qt = getQuestTimers(name);
 		if ((qt == null) || qt.isEmpty())
 		{
 			return null;
@@ -382,7 +378,6 @@ public class Quest extends ManagedScript
 					}
 				}
 			}
-			
 		}
 		finally
 		{
@@ -396,7 +391,7 @@ public class Quest extends ManagedScript
 	 * @param name the name of the quest timers to get
 	 * @return a list of all quest timers matching the given name or {@code null} if none were found
 	 */
-	private FastList<QuestTimer> getQuestTimers(String name)
+	private List<QuestTimer> getQuestTimers(String name)
 	{
 		return _allEventTimers.get(name);
 	}
@@ -407,7 +402,7 @@ public class Quest extends ManagedScript
 	 */
 	public void cancelQuestTimers(String name)
 	{
-		FastList<QuestTimer> timers = getQuestTimers(name);
+		List<QuestTimer> timers = getQuestTimers(name);
 		if (timers == null)
 		{
 			return;
@@ -432,7 +427,7 @@ public class Quest extends ManagedScript
 	//[JOJO]-------------------------------------------------
 	public void cancelQuestTimers(String name, int instanceId)
 	{
-		FastList<QuestTimer> timers = getQuestTimers(name);
+		List<QuestTimer> timers = getQuestTimers(name);
 		if (timers == null)
 			return;
 		try
@@ -479,7 +474,7 @@ public class Quest extends ManagedScript
 		{
 			return;
 		}
-		final FastList<QuestTimer> timers = getQuestTimers(timer.getName());
+		final List<QuestTimer> timers = getQuestTimers(timer.getName());
 		if (timers == null)
 		{
 			return;
@@ -1059,8 +1054,8 @@ public class Quest extends ManagedScript
 	 *            Generally, this string is passed directly via the link.<br>
 	 *            For example:<br>
 	 *            <code>
-	 * 	&lt;a action="bypass -h Quest 626_ADarkTwilight 31517-01.htm"&gt;hello&lt;/a&gt;
-	 * </code> <br>
+	 *            &lt;a action="bypass -h Quest 626_ADarkTwilight 31517-01.htm"&gt;hello&lt;/a&gt;
+	 *            </code><br>
 	 *            The above link sets the event variable to "31517-01.htm" for the quest 626_ADarkTwilight.<br>
 	 *            In the case of timers, this will be the name of the timer.<br>
 	 *            This parameter serves as a sort of identifier.
@@ -1089,8 +1084,8 @@ public class Quest extends ManagedScript
 	 *            Generally, this string is passed directly via the link.<br>
 	 *            For example:<br>
 	 *            <code>
-	 * 	&lt;a action="bypass -h Quest 626_ADarkTwilight 31517-01.htm"&gt;hello&lt;/a&gt;
-	 * </code><br>
+	 *            &lt;a action="bypass -h Quest 626_ADarkTwilight 31517-01.htm"&gt;hello&lt;/a&gt;
+	 *            </code><br>
 	 *            The above link sets the event variable to "31517-01.htm" for the quest 626_ADarkTwilight.<br>
 	 *            In the case of timers, this will be the name of the timer.<br>
 	 *            This parameter serves as a sort of identifier.
@@ -1404,8 +1399,8 @@ public class Quest extends ManagedScript
 			// Get list of quests owned by the player from database
 			con = L2DatabaseFactory.getInstance().getConnection();
 			
-			PreparedStatement invalidQuestData = con.prepareStatement("DELETE FROM character_quests WHERE charId=? and name=?");
-			PreparedStatement invalidQuestDataVar = con.prepareStatement("delete FROM character_quests WHERE charId=? and name=? and var=?");
+			PreparedStatement invalidQuestData = con.prepareStatement("DELETE FROM character_quests WHERE charId=? AND name=?");
+			PreparedStatement invalidQuestDataVar = con.prepareStatement("DELETE FROM character_quests WHERE charId=? AND name=? AND var=?");
 			
 			PreparedStatement statement = con.prepareStatement("SELECT name,value FROM character_quests WHERE charId=? AND var=?");
 			statement.setInt(1, player.getObjectId());
@@ -2229,8 +2224,7 @@ public class Quest extends ManagedScript
 		
 		// if the player is in a party, gather a list of all matching party members (possibly
 		// including this player)
-		FastList<L2PcInstance> candidates = new FastList<>();
-		
+		List<L2PcInstance> candidates = new ArrayList<>();
 		// get the target for enforcing distance limitations.
 		L2Object target = player.getTarget();
 		if (target == null)
@@ -2293,7 +2287,7 @@ public class Quest extends ManagedScript
 		
 		// if the player is in a party, gather a list of all matching party members (possibly
 		// including this player)
-		FastList<L2PcInstance> candidates = new FastList<>();
+		List<L2PcInstance> candidates = new ArrayList<>();
 		
 		// get the target for enforcing distance limitations.
 		L2Object target = player.getTarget();
@@ -2619,7 +2613,7 @@ public class Quest extends ManagedScript
 		// if timers ought to be restarted, the quest can take care of it
 		// with its code (example: save global data indicating what timer must
 		// be restarted).
-		for (FastList<QuestTimer> timers : _allEventTimers.values())
+		for (List<QuestTimer> timers : _allEventTimers.values())
 		{
 			for (QuestTimer timer : timers)
 			{
@@ -2632,7 +2626,9 @@ public class Quest extends ManagedScript
 		{
 			L2NpcTemplate template = NpcTable.getInstance().getTemplate(npcId);
 			if (template != null)
+			{
 				template.removeQuest(this);
+			}
 		}
 		_questInvolvedNpcs.clear();
 		
@@ -2708,9 +2704,9 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * @param player this parameter contains a reference to the player to check.
-	 * @param itemId the item Id of the item to verify.
-	 * @return {code true} if the item exists in player's inventory, otherwise {@code false}.
+	 * @param player the player whose inventory to check for quest items
+	 * @param itemId the ID of the item to check for
+	 * @return {@code true} if the item exists in player's inventory, {@code false} otherwise
 	 */
 	public boolean hasQuestItems(L2PcInstance player, int itemId)
 	{
@@ -2718,9 +2714,9 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * @param player this parameter contains a reference to the player to check.
-	 * @param itemIds the item Ids of the items to verify.
-	 * @return {code true} if all the items exists in player's inventory, otherwise {@code false}.
+	 * @param player the player whose inventory to check for quest items
+	 * @param itemIds a list or array of item IDs to check for
+	 * @return {@code true} if all items exist in player's inventory, {@code false} otherwise
 	 */
 	public boolean hasQuestItems(L2PcInstance player, int... itemIds)
 	{
@@ -2736,9 +2732,9 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * @param player this parameter contains a reference to the player to check.
-	 * @param itemId : ID of the item to check enchantment
-	 * @return the level of enchantment on the weapon of the player(Done specifically for weapon SA's)
+	 * @param player the player whose item to check
+	 * @param itemId the ID of the item whose enchantment to check
+	 * @return the enchantment level of the item or 0 if no item was found
 	 */
 	public int getEnchantLevel(L2PcInstance player, int itemId)
 	{
@@ -2753,10 +2749,10 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * Give Adena to the player
-	 * @param player this parameter contains a reference to the player that receives the Adena.
-	 * @param count this parameter represent the Adena count to give to the player.
-	 * @param applyRates if {@code true} quest rates will be applied.
+	 * Give Adena to the player.
+	 * @param player the player to whom to give the Adena
+	 * @param count the amount of Adena to give
+	 * @param applyRates if {@code true}, quest rates will be applied
 	 */
 	public void giveAdena(L2PcInstance player, long count, boolean applyRates)
 	{
@@ -2765,9 +2761,9 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * Give reward to player using multipliers.
-	 * @param player
-	 * @param itemId
-	 * @param count
+	 * @param player the player to whom to give the item
+	 * @param itemId the ID of the item to give
+	 * @param count the amount of items to give
 	 */
 	public void rewardItems(L2PcInstance player, int itemId, long count)
 	{
