@@ -26,6 +26,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javolution.util.FastMap;
+
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.GameTimeController;
@@ -84,7 +86,7 @@ public class Quest extends ManagedScript
 	/**
 	 * Map containing lists of timers from the name of the timer.
 	 */
-	private final Map<String, List<QuestTimer>> _allEventTimers = new HashMap<>();
+	private final FastMap<String, List<QuestTimer>> _allEventTimers = new FastMap<>();
 	private final List<Integer> _questInvolvedNpcs = new ArrayList<>();
 	
 	private final ReentrantReadWriteLock _rwLock = new ReentrantReadWriteLock();
@@ -147,6 +149,8 @@ public class Quest extends ManagedScript
 		_questId = questId;
 		_name = name;
 		_descr = descr;
+		if (com.l2jserver.Config.QUEST_TIMER_SHARED) _allEventTimers.shared();
+		
 		if (questId != 0)
 		{
 			QuestManager.getInstance().addQuest(this);
@@ -287,7 +291,7 @@ public class Quest extends ManagedScript
 			return _descr;
 	}
 	
-	public Map<String, List<QuestTimer>> getAllQuestTimers()
+	public FastMap<String, List<QuestTimer>> getAllQuestTimers()
 	{
 		return _allEventTimers;
 	}

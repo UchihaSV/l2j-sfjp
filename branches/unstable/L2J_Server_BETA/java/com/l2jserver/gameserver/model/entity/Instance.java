@@ -6,6 +6,7 @@ import gnu.trove.set.hash.TIntHashSet;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -378,7 +379,7 @@ public class Instance
 		for (Quest quest : QuestManager.getInstance().getAllManagedScripts())
 		{
 			if (quest == null) continue;
-			for (FastList<QuestTimer> timers : quest.getAllQuestTimers().values())
+			for (List<QuestTimer> timers : quest.getAllQuestTimers().values())
 			{
 				if (timers == null || timers.isEmpty()) continue;
 				for (QuestTimer timer : timers.toArray(new QuestTimer[timers.size()]))
