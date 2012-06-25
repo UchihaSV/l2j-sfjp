@@ -65,7 +65,6 @@ public class SiegeManager
 	
 	protected SiegeManager()
 	{
-		_log.info("Initializing SiegeManager");
 		load();
 	}
 	
