@@ -18,7 +18,7 @@ import java.util.List;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.datatables.NpcWalkerRoutesTable;
+import com.l2jserver.gameserver.datatables.NpcWalkerRoutesData;
 import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2NpcWalkerNode;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -53,7 +53,7 @@ public class L2NpcWalkerAI extends L2CharacterAI implements Runnable
 		if (!Config.ALLOW_NPC_WALKERS)
 			return;
 		
-		_route = NpcWalkerRoutesTable.getInstance().getRouteForNpc(getActor().getNpcId());
+		_route = NpcWalkerRoutesData.getInstance().getRouteForNpc(getActor().getNpcId());
 		if (_route != null)
 			ThreadPoolManager.getInstance().scheduleAi(this, com.l2jserver.util.Rnd.get(300000, 36000));
 		else
