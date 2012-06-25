@@ -821,7 +821,7 @@ if (com.l2jserver.Config.TEST_GET_AI) {{
 							}
 							L2Playable summon = pl.getPet();
 							
-							if (summon != null && summon instanceof L2PetInstance)
+							if (summon != null && summon.isPet())
 							{
 								reward2 = rewards.get(summon);
 								
