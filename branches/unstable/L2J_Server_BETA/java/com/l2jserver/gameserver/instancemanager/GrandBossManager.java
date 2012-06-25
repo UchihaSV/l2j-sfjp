@@ -115,7 +115,6 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	protected GrandBossManager()
 	{
-		_log.info("Initializing GrandBossManager");
 		init();
 	}
 	
