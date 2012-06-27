@@ -100,11 +100,13 @@ public class L2NpcWalkerAI extends L2CharacterAI implements Runnable
 			 * Check arrived.
 			 */
 			final L2NpcWalkerNode pos = _route.get(_currentPos);
-			NpcStringId npcString = pos.getNpcString();
-			String chat = npcString == null ? pos.getChatText() : null;
+			NpcStringId npcString;
+			String chat;
 			
-			if ((npcString != null) || (chat != null && !chat.isEmpty()))
-				getActor().broadcastChat(chat, npcString);
+			if ((npcString = pos.getNpcString()) != null)
+				getActor().broadcastChat(npcString);
+			else if ((chat = pos.getChatText()) != null && chat.length() > 0)
+				getActor().broadcastChat(chat);
 			
 			//time in millis
 			long delay = pos.getDelay();

@@ -14,11 +14,14 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.regex.Pattern;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -48,7 +51,21 @@ public class NpcWalkerRoutesData extends DocumentParser
 	public void load()
 	{
 		_routes.clear();
+		
+if (com.l2jserver.Config.CUSTOM_WALKERROUTES_LOAD) {{
+		final Pattern pattern = Pattern.compile("WalkerRoutes.*\\.xml");	// WalkerRoutes*.xml
+		File[] walkerRoutesFiles = new File(Config.DATAPACK_ROOT, "data").listFiles(new FileFilter(){
+			@Override public boolean accept(File file) { return file.isFile() && pattern.matcher(file.getName()).matches(); }
+		});
+		for (File file : walkerRoutesFiles)
+		{
+			_log.info(getClass().getSimpleName() + ": Loading " + file.getName());
+			parseFile(file);
+		}
+}} else {{
 		parseDatapackFile("data/WalkerRoutes.xml");
+}}
+		
 		_log.info(getClass().getSimpleName() + ": Loaded " + _routes.size() + " Npc Walker Routes.");
 	}
 	
