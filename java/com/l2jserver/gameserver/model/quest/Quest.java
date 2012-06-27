@@ -19,7 +19,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -81,7 +80,7 @@ public class Quest extends ManagedScript
 	/**
 	 * Map containing events from String value of the event.
 	 */
-	private static Map<String, Quest> _allEventsS = new HashMap<>();
+	private static Map<String, Quest> _allEventsS = new FastMap<>();
 	
 	/**
 	 * Map containing lists of timers from the name of the timer.
@@ -165,7 +164,7 @@ public class Quest extends ManagedScript
 	/**
 	 * The function init_LoadGlobalData is, by default, called by the constructor of all quests.<br>
 	 * Children of this class can implement this function in order to define what variables to load and what structures to save them in.<br>
-	 * By default, nothing is loaded.<br>
+	 * By default, nothing is loaded.
 	 */
 	protected void init_LoadGlobalData()
 	{
