@@ -22,8 +22,9 @@ import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.network.NpcStringId;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
+import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
+import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
-import com.l2jserver.gameserver.util.Broadcast;
 
 
 /**
@@ -68,17 +69,29 @@ public class L2NpcWalkerInstance extends L2Npc
 	
 	/**
 	 * Sends a chat to all _knowObjects
-	 * @param chat message to say
 	 * @param npcString 
 	 */
-	public void broadcastChat(String chat, NpcStringId npcString)
+	public void broadcastChat(NpcStringId npcString)
 	{
-		NpcSay cs;
-		if (npcString == null)
-			cs = new NpcSay(getObjectId(), Say2.ALL, getNpcId(), chat);
+		final L2GameServerPacket cs;
+		if (getTemplate().isServerSideName())
+			throw new UnsupportedOperationException(); //custom_npc cannot say NpcStringId.
 		else
-			cs = new NpcSay(getObjectId(), Say2.ALL, getNpcId(), npcString);
-		Broadcast.toKnownPlayers(this, cs);
+			cs = new NpcSay(getObjectId(), Say2.ALL, getTemplate().getIdTemplate(), npcString);
+		broadcastPacket(cs);
+	}
+	/**
+	 * Sends a chat to all _knowObjects
+	 * @param chat message to say
+	 */
+	public void broadcastChat(String chat)
+	{
+		final L2GameServerPacket cs;
+		if (getTemplate().isServerSideName())
+			cs = new CreatureSay(getObjectId(), Say2.ALL, getName(), chat);
+		else
+			cs = new NpcSay(getObjectId(), Say2.ALL, getTemplate().getIdTemplate(), chat);
+		broadcastPacket(cs);
 	}
 	
 	/**

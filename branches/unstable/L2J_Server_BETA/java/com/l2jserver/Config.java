@@ -1178,6 +1178,7 @@ public final class Config
 	public static final boolean TEST_GET_AI = false;
 	public static final boolean DEBUG_object_already_exist_in_OID_map = true;		//[JOJO]L2World#storeObjectのデバッグモードON/OFF
 	public static final boolean INITIALIZE_EMPTY_COLLECTION = true;		//[JOJO]遅延初期化する
+	public static final boolean CUSTOM_WALKERROUTES_LOAD = true;		//[JOJO]data/WalkerRoutes_*.xml を読み込む.
 	
 
 	//
