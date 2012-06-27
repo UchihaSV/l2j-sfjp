@@ -174,10 +174,11 @@ public final class QuestState
 		{
 			return false;
 		}
-		
+		final boolean newQuest = isCreated(); 
+		_state = state;
 		if (saveInDb)
 		{
-			if (isCreated())
+			if (newQuest)
 			{
 				Quest.createQuestInDb(this);
 			}
@@ -187,7 +188,6 @@ public final class QuestState
 			}
 		}
 		
-		_state = state;
 		_player.sendPacket(new QuestList());
 		return true;
 	}
