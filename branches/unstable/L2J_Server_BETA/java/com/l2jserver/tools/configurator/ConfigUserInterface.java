@@ -81,7 +81,7 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 	
 	private final JTabbedPane _tabPane = new JTabbedPane();
 	
-	private List<ConfigFile> _configs = new FastList<ConfigFile>();
+	private List<ConfigFile> _configs = new FastList<>();
 	
 	private ResourceBundle _bundle;
 	
@@ -392,7 +392,7 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 	{
 		private final File _file;
 		private String _name;
-		private final List<ConfigComment> _configs = new FastList<ConfigComment>();
+		private final List<ConfigComment> _configs = new FastList<>();
 		
 		public ConfigFile(File file)
 		{

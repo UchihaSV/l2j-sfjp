@@ -92,14 +92,14 @@ public final class L2World
 	 */
 	protected L2World()
 	{
-		_allPlayers = new L2TIntObjectHashMap<L2PcInstance>();
-		_allObjects = new L2TIntObjectHashMap<L2Object>();
+		_allPlayers = new L2TIntObjectHashMap<>();
+		_allObjects = new L2TIntObjectHashMap<>();
 if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
-		_allObjectsDebug = new L2TIntObjectHashMap<String>();
+		_allObjectsDebug = new L2TIntObjectHashMap<>();
 }} else {{
 		_allObjectsDebug = null;
 }}
-		_petsInstance = new L2TIntObjectHashMap<L2PetInstance>();
+		_petsInstance = new L2TIntObjectHashMap<>();
 		
 		initRegions();
 	}
@@ -503,7 +503,7 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 			return null;
 		
 		// Create an FastList in order to contain all visible L2Object
-		List<L2Object> result = new ArrayList<L2Object>();
+		List<L2Object> result = new ArrayList<>();
 		
 		// Go through the FastList of region
 		for (L2WorldRegion regi : reg.getSurroundingRegions())
@@ -542,14 +542,14 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 	public List<L2Object> getVisibleObjects(L2Object object, int radius)
 	{
 		if (object == null || !object.isVisible())
-			return new ArrayList<L2Object>();
+			return new ArrayList<>();
 		
 		int x = object.getX();
 		int y = object.getY();
 		int sqRadius = radius * radius;
 		
 		// Create an FastList in order to contain all visible L2Object
-		List<L2Object> result = new ArrayList<L2Object>();
+		List<L2Object> result = new ArrayList<>();
 		
 		// Go through the FastList of region
 		for (L2WorldRegion regi : object.getWorldRegion().getSurroundingRegions())
@@ -593,7 +593,7 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 	public List<L2Object> getVisibleObjects3D(L2Object object, int radius)
 	{
 		if (object == null || !object.isVisible())
-			return new ArrayList<L2Object>();
+			return new ArrayList<>();
 		
 		int x = object.getX();
 		int y = object.getY();
@@ -601,7 +601,7 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 		int sqRadius = radius * radius;
 		
 		// Create an FastList in order to contain all visible L2Object
-		List<L2Object> result = new ArrayList<L2Object>();
+		List<L2Object> result = new ArrayList<>();
 		
 		// Go through visible object of the selected region
 		for (L2WorldRegion regi : object.getWorldRegion().getSurroundingRegions())
@@ -647,7 +647,7 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 			return null;
 		
 		// Create an FastList in order to contain all visible L2Object
-		List<L2Playable> result = new ArrayList<L2Playable>();
+		List<L2Playable> result = new ArrayList<>();
 		
 		// Go through the FastList of region
 		for (L2WorldRegion regi : reg.getSurroundingRegions())

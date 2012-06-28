@@ -361,8 +361,8 @@ public final class HandysBlockCheckerManager
 		public ArenaParticipantsHolder(int arena)
 		{
 			_arena = arena;
-			_redPlayers = new ArrayList<L2PcInstance>(6);
-			_bluePlayers = new ArrayList<L2PcInstance>(6);
+			_redPlayers = new ArrayList<>(6);
+			_bluePlayers = new ArrayList<>(6);
 			_engine = new BlockCheckerEngine(this, _arena);
 		}
 		
@@ -378,7 +378,7 @@ public final class HandysBlockCheckerManager
 		
 		public ArrayList<L2PcInstance> getAllPlayers()
 		{
-			ArrayList<L2PcInstance> all = new ArrayList<L2PcInstance>(12);
+			ArrayList<L2PcInstance> all = new ArrayList<>(12);
 			all.addAll(_redPlayers);
 			all.addAll(_bluePlayers);
 			return all;

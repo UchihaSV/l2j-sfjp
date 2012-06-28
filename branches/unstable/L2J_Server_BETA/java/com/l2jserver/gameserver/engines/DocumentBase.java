@@ -136,7 +136,7 @@ public abstract class DocumentBase
 	protected DocumentBase(File pFile)
 	{
 		_file = pFile;
-		_tables = new FastMap<String, String[]>();
+		_tables = new FastMap<>();
 	}
 	
 	public Document parse()
@@ -176,7 +176,7 @@ public abstract class DocumentBase
 	
 	protected void resetTable()
 	{
-		_tables = new FastMap<String, String[]>();
+		_tables = new FastMap<>();
 	}
 	
 	protected void setTable(String name, String[] table)
@@ -638,7 +638,7 @@ public abstract class DocumentBase
 			else if ("clanHall".equalsIgnoreCase(a.getNodeName()))
 			{
 				StringTokenizer st = new StringTokenizer(a.getNodeValue(), ",");
-				ArrayList<Integer> array = new ArrayList<Integer>(st.countTokens());
+				ArrayList<Integer> array = new ArrayList<>(st.countTokens());
 				while (st.hasMoreTokens())
 				{
 					String item = st.nextToken().trim();
@@ -703,7 +703,7 @@ public abstract class DocumentBase
 			else if ("class_id_restriction".equalsIgnoreCase(a.getNodeName()))
 			{
 				StringTokenizer st = new StringTokenizer(a.getNodeValue(), ",");
-				ArrayList<Integer> array = new ArrayList<Integer>(st.countTokens());
+				ArrayList<Integer> array = new ArrayList<>(st.countTokens());
 				while (st.hasMoreTokens())
 				{
 					String item = st.nextToken().trim();
@@ -719,7 +719,7 @@ public abstract class DocumentBase
 			else if ("instanceId".equalsIgnoreCase(a.getNodeName()))
 			{
 				StringTokenizer st = new StringTokenizer(a.getNodeValue(), ",");
-				ArrayList<Integer> array = new ArrayList<Integer>(st.countTokens());
+				ArrayList<Integer> array = new ArrayList<>(st.countTokens());
 				while (st.hasMoreTokens())
 				{
 					String item = st.nextToken().trim();
@@ -740,7 +740,7 @@ public abstract class DocumentBase
 			else if ("hasPet".equalsIgnoreCase(a.getNodeName()))
 			{
 				StringTokenizer st = new StringTokenizer(a.getNodeValue(), ",");
-				ArrayList<Integer> array = new ArrayList<Integer>(st.countTokens());
+				ArrayList<Integer> array = new ArrayList<>(st.countTokens());
 				while (st.hasMoreTokens())
 				{
 					String item = st.nextToken().trim();
@@ -751,7 +751,7 @@ public abstract class DocumentBase
 			else if ("servitorNpcId".equalsIgnoreCase(a.getNodeName()))
 			{
 				StringTokenizer st = new StringTokenizer(a.getNodeValue(), ",");
-				ArrayList<Integer> array = new ArrayList<Integer>(st.countTokens());
+				ArrayList<Integer> array = new ArrayList<>(st.countTokens());
 				while (st.hasMoreTokens())
 				{
 					String item = st.nextToken().trim();
@@ -778,7 +778,7 @@ public abstract class DocumentBase
 			else if ("insideZoneId".equalsIgnoreCase(a.getNodeName()))
 			{
 				StringTokenizer st = new StringTokenizer(a.getNodeValue(), ",");
-				ArrayList<Integer> array = new ArrayList<Integer>(st.countTokens());
+				ArrayList<Integer> array = new ArrayList<>(st.countTokens());
 				while (st.hasMoreTokens())
 				{
 					String item = st.nextToken().trim();
@@ -824,7 +824,7 @@ public abstract class DocumentBase
 			else if ("class_id_restriction".equalsIgnoreCase(a.getNodeName()))
 			{
 				StringTokenizer st = new StringTokenizer(a.getNodeValue(), ",");
-				ArrayList<Integer> array = new ArrayList<Integer>(st.countTokens());
+				ArrayList<Integer> array = new ArrayList<>(st.countTokens());
 				while (st.hasMoreTokens())
 				{
 					String item = st.nextToken().trim();
@@ -870,7 +870,7 @@ public abstract class DocumentBase
 			else if ("race_id".equalsIgnoreCase(a.getNodeName()))
 			{
 				StringTokenizer st = new StringTokenizer(a.getNodeValue(), ",");
-				ArrayList<Integer> array = new ArrayList<Integer>(st.countTokens());
+				ArrayList<Integer> array = new ArrayList<>(st.countTokens());
 				while (st.hasMoreTokens())
 				{
 					String item = st.nextToken().trim();
@@ -921,7 +921,7 @@ public abstract class DocumentBase
 			else if ("npcId".equalsIgnoreCase(a.getNodeName()))
 			{
 				StringTokenizer st = new StringTokenizer(a.getNodeValue(), ",");
-				ArrayList<Integer> array = new ArrayList<Integer>(st.countTokens());
+				ArrayList<Integer> array = new ArrayList<>(st.countTokens());
 				while (st.hasMoreTokens())
 				{
 					String item = st.nextToken().trim();
@@ -1052,7 +1052,7 @@ public abstract class DocumentBase
 		String name = attrs.getNamedItem("name").getNodeValue();
 		if (name.charAt(0) != '#') throw new IllegalArgumentException("Table name must start with #");
 		StringTokenizer data = new StringTokenizer(n.getFirstChild().getNodeValue());
-		List<String> array = new ArrayList<String>(data.countTokens());
+		List<String> array = new ArrayList<>(data.countTokens());
 		while (data.hasMoreTokens())
 			array.add(intern(data.nextToken()));
 		setTable(name, array.toArray(new String[array.size()]));

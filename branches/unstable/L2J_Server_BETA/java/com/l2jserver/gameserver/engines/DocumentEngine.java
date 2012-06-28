@@ -76,7 +76,7 @@ public class DocumentEngine
 	public void loadAllSkills(final TIntObjectHashMap<L2Skill> allSkills)
 	{
 		int count = 0;
-		List<File> files = new FastList<File>();
+		List<File> files = new FastList<>();
 		hashFiles("data/stats/skills", files);
 		if (Config.CUSTOM_SKILLS_LOAD)
 			hashFiles("data/stats/skills/custom", files);
@@ -105,8 +105,8 @@ public class DocumentEngine
 	 */
 	public List<L2Item> loadItems()
 	{
-		List<L2Item> list = new FastList<L2Item>();
-		List<File> files = new FastList<File>();
+		List<L2Item> list = new FastList<>();
+		List<File> files = new FastList<>();
 		hashFiles("data/stats/items", files);
 		if (Config.CUSTOM_ITEMS_LOAD)
 			hashFiles("data/stats/items/custom", files);

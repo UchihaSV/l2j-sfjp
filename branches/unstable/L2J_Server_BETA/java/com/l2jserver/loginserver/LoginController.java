@@ -105,7 +105,7 @@ public class LoginController
 	{
 		_log.info("Loading LoginController...");
 		
-		_hackProtection = new FastMap<InetAddress, FailedLoginAttempt>();
+		_hackProtection = new FastMap<>();
 		
 		_keyPairs = new ScrambledKeyPair[10];
 		

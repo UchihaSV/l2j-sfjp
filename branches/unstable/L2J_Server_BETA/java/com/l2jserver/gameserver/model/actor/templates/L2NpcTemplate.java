@@ -439,7 +439,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	{
 		if (!_questEvents.containsKey(EventType))
 		{
-			List<Quest> quests = new ArrayList<Quest>();
+			List<Quest> quests = new ArrayList<>();
 			quests.add(q);
 			_questEvents.put(EventType, quests);
 		}
