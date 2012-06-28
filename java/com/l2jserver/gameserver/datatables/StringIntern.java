@@ -31,7 +31,7 @@ public class StringIntern
 		if (Config.STRING_INTERN) {
 			if (_stringSet != null)
 				throw new RuntimeException();
-			_stringSet = new FastMap<String, String>();
+			_stringSet = new FastMap<>();
 		}
 	}
 	

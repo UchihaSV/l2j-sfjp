@@ -31,7 +31,7 @@ import com.l2jserver.gameserver.model.base.PlayerClass;
  */
 public final class ClassListData extends DocumentParser
 {
-	private static final TIntObjectHashMap<ClassInfo> _classData = new TIntObjectHashMap<ClassInfo>();
+	private static final TIntObjectHashMap<ClassInfo> _classData = new TIntObjectHashMap<>();
 	
 	/**
 	 * Instantiates a new class list data.
