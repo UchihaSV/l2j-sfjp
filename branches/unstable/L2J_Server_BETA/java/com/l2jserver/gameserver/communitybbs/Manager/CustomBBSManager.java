@@ -283,7 +283,7 @@ public class CustomBBSManager extends BaseBBSManager
 	{
 		if (msgPage < 1) msgPage = 1;
 
-		List<CustomMsg> msgTable = new FastList<CustomMsg>();
+		List<CustomMsg> msgTable = new FastList<>();
 		int msgTotal = CustomMsg.list(msgTable, msgType, activeChar, (msgPage-1)*MESSAGE_LIST_LIMIT, MESSAGE_LIST_LIMIT);
 		if (msgTotal < 0) {
 			separateAndSend("<html><body><br><br><center><font color=FF0000>BBS ERROR!</font></center></body></html>", activeChar);
@@ -695,7 +695,7 @@ public class CustomBBSManager extends BaseBBSManager
 		int comTotal = -1, nbp = 0;
 		if (showComList) {
 			//「一言コメント」
-			comTable = new FastList<CustomComment>();
+			comTable = new FastList<>();
 			comTotal = CustomComment.list(comTable, msgId, (comPage-1)*COMMENT_LIST_LIMIT, COMMENT_LIST_LIMIT);
 			if (comTotal < 0) {
 				separateAndSend("<html><body><br><br><center><font color=FF0000>COMMENT ERROR!</font></center></body></html>", activeChar);
@@ -1195,7 +1195,7 @@ public class CustomBBSManager extends BaseBBSManager
 	protected void send1002(L2PcInstance activeChar, String string1, String string2,String string3)
 	{
 //		activeChar.TRACE("__BASENAME__:__LINE__: send1002(activeChar,["+string1+"],["+string2+"],["+string3+"])");
-		List<String> _arg = new FastList<String>();
+		List<String> _arg = new FastList<>();
 		_arg.add("0");
 		_arg.add("0");
 		_arg.add("0");
