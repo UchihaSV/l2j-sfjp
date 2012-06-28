@@ -10322,12 +10322,10 @@ public final class L2PcInstance extends L2Playable
 	{
 		sendPacket(SystemMessage.sendString(message));
 	}
-	@Deprecated
 	public void TRACE(String message)
 	{
 		TRACE("", message);
 	}
-	@Deprecated
 	public void TRACE(String title, String message)
 	{
 	}

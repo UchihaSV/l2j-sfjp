@@ -1136,8 +1136,8 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		return "data/html/npcdefault.htm";	*/
 	}
 	
-	@Deprecated public void TRACE(String message) { TRACE(getTitle() == null || getTitle().isEmpty() ? getName() : getTitle() + " " + getName(), message); }
-	@Deprecated public void TRACE(String title, String message) { com.l2jserver.gameserver.debug.TRACE(title, message); }
+	public void TRACE(String message) { TRACE(getTitle() == null || getTitle().isEmpty() ? getName() : getTitle() + " " + getName(), message); }
+	public void TRACE(String title, String message) { com.l2jserver.gameserver.debug.TRACE(title, message); }
 
 	public void showChatWindow(L2PcInstance player)
 	{

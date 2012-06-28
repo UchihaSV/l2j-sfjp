@@ -167,20 +167,6 @@ public class NewCrypt
 			_decrypt.processBlock(raw, i * 8, raw, i * 8);
 		}
 	}
-
-	/** @deprecated **/
-	public byte[] decrypt(byte[] raw) throws IOException
-	{
-		byte[] result = new byte[raw.length];
-		int count = raw.length / 8;
-		
-		for (int i = 0; i < count; i++)
-		{
-			_decrypt.processBlock(raw, i * 8, result, i * 8);
-		}
-		
-		return result;
-	}
 	
 	public void decrypt(byte[] raw, final int offset, final int size) throws IOException
 	{
@@ -198,20 +184,6 @@ public class NewCrypt
 		{
 			_crypt.processBlock(raw, i * 8, raw, i * 8);
 		}
-	}
-	
-	/** @deprecated **/
-	public byte[] crypt(byte[] raw) throws IOException
-	{
-		int count = raw.length / 8;
-		byte[] result = new byte[raw.length];
-		
-		for (int i = 0; i < count; i++)
-		{
-			_crypt.processBlock(raw, i * 8, result, i * 8);
-		}
-		
-		return result;
 	}
 	
 	public void crypt(byte[] raw, final int offset, final int size) throws IOException
