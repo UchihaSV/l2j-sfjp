@@ -2563,7 +2563,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			{
 				if (_attackByList == null)
 				{
-					_attackByList = new WeakFastSet<L2Character>(true);
+					_attackByList = new WeakFastSet<>(true);
 				}
 			}
 		}
@@ -4135,7 +4135,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public final void addStatFuncs(Func[] funcs)
 	{
 		if (funcs.length == 0) return;	//[JOJO]
-		List<Stats> modifiedStats = new ArrayList<Stats>(funcs.length);
+		List<Stats> modifiedStats = new ArrayList<>(funcs.length);
 		
 		for (Func f : funcs)
 		{
@@ -4218,7 +4218,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public final void removeStatFuncs(Func[] funcs)
 	{
 		if (funcs.length == 0) return;	//[JOJO]
-		List<Stats> modifiedStats = new ArrayList<Stats>(funcs.length);
+		List<Stats> modifiedStats = new ArrayList<>(funcs.length);
 		
 		for (Func f : funcs)
 		{
@@ -6427,7 +6427,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			int _skiprange = 0;
 			int _skipgeo = 0;
 			int _skippeace = 0;
-			List<L2Character> targetList = new FastList<L2Character>(targets.length);
+			List<L2Character> targetList = new FastList<>(targets.length);
 			for (L2Object target : targets)
 			{
 				if (target instanceof L2Character)
@@ -6814,7 +6814,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			return;
 		
 		if (_disabledSkills == null)
-			_disabledSkills = new L2TIntObjectHashMap<Long>();
+			_disabledSkills = new L2TIntObjectHashMap<>();
 		
 		_disabledSkills.put(skill.getReuseHashCode(), delay > 10 ? System.currentTimeMillis() + delay : Long.MAX_VALUE);
 	}

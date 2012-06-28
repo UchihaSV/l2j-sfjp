@@ -280,8 +280,8 @@ public class RegionBBSManager extends BaseBBSManager
 	@SuppressWarnings("unchecked")
 	private static final FastList<String> _communityPages[] = new FastList[2];
 		static {
-			_communityPages[FOR_PLAYER] = new FastList<String>();
-			_communityPages[FOR_GM] = new FastList<String>();
+			_communityPages[FOR_PLAYER] = new FastList<>();
+			_communityPages[FOR_GM] = new FastList<>();
 		}
 
 	private static final String DATEFORMAT = "yyyy/MM/dd HH:mm";
@@ -308,7 +308,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 		if (_shutdown) return;
 }}
-		final FastList<L2PcInstance> sortedPlayers = new FastList<L2PcInstance>();
+		final FastList<L2PcInstance> sortedPlayers = new FastList<>();
 		final TIntObjectIterator<L2PcInstance> it = L2World.getInstance().getAllPlayers().iterator();
 		while (it.hasNext())
 		{
@@ -413,7 +413,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 			//-----------------
 			// BBS PLAYER LIST
 			//-----------------
-			FastList<StringBuilder> pages = new FastList<StringBuilder>();
+			FastList<StringBuilder> pages = new FastList<>();
 			
 			if (Config.BBS_SHOW_PLAYERLIST)
 			{

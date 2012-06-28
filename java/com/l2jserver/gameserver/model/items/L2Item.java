@@ -222,7 +222,7 @@ public abstract class L2Item
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		_questEvents = Collections.emptyList();		// = Collections.EMPTY_LIST
 }} else {{
-		_questEvents = new FastList<Quest>();
+		_questEvents = new FastList<>();
 }}
 		_itemId = set.getInteger("item_id");
 		_displayId = set.getInteger("displayId", _itemId);
@@ -714,7 +714,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (_funcTemplates == null || _funcTemplates.length == 0)
 			return _emptyFunctionSet;
 		
-		ArrayList<Func> funcs = new ArrayList<Func>(_funcTemplates.length);
+		ArrayList<Func> funcs = new ArrayList<>(_funcTemplates.length);
 		
 		Env env = new Env();
 		env.setCharacter(player);
@@ -887,7 +887,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public final void attach(Condition c)
 	{
 		if (_preConditions == null)
-			_preConditions = new FastList<Condition>();
+			_preConditions = new FastList<>();
 		if (!_preConditions.contains(c))
 			_preConditions.add(c);
 	}
@@ -1042,7 +1042,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public void addQuestEvent(Quest q)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_questEvents == Collections.EMPTY_LIST) _questEvents = new FastList<Quest>();
+		if (_questEvents == Collections.EMPTY_LIST) _questEvents = new FastList<>();
 }}
 		_questEvents.add(q);
 	}

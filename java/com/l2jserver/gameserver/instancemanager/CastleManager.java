@@ -151,7 +151,7 @@ public class CastleManager implements InstanceListManager
 	public final List<Castle> getCastles()
 	{
 		if (_castles == null)
-			_castles = new FastList<Castle>();
+			_castles = new FastList<>();
 		return _castles;
 	}
 	

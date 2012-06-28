@@ -120,10 +120,10 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	private void init()
 	{
-		_zones = new L2FastList<L2BossZone>();
+		_zones = new L2FastList<>();
 		
-		_bosses = new FastMap<Integer, L2GrandBossInstance>();
-		_storedInfo = new TIntObjectHashMap<StatsSet>();
+		_bosses = new FastMap<>();
+		_storedInfo = new TIntObjectHashMap<>();
 		_bossStatus = new TIntIntHashMap();
 		Connection con = null;
 		try
@@ -184,7 +184,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	{
 		Connection con = null;
 		
-		FastMap<Integer, FastSet/*L2FastList*/<Integer>> zones = new FastMap<Integer, FastSet/*L2FastList*/<Integer>>();
+		FastMap<Integer, FastSet/*L2FastList*/<Integer>> zones = new FastMap<>();
 		
 		if (_zones == null)
 		{

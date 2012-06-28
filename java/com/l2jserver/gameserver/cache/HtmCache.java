@@ -58,19 +58,19 @@ public class HtmCache
 	{
 		if (TIMED_CACHE)
 		{
-			_timedCache = new L2TIntObjectHashMap<TimedCache>();
+			_timedCache = new L2TIntObjectHashMap<>();
 			_cache = null;
 			ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new CacheScheduler(), 3600*1000, 3600*1000);
 		}
 		else if (Config.LAZY_CACHE)
 		{
 			_timedCache = null;
-			_cache = new L2TIntObjectHashMap<String>();
+			_cache = new L2TIntObjectHashMap<>();
 		}
 		else
 		{
 			_timedCache = null;
-			_cache = new TIntObjectHashMap<String>();
+			_cache = new TIntObjectHashMap<>();
 		}
 		reload();
 	}

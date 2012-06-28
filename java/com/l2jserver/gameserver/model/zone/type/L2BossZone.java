@@ -59,13 +59,13 @@ public class L2BossZone extends L2ZoneType
 		0
 	};
 	
-	protected L2FastList<L2Character> _raidList = new L2FastList<L2Character>();
+	protected L2FastList<L2Character> _raidList = new L2FastList<>();
 	
 	public L2BossZone(int id)
 	{
 		super(id);
-		_playerAllowedReEntryTimes = new FastMap<Integer, Long>();
-		_playersAllowed = new FastSet/*L2FastList*/<Integer>();	//[JOJO]
+		_playerAllowedReEntryTimes = new FastMap<>();
+		_playersAllowed = new FastSet/*L2FastList*/<>();	//[JOJO]
 		_oustLoc = new int[3];
 		GrandBossManager.getInstance().addZone(this);
 	}
