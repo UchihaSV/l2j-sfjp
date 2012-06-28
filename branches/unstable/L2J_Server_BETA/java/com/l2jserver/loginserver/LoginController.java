@@ -213,7 +213,7 @@ public class LoginController
 
 	public String[] getAlreadyLoginAccounts(String address)
 	{
-		List<String> ret = new FastList<String>();
+		List<String> ret = new FastList<>();
 		for (Map.Entry<String, String> e : _loginServerIpAddrs.entrySet())
 		{
 			if (e.getValue().equals(address))	//ip

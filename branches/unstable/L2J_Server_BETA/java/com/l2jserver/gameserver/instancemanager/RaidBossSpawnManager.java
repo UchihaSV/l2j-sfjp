@@ -338,7 +338,7 @@ public class RaidBossSpawnManager
 	//[JOJO]-------------------------------------------------
 	private void updateDb(int bossId)
 	{
-		ArrayList<Integer> e = new ArrayList<Integer>(1);
+		ArrayList<Integer> e = new ArrayList<>(1);
 		e.add(bossId);
 		updateDb(e);
 	}
