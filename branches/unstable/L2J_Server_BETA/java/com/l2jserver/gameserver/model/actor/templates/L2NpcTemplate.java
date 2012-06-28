@@ -369,7 +369,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		}
 	}
 	
-	private void addFloatSkill(L2Skill skill)
+	@SuppressWarnings("unused") private void addFloatSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (_floatSkills == Collections.EMPTY_LIST) _floatSkills = new ArrayList<>();
@@ -377,7 +377,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		_floatSkills.add(skill);
 	}
 	
-	private void addFossilSkill(L2Skill skill)
+	@SuppressWarnings("unused") private void addFossilSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (_fossilSkills == Collections.EMPTY_LIST) _fossilSkills = new ArrayList<>();
@@ -411,7 +411,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		_immobilizeSkills.add(skill);
 	}
 	
-	private void addManaHealSkill(L2Skill skill)
+	@SuppressWarnings("unused") private void addManaHealSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (_manaSkills == Collections.EMPTY_LIST) _manaSkills = new ArrayList<>();
@@ -621,7 +621,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		_sleepSkills.add(skill);
 	}
 	
-	private void addStunSkill(L2Skill skill)
+	@SuppressWarnings("unused") private void addStunSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (_stunSkills == Collections.EMPTY_LIST) _stunSkills = new ArrayList<>();

@@ -17,6 +17,7 @@
  */
 package com.l2jserver.gameserver.communitybbs.Manager;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -691,7 +692,7 @@ public class CustomBBSManager extends BaseBBSManager
 			
 		CustomMsg curMsg = new CustomMsg().load(msgId);
 
-		List<CustomComment> comTable = null;
+		final List<CustomComment> comTable;
 		int comTotal = -1, nbp = 0;
 		if (showComList) {
 			//「一言コメント」
@@ -705,6 +706,8 @@ public class CustomBBSManager extends BaseBBSManager
 			if (comPage > nbp) comPage = nbp;
 			if (comTotal == 0) msgViewStyle = FULL_VIEW;
 		}
+		else
+			comTable = Collections.emptyList();
 //		activeChar.TRACE("    └ msgViewStyle=" + msgViewStyle);
 //		activeChar.TRACE("    └ comInputStyle=" + comInputStyle);
 
