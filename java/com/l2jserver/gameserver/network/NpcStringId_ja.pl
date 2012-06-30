@@ -39,38 +39,24 @@ sub start {
 
 	my $UPDATE = 0;
 
-	$text =~ s!\bSUBMITTED_A_BID\b!\bSUBMITTED_A_BID_S1\b!g;	# FIX BUG
-
-	#	/**
-	#	 * 3119	<BR>	The couple action was denied.
-	#	 */
-	#	/**
-	#	 * ID: 3119<br>
-	#	 * Message: The couple action was denied.
-	#	 */
-	$text =~ s!([ \t]+)/\*\*[\s\*]+(\d+)[ \t]<BR>[ \t](.+?)\s+\*/!$1/**\n$1 * ID: $2<br>\n$1 * Message: $3\n$1 */!gs;
-#	/**
-#	 * ID: 60<br>
-#	 * Message: You have failed to earn $s2 $s1(s).
-#	 */
-	while ($text =~ m!([ \t]+)(/\*\*[\s\*]*ID: *)(\d+)(.+?\*/)!gs) {
-		my $tab = $1; # \t\t
-		my $L   = $2; # /**\n* ID: 
-		my $id  = $3; # 60
-		my $R   = $4; # <br>\n\t* Message: .....\n\t*/
-
-		die unless length $id;
+	my @ALL = split /(?=[ \t]\/\*\*)/, $text;
+	foreach my $item (@ALL) {
+		next unless $item =~ m/ID: (\d+)/m;     my $id = $1;
+		next unless $item =~ m/Message: (.*)/m; my $name_en = $1;
 
 		my $name_jp = $array_name_jp{$id};
 		next unless $name_jp;
 
-		if ($text =~ s!\Q$tab$L$id$R\E!$tab/**\n$tab * id: $id<br>\n$tab * Message: $name_jp\n$tab */!s) {
-			print     "$id\t[",$name_jp,"]\n";
-			print LOG "$id\t[",$name_jp,"]\n";
-			$UPDATE = 1;
-		}
+		$item =~ s{/\*\*.*\*/}{/**
+\t * ID: $id<br>
+\t * Message: $name_jp<br>
+\t * Message: $name_en
+\t */}s;
+		$UPDATE = 1;
+		print $item;
 	}
-	$text =~ s/\Q* id: \E/* ID: /gs;
+	
+	$text = join '', @ALL;
 
 	if ($UPDATE) {
 		open FILE, '>:encoding(cp932)', FS($outPath) or die "'$outPath' $!";
