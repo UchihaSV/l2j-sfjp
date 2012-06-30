@@ -11,7 +11,8 @@ binmode STDOUT,':encoding(cp932)'; $|=1;
 sub   FS {Encode::encode('cp932',shift)}
 sub UTF8 {Encode::decode('cp932',shift)}
 
-my $systemmsg_txt = '../../../../../../L2J_DataPack_BETA/dist/game/data/lang/ja/systemmsg.txt';
+my $systemmsg_ja = '../../../../../../L2J_DataPack_BETA/dist/game/data/lang/ja/systemmsg.txt';
+my $systemmsg_tw = '../../../../../../L2J_DataPack_BETA/dist/game/data/lang/tw/systemmsg.txt';
 
 my $DEBUG = 1; # 1 or 0
 
@@ -20,6 +21,7 @@ my $LogFile = UTF8(__FILE__);
 open LOG, '>:utf8', FS($LogFile)  or die "'$LogFile' $!";
 
 my %array_name_jp = ();
+my %array_name_tw = ();
 &loadSystemMessageAll();
 
 &start('.svn/text-base/SystemMessageId.java.svn-base', 'SystemMessageId.java');
@@ -47,11 +49,15 @@ sub start {
 		next unless $item =~ m/Message: (.*)/m; my $name_en = $1;
 
 		my $name_jp = $array_name_jp{$id};
+		my $name_tw = $array_name_tw{$id};
 		next unless $name_jp;
+
+		$name_tw =~ s/(.)/'&#'.ord($1).';'/eg;	# html encode
 
 		$item =~ s{/\*\*.*\*/}{/**
 \t * ID: $id<br>
 \t * Message: $name_jp<br>
+\t * Message: $name_tw<br>
 \t * Message: $name_en
 \t */}s;
 		$UPDATE = 1;
@@ -69,13 +75,23 @@ sub start {
 }
 
 sub loadSystemMessageAll {
-	open FILE,'<:utf8',$systemmsg_txt  or do {warn "'$systemmsg_txt' $!";exit 0};
+	open FILE,'<:utf8',$systemmsg_ja  or do {warn "'$systemmsg_ja' $!";exit 0};
 	while (not eof FILE) {
 		my $line = <FILE>;
 		next if $line =~ m!^/!;
 		chomp $line;
 		my ($N_id, $N_name) = split /\t/, $line;
 		$array_name_jp{$N_id} = $N_name
+	}
+	close FILE;
+
+	open FILE,'<:utf8',$systemmsg_tw  or do {warn "'$systemmsg_tw' $!";exit 0};
+	while (not eof FILE) {
+		my $line = <FILE>;
+		next if $line =~ m!^/!;
+		chomp $line;
+		my ($N_id, $N_name) = split /\t/, $line;
+		$array_name_tw{$N_id} = $N_name
 	}
 	close FILE;
 }
