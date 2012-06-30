@@ -414,7 +414,7 @@ if (com.l2jserver.Config.TEST_GET_AI) {{
 		if (getCurrentHp() <= skill.getHpConsume())
 			return;
 		
-		if (!skill.ignoreSkillMute())
+		if (!skill.isStatic())
 		{
 			if (skill.isMagic())
 			{

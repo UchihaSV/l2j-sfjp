@@ -1882,27 +1882,15 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		L2ItemInstance weaponInst = getActiveWeaponInstance();
 		if (weaponInst != null)
 		{
-			if (skill.isMagic() && !effectWhileCasting && !skill.isPotion())
+			if (skill.isMagic() && !effectWhileCasting)
 			{
 				if ((weaponInst.getChargedSpiritshot() == L2ItemInstance.CHARGED_BLESSED_SPIRITSHOT) || (weaponInst.getChargedSpiritshot() == L2ItemInstance.CHARGED_SPIRITSHOT))
 				{
-					//Only takes 70% of the time to cast a BSpS/SpS cast
-					hitTime = (int) (0.70 * hitTime);
-					coolTime = (int) (0.70 * coolTime);
+					// Using SPS/BSPS Casting Time of Magic Skills is reduced in 40%
+					hitTime = (int) (0.60 * hitTime);
+					coolTime = (int) (0.60 * coolTime);
 					
-					//Because the following are magic skills that do not actively 'eat' BSpS/SpS,
-					//I must 'eat' them here so players don't take advantage of infinite speed increase
-					switch (skill.getSkillType())
-					{
-						case BUFF:
-						case MANAHEAL:
-						case MANARECHARGE:
-						case MANA_BY_LEVEL:
-						case RESURRECT:
-						case RECALL:
-							weaponInst.setChargedSpiritshot(L2ItemInstance.CHARGED_NONE);
-							break;
-					}
+					weaponInst.setChargedSpiritshot(L2ItemInstance.CHARGED_NONE);
 				}
 			}
 			
@@ -1922,8 +1910,8 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			}
 		}
 		
-		// Don't modify skills HitTime if staticHitTime is specified for skill in datapack.
-		if (skill.isStaticHitTime())
+		// if skill is static
+		if (skill.isStatic())
 		{
 			hitTime = skill.getHitTime();
 			coolTime = skill.getCoolTime();
@@ -1958,7 +1946,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		// Init the reuse time of the skill
 		int reuseDelay;
 		
-		if (skill.isStaticReuse())
+		if (skill.isStaticReuse() || skill.isStatic())
 		{
 			reuseDelay = (skill.getReuseDelay());
 		}
@@ -2185,7 +2173,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			return false;
 		}
 		
-		if (!skill.isPotion() && !skill.ignoreSkillMute()) // Skill mute checks.
+		if (!skill.isStatic()) // Skill mute checks.
 		{
 			// Check if the skill is a magic spell and if the L2Character is not muted
 			if (skill.isMagic())
@@ -5822,8 +5810,8 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public void breakCast()
 	{
-		// damage can only cancel magical skills
-		if (isCastingNow() && canAbortCast() && getLastSkillCast() != null && getLastSkillCast().isMagic())
+		// damage can only cancel magical & static skills
+		if (isCastingNow() && canAbortCast() && getLastSkillCast() != null && (getLastSkillCast().isMagic() || getLastSkillCast().isStatic()))
 		{
 			// Abort the cast of the L2Character and send Server->Client MagicSkillCanceld/ActionFailed packet.
 			abortCast();
@@ -6488,8 +6476,8 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		
 		// Ensure that a cast is in progress
 		// Check if player is using fake death.
-		// Potions can be used while faking death.
-		if ((mut.simultaneously && !isCastingSimultaneouslyNow()) || (!mut.simultaneously && !isCastingNow()) || (isAlikeDead() && !skill.isPotion()))
+		// Static skills can be used while faking death.
+		if ((mut.simultaneously && !isCastingSimultaneouslyNow()) || (!mut.simultaneously && !isCastingNow()) || (isAlikeDead() && !skill.isStatic()))
 		{
 			// now cancels both, simultaneous and normal
 			getAI().notifyEvent(CtrlEvent.EVT_CANCEL);
@@ -6506,7 +6494,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			level = 1;
 		
 		// Send a Server->Client packet MagicSkillLaunched to the L2Character AND to all L2PcInstance in the _KnownPlayers of the L2Character
-		if (!skill.isPotion())
+		if (!skill.isStatic())
 			broadcastPacket(new MagicSkillLaunched(this, magicId, level, targets));
 		
 		mut.phase = 2;
