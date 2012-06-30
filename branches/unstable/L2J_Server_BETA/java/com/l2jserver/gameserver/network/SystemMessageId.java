@@ -43,9559 +43,11147 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 0<br>
-	 * Message: サーバーとの接続が切断されました。
+	 * Message: サーバーとの接続が切断されました。<br>
+	 * Message: You have been disconnected from the server.
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_DISCONNECTED;
 	
 	/**
 	 * ID: 1<br>
-	 * Message: サーバーが$s1秒後に中断されます。ゲームを終了してください。
+	 * Message: サーバーが$s1秒後に中断されます。ゲームを終了してください。<br>
+	 * Message: The server will be coming down in $1 seconds. Please find a safe place to log out.
 	 */
 	public static final SystemMessageId THE_SERVER_WILL_BE_COMING_DOWN_IN_S1_SECONDS;
 	
 	/**
 	 * ID: 2<br>
-	 * Message: $s1は存在しないユーザーです。
+	 * Message: $s1は存在しないユーザーです。<br>
+	 * Message: $s1 does not exist.
 	 */
 	public static final SystemMessageId S1_DOES_NOT_EXIST;
 	
 	/**
 	 * ID: 3<br>
-	 * Message: $s1はゲームに接続していません。
+	 * Message: $s1はゲームに接続していません。<br>
+	 * Message: $s1 is not currently logged in.
 	 */
 	public static final SystemMessageId S1_IS_NOT_ONLINE;
 	
 	/**
 	 * ID: 4<br>
-	 * Message: 自分自身に血盟加入申請をすることはできません。
+	 * Message: 自分自身に血盟加入申請をすることはできません。<br>
+	 * Message: You cannot ask yourself to apply to a clan.
 	 */
 	public static final SystemMessageId CANNOT_INVITE_YOURSELF;
 	
 	/**
 	 * ID: 5<br>
-	 * Message: $s1はすでに存在している血盟です。
+	 * Message: $s1はすでに存在している血盟です。<br>
+	 * Message: $s1 already exists.
 	 */
 	public static final SystemMessageId S1_ALREADY_EXISTS;
 	
 	/**
 	 * ID: 6<br>
-	 * Message: $s1は存在する血盟ではありません。
+	 * Message: $s1は存在する血盟ではありません。<br>
+	 * Message: $s1 does not exist
 	 */
 	public static final SystemMessageId S1_DOES_NOT_EXIST2;
 	
 	/**
 	 * ID: 7<br>
-	 * Message: すでに$s1血盟に所属しています。
+	 * Message: すでに$s1血盟に所属しています。<br>
+	 * Message: You are already a member of $s1.
 	 */
 	public static final SystemMessageId ALREADY_MEMBER_OF_S1;
 	
 	/**
 	 * ID: 8<br>
-	 * Message: 血盟に関する他の作業中です。
+	 * Message: 血盟に関する他の作業中です。<br>
+	 * Message: You are working with another clan.
 	 */
 	public static final SystemMessageId YOU_ARE_WORKING_WITH_ANOTHER_CLAN;
 	
 	/**
 	 * ID: 9<br>
-	 * Message: $s1は血盟主ではありません。
+	 * Message: $s1は血盟主ではありません。<br>
+	 * Message: $s1 is not a clan leader.
 	 */
 	public static final SystemMessageId S1_IS_NOT_A_CLAN_LEADER;
 	
 	/**
 	 * ID: 10<br>
-	 * Message: $s1は血盟に関する他の作業中です。
+	 * Message: $s1は血盟に関する他の作業中です。<br>
+	 * Message: $s1 is working with another clan.
 	 */
 	public static final SystemMessageId S1_WORKING_WITH_ANOTHER_CLAN;
 	
 	/**
 	 * ID: 11<br>
-	 * Message: 血盟の加入申請者がいません。
+	 * Message: 血盟の加入申請者がいません。<br>
+	 * Message: There are no applicants for this clan.
 	 */
 	public static final SystemMessageId NO_APPLICANTS_FOR_THIS_CLAN;
 	
 	/**
 	 * ID: 12<br>
-	 * Message: 血盟の加入申請者の情報が不正確です。
+	 * Message: 血盟の加入申請者の情報が不正確です。<br>
+	 * Message: The applicant information is incorrect.
 	 */
 	public static final SystemMessageId APPLICANT_INFORMATION_INCORRECT;
 	
 	/**
 	 * ID: 13<br>
-	 * Message: 攻城戦への参加を申請しているため、解散できません。
+	 * Message: 攻城戦への参加を申請しているため、解散できません。<br>
+	 * Message: Unable to disperse: your clan has requested to participate in a castle siege.
 	 */
 	public static final SystemMessageId CANNOT_DISSOLVE_CAUSE_CLAN_WILL_PARTICIPATE_IN_CASTLE_SIEGE;
 	
 	/**
 	 * ID: 14<br>
-	 * Message: 城またはアジトを所有しているため、解散できません。
+	 * Message: 城またはアジトを所有しているため、解散できません。<br>
+	 * Message: Unable to disperse: your clan owns one or more castles or hideouts.
 	 */
 	public static final SystemMessageId CANNOT_DISSOLVE_CAUSE_CLAN_OWNS_CASTLES_HIDEOUTS;
 	
 	/**
 	 * ID: 15<br>
-	 * Message: 攻城戦中です。
+	 * Message: 攻城戦中です。<br>
+	 * Message: You are in siege.
 	 */
 	public static final SystemMessageId YOU_ARE_IN_SIEGE;
 	
 	/**
 	 * ID: 16<br>
-	 * Message: 攻城戦中ではありません。
+	 * Message: 攻城戦中ではありません。<br>
+	 * Message: You are not in siege.
 	 */
 	public static final SystemMessageId YOU_ARE_NOT_IN_SIEGE;
 	
 	/**
 	 * ID: 17<br>
-	 * Message: 攻城戦が始まりました。
+	 * Message: 攻城戦が始まりました。<br>
+	 * Message: The castle siege has begun.
 	 */
 	public static final SystemMessageId CASTLE_SIEGE_HAS_BEGUN;
 	
 	/**
 	 * ID: 18<br>
-	 * Message: 攻城戦が終了しました。
+	 * Message: 攻城戦が終了しました。<br>
+	 * Message: The castle siege has ended.
 	 */
 	public static final SystemMessageId CASTLE_SIEGE_HAS_ENDED;
 	
 	/**
 	 * ID: 19<br>
-	 * Message: 城主が替わりました！
+	 * Message: 城主が替わりました！<br>
+	 * Message: There is a new Lord of the castle!
 	 */
 	public static final SystemMessageId NEW_CASTLE_LORD;
 	
 	/**
 	 * ID: 20<br>
-	 * Message: 門が開かれます。
+	 * Message: 門が開かれます。<br>
+	 * Message: The gate is being opened.
 	 */
 	public static final SystemMessageId GATE_IS_OPENING;
 	
 	/**
 	 * ID: 21<br>
-	 * Message: 門が破壊されます。
+	 * Message: 門が破壊されます。<br>
+	 * Message: The gate is being destroyed.
 	 */
 	public static final SystemMessageId GATE_IS_DESTROYED;
 	
 	/**
 	 * ID: 22<br>
-	 * Message: 相手が離れ過ぎています。
+	 * Message: 相手が離れ過ぎています。<br>
+	 * Message: Your target is out of range.
 	 */
 	public static final SystemMessageId TARGET_TOO_FAR;
 	
 	/**
 	 * ID: 23<br>
-	 * Message: HPが足りません。
+	 * Message: HPが足りません。<br>
+	 * Message: Not enough HP.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_HP;
 	
 	/**
 	 * ID: 24<br>
-	 * Message: MPが足りません。
+	 * Message: MPが足りません。<br>
+	 * Message: Not enough MP.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_MP;
 	
 	/**
 	 * ID: 25<br>
-	 * Message: HPが回復されます。
+	 * Message: HPが回復されます。<br>
+	 * Message: Rejuvenating HP.
 	 */
 	public static final SystemMessageId REJUVENATING_HP;
 	
 	/**
 	 * ID: 26<br>
-	 * Message: MPが回復されます。
+	 * Message: MPが回復されます。<br>
+	 * Message: Rejuvenating MP.
 	 */
 	public static final SystemMessageId REJUVENATING_MP;
 	
 	/**
 	 * ID: 27<br>
-	 * Message: 妨害を受け、詠唱が中断されました。
+	 * Message: 妨害を受け、詠唱が中断されました。<br>
+	 * Message: Your casting has been interrupted.
 	 */
 	public static final SystemMessageId CASTING_INTERRUPTED;
 	
 	/**
 	 * ID: 28<br>
-	 * Message: $s1アデナを手に入れました。
+	 * Message: $s1アデナを手に入れました。<br>
+	 * Message: You have obtained $s1 adena.
 	 */
 	public static final SystemMessageId YOU_PICKED_UP_S1_ADENA;
 	
 	/**
 	 * ID: 29<br>
-	 * Message: $s1 $s2個を手に入れました。
+	 * Message: $s1 $s2個を手に入れました。<br>
+	 * Message: You have obtained $s2 $s1.
 	 */
 	public static final SystemMessageId YOU_PICKED_UP_S1_S2;
 	
 	/**
 	 * ID: 30<br>
-	 * Message: $s1を手に入れました。
+	 * Message: $s1を手に入れました。<br>
+	 * Message: You have obtained $s1.
 	 */
 	public static final SystemMessageId YOU_PICKED_UP_S1;
 	
 	/**
 	 * ID: 31<br>
-	 * Message: 座った状態では行動できません。
+	 * Message: 座った状態では行動できません。<br>
+	 * Message: You cannot move while sitting.
 	 */
 	public static final SystemMessageId CANT_MOVE_SITTING;
 	
 	/**
 	 * ID: 32<br>
-	 * Message: 戦闘不能に陥りました。最寄りのリスタート ポイントに移動します。
+	 * Message: 戦闘不能に陥りました。最寄りのリスタート ポイントに移動します。<br>
+	 * Message: You are unable to engage in combat. Please go to the nearest restart point.
 	 */
 	public static final SystemMessageId UNABLE_COMBAT_PLEASE_GO_RESTART;
 	
 	/**
 	 * ID: 32<br>
-	 * Message: 戦闘不能に陥りました。最寄りのリスタート ポイントに移動します。
+	 * Message: 戦闘不能に陥りました。最寄りのリスタート ポイントに移動します。<br>
+	 * Message: You cannot move while casting.
 	 */
 	public static final SystemMessageId CANT_MOVE_CASTING;
 	
 	/**
 	 * ID: 34<br>
-	 * Message: リネージュIIの世界へようこそ！
+	 * Message: リネージュIIの世界へようこそ！<br>
+	 * Message: Welcome to the World of Lineage II.
 	 */
 	public static final SystemMessageId WELCOME_TO_LINEAGE;
 	
 	/**
 	 * ID: 35<br>
-	 * Message: $s1のダメージを与えました。
+	 * Message: $s1のダメージを与えました。<br>
+	 * Message: You hit for $s1 damage
 	 */
 	public static final SystemMessageId YOU_DID_S1_DMG;
 	
 	/**
 	 * ID: 36<br>
-	 * Message: $c1から$s2のダメージを受けました。
+	 * Message: $c1から$s2のダメージを受けました。<br>
+	 * Message: $c1 hit you for $s2 damage.
 	 */
 	public static final SystemMessageId C1_GAVE_YOU_S2_DMG;
 	
 	/**
 	 * ID: 37<br>
-	 * Message: $c1によって$s2のダメージを受けました。
+	 * Message: $c1によって$s2のダメージを受けました。<br>
+	 * Message: $c1 hit you for $s2 damage.
 	 */
 	public static final SystemMessageId C1_GAVE_YOU_S2_DMG2;
 	
 	/**
 	 * ID: 41<br>
-	 * Message: 矢の発射準備中です。
+	 * Message: 矢の発射準備中です。<br>
+	 * Message: You carefully nock an arrow.
 	 */
 	public static final SystemMessageId GETTING_READY_TO_SHOOT_AN_ARROW;
 	
 	/**
 	 * ID: 42<br>
-	 * Message: $c1の攻撃を避けました。
+	 * Message: $c1の攻撃を避けました。<br>
+	 * Message: You have avoided $c1's attack.
 	 */
 	public static final SystemMessageId AVOIDED_C1_ATTACK;
 	
 	/**
 	 * ID: 43<br>
-	 * Message: 攻撃が外れました。
+	 * Message: 攻撃が外れました。<br>
+	 * Message: You have missed.
 	 */
 	public static final SystemMessageId MISSED_TARGET;
 	
 	/**
 	 * ID: 44<br>
-	 * Message: クリティカル ヒット！
+	 * Message: クリティカル ヒット！<br>
+	 * Message: Critical hit!
 	 */
 	public static final SystemMessageId CRITICAL_HIT;
 	
 	/**
 	 * ID: 45<br>
-	 * Message: $s1の経験値を得ました。
+	 * Message: $s1の経験値を得ました。<br>
+	 * Message: You have earned $s1 experience.
 	 */
 	public static final SystemMessageId EARNED_S1_EXPERIENCE;
 	
 	/**
 	 * ID: 46<br>
-	 * Message: $s1を使用します。
+	 * Message: $s1を使用します。<br>
+	 * Message: You use $s1.
 	 */
 	public static final SystemMessageId USE_S1;
 	
 	/**
 	 * ID: 47<br>
-	 * Message: $s1の使用中です。
+	 * Message: $s1の使用中です。<br>
+	 * Message: You begin to use a(n) $s1.
 	 */
 	public static final SystemMessageId BEGIN_TO_USE_S1;
 	
 	/**
 	 * ID: 48<br>
-	 * Message: $s1は再使用準備中であるため、使用できません。
+	 * Message: $s1は再使用準備中であるため、使用できません。<br>
+	 * Message: $s1 is not available at this time: being prepared for reuse.
 	 */
 	public static final SystemMessageId S1_PREPARED_FOR_REUSE;
 	
 	/**
 	 * ID: 49<br>
-	 * Message: $s1を装備しました。
+	 * Message: $s1を装備しました。<br>
+	 * Message: You have equipped your $s1.
 	 */
 	public static final SystemMessageId S1_EQUIPPED;
 	
 	/**
 	 * ID: 50<br>
-	 * Message: ターゲットが指定されていません。
+	 * Message: ターゲットが指定されていません。<br>
+	 * Message: Your target cannot be found.
 	 */
 	public static final SystemMessageId TARGET_CANT_FOUND;
 	
 	/**
 	 * ID: 51<br>
-	 * Message: 自分自身には使用できません。
+	 * Message: 自分自身には使用できません。<br>
+	 * Message: You cannot use this on yourself.
 	 */
 	public static final SystemMessageId CANNOT_USE_ON_YOURSELF;
 	
 	/**
 	 * ID: 52<br>
-	 * Message: $s1アデナを得ました。
+	 * Message: $s1アデナを得ました。<br>
+	 * Message: You have earned $s1 adena.
 	 */
 	public static final SystemMessageId EARNED_S1_ADENA;
 	
 	/**
 	 * ID: 53<br>
-	 * Message: $s1 $s2個を得ました。
+	 * Message: $s1 $s2個を得ました。<br>
+	 * Message: You have earned $s2 $s1(s).
 	 */
 	public static final SystemMessageId EARNED_S2_S1_S;
 	
 	/**
 	 * ID: 54<br>
-	 * Message: $s1を得ました。
+	 * Message: $s1を得ました。<br>
+	 * Message: You have earned $s1.
 	 */
 	public static final SystemMessageId EARNED_ITEM_S1;
 	
 	/**
 	 * ID: 55<br>
-	 * Message: $s1アデナの取得に失敗しました。
+	 * Message: $s1アデナの取得に失敗しました。<br>
+	 * Message: You have failed to pick up $s1 adena.
 	 */
 	public static final SystemMessageId FAILED_TO_PICKUP_S1_ADENA;
 	
 	/**
 	 * ID: 56<br>
-	 * Message: $s1の取得に失敗しました。
+	 * Message: $s1の取得に失敗しました。<br>
+	 * Message: You have failed to pick up $s1.
 	 */
 	public static final SystemMessageId FAILED_TO_PICKUP_S1;
 	
 	/**
 	 * ID: 57<br>
-	 * Message: $s1 $s2個の取得に失敗しました。
+	 * Message: $s1 $s2個の取得に失敗しました。<br>
+	 * Message: You have failed to pick up $s2 $s1(s).
 	 */
 	public static final SystemMessageId FAILED_TO_PICKUP_S2_S1_S;
 	
 	/**
 	 * ID: 58<br>
-	 * Message: $s1アデナの取得に失敗しました。
+	 * Message: $s1アデナの取得に失敗しました。<br>
+	 * Message: You have failed to earn $s1 adena.
 	 */
 	public static final SystemMessageId FAILED_TO_EARN_S1_ADENA;
 	
 	/**
 	 * ID: 59<br>
-	 * Message: $s1の取得に失敗しました。
+	 * Message: $s1の取得に失敗しました。<br>
+	 * Message: You have failed to earn $s1.
 	 */
 	public static final SystemMessageId FAILED_TO_EARN_S1;
 	
 	/**
 	 * ID: 60<br>
-	 * Message: $s1 $s2個の取得に失敗しました。
+	 * Message: $s1 $s2個の取得に失敗しました。<br>
+	 * Message: You have failed to earn $s2 $s1(s).
 	 */
 	public static final SystemMessageId FAILED_TO_EARN_S2_S1_S;
 	
 	/**
 	 * ID: 61<br>
-	 * Message: 何も起こりませんでした。
+	 * Message: 何も起こりませんでした。<br>
+	 * Message: Nothing happened.
 	 */
 	public static final SystemMessageId NOTHING_HAPPENED;
 	
 	/**
 	 * ID: 62<br>
-	 * Message: $s1強化に成功しました。
+	 * Message: $s1強化に成功しました。<br>
+	 * Message: Your $s1 has been successfully enchanted.
 	 */
 	public static final SystemMessageId S1_SUCCESSFULLY_ENCHANTED;
 	
 	/**
 	 * ID: 63<br>
-	 * Message: +$s1$s2が無事強化されました。
+	 * Message: +$s1$s2が無事強化されました。<br>
+	 * Message: Your +$S1 $S2 has been successfully enchanted.
 	 */
 	public static final SystemMessageId S1_S2_SUCCESSFULLY_ENCHANTED;
 	
 	/**
 	 * ID: 64<br>
-	 * Message: 強化に失敗しました。$s1が消えました。
+	 * Message: 強化に失敗しました。$s1が消えました。<br>
+	 * Message: The enchantment has failed! Your $s1 has been crystallized.
 	 */
 	public static final SystemMessageId ENCHANTMENT_FAILED_S1_EVAPORATED;
 	
 	/**
 	 * ID: 65<br>
-	 * Message: 強化に失敗しました。+$s1$s2が消えました。
+	 * Message: 強化に失敗しました。+$s1$s2が消えました。<br>
+	 * Message: The enchantment has failed! Your +$s1 $s2 has been crystallized.
 	 */
 	public static final SystemMessageId ENCHANTMENT_FAILED_S1_S2_EVAPORATED;
 	
 	/**
 	 * ID: 66<br>
-	 * Message: $c1 がパーティに招待しています。参加しますか。
+	 * Message: $c1 がパーティに招待しています。参加しますか。<br>
+	 * Message: $c1 is inviting you to join a party. Do you accept?
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY;
 	
 	/**
 	 * ID: 67<br>
-	 * Message: $s1 から$s2血盟の勧誘を受けています。加入しますか。
+	 * Message: $s1 から$s2血盟の勧誘を受けています。加入しますか。<br>
+	 * Message: $s1 has invited you to the join the clan, $s2. Do you wish to join?
 	 */
 	public static final SystemMessageId S1_HAS_INVITED_YOU_TO_JOIN_THE_CLAN_S2;
 	
 	/**
 	 * ID: 68<br>
-	 * Message: $s1血盟から脱退しますか。血盟脱退後、1日間は他の血盟に加入できません。
+	 * Message: $s1血盟から脱退しますか。血盟脱退後、1日間は他の血盟に加入できません。<br>
+	 * Message: Would you like to withdraw from the $s1 clan? If you leave, you will have to wait at least a day before joining another clan.
 	 */
 	public static final SystemMessageId WOULD_YOU_LIKE_TO_WITHDRAW_FROM_THE_S1_CLAN;
 	
 	/**
 	 * ID: 69<br>
-	 * Message: $s1を血盟から追放しますか。血盟員を除名したら1日間、新しい血盟員の加入はできません。
+	 * Message: $s1を血盟から追放しますか。血盟員を除名したら1日間、新しい血盟員の加入はできません。<br>
+	 * Message: Would you like to dismiss $s1 from the clan? If you do so, you will have to wait at least a day before accepting a new member.
 	 */
 	public static final SystemMessageId WOULD_YOU_LIKE_TO_DISMISS_S1_FROM_THE_CLAN;
 	
 	/**
 	 * ID: 70<br>
-	 * Message: $s1血盟を解散します。よろしいですか。
+	 * Message: $s1血盟を解散します。よろしいですか。<br>
+	 * Message: Do you wish to disperse the clan, $s1?
 	 */
 	public static final SystemMessageId DO_YOU_WISH_TO_DISPERSE_THE_CLAN_S1;
 	
 	/**
 	 * ID: 71<br>
-	 * Message: $s1を何個捨てますか。
+	 * Message: $s1を何個捨てますか。<br>
+	 * Message: How many of your $s1(s) do you wish to discard?
 	 */
 	public static final SystemMessageId HOW_MANY_S1_DISCARD;
 	
 	/**
 	 * ID: 72<br>
-	 * Message: $s1を何個移しますか。
+	 * Message: $s1を何個移しますか。<br>
+	 * Message: How many of your $s1(s) do you wish to move?
 	 */
 	public static final SystemMessageId HOW_MANY_S1_MOVE;
 	
 	/**
 	 * ID: 73<br>
-	 * Message: $s1を何個破壊しますか。
+	 * Message: $s1を何個破壊しますか。<br>
+	 * Message: How many of your $s1(s) do you wish to destroy?
 	 */
 	public static final SystemMessageId HOW_MANY_S1_DESTROY;
 	
 	/**
 	 * ID: 74<br>
-	 * Message: $s1を破壊します。よろしいですか。
+	 * Message: $s1を破壊します。よろしいですか。<br>
+	 * Message: Do you wish to destroy your $s1?
 	 */
 	public static final SystemMessageId WISH_DESTROY_S1;
 	
 	/**
 	 * ID: 75<br>
-	 * Message: 存在しないアカウントです。
+	 * Message: 存在しないアカウントです。<br>
+	 * Message: ID does not exist.
 	 */
 	public static final SystemMessageId ID_NOT_EXIST;
 	
 	/**
 	 * ID: 76<br>
-	 * Message: パスワードが正しくありません。
+	 * Message: パスワードが正しくありません。<br>
+	 * Message: Incorrect password.
 	 */
 	public static final SystemMessageId INCORRECT_PASSWORD;
 	
 	/**
 	 * ID: 77<br>
-	 * Message: これ以上は生成できません。既存のキャラクターを削除してやり直してください。
+	 * Message: これ以上は生成できません。既存のキャラクターを削除してやり直してください。<br>
+	 * Message: You cannot create another character. Please delete the existing character and try again.
 	 */
 	public static final SystemMessageId CANNOT_CREATE_CHARACTER;
 	
 	/**
 	 * ID: 78<br>
-	 * Message: キャラクターが削除されれば、持っていたトッピング アイテムも削除されます。キャラクターがトッピング アイテムを持っているかどうかを確認してください。$s1を本当に削除しますか。
+	 * Message: キャラクターが削除されれば、持っていたトッピング アイテムも削除されます。キャラクターがトッピング アイテムを持っているかどうかを確認してください。$s1を本当に削除しますか。<br>
+	 * Message: When you delete a character, any items in his/her possession will also be deleted. Do you really wish to delete $s1%?
 	 */
 	public static final SystemMessageId WISH_DELETE_S1;
 	
 	/**
 	 * ID: 79<br>
-	 * Message: すでに存在する名前です。
+	 * Message: すでに存在する名前です。<br>
+	 * Message: This name already exists.
 	 */
 	public static final SystemMessageId NAMING_NAME_ALREADY_EXISTS;
 	
 	/**
 	 * ID: 80<br>
-	 * Message: 日本語1～8文字、または英語1～16文字以内にしてください。
+	 * Message: 日本語1～8文字、または英語1～16文字以内にしてください。<br>
+	 * Message: Names must be between 1-16 characters, excluding spaces or special characters.
 	 */
 	public static final SystemMessageId NAMING_CHARNAME_UP_TO_16CHARS;
 	
 	/**
 	 * ID: 81<br>
-	 * Message: 種族を選択してください。
+	 * Message: 種族を選択してください。<br>
+	 * Message: Please select your race.
 	 */
 	public static final SystemMessageId PLEASE_SELECT_RACE;
 	
 	/**
 	 * ID: 82<br>
-	 * Message: クラスを選択してください。
+	 * Message: クラスを選択してください。<br>
+	 * Message: Please select your occupation.
 	 */
 	public static final SystemMessageId PLEASE_SELECT_OCCUPATION;
 	
 	/**
 	 * ID: 83<br>
-	 * Message: 性別を選択してください。
+	 * Message: 性別を選択してください。<br>
+	 * Message: Please select your gender.
 	 */
 	public static final SystemMessageId PLEASE_SELECT_GENDER;
 	
 	/**
 	 * ID: 84<br>
-	 * Message: ピースゾーン内では攻撃できません。
+	 * Message: ピースゾーン内では攻撃できません。<br>
+	 * Message: You may not attack in a peaceful zone.
 	 */
 	public static final SystemMessageId CANT_ATK_PEACEZONE;
 	
 	/**
 	 * ID: 85<br>
-	 * Message: 相手がピースゾーン内にいるため、攻撃できません。
+	 * Message: 相手がピースゾーン内にいるため、攻撃できません。<br>
+	 * Message: You may not attack this target in a peaceful zone.
 	 */
 	public static final SystemMessageId TARGET_IN_PEACEZONE;
 	
 	/**
 	 * ID: 86<br>
-	 * Message: アカウントを入力してください。
+	 * Message: アカウントを入力してください。<br>
+	 * Message: Please enter your ID.
 	 */
 	public static final SystemMessageId PLEASE_ENTER_ID;
 	
 	/**
 	 * ID: 87<br>
-	 * Message: パスワードを入力してください。
+	 * Message: パスワードを入力してください。<br>
+	 * Message: Please enter your password.
 	 */
 	public static final SystemMessageId PLEASE_ENTER_PASSWORD;
 	
 	/**
 	 * ID: 88<br>
-	 * Message: プロトコルのバージョンが異なります。プログラムを終了してください。
+	 * Message: プロトコルのバージョンが異なります。プログラムを終了してください。<br>
+	 * Message: Your protocol version is different, please restart your client and run a full check.
 	 */
 	public static final SystemMessageId WRONG_PROTOCOL_CHECK;
 	
 	/**
 	 * ID: 89<br>
-	 * Message: プロトコルのバージョンが異なります。続けてください。
+	 * Message: プロトコルのバージョンが異なります。続けてください。<br>
+	 * Message: Your protocol version is different, please continue.
 	 */
 	public static final SystemMessageId WRONG_PROTOCOL_CONTINUE;
 	
 	/**
 	 * ID: 90<br>
-	 * Message: サーバーに接続できません。
+	 * Message: サーバーに接続できません。<br>
+	 * Message: You are unable to connect to the server.
 	 */
 	public static final SystemMessageId UNABLE_TO_CONNECT;
 	
 	/**
 	 * ID: 91<br>
-	 * Message: 髪型を選択してください。
+	 * Message: 髪型を選択してください。<br>
+	 * Message: Please select your hairstyle.
 	 */
 	public static final SystemMessageId PLEASE_SELECT_HAIRSTYLE;
 	
 	/**
 	 * ID: 92<br>
-	 * Message: $s1の効果が消えました。
+	 * Message: $s1の効果が消えました。<br>
+	 * Message: $s1 has worn off.
 	 */
 	public static final SystemMessageId S1_HAS_WORN_OFF;
 	
 	/**
 	 * ID: 93<br>
-	 * Message: SPが足りません。
+	 * Message: SPが足りません。<br>
+	 * Message: You do not have enough SP for this.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_SP;
 	
 	/**
 	 * ID: 94<br>
-	 * Message: Copyright c NCsoft Corporation. All Rights Reserved.
+	 * Message: Copyright c NCsoft Corporation. All Rights Reserved.<br>
+	 * Message: 2004-2011 (c) NC Interactive, Inc. All Rights Reserved.
 	 */
 	public static final SystemMessageId COPYRIGHT;
 	
 	/**
 	 * ID: 95<br>
-	 * Message: $s1の経験値と$s2のSPを得ました。
+	 * Message: $s1の経験値と$s2のSPを得ました。<br>
+	 * Message: You have earned $s1 experience and $s2 SP.
 	 */
 	public static final SystemMessageId YOU_EARNED_S1_EXP_AND_S2_SP;
 	
 	/**
 	 * ID: 96<br>
-	 * Message: レベル アップしました！
+	 * Message: レベル アップしました！<br>
+	 * Message: Your level has increased!
 	 */
 	public static final SystemMessageId YOU_INCREASED_YOUR_LEVEL;
 	
 	/**
 	 * ID: 97<br>
-	 * Message: クエスト アイテムは移動できません。
+	 * Message: クエスト アイテムは移動できません。<br>
+	 * Message: This item cannot be moved.
 	 */
 	public static final SystemMessageId CANNOT_MOVE_THIS_ITEM;
 	
 	/**
 	 * ID: 98<br>
-	 * Message: クエスト アイテムは、捨てられません。
+	 * Message: クエスト アイテムは、捨てられません。<br>
+	 * Message: This item cannot be discarded.
 	 */
 	public static final SystemMessageId CANNOT_DISCARD_THIS_ITEM;
 	
 	/**
 	 * ID: 99<br>
-	 * Message: クエスト アイテムはトレードしたり売ったりできません。
+	 * Message: クエスト アイテムはトレードしたり売ったりできません。<br>
+	 * Message: This item cannot be traded or sold.
 	 */
 	public static final SystemMessageId CANNOT_TRADE_THIS_ITEM;
 	
 	/**
 	 * ID: 100<br>
-	 * Message: $c1がトレードを申請しています。取引に応じますか。
+	 * Message: $c1がトレードを申請しています。取引に応じますか。<br>
+	 * Message: $c1 is requesting to trade. Do you wish to continue?
 	 */
 	public static final SystemMessageId C1_REQUESTS_TRADE;
 	
 	/**
 	 * ID: 101<br>
-	 * Message: 戦闘中はログアウトできません。
+	 * Message: 戦闘中はログアウトできません。<br>
+	 * Message: You cannot exit while in combat.
 	 */
 	public static final SystemMessageId CANT_LOGOUT_WHILE_FIGHTING;
 	
 	/**
 	 * ID: 102<br>
-	 * Message: 戦闘中はリスタートできません。
+	 * Message: 戦闘中はリスタートできません。<br>
+	 * Message: You cannot restart while in combat.
 	 */
 	public static final SystemMessageId CANT_RESTART_WHILE_FIGHTING;
 	
 	/**
 	 * ID: 103<br>
-	 * Message: 現在接続しているアカウントです。
+	 * Message: 現在接続しているアカウントです。<br>
+	 * Message: This ID is currently logged in.
 	 */
 	public static final SystemMessageId ID_LOGGED_IN;
 	
 	/**
 	 * ID: 104<br>
-	 * Message: 変身中には武器を変更できません。
+	 * Message: 変身中には武器を変更できません。<br>
+	 * Message: You cannot change weapons during an attack.
 	 */
 	public static final SystemMessageId CANNOT_CHANGE_WEAPON_DURING_AN_ATTACK;
 	
 	/**
 	 * ID: 105<br>
-	 * Message: $c1 をパーティに招待しました。
+	 * Message: $c1 をパーティに招待しました。<br>
+	 * Message: $c1 has been invited to the party.
 	 */
 	public static final SystemMessageId C1_INVITED_TO_PARTY;
 	
 	/**
 	 * ID: 106<br>
-	 * Message: パーティに参加しました。
+	 * Message: パーティに参加しました。<br>
+	 * Message: You have joined $s1's party.
 	 */
 	public static final SystemMessageId YOU_JOINED_S1_PARTY;
 	
 	/**
 	 * ID: 107<br>
-	 * Message: $c1がパーティに参加しました。
+	 * Message: $c1がパーティに参加しました。<br>
+	 * Message: $c1 has joined the party.
 	 */
 	public static final SystemMessageId C1_JOINED_PARTY;
 	
 	/**
 	 * ID: 108<br>
-	 * Message: $c1がパーティから脱退しました。
+	 * Message: $c1がパーティから脱退しました。<br>
+	 * Message: $c1 has left the party.
 	 */
 	public static final SystemMessageId C1_LEFT_PARTY;
 	
 	/**
 	 * ID: 109<br>
-	 * Message: ターゲットが正しくありません。
+	 * Message: ターゲットが正しくありません。<br>
+	 * Message: Invalid target.
 	 */
 	public static final SystemMessageId INCORRECT_TARGET;
 	
 	/**
 	 * ID: 110<br>
-	 * Message: $s1の効果が感じられます。
+	 * Message: $s1の効果が感じられます。<br>
+	 * Message: $s1 $s2's effect can be felt.
 	 */
 	public static final SystemMessageId YOU_FEEL_S1_EFFECT;
 	
 	/**
 	 * ID: 111<br>
-	 * Message: シールドによる防御に成功しました。
+	 * Message: シールドによる防御に成功しました。<br>
+	 * Message: Your shield defense has succeeded.
 	 */
 	public static final SystemMessageId SHIELD_DEFENCE_SUCCESSFULL;
 	
 	/**
 	 * ID: 112<br>
-	 * Message: 矢が足りません。
+	 * Message: 矢が足りません。<br>
+	 * Message: You may no longer adjust items in the trade because the trade has been confirmed.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_ARROWS;
 	
 	/**
 	 * ID: 113<br>
-	 * Message: 条件が合わないため、$s1は使用できません。
+	 * Message: 条件が合わないため、$s1は使用できません。<br>
+	 * Message: $s1 cannot be used due to unsuitable terms.
 	 */
 	public static final SystemMessageId S1_CANNOT_BE_USED;
 	
 	/**
 	 * ID: 114<br>
-	 * Message: 世界樹の影に入ります。
+	 * Message: 世界樹の影に入ります。<br>
+	 * Message: You have entered the shadow of the Mother Tree.
 	 */
 	public static final SystemMessageId ENTER_SHADOW_MOTHER_TREE;
 	
 	/**
 	 * ID: 115<br>
-	 * Message: 世界樹の影から離れます。
+	 * Message: 世界樹の影から離れます。<br>
+	 * Message: You have left the shadow of the Mother Tree.
 	 */
 	public static final SystemMessageId EXIT_SHADOW_MOTHER_TREE;
 	
 	/**
 	 * ID: 116<br>
-	 * Message: ピースゾーンに入ります。
+	 * Message: ピースゾーンに入ります。<br>
+	 * Message: You have entered a peaceful zone.
 	 */
 	public static final SystemMessageId ENTER_PEACEFUL_ZONE;
 	
 	/**
 	 * ID: 117<br>
-	 * Message: ピースゾーンから離れます。
+	 * Message: ピースゾーンから離れます。<br>
+	 * Message: You have left the peaceful zone.
 	 */
 	public static final SystemMessageId EXIT_PEACEFUL_ZONE;
 	
 	/**
 	 * ID: 118<br>
-	 * Message: $c1 にトレードを申し込みます。
+	 * Message: $c1 にトレードを申し込みます。<br>
+	 * Message: You have requested a trade with $c1.
 	 */
 	public static final SystemMessageId REQUEST_C1_FOR_TRADE;
 	
 	/**
 	 * ID: 119<br>
-	 * Message: $c1 がトレードを拒否しました。
+	 * Message: $c1 がトレードを拒否しました。<br>
+	 * Message: $c1 has denied your request to trade.
 	 */
 	public static final SystemMessageId C1_DENIED_TRADE_REQUEST;
 	
 	/**
 	 * ID: 120<br>
-	 * Message: $c1とのトレードを開始します。
+	 * Message: $c1とのトレードを開始します。<br>
+	 * Message: You begin trading with $c1.
 	 */
 	public static final SystemMessageId BEGIN_TRADE_WITH_C1;
 	
 	/**
 	 * ID: 121<br>
-	 * Message: $c1 がトレードするアイテムを確定しました。
+	 * Message: $c1 がトレードするアイテムを確定しました。<br>
+	 * Message: $c1 has confirmed the trade.
 	 */
 	public static final SystemMessageId C1_CONFIRMED_TRADE;
 	
 	/**
 	 * ID: 122<br>
-	 * Message: 相手がトレードするアイテムを確定したため、アイテムの追加はできません。
+	 * Message: 相手がトレードするアイテムを確定したため、アイテムの追加はできません。<br>
+	 * Message: You may no longer adjust items in the trade because the trade has been confirmed.
 	 */
 	public static final SystemMessageId CANNOT_ADJUST_ITEMS_AFTER_TRADE_CONFIRMED;
 	
 	/**
 	 * ID: 123<br>
-	 * Message: トレードが無事に行われました。
+	 * Message: トレードが無事に行われました。<br>
+	 * Message: Your trade is successful.
 	 */
 	public static final SystemMessageId TRADE_SUCCESSFUL;
 	
 	/**
 	 * ID: 124<br>
-	 * Message: $c1 がトレードをキャンセルしました。
+	 * Message: $c1 がトレードをキャンセルしました。<br>
+	 * Message: $c1 has cancelled the trade.
 	 */
 	public static final SystemMessageId C1_CANCELED_TRADE;
 	
 	/**
 	 * ID: 125<br>
-	 * Message: ゲームを終了します。
+	 * Message: ゲームを終了します。<br>
+	 * Message: Do you wish to exit the game?
 	 */
 	public static final SystemMessageId WISH_EXIT_GAME;
 	
 	/**
 	 * ID: 126<br>
-	 * Message: ゲームをリスタートします。
+	 * Message: ゲームをリスタートします。<br>
+	 * Message: Do you wish to return to the character select screen?
 	 */
 	public static final SystemMessageId WISH_RESTART_GAME;
 	
 	/**
 	 * ID: 127<br>
-	 * Message: サーバーとの接続が切断されました。しばらくしてから再度ご接続ください。
+	 * Message: サーバーとの接続が切断されました。しばらくしてから再度ご接続ください。<br>
+	 * Message: You have been disconnected from the server. Please login again.
 	 */
 	public static final SystemMessageId DISCONNECTED_FROM_SERVER;
 	
 	/**
 	 * ID: 128<br>
-	 * Message: キャラクターの生成に失敗しました。
+	 * Message: キャラクターの生成に失敗しました。<br>
+	 * Message: Your character creation has failed.
 	 */
 	public static final SystemMessageId CHARACTER_CREATION_FAILED;
 	
 	/**
 	 * ID: 129<br>
-	 * Message: インベントリのスロットがいっぱいです。
+	 * Message: インベントリのスロットがいっぱいです。<br>
+	 * Message: Your inventory is full.
 	 */
 	public static final SystemMessageId SLOTS_FULL;
 	
 	/**
 	 * ID: 130<br>
-	 * Message: 倉庫のスロットがいっぱいです。
+	 * Message: 倉庫のスロットがいっぱいです。<br>
+	 * Message: Your warehouse is full.
 	 */
 	public static final SystemMessageId WAREHOUSE_FULL;
 	
 	/**
 	 * ID: 131<br>
-	 * Message: $s1がログインしました。
+	 * Message: $s1がログインしました。<br>
+	 * Message: $s1 has logged in.
 	 */
 	public static final SystemMessageId S1_LOGGED_IN;
 	
 	/**
 	 * ID: 132<br>
-	 * Message: $s1が友人リストに追加されました。
+	 * Message: $s1が友人リストに追加されました。<br>
+	 * Message: $s1 has been added to your friends list.
 	 */
 	public static final SystemMessageId S1_ADDED_TO_FRIENDS;
 	
 	/**
 	 * ID: 133<br>
-	 * Message: $s1が友人リストから削除されました。
+	 * Message: $s1が友人リストから削除されました。<br>
+	 * Message: $s1 has been removed from your friends list.
 	 */
 	public static final SystemMessageId S1_REMOVED_FROM_YOUR_FRIENDS_LIST;
 	
 	/**
 	 * ID: 134<br>
-	 * Message: 友人リストを確認してください。
+	 * Message: 友人リストを確認してください。<br>
+	 * Message: Please check your friends list again.
 	 */
 	public static final SystemMessageId PLEACE_CHECK_YOUR_FRIEND_LIST_AGAIN;
 	
 	/**
 	 * ID: 135<br>
-	 * Message: $c1が応答しなかったため、パーティ招待がキャンセルされました。
+	 * Message: $c1が応答しなかったため、パーティ招待がキャンセルされました。<br>
+	 * Message: $c1 did not reply to your invitation. Your invitation has been cancelled.
 	 */
 	public static final SystemMessageId C1_DID_NOT_REPLY_TO_YOUR_INVITE;
 	
 	/**
 	 * ID: 136<br>
-	 * Message: $c1の招待に応答しなかったため、加入がキャンセルされました。
+	 * Message: $c1の招待に応答しなかったため、加入がキャンセルされました。<br>
+	 * Message: You have not replied to $c1's invitation. The offer has been cancelled.
 	 */
 	public static final SystemMessageId YOU_DID_NOT_REPLY_TO_C1_INVITE;
 	
 	/**
 	 * ID: 137<br>
-	 * Message: ショートカットに指定されたアイテムが見つかりません。
+	 * Message: ショートカットに指定されたアイテムが見つかりません。<br>
+	 * Message: There are no more items in the shortcut.
 	 */
 	public static final SystemMessageId NO_MORE_ITEMS_SHORTCUT;
 	
 	/**
 	 * ID: 138<br>
-	 * Message: ショートカットが指定されていません。
+	 * Message: ショートカットが指定されていません。<br>
+	 * Message: Designate shortcut.
 	 */
 	public static final SystemMessageId DESIGNATE_SHORTCUT;
 	
 	/**
 	 * ID: 139<br>
-	 * Message: $c1が$s2にかかりませんでした。
+	 * Message: $c1が$s2にかかりませんでした。<br>
+	 * Message: $c1 has resisted your $s2.
 	 */
 	public static final SystemMessageId C1_RESISTED_YOUR_S2;
 	
 	/**
 	 * ID: 140<br>
-	 * Message: MPが足りないため、スキルが中断されました。
+	 * Message: MPが足りないため、スキルが中断されました。<br>
+	 * Message: Your skill was removed due to a lack of MP.
 	 */
 	public static final SystemMessageId SKILL_REMOVED_DUE_LACK_MP;
 	
 	/**
 	 * ID: 141<br>
-	 * Message: トレードするアイテムを確定したため、アイテムの追加はできません。
+	 * Message: トレードするアイテムを確定したため、アイテムの追加はできません。<br>
+	 * Message: Once the trade is confirmed, the item cannot be moved again.
 	 */
 	public static final SystemMessageId ONCE_THE_TRADE_IS_CONFIRMED_THE_ITEM_CANNOT_BE_MOVED_AGAIN;
 	
 	/**
 	 * ID: 142<br>
-	 * Message: すでにトレード中です。
+	 * Message: すでにトレード中です。<br>
+	 * Message: You are already trading with someone.
 	 */
 	public static final SystemMessageId ALREADY_TRADING;
 	
 	/**
 	 * ID: 143<br>
-	 * Message: $c1 は他の人とトレードしています。
+	 * Message: $c1 は他の人とトレードしています。<br>
+	 * Message: $c1 is already trading with another person. Please try again later.
 	 */
 	public static final SystemMessageId C1_ALREADY_TRADING;
 	
 	/**
 	 * ID: 144<br>
-	 * Message: ターゲットが正しくありません。
+	 * Message: ターゲットが正しくありません。<br>
+	 * Message: That is the incorrect target.
 	 */
 	public static final SystemMessageId TARGET_IS_INCORRECT;
 	
 	/**
 	 * ID: 145<br>
-	 * Message: ターゲットがゲーム内にいません。
+	 * Message: ターゲットがゲーム内にいません。<br>
+	 * Message: That player is not online.
 	 */
 	public static final SystemMessageId TARGET_IS_NOT_FOUND_IN_THE_GAME;
 	
 	/**
 	 * ID: 146<br>
-	 * Message: チャットが許可されました。
+	 * Message: チャットが許可されました。<br>
+	 * Message: Chatting is now permitted.
 	 */
 	public static final SystemMessageId CHATTING_PERMITTED;
 	
 	/**
 	 * ID: 147<br>
-	 * Message: チャットが禁止されました。
+	 * Message: チャットが禁止されました。<br>
+	 * Message: Chatting is currently prohibited.
 	 */
 	public static final SystemMessageId CHATTING_PROHIBITED;
 	
 	/**
 	 * ID: 148<br>
-	 * Message: クエスト アイテムは使用できません。
+	 * Message: クエスト アイテムは使用できません。<br>
+	 * Message: You cannot use quest items.
 	 */
 	public static final SystemMessageId CANNOT_USE_QUEST_ITEMS;
 	
 	/**
 	 * ID: 149<br>
-	 * Message: トレード中はアイテムを拾ったり使用したりできません。
+	 * Message: トレード中はアイテムを拾ったり使用したりできません。<br>
+	 * Message: You cannot pick up or use items while trading.
 	 */
 	public static final SystemMessageId CANNOT_USE_ITEM_WHILE_TRADING;
 	
 	/**
 	 * ID: 150<br>
-	 * Message: 個人商店やトレード中に、アイテムを捨てることや破壊することはできません。
+	 * Message: 個人商店やトレード中に、アイテムを捨てることや破壊することはできません。<br>
+	 * Message: You cannot discard or destroy an item while trading at a private store.
 	 */
 	public static final SystemMessageId CANNOT_DISCARD_OR_DESTROY_ITEM_WHILE_TRADING;
 	
 	/**
 	 * ID: 151<br>
-	 * Message: 遠過ぎて捨てられません。
+	 * Message: 遠過ぎて捨てられません。<br>
+	 * Message: That is too far from you to discard.
 	 */
 	public static final SystemMessageId CANNOT_DISCARD_DISTANCE_TOO_FAR;
 	
 	/**
 	 * ID: 152<br>
-	 * Message: 招待する対象が正しくありません。
+	 * Message: 招待する対象が正しくありません。<br>
+	 * Message: You have invited the wrong target.
 	 */
 	public static final SystemMessageId YOU_HAVE_INVITED_THE_WRONG_TARGET;
 	
 	/**
 	 * ID: 153<br>
-	 * Message: $c1 は作業中です。しばらくしてから申請しなおしてください。
+	 * Message: $c1 は作業中です。しばらくしてから申請しなおしてください。<br>
+	 * Message: $c1 is on another task. Please try again later.
 	 */
 	public static final SystemMessageId C1_IS_BUSY_TRY_LATER;
 	
 	/**
 	 * ID: 154<br>
-	 * Message: パーティ リーダーだけが招待を使用できます。
+	 * Message: パーティ リーダーだけが招待を使用できます。<br>
+	 * Message: Only the leader can give out invitations.
 	 */
 	public static final SystemMessageId ONLY_LEADER_CAN_INVITE;
 	
 	/**
 	 * ID: 155<br>
-	 * Message: パーティが満員になりました。
+	 * Message: パーティが満員になりました。<br>
+	 * Message: The party is full.
 	 */
 	public static final SystemMessageId PARTY_FULL;
 	
 	/**
 	 * ID: 156<br>
-	 * Message: ドレインが半分だけ成功しました。
+	 * Message: ドレインが半分だけ成功しました。<br>
+	 * Message: Drain was only 50 percent successful.
 	 */
 	public static final SystemMessageId DRAIN_HALF_SUCCESFUL;
 	
 	/**
 	 * ID: 157<br>
-	 * Message: $c1のドレインに抵抗しました。
+	 * Message: $c1のドレインに抵抗しました。<br>
+	 * Message: You resisted $c1's drain.
 	 */
 	public static final SystemMessageId RESISTED_C1_DRAIN;
 	
 	/**
 	 * ID: 158<br>
-	 * Message: 攻撃が失敗しました。
+	 * Message: 攻撃が失敗しました。<br>
+	 * Message: Your attack has failed.
 	 */
 	public static final SystemMessageId ATTACK_FAILED;
 	
 	/**
 	 * ID: 159<br>
-	 * Message: $c1の魔法に抵抗しました。
+	 * Message: $c1の魔法に抵抗しました。<br>
+	 * Message: You resisted $c1's magic.
 	 */
 	public static final SystemMessageId RESISTED_C1_MAGIC;
 	
 	/**
 	 * ID: 160<br>
-	 * Message: $c1 はすでにパーティに所属しているため、招待できません。
+	 * Message: $c1 はすでにパーティに所属しているため、招待できません。<br>
+	 * Message: $c1 is a member of another party and cannot be invited.
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_IN_PARTY;
 	
 	/**
 	 * ID: 161<br>
-	 * Message: パーティに招待したユーザーがいません。
+	 * Message: パーティに招待したユーザーがいません。<br>
+	 * Message: That player is not currently online.
 	 */
 	public static final SystemMessageId INVITED_USER_NOT_ONLINE;
 	
 	/**
 	 * ID: 162<br>
-	 * Message: 倉庫が離れ過ぎています。
+	 * Message: 倉庫が離れ過ぎています。<br>
+	 * Message: Warehouse is too far.
 	 */
 	public static final SystemMessageId WAREHOUSE_TOO_FAR;
 	
 	/**
 	 * ID: 163<br>
-	 * Message: 個数が正しくないため、破壊できません。
+	 * Message: 個数が正しくないため、破壊できません。<br>
+	 * Message: You cannot destroy it because the number is incorrect.
 	 */
 	public static final SystemMessageId CANNOT_DESTROY_NUMBER_INCORRECT;
 	
 	/**
 	 * ID: 164<br>
-	 * Message: 他のプロセスの応答を待っています。
+	 * Message: 他のプロセスの応答を待っています。<br>
+	 * Message: Waiting for another reply.
 	 */
 	public static final SystemMessageId WAITING_FOR_ANOTHER_REPLY;
 	
 	/**
 	 * ID: 165<br>
-	 * Message: 自分自身を友人として登録することはできません。
+	 * Message: 自分自身を友人として登録することはできません。<br>
+	 * Message: You cannot add yourself to your own friend list.
 	 */
 	public static final SystemMessageId YOU_CANNOT_ADD_YOURSELF_TO_OWN_FRIEND_LIST;
 	
 	/**
 	 * ID: 166<br>
-	 * Message: 友人リストがまだ作成されていません。しばらくしてから登録しなおしてください。
+	 * Message: 友人リストがまだ作成されていません。しばらくしてから登録しなおしてください。<br>
+	 * Message: Friend list is not ready yet. Please register again later.
 	 */
 	public static final SystemMessageId FRIEND_LIST_NOT_READY_YET_REGISTER_LATER;
 	
 	/**
 	 * ID: 167<br>
-	 * Message: $c1 はすでに友人リストに登録されています。
+	 * Message: $c1 はすでに友人リストに登録されています。<br>
+	 * Message: $c1 is already on your friend list.
 	 */
 	public static final SystemMessageId C1_ALREADY_ON_FRIEND_LIST;
 	
 	/**
 	 * ID: 168<br>
-	 * Message: $c1 から友人リストの登録を要請されました。
+	 * Message: $c1 から友人リストの登録を要請されました。<br>
+	 * Message: $c1 has sent a friend request.
 	 */
 	public static final SystemMessageId C1_REQUESTED_TO_BECOME_FRIENDS;
 	
 	/**
 	 * ID: 169<br>
-	 * Message: 登録を許可しますか。 0/1 (許可は1、拒否は0)
+	 * Message: 登録を許可しますか。 0/1 (許可は1、拒否は0)<br>
+	 * Message: Accept friendship 0/1 (1 to accept, 0 to deny)
 	 */
 	public static final SystemMessageId ACCEPT_THE_FRIENDSHIP;
 	
 	/**
 	 * ID: 170<br>
-	 * Message: 友人登録を要請したユーザーがゲーム内にいません。
+	 * Message: 友人登録を要請したユーザーがゲーム内にいません。<br>
+	 * Message: The user who requested to become friends is not found in the game.
 	 */
 	public static final SystemMessageId THE_USER_YOU_REQUESTED_IS_NOT_IN_GAME;
 	
 	/**
 	 * ID: 171<br>
-	 * Message: $c1 は友人リストに登録されているユーザーではありません。
+	 * Message: $c1 は友人リストに登録されているユーザーではありません。<br>
+	 * Message: $c1 is not on your friend list.
 	 */
 	public static final SystemMessageId C1_NOT_ON_YOUR_FRIENDS_LIST;
 	
 	/**
 	 * ID: 172<br>
-	 * Message: 保管料がありません。
+	 * Message: 保管料がありません。<br>
+	 * Message: You lack the funds needed to pay for this transaction.
 	 */
 	public static final SystemMessageId LACK_FUNDS_FOR_TRANSACTION1;
 	
 	/**
 	 * ID: 173<br>
-	 * Message: 保管料が足りません。
+	 * Message: 保管料が足りません。<br>
+	 * Message: You lack the funds needed to pay for this transaction.
 	 */
 	public static final SystemMessageId LACK_FUNDS_FOR_TRANSACTION2;
 	
 	/**
 	 * ID: 174<br>
-	 * Message: 相手のインベントリのスロットがいっぱいです。
+	 * Message: 相手のインベントリのスロットがいっぱいです。<br>
+	 * Message: That person's inventory is full.
 	 */
 	public static final SystemMessageId OTHER_INVENTORY_FULL;
 	
 	/**
 	 * ID: 175<br>
-	 * Message: HPが完全に回復されたため、スキルが中断されました。
+	 * Message: HPが完全に回復されたため、スキルが中断されました。<br>
+	 * Message: That skill has been de-activated as HP was fully recovered.
 	 */
 	public static final SystemMessageId SKILL_DEACTIVATED_HP_FULL;
 	
 	/**
 	 * ID: 176<br>
-	 * Message: 相手はメッセージ受信不可能な状態です。
+	 * Message: 相手はメッセージ受信不可能な状態です。<br>
+	 * Message: That person is in message refusal mode.
 	 */
 	public static final SystemMessageId THE_PERSON_IS_IN_MESSAGE_REFUSAL_MODE;
 	
 	/**
 	 * ID: 177<br>
-	 * Message: メッセージ受信不可能な状態です。
+	 * Message: メッセージ受信不可能な状態です。<br>
+	 * Message: Message refusal mode.
 	 */
 	public static final SystemMessageId MESSAGE_REFUSAL_MODE;
 	
 	/**
 	 * ID: 178<br>
-	 * Message: メッセージ受信可の状態です。
+	 * Message: メッセージ受信可の状態です。<br>
+	 * Message: Message acceptance mode.
 	 */
 	public static final SystemMessageId MESSAGE_ACCEPTANCE_MODE;
 	
 	/**
 	 * ID: 179<br>
-	 * Message: ここではアイテムを捨てられません。
+	 * Message: ここではアイテムを捨てられません。<br>
+	 * Message: You cannot discard those items here.
 	 */
 	public static final SystemMessageId CANT_DISCARD_HERE;
 	
 	/**
 	 * ID: 180<br>
-	 * Message: 削除まで$s1日が残っています。削除をキャンセルしますか。
+	 * Message: 削除まで$s1日が残っています。削除をキャンセルしますか。<br>
+	 * Message: You have $s1 day(s) left until deletion. Do you wish to cancel this action?
 	 */
 	public static final SystemMessageId S1_DAYS_LEFT_CANCEL_ACTION;
 	
 	/**
 	 * ID: 181<br>
-	 * Message: ターゲットが見えません。
+	 * Message: ターゲットが見えません。<br>
+	 * Message: Cannot see target.
 	 */
 	public static final SystemMessageId CANT_SEE_TARGET;
 	
 	/**
 	 * ID: 182<br>
-	 * Message: クエスト：$s1を中断しますか。
+	 * Message: クエスト：$s1を中断しますか。<br>
+	 * Message: Do you want to quit the current quest?
 	 */
 	public static final SystemMessageId WANT_QUIT_CURRENT_QUEST;
 	
 	/**
 	 * ID: 183<br>
-	 * Message: サーバーの制限人数に達しました。しばらくしてから接続しなおしてみてください。
+	 * Message: サーバーの制限人数に達しました。しばらくしてから接続しなおしてみてください。<br>
+	 * Message: There are too many users on the server. Please try again later
 	 */
 	public static final SystemMessageId TOO_MANY_USERS;
 	
 	/**
 	 * ID: 184<br>
-	 * Message: しばらくしてからやり直してください。
+	 * Message: しばらくしてからやり直してください。<br>
+	 * Message: Please try again later.
 	 */
 	public static final SystemMessageId TRY_AGAIN_LATER;
 	
 	/**
 	 * ID: 185<br>
-	 * Message: パーティに招待するユーザーを選択してください。
+	 * Message: パーティに招待するユーザーを選択してください。<br>
+	 * Message: You must first select a user to invite to your party.
 	 */
 	public static final SystemMessageId FIRST_SELECT_USER_TO_INVITE_TO_PARTY;
 	
 	/**
 	 * ID: 186<br>
-	 * Message: 血盟加入を勧誘するユーザーを選択してください。
+	 * Message: 血盟加入を勧誘するユーザーを選択してください。<br>
+	 * Message: You must first select a user to invite to your clan.
 	 */
 	public static final SystemMessageId FIRST_SELECT_USER_TO_INVITE_TO_CLAN;
 	
 	/**
 	 * ID: 187<br>
-	 * Message: 追放するユーザーを選択してください。
+	 * Message: 追放するユーザーを選択してください。<br>
+	 * Message: Select user to expel.
 	 */
 	public static final SystemMessageId SELECT_USER_TO_EXPEL;
 	
 	/**
 	 * ID: 188<br>
-	 * Message: 血盟名を入力してください。
+	 * Message: 血盟名を入力してください。<br>
+	 * Message: Please create your clan name.
 	 */
 	public static final SystemMessageId PLEASE_CREATE_CLAN_NAME;
 	
 	/**
 	 * ID: 189<br>
-	 * Message: 血盟が創設されました。
+	 * Message: 血盟が創設されました。<br>
+	 * Message: Your clan has been created.
 	 */
 	public static final SystemMessageId CLAN_CREATED;
 	
 	/**
 	 * ID: 190<br>
-	 * Message: 血盟の創設に失敗しました。
+	 * Message: 血盟の創設に失敗しました。<br>
+	 * Message: You have failed to create a clan.
 	 */
 	public static final SystemMessageId FAILED_TO_CREATE_CLAN;
 	
 	/**
 	 * ID: 191<br>
-	 * Message: 血盟員 $s1が血盟から除名されました。
+	 * Message: 血盟員 $s1が血盟から除名されました。<br>
+	 * Message: Clan member $s1 has been expelled.
 	 */
 	public static final SystemMessageId CLAN_MEMBER_S1_EXPELLED;
 	
 	/**
 	 * ID: 192<br>
-	 * Message: 血盟員 $s1の除名に失敗しました。
+	 * Message: 血盟員 $s1の除名に失敗しました。<br>
+	 * Message: You have failed to expel $s1 from the clan.
 	 */
 	public static final SystemMessageId FAILED_EXPEL_S1;
 	
 	/**
 	 * ID: 193<br>
-	 * Message: 血盟が解散されました。
+	 * Message: 血盟が解散されました。<br>
+	 * Message: Clan has dispersed.
 	 */
 	public static final SystemMessageId CLAN_HAS_DISPERSED;
 	
 	/**
 	 * ID: 194<br>
-	 * Message: 血盟の解散に失敗しました。
+	 * Message: 血盟の解散に失敗しました。<br>
+	 * Message: You have failed to disperse the clan.
 	 */
 	public static final SystemMessageId FAILED_TO_DISPERSE_CLAN;
 	
 	/**
 	 * ID: 195<br>
-	 * Message: 血盟に加入されました。
+	 * Message: 血盟に加入されました。<br>
+	 * Message: Entered the clan.
 	 */
 	public static final SystemMessageId ENTERED_THE_CLAN;
 	
 	/**
 	 * ID: 196<br>
-	 * Message: $s1が血盟加入を拒否しました。
+	 * Message: $s1が血盟加入を拒否しました。<br>
+	 * Message: $s1 declined your clan invitation.
 	 */
 	public static final SystemMessageId S1_REFUSED_TO_JOIN_CLAN;
 	
 	/**
 	 * ID: 197<br>
-	 * Message: 血盟から脱退しました。
+	 * Message: 血盟から脱退しました。<br>
+	 * Message: You have withdrawn from the clan.
 	 */
 	public static final SystemMessageId YOU_HAVE_WITHDRAWN_FROM_CLAN;
 	
 	/**
 	 * ID: 198<br>
-	 * Message: $s1血盟からの脱退に失敗しました。
+	 * Message: $s1血盟からの脱退に失敗しました。<br>
+	 * Message: You have failed to withdraw from the $s1 clan.
 	 */
 	public static final SystemMessageId FAILED_TO_WITHDRAW_FROM_S1_CLAN;
 	
 	/**
 	 * ID: 199<br>
-	 * Message: 血盟から除名されました。1日間は他の血盟に加入できません。
+	 * Message: 血盟から除名されました。1日間は他の血盟に加入できません。<br>
+	 * Message: You have recently been dismissed from a clan. You are not allowed to join another clan for 24-hours.
 	 */
 	public static final SystemMessageId CLAN_MEMBERSHIP_TERMINATED;
 	
 	/**
 	 * ID: 200<br>
-	 * Message: パーティから脱退しました。
+	 * Message: パーティから脱退しました。<br>
+	 * Message: You have withdrawn from the party.
 	 */
 	public static final SystemMessageId YOU_LEFT_PARTY;
 	
 	/**
 	 * ID: 201<br>
-	 * Message: $c1をパーティから追放しました。
+	 * Message: $c1をパーティから追放しました。<br>
+	 * Message: $c1 was expelled from the party.
 	 */
 	public static final SystemMessageId C1_WAS_EXPELLED_FROM_PARTY;
 	
 	/**
 	 * ID: 202<br>
-	 * Message: パーティから追放されました。
+	 * Message: パーティから追放されました。<br>
+	 * Message: You have been expelled from the party.
 	 */
 	public static final SystemMessageId HAVE_BEEN_EXPELLED_FROM_PARTY;
 	
 	/**
 	 * ID: 203<br>
-	 * Message: パーティが解散されました。
+	 * Message: パーティが解散されました。<br>
+	 * Message: The party has dispersed.
 	 */
 	public static final SystemMessageId PARTY_DISPERSED;
 	
 	/**
 	 * ID: 204<br>
-	 * Message: 文字数の制限を越えているか、不適切な文字が使用されています。やり直してください。
+	 * Message: 文字数の制限を越えているか、不適切な文字が使用されています。やり直してください。<br>
+	 * Message: Incorrect name. Please try again.
 	 */
 	public static final SystemMessageId INCORRECT_NAME_TRY_AGAIN;
 	
 	/**
 	 * ID: 205<br>
-	 * Message: キャラクター名が正しくありません。サポートにお問い合わせください。
+	 * Message: キャラクター名が正しくありません。サポートにお問い合わせください。<br>
+	 * Message: Incorrect character name. Please try again.
 	 */
 	public static final SystemMessageId INCORRECT_CHARACTER_NAME_TRY_AGAIN;
 	
 	/**
 	 * ID: 206<br>
-	 * Message: 血盟戦を布告する血盟名を入力してください。
+	 * Message: 血盟戦を布告する血盟名を入力してください。<br>
+	 * Message: Please enter the name of the clan you wish to declare war on.
 	 */
 	public static final SystemMessageId ENTER_CLAN_NAME_TO_DECLARE_WAR;
 	
 	/**
 	 * ID: 207<br>
-	 * Message: $s1血盟の$s2に血盟戦を申し込まれました。挑戦を受け入れますか。
+	 * Message: $s1血盟の$s2に血盟戦を申し込まれました。挑戦を受け入れますか。<br>
+	 * Message: $s2 of the clan $s1 requests declaration of war. Do you accept?
 	 */
 	public static final SystemMessageId S2_OF_THE_CLAN_S1_REQUESTS_WAR;
 	
 	/**
 	 * ID: 212<br>
-	 * Message: 所属する血盟員ではありません。
+	 * Message: 所属する血盟員ではありません。<br>
+	 * Message: You are not a clan member and cannot perform this action.
 	 */
 	public static final SystemMessageId YOU_ARE_NOT_A_CLAN_MEMBER;
 	
 	/**
 	 * ID: 213<br>
-	 * Message: 処理されませんでした。しばらくしてからやり直してください。
+	 * Message: 処理されませんでした。しばらくしてからやり直してください。<br>
+	 * Message: Not working. Please try again later.
 	 */
 	public static final SystemMessageId NOT_WORKING_PLEASE_TRY_AGAIN_LATER;
 	
 	/**
 	 * ID: 214<br>
-	 * Message: タイトルが変更されました。
+	 * Message: タイトルが変更されました。<br>
+	 * Message: Your title has been changed.
 	 */
 	public static final SystemMessageId TITLE_CHANGED;
 	
 	/**
 	 * ID: 215<br>
-	 * Message: $s1 血盟との戦争が始まりました。
+	 * Message: $s1 血盟との戦争が始まりました。<br>
+	 * Message: War with the $s1 clan has begun.
 	 */
 	public static final SystemMessageId WAR_WITH_THE_S1_CLAN_HAS_BEGUN;
 	
 	/**
 	 * ID: 216<br>
-	 * Message: $s1 血盟との戦争が終了しました。
+	 * Message: $s1 血盟との戦争が終了しました。<br>
+	 * Message: War with the $s1 clan has ended.
 	 */
 	public static final SystemMessageId WAR_WITH_THE_S1_CLAN_HAS_ENDED;
 	
 	/**
 	 * ID: 217<br>
-	 * Message: $s1 血盟との戦争で勝利しました！
+	 * Message: $s1 血盟との戦争で勝利しました！<br>
+	 * Message: You have won the war over the $s1 clan!
 	 */
 	public static final SystemMessageId YOU_HAVE_WON_THE_WAR_OVER_THE_S1_CLAN;
 	
 	/**
 	 * ID: 218<br>
-	 * Message: $s1 血盟に降伏しました。
+	 * Message: $s1 血盟に降伏しました。<br>
+	 * Message: You have surrendered to the $s1 clan.
 	 */
 	public static final SystemMessageId YOU_HAVE_SURRENDERED_TO_THE_S1_CLAN;
 	
 	/**
 	 * ID: 219<br>
-	 * Message: 血盟主が死亡し、$s1 血盟に負けました。
+	 * Message: 血盟主が死亡し、$s1 血盟に負けました。<br>
+	 * Message: Your clan leader has died. You have been defeated by the $s1 clan.
 	 */
 	public static final SystemMessageId YOU_WERE_DEFEATED_BY_S1_CLAN;
 	
 	/**
 	 * ID: 220<br>
-	 * Message: 血盟戦の終了まであと $s1分です。
+	 * Message: 血盟戦の終了まであと $s1分です。<br>
+	 * Message: You have $s1 minutes left until the clan war ends.
 	 */
 	public static final SystemMessageId S1_MINUTES_LEFT_UNTIL_CLAN_WAR_ENDS;
 	
 	/**
 	 * ID: 221<br>
-	 * Message: 血盟戦の制限時間が過ぎ、$s1 血盟との戦争が終了しました。
+	 * Message: 血盟戦の制限時間が過ぎ、$s1 血盟との戦争が終了しました。<br>
+	 * Message: The time limit for the clan war is up. War with the $s1 clan is over.
 	 */
 	public static final SystemMessageId CLAN_WAR_WITH_S1_CLAN_HAS_ENDED;
 	
 	/**
 	 * ID: 222<br>
-	 * Message: $s1が血盟に加入しました。
+	 * Message: $s1が血盟に加入しました。<br>
+	 * Message: $s1 has joined the clan.
 	 */
 	public static final SystemMessageId S1_HAS_JOINED_CLAN;
 	
 	/**
 	 * ID: 223<br>
-	 * Message: 血盟員 $s1が血盟から脱退しました。
+	 * Message: 血盟員 $s1が血盟から脱退しました。<br>
+	 * Message: $s1 has withdrawn from the clan.
 	 */
 	public static final SystemMessageId S1_HAS_WITHDRAWN_FROM_THE_CLAN;
 	
 	/**
 	 * ID: 224<br>
-	 * Message: $s1が応答しなかったため、血盟加入の勧誘がキャンセルされました。
+	 * Message: $s1が応答しなかったため、血盟加入の勧誘がキャンセルされました。<br>
+	 * Message: $s1 did not respond: Invitation to the clan has been cancelled.
 	 */
 	public static final SystemMessageId S1_DID_NOT_RESPOND_TO_CLAN_INVITATION;
 	
 	/**
 	 * ID: 225<br>
-	 * Message: $s1の勧誘に応答しなかったため、血盟加入がキャンセルされました。
+	 * Message: $s1の勧誘に応答しなかったため、血盟加入がキャンセルされました。<br>
+	 * Message: You didn't respond to $s1's invitation: joining has been cancelled.
 	 */
 	public static final SystemMessageId YOU_DID_NOT_RESPOND_TO_S1_CLAN_INVITATION;
 	
 	/**
 	 * ID: 226<br>
-	 * Message: $s1血盟が応答しなかったため、宣戦布告が拒否されました。
+	 * Message: $s1血盟が応答しなかったため、宣戦布告が拒否されました。<br>
+	 * Message: The $s1 clan did not respond: war proclamation has been refused.
 	 */
 	public static final SystemMessageId S1_CLAN_DID_NOT_RESPOND;
 	
 	/**
 	 * ID: 227<br>
-	 * Message: $s1血盟の宣戦布告に応答しなかったため、血盟戦が拒否されました。
+	 * Message: $s1血盟の宣戦布告に応答しなかったため、血盟戦が拒否されました。<br>
+	 * Message: Clan war has been refused because you did not respond to $s1 clan's war proclamation.
 	 */
 	public static final SystemMessageId CLAN_WAR_REFUSED_YOU_DID_NOT_RESPOND_TO_S1;
 	
 	/**
 	 * ID: 228<br>
-	 * Message: 終戦要請が拒否されました。
+	 * Message: 終戦要請が拒否されました。<br>
+	 * Message: Request to end war has been denied.
 	 */
 	public static final SystemMessageId REQUEST_TO_END_WAR_HAS_BEEN_DENIED;
 	
 	/**
 	 * ID: 229<br>
-	 * Message: 血盟創設の資格がありません。
+	 * Message: 血盟創設の資格がありません。<br>
+	 * Message: You do not meet the criteria in order to create a clan.
 	 */
 	public static final SystemMessageId YOU_DO_NOT_MEET_CRITERIA_IN_ORDER_TO_CREATE_A_CLAN;
 	
 	/**
 	 * ID: 230<br>
-	 * Message: 血盟解散後10日以内には新しく血盟を創設できません。
+	 * Message: 血盟解散後10日以内には新しく血盟を創設できません。<br>
+	 * Message: You must wait 10 days before creating a new clan.
 	 */
 	public static final SystemMessageId YOU_MUST_WAIT_XX_DAYS_BEFORE_CREATING_A_NEW_CLAN;
 	
 	/**
 	 * ID: 231<br>
-	 * Message: 血盟員の除名後1日以内には新しい血盟員の加入はできません。
+	 * Message: 血盟員の除名後1日以内には新しい血盟員の加入はできません。<br>
+	 * Message: After a clan member is dismissed from a clan, the clan must wait at least a day before accepting a new member.
 	 */
 	public static final SystemMessageId YOU_MUST_WAIT_BEFORE_ACCEPTING_A_NEW_MEMBER;
 	
 	/**
 	 * ID: 232<br>
-	 * Message: 除名または脱退後1日以内には血盟に加入できません。
+	 * Message: 除名または脱退後1日以内には血盟に加入できません。<br>
+	 * Message: After leaving or having been dismissed from a clan, you must wait at least a day before joining another clan.
 	 */
 	public static final SystemMessageId YOU_MUST_WAIT_BEFORE_JOINING_ANOTHER_CLAN;
 	
 	/**
 	 * ID: 233<br>
-	 * Message: アカデミー/近衛隊/騎士団の空きがありませんので、新たな血盟員の加入はできません。
+	 * Message: アカデミー/近衛隊/騎士団の空きがありませんので、新たな血盟員の加入はできません。<br>
+	 * Message: The Academy/Royal Guard/Order of Knights is full and cannot accept new members at this time.
 	 */
 	public static final SystemMessageId SUBCLAN_IS_FULL;
 	
 	/**
 	 * ID: 234<br>
-	 * Message: ターゲットを血盟員にしてください。
+	 * Message: ターゲットを血盟員にしてください。<br>
+	 * Message: The target must be a clan member.
 	 */
 	public static final SystemMessageId TARGET_MUST_BE_IN_CLAN;
 	
 	/**
 	 * ID: 235<br>
-	 * Message: 権限が委譲できません。
+	 * Message: 権限が委譲できません。<br>
+	 * Message: You are not authorized to bestow these rights.
 	 */
 	public static final SystemMessageId NOT_AUTHORIZED_TO_BESTOW_RIGHTS;
 	
 	/**
 	 * ID: 236<br>
-	 * Message: 血盟主のみが行えます。
+	 * Message: 血盟主のみが行えます。<br>
+	 * Message: Only the clan leader is enabled.
 	 */
 	public static final SystemMessageId ONLY_THE_CLAN_LEADER_IS_ENABLED;
 	
 	/**
 	 * ID: 237<br>
-	 * Message: 血盟主が見つかりません。
+	 * Message: 血盟主が見つかりません。<br>
+	 * Message: The clan leader could not be found.
 	 */
 	public static final SystemMessageId CLAN_LEADER_NOT_FOUND;
 	
 	/**
 	 * ID: 238<br>
-	 * Message: 血盟に加入していません。
+	 * Message: 血盟に加入していません。<br>
+	 * Message: Not joined in any clan.
 	 */
 	public static final SystemMessageId NOT_JOINED_IN_ANY_CLAN;
 	
 	/**
 	 * ID: 239<br>
-	 * Message: 血盟主は脱退できません。
+	 * Message: 血盟主は脱退できません。<br>
+	 * Message: The clan leader cannot withdraw.
 	 */
 	public static final SystemMessageId CLAN_LEADER_CANNOT_WITHDRAW;
 	
 	/**
 	 * ID: 240<br>
-	 * Message: 現在血盟戦中です。
+	 * Message: 現在血盟戦中です。<br>
+	 * Message: Currently involved in clan war.
 	 */
 	public static final SystemMessageId CURRENTLY_INVOLVED_IN_CLAN_WAR;
 	
 	/**
 	 * ID: 241<br>
-	 * Message: $s1血盟の血盟主は接続していません。
+	 * Message: $s1血盟の血盟主は接続していません。<br>
+	 * Message: Leader of the $s1 Clan is not logged in.
 	 */
 	public static final SystemMessageId LEADER_OF_S1_CLAN_NOT_FOUND;
 	
 	/**
 	 * ID: 242<br>
-	 * Message: ターゲットを選択してください。
+	 * Message: ターゲットを選択してください。<br>
+	 * Message: Select target.
 	 */
 	public static final SystemMessageId SELECT_TARGET;
 	
 	/**
 	 * ID: 243<br>
-	 * Message: 同盟の血盟に対して血盟戦の宣戦布告はできません。
+	 * Message: 同盟の血盟に対して血盟戦の宣戦布告はできません。<br>
+	 * Message: You cannot declare war on an allied clan.
 	 */
 	public static final SystemMessageId CANNOT_DECLARE_WAR_ON_ALLIED_CLAN;
 	
 	/**
 	 * ID: 244<br>
-	 * Message: 血盟戦を申し込む資格がありません。
+	 * Message: 血盟戦を申し込む資格がありません。<br>
+	 * Message: You are not allowed to issue this challenge.
 	 */
 	public static final SystemMessageId NOT_ALLOWED_TO_CHALLENGE;
 	
 	/**
 	 * ID: 245<br>
-	 * Message: 前回の血盟戦の拒否から5日が経っていません。よろしいですか。
+	 * Message: 前回の血盟戦の拒否から5日が経っていません。よろしいですか。<br>
+	 * Message: 5 days has not passed since you were refused war. Do you wish to continue?
 	 */
 	public static final SystemMessageId FIVE_DAYS_NOT_PASSED_SINCE_REFUSED_WAR;
 	
 	/**
 	 * ID: 246<br>
-	 * Message: 相手の血盟は現在戦争中です。
+	 * Message: 相手の血盟は現在戦争中です。<br>
+	 * Message: That clan is currently at war.
 	 */
 	public static final SystemMessageId CLAN_CURRENTLY_AT_WAR;
 	
 	/**
 	 * ID: 247<br>
-	 * Message: $s1 血盟とはすでに戦争を行ったため、前回の戦争から5日が経過しないと宣戦布告できません。
+	 * Message: $s1 血盟とはすでに戦争を行ったため、前回の戦争から5日が経過しないと宣戦布告できません。<br>
+	 * Message: You have already been at war with the $s1 clan: 5 days must pass before you can challenge this clan again
 	 */
 	public static final SystemMessageId FIVE_DAYS_MUST_PASS_BEFORE_CHALLENGE_AGAIN;
 	
 	/**
 	 * ID: 248<br>
-	 * Message: $s1 血盟の血盟員が少なくて宣戦布告できません。
+	 * Message: $s1 血盟の血盟員が少なくて宣戦布告できません。<br>
+	 * Message: You cannot proclaim war: the $s1 clan does not have enough members.
 	 */
 	public static final SystemMessageId S1_CLAN_NOT_ENOUGH_MEMBERS_FOR_WAR;
 	
 	/**
 	 * ID: 249<br>
-	 * Message: $s1 血盟に降伏しますか。
+	 * Message: $s1 血盟に降伏しますか。<br>
+	 * Message: Do you wish to surrender to the $s1 clan?
 	 */
 	public static final SystemMessageId WISH_SURRENDER_TO_S1_CLAN;
 	
 	/**
 	 * ID: 250<br>
-	 * Message: $s1 血盟に個人降伏しました。血盟戦の状態から免れます。
+	 * Message: $s1 血盟に個人降伏しました。血盟戦の状態から免れます。<br>
+	 * Message: You have personally surrendered to the $s1 clan. You are no longer participating in this clan war.
 	 */
 	public static final SystemMessageId YOU_HAVE_PERSONALLY_SURRENDERED_TO_THE_S1_CLAN;
 	
 	/**
 	 * ID: 251<br>
-	 * Message: 血盟戦中には他の血盟に対して宣戦布告できません。
+	 * Message: 血盟戦中には他の血盟に対して宣戦布告できません。<br>
+	 * Message: You cannot proclaim war: you are at war with another clan.
 	 */
 	public static final SystemMessageId ALREADY_AT_WAR_WITH_ANOTHER_CLAN;
 	
 	/**
 	 * ID: 252<br>
-	 * Message: 降伏する血盟名を入力してください。
+	 * Message: 降伏する血盟名を入力してください。<br>
+	 * Message: Enter the clan name to surrender to.
 	 */
 	public static final SystemMessageId ENTER_CLAN_NAME_TO_SURRENDER_TO;
 	
 	/**
 	 * ID: 253<br>
-	 * Message: 終戦を申し込む血盟名を入力してください。
+	 * Message: 終戦を申し込む血盟名を入力してください。<br>
+	 * Message: Enter the name of the clan you wish to end the war with.
 	 */
 	public static final SystemMessageId ENTER_CLAN_NAME_TO_END_WAR;
 	
 	/**
 	 * ID: 254<br>
-	 * Message: 血盟主は個人降伏できません。
+	 * Message: 血盟主は個人降伏できません。<br>
+	 * Message: A clan leader cannot personally surrender.
 	 */
 	public static final SystemMessageId LEADER_CANT_PERSONALLY_SURRENDER;
 	
 	/**
 	 * ID: 255<br>
-	 * Message: $s1 血盟に終戦を申し込まれました。同意しますか。
+	 * Message: $s1 血盟に終戦を申し込まれました。同意しますか。<br>
+	 * Message: The $s1 clan has requested to end war. Do you agree?
 	 */
 	public static final SystemMessageId S1_CLAN_REQUESTED_END_WAR;
 	
 	/**
 	 * ID: 256<br>
-	 * Message: 付与するタイトルを入力してください。
+	 * Message: 付与するタイトルを入力してください。<br>
+	 * Message: Enter title
 	 */
 	public static final SystemMessageId ENTER_TITLE;
 	
 	/**
 	 * ID: 257<br>
-	 * Message: $s1血盟に終戦を申し込みますか。
+	 * Message: $s1血盟に終戦を申し込みますか。<br>
+	 * Message: Do you offer the $s1 clan a proposal to end the war?
 	 */
 	public static final SystemMessageId DO_YOU_OFFER_S1_CLAN_END_WAR;
 	
 	/**
 	 * ID: 258<br>
-	 * Message: 血盟戦中ではありません。
+	 * Message: 血盟戦中ではありません。<br>
+	 * Message: You are not involved in a clan war.
 	 */
 	public static final SystemMessageId NOT_INVOLVED_CLAN_WAR;
 	
 	/**
 	 * ID: 259<br>
-	 * Message: 血盟員をリストから選択してください。
+	 * Message: 血盟員をリストから選択してください。<br>
+	 * Message: Select clan members from list.
 	 */
 	public static final SystemMessageId SELECT_MEMBERS_FROM_LIST;
 	
 	/**
 	 * ID: 260<br>
-	 * Message: 血盟戦の拒否から5日が経っていないため、名声値が下がりました。
+	 * Message: 血盟戦の拒否から5日が経っていないため、名声値が下がりました。<br>
+	 * Message: Fame level has decreased: 5 days have not passed since you were refused war
 	 */
 	public static final SystemMessageId FIVE_DAYS_NOT_PASSED_SINCE_YOU_WERE_REFUSED_WAR;
 	
 	/**
 	 * ID: 261<br>
-	 * Message: 血盟名が正しくありません。
+	 * Message: 血盟名が正しくありません。<br>
+	 * Message: Clan name is invalid.
 	 */
 	public static final SystemMessageId CLAN_NAME_INCORRECT;
 	
 	/**
 	 * ID: 262<br>
-	 * Message: 血盟名が長過ぎます。
+	 * Message: 血盟名が長過ぎます。<br>
+	 * Message: Clan name's length is incorrect.
 	 */
 	public static final SystemMessageId CLAN_NAME_TOO_LONG;
 	
 	/**
 	 * ID: 263<br>
-	 * Message: $s1血盟は解散の申し込み中です。
+	 * Message: $s1血盟は解散の申し込み中です。<br>
+	 * Message: You have already requested the dissolution of your clan.
 	 */
 	public static final SystemMessageId DISSOLUTION_IN_PROGRESS;
 	
 	/**
 	 * ID: 264<br>
-	 * Message: 戦争中には血盟を解散できません。
+	 * Message: 戦争中には血盟を解散できません。<br>
+	 * Message: You cannot dissolve a clan while engaged in a war.
 	 */
 	public static final SystemMessageId CANNOT_DISSOLVE_WHILE_IN_WAR;
 	
 	/**
 	 * ID: 265<br>
-	 * Message: 攻防中の血盟は解散できません。
+	 * Message: 攻防中の血盟は解散できません。<br>
+	 * Message: You cannot dissolve a clan during a siege or while protecting a castle.
 	 */
 	public static final SystemMessageId CANNOT_DISSOLVE_WHILE_IN_SIEGE;
 	
 	/**
 	 * ID: 266<br>
-	 * Message: アジトや城を所有している血盟は解散できません。
+	 * Message: アジトや城を所有している血盟は解散できません。<br>
+	 * Message: You cannot dissolve a clan while owning a clan hall or castle.
 	 */
 	public static final SystemMessageId CANNOT_DISSOLVE_WHILE_OWNING_CLAN_HALL_OR_CASTLE;
 	
 	/**
 	 * ID: 267<br>
-	 * Message: 解散の申し込みがされていません。
+	 * Message: 解散の申し込みがされていません。<br>
+	 * Message: There are no requests to disperse.
 	 */
 	public static final SystemMessageId NO_REQUESTS_TO_DISPERSE;
 	
 	/**
 	 * ID: 268<br>
-	 * Message: すでに血盟に所属しています。
+	 * Message: すでに血盟に所属しています。<br>
+	 * Message: That player already belongs to another clan.
 	 */
 	public static final SystemMessageId PLAYER_ALREADY_ANOTHER_CLAN;
 	
 	/**
 	 * ID: 269<br>
-	 * Message: 自分自身を除名することはできません。
+	 * Message: 自分自身を除名することはできません。<br>
+	 * Message: You cannot dismiss yourself.
 	 */
 	public static final SystemMessageId YOU_CANNOT_DISMISS_YOURSELF;
 	
 	/**
 	 * ID: 270<br>
-	 * Message: すでに降伏しました。
+	 * Message: すでに降伏しました。<br>
+	 * Message: You have already surrendered.
 	 */
 	public static final SystemMessageId YOU_HAVE_ALREADY_SURRENDERED;
 	
 	/**
 	 * ID: 271<br>
-	 * Message: タイトル付与は血盟スキル レベルが3以上からできます。
+	 * Message: タイトル付与は血盟スキル レベルが3以上からできます。<br>
+	 * Message: A player can only be granted a title if the clan is level 3 or above
 	 */
 	public static final SystemMessageId CLAN_LVL_3_NEEDED_TO_ENDOWE_TITLE;
 	
 	/**
 	 * ID: 272<br>
-	 * Message: エンブレム登録は血盟スキル レベルが3以上からできます。
+	 * Message: エンブレム登録は血盟スキル レベルが3以上からできます。<br>
+	 * Message: A clan crest can only be registered when the clan's skill level is 3 or above.
 	 */
 	public static final SystemMessageId CLAN_LVL_3_NEEDED_TO_SET_CREST;
 	
 	/**
 	 * ID: 273<br>
-	 * Message: 血盟戦の布告は血盟スキル レベルが3以上からできます。
+	 * Message: 血盟戦の布告は血盟スキル レベルが3以上からできます。<br>
+	 * Message: A clan war can only be declared when a clan's skill level is 3 or above.
 	 */
 	public static final SystemMessageId CLAN_LVL_3_NEEDED_TO_DECLARE_WAR;
 	
 	/**
 	 * ID: 274<br>
-	 * Message: 血盟スキルのレベルが上がりました。
+	 * Message: 血盟スキルのレベルが上がりました。<br>
+	 * Message: Your clan's skill level has increased.
 	 */
 	public static final SystemMessageId CLAN_LEVEL_INCREASED;
 	
 	/**
 	 * ID: 275<br>
-	 * Message: 血盟スキルのレベル アップに失敗しました。
+	 * Message: 血盟スキルのレベル アップに失敗しました。<br>
+	 * Message: Clan has failed to increase skill level.
 	 */
 	public static final SystemMessageId CLAN_LEVEL_INCREASE_FAILED;
 	
 	/**
 	 * ID: 276<br>
-	 * Message: スキル習得に必要なアイテムが足りません。
+	 * Message: スキル習得に必要なアイテムが足りません。<br>
+	 * Message: You do not have the necessary materials or prerequisites to learn this skill.
 	 */
 	public static final SystemMessageId ITEM_MISSING_TO_LEARN_SKILL;
 	
 	/**
 	 * ID: 277<br>
-	 * Message: $s1を習得します。
+	 * Message: $s1を習得します。<br>
+	 * Message: You have earned $s1.
 	 */
 	public static final SystemMessageId LEARNED_SKILL_S1;
 	
 	/**
 	 * ID: 278<br>
-	 * Message: スキル習得に必要なSPが足りません。
+	 * Message: スキル習得に必要なSPが足りません。<br>
+	 * Message: You do not have enough SP to learn this skill.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_SP_TO_LEARN_SKILL;
 	
 	/**
 	 * ID: 279<br>
-	 * Message: アデナが足りません。
+	 * Message: アデナが足りません。<br>
+	 * Message: You do not have enough adena.
 	 */
 	public static final SystemMessageId YOU_NOT_ENOUGH_ADENA;
 	
 	/**
 	 * ID: 280<br>
-	 * Message: 売るものがありません。
+	 * Message: 売るものがありません。<br>
+	 * Message: You do not have any items to sell.
 	 */
 	public static final SystemMessageId NO_ITEMS_TO_SELL;
 	
 	/**
 	 * ID: 281<br>
-	 * Message: 保管料が足りません。
+	 * Message: 保管料が足りません。<br>
+	 * Message: You do not have enough adena to pay the fee.
 	 */
 	public static final SystemMessageId YOU_NOT_ENOUGH_ADENA_PAY_FEE;
 	
 	/**
 	 * ID: 282<br>
-	 * Message: 預けたものがありません。
+	 * Message: 預けたものがありません。<br>
+	 * Message: You have not deposited any items in your warehouse.
 	 */
 	public static final SystemMessageId NO_ITEM_DEPOSITED_IN_WH;
 	
 	/**
 	 * ID: 283<br>
-	 * Message: 戦場に入りました。
+	 * Message: 戦場に入りました。<br>
+	 * Message: You have entered a combat zone.
 	 */
 	public static final SystemMessageId ENTERED_COMBAT_ZONE;
 	
 	/**
 	 * ID: 284<br>
-	 * Message: 戦場から出ました。
+	 * Message: 戦場から出ました。<br>
+	 * Message: You have left a combat zone.
 	 */
 	public static final SystemMessageId LEFT_COMBAT_ZONE;
 	
 	/**
 	 * ID: 285<br>
-	 * Message: $s1 血盟が支配者の刻印に成功しました。
+	 * Message: $s1 血盟が支配者の刻印に成功しました。<br>
+	 * Message: Clan $s1 has succeeded in engraving the ruler!
 	 */
 	public static final SystemMessageId CLAN_S1_ENGRAVED_RULER;
 	
 	/**
 	 * ID: 286<br>
-	 * Message: 陣地が攻撃されています。
+	 * Message: 陣地が攻撃されています。<br>
+	 * Message: Your base is being attacked.
 	 */
 	public static final SystemMessageId BASE_UNDER_ATTACK;
 	
 	/**
 	 * ID: 287<br>
-	 * Message: 敵の血盟が支配者の刻印を始めました。
+	 * Message: 敵の血盟が支配者の刻印を始めました。<br>
+	 * Message: The opposing clan has stared to engrave to monument!
 	 */
 	public static final SystemMessageId OPPONENT_STARTED_ENGRAVING;
 	
 	/**
 	 * ID: 288<br>
-	 * Message: 城門が壊れました。
+	 * Message: 城門が壊れました。<br>
+	 * Message: The castle gate has been broken down.
 	 */
 	public static final SystemMessageId CASTLE_GATE_BROKEN_DOWN;
 	
 	/**
 	 * ID: 289<br>
-	 * Message: 現在陣地や前哨基地があるため構築できません。
+	 * Message: 現在陣地や前哨基地があるため構築できません。<br>
+	 * Message: An outpost or headquarters cannot be built because at least one already exists.
 	 */
 	public static final SystemMessageId NOT_ANOTHER_HEADQUARTERS;
 	
 	/**
 	 * ID: 290<br>
-	 * Message: ここには陣地を建てられません。
+	 * Message: ここには陣地を建てられません。<br>
+	 * Message: You cannot set up a base here.
 	 */
 	public static final SystemMessageId NOT_SET_UP_BASE_HERE;
 	
 	/**
 	 * ID: 291<br>
-	 * Message: $s1 血盟が $s2 との攻城戦で勝利しました。
+	 * Message: $s1 血盟が $s2 との攻城戦で勝利しました。<br>
+	 * Message: Clan $s1 is victorious over $s2's castle siege!
 	 */
 	public static final SystemMessageId CLAN_S1_VICTORIOUS_OVER_S2_S_SIEGE;
 	
 	/**
 	 * ID: 292<br>
-	 * Message: $s1が攻城時刻を宣布しました。
+	 * Message: $s1が攻城時刻を宣布しました。<br>
+	 * Message: $s1 has announced the castle siege time.
 	 */
 	public static final SystemMessageId S1_ANNOUNCED_SIEGE_TIME;
 	
 	/**
 	 * ID: 293<br>
-	 * Message: $s1の攻城登録期間が終了しました。
+	 * Message: $s1の攻城登録期間が終了しました。<br>
+	 * Message: The registration term for $s1 has ended.
 	 */
 	public static final SystemMessageId REGISTRATION_TERM_FOR_S1_ENDED;
 	
 	/**
 	 * ID: 294<br>
-	 * Message: 攻城戦、要塞戦やアジト戦に参加している攻撃側の血盟ではないので陣地を作ることはできません。
+	 * Message: 攻城戦、要塞戦やアジト戦に参加している攻撃側の血盟ではないので陣地を作ることはできません。<br>
+	 * Message: Because your clan is not currently on the offensive in a Clan Hall siege war, it cannot summon its base camp.
 	 */
 	public static final SystemMessageId BECAUSE_YOUR_CLAN_IS_NOT_CURRENTLY_ON_THE_OFFENSIVE_IN_A_CLAN_HALL_SIEGE_WAR_IT_CANNOT_SUMMON_ITS_BASE_CAMP;
 	
 	/**
 	 * ID: 295<br>
-	 * Message: 攻城戦に参加する血盟がないため、$s1の攻城戦がキャンセルされました。
+	 * Message: 攻城戦に参加する血盟がないため、$s1の攻城戦がキャンセルされました。<br>
+	 * Message: $s1's siege was canceled because there were no clans that participated.
 	 */
 	public static final SystemMessageId S1_SIEGE_WAS_CANCELED_BECAUSE_NO_CLANS_PARTICIPATED;
 	
 	/**
 	 * ID: 296<br>
-	 * Message: 高い所から落ちて$s1のダメージを受けました。
+	 * Message: 高い所から落ちて$s1のダメージを受けました。<br>
+	 * Message: You received $s1 damage from taking a high fall.
 	 */
 	public static final SystemMessageId FALL_DAMAGE_S1;
 	
 	/**
 	 * ID: 297<br>
-	 * Message: 呼吸ができず$s1のダメージを受けました。
+	 * Message: 呼吸ができず$s1のダメージを受けました。<br>
+	 * Message: You have taken $s1 damage because you were unable to breathe.
 	 */
 	public static final SystemMessageId DROWN_DAMAGE_S1;
 	
 	/**
 	 * ID: 298<br>
-	 * Message: $s1を落としました。
+	 * Message: $s1を落としました。<br>
+	 * Message: You have dropped $s1.
 	 */
 	public static final SystemMessageId YOU_DROPPED_S1;
 	
 	/**
 	 * ID: 299<br>
-	 * Message: $c1が$s2を$s3個手に入れました。
+	 * Message: $c1が$s2を$s3個手に入れました。<br>
+	 * Message: $c1 has obtained $s3 $s2.
 	 */
 	public static final SystemMessageId C1_OBTAINED_S3_S2;
 	
 	/**
 	 * ID: 300<br>
-	 * Message: $c1が$s2を手に入れました。
+	 * Message: $c1が$s2を手に入れました。<br>
+	 * Message: $c1 has obtained $s2.
 	 */
 	public static final SystemMessageId C1_OBTAINED_S2;
 	
 	/**
 	 * ID: 301<br>
-	 * Message: $s1 $s2個が消えました。
+	 * Message: $s1 $s2個が消えました。<br>
+	 * Message: $s2 $s1 has disappeared.
 	 */
 	public static final SystemMessageId S2_S1_DISAPPEARED;
 	
 	/**
 	 * ID: 302<br>
-	 * Message: $s1が消えました。
+	 * Message: $s1が消えました。<br>
+	 * Message: $s1 has disappeared.
 	 */
 	public static final SystemMessageId S1_DISAPPEARED;
 	
 	/**
 	 * ID: 303<br>
-	 * Message: 強化するアイテムを選択してください。
+	 * Message: 強化するアイテムを選択してください。<br>
+	 * Message: Select item to enchant.
 	 */
 	public static final SystemMessageId SELECT_ITEM_TO_ENCHANT;
 	
 	/**
 	 * ID: 304<br>
-	 * Message: 血盟員 $s1がゲームに接続しました。
+	 * Message: 血盟員 $s1がゲームに接続しました。<br>
+	 * Message: Clan member $s1 has logged into game.
 	 */
 	public static final SystemMessageId CLAN_MEMBER_S1_LOGGED_IN;
 	
 	/**
 	 * ID: 305<br>
-	 * Message: パーティへの参加を拒否されました。
+	 * Message: パーティへの参加を拒否されました。<br>
+	 * Message: The player declined to join your party.
 	 */
 	public static final SystemMessageId PLAYER_DECLINED;
 	
 	/**
 	 * ID: 306<br>
-	 * Message: キャラクターの削除に失敗しました。
+	 * Message: キャラクターの削除に失敗しました。<br>
+	 * Message: You have failed to delete the character.
 	 */
 	public static final SystemMessageId FAILED_TO_DELETE_CHAR;
 	
 	/**
 	 * ID: 307<br>
-	 * Message: 倉庫とのトレードに失敗しました。
+	 * Message: 倉庫とのトレードに失敗しました。<br>
+	 * Message: You cannot trade with a warehouse keeper.
 	 */
 	public static final SystemMessageId CANNOT_TRADE_WAREHOUSE_KEEPER;
 	
 	/**
 	 * ID: 308<br>
-	 * Message: 血盟の勧誘に失敗しました。
+	 * Message: 血盟の勧誘に失敗しました。<br>
+	 * Message: The player declined your clan invitation.
 	 */
 	public static final SystemMessageId PLAYER_DECLINED_CLAN_INVITATION;
 	
 	/**
 	 * ID: 309<br>
-	 * Message: 血盟員の除名に成功しました。
+	 * Message: 血盟員の除名に成功しました。<br>
+	 * Message: You have succeeded in expelling the clan member.
 	 */
 	public static final SystemMessageId YOU_HAVE_SUCCEEDED_IN_EXPELLING_CLAN_MEMBER;
 	
 	/**
 	 * ID: 310<br>
-	 * Message: 血盟員の除名に失敗しました。
+	 * Message: 血盟員の除名に失敗しました。<br>
+	 * Message: You have failed to expel the clan member.
 	 */
 	public static final SystemMessageId FAILED_TO_EXPEL_CLAN_MEMBER;
 	
 	/**
 	 * ID: 311<br>
-	 * Message: 血盟戦の申し込みが受け入れられました。
+	 * Message: 血盟戦の申し込みが受け入れられました。<br>
+	 * Message: The clan war declaration has been accepted.
 	 */
 	public static final SystemMessageId CLAN_WAR_DECLARATION_ACCEPTED;
 	
 	/**
 	 * ID: 312<br>
-	 * Message: 血盟戦の申し込みが拒否されました。
+	 * Message: 血盟戦の申し込みが拒否されました。<br>
+	 * Message: The clan war declaration has been refused.
 	 */
 	public static final SystemMessageId CLAN_WAR_DECLARATION_REFUSED;
 	
 	/**
 	 * ID: 313<br>
-	 * Message: 終戦の申し込みが受け入れられました。
+	 * Message: 終戦の申し込みが受け入れられました。<br>
+	 * Message: The cease war request has been accepted.
 	 */
 	public static final SystemMessageId CEASE_WAR_REQUEST_ACCEPTED;
 	
 	/**
 	 * ID: 314<br>
-	 * Message: 降伏に失敗しました。
+	 * Message: 降伏に失敗しました。<br>
+	 * Message: You have failed to surrender.
 	 */
 	public static final SystemMessageId FAILED_TO_SURRENDER;
 	
 	/**
 	 * ID: 315<br>
-	 * Message: 個人降伏に失敗しました。
+	 * Message: 個人降伏に失敗しました。<br>
+	 * Message: You have failed to personally surrender.
 	 */
 	public static final SystemMessageId FAILED_TO_PERSONALLY_SURRENDER;
 	
 	/**
 	 * ID: 316<br>
-	 * Message: パーティからの脱退に失敗しました。
+	 * Message: パーティからの脱退に失敗しました。<br>
+	 * Message: You have failed to withdraw from the party.
 	 */
 	public static final SystemMessageId FAILED_TO_WITHDRAW_FROM_THE_PARTY;
 	
 	/**
 	 * ID: 317<br>
-	 * Message: パーティ メンバーの追放に失敗しました。
+	 * Message: パーティ メンバーの追放に失敗しました。<br>
+	 * Message: You have failed to expel the party member.
 	 */
 	public static final SystemMessageId FAILED_TO_EXPEL_THE_PARTY_MEMBER;
 	
 	/**
 	 * ID: 318<br>
-	 * Message: パーティの解散に失敗しました。
+	 * Message: パーティの解散に失敗しました。<br>
+	 * Message: You have failed to disperse the party.
 	 */
 	public static final SystemMessageId FAILED_TO_DISPERSE_THE_PARTY;
 	
 	/**
 	 * ID: 319<br>
-	 * Message: アンロックできないドアです。
+	 * Message: アンロックできないドアです。<br>
+	 * Message: This door cannot be unlocked.
 	 */
 	public static final SystemMessageId UNABLE_TO_UNLOCK_DOOR;
 	
 	/**
 	 * ID: 320<br>
-	 * Message: アンロックに失敗しました。
+	 * Message: アンロックに失敗しました。<br>
+	 * Message: You have failed to unlock the door.
 	 */
 	public static final SystemMessageId FAILED_TO_UNLOCK_DOOR;
 	
 	/**
 	 * ID: 321<br>
-	 * Message: ロックされていません。
+	 * Message: ロックされていません。<br>
+	 * Message: It is not locked.
 	 */
 	public static final SystemMessageId ITS_NOT_LOCKED;
 	
 	/**
 	 * ID: 322<br>
-	 * Message: 販売額を決めてください。
+	 * Message: 販売額を決めてください。<br>
+	 * Message: Please decide on the sales price.
 	 */
 	public static final SystemMessageId DECIDE_SALES_PRICE;
 	
 	/**
 	 * ID: 323<br>
-	 * Message: 気が$s1段階に上昇しました。
+	 * Message: 気が$s1段階に上昇しました。<br>
+	 * Message: Your force has increased to $s1 level.
 	 */
 	public static final SystemMessageId FORCE_INCREASED_TO_S1;
 	
 	/**
 	 * ID: 324<br>
-	 * Message: これ以上は気を上げられません。
+	 * Message: これ以上は気を上げられません。<br>
+	 * Message: Your force has reached maximum capacity.
 	 */
 	public static final SystemMessageId FORCE_MAXLEVEL_REACHED;
 	
 	/**
 	 * ID: 325<br>
-	 * Message: 死体がすでになくなりました。
+	 * Message: 死体がすでになくなりました。<br>
+	 * Message: The corpse has already disappeared.
 	 */
 	public static final SystemMessageId CORPSE_ALREADY_DISAPPEARED;
 	
 	/**
 	 * ID: 326<br>
-	 * Message: 対象をリストから選択してください。
+	 * Message: 対象をリストから選択してください。<br>
+	 * Message: Select target from list.
 	 */
 	public static final SystemMessageId SELECT_TARGET_FROM_LIST;
 	
 	/**
 	 * ID: 327<br>
-	 * Message: 80文字以下にしてください。
+	 * Message: 80文字以下にしてください。<br>
+	 * Message: You cannot exceed 80 characters.
 	 */
 	public static final SystemMessageId CANNOT_EXCEED_80_CHARACTERS;
 	
 	/**
 	 * ID: 328<br>
-	 * Message: 題目を入力してください。
+	 * Message: 題目を入力してください。<br>
+	 * Message: Please input title using less than 128 characters.
 	 */
 	public static final SystemMessageId PLEASE_INPUT_TITLE_LESS_128_CHARACTERS;
 	
 	/**
 	 * ID: 329<br>
-	 * Message: 内容を入力してください。
+	 * Message: 内容を入力してください。<br>
+	 * Message: Please input content using less than 3000 characters.
 	 */
 	public static final SystemMessageId PLEASE_INPUT_CONTENT_LESS_3000_CHARACTERS;
 	
 	/**
 	 * ID: 330<br>
-	 * Message: コメントは128文字以内で入力してください。
+	 * Message: コメントは128文字以内で入力してください。<br>
+	 * Message: A one-line response may not exceed 128 characters.
 	 */
 	public static final SystemMessageId ONE_LINE_RESPONSE_NOT_EXCEED_128_CHARACTERS;
 	
 	/**
 	 * ID: 331<br>
-	 * Message: $s1のSPを得ました。
+	 * Message: $s1のSPを得ました。<br>
+	 * Message: You have acquired $s1 SP.
 	 */
 	public static final SystemMessageId ACQUIRED_S1_SP;
 	
 	/**
 	 * ID: 332<br>
-	 * Message: 復活しますか。
+	 * Message: 復活しますか。<br>
+	 * Message: Do you want to be restored?
 	 */
 	public static final SystemMessageId DO_YOU_WANT_TO_BE_RESTORED;
 	
 	/**
 	 * ID: 333<br>
-	 * Message: コアのバリアによって$s1のダメージを受けました。
+	 * Message: コアのバリアによって$s1のダメージを受けました。<br>
+	 * Message: You have received $s1 damage by Core's barrier.
 	 */
 	public static final SystemMessageId S1_DAMAGE_BY_CORE_BARRIER;
 	
 	/**
 	 * ID: 334<br>
-	 * Message: メッセージを入力してください。
+	 * Message: メッセージを入力してください。<br>
+	 * Message: Please enter your private store display message.
 	 */
 	public static final SystemMessageId ENTER_PRIVATE_STORE_MESSAGE;
 	
 	/**
 	 * ID: 335<br>
-	 * Message: $s1を中断します。
+	 * Message: $s1を中断します。<br>
+	 * Message: $s1 has been aborted.
 	 */
 	public static final SystemMessageId S1_HAS_BEEN_ABORTED;
 	
 	/**
 	 * ID: 336<br>
-	 * Message: $s1をクリスタライズします。よろしいですか。
+	 * Message: $s1をクリスタライズします。よろしいですか。<br>
+	 * Message: You are attempting to crystallize $s1. Do you wish to continue?
 	 */
 	public static final SystemMessageId WISH_TO_CRYSTALLIZE_S1;
 	
 	/**
 	 * ID: 337<br>
-	 * Message: ソウル ショットと武器のグレードが一致しません。
+	 * Message: ソウル ショットと武器のグレードが一致しません。<br>
+	 * Message: The soulshot you are attempting to use does not match the grade of your equipped weapon.
 	 */
 	public static final SystemMessageId SOULSHOTS_GRADE_MISMATCH;
 	
 	/**
 	 * ID: 338<br>
-	 * Message: ソウル ショットが足りません。
+	 * Message: ソウル ショットが足りません。<br>
+	 * Message: You do not have enough soulshots for that.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_SOULSHOTS;
 	
 	/**
 	 * ID: 339<br>
-	 * Message: ソウル ショットが使用できません。
+	 * Message: ソウル ショットが使用できません。<br>
+	 * Message: Cannot use soulshots.
 	 */
 	public static final SystemMessageId CANNOT_USE_SOULSHOTS;
 	
 	/**
 	 * ID: 340<br>
-	 * Message: 個人商店の準備中です。
+	 * Message: 個人商店の準備中です。<br>
+	 * Message: Your private store is now open for business.
 	 */
 	public static final SystemMessageId PRIVATE_STORE_UNDER_WAY;
 	
 	/**
 	 * ID: 341<br>
-	 * Message: 材料が足りません。
+	 * Message: 材料が足りません。<br>
+	 * Message: You do not have enough materials to perform that action.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_MATERIALS;
 	
 	/**
 	 * ID: 342<br>
-	 * Message: 精霊の力を使います。
+	 * Message: 精霊の力を使います。<br>
+	 * Message: Power of the spirits enabled.
 	 */
 	public static final SystemMessageId ENABLED_SOULSHOT;
 	
 	/**
 	 * ID: 343<br>
-	 * Message: スポイルされていないため、スウィーパーの使用に失敗しました。
+	 * Message: スポイルされていないため、スウィーパーの使用に失敗しました。<br>
+	 * Message: Sweeper failed, target not spoiled.
 	 */
 	public static final SystemMessageId SWEEPER_FAILED_TARGET_NOT_SPOILED;
 	
 	/**
 	 * ID: 344<br>
-	 * Message: 精霊の力が無くなりました。
+	 * Message: 精霊の力が無くなりました。<br>
+	 * Message: Power of the spirits disabled.
 	 */
 	public static final SystemMessageId SOULSHOTS_DISABLED;
 	
 	/**
 	 * ID: 345<br>
-	 * Message: チャット可能な状態です。
+	 * Message: チャット可能な状態です。<br>
+	 * Message: Chat enabled.
 	 */
 	public static final SystemMessageId CHAT_ENABLED;
 	
 	/**
 	 * ID: 346<br>
-	 * Message: チャットが禁止されました。
+	 * Message: チャットが禁止されました。<br>
+	 * Message: Chat disabled.
 	 */
 	public static final SystemMessageId CHAT_DISABLED;
 	
 	/**
 	 * ID: 347<br>
-	 * Message: アイテムの個数が正しくありません。
+	 * Message: アイテムの個数が正しくありません。<br>
+	 * Message: Incorrect item count.
 	 */
 	public static final SystemMessageId INCORRECT_ITEM_COUNT;
 	
 	/**
 	 * ID: 348<br>
-	 * Message: アイテムの価格が正しくありません。
+	 * Message: アイテムの価格が正しくありません。<br>
+	 * Message: Incorrect item price.
 	 */
 	public static final SystemMessageId INCORRECT_ITEM_PRICE;
 	
 	/**
 	 * ID: 349<br>
-	 * Message: 個人商店が終了しました。
+	 * Message: 個人商店が終了しました。<br>
+	 * Message: Private store already closed.
 	 */
 	public static final SystemMessageId PRIVATE_STORE_ALREADY_CLOSED;
 	
 	/**
 	 * ID: 350<br>
-	 * Message: アイテムが品切れです。
+	 * Message: アイテムが品切れです。<br>
+	 * Message: Item out of stock.
 	 */
 	public static final SystemMessageId ITEM_OUT_OF_STOCK;
 	
 	/**
 	 * ID: 351<br>
-	 * Message: 購入するアイテムの個数が正しくありません。
+	 * Message: 購入するアイテムの個数が正しくありません。<br>
+	 * Message: Incorrect item count.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_ITEMS;
 	
 	/**
 	 * ID: 352<br>
-	 * Message: アイテムが正しくありません。
+	 * Message: アイテムが正しくありません。<br>
+	 * Message: Incorrect item.
 	 */
 	public static final SystemMessageId INCORRECT_ITEM;
 	
 	/**
 	 * ID: 353<br>
-	 * Message: 購入に失敗しました。
+	 * Message: 購入に失敗しました。<br>
+	 * Message: Cannot purchase.
 	 */
 	public static final SystemMessageId CANNOT_PURCHASE;
 	
 	/**
 	 * ID: 354<br>
-	 * Message: エンチャントがキャンセルされました。
+	 * Message: エンチャントがキャンセルされました。<br>
+	 * Message: Cancel enchant.
 	 */
 	public static final SystemMessageId CANCEL_ENCHANT;
 	
 	/**
 	 * ID: 355<br>
-	 * Message: エンチャントの条件が一致しません。
+	 * Message: エンチャントの条件が一致しません。<br>
+	 * Message: Inappropriate enchant conditions.
 	 */
 	public static final SystemMessageId INAPPROPRIATE_ENCHANT_CONDITION;
 	
 	/**
 	 * ID: 356<br>
-	 * Message: 復活を拒否しました。
+	 * Message: 復活を拒否しました。<br>
+	 * Message: Reject resurrection.
 	 */
 	public static final SystemMessageId REJECT_RESURRECTION;
 	
 	/**
 	 * ID: 357<br>
-	 * Message: すでにスポイルにかかっています。
+	 * Message: すでにスポイルにかかっています。<br>
+	 * Message: It has already been spoiled.
 	 */
 	public static final SystemMessageId ALREADY_SPOILED;
 	
 	/**
 	 * ID: 358<br>
-	 * Message: 攻城戦の終了まであと$s1時間です。
+	 * Message: 攻城戦の終了まであと$s1時間です。<br>
+	 * Message: $s1 hour(s) until castle siege conclusion.
 	 */
 	public static final SystemMessageId S1_HOURS_UNTIL_SIEGE_CONCLUSION;
 	
 	/**
 	 * ID: 359<br>
-	 * Message: 攻城戦の終了まであと$s1分です。
+	 * Message: 攻城戦の終了まであと$s1分です。<br>
+	 * Message: $s1 minute(s) until castle siege conclusion.
 	 */
 	public static final SystemMessageId S1_MINUTES_UNTIL_SIEGE_CONCLUSION;
 	
 	/**
 	 * ID: 360<br>
-	 * Message: 攻城戦の終了まであと$s1秒！
+	 * Message: 攻城戦の終了まであと$s1秒！<br>
+	 * Message: Castle siege $s1 second(s) left!
 	 */
 	public static final SystemMessageId CASTLE_SIEGE_S1_SECONDS_LEFT;
 	
 	/**
 	 * ID: 361<br>
-	 * Message: オーバーヒット！
+	 * Message: オーバーヒット！<br>
+	 * Message: Over-hit!
 	 */
 	public static final SystemMessageId OVER_HIT;
 	
 	/**
 	 * ID: 362<br>
-	 * Message: オーバーヒットで$s1のボーナス経験値を得ました。
+	 * Message: オーバーヒットで$s1のボーナス経験値を得ました。<br>
+	 * Message: You have acquired $s1 bonus experience from a successful over-hit.
 	 */
 	public static final SystemMessageId ACQUIRED_BONUS_EXPERIENCE_THROUGH_OVER_HIT;
 	
 	/**
 	 * ID: 363<br>
-	 * Message: チャット可能まであと$s1分です。
+	 * Message: チャット可能まであと$s1分です。<br>
+	 * Message: Chat available time: $s1 minute.
 	 */
 	public static final SystemMessageId CHAT_AVAILABLE_S1_MINUTE;
 	
 	/**
 	 * ID: 364<br>
-	 * Message: 検索するユーザー名を入力してください。
+	 * Message: 検索するユーザー名を入力してください。<br>
+	 * Message: Enter user's name to search
 	 */
 	public static final SystemMessageId ENTER_USER_NAME_TO_SEARCH;
 	
 	/**
 	 * ID: 365<br>
-	 * Message: 本当にクリスタライズしますか。
+	 * Message: 本当にクリスタライズしますか。<br>
+	 * Message: Are you sure?
 	 */
 	public static final SystemMessageId ARE_YOU_SURE;
 	
 	/**
 	 * ID: 366<br>
-	 * Message: 髪色を選択してください。
+	 * Message: 髪色を選択してください。<br>
+	 * Message: Please select your hair color.
 	 */
 	public static final SystemMessageId PLEASE_SELECT_HAIR_COLOR;
 	
 	/**
 	 * ID: 367<br>
-	 * Message: 血盟に所属しているキャラクターは削除できません。
+	 * Message: 血盟に所属しているキャラクターは削除できません。<br>
+	 * Message: You cannot remove that clan character at this time.
 	 */
 	public static final SystemMessageId CANNOT_REMOVE_CLAN_CHARACTER;
 	
 	/**
 	 * ID: 368<br>
-	 * Message: +$s1$s2を装備しました。
+	 * Message: +$s1$s2を装備しました。<br>
+	 * Message: Equipped +$s1 $s2.
 	 */
 	public static final SystemMessageId S1_S2_EQUIPPED;
 	
 	/**
 	 * ID: 369<br>
-	 * Message: +$s1$s2を手に入れました。
+	 * Message: +$s1$s2を手に入れました。<br>
+	 * Message: You have obtained a +$s1 $s2.
 	 */
 	public static final SystemMessageId YOU_PICKED_UP_A_S1_S2;
 	
 	/**
 	 * ID: 370<br>
-	 * Message: +$s1$s2の取得に失敗しました。
+	 * Message: +$s1$s2の取得に失敗しました。<br>
+	 * Message: Failed to pickup $s1.
 	 */
 	public static final SystemMessageId FAILED_PICKUP_S1;
 	
 	/**
 	 * ID: 371<br>
-	 * Message: +$s1$s2を得ました。
+	 * Message: +$s1$s2を得ました。<br>
+	 * Message: Acquired +$s1 $s2.
 	 */
 	public static final SystemMessageId ACQUIRED_S1_S2;
 	
 	/**
 	 * ID: 372<br>
-	 * Message: +$s1$s2取得に失敗しました。
+	 * Message: +$s1$s2取得に失敗しました。<br>
+	 * Message: Failed to earn $s1.
 	 */
 	public static final SystemMessageId FAILED_EARN_S1;
 	
 	/**
 	 * ID: 373<br>
-	 * Message: +$s1$s2を破壊します。よろしいですか。
+	 * Message: +$s1$s2を破壊します。よろしいですか。<br>
+	 * Message: You are trying to destroy +$s1 $s2. Do you wish to continue?
 	 */
 	public static final SystemMessageId WISH_DESTROY_S1_S2;
 	
 	/**
 	 * ID: 374<br>
-	 * Message: +$s1$s2をクリスタライズします。よろしいですか。
+	 * Message: +$s1$s2をクリスタライズします。よろしいですか。<br>
+	 * Message: You are attempting to crystallize +$s1 $s2. Do you wish to continue?
 	 */
 	public static final SystemMessageId WISH_CRYSTALLIZE_S1_S2;
 	
 	/**
 	 * ID: 375<br>
-	 * Message: +$s1$s2を落としました。
+	 * Message: +$s1$s2を落としました。<br>
+	 * Message: You have dropped +$s1 $s2 .
 	 */
 	public static final SystemMessageId DROPPED_S1_S2;
 	
 	/**
 	 * ID: 376<br>
-	 * Message: $c1が +$s2$s3を手に入れました。
+	 * Message: $c1が +$s2$s3を手に入れました。<br>
+	 * Message: $c1 has obtained +$s2$s3.
 	 */
 	public static final SystemMessageId C1_OBTAINED_S2_S3;
 	
 	/**
 	 * ID: 377<br>
-	 * Message: +$s1$s2が消えました。
+	 * Message: +$s1$s2が消えました。<br>
+	 * Message: $S1 $S2 disappeared.
 	 */
 	public static final SystemMessageId S1_S2_DISAPPEARED;
 	
 	/**
 	 * ID: 378<br>
-	 * Message: $c1が $s2を買いました。
+	 * Message: $c1が $s2を買いました。<br>
+	 * Message: $c1 purchased $s2.
 	 */
 	public static final SystemMessageId C1_PURCHASED_S2;
 	
 	/**
 	 * ID: 379<br>
-	 * Message: $c1が +$s2$s3を買いました。
+	 * Message: $c1が +$s2$s3を買いました。<br>
+	 * Message: $c1 purchased +$s2$s3.
 	 */
 	public static final SystemMessageId C1_PURCHASED_S2_S3;
 	
 	/**
 	 * ID: 380<br>
-	 * Message: $c1が $s2 $s3個を買いました。
+	 * Message: $c1が $s2 $s3個を買いました。<br>
+	 * Message: $c1 purchased $s3 $s2(s).
 	 */
 	public static final SystemMessageId C1_PURCHASED_S3_S2_S;
 	
 	/**
 	 * ID: 381<br>
-	 * Message: サポートサーバーに繋がりません。
+	 * Message: サポートサーバーに繋がりません。<br>
+	 * Message: The game client encountered an error and was unable to connect to the petition server.
 	 */
 	public static final SystemMessageId GAME_CLIENT_UNABLE_TO_CONNECT_TO_PETITION_SERVER;
 	
 	/**
 	 * ID: 382<br>
-	 * Message: 現在FS・SPT・サービスチーム IDでチェックアウトされているお客様はいません。
+	 * Message: 現在FS・SPT・サービスチーム IDでチェックアウトされているお客様はいません。<br>
+	 * Message: Currently there are no users that have checked out a GM ID.
 	 */
 	public static final SystemMessageId NO_USERS_CHECKED_OUT_GM_ID;
 	
 	/**
 	 * ID: 383<br>
-	 * Message: サポートの終了をリクエストしました。
+	 * Message: サポートの終了をリクエストしました。<br>
+	 * Message: Request confirmed to end consultation at petition server.
 	 */
 	public static final SystemMessageId REQUEST_CONFIRMED_TO_END_CONSULTATION;
 	
 	/**
 	 * ID: 384<br>
-	 * Message: ユーザーがゲーム サーバーに接続していません。
+	 * Message: ユーザーがゲーム サーバーに接続していません。<br>
+	 * Message: The client is not logged onto the game server.
 	 */
 	public static final SystemMessageId CLIENT_NOT_LOGGED_ONTO_GAME_SERVER;
 	
 	/**
 	 * ID: 385<br>
-	 * Message: サポートの開始をリクエストしました。
+	 * Message: サポートの開始をリクエストしました。<br>
+	 * Message: Request confirmed to begin consultation at petition server.
 	 */
 	public static final SystemMessageId REQUEST_CONFIRMED_TO_BEGIN_CONSULTATION;
 	
 	/**
 	 * ID: 386<br>
-	 * Message: サポート要請をするには、内容を6文字以上入力してください。
+	 * Message: サポート要請をするには、内容を6文字以上入力してください。<br>
+	 * Message: The body of your petition must be more than five characters in length.
 	 */
 	public static final SystemMessageId PETITION_MORE_THAN_FIVE_CHARACTERS;
 	
 	/**
 	 * ID: 387<br>
-	 * Message: サポートが終了しました。\nサポートに対する評価をして頂ければ幸いです。
+	 * Message: サポートが終了しました。\nサポートに対する評価をして頂ければ幸いです。<br>
+	 * Message: This ends the GM petition consultation. Please take a moment to provide feedback about this service.
 	 */
 	public static final SystemMessageId THIS_END_THE_PETITION_PLEASE_PROVIDE_FEEDBACK;
 	
 	/**
 	 * ID: 388<br>
-	 * Message: 現在、対話可能状態ではありません。
+	 * Message: 現在、対話可能状態ではありません。<br>
+	 * Message: Not under petition consultation.
 	 */
 	public static final SystemMessageId NOT_UNDER_PETITION_CONSULTATION;
 	
 	/**
 	 * ID: 389<br>
-	 * Message: - サポートを受け付けました。\n - 受付番号は$s1番です。
+	 * Message: - サポートを受け付けました。\n - 受付番号は$s1番です。<br>
+	 * Message: our petition application has been accepted. - Receipt No. is $s1.
 	 */
 	public static final SystemMessageId PETITION_ACCEPTED_RECENT_NO_S1;
 	
 	/**
 	 * ID: 390<br>
-	 * Message: すでにサポート要請を受け付けております。
+	 * Message: すでにサポート要請を受け付けております。<br>
+	 * Message: You may only submit one petition (active) at a time.
 	 */
 	public static final SystemMessageId ONLY_ONE_ACTIVE_PETITION_AT_TIME;
 	
 	/**
 	 * ID: 391<br>
-	 * Message: 受付番号$s1番がキャンセルされました。
+	 * Message: 受付番号$s1番がキャンセルされました。<br>
+	 * Message: Receipt No. $s1, petition cancelled.
 	 */
 	public static final SystemMessageId RECENT_NO_S1_CANCELED;
 	
 	/**
 	 * ID: 392<br>
-	 * Message: 現在サポート対応中です。
+	 * Message: 現在サポート対応中です。<br>
+	 * Message: Under petition advice.
 	 */
 	public static final SystemMessageId UNDER_PETITION_ADVICE;
 	
 	/**
 	 * ID: 393<br>
-	 * Message: サポート要請のキャンセルに失敗しました。しばらくしてからやり直してください。
+	 * Message: サポート要請のキャンセルに失敗しました。しばらくしてからやり直してください。<br>
+	 * Message: Failed to cancel petition. Please try again later.
 	 */
 	public static final SystemMessageId FAILED_CANCEL_PETITION_TRY_LATER;
 	
 	/**
 	 * ID: 394<br>
-	 * Message: $c1とのサポートを開始しました。
+	 * Message: $c1とのサポートを開始しました。<br>
+	 * Message: Starting petition consultation with $c1.
 	 */
 	public static final SystemMessageId STARTING_PETITION_WITH_C1;
 	
 	/**
 	 * ID: 395<br>
-	 * Message: $c1とのサポートが終了しました。
+	 * Message: $c1とのサポートが終了しました。<br>
+	 * Message: Ending petition consultation with $c1.
 	 */
 	public static final SystemMessageId PETITION_ENDED_WITH_C1;
 	
 	/**
 	 * ID: 396<br>
-	 * Message: 公式サイト（http://lineage2.plaync.jp/）でパスワードの変更またはセキュリティカードの再発行をしてから接続してください。
+	 * Message: 公式サイト（http://lineage2.plaync.jp/）でパスワードの変更またはセキュリティカードの再発行をしてから接続してください。<br>
+	 * Message: Please login after changing your temporary password.
 	 */
 	public static final SystemMessageId TRY_AGAIN_AFTER_CHANGING_PASSWORD;
 	
 	/**
 	 * ID: 397<br>
-	 * Message: 有料アカウントではありません。
+	 * Message: 有料アカウントではありません。<br>
+	 * Message: Not a paid account.
 	 */
 	public static final SystemMessageId NO_PAID_ACCOUNT;
 	
 	/**
 	 * ID: 398<br>
-	 * Message: 定量制の残り時間がありません。
+	 * Message: 定量制の残り時間がありません。<br>
+	 * Message: There is no time left on this account.
 	 */
 	public static final SystemMessageId NO_TIME_LEFT_ON_ACCOUNT;
 	
 	/**
 	 * ID: 399<br>
-	 * Message: システムエラーです。
+	 * Message: システムエラーです。<br>
+	 * Message: System error.
 	 */
 	public static final SystemMessageId SYSTEM_ERROR;
 	
 	/**
 	 * ID: 400<br>
-	 * Message: $s1を捨てます。よろしいですか。
+	 * Message: $s1を捨てます。よろしいですか。<br>
+	 * Message: You are attempting to drop $s1. Dou you wish to continue?
 	 */
 	public static final SystemMessageId WISH_TO_DROP_S1;
 	
 	/**
 	 * ID: 401<br>
-	 * Message: 進行中のクエストが多過ぎます。
+	 * Message: 進行中のクエストが多過ぎます。<br>
+	 * Message: You have to many ongoing quests.
 	 */
 	public static final SystemMessageId TOO_MANY_QUESTS;
 	
 	/**
 	 * ID: 402<br>
-	 * Message: 乗船券がないと乗船できません。
+	 * Message: 乗船券がないと乗船できません。<br>
+	 * Message: You do not possess the correct ticket to board the boat.
 	 */
 	public static final SystemMessageId NOT_CORRECT_BOAT_TICKET;
 	
 	/**
 	 * ID: 403<br>
-	 * Message: 所持できるアデナの限界を超えました。
+	 * Message: 所持できるアデナの限界を超えました。<br>
+	 * Message: You have exceeded your out-of-pocket adena limit.
 	 */
 	public static final SystemMessageId EXCEECED_POCKET_ADENA_LIMIT;
 	
 	/**
 	 * ID: 404<br>
-	 * Message: アイテム調合スキルのレベルが低過ぎます。
+	 * Message: アイテム調合スキルのレベルが低過ぎます。<br>
+	 * Message: Your Create Item level is too low to register this recipe.
 	 */
 	public static final SystemMessageId CREATE_LVL_TOO_LOW_TO_REGISTER;
 	
 	/**
 	 * ID: 405<br>
-	 * Message: 商品価格の総額が大き過ぎます。
+	 * Message: 商品価格の総額が大き過ぎます。<br>
+	 * Message: The total price of the product is too high.
 	 */
 	public static final SystemMessageId TOTAL_PRICE_TOO_HIGH;
 	
 	/**
 	 * ID: 406<br>
-	 * Message: サポートの申請を受け付けました。
+	 * Message: サポートの申請を受け付けました。<br>
+	 * Message: Petition application accepted.
 	 */
 	public static final SystemMessageId PETITION_APP_ACCEPTED;
 	
 	/**
 	 * ID: 407<br>
-	 * Message: 現在対応中のサポート要請です。
+	 * Message: 現在対応中のサポート要請です。<br>
+	 * Message: Petition under process.
 	 */
 	public static final SystemMessageId PETITION_UNDER_PROCESS;
 	
 	/**
 	 * ID: 408<br>
-	 * Message: 攻城戦の設定期間
+	 * Message: 攻城戦の設定期間<br>
+	 * Message: Set Period
 	 */
 	public static final SystemMessageId SET_PERIOD;
 	
 	/**
 	 * ID: 409<br>
-	 * Message: 攻城戦の設定まで$s1時間$s2分$s3秒です。
+	 * Message: 攻城戦の設定まで$s1時間$s2分$s3秒です。<br>
+	 * Message: Set Time-$s1:$s2:$s3
 	 */
 	public static final SystemMessageId SET_TIME_S1_S2_S3;
 	
 	/**
 	 * ID: 410<br>
-	 * Message: 攻城戦の登録期間
+	 * Message: 攻城戦の登録期間<br>
+	 * Message: Registration Period
 	 */
 	public static final SystemMessageId REGISTRATION_PERIOD;
 	
 	/**
 	 * ID: 411<br>
-	 * Message: 攻城戦の登録まで$s1時間$s2分$s3秒です。
+	 * Message: 攻城戦の登録まで$s1時間$s2分$s3秒です。<br>
+	 * Message: Registration Time-$s1:$s2:$s3
 	 */
 	public static final SystemMessageId REGISTRATION_TIME_S1_S2_S3;
 	
 	/**
 	 * ID: 412<br>
-	 * Message: 攻城戦の開始まで$s1時間$s2分$s4秒です。
+	 * Message: 攻城戦の開始まで$s1時間$s2分$s4秒です。<br>
+	 * Message: Battle begins in $s1:$s2:$s3
 	 */
 	public static final SystemMessageId BATTLE_BEGINS_S1_S2_S3;
 	
 	/**
 	 * ID: 413<br>
-	 * Message: 攻城戦の終了まで$s1時間$s2分$s5秒です。
+	 * Message: 攻城戦の終了まで$s1時間$s2分$s5秒です。<br>
+	 * Message: Battle ends in $s1:$s2:$s3
 	 */
 	public static final SystemMessageId BATTLE_ENDS_S1_S2_S3;
 	
 	/**
 	 * ID: 414<br>
-	 * Message: 攻城戦の待機期間
+	 * Message: 攻城戦の待機期間<br>
+	 * Message: Standby
 	 */
 	public static final SystemMessageId STANDBY;
 	
 	/**
 	 * ID: 415<br>
-	 * Message: 攻城戦中
+	 * Message: 攻城戦中<br>
+	 * Message: Under Siege
 	 */
 	public static final SystemMessageId UNDER_SIEGE;
 	
 	/**
 	 * ID: 416<br>
-	 * Message: トレードできない状態です。
+	 * Message: トレードできない状態です。<br>
+	 * Message: This item cannot be exchanged.
 	 */
 	public static final SystemMessageId ITEM_CANNOT_EXCHANGE;
 	
 	/**
 	 * ID: 417<br>
-	 * Message: $s1を装備解除しました。
+	 * Message: $s1を装備解除しました。<br>
+	 * Message: $s1 has been disarmed.
 	 */
 	public static final SystemMessageId S1_DISARMED;
 	
 	/**
 	 * ID: 419<br>
-	 * Message: 使用時間は残り$s1分です。
+	 * Message: 使用時間は残り$s1分です。<br>
+	 * Message: $s1 minute(s) of usage time left.
 	 */
 	public static final SystemMessageId S1_MINUTES_USAGE_LEFT;
 	
 	/**
 	 * ID: 420<br>
-	 * Message: 定量使用時間が終了しました。
+	 * Message: 定量使用時間が終了しました。<br>
+	 * Message: Time expired.
 	 */
 	public static final SystemMessageId TIME_EXPIRED;
 	
 	/**
 	 * ID: 421<br>
-	 * Message: 他のユーザーが同じアカウントでログインしました。
+	 * Message: 他のユーザーが同じアカウントでログインしました。<br>
+	 * Message: Another person has logged in with the same account.
 	 */
 	public static final SystemMessageId ANOTHER_LOGIN_WITH_ACCOUNT;
 	
 	/**
 	 * ID: 422<br>
-	 * Message: 許容重量を超えました。
+	 * Message: 許容重量を超えました。<br>
+	 * Message: You have exceeded the weight limit.
 	 */
 	public static final SystemMessageId WEIGHT_LIMIT_EXCEEDED;
 	
 	/**
 	 * ID: 423<br>
-	 * Message: 強化スクロールの使用がキャンセルされました。
+	 * Message: 強化スクロールの使用がキャンセルされました。<br>
+	 * Message: You have cancelled the enchanting process.
 	 */
 	public static final SystemMessageId ENCHANT_SCROLL_CANCELLED;
 	
 	/**
 	 * ID: 424<br>
-	 * Message: スクロールの強化条件に合いません。
+	 * Message: スクロールの強化条件に合いません。<br>
+	 * Message: Does not fit strengthening conditions of the scroll.
 	 */
 	public static final SystemMessageId DOES_NOT_FIT_SCROLL_CONDITIONS;
 	
 	/**
 	 * ID: 425<br>
-	 * Message: アイテム調合スキルのレベルが低過ぎるか、アイテム調合スキルがありません。
+	 * Message: アイテム調合スキルのレベルが低過ぎるか、アイテム調合スキルがありません。<br>
+	 * Message: Your Create Item level is too low to register this recipe.
 	 */
 	public static final SystemMessageId CREATE_LVL_TOO_LOW_TO_REGISTER2;
 	
 	/**
 	 * ID: 445<br>
-	 * Message: （退会受付番号： $s1）
+	 * Message: （退会受付番号： $s1）<br>
+	 * Message: (Reference Number Regarding Membership Withdrawal Request: $s1)
 	 */
 	public static final SystemMessageId REFERENCE_MEMBERSHIP_WITHDRAWAL_S1;
 	
 	/**
 	 * ID: 447<br>
-	 * Message: 。
+	 * Message: 。<br>
+	 * Message: .
 	 */
 	public static final SystemMessageId DOT;
 	
 	/**
 	 * ID: 448<br>
-	 * Message: システム エラーです。しばらくしてからログインしてください。
+	 * Message: システム エラーです。しばらくしてからログインしてください。<br>
+	 * Message: There is a system error. Please log in again later.
 	 */
 	public static final SystemMessageId SYSTEM_ERROR_LOGIN_LATER;
 	
 	/**
 	 * ID: 449<br>
-	 * Message: アカウントとパスワードが一致しません。
+	 * Message: アカウントとパスワードが一致しません。<br>
+	 * Message: The password you have entered is incorrect.
 	 */
 	public static final SystemMessageId PASSWORD_ENTERED_INCORRECT1;
 	
 	/**
 	 * ID: 450<br>
-	 * Message: アカウント情報を再確認してログインしてください。
+	 * Message: アカウント情報を再確認してログインしてください。<br>
+	 * Message: Confirm your account information and log in later.
 	 */
 	public static final SystemMessageId CONFIRM_ACCOUNT_LOGIN_LATER;
 	
 	/**
 	 * ID: 451<br>
-	 * Message: アカウントとパスワードが一致しません。
+	 * Message: アカウントとパスワードが一致しません。<br>
+	 * Message: The password you have entered is incorrect.
 	 */
 	public static final SystemMessageId PASSWORD_ENTERED_INCORRECT2;
 	
 	/**
 	 * ID: 452<br>
-	 * Message: アカウント情報を再確認してログインしてください。
+	 * Message: アカウント情報を再確認してログインしてください。<br>
+	 * Message: Please confirm your account information and try logging in later.
 	 */
 	public static final SystemMessageId PLEASE_CONFIRM_ACCOUNT_LOGIN_LATER;
 	
 	/**
 	 * ID: 453<br>
-	 * Message: アカウント情報が正しくありません。
+	 * Message: アカウント情報が正しくありません。<br>
+	 * Message: Your account information is incorrect.
 	 */
 	public static final SystemMessageId ACCOUNT_INFORMATION_INCORRECT;
 	
 	/**
 	 * ID: 455<br>
-	 * Message: すでに使用中のアカウントです。ログインできません。
+	 * Message: すでに使用中のアカウントです。ログインできません。<br>
+	 * Message: Account is already in use. Unable to log in.
 	 */
 	public static final SystemMessageId ACCOUNT_IN_USE;
 	
 	/**
 	 * ID: 456<br>
-	 * Message: リネージュII は、15才以上の方のみご利用いただけます。PvPサーバーは18才以上の方のみご利用いただけます。
+	 * Message: リネージュII は、15才以上の方のみご利用いただけます。PvPサーバーは18才以上の方のみご利用いただけます。<br>
+	 * Message: Lineage II game services may be used by individuals 15 years of age or older except for PvP servers,which may only be used by adults 18 years of age and older (Korea Only)
 	 */
 	public static final SystemMessageId LINAGE_MINIMUM_AGE;
 	
 	/**
 	 * ID: 457<br>
-	 * Message: 現在、ゲーム サーバーのメンテナンス中です。しばらくしてからログインしてください。
+	 * Message: 現在、ゲーム サーバーのメンテナンス中です。しばらくしてからログインしてください。<br>
+	 * Message: Currently undergoing game server maintenance. Please log in again later.
 	 */
 	public static final SystemMessageId SERVER_MAINTENANCE;
 	
 	/**
 	 * ID: 458<br>
-	 * Message: プレイ可能期間が終了したため、ログインできません。
+	 * Message: プレイ可能期間が終了したため、ログインできません。<br>
+	 * Message: Your usage term has expired.
 	 */
 	public static final SystemMessageId USAGE_TERM_EXPIRED;
 	
 	/**
 	 * ID: 460<br>
-	 * Message: 公認ネットカフェからご利用のお客様は店舗スタッフにご確認ください。
+	 * Message: 公認ネットカフェからご利用のお客様は店舗スタッフにご確認ください。<br>
+	 * Message: to reactivate your account.
 	 */
 	public static final SystemMessageId TO_REACTIVATE_YOUR_ACCOUNT;
 	
 	/**
 	 * ID: 461<br>
-	 * Message: ゲーム サーバーの接続に失敗しました。
+	 * Message: ゲーム サーバーの接続に失敗しました。<br>
+	 * Message: Access failed.
 	 */
 	public static final SystemMessageId ACCESS_FAILED;
 	
 	/**
 	 * ID: 461<br>
-	 * Message: ゲーム サーバーの接続に失敗しました。
+	 * Message: ゲーム サーバーの接続に失敗しました。<br>
+	 * Message: Please try again later.
 	 */
 	public static final SystemMessageId PLEASE_TRY_AGAIN_LATER;
 	
 	/**
 	 * ID: 464<br>
-	 * Message: 同盟主のみが行えます。
+	 * Message: 同盟主のみが行えます。<br>
+	 * Message: This feature is only available alliance leaders.
 	 */
 	public static final SystemMessageId FEATURE_ONLY_FOR_ALLIANCE_LEADER;
 	
 	/**
 	 * ID: 465<br>
-	 * Message: 同盟に加入していません。
+	 * Message: 同盟に加入していません。<br>
+	 * Message: You are not currently allied with any clans.
 	 */
 	public static final SystemMessageId NO_CURRENT_ALLIANCES;
 	
 	/**
 	 * ID: 466<br>
-	 * Message: 満員なので新しい血盟は受け入れられません。
+	 * Message: 満員なので新しい血盟は受け入れられません。<br>
+	 * Message: You have exceeded the limit.
 	 */
 	public static final SystemMessageId YOU_HAVE_EXCEEDED_THE_LIMIT;
 	
 	/**
 	 * ID: 467<br>
-	 * Message: 血盟追放後1日経っていない場合、新しい血盟は受け入れられません。
+	 * Message: 血盟追放後1日経っていない場合、新しい血盟は受け入れられません。<br>
+	 * Message: You may not accept any clan within a day after expelling another clan.
 	 */
 	public static final SystemMessageId CANT_INVITE_CLAN_WITHIN_1_DAY;
 	
 	/**
 	 * ID: 468<br>
-	 * Message: 追放されたり脱退した血盟は、1日以内には同盟に加入できません。
+	 * Message: 追放されたり脱退した血盟は、1日以内には同盟に加入できません。<br>
+	 * Message: A clan that has withdrawn or been expelled cannot enter into an alliance within one day of withdrawal or expulsion.
 	 */
 	public static final SystemMessageId CANT_ENTER_ALLIANCE_WITHIN_1_DAY;
 	
 	/**
 	 * ID: 469<br>
-	 * Message: 血盟戦関係にある血盟とは同盟を締結できません。
+	 * Message: 血盟戦関係にある血盟とは同盟を締結できません。<br>
+	 * Message: You may not ally with a clan you are currently at war with. That would be diabolical and treacherous.
 	 */
 	public static final SystemMessageId MAY_NOT_ALLY_CLAN_BATTLE;
 	
 	/**
 	 * ID: 470<br>
-	 * Message: 血盟主のみが同盟の脱退申請ができます。
+	 * Message: 血盟主のみが同盟の脱退申請ができます。<br>
+	 * Message: Only the clan leader may apply for withdrawal from the alliance.
 	 */
 	public static final SystemMessageId ONLY_CLAN_LEADER_WITHDRAW_ALLY;
 	
 	/**
 	 * ID: 471<br>
-	 * Message: 同盟主は脱退できません。
+	 * Message: 同盟主は脱退できません。<br>
+	 * Message: Alliance leaders cannot withdraw.
 	 */
 	public static final SystemMessageId ALLIANCE_LEADER_CANT_WITHDRAW;
 	
 	/**
 	 * ID: 472<br>
-	 * Message: 自分の血盟は追放できません。
+	 * Message: 自分の血盟は追放できません。<br>
+	 * Message: You cannot expel yourself from the clan.
 	 */
 	public static final SystemMessageId CANNOT_EXPEL_YOURSELF;
 	
 	/**
 	 * ID: 473<br>
-	 * Message: 同じ同盟に属する血盟ではありません。
+	 * Message: 同じ同盟に属する血盟ではありません。<br>
+	 * Message: Different alliance.
 	 */
 	public static final SystemMessageId DIFFERENT_ALLIANCE;
 	
 	/**
 	 * ID: 474<br>
-	 * Message: 該当血盟が存在しません。
+	 * Message: 該当血盟が存在しません。<br>
+	 * Message: That clan does not exist.
 	 */
 	public static final SystemMessageId CLAN_DOESNT_EXISTS;
 	
 	/**
 	 * ID: 475<br>
-	 * Message: 同じ同盟に属する血盟ではありません。
+	 * Message: 同じ同盟に属する血盟ではありません。<br>
+	 * Message: Different alliance.
 	 */
 	public static final SystemMessageId DIFFERENT_ALLIANCE2;
 	
 	/**
 	 * ID: 476<br>
-	 * Message: 画像ファイルのサイズが正しくありません。8x12ピクセルに指定してください。
+	 * Message: 画像ファイルのサイズが正しくありません。8x12ピクセルに指定してください。<br>
+	 * Message: Please adjust the image size to 8x12.
 	 */
 	public static final SystemMessageId ADJUST_IMAGE_8_12;
 	
 	/**
 	 * ID: 477<br>
-	 * Message: 応答がなかったため、同盟の勧誘がキャンセルされました。
+	 * Message: 応答がなかったため、同盟の勧誘がキャンセルされました。<br>
+	 * Message: No response. Invitation to join an alliance has been cancelled.
 	 */
 	public static final SystemMessageId NO_RESPONSE_TO_ALLY_INVITATION;
 	
 	/**
 	 * ID: 478<br>
-	 * Message: 勧誘に応答しなかったため、同盟の加入がキャンセルされました。
+	 * Message: 勧誘に応答しなかったため、同盟の加入がキャンセルされました。<br>
+	 * Message: No response. Your entrance to the alliance has been cancelled.
 	 */
 	public static final SystemMessageId YOU_DID_NOT_RESPOND_TO_ALLY_INVITATION;
 	
 	/**
 	 * ID: 479<br>
-	 * Message: $s1が新しい友人に登録されました。
+	 * Message: $s1が新しい友人に登録されました。<br>
+	 * Message: $s1 has joined as a friend.
 	 */
 	public static final SystemMessageId S1_JOINED_AS_FRIEND;
 	
 	/**
 	 * ID: 480<br>
-	 * Message: 友人リストを確認してください。
+	 * Message: 友人リストを確認してください。<br>
+	 * Message: Please check your friend list.
 	 */
 	public static final SystemMessageId PLEASE_CHECK_YOUR_FRIENDS_LIST;
 	
 	/**
 	 * ID: 481<br>
-	 * Message: $s1が友人リストから削除されました。
+	 * Message: $s1が友人リストから削除されました。<br>
+	 * Message: $s1 has been deleted from your friends list.
 	 */
 	public static final SystemMessageId S1_HAS_BEEN_DELETED_FROM_YOUR_FRIENDS_LIST;
 	
 	/**
 	 * ID: 482<br>
-	 * Message: 自分自身を友人として登録することはできません。
+	 * Message: 自分自身を友人として登録することはできません。<br>
+	 * Message: You cannot add yourself to your own friend list.
 	 */
 	public static final SystemMessageId YOU_CANNOT_ADD_YOURSELF_TO_YOUR_OWN_FRIENDS_LIST;
 	
 	/**
 	 * ID: 483<br>
-	 * Message: 友人リストがまだ作成されていません。しばらくしてからご利用ください。
+	 * Message: 友人リストがまだ作成されていません。しばらくしてからご利用ください。<br>
+	 * Message: This function is inaccessible right now. Please try again later.
 	 */
 	public static final SystemMessageId FUNCTION_INACCESSIBLE_NOW;
 	
 	/**
 	 * ID: 484<br>
-	 * Message: すでに友人リストに登録されています。
+	 * Message: すでに友人リストに登録されています。<br>
+	 * Message: This player is already registered in your friends list.
 	 */
 	public static final SystemMessageId S1_ALREADY_IN_FRIENDS_LIST;
 	
 	/**
 	 * ID: 485<br>
-	 * Message: 友人になることを勧めたユーザーがいません。
+	 * Message: 友人になることを勧めたユーザーがいません。<br>
+	 * Message: No new friend invitations may be accepted.
 	 */
 	public static final SystemMessageId NO_NEW_INVITATIONS_ACCEPTED;
 	
 	/**
 	 * ID: 486<br>
-	 * Message: 友人リストに登録されているユーザーではありません。
+	 * Message: 友人リストに登録されているユーザーではありません。<br>
+	 * Message: The following user is not in your friends list.
 	 */
 	public static final SystemMessageId THE_USER_NOT_IN_FRIENDS_LIST;
 	
 	/**
 	 * ID: 487<br>
-	 * Message: ======<友人リスト>======
+	 * Message: ======<友人リスト>======<br>
+	 * Message: ======<Friends List>======
 	 */
 	public static final SystemMessageId FRIEND_LIST_HEADER;
 	
 	/**
 	 * ID: 488<br>
-	 * Message: $s1（ステータス：オンライン）
+	 * Message: $s1（ステータス：オンライン）<br>
+	 * Message: $s1 (Currently: Online)
 	 */
 	public static final SystemMessageId S1_ONLINE;
 	
 	/**
 	 * ID: 489<br>
-	 * Message: $s1（ステータス：オフライン）
+	 * Message: $s1（ステータス：オフライン）<br>
+	 * Message: $s1 (Currently: Offline)
 	 */
 	public static final SystemMessageId S1_OFFLINE;
 	
 	/**
 	 * ID: 490<br>
+	 * Message: ========================<br>
 	 * Message: ========================
 	 */
 	public static final SystemMessageId FRIEND_LIST_FOOTER;
 	
 	/**
 	 * ID: 491<br>
-	 * Message: =======<同盟情報>=======
+	 * Message: =======<同盟情報>=======<br>
+	 * Message: =======<Alliance Information>=======
 	 */
 	public static final SystemMessageId ALLIANCE_INFO_HEAD;
 	
 	/**
 	 * ID: 492<br>
-	 * Message: 同盟名：$s1
+	 * Message: 同盟名：$s1<br>
+	 * Message: Alliance Name: $s1
 	 */
 	public static final SystemMessageId ALLIANCE_NAME_S1;
 	
 	/**
 	 * ID: 493<br>
-	 * Message: 接続：$s1人/合計$s2人
+	 * Message: 接続：$s1人/合計$s2人<br>
+	 * Message: Connection: $s1 / Total $s2
 	 */
 	public static final SystemMessageId CONNECTION_S1_TOTAL_S2;
 	
 	/**
 	 * ID: 494<br>
-	 * Message: 同盟主：$s1血盟の$s2
+	 * Message: 同盟主：$s1血盟の$s2<br>
+	 * Message: Alliance Leader: $s2 of $s1
 	 */
 	public static final SystemMessageId ALLIANCE_LEADER_S2_OF_S1;
 	
 	/**
 	 * ID: 495<br>
-	 * Message: 所属血盟：合計$s1血盟
+	 * Message: 所属血盟：合計$s1血盟<br>
+	 * Message: Affiliated clans: Total $s1 clan(s)
 	 */
 	public static final SystemMessageId ALLIANCE_CLAN_TOTAL_S1;
 	
 	/**
 	 * ID: 496<br>
-	 * Message: =====<所属血盟の情報>=====
+	 * Message: =====<所属血盟の情報>=====<br>
+	 * Message: =====<Clan Information>=====
 	 */
 	public static final SystemMessageId CLAN_INFO_HEAD;
 	
 	/**
 	 * ID: 497<br>
-	 * Message: 血盟名：$s1
+	 * Message: 血盟名：$s1<br>
+	 * Message: Clan Name: $s1
 	 */
 	public static final SystemMessageId CLAN_INFO_NAME_S1;
 	
 	/**
 	 * ID: 498<br>
-	 * Message: 血盟主：$s1
+	 * Message: 血盟主：$s1<br>
+	 * Message: Clan Leader: $s1
 	 */
 	public static final SystemMessageId CLAN_INFO_LEADER_S1;
 	
 	/**
 	 * ID: 499<br>
-	 * Message: 血盟レベル：$s1
+	 * Message: 血盟レベル：$s1<br>
+	 * Message: Clan Level: $s1
 	 */
 	public static final SystemMessageId CLAN_INFO_LEVEL_S1;
 	
 	/**
 	 * ID: 500<br>
+	 * Message: ------------------------<br>
 	 * Message: ------------------------
 	 */
 	public static final SystemMessageId CLAN_INFO_SEPARATOR;
 	
 	/**
 	 * ID: 501<br>
+	 * Message: ========================<br>
 	 * Message: ========================
 	 */
 	public static final SystemMessageId CLAN_INFO_FOOT;
 	
 	/**
 	 * ID: 502<br>
-	 * Message: すでに同盟に加入しています。
+	 * Message: すでに同盟に加入しています。<br>
+	 * Message: You already belong to another alliance.
 	 */
 	public static final SystemMessageId ALREADY_JOINED_ALLIANCE;
 	
 	/**
 	 * ID: 503<br>
-	 * Message: 友人$s1 がログインしました。
+	 * Message: 友人$s1 がログインしました。<br>
+	 * Message: $s1 (Friend) has logged in.
 	 */
 	public static final SystemMessageId FRIEND_S1_HAS_LOGGED_IN;
 	
 	/**
 	 * ID: 504<br>
-	 * Message: 血盟主のみが同盟を創設できます。
+	 * Message: 血盟主のみが同盟を創設できます。<br>
+	 * Message: Only clan leaders may create alliances.
 	 */
 	public static final SystemMessageId ONLY_CLAN_LEADER_CREATE_ALLIANCE;
 	
 	/**
 	 * ID: 505<br>
-	 * Message: 同盟解散後の当日は新たな同盟の創設はできません。
+	 * Message: 同盟解散後の当日は新たな同盟の創設はできません。<br>
+	 * Message: You cannot create a new alliance within 10 days after dissolution.
 	 */
 	public static final SystemMessageId CANT_CREATE_ALLIANCE_10_DAYS_DISOLUTION;
 	
 	/**
 	 * ID: 506<br>
-	 * Message: 同盟名が正しくありません。
+	 * Message: 同盟名が正しくありません。<br>
+	 * Message: Incorrect alliance name. Please try again.
 	 */
 	public static final SystemMessageId INCORRECT_ALLIANCE_NAME;
 	
 	/**
 	 * ID: 507<br>
-	 * Message: 同盟名が長過ぎます。
+	 * Message: 同盟名が長過ぎます。<br>
+	 * Message: Incorrect length for an alliance name.
 	 */
 	public static final SystemMessageId INCORRECT_ALLIANCE_NAME_LENGTH;
 	
 	/**
 	 * ID: 508<br>
-	 * Message: すでに存在する同盟です。
+	 * Message: すでに存在する同盟です。<br>
+	 * Message: This alliance name already exists.
 	 */
 	public static final SystemMessageId ALLIANCE_ALREADY_EXISTS;
 	
 	/**
 	 * ID: 509<br>
-	 * Message: 同盟中の血盟と攻城戦で敵関係として申請されているので、受付できません。
+	 * Message: 同盟中の血盟と攻城戦で敵関係として申請されているので、受付できません。<br>
+	 * Message: Cannot accept. clan ally is registered as an enemy during siege battle.
 	 */
 	public static final SystemMessageId CANT_ACCEPT_ALLY_ENEMY_FOR_SIEGE;
 	
 	/**
 	 * ID: 510<br>
-	 * Message: 同盟に招待しました。
+	 * Message: 同盟に招待しました。<br>
+	 * Message: You have invited someone to your alliance.
 	 */
 	public static final SystemMessageId YOU_INVITED_FOR_ALLIANCE;
 	
 	/**
 	 * ID: 511<br>
-	 * Message: 同盟に招待する人を選択してください。
+	 * Message: 同盟に招待する人を選択してください。<br>
+	 * Message: You must first select a user to invite.
 	 */
 	public static final SystemMessageId SELECT_USER_TO_INVITE;
 	
 	/**
 	 * ID: 512<br>
-	 * Message: 本当に同盟から脱退しますか。脱退後1日間、他の同盟に再加入できません。
+	 * Message: 本当に同盟から脱退しますか。脱退後1日間、他の同盟に再加入できません。<br>
+	 * Message: Do you really wish to withdraw from the alliance?
 	 */
 	public static final SystemMessageId DO_YOU_WISH_TO_WITHDRW;
 	
 	/**
 	 * ID: 513<br>
-	 * Message: 追放する相手の血盟名を入力してください。
+	 * Message: 追放する相手の血盟名を入力してください。<br>
+	 * Message: Enter the name of the clan you wish to expel.
 	 */
 	public static final SystemMessageId ENTER_NAME_CLAN_TO_EXPEL;
 	
 	/**
 	 * ID: 514<br>
-	 * Message: 本当に解散しますか。解散当日は同盟を再創設できません。
+	 * Message: 本当に解散しますか。解散当日は同盟を再創設できません。<br>
+	 * Message: Do you really wish to dissolve the alliance?
 	 */
 	public static final SystemMessageId DO_YOU_WISH_TO_DISOLVE;
 	
 	/**
 	 * ID: 516<br>
-	 * Message: $s1 があなたを友人として招待しました。
+	 * Message: $s1 があなたを友人として招待しました。<br>
+	 * Message: $s1 has invited you to be their friend.
 	 */
 	public static final SystemMessageId SI_INVITED_YOU_AS_FRIEND;
 	
 	/**
 	 * ID: 517<br>
-	 * Message: 同盟を許可しました。
+	 * Message: 同盟を許可しました。<br>
+	 * Message: You have accepted the alliance.
 	 */
 	public static final SystemMessageId YOU_ACCEPTED_ALLIANCE;
 	
 	/**
 	 * ID: 518<br>
-	 * Message: 同盟の招待に失敗しました。
+	 * Message: 同盟の招待に失敗しました。<br>
+	 * Message: You have failed to invite a clan into the alliance.
 	 */
 	public static final SystemMessageId FAILED_TO_INVITE_CLAN_IN_ALLIANCE;
 	
 	/**
 	 * ID: 519<br>
-	 * Message: 同盟から脱退しました。
+	 * Message: 同盟から脱退しました。<br>
+	 * Message: You have withdrawn from the alliance.
 	 */
 	public static final SystemMessageId YOU_HAVE_WITHDRAWN_FROM_ALLIANCE;
 	
 	/**
 	 * ID: 520<br>
-	 * Message: 同盟の脱退に失敗しました。
+	 * Message: 同盟の脱退に失敗しました。<br>
+	 * Message: You have failed to withdraw from the alliance.
 	 */
 	public static final SystemMessageId YOU_HAVE_FAILED_TO_WITHDRAWN_FROM_ALLIANCE;
 	
 	/**
 	 * ID: 521<br>
-	 * Message: 血盟の追放に成功しました。
+	 * Message: 血盟の追放に成功しました。<br>
+	 * Message: You have succeeded in expelling a clan.
 	 */
 	public static final SystemMessageId YOU_HAVE_EXPELED_A_CLAN;
 	
 	/**
 	 * ID: 522<br>
-	 * Message: 血盟の追放に失敗しました。
+	 * Message: 血盟の追放に失敗しました。<br>
+	 * Message: You have failed to expel a clan.
 	 */
 	public static final SystemMessageId FAILED_TO_EXPELED_A_CLAN;
 	
 	/**
 	 * ID: 523<br>
-	 * Message: 同盟を解散しました。
+	 * Message: 同盟を解散しました。<br>
+	 * Message: The alliance has been dissolved.
 	 */
 	public static final SystemMessageId ALLIANCE_DISOLVED;
 	
 	/**
 	 * ID: 524<br>
-	 * Message: 同盟の解散に失敗しました。
+	 * Message: 同盟の解散に失敗しました。<br>
+	 * Message: You have failed to dissolve the alliance.
 	 */
 	public static final SystemMessageId FAILED_TO_DISOLVE_ALLIANCE;
 	
 	/**
 	 * ID: 525<br>
-	 * Message: 友人の招待に成功しました。
+	 * Message: 友人の招待に成功しました。<br>
+	 * Message: You have succeeded in inviting a friend to your friends list.
 	 */
 	public static final SystemMessageId YOU_HAVE_SUCCEEDED_INVITING_FRIEND;
 	
 	/**
 	 * ID: 526<br>
-	 * Message: 友人の招待に失敗しました。
+	 * Message: 友人の招待に失敗しました。<br>
+	 * Message: You have failed to add a friend to your friends list.
 	 */
 	public static final SystemMessageId FAILED_TO_INVITE_A_FRIEND;
 	
 	/**
 	 * ID: 527<br>
-	 * Message: $s1同盟の同盟主$s2 に同盟を申し込まれました。
+	 * Message: $s1同盟の同盟主$s2 に同盟を申し込まれました。<br>
+	 * Message: $s1 leader, $s2, has requested an alliance.
 	 */
 	public static final SystemMessageId S2_ALLIANCE_LEADER_OF_S1_REQUESTED_ALLIANCE;
 	
 	/**
 	 * ID: 530<br>
-	 * Message: スピリット ショットが武器のグレードと一致しません。
+	 * Message: スピリット ショットが武器のグレードと一致しません。<br>
+	 * Message: The Spiritshot does not match the weapon's grade.
 	 */
 	public static final SystemMessageId SPIRITSHOTS_GRADE_MISMATCH;
 	
 	/**
 	 * ID: 531<br>
-	 * Message: スピリット ショットが足りません。
+	 * Message: スピリット ショットが足りません。<br>
+	 * Message: You do not have enough Spiritshots for that.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_SPIRITSHOTS;
 	
 	/**
 	 * ID: 532<br>
-	 * Message: スピリット ショットが使えません。
+	 * Message: スピリット ショットが使えません。<br>
+	 * Message: You may not use Spiritshots.
 	 */
 	public static final SystemMessageId CANNOT_USE_SPIRITSHOTS;
 	
 	/**
 	 * ID: 533<br>
-	 * Message: マナの力を使います。
+	 * Message: マナの力を使います。<br>
+	 * Message: Power of Mana enabled.
 	 */
 	public static final SystemMessageId ENABLED_SPIRITSHOT;
 	
 	/**
 	 * ID: 534<br>
-	 * Message: マナの力がなくなりました。
+	 * Message: マナの力がなくなりました。<br>
+	 * Message: Power of Mana disabled.
 	 */
 	public static final SystemMessageId DISABLED_SPIRITSHOT;
 	
 	/**
 	 * ID: 536<br>
-	 * Message: アデナをどれくらいインベントリに移しますか。
+	 * Message: アデナをどれくらいインベントリに移しますか。<br>
+	 * Message: How much adena do you wish to transfer to your Inventory?
 	 */
 	public static final SystemMessageId HOW_MUCH_ADENA_TRANSFER;
 	
 	/**
 	 * ID: 537<br>
-	 * Message: いくつ移しますか。
+	 * Message: いくつ移しますか。<br>
+	 * Message: How much will you transfer?
 	 */
 	public static final SystemMessageId HOW_MUCH_TRANSFER;
 	
 	/**
 	 * ID: 538<br>
-	 * Message: SPが$s1減りました。
+	 * Message: SPが$s1減りました。<br>
+	 * Message: Your SP has decreased by $s1.
 	 */
 	public static final SystemMessageId SP_DECREASED_S1;
 	
 	/**
 	 * ID: 539<br>
-	 * Message: 経験値が$s1減りました。
+	 * Message: 経験値が$s1減りました。<br>
+	 * Message: Your Experience has decreased by $s1.
 	 */
 	public static final SystemMessageId EXP_DECREASED_BY_S1;
 	
 	/**
 	 * ID: 540<br>
-	 * Message: 血盟主は削除できません。血盟を解散してからやり直してみてください。
+	 * Message: 血盟主は削除できません。血盟を解散してからやり直してみてください。<br>
+	 * Message: Clan leaders may not be deleted. Dissolve the clan first and try again.
 	 */
 	public static final SystemMessageId CLAN_LEADERS_MAY_NOT_BE_DELETED;
 	
 	/**
 	 * ID: 541<br>
-	 * Message: 血盟員は削除できません。血盟を脱退してからやり直してみてください。
+	 * Message: 血盟員は削除できません。血盟を脱退してからやり直してみてください。<br>
+	 * Message: You may not delete a clan member. Withdraw from the clan first and try again.
 	 */
 	public static final SystemMessageId CLAN_MEMBER_MAY_NOT_BE_DELETED;
 	
 	/**
 	 * ID: 542<br>
-	 * Message: NPCサーバーが作動していないため、ペットを召喚できません。
+	 * Message: NPCサーバーが作動していないため、ペットを召喚できません。<br>
+	 * Message: The NPC server is currently down. Pets and servitors cannot be summoned at this time.
 	 */
 	public static final SystemMessageId THE_NPC_SERVER_IS_CURRENTLY_DOWN;
 	
 	/**
 	 * ID: 543<br>
-	 * Message: すでにペットがいます。
+	 * Message: すでにペットがいます。<br>
+	 * Message: You already have a pet.
 	 */
 	public static final SystemMessageId YOU_ALREADY_HAVE_A_PET;
 	
 	/**
 	 * ID: 544<br>
-	 * Message: ペットに渡せないアイテムです。
+	 * Message: ペットに渡せないアイテムです。<br>
+	 * Message: Your pet cannot carry this item.
 	 */
 	public static final SystemMessageId ITEM_NOT_FOR_PETS;
 	
 	/**
 	 * ID: 545<br>
-	 * Message: ペットのインベントリのスロット数制限によりアイテムが渡せません。
+	 * Message: ペットのインベントリのスロット数制限によりアイテムが渡せません。<br>
+	 * Message: Your pet cannot carry any more items. Remove some, then try again.
 	 */
 	public static final SystemMessageId YOUR_PET_CANNOT_CARRY_ANY_MORE_ITEMS;
 	
 	/**
 	 * ID: 546<br>
-	 * Message: ペット用インベントリの重量制限によりアイテムが渡せません。
+	 * Message: ペット用インベントリの重量制限によりアイテムが渡せません。<br>
+	 * Message: Unable to place item, your pet is too encumbered.
 	 */
 	public static final SystemMessageId UNABLE_TO_PLACE_ITEM_YOUR_PET_IS_TOO_ENCUMBERED;
 	
 	/**
 	 * ID: 547<br>
-	 * Message: ペットを召喚します。
+	 * Message: ペットを召喚します。<br>
+	 * Message: Summoning your pet.
 	 */
 	public static final SystemMessageId SUMMON_A_PET;
 	
 	/**
 	 * ID: 548<br>
-	 * Message: ペットの名前は8文字まで可能です。
+	 * Message: ペットの名前は8文字まで可能です。<br>
+	 * Message: Your pet's name can be up to 8 characters in length.
 	 */
 	public static final SystemMessageId NAMING_PETNAME_UP_TO_8CHARS;
 	
 	/**
 	 * ID: 549<br>
-	 * Message: 同盟を締結するには、血盟のレベルが5以上でなければなりません。
+	 * Message: 同盟を締結するには、血盟のレベルが5以上でなければなりません。<br>
+	 * Message: To create an alliance, your clan must be Level 5 or higher.
 	 */
 	public static final SystemMessageId TO_CREATE_AN_ALLY_YOU_CLAN_MUST_BE_LEVEL_5_OR_HIGHER;
 	
 	/**
 	 * ID: 550<br>
-	 * Message: 解散猶予期間中は同盟の創設はできません。
+	 * Message: 解散猶予期間中は同盟の創設はできません。<br>
+	 * Message: You may not create an alliance during the term of dissolution postponement.
 	 */
 	public static final SystemMessageId YOU_MAY_NOT_CREATE_ALLY_WHILE_DISSOLVING;
 	
 	/**
 	 * ID: 551<br>
-	 * Message: 解散猶予期間中は血盟レベルを上げられません。
+	 * Message: 解散猶予期間中は血盟レベルを上げられません。<br>
+	 * Message: You cannot raise your clan level during the term of dispersion postponement.
 	 */
 	public static final SystemMessageId CANNOT_RISE_LEVEL_WHILE_DISSOLUTION_IN_PROGRESS;
 	
 	/**
 	 * ID: 552<br>
-	 * Message: 解散猶予期間中はエンブレムの登録および削除はできません。
+	 * Message: 解散猶予期間中はエンブレムの登録および削除はできません。<br>
+	 * Message: During the grace period for dissolving a clan, the registration or deletion of a clan's crest is not allowed.
 	 */
 	public static final SystemMessageId CANNOT_SET_CREST_WHILE_DISSOLUTION_IN_PROGRESS;
 	
 	/**
 	 * ID: 553<br>
-	 * Message: 相手の血盟は解散が申し込まれています。
+	 * Message: 相手の血盟は解散が申し込まれています。<br>
+	 * Message: The opposing clan has applied for dispersion.
 	 */
 	public static final SystemMessageId OPPOSING_CLAN_APPLIED_DISPERSION;
 	
 	/**
 	 * ID: 554<br>
-	 * Message: 同盟に属する血盟は解散できません。
+	 * Message: 同盟に属する血盟は解散できません。<br>
+	 * Message: You cannot disperse the clans in your alliance.
 	 */
 	public static final SystemMessageId CANNOT_DISPERSE_THE_CLANS_IN_ALLY;
 	
 	/**
 	 * ID: 555<br>
-	 * Message: 持っているアイテムが重過ぎて動けません。
+	 * Message: 持っているアイテムが重過ぎて動けません。<br>
+	 * Message: You cannot move - you are too encumbered
 	 */
 	public static final SystemMessageId CANT_MOVE_TOO_ENCUMBERED;
 	
 	/**
 	 * ID: 556<br>
-	 * Message: 現在の状態では動けません。
+	 * Message: 現在の状態では動けません。<br>
+	 * Message: You cannot move in this state
 	 */
 	public static final SystemMessageId CANT_MOVE_IN_THIS_STATE;
 	
 	/**
 	 * ID: 557<br>
-	 * Message: ペットが召喚されているため、破壊できません。
+	 * Message: ペットが召喚されているため、破壊できません。<br>
+	 * Message: Your pet has been summoned and may not be destroyed
 	 */
 	public static final SystemMessageId PET_SUMMONED_MAY_NOT_DESTROYED;
 	
 	/**
 	 * ID: 558<br>
-	 * Message: ペットが召喚されているため、地面に捨てられません。
+	 * Message: ペットが召喚されているため、地面に捨てられません。<br>
+	 * Message: Your pet has been summoned and may not be let go.
 	 */
 	public static final SystemMessageId PET_SUMMONED_MAY_NOT_LET_GO;
 	
 	/**
 	 * ID: 559<br>
-	 * Message: $c1から$s2を買いました。
+	 * Message: $c1から$s2を買いました。<br>
+	 * Message: You have purchased $s2 from $c1.
 	 */
 	public static final SystemMessageId PURCHASED_S2_FROM_C1;
 	
 	/**
 	 * ID: 560<br>
-	 * Message: $c1から+$s2$s3を買いました。
+	 * Message: $c1から+$s2$s3を買いました。<br>
+	 * Message: You have purchased +$s2 $s3 from $c1.
 	 */
 	public static final SystemMessageId PURCHASED_S2_S3_FROM_C1;
 	
 	/**
 	 * ID: 561<br>
-	 * Message: $c1から$s2 $s3個を買いました。
+	 * Message: $c1から$s2 $s3個を買いました。<br>
+	 * Message: You have purchased $s3 $s2(s) from $c1.
 	 */
 	public static final SystemMessageId PURCHASED_S3_S2_S_FROM_C1;
 	
 	/**
 	 * ID: 562<br>
-	 * Message: クリスタライズのスキル レベルが低いのでクリスタライズできません。
+	 * Message: クリスタライズのスキル レベルが低いのでクリスタライズできません。<br>
+	 * Message: You may not crystallize this item. Your crystallization skill level is too low.
 	 */
 	public static final SystemMessageId CRYSTALLIZE_LEVEL_TOO_LOW;
 	
 	/**
 	 * ID: 563<br>
-	 * Message: 攻撃欲求の解除に失敗しました。
+	 * Message: 攻撃欲求の解除に失敗しました。<br>
+	 * Message: Failed to disable attack target.
 	 */
 	public static final SystemMessageId FAILED_DISABLE_TARGET;
 	
 	/**
 	 * ID: 564<br>
-	 * Message: 攻撃欲求の変更に失敗しました。
+	 * Message: 攻撃欲求の変更に失敗しました。<br>
+	 * Message: Failed to change attack target.
 	 */
 	public static final SystemMessageId FAILED_CHANGE_TARGET;
 	
 	/**
 	 * ID: 565<br>
-	 * Message: 運勢が足りません。
+	 * Message: 運勢が足りません。<br>
+	 * Message: Not enough luck.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_LUCK;
 	
 	/**
 	 * ID: 566<br>
-	 * Message: 混乱に失敗しました。
+	 * Message: 混乱に失敗しました。<br>
+	 * Message: Your confusion spell failed.
 	 */
 	public static final SystemMessageId CONFUSION_FAILED;
 	
 	/**
 	 * ID: 567<br>
-	 * Message: フィアーに失敗しました。
+	 * Message: フィアーに失敗しました。<br>
+	 * Message: Your fear spell failed.
 	 */
 	public static final SystemMessageId FEAR_FAILED;
 	
 	/**
 	 * ID: 568<br>
-	 * Message: キュービックの召喚に失敗しました。
+	 * Message: キュービックの召喚に失敗しました。<br>
+	 * Message: Cubic Summoning failed.
 	 */
 	public static final SystemMessageId CUBIC_SUMMONING_FAILED;
 	
 	/**
 	 * ID: 572<br>
-	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：拾った人が所有）
+	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：拾った人が所有）<br>
+	 * Message: Do you accept $c1's party invitation? (Item Distribution: Finders Keepers.)
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY_FINDERS_KEEPERS;
 	
 	/**
 	 * ID: 573<br>
-	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：パーティ メンバーにランダムで）
+	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：パーティ メンバーにランダムで）<br>
+	 * Message: Do you accept $c1's party invitation? (Item Distribution: Random.)
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY_RANDOM;
 	
 	/**
 	 * ID: 574<br>
-	 * Message: 召喚獣やペットがいません。
+	 * Message: 召喚獣やペットがいません。<br>
+	 * Message: Pets and Servitors are not available at this time.
 	 */
 	public static final SystemMessageId PETS_ARE_NOT_AVAILABLE_AT_THIS_TIME;
 	
 	/**
 	 * ID: 575<br>
-	 * Message: いくらのアデナをペットに移しますか。
+	 * Message: いくらのアデナをペットに移しますか。<br>
+	 * Message: How much adena do you wish to transfer to your pet?
 	 */
 	public static final SystemMessageId HOW_MUCH_ADENA_TRANSFER_TO_PET;
 	
 	/**
 	 * ID: 576<br>
-	 * Message: いくつ移しますか。
+	 * Message: いくつ移しますか。<br>
+	 * Message: How much do you wish to transfer?
 	 */
 	public static final SystemMessageId HOW_MUCH_TRANSFER2;
 	
 	/**
 	 * ID: 577<br>
-	 * Message: トレードや個人商店中には召喚できません。
+	 * Message: トレードや個人商店中には召喚できません。<br>
+	 * Message: You cannot summon during a trade or while using the private shops.
 	 */
 	public static final SystemMessageId CANNOT_SUMMON_DURING_TRADE_SHOP;
 	
 	/**
 	 * ID: 578<br>
-	 * Message: 戦闘中は召喚できません。
+	 * Message: 戦闘中は召喚できません。<br>
+	 * Message: You cannot summon during combat.
 	 */
 	public static final SystemMessageId YOU_CANNOT_SUMMON_IN_COMBAT;
 	
 	/**
 	 * ID: 579<br>
-	 * Message: 戦闘中のペットは戻せません。
+	 * Message: 戦闘中のペットは戻せません。<br>
+	 * Message: A pet cannot be sent back during battle.
 	 */
 	public static final SystemMessageId PET_CANNOT_SENT_BACK_DURING_BATTLE;
 	
 	/**
 	 * ID: 580<br>
-	 * Message: 複数のペットや召喚獣を一度に使うことはできません。
+	 * Message: 複数のペットや召喚獣を一度に使うことはできません。<br>
+	 * Message: You may not use multiple pets or servitors at the same time.
 	 */
 	public static final SystemMessageId SUMMON_ONLY_ONE;
 	
 	/**
 	 * ID: 581<br>
-	 * Message: 名前にスペースが入っています。
+	 * Message: 名前にスペースが入っています。<br>
+	 * Message: There is a space in the name.
 	 */
 	public static final SystemMessageId NAMING_THERE_IS_A_SPACE;
 	
 	/**
 	 * ID: 582<br>
-	 * Message: 禁止されたキャラクター名です。
+	 * Message: 禁止されたキャラクター名です。<br>
+	 * Message: Inappropriate character name.
 	 */
 	public static final SystemMessageId NAMING_INAPPROPRIATE_CHARACTER_NAME;
 	
 	/**
 	 * ID: 583<br>
-	 * Message: 名前に禁止された単語が入っています。
+	 * Message: 名前に禁止された単語が入っています。<br>
+	 * Message: Name includes forbidden words.
 	 */
 	public static final SystemMessageId NAMING_INCLUDES_FORBIDDEN_WORDS;
 	
 	/**
 	 * ID: 584<br>
-	 * Message: すでに同じ名前のペットがいます。
+	 * Message: すでに同じ名前のペットがいます。<br>
+	 * Message: This is already in use by another pet.
 	 */
 	public static final SystemMessageId NAMING_ALREADY_IN_USE_BY_ANOTHER_PET;
 	
 	/**
 	 * ID: 585<br>
-	 * Message: 購入価格を決めてください。
+	 * Message: 購入価格を決めてください。<br>
+	 * Message: Please decide on the price.
 	 */
 	public static final SystemMessageId DECIDE_ON_PRICE;
 	
 	/**
 	 * ID: 586<br>
-	 * Message: ペットのアイテムはショートカットに登録できません。
+	 * Message: ペットのアイテムはショートカットに登録できません。<br>
+	 * Message: Pet items cannot be registered as shortcuts.
 	 */
 	public static final SystemMessageId PET_NO_SHORTCUT;
 	
 	/**
 	 * ID: 588<br>
-	 * Message: ペットのインベントリがいっぱいです。
+	 * Message: ペットのインベントリがいっぱいです。<br>
+	 * Message: Your pet's inventory is full.
 	 */
 	public static final SystemMessageId PET_INVENTORY_FULL;
 	
 	/**
 	 * ID: 589<br>
-	 * Message: 死んだペットを戻すことはできません。
+	 * Message: 死んだペットを戻すことはできません。<br>
+	 * Message: A dead pet cannot be sent back.
 	 */
 	public static final SystemMessageId DEAD_PET_CANNOT_BE_RETURNED;
 	
 	/**
 	 * ID: 590<br>
-	 * Message: 死んだペットにアイテムは移動できません。
+	 * Message: 死んだペットにアイテムは移動できません。<br>
+	 * Message: Your pet is motionless and any attempt you make to give it something goes unrecognized.
 	 */
 	public static final SystemMessageId CANNOT_GIVE_ITEMS_TO_DEAD_PET;
 	
 	/**
 	 * ID: 591<br>
-	 * Message: ペットの名前に無効の文字が入っています。
+	 * Message: ペットの名前に無効の文字が入っています。<br>
+	 * Message: An invalid character is included in the pet's name.
 	 */
 	public static final SystemMessageId NAMING_PETNAME_CONTAINS_INVALID_CHARS;
 	
 	/**
 	 * ID: 592<br>
-	 * Message: 本当に解散しますか。解散すると召喚アイテムは消えます。
+	 * Message: 本当に解散しますか。解散すると召喚アイテムは消えます。<br>
+	 * Message: Do you wish to dismiss your pet? Dismissing your pet will cause the pet necklace to disappear
 	 */
 	public static final SystemMessageId WISH_TO_DISMISS_PET;
 	
 	/**
 	 * ID: 593<br>
-	 * Message: 飢えをこらえきれず、ペットがあなたの元を去りました。
+	 * Message: 飢えをこらえきれず、ペットがあなたの元を去りました。<br>
+	 * Message: Starving, grumpy and fed up, your pet has left.
 	 */
 	public static final SystemMessageId STARVING_GRUMPY_AND_FED_UP_YOUR_PET_HAS_LEFT;
 	
 	/**
 	 * ID: 594<br>
-	 * Message: 飢えたペットは戻すことができません。
+	 * Message: 飢えたペットは戻すことができません。<br>
+	 * Message: You may not restore a hungry pet.
 	 */
 	public static final SystemMessageId YOU_CANNOT_RESTORE_HUNGRY_PETS;
 	
 	/**
 	 * ID: 595<br>
-	 * Message: ペットがあまりにもお腹をすかせています。
+	 * Message: ペットがあまりにもお腹をすかせています。<br>
+	 * Message: Your pet is very hungry.
 	 */
 	public static final SystemMessageId YOUR_PET_IS_VERY_HUNGRY;
 	
 	/**
 	 * ID: 596<br>
-	 * Message: ペットはどうにか飢えをしのぎましたが、依然としてお腹をすかせています。
+	 * Message: ペットはどうにか飢えをしのぎましたが、依然としてお腹をすかせています。<br>
+	 * Message: Your pet ate a little, but is still hungry.
 	 */
 	public static final SystemMessageId YOUR_PET_ATE_A_LITTLE_BUT_IS_STILL_HUNGRY;
 	
 	/**
 	 * ID: 597<br>
-	 * Message: ペットが飢えにがまんできないでいます。気をつけてください。
+	 * Message: ペットが飢えにがまんできないでいます。気をつけてください。<br>
+	 * Message: Your pet is very hungry. Please be careful.
 	 */
 	public static final SystemMessageId YOUR_PET_IS_VERY_HUNGRY_PLEASE_BE_CAREFULL;
 	
 	/**
 	 * ID: 598<br>
-	 * Message: 透明状態のため、一般チャットはできません。
+	 * Message: 透明状態のため、一般チャットはできません。<br>
+	 * Message: You may not chat while you are invisible.
 	 */
 	public static final SystemMessageId NOT_CHAT_WHILE_INVISIBLE;
 	
 	/**
 	 * ID: 599<br>
-	 * Message: サポートから重要なお知らせがあります。チャットはしばらく中止されます。
+	 * Message: サポートから重要なお知らせがあります。チャットはしばらく中止されます。<br>
+	 * Message: The GM has an important notice. Chat has been temporarily disabled.
 	 */
 	public static final SystemMessageId GM_NOTICE_CHAT_DISABLED;
 	
 	/**
 	 * ID: 600<br>
-	 * Message: ペット アイテムは装備できません。
+	 * Message: ペット アイテムは装備できません。<br>
+	 * Message: You may not equip a pet item.
 	 */
 	public static final SystemMessageId CANNOT_EQUIP_PET_ITEM;
 	
 	/**
 	 * ID: 601<br>
-	 * Message: - 受付の待機者数は$s1です。
+	 * Message: - 受付の待機者数は$s1です。<br>
+	 * Message: There are $S1 petitions currently on the waiting list.
 	 */
 	public static final SystemMessageId S1_PETITION_ON_WAITING_LIST;
 	
 	/**
 	 * ID: 602<br>
-	 * Message: 現在、サポートシステムが作動していません。しばらくしてからやり直してください。
+	 * Message: 現在、サポートシステムが作動していません。しばらくしてからやり直してください。<br>
+	 * Message: The petition system is currently unavailable. Please try again later.
 	 */
 	public static final SystemMessageId PETITION_SYSTEM_CURRENT_UNAVAILABLE;
 	
 	/**
 	 * ID: 603<br>
-	 * Message: そのアイテムは捨てたりトレードしたりできません。
+	 * Message: そのアイテムは捨てたりトレードしたりできません。<br>
+	 * Message: That item cannot be discarded or exchanged.
 	 */
 	public static final SystemMessageId CANNOT_DISCARD_EXCHANGE_ITEM;
 	
 	/**
 	 * ID: 604<br>
-	 * Message: ここではペットや召喚獣を召喚できません。
+	 * Message: ここではペットや召喚獣を召喚できません。<br>
+	 * Message: You may not call forth a pet or summoned creature from this location
 	 */
 	public static final SystemMessageId NOT_CALL_PET_FROM_THIS_LOCATION;
 	
 	/**
 	 * ID: 605<br>
-	 * Message: 友人リストには最大128人まで登録できます。
+	 * Message: 友人リストには最大128人まで登録できます。<br>
+	 * Message: You may register up to 64 people on your list.
 	 */
 	public static final SystemMessageId MAY_REGISTER_UP_TO_64_PEOPLE;
 	
 	/**
 	 * ID: 606<br>
-	 * Message: 相手の友人リストに登録された人数が128人を超えたので、登録できません。
+	 * Message: 相手の友人リストに登録された人数が128人を超えたので、登録できません。<br>
+	 * Message: You cannot be registered because the other person has already registered 64 people on his/her list.
 	 */
 	public static final SystemMessageId OTHER_PERSON_ALREADY_64_PEOPLE;
 	
 	/**
 	 * ID: 607<br>
-	 * Message: これ以上習うスキルがありません。$s1レベルになってから来てください。
+	 * Message: これ以上習うスキルがありません。$s1レベルになってから来てください。<br>
+	 * Message: You do not have any further skills to learn. Come back when you have reached Level $s1.
 	 */
 	public static final SystemMessageId DO_NOT_HAVE_FURTHER_SKILLS_TO_LEARN_S1;
 	
 	/**
 	 * ID: 608<br>
-	 * Message: $c1がスウィーパーで$s2 $s3個を手に入れました。
+	 * Message: $c1がスウィーパーで$s2 $s3個を手に入れました。<br>
+	 * Message: $c1 has obtained $s3 $s2 by using Sweeper.
 	 */
 	public static final SystemMessageId C1_SWEEPED_UP_S3_S2;
 	
 	/**
 	 * ID: 609<br>
-	 * Message: $c1がスウィーパーで$s2を手に入れました。
+	 * Message: $c1がスウィーパーで$s2を手に入れました。<br>
+	 * Message: $c1 has obtained $s2 by using Sweeper.
 	 */
 	public static final SystemMessageId C1_SWEEPED_UP_S2;
 	
 	/**
 	 * ID: 610<br>
-	 * Message: HPが足りなかったためスキルが解除されました。
+	 * Message: HPが足りなかったためスキルが解除されました。<br>
+	 * Message: Your skill has been canceled due to lack of HP.
 	 */
 	public static final SystemMessageId SKILL_REMOVED_DUE_LACK_HP;
 	
 	/**
 	 * ID: 611<br>
-	 * Message: 敵を惑わすことに成功しました。
+	 * Message: 敵を惑わすことに成功しました。<br>
+	 * Message: You have succeeded in Confusing the enemy.
 	 */
 	public static final SystemMessageId CONFUSING_SUCCEEDED;
 	
 	/**
 	 * ID: 612<br>
-	 * Message: スポイル状態になりました。
+	 * Message: スポイル状態になりました。<br>
+	 * Message: The Spoil condition has been activated.
 	 */
 	public static final SystemMessageId SPOIL_SUCCESS;
 	
 	/**
 	 * ID: 613<br>
-	 * Message: ========<遮断リスト>========
+	 * Message: ========<遮断リスト>========<br>
+	 * Message: ======<Ignore List>======
 	 */
 	public static final SystemMessageId BLOCK_LIST_HEADER;
 	
 	/**
 	 * ID: 614<br>
-	 * Message: $c1：$c2
+	 * Message: $c1：$c2<br>
+	 * Message: $c1 : $c2
 	 */
 	public static final SystemMessageId C1_D_C2;
 	
 	/**
 	 * ID: 615<br>
-	 * Message: 遮断リストへの登録に失敗しました。
+	 * Message: 遮断リストへの登録に失敗しました。<br>
+	 * Message: You have failed to register the user to your Ignore List.
 	 */
 	public static final SystemMessageId FAILED_TO_REGISTER_TO_IGNORE_LIST;
 	
 	/**
 	 * ID: 616<br>
-	 * Message: 遮断リストからの削除に失敗しました。
+	 * Message: 遮断リストからの削除に失敗しました。<br>
+	 * Message: You have failed to delete the character.
 	 */
 	public static final SystemMessageId FAILED_TO_DELETE_CHARACTER;
 	
 	/**
 	 * ID: 617<br>
-	 * Message: $s1を遮断リストに登録しました。
+	 * Message: $s1を遮断リストに登録しました。<br>
+	 * Message: $s1 has been added to your Ignore List.
 	 */
 	public static final SystemMessageId S1_WAS_ADDED_TO_YOUR_IGNORE_LIST;
 	
 	/**
 	 * ID: 618<br>
-	 * Message: $s1を遮断リストから削除しました。
+	 * Message: $s1を遮断リストから削除しました。<br>
+	 * Message: $s1 has been removed from your Ignore List.
 	 */
 	public static final SystemMessageId S1_WAS_REMOVED_FROM_YOUR_IGNORE_LIST;
 	
 	/**
 	 * ID: 619<br>
-	 * Message: $s1があなたを遮断しました。
+	 * Message: $s1があなたを遮断しました。<br>
+	 * Message: $s1 has placed you on his/her Ignore List.
 	 */
 	public static final SystemMessageId S1_HAS_ADDED_YOU_TO_IGNORE_LIST;
 	
 	/**
 	 * ID: 620<br>
-	 * Message: $s1はあなたを遮断しました。
+	 * Message: $s1はあなたを遮断しました。<br>
+	 * Message: $s1 has placed you on his/her Ignore List.
 	 */
 	public static final SystemMessageId S1_HAS_ADDED_YOU_TO_IGNORE_LIST2;
 	
 	/**
 	 * ID: 621<br>
-	 * Message: 接続が制限されたIPを通じてゲームに接続を試みました。
+	 * Message: 接続が制限されたIPを通じてゲームに接続を試みました。<br>
+	 * Message: Game connection attempted through a restricted IP.
 	 */
 	public static final SystemMessageId CONNECTION_RESTRICTED_IP;
 	
 	/**
 	 * ID: 622<br>
-	 * Message: 同盟戦中に宣戦布告はできません。
+	 * Message: 同盟戦中に宣戦布告はできません。<br>
+	 * Message: You may not make a declaration of war during an alliance battle.
 	 */
 	public static final SystemMessageId NO_WAR_DURING_ALLY_BATTLE;
 	
 	/**
 	 * ID: 623<br>
-	 * Message: 相手の同盟が進行できる同盟戦の数を超えています。
+	 * Message: 相手の同盟が進行できる同盟戦の数を超えています。<br>
+	 * Message: Your opponent has exceeded the number of simultaneous alliance battles alllowed.
 	 */
 	public static final SystemMessageId OPPONENT_TOO_MUCH_ALLY_BATTLES1;
 	
 	/**
 	 * ID: 624<br>
-	 * Message: $s1同盟の同盟主が接続していません。
+	 * Message: $s1同盟の同盟主が接続していません。<br>
+	 * Message: $s1 Clan leader is not currently connected to the game server.
 	 */
 	public static final SystemMessageId S1_LEADER_NOT_CONNECTED;
 	
 	/**
 	 * ID: 625<br>
-	 * Message: 同盟戦の終戦要請が拒否されました。
+	 * Message: 同盟戦の終戦要請が拒否されました。<br>
+	 * Message: Your request for Alliance Battle truce has been denied.
 	 */
 	public static final SystemMessageId ALLY_BATTLE_TRUCE_DENIED;
 	
 	/**
 	 * ID: 626<br>
-	 * Message: $s1血盟が応答しなかったため、宣戦布告が拒否されました。
+	 * Message: $s1血盟が応答しなかったため、宣戦布告が拒否されました。<br>
+	 * Message: The $s1 clan did not respond: war proclamation has been refused.
 	 */
 	public static final SystemMessageId WAR_PROCLAMATION_HAS_BEEN_REFUSED;
 	
 	/**
 	 * ID: 627<br>
-	 * Message: $s1同盟の宣戦布告に応答しなかったため、同盟戦が拒否されました。
+	 * Message: $s1同盟の宣戦布告に応答しなかったため、同盟戦が拒否されました。<br>
+	 * Message: Clan battle has been refused because you did not respond to $s1 clan's war proclamation.
 	 */
 	public static final SystemMessageId YOU_REFUSED_CLAN_WAR_PROCLAMATION;
 	
 	/**
 	 * ID: 628<br>
-	 * Message: $s1 同盟とはすでに同盟戦を行ったため、前回の同盟戦から5日が経過しないと宣戦布告できません。
+	 * Message: $s1 同盟とはすでに同盟戦を行ったため、前回の同盟戦から5日が経過しないと宣戦布告できません。<br>
+	 * Message: You have already been at war with the $s1 clan: 5 days must pass before you can declare war again.
 	 */
 	public static final SystemMessageId ALREADY_AT_WAR_WITH_S1_WAIT_5_DAYS;
 	
 	/**
 	 * ID: 629<br>
-	 * Message: 相手の血盟が進行できる血盟戦の数を超えています。
+	 * Message: 相手の血盟が進行できる血盟戦の数を超えています。<br>
+	 * Message: Your opponent has exceeded the number of simultaneous alliance battles alllowed.
 	 */
 	public static final SystemMessageId OPPONENT_TOO_MUCH_ALLY_BATTLES2;
 	
 	/**
 	 * ID: 630<br>
-	 * Message: $s1同盟との同盟戦が始まりました。
+	 * Message: $s1同盟との同盟戦が始まりました。<br>
+	 * Message: War with the clan has begun.
 	 */
 	public static final SystemMessageId WAR_WITH_CLAN_BEGUN;
 	
 	/**
 	 * ID: 631<br>
-	 * Message: $s1同盟との同盟戦が終了しました。
+	 * Message: $s1同盟との同盟戦が終了しました。<br>
+	 * Message: War with the clan is over.
 	 */
 	public static final SystemMessageId WAR_WITH_CLAN_ENDED;
 	
 	/**
 	 * ID: 632<br>
-	 * Message: $s1同盟との同盟戦で勝利しました！
+	 * Message: $s1同盟との同盟戦で勝利しました！<br>
+	 * Message: You have won the war over the clan!
 	 */
 	public static final SystemMessageId WON_WAR_OVER_CLAN;
 	
 	/**
 	 * ID: 633<br>
-	 * Message: $s1同盟に降伏しました。
+	 * Message: $s1同盟に降伏しました。<br>
+	 * Message: You have surrendered to the clan.
 	 */
 	public static final SystemMessageId SURRENDERED_TO_CLAN;
 	
 	/**
 	 * ID: 634<br>
-	 * Message: 同盟主が死亡して、$s1同盟に敗北しました。
+	 * Message: 同盟主が死亡して、$s1同盟に敗北しました。<br>
+	 * Message: Your alliance leader has been slain. You have been defeated by the clan.
 	 */
 	public static final SystemMessageId DEFEATED_BY_CLAN;
 	
 	/**
 	 * ID: 635<br>
-	 * Message: 同盟戦の制限時間が過ぎたため、$s1同盟との同盟戦が終了しました。
+	 * Message: 同盟戦の制限時間が過ぎたため、$s1同盟との同盟戦が終了しました。<br>
+	 * Message: The time limit for the clan war has been exceeded. War with the clan is over.
 	 */
 	public static final SystemMessageId TIME_UP_WAR_OVER;
 	
 	/**
 	 * ID: 636<br>
-	 * Message: 同盟戦中ではありません。
+	 * Message: 同盟戦中ではありません。<br>
+	 * Message: You are not involved in a clan war.
 	 */
 	public static final SystemMessageId NOT_INVOLVED_IN_WAR;
 	
 	/**
 	 * ID: 637<br>
-	 * Message: 同盟所属の血盟が敵側に登録しました。
+	 * Message: 同盟所属の血盟が敵側に登録しました。<br>
+	 * Message: A clan ally has registered itself to the opponent.
 	 */
 	public static final SystemMessageId ALLY_REGISTERED_SELF_TO_OPPONENT;
 	
 	/**
 	 * ID: 638<br>
-	 * Message: すでに攻城戦を申請した状態です。
+	 * Message: すでに攻城戦を申請した状態です。<br>
+	 * Message: You have already requested a Siege Battle.
 	 */
 	public static final SystemMessageId ALREADY_REQUESTED_SIEGE_BATTLE;
 	
 	/**
 	 * ID: 639<br>
-	 * Message: 他の攻城戦に申請した状態なので申請できません。
+	 * Message: 他の攻城戦に申請した状態なので申請できません。<br>
+	 * Message: Your application has been denied because you have already submitted a request for another Siege Battle.
 	 */
 	public static final SystemMessageId APPLICATION_DENIED_BECAUSE_ALREADY_SUBMITTED_A_REQUEST_FOR_ANOTHER_SIEGE_BATTLE;
 	
 	/**
 	 * ID: 640<br>
-	 * Message: 城守の拒否に失敗しました。
+	 * Message: 城守の拒否に失敗しました。<br>
+	 * Message: You have failed to refuse castle defense aid.
 	 */
 	public static final SystemMessageId FAILED_TO_REFUSE_CASTLE_DEFENSE_AID;
 	
 	/**
 	 * ID: 641<br>
-	 * Message: 城守の承認に失敗しました。
+	 * Message: 城守の承認に失敗しました。<br>
+	 * Message: You have failed to approve castle defense aid.
 	 */
 	public static final SystemMessageId FAILED_TO_APPROVE_CASTLE_DEFENSE_AID;
 	
 	/**
 	 * ID: 642<br>
-	 * Message: すでに攻撃側に登録されているため申請できません。攻撃側の登録をキャンセルしてからもう一度やり直してください。
+	 * Message: すでに攻撃側に登録されているため申請できません。攻撃側の登録をキャンセルしてからもう一度やり直してください。<br>
+	 * Message: You are already registered to the attacker side and must cancel your registration before submitting your request.
 	 */
 	public static final SystemMessageId ALREADY_ATTACKER_NOT_CANCEL;
 	
 	/**
 	 * ID: 643<br>
-	 * Message: すでに守備側に登録されているため申請できません。守備側の登録をキャンセルしてからもう一度やり直してください。
+	 * Message: すでに守備側に登録されているため申請できません。守備側の登録をキャンセルしてからもう一度やり直してください。<br>
+	 * Message: You have already registered to the defender side and must cancel your registration before submitting your request.
 	 */
 	public static final SystemMessageId ALREADY_DEFENDER_NOT_CANCEL;
 	
 	/**
 	 * ID: 644<br>
-	 * Message: まだ攻城戦に登録されていません。
+	 * Message: まだ攻城戦に登録されていません。<br>
+	 * Message: You are not yet registered for the castle siege.
 	 */
 	public static final SystemMessageId NOT_REGISTERED_FOR_SIEGE;
 	
 	/**
 	 * ID: 645<br>
-	 * Message: レベル5以上の血盟のみが攻城戦に登録できます。
+	 * Message: レベル5以上の血盟のみが攻城戦に登録できます。<br>
+	 * Message: Only clans of level 5 or higher may register for a castle siege.
 	 */
 	public static final SystemMessageId ONLY_CLAN_LEVEL_5_ABOVE_MAY_SIEGE;
 	
 	/**
 	 * ID: 646<br>
-	 * Message: 守備側のリストを変更する権限がありません。
+	 * Message: 守備側のリストを変更する権限がありません。<br>
+	 * Message: You do not have the authority to modify the castle defender list.
 	 */
 	public static final SystemMessageId DO_NOT_HAVE_AUTHORITY_TO_MODIFY_CASTLE_DEFENDER_LIST;
 	
 	/**
 	 * ID: 647<br>
-	 * Message: 攻城時刻を設定する権限がありません。
+	 * Message: 攻城時刻を設定する権限がありません。<br>
+	 * Message: You do not have the authority to modify the siege time.
 	 */
 	public static final SystemMessageId DO_NOT_HAVE_AUTHORITY_TO_MODIFY_SIEGE_TIME;
 	
 	/**
 	 * ID: 648<br>
-	 * Message: これ以上攻撃側に登録できません。
+	 * Message: これ以上攻撃側に登録できません。<br>
+	 * Message: No more registrations may be accepted for the attacker side.
 	 */
 	public static final SystemMessageId ATTACKER_SIDE_FULL;
 	
 	/**
 	 * ID: 649<br>
-	 * Message: これ以上守備側に申請できません。
+	 * Message: これ以上守備側に申請できません。<br>
+	 * Message: No more registrations may be accepted for the defender side.
 	 */
 	public static final SystemMessageId DEFENDER_SIDE_FULL;
 	
 	/**
 	 * ID: 650<br>
-	 * Message: 現在地では召喚できません。
+	 * Message: 現在地では召喚できません。<br>
+	 * Message: You may not summon from your current location.
 	 */
 	public static final SystemMessageId YOU_MAY_NOT_SUMMON_FROM_YOUR_CURRENT_LOCATION;
 	
 	/**
 	 * ID: 651<br>
-	 * Message: $s1を現在立っている位置と方向に配置します。よろしいですか。
+	 * Message: $s1を現在立っている位置と方向に配置します。よろしいですか。<br>
+	 * Message: Place in the current location and direction. Do you wish to continue?
 	 */
 	public static final SystemMessageId PLACE_CURRENT_LOCATION_DIRECTION;
 	
 	/**
 	 * ID: 652<br>
-	 * Message: 召喚獣のターゲットが正しくありません。
+	 * Message: 召喚獣のターゲットが正しくありません。<br>
+	 * Message: The target of the summoned monster is wrong.
 	 */
 	public static final SystemMessageId TARGET_OF_SUMMON_WRONG;
 	
 	/**
 	 * ID: 653<br>
-	 * Message: 傭兵を配置する権限がありません。
+	 * Message: 傭兵を配置する権限がありません。<br>
+	 * Message: You do not have the authority to position mercenaries.
 	 */
 	public static final SystemMessageId YOU_DO_NOT_HAVE_AUTHORITY_TO_POSITION_MERCENARIES;
 	
 	/**
 	 * ID: 654<br>
-	 * Message: 傭兵配置をキャンセルする権限がありません。
+	 * Message: 傭兵配置をキャンセルする権限がありません。<br>
+	 * Message: You do not have the authority to cancel mercenary positioning.
 	 */
 	public static final SystemMessageId YOU_DO_NOT_HAVE_AUTHORITY_TO_CANCEL_MERCENARY_POSITIONING;
 	
 	/**
 	 * ID: 655<br>
-	 * Message: 傭兵が所属している城ではないため、配置できません。
+	 * Message: 傭兵が所属している城ではないため、配置できません。<br>
+	 * Message: Mercenaries cannot be positioned here.
 	 */
 	public static final SystemMessageId MERCENARIES_CANNOT_BE_POSITIONED_HERE;
 	
 	/**
 	 * ID: 656<br>
-	 * Message: この傭兵は配置できません。
+	 * Message: この傭兵は配置できません。<br>
+	 * Message: This mercenary cannot be positioned anymore.
 	 */
 	public static final SystemMessageId THIS_MERCENARY_CANNOT_BE_POSITIONED_ANYMORE;
 	
 	/**
 	 * ID: 657<br>
-	 * Message: 傭兵同士の間隔が狭過ぎるため、配置できません。
+	 * Message: 傭兵同士の間隔が狭過ぎるため、配置できません。<br>
+	 * Message: Positioning cannot be done here because the distance between mercenaries is too short.
 	 */
 	public static final SystemMessageId POSITIONING_CANNOT_BE_DONE_BECAUSE_DISTANCE_BETWEEN_MERCENARIES_TOO_SHORT;
 	
 	/**
 	 * ID: 658<br>
-	 * Message: 所有している城の傭兵ではないため、配置をキャンセルできません。
+	 * Message: 所有している城の傭兵ではないため、配置をキャンセルできません。<br>
+	 * Message: This is not a mercenary of a castle that you own and so you cannot cancel its positioning.
 	 */
 	public static final SystemMessageId THIS_IS_NOT_A_MERCENARY_OF_A_CASTLE_THAT_YOU_OWN_AND_SO_CANNOT_CANCEL_POSITIONING;
 	
 	/**
 	 * ID: 659<br>
-	 * Message: 攻城の登録期間ではないため、承認も拒否もできません。
+	 * Message: 攻城の登録期間ではないため、承認も拒否もできません。<br>
+	 * Message: This is not the time for siege registration and so registrations cannot be accepted or rejected.
 	 */
 	public static final SystemMessageId NOT_SIEGE_REGISTRATION_TIME1;
 	
 	/**
 	 * ID: 659<br>
-	 * Message: 攻城の登録期間ではないため、承認も拒否もできません。
+	 * Message: 攻城の登録期間ではないため、承認も拒否もできません。<br>
+	 * Message: This is not the time for siege registration and so registration and cancellation cannot be done.
 	 */
 	public static final SystemMessageId NOT_SIEGE_REGISTRATION_TIME2;
 	
 	/**
 	 * ID: 661<br>
-	 * Message: スポイルできないキャラクターです。
+	 * Message: スポイルできないキャラクターです。<br>
+	 * Message: This character cannot be spoiled.
 	 */
 	public static final SystemMessageId SPOIL_CANNOT_USE;
 	
 	/**
 	 * ID: 662<br>
-	 * Message: 相手が友達の招待を拒否している状態です。
+	 * Message: 相手が友達の招待を拒否している状態です。<br>
+	 * Message: The other player is rejecting friend invitations.
 	 */
 	public static final SystemMessageId THE_PLAYER_IS_REJECTING_FRIEND_INVITATIONS;
 	
 	/**
 	 * ID: 663<br>
-	 * Message: 攻城時刻は$s1です。宣布後の変更はできません。よろしいですか。
+	 * Message: 攻城時刻は$s1です。宣布後の変更はできません。よろしいですか。<br>
+	 * Message: The siege time has been declared for $s. It is not possible to change the time after a siege time has been declared. Do you want to continue?
 	 */
 	public static final SystemMessageId SIEGE_TIME_DECLARED_FOR_S1;
 	
 	/**
 	 * ID: 664<br>
-	 * Message: 受取人を選択してください。
+	 * Message: 受取人を選択してください。<br>
+	 * Message: Please choose a person to receive.
 	 */
 	public static final SystemMessageId CHOOSE_PERSON_TO_RECEIVE;
 	
 	/**
 	 * ID: 665<br>
-	 * Message: $s1同盟の$s2に同盟戦を申し込まれました。挑戦を受け入れますか。
+	 * Message: $s1同盟の$s2に同盟戦を申し込まれました。挑戦を受け入れますか。<br>
+	 * Message: of alliance is applying for alliance war. Do you want to accept the challenge?
 	 */
 	public static final SystemMessageId APPLYING_ALLIANCE_WAR;
 	
 	/**
 	 * ID: 666<br>
-	 * Message: $s1 同盟に終戦を申し込まれました。同意しますか。
+	 * Message: $s1 同盟に終戦を申し込まれました。同意しますか。<br>
+	 * Message: A request for ceasefire has been received from alliance. Do you agree?
 	 */
 	public static final SystemMessageId REQUEST_FOR_CEASEFIRE;
 	
 	/**
 	 * ID: 667<br>
-	 * Message: $s1攻城戦に攻撃側として登録します。よろしいですか。
+	 * Message: $s1攻城戦に攻撃側として登録します。よろしいですか。<br>
+	 * Message: You are registering on the attacking side of the siege. Do you want to continue?
 	 */
 	public static final SystemMessageId REGISTERING_ON_ATTACKING_SIDE;
 	
 	/**
 	 * ID: 668<br>
-	 * Message: $s1攻城戦に守備側として登録します。よろしいですか。
+	 * Message: $s1攻城戦に守備側として登録します。よろしいですか。<br>
+	 * Message: You are registering on the defending side of the siege. Do you want to continue?
 	 */
 	public static final SystemMessageId REGISTERING_ON_DEFENDING_SIDE;
 	
 	/**
 	 * ID: 669<br>
-	 * Message: $s1攻城戦への参戦申請をキャンセルします。よろしいですか。
+	 * Message: $s1攻城戦への参戦申請をキャンセルします。よろしいですか。<br>
+	 * Message: You are canceling your application to participate in the siege battle. Do you want to continue?
 	 */
 	public static final SystemMessageId CANCELING_REGISTRATION;
 	
 	/**
 	 * ID: 670<br>
-	 * Message: $s1血盟の守備側登録を拒否します。よろしいですか。
+	 * Message: $s1血盟の守備側登録を拒否します。よろしいですか。<br>
+	 * Message: You are refusing the registration of clan on the defending side. Do you want to continue?
 	 */
 	public static final SystemMessageId REFUSING_REGISTRATION;
 	
 	/**
 	 * ID: 671<br>
-	 * Message: $s1血盟の守備側登録を承認します。よろしいですか。
+	 * Message: $s1血盟の守備側登録を承認します。よろしいですか。<br>
+	 * Message: You are agreeing to the registration of clan on the defending side. Do you want to continue?
 	 */
 	public static final SystemMessageId AGREEING_REGISTRATION;
 	
 	/**
 	 * ID: 672<br>
-	 * Message: $s1アデナが消えました。
+	 * Message: $s1アデナが消えました。<br>
+	 * Message: $s1 adena disappeared.
 	 */
 	public static final SystemMessageId S1_DISAPPEARED_ADENA;
 	
 	/**
 	 * ID: 673<br>
-	 * Message: アジトの競売には血盟レベル2以上の血盟主のみ参加できます。
+	 * Message: アジトの競売には血盟レベル2以上の血盟主のみ参加できます。<br>
+	 * Message: Only a clan leader whose clan is of level 2 or higher is allowed to participate in a clan hall auction.
 	 */
 	public static final SystemMessageId AUCTION_ONLY_CLAN_LEVEL_2_HIGHER;
 	
 	/**
 	 * ID: 674<br>
-	 * Message: 競売をキャンセルしてから7日が過ぎていません。
+	 * Message: 競売をキャンセルしてから7日が過ぎていません。<br>
+	 * Message: I has not yet been seven days since canceling an auction.
 	 */
 	public static final SystemMessageId NOT_SEVEN_DAYS_SINCE_CANCELING_AUCTION;
 	
 	/**
 	 * ID: 675<br>
-	 * Message: 競売中のアジトではありません。
+	 * Message: 競売中のアジトではありません。<br>
+	 * Message: There are no clan halls up for auction.
 	 */
 	public static final SystemMessageId NO_CLAN_HALLS_UP_FOR_AUCTION;
 	
 	/**
 	 * ID: 676<br>
-	 * Message: 現在競売に入札中のため、他の競売には参加できません。
+	 * Message: 現在競売に入札中のため、他の競売には参加できません。<br>
+	 * Message: Since you have already submitted a bid, you are not allowed to participate in another auction at this time.
 	 */
 	public static final SystemMessageId ALREADY_SUBMITTED_BID;
 	
 	/**
 	 * ID: 677<br>
-	 * Message: 入札価格は最低入札可能価格より高くなければなりません。
+	 * Message: 入札価格は最低入札可能価格より高くなければなりません。<br>
+	 * Message: Your bid price must be higher than the minimum price that can be bid.
 	 */
 	public static final SystemMessageId BID_PRICE_MUST_BE_HIGHER;
 	
 	/**
 	 * ID: 678<br>
-	 * Message: $s1の競売に入札しました。
+	 * Message: $s1の競売に入札しました。<br>
+	 * Message: You have submitted a bid for the auction of $s1.
 	 */
 	public static final SystemMessageId SUBMITTED_A_BID_OF_S1;
 	
 	/**
 	 * ID: 679<br>
-	 * Message: 入札をキャンセルしました。
+	 * Message: 入札をキャンセルしました。<br>
+	 * Message: You have canceled your bid.
 	 */
 	public static final SystemMessageId CANCELED_BID;
 	
 	/**
 	 * ID: 680<br>
-	 * Message: 競売に参加できません。
+	 * Message: 競売に参加できません。<br>
+	 * Message: You cannot participate in an auction.
 	 */
 	public static final SystemMessageId CANNOT_PARTICIPATE_IN_AN_AUCTION;
 	
 	/**
 	 * ID: 681<br>
-	 * Message: 血盟がアジトを所有していません。
+	 * Message: 血盟がアジトを所有していません。<br>
+	 * Message: The clan does not own a clan hall.
 	 */
 	public static final SystemMessageId CLAN_HAS_NO_CLAN_HALL;
 	
 	/**
 	 * ID: 682<br>
-	 * Message: 指定した場所に移動しますか。
+	 * Message: 指定した場所に移動しますか。<br>
+	 * Message: You are moving to another village. Do you want to continue?
 	 */
 	public static final SystemMessageId MOVING_TO_ANOTHER_VILLAGE;
 	
 	/**
 	 * ID: 683<br>
-	 * Message: スウィーパーに対する優先権がありません。
+	 * Message: スウィーパーに対する優先権がありません。<br>
+	 * Message: There are no priority rights on a sweeper.
 	 */
 	public static final SystemMessageId SWEEP_NOT_ALLOWED;
 	
 	/**
 	 * ID: 684<br>
-	 * Message: 攻城中には傭兵を配置できません。
+	 * Message: 攻城中には傭兵を配置できません。<br>
+	 * Message: You cannot position mercenaries during a siege.
 	 */
 	public static final SystemMessageId CANNOT_POSITION_MERCS_DURING_SIEGE;
 	
 	/**
 	 * ID: 685<br>
-	 * Message: 同じ同盟に属する血盟に血盟戦を申し込むことはできません。
+	 * Message: 同じ同盟に属する血盟に血盟戦を申し込むことはできません。<br>
+	 * Message: You cannot apply for clan war with a clan that belongs to the same alliance
 	 */
 	public static final SystemMessageId CANNOT_DECLARE_WAR_ON_ALLY;
 	
 	/**
 	 * ID: 686<br>
-	 * Message: 魔法の火によって$s1のダメージを受けました。
+	 * Message: 魔法の火によって$s1のダメージを受けました。<br>
+	 * Message: You have received $s1 damage from the fire of magic.
 	 */
 	public static final SystemMessageId S1_DAMAGE_FROM_FIRE_MAGIC;
 	
 	/**
 	 * ID: 687<br>
-	 * Message: フリーズ状態では行動できません。しばらくお待ちください。
+	 * Message: フリーズ状態では行動できません。しばらくお待ちください。<br>
+	 * Message: You cannot move while frozen. Please wait.
 	 */
 	public static final SystemMessageId CANNOT_MOVE_FROZEN;
 	
 	/**
 	 * ID: 688<br>
-	 * Message: 城を所有している血盟は、自動的に守備側に登録されます。
+	 * Message: 城を所有している血盟は、自動的に守備側に登録されます。<br>
+	 * Message: The clan that owns the castle is automatically registered on the defending side.
 	 */
 	public static final SystemMessageId CLAN_THAT_OWNS_CASTLE_IS_AUTOMATICALLY_REGISTERED_DEFENDING;
 	
 	/**
 	 * ID: 689<br>
-	 * Message: 城を所有している血盟は、他の攻城戦には参戦できません。
+	 * Message: 城を所有している血盟は、他の攻城戦には参戦できません。<br>
+	 * Message: A clan that owns a castle cannot participate in another siege.
 	 */
 	public static final SystemMessageId CLAN_THAT_OWNS_CASTLE_CANNOT_PARTICIPATE_OTHER_SIEGE;
 	
 	/**
 	 * ID: 690<br>
-	 * Message: 城を所有している血盟と同じ同盟に属しているため、攻撃側に登録できません。
+	 * Message: 城を所有している血盟と同じ同盟に属しているため、攻撃側に登録できません。<br>
+	 * Message: You cannot register on the attacking side because you are part of an alliance with the clan that owns the castle.
 	 */
 	public static final SystemMessageId CANNOT_ATTACK_ALLIANCE_CASTLE;
 	
 	/**
 	 * ID: 691<br>
-	 * Message: $s1血盟は、すでに$s2同盟に加盟しています。
+	 * Message: $s1血盟は、すでに$s2同盟に加盟しています。<br>
+	 * Message: $s1 clan is already a member of $s2 alliance.
 	 */
 	public static final SystemMessageId S1_CLAN_ALREADY_MEMBER_OF_S2_ALLIANCE;
 	
 	/**
 	 * ID: 692<br>
-	 * Message: 相手がフリーズ状態です。しばらくお待ちください。
+	 * Message: 相手がフリーズ状態です。しばらくお待ちください。<br>
+	 * Message: The other party is frozen. Please wait a moment.
 	 */
 	public static final SystemMessageId OTHER_PARTY_IS_FROZEN;
 	
 	/**
 	 * ID: 693<br>
-	 * Message: 到着した小包が他の倉庫にあります。
+	 * Message: 到着した小包が他の倉庫にあります。<br>
+	 * Message: The package that arrived is in another warehouse.
 	 */
 	public static final SystemMessageId PACKAGE_IN_ANOTHER_WAREHOUSE;
 	
 	/**
 	 * ID: 694<br>
-	 * Message: 到着した小包はありません。
+	 * Message: 到着した小包はありません。<br>
+	 * Message: No packages have arrived.
 	 */
 	public static final SystemMessageId NO_PACKAGES_ARRIVED;
 	
 	/**
 	 * ID: 695<br>
-	 * Message: ペットの名前を設定できません。
+	 * Message: ペットの名前を設定できません。<br>
+	 * Message: You cannot set the name of the pet.
 	 */
 	public static final SystemMessageId NAMING_YOU_CANNOT_SET_NAME_OF_THE_PET;
 	
 	/**
 	 * ID: 697<br>
-	 * Message: アイテムエンチャント値が異常です。
+	 * Message: アイテムエンチャント値が異常です。<br>
+	 * Message: The item enchant value is strange
 	 */
 	public static final SystemMessageId ITEM_ENCHANT_VALUE_STRANGE;
 	
 	/**
 	 * ID: 698<br>
-	 * Message: 販売リストにある同じアイテムと価格が異なります。
+	 * Message: 販売リストにある同じアイテムと価格が異なります。<br>
+	 * Message: The price is different than the same item on the sales list.
 	 */
 	public static final SystemMessageId PRICE_DIFFERENT_FROM_SALES_LIST;
 	
 	/**
 	 * ID: 699<br>
-	 * Message: 現在購入しません。
+	 * Message: 現在購入しません。<br>
+	 * Message: Currently not purchasing.
 	 */
 	public static final SystemMessageId CURRENTLY_NOT_PURCHASING;
 	
 	/**
 	 * ID: 700<br>
-	 * Message: 購入が完了しました。
+	 * Message: 購入が完了しました。<br>
+	 * Message: The purchase is complete.
 	 */
 	public static final SystemMessageId THE_PURCHASE_IS_COMPLETE;
 	
 	/**
 	 * ID: 701<br>
-	 * Message: 必要アイテムが足りません。
+	 * Message: 必要アイテムが足りません。<br>
+	 * Message: You do not have enough required items.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_REQUIRED_ITEMS;
 	
 	/**
 	 * ID: 702<br>
-	 * Message: 現在対応中のFS・SPT・サービスチームがいません。
+	 * Message: 現在対応中のFS・SPT・サービスチームがいません。<br>
+	 * Message: There are no GMs currently visible in the public list as they may be performing other functions at the moment.
 	 */
 	public static final SystemMessageId NO_GM_PROVIDING_SERVICE_NOW;
 	
 	/**
 	 * ID: 703<br>
-	 * Message: ======<FSリスト>======
+	 * Message: ======<FSリスト>======<br>
+	 * Message: ======<GM List>======
 	 */
 	public static final SystemMessageId GM_LIST;
 	
 	/**
 	 * ID: 704<br>
-	 * Message: support：$c1
+	 * Message: support：$c1<br>
+	 * Message: GM : $c1
 	 */
 	public static final SystemMessageId GM_C1;
 	
 	/**
 	 * ID: 705<br>
-	 * Message: 自分自身を遮断することはできません。
+	 * Message: 自分自身を遮断することはできません。<br>
+	 * Message: You cannot exclude yourself.
 	 */
 	public static final SystemMessageId CANNOT_EXCLUDE_SELF;
 	
 	/**
 	 * ID: 706<br>
-	 * Message: 遮断リストには最大128人まで登録できます。
+	 * Message: 遮断リストには最大128人まで登録できます。<br>
+	 * Message: You can only register up to 64 names on your exclude list.
 	 */
 	public static final SystemMessageId ONLY_64_NAMES_ON_EXCLUDE_LIST;
 	
 	/**
 	 * ID: 707<br>
-	 * Message: 攻城戦中の村へはテレポートできません。
+	 * Message: 攻城戦中の村へはテレポートできません。<br>
+	 * Message: You cannot teleport to a village that is in a siege.
 	 */
 	public static final SystemMessageId NO_PORT_THAT_IS_IN_SIGE;
 	
 	/**
 	 * ID: 708<br>
-	 * Message: 城の倉庫を利用する権限がありません。
+	 * Message: 城の倉庫を利用する権限がありません。<br>
+	 * Message: You do not have the right to use the castle warehouse.
 	 */
 	public static final SystemMessageId YOU_DO_NOT_HAVE_THE_RIGHT_TO_USE_CASTLE_WAREHOUSE;
 	
 	/**
 	 * ID: 709<br>
-	 * Message: 血盟倉庫を利用する権限がありません。
+	 * Message: 血盟倉庫を利用する権限がありません。<br>
+	 * Message: You do not have the right to use the clan warehouse.
 	 */
 	public static final SystemMessageId YOU_DO_NOT_HAVE_THE_RIGHT_TO_USE_CLAN_WAREHOUSE;
 	
 	/**
 	 * ID: 710<br>
-	 * Message: 血盟倉庫を利用できるのは、血盟レベルが1以上の血盟のみです。
+	 * Message: 血盟倉庫を利用できるのは、血盟レベルが1以上の血盟のみです。<br>
+	 * Message: Only clans of clan level 1 or higher can use a clan warehouse.
 	 */
 	public static final SystemMessageId ONLY_LEVEL_1_CLAN_OR_HIGHER_CAN_USE_WAREHOUSE;
 	
 	/**
 	 * ID: 711<br>
-	 * Message: $s1の攻城戦が始まりました。
+	 * Message: $s1の攻城戦が始まりました。<br>
+	 * Message: The siege of $s1 has started.
 	 */
 	public static final SystemMessageId SIEGE_OF_S1_HAS_STARTED;
 	
 	/**
 	 * ID: 712<br>
-	 * Message: $s1の攻城戦が終了しました。
+	 * Message: $s1の攻城戦が終了しました。<br>
+	 * Message: The siege of $s1 has finished.
 	 */
 	public static final SystemMessageId SIEGE_OF_S1_HAS_ENDED;
 	
 	/**
 	 * ID: 713<br>
-	 * Message: $s1/$s2/$s3 $s4:$s5
+	 * Message: $s1/$s2/$s3 $s4:$s5<br>
+	 * Message: $s1/$s2/$s3 :
 	 */
 	public static final SystemMessageId S1_S2_S3_D;
 	
 	/**
 	 * ID: 714<br>
-	 * Message: トラップ装置が作動しました。
+	 * Message: トラップ装置が作動しました。<br>
+	 * Message: A trap device has been tripped.
 	 */
 	public static final SystemMessageId A_TRAP_DEVICE_HAS_BEEN_TRIPPED;
 	
 	/**
 	 * ID: 715<br>
-	 * Message: トラップ装置の作動が中断されました。
+	 * Message: トラップ装置の作動が中断されました。<br>
+	 * Message: A trap device has been stopped.
 	 */
 	public static final SystemMessageId A_TRAP_DEVICE_HAS_BEEN_STOPPED;
 	
 	/**
 	 * ID: 716<br>
-	 * Message: 陣地がないと復活できません。
+	 * Message: 陣地がないと復活できません。<br>
+	 * Message: If a base camp does not exist, resurrection is not possible.
 	 */
 	public static final SystemMessageId NO_RESURRECTION_WITHOUT_BASE_CAMP;
 	
 	/**
 	 * ID: 717<br>
-	 * Message: ガーディアンタワーが破壊され、復活が不可能です。
+	 * Message: ガーディアンタワーが破壊され、復活が不可能です。<br>
+	 * Message: The guardian tower has been destroyed and resurrection is not possible
 	 */
 	public static final SystemMessageId TOWER_DESTROYED_NO_RESURRECTION;
 	
 	/**
 	 * ID: 718<br>
-	 * Message: 攻城戦中は城門を開閉できません。
+	 * Message: 攻城戦中は城門を開閉できません。<br>
+	 * Message: The castle gates cannot be opened and closed during a siege.
 	 */
 	public static final SystemMessageId GATES_NOT_OPENED_CLOSED_DURING_SIEGE;
 	
 	/**
 	 * ID: 719<br>
-	 * Message: アイテムの調合に失敗しました。
+	 * Message: アイテムの調合に失敗しました。<br>
+	 * Message: You failed at mixing the item.
 	 */
 	public static final SystemMessageId ITEM_MIXING_FAILED;
 	
 	/**
 	 * ID: 720<br>
-	 * Message: 購入額が所持金より大きいため、個人商店を開くことができません。
+	 * Message: 購入額が所持金より大きいため、個人商店を開くことができません。<br>
+	 * Message: The purchase price is higher than the amount of money that you have and so you cannot open a personal store.
 	 */
 	public static final SystemMessageId THE_PURCHASE_PRICE_IS_HIGHER_THAN_MONEY;
 	
 	/**
 	 * ID: 721<br>
-	 * Message: 攻城戦に参戦している状態では、同盟を作ることができません。
+	 * Message: 攻城戦に参戦している状態では、同盟を作ることができません。<br>
+	 * Message: You cannot create an alliance while participating in a siege.
 	 */
 	public static final SystemMessageId NO_ALLY_CREATION_WHILE_SIEGE;
 	
 	/**
 	 * ID: 722<br>
-	 * Message: 所属の血盟が攻城戦に参戦している状態のため、同盟を解散できません。
+	 * Message: 所属の血盟が攻城戦に参戦している状態のため、同盟を解散できません。<br>
+	 * Message: You cannot dissolve an alliance while an affiliated clan is participating in a siege battle.
 	 */
 	public static final SystemMessageId CANNOT_DISSOLVE_ALLY_WHILE_IN_SIEGE;
 	
 	/**
 	 * ID: 723<br>
-	 * Message: 相手の血盟は、攻城戦に参戦中です。
+	 * Message: 相手の血盟は、攻城戦に参戦中です。<br>
+	 * Message: The opposing clan is participating in a siege battle.
 	 */
 	public static final SystemMessageId OPPOSING_CLAN_IS_PARTICIPATING_IN_SIEGE;
 	
 	/**
 	 * ID: 724<br>
-	 * Message: 攻城戦に参戦している状態では、脱退できません。
+	 * Message: 攻城戦に参戦している状態では、脱退できません。<br>
+	 * Message: You cannot leave while participating in a siege battle.
 	 */
 	public static final SystemMessageId CANNOT_LEAVE_WHILE_SIEGE;
 	
 	/**
 	 * ID: 725<br>
-	 * Message: 攻城戦に参戦中の血盟を同盟から追放できません。
+	 * Message: 攻城戦に参戦中の血盟を同盟から追放できません。<br>
+	 * Message: You cannot banish a clan from an alliance while the clan is participating in a siege
 	 */
 	public static final SystemMessageId CANNOT_DISMISS_WHILE_SIEGE;
 	
 	/**
 	 * ID: 726<br>
-	 * Message: フリーズ状態が始まりました。しばらくお待ちください。
+	 * Message: フリーズ状態が始まりました。しばらくお待ちください。<br>
+	 * Message: Frozen condition has started. Please wait a moment.
 	 */
 	public static final SystemMessageId FROZEN_CONDITION_STARTED;
 	
 	/**
 	 * ID: 727<br>
-	 * Message: フリーズ状態が解除されました。
+	 * Message: フリーズ状態が解除されました。<br>
+	 * Message: The frozen condition was removed.
 	 */
 	public static final SystemMessageId FROZEN_CONDITION_REMOVED;
 	
 	/**
 	 * ID: 728<br>
-	 * Message: 解散の申請後7日以内は、再び解散を申し込むことができません。
+	 * Message: 解散の申請後7日以内は、再び解散を申し込むことができません。<br>
+	 * Message: You cannot apply for dissolution again within seven days after a previous application for dissolution.
 	 */
 	public static final SystemMessageId CANNOT_APPLY_DISSOLUTION_AGAIN;
 	
 	/**
 	 * ID: 729<br>
-	 * Message: 該当アイテムを捨てることはできません。
+	 * Message: 該当アイテムを捨てることはできません。<br>
+	 * Message: That item cannot be discarded.
 	 */
 	public static final SystemMessageId ITEM_NOT_DISCARDED;
 	
 	/**
 	 * ID: 730<br>
-	 * Message: - $c1番目のサポートが受け付けされました。\n - 今日のサポート回数はあと$s2回です。\n - ワールドの状況によっては返信にお時間がかかってしまう場合がございます。予めご了承下さいませ。
+	 * Message: - $c1番目のサポートが受け付けされました。\n - 今日のサポート回数はあと$s2回です。\n - ワールドの状況によっては返信にお時間がかかってしまう場合がございます。予めご了承下さいませ。<br>
+	 * Message: You have submitted $s1 petition(s). - You may submit $s2 more petition(s) today.
 	 */
 	public static final SystemMessageId SUBMITTED_YOU_S1_TH_PETITION_S2_LEFT;
 	
 	/**
 	 * ID: 731<br>
-	 * Message: $c1 にサポートからの対応要請をしました。受付番号は$s2です。
+	 * Message: $c1 にサポートからの対応要請をしました。受付番号は$s2です。<br>
+	 * Message: A petition has been received by the GM on behalf of $s1. The petition code is $s2.
 	 */
 	public static final SystemMessageId PETITION_S1_RECEIVED_CODE_IS_S2;
 	
 	/**
 	 * ID: 732<br>
-	 * Message: $c1 にサポートからのご連絡があります。
+	 * Message: $c1 にサポートからのご連絡があります。<br>
+	 * Message: $c1 has received a request for a consultation with the GM.
 	 */
 	public static final SystemMessageId C1_RECEIVED_CONSULTATION_REQUEST;
 	
 	/**
 	 * ID: 733<br>
-	 * Message: 一日に申請可能な$s1回のサポートをすべて受け付けました。これ以上サポートを申し込むことはできません。
+	 * Message: 一日に申請可能な$s1回のサポートをすべて受け付けました。これ以上サポートを申し込むことはできません。<br>
+	 * Message: We have received $s1 petitions from you today and that is the maximum that you can submit in one day. You cannot submit any more petitions.
 	 */
 	public static final SystemMessageId WE_HAVE_RECEIVED_S1_PETITIONS_TODAY;
 	
 	/**
 	 * ID: 734<br>
-	 * Message: サポートの代理受付に失敗しました。$c1 がすでにサポートを受け付けた状態です。
+	 * Message: サポートの代理受付に失敗しました。$c1 がすでにサポートを受け付けた状態です。<br>
+	 * Message: You have failed at submitting a petition on behalf of someone else. $c1 already submitted a petition.
 	 */
 	public static final SystemMessageId PETITION_FAILED_C1_ALREADY_SUBMITTED;
 	
 	/**
 	 * ID: 735<br>
-	 * Message: $c1 に対するサポートの代理受付に失敗しました。エラー番号は$s2です。
+	 * Message: $c1 に対するサポートの代理受付に失敗しました。エラー番号は$s2です。<br>
+	 * Message: You have failed at submitting a petition on behalf of $c1. The error number is $s2.
 	 */
 	public static final SystemMessageId PETITION_FAILED_FOR_C1_ERROR_NUMBER_S2;
 	
 	/**
 	 * ID: 736<br>
-	 * Message: サポート要請がキャンセルされました。今日受け付け可能なサポートはあと$s1回です。
+	 * Message: サポート要請がキャンセルされました。今日受け付け可能なサポートはあと$s1回です。<br>
+	 * Message: The petition was canceled. You may submit $s1 more petition(s) today.
 	 */
 	public static final SystemMessageId PETITION_CANCELED_SUBMIT_S1_MORE_TODAY;
 	
 	/**
 	 * ID: 737<br>
-	 * Message: $c1 に対するサポートの代理受付をキャンセルしました。
+	 * Message: $c1 に対するサポートの代理受付をキャンセルしました。<br>
+	 * Message: You have cancelled submitting a petition on behalf of $s1.
 	 */
 	public static final SystemMessageId CANCELED_PETITION_ON_S1;
 	
 	/**
 	 * ID: 738<br>
-	 * Message: 現在はサポート要請を受け付けておりません。
+	 * Message: 現在はサポート要請を受け付けておりません。<br>
+	 * Message: You have not submitted a petition.
 	 */
 	public static final SystemMessageId PETITION_NOT_SUBMITTED;
 	
 	/**
 	 * ID: 739<br>
-	 * Message: $c1 に対するサポートの代理受付のキャンセルに失敗しました。エラーコードは$s2です。
+	 * Message: $c1 に対するサポートの代理受付のキャンセルに失敗しました。エラーコードは$s2です。<br>
+	 * Message: You have failed at cancelling a petition on behalf of $c1. The error number is $s2.
 	 */
 	public static final SystemMessageId PETITION_CANCEL_FAILED_FOR_C1_ERROR_NUMBER_S2;
 	
 	/**
 	 * ID: 740<br>
-	 * Message: $c1 がサポートの要請で対話に参加しました。
+	 * Message: $c1 がサポートの要請で対話に参加しました。<br>
+	 * Message: $c1 participated in a petition chat at the request of the GM.
 	 */
 	public static final SystemMessageId C1_PARTICIPATE_PETITION;
 	
 	/**
 	 * ID: 741<br>
-	 * Message: $c1 を対話に追加するのに失敗しました。すでにサポートを受け付けた状態です。
+	 * Message: $c1 を対話に追加するのに失敗しました。すでにサポートを受け付けた状態です。<br>
+	 * Message: You have failed at adding $c1 to the petition chat. Petition has already been submitted.
 	 */
 	public static final SystemMessageId FAILED_ADDING_C1_TO_PETITION;
 	
 	/**
 	 * ID: 742<br>
-	 * Message: $c1 を対話に追加するのに失敗しました。エラーコードは$s2です。
+	 * Message: $c1 を対話に追加するのに失敗しました。エラーコードは$s2です。<br>
+	 * Message: You have failed at adding $c1 to the petition chat. The error code is $s2.
 	 */
 	public static final SystemMessageId PETITION_ADDING_C1_FAILED_ERROR_NUMBER_S2;
 	
 	/**
 	 * ID: 743<br>
-	 * Message: $c1 が対話から退場しました。
+	 * Message: $c1 が対話から退場しました。<br>
+	 * Message: $c1 left the petition chat.
 	 */
 	public static final SystemMessageId C1_LEFT_PETITION_CHAT;
 	
 	/**
 	 * ID: 744<br>
-	 * Message: $s1 を対話から削除するのに失敗しました。エラーコードは$s2です。
+	 * Message: $s1 を対話から削除するのに失敗しました。エラーコードは$s2です。<br>
+	 * Message: You have failed at removing $s1 from the petition chat. The error code is $s2.
 	 */
 	public static final SystemMessageId PETITION_REMOVING_S1_FAILED_ERROR_NUMBER_S2;
 	
 	/**
 	 * ID: 745<br>
-	 * Message: 現在サポートの対話状態ではありません。
+	 * Message: 現在サポートの対話状態ではありません。<br>
+	 * Message: You are currently not in a petition chat.
 	 */
 	public static final SystemMessageId YOU_ARE_NOT_IN_PETITION_CHAT;
 	
 	/**
 	 * ID: 746<br>
-	 * Message: 現在はサポート要請の状態ではありません。
+	 * Message: 現在はサポート要請の状態ではありません。<br>
+	 * Message: It is not currently a petition.
 	 */
 	public static final SystemMessageId CURRENTLY_NO_PETITION;
 	
 	/**
 	 * ID: 748<br>
-	 * Message: 離れているため、詠唱が中断されました。
+	 * Message: 離れているため、詠唱が中断されました。<br>
+	 * Message: The distance is too far and so the casting has been stopped.
 	 */
 	public static final SystemMessageId DIST_TOO_FAR_CASTING_STOPPED;
 	
 	/**
 	 * ID: 749<br>
-	 * Message: $s1の効果が解除されました。
+	 * Message: $s1の効果が解除されました。<br>
+	 * Message: The effect of $s1 has been removed.
 	 */
 	public static final SystemMessageId EFFECT_S1_DISAPPEARED;
 	
 	/**
 	 * ID: 750<br>
-	 * Message: これ以上習うスキルがありません。
+	 * Message: これ以上習うスキルがありません。<br>
+	 * Message: There are no other skills to learn.
 	 */
 	public static final SystemMessageId NO_MORE_SKILLS_TO_LEARN;
 	
 	/**
 	 * ID: 751<br>
-	 * Message: 同盟に属する血盟と攻城戦の関係が衝突するため、同盟に招待できません。
+	 * Message: 同盟に属する血盟と攻城戦の関係が衝突するため、同盟に招待できません。<br>
+	 * Message: As there is a conflict in the siege relationship with a clan in the alliance, you cannot invite that clan to the alliance.
 	 */
 	public static final SystemMessageId CANNOT_INVITE_CONFLICT_CLAN;
 	
 	/**
 	 * ID: 752<br>
-	 * Message: 使用できない名前です。
+	 * Message: 使用できない名前です。<br>
+	 * Message: That name cannot be used.
 	 */
 	public static final SystemMessageId CANNOT_USE_NAME;
 	
 	/**
 	 * ID: 753<br>
-	 * Message: ここには傭兵を配置できません。
+	 * Message: ここには傭兵を配置できません。<br>
+	 * Message: You cannot position mercenaries here.
 	 */
 	public static final SystemMessageId NO_MERCS_HERE;
 	
 	/**
 	 * ID: 754<br>
-	 * Message: 今週の使用時間は、あと$s1時間$s2分です。
+	 * Message: 今週の使用時間は、あと$s1時間$s2分です。<br>
+	 * Message: There are $s1 hours and $s2 minutes left in this week's usage time.
 	 */
 	public static final SystemMessageId S1_HOURS_S2_MINUTES_LEFT_THIS_WEEK;
 	
 	/**
 	 * ID: 755<br>
-	 * Message: 今週の使用時間は、あと$s1分です。
+	 * Message: 今週の使用時間は、あと$s1分です。<br>
+	 * Message: There are $s1 minutes left in this week's usage time.
 	 */
 	public static final SystemMessageId S1_MINUTES_LEFT_THIS_WEEK;
 	
 	/**
 	 * ID: 756<br>
-	 * Message: 今週の使用時間が終了しました。
+	 * Message: 今週の使用時間が終了しました。<br>
+	 * Message: This week's usage time has finished.
 	 */
 	public static final SystemMessageId WEEKS_USAGE_TIME_FINISHED;
 	
 	/**
 	 * ID: 757<br>
-	 * Message: 定量使用時間は、あと$s1時間$s2分です。
+	 * Message: 定量使用時間は、あと$s1時間$s2分です。<br>
+	 * Message: There are $s1 hours and $s2 minutes left in the fixed use time.
 	 */
 	public static final SystemMessageId S1_HOURS_S2_MINUTES_LEFT_IN_TIME;
 	
 	/**
 	 * ID: 758<br>
-	 * Message: 今週のプレイ時間は、あと$s1時間$s2分です。
+	 * Message: 今週のプレイ時間は、あと$s1時間$s2分です。<br>
+	 * Message: There are $s1 hours and $s2 minutes left in this week's play time.
 	 */
 	public static final SystemMessageId S1_HOURS_S2_MINUTES_LEFT_THIS_WEEKS_PLAY_TIME;
 	
 	/**
 	 * ID: 759<br>
-	 * Message: 今週のプレイ時間は、あと$s1分です。
+	 * Message: 今週のプレイ時間は、あと$s1分です。<br>
+	 * Message: There are $s1 minutes left in this week's play time.
 	 */
 	public static final SystemMessageId S1_MINUTES_LEFT_THIS_WEEKS_PLAY_TIME;
 	
 	/**
 	 * ID: 760<br>
-	 * Message: $c1 は血盟脱退後1日間経過しておらず、血盟に加入できない状態です。
+	 * Message: $c1 は血盟脱退後1日間経過しておらず、血盟に加入できない状態です。<br>
+	 * Message: $c1 cannot join the clan because one day has not yet passed since he/she left another clan.
 	 */
 	public static final SystemMessageId C1_MUST_WAIT_BEFORE_JOINING_ANOTHER_CLAN;
 	
 	/**
 	 * ID: 761<br>
-	 * Message: $s1は同盟脱退後1日が経過しておらず、同盟に加入できない状態です。
+	 * Message: $s1は同盟脱退後1日が経過しておらず、同盟に加入できない状態です。<br>
+	 * Message: $s1 clan cannot join the alliance because one day has not yet passed since it left another alliance.
 	 */
 	public static final SystemMessageId S1_CANT_ENTER_ALLIANCE_WITHIN_1_DAY;
 	
 	/**
 	 * ID: 762<br>
-	 * Message: $c1が$s2を転がして$s3が出ました。
+	 * Message: $c1が$s2を転がして$s3が出ました。<br>
+	 * Message: $c1 rolled $s2 and $s3's eye came out.
 	 */
 	public static final SystemMessageId C1_ROLLED_S2_S3_EYE_CAME_OUT;
 	
 	/**
 	 * ID: 763<br>
-	 * Message: 倉庫との距離が遠いため小包を届けられませんでした。
+	 * Message: 倉庫との距離が遠いため小包を届けられませんでした。<br>
+	 * Message: You failed at sending the package because you are too far from the warehouse.
 	 */
 	public static final SystemMessageId FAILED_SENDING_PACKAGE_TOO_FAR;
 	
 	/**
 	 * ID: 764<br>
-	 * Message: $s1時間プレイしました。健康のためにしばらく休憩してください。
+	 * Message: $s1時間プレイしました。健康のためにしばらく休憩してください。<br>
+	 * Message: You have been playing for an extended period of time. Please consider taking a break.
 	 */
 	public static final SystemMessageId PLAYING_FOR_LONG_TIME;
 	
 	/**
 	 * ID: 769<br>
-	 * Message: 不正ユーティリティの利用が発見されました。不正ユーティリティの利用を終了して、再度実行してください。
+	 * Message: 不正ユーティリティの利用が発見されました。不正ユーティリティの利用を終了して、再度実行してください。<br>
+	 * Message: A hacking tool has been discovered. Please try again after closing unnecessary programs.
 	 */
 	public static final SystemMessageId HACKING_TOOL;
 	
 	/**
 	 * ID: 774<br>
-	 * Message: プレイ時間はこれ以上減りません。
+	 * Message: プレイ時間はこれ以上減りません。<br>
+	 * Message: Play time is no longer accumulating.
 	 */
 	public static final SystemMessageId PLAY_TIME_NO_LONGER_ACCUMULATING;
 	
 	/**
 	 * ID: 775<br>
-	 * Message: これからプレイ時間が減ります。
+	 * Message: これからプレイ時間が減ります。<br>
+	 * Message: From here on, play time will be expended.
 	 */
 	public static final SystemMessageId PLAY_TIME_EXPENDED;
 	
 	/**
 	 * ID: 776<br>
-	 * Message: 競売に入札したアジトが$s1血盟に落札されました。
+	 * Message: 競売に入札したアジトが$s1血盟に落札されました。<br>
+	 * Message: The clan hall which was put up for auction has been awarded to clan.
 	 */
 	public static final SystemMessageId CLANHALL_AWARDED_TO_CLAN;
 	
 	/**
 	 * ID: 777<br>
-	 * Message: 競売に入札したアジトが流札となりました。
+	 * Message: 競売に入札したアジトが流札となりました。<br>
+	 * Message: The clan hall which was put up for auction was not sold and therefore has been re-listed.
 	 */
 	public static final SystemMessageId CLANHALL_NOT_SOLD;
 	
 	/**
 	 * ID: 778<br>
-	 * Message: ここではログアウトできません。
+	 * Message: ここではログアウトできません。<br>
+	 * Message: You may not log out from this location.
 	 */
 	public static final SystemMessageId NO_LOGOUT_HERE;
 	
 	/**
 	 * ID: 779<br>
-	 * Message: ここではリスタートできません。
+	 * Message: ここではリスタートできません。<br>
+	 * Message: You may not restart in this location.
 	 */
 	public static final SystemMessageId NO_RESTART_HERE;
 	
 	/**
 	 * ID: 780<br>
-	 * Message: 攻城戦の間だけ観戦できます。
+	 * Message: 攻城戦の間だけ観戦できます。<br>
+	 * Message: Observation is only possible during a siege.
 	 */
 	public static final SystemMessageId ONLY_VIEW_SIEGE;
 	
 	/**
 	 * ID: 781<br>
-	 * Message: 観戦中にはできない行動です。
+	 * Message: 観戦中にはできない行動です。<br>
+	 * Message: Observers cannot participate.
 	 */
 	public static final SystemMessageId OBSERVERS_CANNOT_PARTICIPATE;
 	
 	/**
 	 * ID: 782<br>
-	 * Message: ペット、または召喚獣が召喚されている状態では観戦できません。
+	 * Message: ペット、または召喚獣が召喚されている状態では観戦できません。<br>
+	 * Message: You may not observe a siege with a pet or servitor summoned.
 	 */
 	public static final SystemMessageId NO_OBSERVE_WITH_PET;
 	
 	/**
 	 * ID: 783<br>
-	 * Message: 現在、宝くじの販売が一時中断されております。
+	 * Message: 現在、宝くじの販売が一時中断されております。<br>
+	 * Message: Lottery ticket sales have been temporarily suspended.
 	 */
 	public static final SystemMessageId LOTTERY_TICKET_SALES_TEMP_SUSPENDED;
 	
 	/**
 	 * ID: 784<br>
-	 * Message: 宝くじの販売が締め切られました。
+	 * Message: 宝くじの販売が締め切られました。<br>
+	 * Message: Tickets for the current lottery are no longer available.
 	 */
 	public static final SystemMessageId NO_LOTTERY_TICKETS_AVAILABLE;
 	
 	/**
 	 * ID: 785<br>
-	 * Message: まだ$s1回目の当選結果が出ていません。
+	 * Message: まだ$s1回目の当選結果が出ていません。<br>
+	 * Message: The results of lottery number $s1 have not yet been published.
 	 */
 	public static final SystemMessageId LOTTERY_S1_RESULT_NOT_PUBLISHED;
 	
 	/**
 	 * ID: 786<br>
-	 * Message: 使えない単語が含まれています。
+	 * Message: 使えない単語が含まれています。<br>
+	 * Message: Incorrect syntax.
 	 */
 	public static final SystemMessageId INCORRECT_SYNTAX;
 	
 	/**
 	 * ID: 787<br>
-	 * Message: 予選が終了しました。
+	 * Message: 予選が終了しました。<br>
+	 * Message: The tryouts are finished.
 	 */
 	public static final SystemMessageId CLANHALL_SIEGE_TRYOUTS_FINISHED;
 	
 	/**
 	 * ID: 788<br>
-	 * Message: 決勝戦が終了しました。
+	 * Message: 決勝戦が終了しました。<br>
+	 * Message: The finals are finished.
 	 */
 	public static final SystemMessageId CLANHALL_SIEGE_FINALS_FINISHED;
 	
 	/**
 	 * ID: 789<br>
-	 * Message: 予選が始まりました。
+	 * Message: 予選が始まりました。<br>
+	 * Message: The tryouts have begun.
 	 */
 	public static final SystemMessageId CLANHALL_SIEGE_TRYOUTS_BEGUN;
 	
 	/**
 	 * ID: 790<br>
-	 * Message: 決勝戦が始まりました。
+	 * Message: 決勝戦が始まりました。<br>
+	 * Message: The finals are finished.
 	 */
 	public static final SystemMessageId CLANHALL_SIEGE_FINALS_BEGUN;
 	
 	/**
 	 * ID: 791<br>
-	 * Message: 決勝戦の待機状態です。準備してください。
+	 * Message: 決勝戦の待機状態です。準備してください。<br>
+	 * Message: The final match is about to begin. Line up!
 	 */
 	public static final SystemMessageId FINAL_MATCH_BEGIN;
 	
 	/**
 	 * ID: 792<br>
-	 * Message: アジト戦が終了しました。
+	 * Message: アジト戦が終了しました。<br>
+	 * Message: The siege of the clan hall is finished.
 	 */
 	public static final SystemMessageId CLANHALL_SIEGE_ENDED;
 	
 	/**
 	 * ID: 793<br>
-	 * Message: アジト戦が始まりました。
+	 * Message: アジト戦が始まりました。<br>
+	 * Message: The siege of the clan hall has begun.
 	 */
 	public static final SystemMessageId CLANHALL_SIEGE_BEGUN;
 	
 	/**
 	 * ID: 794<br>
-	 * Message: 該当する権限がありません。
+	 * Message: 該当する権限がありません。<br>
+	 * Message: You are not authorized to do that.
 	 */
 	public static final SystemMessageId YOU_ARE_NOT_AUTHORIZED_TO_DO_THAT;
 	
 	/**
 	 * ID: 795<br>
-	 * Message: 血盟主のみが権限を設定できます。
+	 * Message: 血盟主のみが権限を設定できます。<br>
+	 * Message: Only clan leaders are authorized to set rights.
 	 */
 	public static final SystemMessageId ONLY_LEADERS_CAN_SET_RIGHTS;
 	
 	/**
 	 * ID: 796<br>
-	 * Message: 観戦可能時間は残り$s1分です。
+	 * Message: 観戦可能時間は残り$s1分です。<br>
+	 * Message: Your remaining observation time is minutes.
 	 */
 	public static final SystemMessageId REMAINING_OBSERVATION_TIME;
 	
 	/**
 	 * ID: 797<br>
-	 * Message: マクロは48個まで登録可能です。
+	 * Message: マクロは48個まで登録可能です。<br>
+	 * Message: You may create up to 48 macros.
 	 */
 	public static final SystemMessageId YOU_MAY_CREATE_UP_TO_48_MACROS;
 	
 	/**
 	 * ID: 798<br>
-	 * Message: 一度登録すると、再び製作図アイテムに戻すことはできません。登録してもよろしいですか。
+	 * Message: 一度登録すると、再び製作図アイテムに戻すことはできません。登録してもよろしいですか。<br>
+	 * Message: Item registration is irreversible. Do you wish to continue?
 	 */
 	public static final SystemMessageId ITEM_REGISTRATION_IRREVERSIBLE;
 	
 	/**
 	 * ID: 799<br>
-	 * Message: 観戦可能時間が終了しました。
+	 * Message: 観戦可能時間が終了しました。<br>
+	 * Message: The observation time has expired.
 	 */
 	public static final SystemMessageId OBSERVATION_TIME_EXPIRED;
 	
 	/**
 	 * ID: 800<br>
-	 * Message: アジト戦の登録期間が過ぎたので、登録できません。
+	 * Message: アジト戦の登録期間が過ぎたので、登録できません。<br>
+	 * Message: You are too late. The registration period is over.
 	 */
 	public static final SystemMessageId REGISTRATION_PERIOD_OVER;
 	
 	/**
 	 * ID: 801<br>
-	 * Message: これ以上のアジト戦の登録はできません。
+	 * Message: これ以上のアジト戦の登録はできません。<br>
+	 * Message: Registration for the clan hall siege is closed.
 	 */
 	public static final SystemMessageId REGISTRATION_CLOSED;
 	
 	/**
 	 * ID: 802<br>
-	 * Message: これ以上監視ウィンドウを開くことができません。ウィンドウを閉じて、再度実行してください。
+	 * Message: これ以上監視ウィンドウを開くことができません。ウィンドウを閉じて、再度実行してください。<br>
+	 * Message: Petitions are not being accepted at this time. You may submit your petition after a.m./p.m.
 	 */
 	public static final SystemMessageId PETITION_NOT_ACCEPTED_NOW;
 	
 	/**
 	 * ID: 803<br>
-	 * Message: サポート要請の内容を書いてください。
+	 * Message: サポート要請の内容を書いてください。<br>
+	 * Message: Enter the specifics of your petition.
 	 */
 	public static final SystemMessageId PETITION_NOT_SPECIFIED;
 	
 	/**
 	 * ID: 804<br>
-	 * Message: 分類を選択して、FAQをご確認ください。
+	 * Message: 分類を選択して、FAQをご確認ください。<br>
+	 * Message: Select a type.
 	 */
 	public static final SystemMessageId SELECT_TYPE;
 	
 	/**
 	 * ID: 805<br>
-	 * Message: 現在はサポートの受け付けを行っていません。$s1時以後に再度要請してください。
+	 * Message: 現在はサポートの受け付けを行っていません。$s1時以後に再度要請してください。<br>
+	 * Message: Petitions are not being accepted at this time. You may submit your petition after $s1 a.m./p.m.
 	 */
 	public static final SystemMessageId PETITION_NOT_ACCEPTED_SUBMIT_AT_S1;
 	
 	/**
 	 * ID: 806<br>
-	 * Message: 地形にはまって出られない時は「/escape」コマンドを試してみてください。
+	 * Message: 地形にはまって出られない時は「/escape」コマンドを試してみてください。<br>
+	 * Message: If you are trapped, try typing "/unstuck".
 	 */
 	public static final SystemMessageId TRY_UNSTUCK_WHEN_TRAPPED;
 	
 	/**
 	 * ID: 807<br>
-	 * Message: 移動が不可能な地形でしたので、村にテレポートします。
+	 * Message: 移動が不可能な地形でしたので、村にテレポートします。<br>
+	 * Message: This terrain is navigable. Prepare for transport to the nearest village.
 	 */
 	public static final SystemMessageId STUCK_PREPARE_FOR_TRANSPORT;
 	
 	/**
 	 * ID: 808<br>
-	 * Message: 移動が不可能な地形であることを確認できませんでした。「/support」コマンドで、サポート要請を行なってください。
+	 * Message: 移動が不可能な地形であることを確認できませんでした。「/support」コマンドで、サポート要請を行なってください。<br>
+	 * Message: You are stuck. You may submit a petition by typing "/gm".
 	 */
 	public static final SystemMessageId STUCK_SUBMIT_PETITION;
 	
 	/**
 	 * ID: 809<br>
-	 * Message: 移動が不可能な地形であることを確認できませんでした。5分後に村にテレポートします。
+	 * Message: 移動が不可能な地形であることを確認できませんでした。5分後に村にテレポートします。<br>
+	 * Message: You are stuck. You will be transported to the nearest village in five minutes.
 	 */
 	public static final SystemMessageId STUCK_TRANSPORT_IN_FIVE_MINUTES;
 	
 	/**
 	 * ID: 810<br>
-	 * Message: 有効なマクロではありません。マクロに関連するヘルプをご確認ください。
+	 * Message: 有効なマクロではありません。マクロに関連するヘルプをご確認ください。<br>
+	 * Message: Invalid macro. Refer to the Help file for instructions.
 	 */
 	public static final SystemMessageId INVALID_MACRO;
 	
 	/**
 	 * ID: 811<br>
-	 * Message: 目的地（$s1）に移動しますか。
+	 * Message: 目的地（$s1）に移動しますか。<br>
+	 * Message: You will be moved to (). Do you wish to continue?
 	 */
 	public static final SystemMessageId WILL_BE_MOVED;
 	
 	/**
 	 * ID: 812<br>
-	 * Message: 罠によって$s1のダメージを受けました。
+	 * Message: 罠によって$s1のダメージを受けました。<br>
+	 * Message: The secret trap has inflicted $s1 damage on you.
 	 */
 	public static final SystemMessageId TRAP_DID_S1_DAMAGE;
 	
 	/**
 	 * ID: 813<br>
-	 * Message: 罠によって毒に掛かりました。
+	 * Message: 罠によって毒に掛かりました。<br>
+	 * Message: You have been poisoned by a Secret Trap.
 	 */
 	public static final SystemMessageId POISONED_BY_TRAP;
 	
 	/**
 	 * ID: 814<br>
-	 * Message: 罠によって移動速度が低下しました。
+	 * Message: 罠によって移動速度が低下しました。<br>
+	 * Message: Your speed has been decreased by a Secret Trap.
 	 */
 	public static final SystemMessageId SLOWED_BY_TRAP;
 	
 	/**
 	 * ID: 815<br>
-	 * Message: 予選待機状態です。準備してください。
+	 * Message: 予選待機状態です。準備してください。<br>
+	 * Message: The tryouts are about to begin. Line up!
 	 */
 	public static final SystemMessageId TRYOUTS_ABOUT_TO_BEGIN;
 	
 	/**
 	 * ID: 816<br>
-	 * Message: 第$s1回モンスター レース チケットの販売が開始されました！
+	 * Message: 第$s1回モンスター レース チケットの販売が開始されました！<br>
+	 * Message: Tickets are now available for Monster Race $s1!
 	 */
 	public static final SystemMessageId MONSRACE_TICKETS_AVAILABLE_FOR_S1_RACE;
 	
 	/**
 	 * ID: 817<br>
-	 * Message: 第$s1回モンスター レース チケットを現在販売しております。
+	 * Message: 第$s1回モンスター レース チケットを現在販売しております。<br>
+	 * Message: Now selling tickets for Monster Race $s1!
 	 */
 	public static final SystemMessageId MONSRACE_TICKETS_NOW_AVAILABLE_FOR_S1_RACE;
 	
 	/**
 	 * ID: 818<br>
-	 * Message: $s1分後にモンスター レース チケットの販売が終了いたします。お早めにご購入ください。
+	 * Message: $s1分後にモンスター レース チケットの販売が終了いたします。お早めにご購入ください。<br>
+	 * Message: Ticket sales for the Monster Race will end in $s1 minute(s).
 	 */
 	public static final SystemMessageId MONSRACE_TICKETS_STOP_IN_S1_MINUTES;
 	
 	/**
 	 * ID: 819<br>
-	 * Message: 第$s1回モンスター レース チケットの販売が終了いたしました。配当率をご確認ください。
+	 * Message: 第$s1回モンスター レース チケットの販売が終了いたしました。配当率をご確認ください。<br>
+	 * Message: Tickets sales are closed for Monster Race $s1. Odds are posted.
 	 */
 	public static final SystemMessageId MONSRACE_S1_TICKET_SALES_CLOSED;
 	
 	/**
 	 * ID: 820<br>
-	 * Message: $s1分後に第$s2回モンスター レースが開始されます。
+	 * Message: $s1分後に第$s2回モンスター レースが開始されます。<br>
+	 * Message: Monster Race $s2 will begin in $s1 minute(s)!
 	 */
 	public static final SystemMessageId MONSRACE_S2_BEGINS_IN_S1_MINUTES;
 	
 	/**
 	 * ID: 821<br>
-	 * Message: 30秒後に第$s1回モンスター レースが開始されます。
+	 * Message: 30秒後に第$s1回モンスター レースが開始されます。<br>
+	 * Message: Monster Race $s1 will begin in 30 seconds!
 	 */
 	public static final SystemMessageId MONSRACE_S1_BEGINS_IN_30_SECONDS;
 	
 	/**
 	 * ID: 822<br>
-	 * Message: 第$s1回モンスター レースが開始されます。
+	 * Message: 第$s1回モンスター レースが開始されます。<br>
+	 * Message: Monster Race $s1 is about to begin! Countdown in five seconds!
 	 */
 	public static final SystemMessageId MONSRACE_S1_COUNTDOWN_IN_FIVE_SECONDS;
 	
 	/**
 	 * ID: 823<br>
-	 * Message: $s1秒前！
+	 * Message: $s1秒前！<br>
+	 * Message: The race will begin in $s1 second(s)!
 	 */
 	public static final SystemMessageId MONSRACE_BEGINS_IN_S1_SECONDS;
 	
 	/**
 	 * ID: 824<br>
-	 * Message: レース スタート！
+	 * Message: レース スタート！<br>
+	 * Message: They're off!
 	 */
 	public static final SystemMessageId MONSRACE_RACE_START;
 	
 	/**
 	 * ID: 825<br>
-	 * Message: 第$s1回モンスター レースが終了いたしました。
+	 * Message: 第$s1回モンスター レースが終了いたしました。<br>
+	 * Message: Monster Race $s1 is finished!
 	 */
 	public static final SystemMessageId MONSRACE_S1_RACE_END;
 	
 	/**
 	 * ID: 826<br>
-	 * Message: 1着$s1番、2着$s2番です！
+	 * Message: 1着$s1番、2着$s2番です！<br>
+	 * Message: First prize goes to the player in lane $s1. Second prize goes to the player in lane $s2.
 	 */
 	public static final SystemMessageId MONSRACE_FIRST_PLACE_S1_SECOND_S2;
 	
 	/**
 	 * ID: 827<br>
-	 * Message: FS・SPT・サービスチームを遮断することはできません。
+	 * Message: FS・SPT・サービスチームを遮断することはできません。<br>
+	 * Message: You may not impose a block on a GM.
 	 */
 	public static final SystemMessageId YOU_MAY_NOT_IMPOSE_A_BLOCK_ON_GM;
 	
 	/**
 	 * ID: 828<br>
-	 * Message: $s1マクロを削除しますか。
+	 * Message: $s1マクロを削除しますか。<br>
+	 * Message: Are you sure you wish to delete the $s1 macro?
 	 */
 	public static final SystemMessageId WISH_TO_DELETE_S1_MACRO;
 	
 	/**
 	 * ID: 829<br>
-	 * Message: 自分自身を推薦することはできません。
+	 * Message: 自分自身を推薦することはできません。<br>
+	 * Message: You cannot recommend yourself.
 	 */
 	public static final SystemMessageId YOU_CANNOT_RECOMMEND_YOURSELF;
 	
 	/**
 	 * ID: 830<br>
-	 * Message: $c1を推薦しました。推薦権の残りは$s2です。
+	 * Message: $c1を推薦しました。推薦権の残りは$s2です。<br>
+	 * Message: You have recommended $c1. You have $s2 recommendations left.
 	 */
 	public static final SystemMessageId YOU_HAVE_RECOMMENDED_C1_YOU_HAVE_S2_RECOMMENDATIONS_LEFT;
 	
 	/**
 	 * ID: 831<br>
-	 * Message: $c1から推薦されました。
+	 * Message: $c1から推薦されました。<br>
+	 * Message: You have been recommended by $c1.
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_RECOMMENDED_BY_C1;
 	
 	/**
 	 * ID: 832<br>
-	 * Message: すでに推薦をしています。
+	 * Message: すでに推薦をしています。<br>
+	 * Message: That character has already been recommended.
 	 */
 	public static final SystemMessageId THAT_CHARACTER_IS_RECOMMENDED;
 	
 	/**
 	 * ID: 833<br>
-	 * Message: 推薦権をすべて使用しました。推薦数は毎日午後1時に初期化されます。
+	 * Message: 推薦権をすべて使用しました。推薦数は毎日午後1時に初期化されます。<br>
+	 * Message: You are not authorized to make further recommendations at this time. You will receive more recommendation credits each day at 1 p.m.
 	 */
 	public static final SystemMessageId NO_MORE_RECOMMENDATIONS_TO_HAVE;
 	
 	/**
 	 * ID: 834<br>
-	 * Message: $c1が転がしたサイコロの目は$s2です。
+	 * Message: $c1が転がしたサイコロの目は$s2です。<br>
+	 * Message: $c1 has rolled $s2.
 	 */
 	public static final SystemMessageId C1_ROLLED_S2;
 	
 	/**
 	 * ID: 835<br>
-	 * Message: 連続してサイコロを振ることはできません。時間を置いてから使用してください。
+	 * Message: 連続してサイコロを振ることはできません。時間を置いてから使用してください。<br>
+	 * Message: You may not throw the dice at this time. Try again later.
 	 */
 	public static final SystemMessageId YOU_MAY_NOT_THROW_THE_DICE_AT_THIS_TIME_TRY_AGAIN_LATER;
 	
 	/**
 	 * ID: 836<br>
-	 * Message: インベントリのスロット数制限の超過により、アイテムが受け取れません。
+	 * Message: インベントリのスロット数制限の超過により、アイテムが受け取れません。<br>
+	 * Message: You have exceeded your inventory volume limit and cannot take this item.
 	 */
 	public static final SystemMessageId YOU_HAVE_EXCEEDED_YOUR_INVENTORY_VOLUME_LIMIT_AND_CANNOT_TAKE_THIS_ITEM;
 	
 	/**
 	 * ID: 837<br>
-	 * Message: マクロの説明は32文字までです。
+	 * Message: マクロの説明は32文字までです。<br>
+	 * Message: Macro descriptions may contain up to 32 characters.
 	 */
 	public static final SystemMessageId MACRO_DESCRIPTION_MAX_32_CHARS;
 	
 	/**
 	 * ID: 838<br>
-	 * Message: マクロ名を入力してください。
+	 * Message: マクロ名を入力してください。<br>
+	 * Message: Enter the name of the macro.
 	 */
 	public static final SystemMessageId ENTER_THE_MACRO_NAME;
 	
 	/**
 	 * ID: 839<br>
-	 * Message: 同じ名前のマクロがあるので登録できません。
+	 * Message: 同じ名前のマクロがあるので登録できません。<br>
+	 * Message: That name is already assigned to another macro.
 	 */
 	public static final SystemMessageId MACRO_NAME_ALREADY_USED;
 	
 	/**
 	 * ID: 840<br>
-	 * Message: すでに登録されている製作図です。
+	 * Message: すでに登録されている製作図です。<br>
+	 * Message: That recipe is already registered.
 	 */
 	public static final SystemMessageId RECIPE_ALREADY_REGISTERED;
 	
 	/**
 	 * ID: 841<br>
-	 * Message: これ以上製作図の登録はできません。
+	 * Message: これ以上製作図の登録はできません。<br>
+	 * Message: No further recipes may be registered.
 	 */
 	public static final SystemMessageId NO_FUTHER_RECIPES_CAN_BE_ADDED;
 	
 	/**
 	 * ID: 842<br>
-	 * Message: クリエイト アイテムのスキル レベルが低いため、製作図を登録できません。
+	 * Message: クリエイト アイテムのスキル レベルが低いため、製作図を登録できません。<br>
+	 * Message: You are not authorized to register a recipe.
 	 */
 	public static final SystemMessageId NOT_AUTHORIZED_REGISTER_RECIPE;
 	
 	/**
 	 * ID: 843<br>
-	 * Message: $s1の占領戦が終了しました。
+	 * Message: $s1の占領戦が終了しました。<br>
+	 * Message: The siege of $s1 is finished.
 	 */
 	public static final SystemMessageId SIEGE_OF_S1_FINISHED;
 	
 	/**
 	 * ID: 844<br>
-	 * Message: $s1の占領戦が開始されました。
+	 * Message: $s1の占領戦が開始されました。<br>
+	 * Message: The siege to conquer $s1 has begun.
 	 */
 	public static final SystemMessageId SIEGE_OF_S1_BEGUN;
 	
 	/**
 	 * ID: 845<br>
-	 * Message: $s1の占領戦の登録時間が終了しました。
+	 * Message: $s1の占領戦の登録時間が終了しました。<br>
+	 * Message: The deadlineto register for the siege of $s1 has passed.
 	 */
 	public static final SystemMessageId DEADLINE_FOR_SIEGE_S1_PASSED;
 	
 	/**
 	 * ID: 846<br>
-	 * Message: 参加する血盟がないため、$s1の占領戦がキャンセルされました。
+	 * Message: 参加する血盟がないため、$s1の占領戦がキャンセルされました。<br>
+	 * Message: The siege of $s1 has been canceled due to lack of interest.
 	 */
 	public static final SystemMessageId SIEGE_OF_S1_HAS_BEEN_CANCELED_DUE_TO_LACK_OF_INTEREST;
 	
 	/**
 	 * ID: 847<br>
-	 * Message: すでにアジトを所有している血盟は占領戦に参加できません。
+	 * Message: すでにアジトを所有している血盟は占領戦に参加できません。<br>
+	 * Message: A clan that owns a clan hall may not participate in a clan hall siege.
 	 */
 	public static final SystemMessageId CLAN_OWNING_CLANHALL_MAY_NOT_SIEGE_CLANHALL;
 	
 	/**
 	 * ID: 848<br>
-	 * Message: $s1が削除されました。
+	 * Message: $s1が削除されました。<br>
+	 * Message: $s1 has been deleted.
 	 */
 	public static final SystemMessageId S1_HAS_BEEN_DELETED;
 	
 	/**
 	 * ID: 849<br>
-	 * Message: $s1を探すことができません。
+	 * Message: $s1を探すことができません。<br>
+	 * Message: $s1 cannot be found.
 	 */
 	public static final SystemMessageId S1_NOT_FOUND;
 	
 	/**
 	 * ID: 850<br>
-	 * Message: $s1がすでに存在します。
+	 * Message: $s1がすでに存在します。<br>
+	 * Message: $s1 already exists.
 	 */
 	public static final SystemMessageId S1_ALREADY_EXISTS2;
 	
 	/**
 	 * ID: 851<br>
-	 * Message: $s1が追加されました。
+	 * Message: $s1が追加されました。<br>
+	 * Message: $s1 has been added.
 	 */
 	public static final SystemMessageId S1_ADDED;
 	
 	/**
 	 * ID: 852<br>
-	 * Message: 製作図の情報が正しくありません。
+	 * Message: 製作図の情報が正しくありません。<br>
+	 * Message: The recipe is incorrect.
 	 */
 	public static final SystemMessageId RECIPE_INCORRECT;
 	
 	/**
 	 * ID: 853<br>
-	 * Message: 個人製作状態では、製作図集管理はできません。
+	 * Message: 個人製作状態では、製作図集管理はできません。<br>
+	 * Message: You may not alter your recipe book while engaged in manufacturing.
 	 */
 	public static final SystemMessageId CANT_ALTER_RECIPEBOOK_WHILE_CRAFTING;
 	
 	/**
 	 * ID: 854<br>
-	 * Message: $s1が$s2足りません。
+	 * Message: $s1が$s2足りません。<br>
+	 * Message: You are missing $s2 $s1 required to create that.
 	 */
 	public static final SystemMessageId MISSING_S2_S1_TO_CREATE;
 	
 	/**
 	 * ID: 855<br>
-	 * Message: $s1血盟が$s2との占領戦で勝利しました。
+	 * Message: $s1血盟が$s2との占領戦で勝利しました。<br>
+	 * Message: $s1 clan has defeated $s2.
 	 */
 	public static final SystemMessageId S1_CLAN_DEFEATED_S2;
 	
 	/**
 	 * ID: 856<br>
-	 * Message: $s1の占領戦が引き分けで終了しました。
+	 * Message: $s1の占領戦が引き分けで終了しました。<br>
+	 * Message: The siege of $s1 has ended in a draw.
 	 */
 	public static final SystemMessageId SIEGE_S1_DRAW;
 	
 	/**
 	 * ID: 857<br>
-	 * Message: $s1血盟が$s2との予選で勝利しました。
+	 * Message: $s1血盟が$s2との予選で勝利しました。<br>
+	 * Message: $s1 clan has won in the preliminary match of $s2.
 	 */
 	public static final SystemMessageId S1_CLAN_WON_MATCH_S2;
 	
 	/**
 	 * ID: 858<br>
-	 * Message: $s1の予選は引き分けで終了しました。
+	 * Message: $s1の予選は引き分けで終了しました。<br>
+	 * Message: The preliminary match of $s1 has ended in a draw.
 	 */
 	public static final SystemMessageId MATCH_OF_S1_DRAW;
 	
 	/**
 	 * ID: 859<br>
-	 * Message: 製作図を登録してください。
+	 * Message: 製作図を登録してください。<br>
+	 * Message: Please register a recipe.
 	 */
 	public static final SystemMessageId PLEASE_REGISTER_RECIPE;
 	
 	/**
 	 * ID: 860<br>
-	 * Message: 他の陣地との間隔が狭いため、ここに陣地を立てることができません。
+	 * Message: 他の陣地との間隔が狭いため、ここに陣地を立てることができません。<br>
+	 * Message: You may not buld your headquarters in close proximity to another headquarters.
 	 */
 	public static final SystemMessageId HEADQUARTERS_TOO_CLOSE;
 	
 	/**
 	 * ID: 861<br>
-	 * Message: メモの数が超過しました。
+	 * Message: メモの数が超過しました。<br>
+	 * Message: You have exceeded the maximum number of memos.
 	 */
 	public static final SystemMessageId TOO_MANY_MEMOS;
 	
 	/**
 	 * ID: 862<br>
-	 * Message: チケットの販売が完了していないので、配当を見ることができません。
+	 * Message: チケットの販売が完了していないので、配当を見ることができません。<br>
+	 * Message: Odds are not posted until ticket sales have closed.
 	 */
 	public static final SystemMessageId ODDS_NOT_POSTED;
 	
 	/**
 	 * ID: 863<br>
-	 * Message: 火の気が感じられます。
+	 * Message: 火の気が感じられます。<br>
+	 * Message: You feel the energy of fire.
 	 */
 	public static final SystemMessageId FEEL_ENERGY_FIRE;
 	
 	/**
 	 * ID: 864<br>
-	 * Message: 水の気が感じられます。
+	 * Message: 水の気が感じられます。<br>
+	 * Message: You feel the energy of water.
 	 */
 	public static final SystemMessageId FEEL_ENERGY_WATER;
 	
 	/**
 	 * ID: 865<br>
-	 * Message: 風の気が感じられます。
+	 * Message: 風の気が感じられます。<br>
+	 * Message: You feel the energy of wind.
 	 */
 	public static final SystemMessageId FEEL_ENERGY_WIND;
 	
 	/**
 	 * ID: 866<br>
-	 * Message: これ以上、気を集めることができません。
+	 * Message: これ以上、気を集めることができません。<br>
+	 * Message: You may no longer gather energy.
 	 */
 	public static final SystemMessageId NO_LONGER_ENERGY;
 	
 	/**
 	 * ID: 867<br>
-	 * Message: 気がなくなりました。
+	 * Message: 気がなくなりました。<br>
+	 * Message: The energy is depleted.
 	 */
 	public static final SystemMessageId ENERGY_DEPLETED;
 	
 	/**
 	 * ID: 868<br>
-	 * Message: 火の気を伝えました。
+	 * Message: 火の気を伝えました。<br>
+	 * Message: The energy of fire has been delivered.
 	 */
 	public static final SystemMessageId ENERGY_FIRE_DELIVERED;
 	
 	/**
 	 * ID: 869<br>
-	 * Message: 水の気を伝えました。
+	 * Message: 水の気を伝えました。<br>
+	 * Message: The energy of water has been delivered.
 	 */
 	public static final SystemMessageId ENERGY_WATER_DELIVERED;
 	
 	/**
 	 * ID: 870<br>
-	 * Message: 風の気を伝えました。
+	 * Message: 風の気を伝えました。<br>
+	 * Message: The energy of wind has been delivered.
 	 */
 	public static final SystemMessageId ENERGY_WIND_DELIVERED;
 	
 	/**
 	 * ID: 871<br>
-	 * Message: すでに種を植付けられた状態です。
+	 * Message: すでに種を植付けられた状態です。<br>
+	 * Message: The seed has been sown.
 	 */
 	public static final SystemMessageId THE_SEED_HAS_BEEN_SOWN;
 	
 	/**
 	 * ID: 872<br>
-	 * Message: この荘園では使えない種です。
+	 * Message: この荘園では使えない種です。<br>
+	 * Message: This seed may not be sown here.
 	 */
 	public static final SystemMessageId THIS_SEED_MAY_NOT_BE_SOWN_HERE;
 	
 	/**
 	 * ID: 873<br>
-	 * Message: 貨物を受け取るキャラクターがいません。
+	 * Message: 貨物を受け取るキャラクターがいません。<br>
+	 * Message: That character does not exist.
 	 */
 	public static final SystemMessageId CHARACTER_DOES_NOT_EXIST;
 	
 	/**
 	 * ID: 874<br>
-	 * Message: 対象となる倉庫がいっぱいです。
+	 * Message: 対象となる倉庫がいっぱいです。<br>
+	 * Message: The capacity of the warehouse has been exceeded.
 	 */
 	public static final SystemMessageId WAREHOUSE_CAPACITY_EXCEEDED;
 	
 	/**
 	 * ID: 875<br>
-	 * Message: 配送がキャンセルされました。
+	 * Message: 配送がキャンセルされました。<br>
+	 * Message: The transport of the cargo has been canceled.
 	 */
 	public static final SystemMessageId CARGO_CANCELED;
 	
 	/**
 	 * ID: 876<br>
-	 * Message: 配送に失敗しました。
+	 * Message: 配送に失敗しました。<br>
+	 * Message: The cargo was not delivered.
 	 */
 	public static final SystemMessageId CARGO_NOT_DELIVERED;
 	
 	/**
 	 * ID: 877<br>
-	 * Message: 紋様が追加されました。
+	 * Message: 紋様が追加されました。<br>
+	 * Message: The symbol has been added.
 	 */
 	public static final SystemMessageId SYMBOL_ADDED;
 	
 	/**
 	 * ID: 878<br>
-	 * Message: 紋様が削除されました。
+	 * Message: 紋様が削除されました。<br>
+	 * Message: The symbol has been deleted.
 	 */
 	public static final SystemMessageId SYMBOL_DELETED;
 	
 	/**
 	 * ID: 879<br>
-	 * Message: 荘園システムは現在点検中です。
+	 * Message: 荘園システムは現在点検中です。<br>
+	 * Message: The manor system is currently under maintenance.
 	 */
 	public static final SystemMessageId THE_MANOR_SYSTEM_IS_CURRENTLY_UNDER_MAINTENANCE;
 	
 	/**
 	 * ID: 880<br>
-	 * Message: 購入が終わりました。
+	 * Message: 購入が終わりました。<br>
+	 * Message: The transaction is complete.
 	 */
 	public static final SystemMessageId THE_TRANSACTION_IS_COMPLETE;
 	
 	/**
 	 * ID: 881<br>
-	 * Message: 購入アイテムの情報が正しくありません。
+	 * Message: 購入アイテムの情報が正しくありません。<br>
+	 * Message: There is a discrepancy on the invoice.
 	 */
 	public static final SystemMessageId THERE_IS_A_DISCREPANCY_ON_THE_INVOICE;
 	
 	/**
 	 * ID: 882<br>
-	 * Message: 種の数が正しくありません。
+	 * Message: 種の数が正しくありません。<br>
+	 * Message: The seed quantity is incorrect.
 	 */
 	public static final SystemMessageId THE_SEED_QUANTITY_IS_INCORRECT;
 	
 	/**
 	 * ID: 883<br>
-	 * Message: 種の情報が正しくありません。
+	 * Message: 種の情報が正しくありません。<br>
+	 * Message: The seed information is incorrect.
 	 */
 	public static final SystemMessageId THE_SEED_INFORMATION_IS_INCORRECT;
 	
 	/**
 	 * ID: 884<br>
-	 * Message: 荘園の情報が新たに設定されました。
+	 * Message: 荘園の情報が新たに設定されました。<br>
+	 * Message: The manor information has been updated.
 	 */
 	public static final SystemMessageId THE_MANOR_INFORMATION_HAS_BEEN_UPDATED;
 	
 	/**
 	 * ID: 885<br>
-	 * Message: 作物の数が正しくありません。
+	 * Message: 作物の数が正しくありません。<br>
+	 * Message: The number of crops is incorrect.
 	 */
 	public static final SystemMessageId THE_NUMBER_OF_CROPS_IS_INCORRECT;
 	
 	/**
 	 * ID: 886<br>
-	 * Message: 作物の価格情報が正しくありません。
+	 * Message: 作物の価格情報が正しくありません。<br>
+	 * Message: The crops are priced incorrectly.
 	 */
 	public static final SystemMessageId THE_CROPS_ARE_PRICED_INCORRECTLY;
 	
 	/**
 	 * ID: 887<br>
-	 * Message: タイプが正しくありません。
+	 * Message: タイプが正しくありません。<br>
+	 * Message: The type is incorrect.
 	 */
 	public static final SystemMessageId THE_TYPE_IS_INCORRECT;
 	
 	/**
 	 * ID: 888<br>
-	 * Message: 購入する作物がありません。
+	 * Message: 購入する作物がありません。<br>
+	 * Message: No crops can be purchased at this time.
 	 */
 	public static final SystemMessageId NO_CROPS_CAN_BE_PURCHASED_AT_THIS_TIME;
 	
 	/**
 	 * ID: 889<br>
-	 * Message: 種の植付けに成功しました。
+	 * Message: 種の植付けに成功しました。<br>
+	 * Message: The seed was successfully sown.
 	 */
 	public static final SystemMessageId THE_SEED_WAS_SUCCESSFULLY_SOWN;
 	
 	/**
 	 * ID: 890<br>
-	 * Message: 種の植付けに失敗しました。
+	 * Message: 種の植付けに失敗しました。<br>
+	 * Message: The seed was not sown.
 	 */
 	public static final SystemMessageId THE_SEED_WAS_NOT_SOWN;
 	
 	/**
 	 * ID: 891<br>
-	 * Message: 収穫に対する優先権がありません。
+	 * Message: 収穫に対する優先権がありません。<br>
+	 * Message: You are not authorized to harvest.
 	 */
 	public static final SystemMessageId YOU_ARE_NOT_AUTHORIZED_TO_HARVEST;
 	
 	/**
 	 * ID: 892<br>
-	 * Message: 収穫に失敗しました。
+	 * Message: 収穫に失敗しました。<br>
+	 * Message: The harvest has failed.
 	 */
 	public static final SystemMessageId THE_HARVEST_HAS_FAILED;
 	
 	/**
 	 * ID: 893<br>
-	 * Message: 種の植付け状態が悪く、収穫に失敗しました。
+	 * Message: 種の植付け状態が悪く、収穫に失敗しました。<br>
+	 * Message: The harvest failed because the seed was not sown.
 	 */
 	public static final SystemMessageId THE_HARVEST_FAILED_BECAUSE_THE_SEED_WAS_NOT_SOWN;
 	
 	/**
 	 * ID: 894<br>
-	 * Message: 製作図は$s1枚だけ登録できます。
+	 * Message: 製作図は$s1枚だけ登録できます。<br>
+	 * Message: Up to $s1 recipes can be registered.
 	 */
 	public static final SystemMessageId UP_TO_S1_RECIPES_CAN_REGISTER;
 	
 	/**
 	 * ID: 895<br>
-	 * Message: 登録された製作図がありません。
+	 * Message: 登録された製作図がありません。<br>
+	 * Message: No recipes have been registered.
 	 */
 	public static final SystemMessageId NO_RECIPES_REGISTERED;
 	
 	/**
 	 * ID: 896<br>
-	 * Message: クエスト製作図は登録できません。
+	 * Message: クエスト製作図は登録できません。<br>
+	 * Message: The ferry has arrived at Gludin Harbor.
 	 */
 	public static final SystemMessageId FERRY_AT_GLUDIN;
 	
 	/**
 	 * ID: 897<br>
-	 * Message: 製作手数料が正しくありません。
+	 * Message: 製作手数料が正しくありません。<br>
+	 * Message: The ferry will leave for Talking Island Harbor after anchoring for ten minutes.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_TALKING;
 	
 	/**
 	 * ID: 898<br>
-	 * Message: レベル10以上にならないと、他の人を推薦することはできません。
+	 * Message: レベル10以上にならないと、他の人を推薦することはできません。<br>
+	 * Message: Only characters of level 10 or above are authorized to make recommendations.
 	 */
 	public static final SystemMessageId ONLY_LEVEL_SUP_10_CAN_RECOMMEND;
 	
 	/**
 	 * ID: 899<br>
-	 * Message: 紋様を刻むことができません。
+	 * Message: 紋様を刻むことができません。<br>
+	 * Message: The symbol cannot be drawn.
 	 */
 	public static final SystemMessageId CANT_DRAW_SYMBOL;
 	
 	/**
 	 * ID: 900<br>
-	 * Message: 紋様を刻む場所がありません。
+	 * Message: 紋様を刻む場所がありません。<br>
+	 * Message: No slot exists to draw the symbol
 	 */
 	public static final SystemMessageId SYMBOLS_FULL;
 	
 	/**
 	 * ID: 901<br>
-	 * Message: 紋様情報を見つけることができません。
+	 * Message: 紋様情報を見つけることができません。<br>
+	 * Message: The symbol information cannot be found.
 	 */
 	public static final SystemMessageId SYMBOL_NOT_FOUND;
 	
 	/**
 	 * ID: 902<br>
-	 * Message: アイテム数が正しくありません。
+	 * Message: アイテム数が正しくありません。<br>
+	 * Message: The number of items is incorrect.
 	 */
 	public static final SystemMessageId NUMBER_INCORRECT;
 	
 	/**
 	 * ID: 903<br>
-	 * Message: フリーズ状態ではサポート要請が行えません。しばらくお待ちください。
+	 * Message: フリーズ状態ではサポート要請が行えません。しばらくお待ちください。<br>
+	 * Message: You may not submit a petition while frozen. Be patient.
 	 */
 	public static final SystemMessageId NO_PETITION_WHILE_FROZEN;
 	
 	/**
 	 * ID: 904<br>
-	 * Message: 個人商店を開いた状態ではアイテムを捨てられません。
+	 * Message: 個人商店を開いた状態ではアイテムを捨てられません。<br>
+	 * Message: Items cannot be discarded while in private store status.
 	 */
 	public static final SystemMessageId NO_DISCARD_WHILE_PRIVATE_STORE;
 	
 	/**
 	 * ID: 905<br>
-	 * Message: ヒューマンのスコアは $s1点です。
+	 * Message: ヒューマンのスコアは $s1点です。<br>
+	 * Message: The current score for the Humans is $s1.
 	 */
 	public static final SystemMessageId HUMAN_SCORE_S1;
 	
 	/**
 	 * ID: 906<br>
-	 * Message: エルフのスコアは $s1点です。
+	 * Message: エルフのスコアは $s1点です。<br>
+	 * Message: The current score for the Elves is $s1.
 	 */
 	public static final SystemMessageId ELVES_SCORE_S1;
 	
 	/**
 	 * ID: 907<br>
-	 * Message: ダークエルフのスコアは $s1点です。
+	 * Message: ダークエルフのスコアは $s1点です。<br>
+	 * Message: The current score for the Dark Elves is $s1.
 	 */
 	public static final SystemMessageId DARK_ELVES_SCORE_S1;
 	
 	/**
 	 * ID: 908<br>
-	 * Message: オークのスコアは $s1点です。
+	 * Message: オークのスコアは $s1点です。<br>
+	 * Message: The current score for the Orcs is $s1.
 	 */
 	public static final SystemMessageId ORCS_SCORE_S1;
 	
 	/**
 	 * ID: 909<br>
-	 * Message: ドワーフのスコアは $s1点です。
+	 * Message: ドワーフのスコアは $s1点です。<br>
+	 * Message: The current score for the Dwarves is $s1.
 	 */
 	public static final SystemMessageId DWARVEN_SCORE_S1;
 	
 	/**
 	 * ID: 910<br>
-	 * Message: 現在地： $s1、$s2、$s3 (話せる島の村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (話せる島の村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near Talking Island Village)
 	 */
 	public static final SystemMessageId LOC_TI_S1_S2_S3;
 	
 	/**
 	 * ID: 911<br>
-	 * Message: 現在地： $s1、$s2、$s3 (グルーディン村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (グルーディン村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near Gludin Village)
 	 */
 	public static final SystemMessageId LOC_GLUDIN_S1_S2_S3;
 	
 	/**
 	 * ID: 912<br>
-	 * Message: 現在地： $s1、$s2、$s3 (グルーディオ城の村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (グルーディオ城の村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near the Town of Gludio)
 	 */
 	public static final SystemMessageId LOC_GLUDIO_S1_S2_S3;
 	
 	/**
 	 * ID: 913<br>
-	 * Message: 現在地： $s1、$s2、$s3 (中立地帯付近)
+	 * Message: 現在地： $s1、$s2、$s3 (中立地帯付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near the Neutral Zone)
 	 */
 	public static final SystemMessageId LOC_NEUTRAL_ZONE_S1_S2_S3;
 	
 	/**
 	 * ID: 914<br>
-	 * Message: 現在地： $s1、$s2、$s3 (エルフ村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (エルフ村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near the Elven Village)
 	 */
 	public static final SystemMessageId LOC_ELVEN_S1_S2_S3;
 	
 	/**
 	 * ID: 915<br>
-	 * Message: 現在地： $s1、$s2、$s3 (ダークエルフ村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (ダークエルフ村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near the Dark Elf Village)
 	 */
 	public static final SystemMessageId LOC_DARK_ELVEN_S1_S2_S3;
 	
 	/**
 	 * ID: 916<br>
-	 * Message: 現在地： $s1、$s2、$s3 (ディオン城の村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (ディオン城の村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near the Town of Dion)
 	 */
 	public static final SystemMessageId LOC_DION_S1_S2_S3;
 	
 	/**
 	 * ID: 917<br>
-	 * Message: 現在地： $s1、$s2、$s3 (フローラン村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (フローラン村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near the Floran Village)
 	 */
 	public static final SystemMessageId LOC_FLORAN_S1_S2_S3;
 	
 	/**
 	 * ID: 918<br>
-	 * Message: 現在地： $s1、$s2、$s3 (ギラン城の村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (ギラン城の村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near the Town of Giran)
 	 */
 	public static final SystemMessageId LOC_GIRAN_S1_S2_S3;
 	
 	/**
 	 * ID: 919<br>
-	 * Message: 現在地： $s1、$s2、$s3 (ギラン港付近)
+	 * Message: 現在地： $s1、$s2、$s3 (ギラン港付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near Giran Harbor)
 	 */
 	public static final SystemMessageId LOC_GIRAN_HARBOR_S1_S2_S3;
 	
 	/**
 	 * ID: 920<br>
-	 * Message: 現在地： $s1、$s2、$s3 (オーク村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (オーク村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near the Orc Village)
 	 */
 	public static final SystemMessageId LOC_ORC_S1_S2_S3;
 	
 	/**
 	 * ID: 921<br>
-	 * Message: 現在地： $s1、$s2、$s3 (ドワーフ村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (ドワーフ村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near the Dwarven Village)
 	 */
 	public static final SystemMessageId LOC_DWARVEN_S1_S2_S3;
 	
 	/**
 	 * ID: 922<br>
-	 * Message: 現在地： $s1、$s2、$s3 (オーレン城の村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (オーレン城の村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near the Town of Oren)
 	 */
 	public static final SystemMessageId LOC_OREN_S1_S2_S3;
 	
 	/**
 	 * ID: 923<br>
-	 * Message: 現在地： $s1、$s2、$s3 (猟師の村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (猟師の村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near Hunters Village)
 	 */
 	public static final SystemMessageId LOC_HUNTER_S1_S2_S3;
 	
 	/**
 	 * ID: 924<br>
-	 * Message: 現在地： $s1、$s2、$s3 (アデン城の村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (アデン城の村付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near Aden Castle Town)
 	 */
 	public static final SystemMessageId LOC_ADEN_S1_S2_S3;
 	
 	/**
 	 * ID: 925<br>
-	 * Message: 現在地： $s1、$s2、$s3 (コロシアム)
+	 * Message: 現在地： $s1、$s2、$s3 (コロシアム)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near the Coliseum)
 	 */
 	public static final SystemMessageId LOC_COLISEUM_S1_S2_S3;
 	
 	/**
 	 * ID: 926<br>
-	 * Message: 現在地： $s1、$s2、$s3 (ハイネス付近)
+	 * Message: 現在地： $s1、$s2、$s3 (ハイネス付近)<br>
+	 * Message: Current location : $s1, $s2, $s3 (Near Heine)
 	 */
 	public static final SystemMessageId LOC_HEINE_S1_S2_S3;
 	
 	/**
 	 * ID: 927<br>
-	 * Message: 現在の時刻は$s1時$s2分です。
+	 * Message: 現在の時刻は$s1時$s2分です。<br>
+	 * Message: The current time is $s1:$s2.
 	 */
 	public static final SystemMessageId TIME_S1_S2_IN_THE_DAY;
 	
 	/**
 	 * ID: 928<br>
-	 * Message: 現在の時刻は$s1時$s2分です。
+	 * Message: 現在の時刻は$s1時$s2分です。<br>
+	 * Message: The current time is $s1:$s2.
 	 */
 	public static final SystemMessageId TIME_S1_S2_IN_THE_NIGHT;
 	
 	/**
 	 * ID: 929<br>
-	 * Message: 作物に対する報賞は出ませんでした。
+	 * Message: 作物に対する報賞は出ませんでした。<br>
+	 * Message: No compensation was given for the farm products.
 	 */
 	public static final SystemMessageId NO_COMPENSATION_FOR_FARM_PRODUCTS;
 	
 	/**
 	 * ID: 930<br>
-	 * Message: 現在、宝くじの販売を行なっておりません。
+	 * Message: 現在、宝くじの販売を行なっておりません。<br>
+	 * Message: Lottery tickets are not currently being sold.
 	 */
 	public static final SystemMessageId NO_LOTTERY_TICKETS_CURRENT_SOLD;
 	
 	/**
 	 * ID: 931<br>
-	 * Message: 宝くじ当選番号はまだ発表されておりません。
+	 * Message: 宝くじ当選番号はまだ発表されておりません。<br>
+	 * Message: The winning lottery ticket numbers has not yet been anonunced.
 	 */
 	public static final SystemMessageId LOTTERY_WINNERS_NOT_ANNOUNCED_YET;
 	
 	/**
 	 * ID: 932<br>
-	 * Message: 観戦中のため、一般チャットはできません。
+	 * Message: 観戦中のため、一般チャットはできません。<br>
+	 * Message: You cannot chat locally while observing.
 	 */
 	public static final SystemMessageId NO_ALLCHAT_WHILE_OBSERVING;
 	
 	/**
 	 * ID: 933<br>
-	 * Message: 種の価格情報が正しくありません。
+	 * Message: 種の価格情報が正しくありません。<br>
+	 * Message: The seed pricing greatly differs from standard seed prices.
 	 */
 	public static final SystemMessageId THE_SEED_PRICING_GREATLY_DIFFERS_FROM_STANDARD_SEED_PRICES;
 	
 	/**
 	 * ID: 934<br>
-	 * Message: 削除された製作図です。
+	 * Message: 削除された製作図です。<br>
+	 * Message: It is a deleted recipe.
 	 */
 	public static final SystemMessageId A_DELETED_RECIPE;
 	
 	/**
 	 * ID: 935<br>
-	 * Message: 金額不足のため、荘園が動作しません。
+	 * Message: 金額不足のため、荘園が動作しません。<br>
+	 * Message: The amount is not sufficient and so the manor is not in operation.
 	 */
 	public static final SystemMessageId THE_AMOUNT_IS_NOT_SUFFICIENT_AND_SO_THE_MANOR_IS_NOT_IN_OPERATION;
 	
 	/**
 	 * ID: 936<br>
-	 * Message: $s1を使用します。
+	 * Message: $s1を使用します。<br>
+	 * Message: Use $s1.
 	 */
 	public static final SystemMessageId USE_S1_;
 	
 	/**
 	 * ID: 937<br>
-	 * Message: 個人工房の準備中です。
+	 * Message: 個人工房の準備中です。<br>
+	 * Message: Currently preparing for private workshop.
 	 */
 	public static final SystemMessageId PREPARING_PRIVATE_WORKSHOP;
 	
 	/**
 	 * ID: 938<br>
-	 * Message: 現在、コミュニティー サーバーの点検中です。
+	 * Message: 現在、コミュニティー サーバーの点検中です。<br>
+	 * Message: The community server is currently offline.
 	 */
 	public static final SystemMessageId CB_OFFLINE;
 	
 	/**
 	 * ID: 939<br>
-	 * Message: 全体遮断状態なのでトレードができません。
+	 * Message: 全体遮断状態なのでトレードができません。<br>
+	 * Message: You cannot exchange while blocking everything.
 	 */
 	public static final SystemMessageId NO_EXCHANGE_WHILE_BLOCKING;
 	
 	/**
 	 * ID: 940<br>
-	 * Message: $s1は全体遮断状態です。
+	 * Message: $s1は全体遮断状態です。<br>
+	 * Message: $s1 is blocked everything.
 	 */
 	public static final SystemMessageId S1_BLOCKED_EVERYTHING;
 	
 	/**
 	 * ID: 941<br>
-	 * Message: 話せる島の村でリスタートします。
+	 * Message: 話せる島の村でリスタートします。<br>
+	 * Message: Restart at Talking Island Village.
 	 */
 	public static final SystemMessageId RESTART_AT_TI;
 	
 	/**
 	 * ID: 942<br>
-	 * Message: グルーディン村でリスタートします。
+	 * Message: グルーディン村でリスタートします。<br>
+	 * Message: Restart at Gludin Village.
 	 */
 	public static final SystemMessageId RESTART_AT_GLUDIN;
 	
 	/**
 	 * ID: 943<br>
-	 * Message: グルーディオ城の村でリスタートします。
+	 * Message: グルーディオ城の村でリスタートします。<br>
+	 * Message: Restart at the Town of Gludin. || guess should be Gludio ;)
 	 */
 	public static final SystemMessageId RESTART_AT_GLUDIO;
 	
 	/**
 	 * ID: 944<br>
-	 * Message: 中立地帯でリスタートします。
+	 * Message: 中立地帯でリスタートします。<br>
+	 * Message: Restart at the Neutral Zone.
 	 */
 	public static final SystemMessageId RESTART_AT_NEUTRAL_ZONE;
 	
 	/**
 	 * ID: 945<br>
-	 * Message: エルフ村でリスタートします。
+	 * Message: エルフ村でリスタートします。<br>
+	 * Message: Restart at the Elven Village.
 	 */
 	public static final SystemMessageId RESTART_AT_ELFEN_VILLAGE;
 	
 	/**
 	 * ID: 946<br>
-	 * Message: ダークエルフ村でリスタートします。
+	 * Message: ダークエルフ村でリスタートします。<br>
+	 * Message: Restart at the Dark Elf Village.
 	 */
 	public static final SystemMessageId RESTART_AT_DARKELF_VILLAGE;
 	
 	/**
 	 * ID: 947<br>
-	 * Message: ディオン城の村でリスタートします。
+	 * Message: ディオン城の村でリスタートします。<br>
+	 * Message: Restart at the Town of Dion.
 	 */
 	public static final SystemMessageId RESTART_AT_DION;
 	
 	/**
 	 * ID: 948<br>
-	 * Message: フローラン村でリスタートします。
+	 * Message: フローラン村でリスタートします。<br>
+	 * Message: Restart at Floran Village.
 	 */
 	public static final SystemMessageId RESTART_AT_FLORAN;
 	
 	/**
 	 * ID: 949<br>
-	 * Message: ギラン城の村でリスタートします。
+	 * Message: ギラン城の村でリスタートします。<br>
+	 * Message: Restart at the Town of Giran.
 	 */
 	public static final SystemMessageId RESTART_AT_GIRAN;
 	
 	/**
 	 * ID: 950<br>
-	 * Message: ギラン港でリスタートします。
+	 * Message: ギラン港でリスタートします。<br>
+	 * Message: Restart at Giran Harbor.
 	 */
 	public static final SystemMessageId RESTART_AT_GIRAN_HARBOR;
 	
 	/**
 	 * ID: 951<br>
-	 * Message: オーク村でリスタートします。
+	 * Message: オーク村でリスタートします。<br>
+	 * Message: Restart at the Orc Village.
 	 */
 	public static final SystemMessageId RESTART_AT_ORC_VILLAGE;
 	
 	/**
 	 * ID: 952<br>
-	 * Message: ドワーフ村でリスタートします。
+	 * Message: ドワーフ村でリスタートします。<br>
+	 * Message: Restart at the Dwarven Village.
 	 */
 	public static final SystemMessageId RESTART_AT_DWARFEN_VILLAGE;
 	
 	/**
 	 * ID: 953<br>
-	 * Message: オーレン城の村でリスタートします。
+	 * Message: オーレン城の村でリスタートします。<br>
+	 * Message: Restart at the Town of Oren.
 	 */
 	public static final SystemMessageId RESTART_AT_OREN;
 	
 	/**
 	 * ID: 954<br>
-	 * Message: 猟師の村でリスタートします。
+	 * Message: 猟師の村でリスタートします。<br>
+	 * Message: Restart at Hunters Village.
 	 */
 	public static final SystemMessageId RESTART_AT_HUNTERS_VILLAGE;
 	
 	/**
 	 * ID: 955<br>
-	 * Message: アデン城の村でリスタートします。
+	 * Message: アデン城の村でリスタートします。<br>
+	 * Message: Restart at the Town of Aden.
 	 */
 	public static final SystemMessageId RESTART_AT_ADEN;
 	
 	/**
 	 * ID: 956<br>
-	 * Message: コロシアムでリスタートします。
+	 * Message: コロシアムでリスタートします。<br>
+	 * Message: Restart at the Coliseum.
 	 */
 	public static final SystemMessageId RESTART_AT_COLISEUM;
 	
 	/**
 	 * ID: 957<br>
-	 * Message: ハイネスでリスタートします。
+	 * Message: ハイネスでリスタートします。<br>
+	 * Message: Restart at Heine.
 	 */
 	public static final SystemMessageId RESTART_AT_HEINE;
 	
 	/**
 	 * ID: 958<br>
-	 * Message: 個人商店や個人工房の準備中に、アイテムを捨てることや破壊することはできません。
+	 * Message: 個人商店や個人工房の準備中に、アイテムを捨てることや破壊することはできません。<br>
+	 * Message: Items cannot be discarded or destroyed while operating a private store or workshop.
 	 */
 	public static final SystemMessageId ITEMS_CANNOT_BE_DISCARDED_OR_DESTROYED_WHILE_OPERATING_PRIVATE_STORE_OR_WORKSHOP;
 	
 	/**
 	 * ID: 959<br>
-	 * Message: $s1（※$s2）の製作に成功しました。
+	 * Message: $s1（※$s2）の製作に成功しました。<br>
+	 * Message: $s1 (*$s2) manufactured successfully.
 	 */
 	public static final SystemMessageId S1_S2_MANUFACTURED_SUCCESSFULLY;
 	
 	/**
 	 * ID: 960<br>
-	 * Message: $s1の製作に失敗しました。
+	 * Message: $s1の製作に失敗しました。<br>
+	 * Message: $s1 manufacturing failure.
 	 */
 	public static final SystemMessageId S1_MANUFACTURE_FAILURE;
 	
 	/**
 	 * ID: 961<br>
-	 * Message: 現在全体遮断状態です。
+	 * Message: 現在全体遮断状態です。<br>
+	 * Message: You are now blocking everything.
 	 */
 	public static final SystemMessageId BLOCKING_ALL;
 	
 	/**
 	 * ID: 962<br>
-	 * Message: 全体遮断状態を解除しました。
+	 * Message: 全体遮断状態を解除しました。<br>
+	 * Message: You are no longer blocking everything.
 	 */
 	public static final SystemMessageId NOT_BLOCKING_ALL;
 	
 	/**
 	 * ID: 963<br>
-	 * Message: 製作価格を決定してください。
+	 * Message: 製作価格を決定してください。<br>
+	 * Message: Please determine the manufacturing price.
 	 */
 	public static final SystemMessageId DETERMINE_MANUFACTURE_PRICE;
 	
 	/**
 	 * ID: 964<br>
-	 * Message: 連続チャットにより、約1分間チャットが禁止されました。
+	 * Message: 連続チャットにより、約1分間チャットが禁止されました。<br>
+	 * Message: Chatting is prohibited for one minute.
 	 */
 	public static final SystemMessageId CHATBAN_FOR_1_MINUTE;
 	
 	/**
 	 * ID: 965<br>
-	 * Message: チャット禁止が解除されました。
+	 * Message: チャット禁止が解除されました。<br>
+	 * Message: The chatting prohibition has been removed.
 	 */
 	public static final SystemMessageId CHATBAN_REMOVED;
 	
 	/**
 	 * ID: 966<br>
-	 * Message: チャット禁止中です。解除される前にチャットを試みる場合、解除までの時間がより長くなりますのでご注意ください。
+	 * Message: チャット禁止中です。解除される前にチャットを試みる場合、解除までの時間がより長くなりますのでご注意ください。<br>
+	 * Message: Chatting is currently prohibited. If you try to chat before the prohibition is removed, the prohibition time will become even longer.
 	 */
 	public static final SystemMessageId CHATTING_IS_CURRENTLY_PROHIBITED;
 	
 	/**
 	 * ID: 967<br>
-	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：スポイルを含めランダムに）
+	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：スポイルを含めランダムに）<br>
+	 * Message: Do you accept $c1's party invitation? (Item Distribution: Random including spoil.)
 	 */
 	public static final SystemMessageId C1_PARTY_INVITE_RANDOM_INCLUDING_SPOIL;
 	
 	/**
 	 * ID: 968<br>
-	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：順番に取得）
+	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：順番に取得）<br>
+	 * Message: Do you accept $c1's party invitation? (Item Distribution: By Turn.)
 	 */
 	public static final SystemMessageId C1_PARTY_INVITE_BY_TURN;
 	
 	/**
 	 * ID: 969<br>
-	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：スポイルを含め順番に）
+	 * Message: $c1 のパーティ勧誘に応じますか。（アイテム分配：スポイルを含め順番に）<br>
+	 * Message: Do you accept $c1's party invitation? (Item Distribution: By Turn including spoil.)
 	 */
 	public static final SystemMessageId C1_PARTY_INVITE_BY_TURN_INCLUDING_SPOIL;
 	
 	/**
 	 * ID: 970<br>
-	 * Message: $c1から$s2のMPドレインを受けました。
+	 * Message: $c1から$s2のMPドレインを受けました。<br>
+	 * Message: $s2's MP has been drained by $c1.
 	 */
 	public static final SystemMessageId S2_MP_HAS_BEEN_DRAINED_BY_C1;
 	
 	/**
 	 * ID: 971<br>
-	 * Message: 255文字を超えるサポート要請はできません。お手数ですが文章を短くして再度要請を行なってください。
+	 * Message: 255文字を超えるサポート要請はできません。お手数ですが文章を短くして再度要請を行なってください。<br>
+	 * Message: Petitions cannot exceed 255 characters.
 	 */
 	public static final SystemMessageId PETITION_MAX_CHARS_255;
 	
 	/**
 	 * ID: 972<br>
-	 * Message: ペットが使用できないアイテムです。
+	 * Message: ペットが使用できないアイテムです。<br>
+	 * Message: This pet cannot use this item.
 	 */
 	public static final SystemMessageId PET_CANNOT_USE_ITEM;
 	
 	/**
 	 * ID: 973<br>
-	 * Message: 持っている量の範囲内で入力してください。
+	 * Message: 持っている量の範囲内で入力してください。<br>
+	 * Message: Please input no more than the number you have.
 	 */
 	public static final SystemMessageId INPUT_NO_MORE_YOU_HAVE;
 	
 	/**
 	 * ID: 974<br>
-	 * Message: ソウル ストーンが魂の吸収に成功しました。
+	 * Message: ソウル ストーンが魂の吸収に成功しました。<br>
+	 * Message: The soul crystal succeeded in absorbing a soul.
 	 */
 	public static final SystemMessageId SOUL_CRYSTAL_ABSORBING_SUCCEEDED;
 	
 	/**
 	 * ID: 975<br>
-	 * Message: ソウル ストーンが魂の吸収に失敗しました。
+	 * Message: ソウル ストーンが魂の吸収に失敗しました。<br>
+	 * Message: The soul crystal was not able to absorb a soul.
 	 */
 	public static final SystemMessageId SOUL_CRYSTAL_ABSORBING_FAILED;
 	
 	/**
 	 * ID: 976<br>
-	 * Message: ソウル ストーンが魂の気に耐えられず砕けました。
+	 * Message: ソウル ストーンが魂の気に耐えられず砕けました。<br>
+	 * Message: The soul crystal broke because it was not able to endure the soul energy.
 	 */
 	public static final SystemMessageId SOUL_CRYSTAL_BROKE;
 	
 	/**
 	 * ID: 977<br>
-	 * Message: ソウル ストーンが共鳴を起こし魂の吸収に失敗しました。
+	 * Message: ソウル ストーンが共鳴を起こし魂の吸収に失敗しました。<br>
+	 * Message: The soul crystals caused resonation and failed at absorbing a soul.
 	 */
 	public static final SystemMessageId SOUL_CRYSTAL_ABSORBING_FAILED_RESONATION;
 	
 	/**
 	 * ID: 978<br>
-	 * Message: ソウル ストーンが魂の吸収を拒否しています。
+	 * Message: ソウル ストーンが魂の吸収を拒否しています。<br>
+	 * Message: The soul crystal is refusing to absorb a soul.
 	 */
 	public static final SystemMessageId SOUL_CRYSTAL_ABSORBING_REFUSED;
 	
 	/**
 	 * ID: 979<br>
-	 * Message: 話せる島の港に到着しました。
+	 * Message: 話せる島の港に到着しました。<br>
+	 * Message: The ferry arrived at Talking Island Harbor.
 	 */
 	public static final SystemMessageId FERRY_ARRIVED_AT_TALKING;
 	
 	/**
 	 * ID: 980<br>
-	 * Message: 10分間の停泊後、グルーディンに出発します。
+	 * Message: 10分間の停泊後、グルーディンに出発します。<br>
+	 * Message: The ferry will leave for Gludin Harbor after anchoring for ten minutes.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_FOR_GLUDIN_AFTER_10_MINUTES;
 	
 	/**
 	 * ID: 981<br>
-	 * Message: 5分後に話せる島の港からグルーディンへ出発します。
+	 * Message: 5分後に話せる島の港からグルーディンへ出発します。<br>
+	 * Message: The ferry will leave for Gludin Harbor in five minutes.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_FOR_GLUDIN_IN_5_MINUTES;
 	
 	/**
 	 * ID: 982<br>
-	 * Message: 1分後に話せる島の港からグルーディンへ出発します。
+	 * Message: 1分後に話せる島の港からグルーディンへ出発します。<br>
+	 * Message: The ferry will leave for Gludin Harbor in one minute.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_FOR_GLUDIN_IN_1_MINUTE;
 	
 	/**
 	 * ID: 983<br>
-	 * Message: 乗船される方は急いでください。
+	 * Message: 乗船される方は急いでください。<br>
+	 * Message: Those wishing to ride should make haste to get on.
 	 */
 	public static final SystemMessageId MAKE_HASTE_GET_ON_BOAT;
 	
 	/**
 	 * ID: 984<br>
-	 * Message: 間もなく話せる島の港からグルーディンへ出発します。
+	 * Message: 間もなく話せる島の港からグルーディンへ出発します。<br>
+	 * Message: The ferry will be leaving soon for Gludin Harbor.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_SOON_FOR_GLUDIN;
 	
 	/**
 	 * ID: 985<br>
-	 * Message: 話せる島の港からグルーディンへ出発します。
+	 * Message: 話せる島の港からグルーディンへ出発します。<br>
+	 * Message: The ferry is leaving for Gludin Harbor.
 	 */
 	public static final SystemMessageId FERRY_LEAVING_FOR_GLUDIN;
 	
 	/**
 	 * ID: 986<br>
-	 * Message: グルーディン港に到着しました。
+	 * Message: グルーディン港に到着しました。<br>
+	 * Message: The ferry has arrived at Gludin Harbor.
 	 */
 	public static final SystemMessageId FERRY_ARRIVED_AT_GLUDIN;
 	
 	/**
 	 * ID: 987<br>
-	 * Message: 10分間の停泊後、話せる島に出発します。
+	 * Message: 10分間の停泊後、話せる島に出発します。<br>
+	 * Message: The ferry will leave for Talking Island Harbor after anchoring for ten minutes.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_FOR_TALKING_AFTER_10_MINUTES;
 	
 	/**
 	 * ID: 988<br>
-	 * Message: 5分後にグルーディン港から話せる島へ出発します。
+	 * Message: 5分後にグルーディン港から話せる島へ出発します。<br>
+	 * Message: The ferry will leave for Talking Island Harbor in five minutes.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_FOR_TALKING_IN_5_MINUTES;
 	
 	/**
 	 * ID: 989<br>
-	 * Message: 1分後にグルーディン港から話せる島へ出発します。
+	 * Message: 1分後にグルーディン港から話せる島へ出発します。<br>
+	 * Message: The ferry will leave for Talking Island Harbor in one minute.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_FOR_TALKING_IN_1_MINUTE;
 	
 	/**
 	 * ID: 990<br>
-	 * Message: 間もなくグルーディン港から話せる島へ出発します。
+	 * Message: 間もなくグルーディン港から話せる島へ出発します。<br>
+	 * Message: The ferry will be leaving soon for Talking Island Harbor.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_SOON_FOR_TALKING;
 	
 	/**
 	 * ID: 991<br>
-	 * Message: グルーディン港から話せる島へ出発します。
+	 * Message: グルーディン港から話せる島へ出発します。<br>
+	 * Message: The ferry is leaving for Talking Island Harbor.
 	 */
 	public static final SystemMessageId FERRY_LEAVING_FOR_TALKING;
 	
 	/**
 	 * ID: 992<br>
-	 * Message: ギラン港に到着しました。
+	 * Message: ギラン港に到着しました。<br>
+	 * Message: The ferry has arrived at Giran Harbor.
 	 */
 	public static final SystemMessageId FERRY_ARRIVED_AT_GIRAN;
 	
 	/**
 	 * ID: 993<br>
-	 * Message: 10分間停泊した後、ギランに出発します。
+	 * Message: 10分間停泊した後、ギランに出発します。<br>
+	 * Message: The ferry will leave for Giran Harbor after anchoring for ten minutes.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_FOR_GIRAN_AFTER_10_MINUTES;
 	
 	/**
 	 * ID: 994<br>
-	 * Message: 5分後にギラン港に出発します。
+	 * Message: 5分後にギラン港に出発します。<br>
+	 * Message: The ferry will leave for Giran Harbor in five minutes.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_FOR_GIRAN_IN_5_MINUTES;
 	
 	/**
 	 * ID: 995<br>
-	 * Message: 1分後にギラン港に出発します。
+	 * Message: 1分後にギラン港に出発します。<br>
+	 * Message: The ferry will leave for Giran Harbor in one minute.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_FOR_GIRAN_IN_1_MINUTE;
 	
 	/**
 	 * ID: 996<br>
-	 * Message: まもなくギラン港に出発します。
+	 * Message: まもなくギラン港に出発します。<br>
+	 * Message: The ferry will be leaving soon for Giran Harbor.
 	 */
 	public static final SystemMessageId FERRY_LEAVE_SOON_FOR_GIRAN;
 	
 	/**
 	 * ID: 997<br>
-	 * Message: ギラン港に出発します。
+	 * Message: ギラン港に出発します。<br>
+	 * Message: The ferry is leaving for Giran Harbor.
 	 */
 	public static final SystemMessageId FERRY_LEAVING_FOR_GIRAN;
 	
 	/**
 	 * ID: 998<br>
-	 * Message: インナドリル遊覧船が到着しました。10分間停泊します。
+	 * Message: インナドリル遊覧船が到着しました。10分間停泊します。<br>
+	 * Message: The Innadril pleasure boat has arrived. It will anchor for ten minutes.
 	 */
 	public static final SystemMessageId INNADRIL_BOAT_ANCHOR_10_MINUTES;
 	
 	/**
 	 * ID: 999<br>
-	 * Message: 5分後にインナドリル遊覧船が出発します。
+	 * Message: 5分後にインナドリル遊覧船が出発します。<br>
+	 * Message: The Innadril pleasure boat will leave in five minutes.
 	 */
 	public static final SystemMessageId INNADRIL_BOAT_LEAVE_IN_5_MINUTES;
 	
 	/**
 	 * ID: 1000<br>
-	 * Message: 1分後にインナドリル遊覧船が出発します。
+	 * Message: 1分後にインナドリル遊覧船が出発します。<br>
+	 * Message: The Innadril pleasure boat will leave in one minute.
 	 */
 	public static final SystemMessageId INNADRIL_BOAT_LEAVE_IN_1_MINUTE;
 	
 	/**
 	 * ID: 1001<br>
-	 * Message: まもなくインナドリル遊覧船が出発します。
+	 * Message: まもなくインナドリル遊覧船が出発します。<br>
+	 * Message: The Innadril pleasure boat will be leaving soon.
 	 */
 	public static final SystemMessageId INNADRIL_BOAT_LEAVE_SOON;
 	
 	/**
 	 * ID: 1002<br>
-	 * Message: インナドリル遊覧船が出発します。
+	 * Message: インナドリル遊覧船が出発します。<br>
+	 * Message: The Innadril pleasure boat is leaving.
 	 */
 	public static final SystemMessageId INNADRIL_BOAT_LEAVING;
 	
 	/**
 	 * ID: 1003<br>
-	 * Message: モンスター レース チケットの清算ができません。
+	 * Message: モンスター レース チケットの清算ができません。<br>
+	 * Message: Cannot possess a monster race ticket.
 	 */
 	public static final SystemMessageId CANNOT_POSSES_MONS_TICKET;
 	
 	/**
 	 * ID: 1004<br>
-	 * Message: アジトの競売に登録しました。
+	 * Message: アジトの競売に登録しました。<br>
+	 * Message: You have registered for a clan hall auction.
 	 */
 	public static final SystemMessageId REGISTERED_FOR_CLANHALL;
 	
 	/**
 	 * ID: 1005<br>
-	 * Message: 血盟倉庫にアデナが足りません。
+	 * Message: 血盟倉庫にアデナが足りません。<br>
+	 * Message: There is not enough adena in the clan hall warehouse.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_ADENA_IN_CWH;
 	
 	/**
 	 * ID: 1006<br>
-	 * Message: アジトの競売に入札しました。
+	 * Message: アジトの競売に入札しました。<br>
+	 * Message: You have bid in a clan hall auction.
 	 */
 	public static final SystemMessageId BID_IN_CLANHALL_AUCTION;
 	
 	/**
 	 * ID: 1007<br>
-	 * Message: $s1の予選登録が締め切られました。
+	 * Message: $s1の予選登録が締め切られました。<br>
+	 * Message: The preliminary match registration of $s1 has finished.
 	 */
 	public static final SystemMessageId PRELIMINARY_REGISTRATION_OF_S1_FINISHED;
 	
 	/**
 	 * ID: 1008<br>
-	 * Message: 空腹状態のストライダーには乗り降りできません。
+	 * Message: 空腹状態のストライダーには乗り降りできません。<br>
+	 * Message: A hungry strider cannot be mounted or dismounted.
 	 */
 	public static final SystemMessageId HUNGRY_STRIDER_NOT_MOUNT;
 	
 	/**
 	 * ID: 1009<br>
-	 * Message: 死亡状態ではストライダーに乗ることができません。
+	 * Message: 死亡状態ではストライダーに乗ることができません。<br>
+	 * Message: A strider cannot be ridden when dead.
 	 */
 	public static final SystemMessageId STRIDER_CANT_BE_RIDDEN_WHILE_DEAD;
 	
 	/**
 	 * ID: 1010<br>
-	 * Message: 死亡したストライダーに乗ることはできません。
+	 * Message: 死亡したストライダーに乗ることはできません。<br>
+	 * Message: A dead strider cannot be ridden.
 	 */
 	public static final SystemMessageId DEAD_STRIDER_CANT_BE_RIDDEN;
 	
 	/**
 	 * ID: 1011<br>
-	 * Message: 戦闘中のストライダーに乗ることはできません。
+	 * Message: 戦闘中のストライダーに乗ることはできません。<br>
+	 * Message: A strider in battle cannot be ridden.
 	 */
 	public static final SystemMessageId STRIDER_IN_BATLLE_CANT_BE_RIDDEN;
 	
 	/**
 	 * ID: 1012<br>
-	 * Message: 戦闘中はストライダーに乗ることができません。
+	 * Message: 戦闘中はストライダーに乗ることができません。<br>
+	 * Message: A strider cannot be ridden while in battle.
 	 */
 	public static final SystemMessageId STRIDER_CANT_BE_RIDDEN_WHILE_IN_BATTLE;
 	
 	/**
 	 * ID: 1013<br>
-	 * Message: 立っている状態のストライダーだけに乗ることができます。
+	 * Message: 立っている状態のストライダーだけに乗ることができます。<br>
+	 * Message: A strider can be ridden only when standing.
 	 */
 	public static final SystemMessageId STRIDER_CAN_BE_RIDDEN_ONLY_WHILE_STANDING;
 	
 	/**
 	 * ID: 1014<br>
-	 * Message: ペットが$s1の経験値を得ました。
+	 * Message: ペットが$s1の経験値を得ました。<br>
+	 * Message: Your pet gained $s1 experience points.
 	 */
 	public static final SystemMessageId PET_EARNED_S1_EXP;
 	
 	/**
 	 * ID: 1015<br>
-	 * Message: ペットが$s1のダメージを与えました。
+	 * Message: ペットが$s1のダメージを与えました。<br>
+	 * Message: Your pet hit for $s1 damage.
 	 */
 	public static final SystemMessageId PET_HIT_FOR_S1_DAMAGE;
 	
 	/**
 	 * ID: 1016<br>
-	 * Message: ペットが$c1によって$s2のダメージを受けました。
+	 * Message: ペットが$c1によって$s2のダメージを受けました。<br>
+	 * Message: Pet received $s2 damage by $c1.
 	 */
 	public static final SystemMessageId PET_RECEIVED_S2_DAMAGE_BY_C1;
 	
 	/**
 	 * ID: 1017<br>
-	 * Message: ペットのクリティカル ヒット！
+	 * Message: ペットのクリティカル ヒット！<br>
+	 * Message: Pet's critical hit!
 	 */
 	public static final SystemMessageId CRITICAL_HIT_BY_PET;
 	
 	/**
 	 * ID: 1018<br>
-	 * Message: ペットが$s1を使用します。
+	 * Message: ペットが$s1を使用します。<br>
+	 * Message: Your pet uses $s1.
 	 */
 	public static final SystemMessageId PET_USES_S1;
 	
 	/**
 	 * ID: 1019<br>
-	 * Message: ペットが$s1を使用します。
+	 * Message: ペットが$s1を使用します。<br>
+	 * Message: Your pet uses $s1.
 	 */
 	public static final SystemMessageId PET_USES_S1_;
 	
 	/**
 	 * ID: 1020<br>
-	 * Message: ペットが$s1を得ました。
+	 * Message: ペットが$s1を得ました。<br>
+	 * Message: Your pet picked up $s1.
 	 */
 	public static final SystemMessageId PET_PICKED_S1;
 	
 	/**
 	 * ID: 1021<br>
-	 * Message: ペットが$s1 $s2個を得ました。
+	 * Message: ペットが$s1 $s2個を得ました。<br>
+	 * Message: Your pet picked up $s2 $s1(s).
 	 */
 	public static final SystemMessageId PET_PICKED_S2_S1_S;
 	
 	/**
 	 * ID: 1022<br>
-	 * Message: ペットが+$s1$s2を得ました。
+	 * Message: ペットが+$s1$s2を得ました。<br>
+	 * Message: Your pet picked up +$s1 $s2.
 	 */
 	public static final SystemMessageId PET_PICKED_S1_S2;
 	
 	/**
 	 * ID: 1023<br>
-	 * Message: ペットが$s1アデナを得ました。
+	 * Message: ペットが$s1アデナを得ました。<br>
+	 * Message: Your pet picked up $s1 adena.
 	 */
 	public static final SystemMessageId PET_PICKED_S1_ADENA;
 	
 	/**
 	 * ID: 1024<br>
-	 * Message: ペットが$s1を装備しました。
+	 * Message: ペットが$s1を装備しました。<br>
+	 * Message: Your pet put on $s1.
 	 */
 	public static final SystemMessageId PET_PUT_ON_S1;
 	
 	/**
 	 * ID: 1025<br>
-	 * Message: ペットが$s1の装備を解除しました。
+	 * Message: ペットが$s1の装備を解除しました。<br>
+	 * Message: Your pet took off $s1.
 	 */
 	public static final SystemMessageId PET_TOOK_OFF_S1;
 	
 	/**
 	 * ID: 1026<br>
-	 * Message: 召喚獣が$s1のダメージを与えました。
+	 * Message: 召喚獣が$s1のダメージを与えました。<br>
+	 * Message: The summoned monster gave damage of $s1
 	 */
 	public static final SystemMessageId SUMMON_GAVE_DAMAGE_S1;
 	
 	/**
 	 * ID: 1027<br>
-	 * Message: 召喚獣が$c1によって$s2のダメージを受けました。
+	 * Message: 召喚獣が$c1によって$s2のダメージを受けました。<br>
+	 * Message: Servitor received $s2 damage caused by $s1.
 	 */
 	public static final SystemMessageId SUMMON_RECEIVED_DAMAGE_S2_BY_S1;
 	
 	/**
 	 * ID: 1028<br>
-	 * Message: 召喚獣のクリティカル ヒット！
+	 * Message: 召喚獣のクリティカル ヒット！<br>
+	 * Message: Summoned monster's critical hit!
 	 */
 	public static final SystemMessageId CRITICAL_HIT_BY_SUMMONED_MOB;
 	
 	/**
 	 * ID: 1029<br>
-	 * Message: 召喚獣が$s1を使用します。
+	 * Message: 召喚獣が$s1を使用します。<br>
+	 * Message: Summoned monster uses $s1.
 	 */
 	public static final SystemMessageId SUMMONED_MOB_USES_S1;
 	
 	/**
 	 * ID: 1030<br>
-	 * Message: =======<パーティ情報>=======
+	 * Message: =======<パーティ情報>=======<br>
+	 * Message: <Party Information>
 	 */
 	public static final SystemMessageId PARTY_INFORMATION;
 	
 	/**
 	 * ID: 1031<br>
-	 * Message: タイプ： 拾った人が所有
+	 * Message: タイプ： 拾った人が所有<br>
+	 * Message: Looting method: Finders keepers
 	 */
 	public static final SystemMessageId LOOTING_FINDERS_KEEPERS;
 	
 	/**
 	 * ID: 1032<br>
-	 * Message: タイプ： ランダムに分配
+	 * Message: タイプ： ランダムに分配<br>
+	 * Message: Looting method: Random
 	 */
 	public static final SystemMessageId LOOTING_RANDOM;
 	
 	/**
 	 * ID: 1033<br>
-	 * Message: タイプ： スポイルを含めランダムに
+	 * Message: タイプ： スポイルを含めランダムに<br>
+	 * Message: Looting method: Random including spoil
 	 */
 	public static final SystemMessageId LOOTING_RANDOM_INCLUDE_SPOIL;
 	
 	/**
 	 * ID: 1034<br>
-	 * Message: タイプ： 順番に取得
+	 * Message: タイプ： 順番に取得<br>
+	 * Message: Looting method: By turn
 	 */
 	public static final SystemMessageId LOOTING_BY_TURN;
 	
 	/**
 	 * ID: 1035<br>
-	 * Message: タイプ： スポイルを含め順番に
+	 * Message: タイプ： スポイルを含め順番に<br>
+	 * Message: Looting method: By turn including spoil
 	 */
 	public static final SystemMessageId LOOTING_BY_TURN_INCLUDE_SPOIL;
 	
 	/**
 	 * ID: 1036<br>
-	 * Message: 入力可能な数量を超過しました。
+	 * Message: 入力可能な数量を超過しました。<br>
+	 * Message: You have exceeded the quantity that can be inputted.
 	 */
 	public static final SystemMessageId YOU_HAVE_EXCEEDED_QUANTITY_THAT_CAN_BE_INPUTTED;
 	
 	/**
 	 * ID: 1037<br>
-	 * Message: $c1が$s2を製作しました。
+	 * Message: $c1が$s2を製作しました。<br>
+	 * Message: $c1 manufactured $s2.
 	 */
 	public static final SystemMessageId C1_MANUFACTURED_S2;
 	
 	/**
 	 * ID: 1038<br>
-	 * Message: $c1が$s2 $s3個を製作しました。
+	 * Message: $c1が$s2 $s3個を製作しました。<br>
+	 * Message: $c1 manufactured $s3 $s2(s).
 	 */
 	public static final SystemMessageId C1_MANUFACTURED_S3_S2_S;
 	
 	/**
 	 * ID: 1039<br>
-	 * Message: 血盟倉庫に預けたアイテムは血盟主のみ取り出しが可能です。それでもよろしいですか。
+	 * Message: 血盟倉庫に預けたアイテムは血盟主のみ取り出しが可能です。それでもよろしいですか。<br>
+	 * Message: Items left at the clan hall warehouse can only be retrieved by the clan leader. Do you want to continue?
 	 */
 	public static final SystemMessageId ONLY_CLAN_LEADER_CAN_RETRIEVE_ITEMS_FROM_CLAN_WAREHOUSE;
 	
 	/**
 	 * ID: 1040<br>
-	 * Message: 発送したトッピング アイテムは全地域の境界の商人から取り出せます。よろしいですか。
+	 * Message: 発送したトッピング アイテムは全地域の境界の商人から取り出せます。よろしいですか。<br>
+	 * Message: Items sent by freight can be picked up from any Warehouse location. Do you want to continue?
 	 */
 	public static final SystemMessageId ITEMS_SENT_BY_FREIGHT_PICKED_UP_FROM_ANYWHERE;
 	
 	/**
 	 * ID: 1041<br>
-	 * Message: 次の種の購入代金は$s1アデナです。
+	 * Message: 次の種の購入代金は$s1アデナです。<br>
+	 * Message: The next seed purchase price is $s1 adena.
 	 */
 	public static final SystemMessageId THE_NEXT_SEED_PURCHASE_PRICE_IS_S1_ADENA;
 	
 	/**
 	 * ID: 1042<br>
-	 * Message: 次の作物の販売代金は$s1アデナです。
+	 * Message: 次の作物の販売代金は$s1アデナです。<br>
+	 * Message: The next farm goods purchase price is $s1 adena.
 	 */
 	public static final SystemMessageId THE_NEXT_FARM_GOODS_PURCHASE_PRICE_IS_S1_ADENA;
 	
 	/**
 	 * ID: 1043<br>
-	 * Message: 現在、「/escape」コマンドは使用できません。サポート要請を行なってください。
+	 * Message: 現在、「/escape」コマンドは使用できません。サポート要請を行なってください。<br>
+	 * Message: At the current time, the "/unstuck" command cannot be used. Please send in a petition.
 	 */
 	public static final SystemMessageId NO_UNSTUCK_PLEASE_SEND_PETITION;
 	
 	/**
 	 * ID: 1044<br>
-	 * Message: チケット販売中はモンスター レースの配当表示を見ることができません。
+	 * Message: チケット販売中はモンスター レースの配当表示を見ることができません。<br>
+	 * Message: Monster race payout information is not available while tickets are being sold.
 	 */
 	public static final SystemMessageId MONSRACE_NO_PAYOUT_INFO;
 	
 	/**
 	 * ID: 1046<br>
-	 * Message: 販売が終了し、モンスター レースのチケットを購入できません。
+	 * Message: 販売が終了し、モンスター レースのチケットを購入できません。<br>
+	 * Message: Monster race tickets are no longer available.
 	 */
 	public static final SystemMessageId MONSRACE_TICKETS_NOT_AVAILABLE;
 	
 	/**
 	 * ID: 1047<br>
-	 * Message: $s1のアイテム製作に失敗しました。
+	 * Message: $s1のアイテム製作に失敗しました。<br>
+	 * Message: We did not succeed in producing $s1 item.
 	 */
 	public static final SystemMessageId NOT_SUCCEED_PRODUCING_S1;
 	
 	/**
 	 * ID: 1048<br>
-	 * Message: 全体遮断状態なのでウィスパーを使用できません。
+	 * Message: 全体遮断状態なのでウィスパーを使用できません。<br>
+	 * Message: When "blocking" everything, whispering is not possible.
 	 */
 	public static final SystemMessageId NO_WHISPER_WHEN_BLOCKING;
 	
 	/**
 	 * ID: 1049<br>
-	 * Message: 全体遮断状態なのでパーティーの招待ができません。
+	 * Message: 全体遮断状態なのでパーティーの招待ができません。<br>
+	 * Message: When "blocking" everything, it is not possible to send invitations for organizing parties.
 	 */
 	public static final SystemMessageId NO_PARTY_WHEN_BLOCKING;
 	
 	/**
 	 * ID: 1050<br>
-	 * Message: 自分の血盟コミュニティーがありません。村の大神官又は大長老を訪ねて血盟のレベルを2以上に上げればコミュニティーが生成されます。
+	 * Message: 自分の血盟コミュニティーがありません。村の大神官又は大長老を訪ねて血盟のレベルを2以上に上げればコミュニティーが生成されます。<br>
+	 * Message: There are no communities in my clan. Clan communities are allowed for clans with skill levels of 2 and higher.
 	 */
 	public static final SystemMessageId NO_CB_IN_MY_CLAN;
 	
 	/**
 	 * ID: 1051<br>
-	 * Message: アジトの使用料金が支払われませんでした。明日$s1時までに使用料金を血盟倉庫にお納めください。
+	 * Message: アジトの使用料金が支払われませんでした。明日$s1時までに使用料金を血盟倉庫にお納めください。<br>
+	 * Message: Payment for your clan hall has not been made please make payment tomorrow.
 	 */
 	public static final SystemMessageId PAYMENT_FOR_YOUR_CLAN_HALL_HAS_NOT_BEEN_MADE_PLEASE_MAKE_PAYMENT_TO_YOUR_CLAN_WAREHOUSE_BY_S1_TOMORROW;
 	
 	/**
 	 * ID: 1052<br>
-	 * Message: アジト使用料金を一週間滞納したためアジトが返還されました。
+	 * Message: アジト使用料金を一週間滞納したためアジトが返還されました。<br>
+	 * Message: Payment of Clan Hall is overdue the owner loose Clan Hall.
 	 */
 	public static final SystemMessageId THE_CLAN_HALL_FEE_IS_ONE_WEEK_OVERDUE_THEREFORE_THE_CLAN_HALL_OWNERSHIP_HAS_BEEN_REVOKED;
 	
 	/**
 	 * ID: 1053<br>
-	 * Message: 攻城戦中の戦場では復活できません。
+	 * Message: 攻城戦中の戦場では復活できません。<br>
+	 * Message: It is not possible to resurrect in battlefields where a siege war is taking place.
 	 */
 	public static final SystemMessageId CANNOT_BE_RESURRECTED_DURING_SIEGE;
 	
 	/**
 	 * ID: 1054<br>
-	 * Message: 神秘の気に満ちたエリアに入りました。
+	 * Message: 神秘の気に満ちたエリアに入りました。<br>
+	 * Message: You have entered a mystical land.
 	 */
 	public static final SystemMessageId ENTERED_MYSTICAL_LAND;
 	
 	/**
 	 * ID: 1055<br>
-	 * Message: 神秘の気に満ちたエリアから離れました。
+	 * Message: 神秘の気に満ちたエリアから離れました。<br>
+	 * Message: You have left a mystical land.
 	 */
 	public static final SystemMessageId EXITED_MYSTICAL_LAND;
 	
 	/**
 	 * ID: 1056<br>
-	 * Message: 城の金庫に保管できるアデナの限度額を超えました。
+	 * Message: 城の金庫に保管できるアデナの限度額を超えました。<br>
+	 * Message: You have exceeded the storage capacity of the castle's vault.
 	 */
 	public static final SystemMessageId VAULT_CAPACITY_EXCEEDED;
 	
 	/**
 	 * ID: 1057<br>
-	 * Message: リラックス サーバーでのみ使用可能なコマンドです。
+	 * Message: リラックス サーバーでのみ使用可能なコマンドです。<br>
+	 * Message: This command can only be used in the relax server.
 	 */
 	public static final SystemMessageId RELAX_SERVER_ONLY;
 	
 	/**
 	 * ID: 1058<br>
-	 * Message: 種の販売代金は$s1アデナです。
+	 * Message: 種の販売代金は$s1アデナです。<br>
+	 * Message: The sales price for seeds is $s1 adena.
 	 */
 	public static final SystemMessageId THE_SALES_PRICE_FOR_SEEDS_IS_S1_ADENA;
 	
 	/**
 	 * ID: 1059<br>
-	 * Message: 残りの買い入れ代金は$s1アデナです。
+	 * Message: 残りの買い入れ代金は$s1アデナです。<br>
+	 * Message: The remaining purchasing amount is $s1 adena.
 	 */
 	public static final SystemMessageId THE_REMAINING_PURCHASING_IS_S1_ADENA;
 	
 	/**
 	 * ID: 1060<br>
-	 * Message: 種を販売して残った金額は$s1アデナです。
+	 * Message: 種を販売して残った金額は$s1アデナです。<br>
+	 * Message: The remainder after selling the seeds is $s1.
 	 */
 	public static final SystemMessageId THE_REMAINDER_AFTER_SELLING_THE_SEEDS_IS_S1;
 	
 	/**
 	 * ID: 1061<br>
-	 * Message: アイテム製作スキルが足りないため、製作図を登録できません。
+	 * Message: アイテム製作スキルが足りないため、製作図を登録できません。<br>
+	 * Message: The recipe cannot be registered. You do not have the ability to create items.
 	 */
 	public static final SystemMessageId CANT_REGISTER_NO_ABILITY_TO_CRAFT;
 	
 	/**
 	 * ID: 1062<br>
-	 * Message: 新規作成はレベル10から可能です。
+	 * Message: 新規作成はレベル10から可能です。<br>
+	 * Message: Writing something new is possible after level 10.
 	 */
 	public static final SystemMessageId WRITING_SOMETHING_NEW_POSSIBLE_AFTER_LEVEL_10;
 	
 	/**
 	 * ID: 1063<br>
-	 * Message: $s1時から$s2時まではサポートを利用できません。移動が不可能な地形に閉じ込められた場合は「/escape」コマンドをご利用ください。
+	 * if you become trapped or unable to move, please use the '/unstuck' command.
 	 */
 	public static final SystemMessageId PETITION_UNAVAILABLE;
 	
 	/**
 	 * ID: 1064<br>
-	 * Message: +$s1$s2の装備を解除しました。
+	 * Message: +$s1$s2の装備を解除しました。<br>
+	 * Message: The equipment, +$s1 $s2, has been removed.
 	 */
 	public static final SystemMessageId EQUIPMENT_S1_S2_REMOVED;
 	
 	/**
 	 * ID: 1065<br>
-	 * Message: 個人商店や個人工房の場合、アイテムを捨てることやトレードすることはできません。
+	 * Message: 個人商店や個人工房の場合、アイテムを捨てることやトレードすることはできません。<br>
+	 * Message: While operating a private store or workshop, you cannot discard, destroy, or trade an item.
 	 */
 	public static final SystemMessageId CANNOT_TRADE_DISCARD_DROP_ITEM_WHILE_IN_SHOPMODE;
 	
 	/**
 	 * ID: 1066<br>
-	 * Message: $s1のHPが回復されました。
+	 * Message: $s1のHPが回復されました。<br>
+	 * Message: $s1 HP has been restored.
 	 */
 	public static final SystemMessageId S1_HP_RESTORED;
 	
 	/**
 	 * ID: 1067<br>
-	 * Message: $c1によってHPが$s2回復されました。
+	 * Message: $c1によってHPが$s2回復されました。<br>
+	 * Message: $s2 HP has been restored by $c1
 	 */
 	public static final SystemMessageId S2_HP_RESTORED_BY_C1;
 	
 	/**
 	 * ID: 1068<br>
-	 * Message: MPが$s1回復しました。
+	 * Message: MPが$s1回復しました。<br>
+	 * Message: $s1 MP has been restored.
 	 */
 	public static final SystemMessageId S1_MP_RESTORED;
 	
 	/**
 	 * ID: 1069<br>
-	 * Message: $c1によってMPが$s2回復しました。
+	 * Message: $c1によってMPが$s2回復しました。<br>
+	 * Message: $s2 MP has been restored by $c1.
 	 */
 	public static final SystemMessageId S2_MP_RESTORED_BY_C1;
 	
 	/**
 	 * ID: 1070<br>
-	 * Message: 読み込み権限がありません。
+	 * Message: 読み込み権限がありません。<br>
+	 * Message: You do not have 'read' permission.
 	 */
 	public static final SystemMessageId NO_READ_PERMISSION;
 	
 	/**
 	 * ID: 1071<br>
-	 * Message: 書き込み権限がありません。
+	 * Message: 書き込み権限がありません。<br>
+	 * Message: You do not have 'write' permission.
 	 */
 	public static final SystemMessageId NO_WRITE_PERMISSION;
 	
 	/**
 	 * ID: 1072<br>
-	 * Message: 第$s1回目モンスターレースの単勝式チケットを受け取りました。
+	 * Message: 第$s1回目モンスターレースの単勝式チケットを受け取りました。<br>
+	 * Message: You have obtained a ticket for the Monster Race #$s1 - Single
 	 */
 	public static final SystemMessageId OBTAINED_TICKET_FOR_MONS_RACE_S1_SINGLE;
 	
 	/**
 	 * ID: 1073<br>
-	 * Message: 第$s1回目モンスターレースの連複式チケットを受け取りました。
+	 * Message: 第$s1回目モンスターレースの連複式チケットを受け取りました。<br>
+	 * Message: You have obtained a ticket for the Monster Race #$s1 - Single
 	 */
 	public static final SystemMessageId OBTAINED_TICKET_FOR_MONS_RACE_S1_SINGLE_;
 	
 	/**
 	 * ID: 1074<br>
-	 * Message: 年齢制限でモンスター レースのチケットを購入できません。
+	 * Message: 年齢制限でモンスター レースのチケットを購入できません。<br>
+	 * Message: You do not meet the age requirement to purchase a Monster Race Ticket.
 	 */
 	public static final SystemMessageId NOT_MEET_AGE_REQUIREMENT_FOR_MONS_RACE;
 	
 	/**
 	 * ID: 1075<br>
-	 * Message: 再入札価格は既存の入札価格より高く設定してください。
+	 * Message: 再入札価格は既存の入札価格より高く設定してください。<br>
+	 * Message: The bid amount must be higher than the previous bid.
 	 */
 	public static final SystemMessageId BID_AMOUNT_HIGHER_THAN_PREVIOUS_BID;
 	
 	/**
 	 * ID: 1076<br>
-	 * Message: ゲームを終了できません。
+	 * Message: ゲームを終了できません。<br>
+	 * Message: The game cannot be terminated at this time.
 	 */
 	public static final SystemMessageId GAME_CANNOT_TERMINATE_NOW;
 	
 	/**
 	 * ID: 1077<br>
-	 * Message: GameGuardのエラーです。
+	 * Message: GameGuardのエラーです。<br>
+	 * Message: A GameGuard Execution error has occurred. Please send the *.erl file(s) located in the GameGuard folder to game@inca.co.kr
 	 */
 	public static final SystemMessageId GG_EXECUTION_ERROR;
 	
 	/**
 	 * ID: 1078<br>
-	 * Message: 短時間で重複する内容の発言を多量に入力すると自動的にチャット禁止になりますので、ご注意ください。
+	 * Message: 短時間で重複する内容の発言を多量に入力すると自動的にチャット禁止になりますので、ご注意ください。<br>
+	 * Message: When a user's keyboard input exceeds a certain cumulative score a chat ban will be applied. This is done to discourage spamming. Please avoid posting the same message multiple times during a short period.
 	 */
 	public static final SystemMessageId DONT_SPAM;
 	
 	/**
 	 * ID: 1079<br>
-	 * Message: 相手がチャット禁止中です。
+	 * Message: 相手がチャット禁止中です。<br>
+	 * Message: The target is currently banend from chatting.
 	 */
 	public static final SystemMessageId TARGET_IS_CHAT_BANNED;
 	
 	/**
 	 * ID: 1080<br>
-	 * Message: フェイスタイプのポーション：Aを使用しますか。使用後の効果は永久に持続します。
+	 * Message: フェイスタイプのポーション：Aを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Being permanent, are you sure you wish to use the facelift potion - Type A?
 	 */
 	public static final SystemMessageId FACELIFT_POTION_TYPE_A;
 	
 	/**
 	 * ID: 1081<br>
-	 * Message: ヘアカラーのポーション：Aを使用しますか。使用後の効果は永久に持続します。
+	 * Message: ヘアカラーのポーション：Aを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Being permanent, are you sure you wish to use the hair dye potion - Type A?
 	 */
 	public static final SystemMessageId HAIRDYE_POTION_TYPE_A;
 	
 	/**
 	 * ID: 1082<br>
-	 * Message: ヘアスタイルのポーション：Aを使用しますか。使用後の効果は永久に持続します。
+	 * Message: ヘアスタイルのポーション：Aを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Do you wish to use the hair style change potion - Type A? It is permanent.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_A;
 	
 	/**
 	 * ID: 1083<br>
-	 * Message: フェイスタイプのポーション：Aを使用しました。
+	 * Message: フェイスタイプのポーション：Aを使用しました。<br>
+	 * Message: Facelift potion - Type A is being applied.
 	 */
 	public static final SystemMessageId FACELIFT_POTION_TYPE_A_APPLIED;
 	
 	/**
 	 * ID: 1084<br>
-	 * Message: ヘアカラーのポーション：Aを使用しました。
+	 * Message: ヘアカラーのポーション：Aを使用しました。<br>
+	 * Message: Hair dye potion - Type A is being applied.
 	 */
 	public static final SystemMessageId HAIRDYE_POTION_TYPE_A_APPLIED;
 	
 	/**
 	 * ID: 1085<br>
-	 * Message: ヘアスタイルのポーション：Aを使用しました。
+	 * Message: ヘアスタイルのポーション：Aを使用しました。<br>
+	 * Message: The hair style chance potion - Type A is being used.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_A_USED;
 	
 	/**
 	 * ID: 1086<br>
-	 * Message: フェイスタイプが変更されました。
+	 * Message: フェイスタイプが変更されました。<br>
+	 * Message: Your facial appearance has been changed.
 	 */
 	public static final SystemMessageId FACE_APPEARANCE_CHANGED;
 	
 	/**
 	 * ID: 1087<br>
-	 * Message: ヘアカラーが変更されました。
+	 * Message: ヘアカラーが変更されました。<br>
+	 * Message: Your hair color has changed.
 	 */
 	public static final SystemMessageId HAIR_COLOR_CHANGED;
 	
 	/**
 	 * ID: 1088<br>
-	 * Message: ヘアスタイルが変更されました。
+	 * Message: ヘアスタイルが変更されました。<br>
+	 * Message: Your hair style has been changed.
 	 */
 	public static final SystemMessageId HAIR_STYLE_CHANGED;
 	
 	/**
 	 * ID: 1089<br>
-	 * Message: $c1 が1周年記念アイテムを得ました。
+	 * Message: $c1 が1周年記念アイテムを得ました。<br>
+	 * Message: $c1 has obtained a first anniversary commemorative item.
 	 */
 	public static final SystemMessageId C1_OBTAINED_ANNIVERSARY_ITEM;
 	
 	/**
 	 * ID: 1090<br>
-	 * Message: フェイスタイプのポーション：Bを使用しますか。使用後の効果は永久に持続します。
+	 * Message: フェイスタイプのポーション：Bを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Being permanent, are you sure you wish to use the facelift potion - Type B?
 	 */
 	public static final SystemMessageId FACELIFT_POTION_TYPE_B;
 	
 	/**
 	 * ID: 1091<br>
-	 * Message: フェイスタイプのポーション：Cを使用しますか。使用後の効果は永久に持続します。
+	 * Message: フェイスタイプのポーション：Cを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Being permanent, are you sure you wish to use the facelift potion - Type C?
 	 */
 	public static final SystemMessageId FACELIFT_POTION_TYPE_C;
 	
 	/**
 	 * ID: 1092<br>
-	 * Message: ヘアカラーのポーション：Bを使用しますか。使用後の効果は永久に持続します。
+	 * Message: ヘアカラーのポーション：Bを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Being permanent, are you sure you wish to use the hair dye potion - Type B?
 	 */
 	public static final SystemMessageId HAIRDYE_POTION_TYPE_B;
 	
 	/**
 	 * ID: 1093<br>
-	 * Message: ヘアカラーのポーション：Cを使用しますか。使用後の効果は永久に持続します。
+	 * Message: ヘアカラーのポーション：Cを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Being permanent, are you sure you wish to use the hair dye potion - Type C?
 	 */
 	public static final SystemMessageId HAIRDYE_POTION_TYPE_C;
 	
 	/**
 	 * ID: 1094<br>
-	 * Message: ヘアカラーのポーション：Dを使用しますか。使用後の効果は永久に持続します。
+	 * Message: ヘアカラーのポーション：Dを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Being permanent, are you sure you wish to use the hair dye potion - Type D?
 	 */
 	public static final SystemMessageId HAIRDYE_POTION_TYPE_D;
 	
 	/**
 	 * ID: 1095<br>
-	 * Message: ヘアスタイルのポーション：Bを使用しますか。使用後の効果は永久に持続します。
+	 * Message: ヘアスタイルのポーション：Bを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Do you wish to use the hair style change potion - Type B? It is permanent.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_B;
 	
 	/**
 	 * ID: 1096<br>
-	 * Message: ヘアスタイルのポーション：Cを使用しますか。使用後の効果は永久に持続します。
+	 * Message: ヘアスタイルのポーション：Cを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Do you wish to use the hair style change potion - Type C? It is permanent.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_C;
 	
 	/**
 	 * ID: 1097<br>
-	 * Message: ヘアスタイルのポーション：Dを使用しますか。使用後の効果は永久に持続します。
+	 * Message: ヘアスタイルのポーション：Dを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Do you wish to use the hair style change potion - Type D? It is permanent.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_D;
 	
 	/**
 	 * ID: 1098<br>
-	 * Message: ヘアスタイルのポーション：Eを使用しますか。使用後の効果は永久に持続します。
+	 * Message: ヘアスタイルのポーション：Eを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Do you wish to use the hair style change potion - Type E? It is permanent.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_E;
 	
 	/**
 	 * ID: 1099<br>
-	 * Message: ヘアスタイルのポーション：Fを使用しますか。使用後の効果は永久に持続します。
+	 * Message: ヘアスタイルのポーション：Fを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Do you wish to use the hair style change potion - Type F? It is permanent.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_F;
 	
 	/**
 	 * ID: 1100<br>
-	 * Message: ヘアスタイルのポーション：Gを使用しますか。使用後の効果は永久に持続します。
+	 * Message: ヘアスタイルのポーション：Gを使用しますか。使用後の効果は永久に持続します。<br>
+	 * Message: Do you wish to use the hair style change potion - Type G? It is permanent.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_G;
 	
 	/**
 	 * ID: 1101<br>
-	 * Message: フェイスタイプのポーション：Bを使用しました。
+	 * Message: フェイスタイプのポーション：Bを使用しました。<br>
+	 * Message: Facelift potion - Type B is being applied.
 	 */
 	public static final SystemMessageId FACELIFT_POTION_TYPE_B_APPLIED;
 	
 	/**
 	 * ID: 1102<br>
-	 * Message: フェイスタイプのポーション：Cを使用しました。
+	 * Message: フェイスタイプのポーション：Cを使用しました。<br>
+	 * Message: Facelift potion - Type C is being applied.
 	 */
 	public static final SystemMessageId FACELIFT_POTION_TYPE_C_APPLIED;
 	
 	/**
 	 * ID: 1103<br>
-	 * Message: ヘアカラーのポーション：Bを使用しました。
+	 * Message: ヘアカラーのポーション：Bを使用しました。<br>
+	 * Message: Hair dye potion - Type B is being applied.
 	 */
 	public static final SystemMessageId HAIRDYE_POTION_TYPE_B_APPLIED;
 	
 	/**
 	 * ID: 1104<br>
-	 * Message: ヘアカラーのポーション：Cを使用しました。
+	 * Message: ヘアカラーのポーション：Cを使用しました。<br>
+	 * Message: Hair dye potion - Type C is being applied.
 	 */
 	public static final SystemMessageId HAIRDYE_POTION_TYPE_C_APPLIED;
 	
 	/**
 	 * ID: 1105<br>
-	 * Message: ヘアカラーのポーション：Dを使用しました。
+	 * Message: ヘアカラーのポーション：Dを使用しました。<br>
+	 * Message: Hair dye potion - Type D is being applied.
 	 */
 	public static final SystemMessageId HAIRDYE_POTION_TYPE_D_APPLIED;
 	
 	/**
 	 * ID: 1106<br>
-	 * Message: ヘアスタイルのポーション：Bを使用しました。
+	 * Message: ヘアスタイルのポーション：Bを使用しました。<br>
+	 * Message: The hair style chance potion - Type B is being used.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_B_USED;
 	
 	/**
 	 * ID: 1107<br>
-	 * Message: ヘアスタイルのポーション：Cを使用しました。
+	 * Message: ヘアスタイルのポーション：Cを使用しました。<br>
+	 * Message: The hair style chance potion - Type C is being used.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_C_USED;
 	
 	/**
 	 * ID: 1108<br>
-	 * Message: ヘアスタイルのポーション：Dを使用しました。
+	 * Message: ヘアスタイルのポーション：Dを使用しました。<br>
+	 * Message: The hair style chance potion - Type D is being used.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_D_USED;
 	
 	/**
 	 * ID: 1109<br>
-	 * Message: ヘアスタイルのポーション：Eを使用しました。
+	 * Message: ヘアスタイルのポーション：Eを使用しました。<br>
+	 * Message: The hair style chance potion - Type E is being used.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_E_USED;
 	
 	/**
 	 * ID: 1110<br>
-	 * Message: ヘアスタイルのポーション：Fを使用しました。
+	 * Message: ヘアスタイルのポーション：Fを使用しました。<br>
+	 * Message: The hair style chance potion - Type F is being used.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_F_USED;
 	
 	/**
 	 * ID: 1111<br>
-	 * Message: ヘアスタイルのポーション：Gを使用しました。
+	 * Message: ヘアスタイルのポーション：Gを使用しました。<br>
+	 * Message: The hair style chance potion - Type G is being used.
 	 */
 	public static final SystemMessageId HAIRSTYLE_POTION_TYPE_G_USED;
 	
 	/**
 	 * ID: 1112<br>
-	 * Message: 第$s1回目宝くじの当選金額は$s2アデナで、$s3名様が1等に当選しました。
+	 * Message: 第$s1回目宝くじの当選金額は$s2アデナで、$s3名様が1等に当選しました。<br>
+	 * Message: The prize amount for the winner of Lottery #$s1 is $s2 adena. We have $s3 first prize winners.
 	 */
 	public static final SystemMessageId AMOUNT_FOR_WINNER_S1_IS_S2_ADENA_WE_HAVE_S3_PRIZE_WINNER;
 	
 	/**
 	 * ID: 1113<br>
-	 * Message: 第$s1回目宝くじの当選金額は$s2アデナでしたが、高額当選者がいないため、当選金の繰り越しが発生しました。
+	 * Message: 第$s1回目宝くじの当選金額は$s2アデナでしたが、高額当選者がいないため、当選金の繰り越しが発生しました。<br>
+	 * Message: The prize amount for Lucky Lottery #$s1 is $s2 adena. There was no first prize winner in this drawing, therefore the jackpot will be added to the next drawing.
 	 */
 	public static final SystemMessageId AMOUNT_FOR_LOTTERY_S1_IS_S2_ADENA_NO_WINNER;
 	
 	/**
 	 * ID: 1114<br>
-	 * Message: 解散猶予期間中は攻城戦に登録できません。
+	 * Message: 解散猶予期間中は攻城戦に登録できません。<br>
+	 * Message: Your clan may not register to participate in a siege while under a grace period of the clan's dissolution.
 	 */
 	public static final SystemMessageId CANT_PARTICIPATE_IN_SIEGE_WHILE_DISSOLUTION_IN_PROGRESS;
 	
 	/**
 	 * ID: 1115<br>
-	 * Message: 戦闘中は個人降伏することはできません。
+	 * Message: 戦闘中は個人降伏することはできません。<br>
+	 * Message: Individuals may not surrender during combat.
 	 */
 	public static final SystemMessageId INDIVIDUALS_NOT_SURRENDER_DURING_COMBAT;
 	
 	/**
 	 * ID: 1116<br>
-	 * Message: 戦闘中は血盟から脱退できません。
+	 * Message: 戦闘中は血盟から脱退できません。<br>
+	 * Message: One cannot leave one's clan during combat.
 	 */
 	public static final SystemMessageId YOU_CANNOT_LEAVE_DURING_COMBAT;
 	
 	/**
 	 * ID: 1117<br>
-	 * Message: 戦闘中の血盟員を追放することはできません。
+	 * Message: 戦闘中の血盟員を追放することはできません。<br>
+	 * Message: A clan member may not be dismissed during combat.
 	 */
 	public static final SystemMessageId CLAN_MEMBER_CANNOT_BE_DISMISSED_DURING_COMBAT;
 	
 	/**
 	 * ID: 1118<br>
-	 * Message: インベントリの重量または個数が80％未満の時のみ進行できます。
+	 * Message: インベントリの重量または個数が80％未満の時のみ進行できます。<br>
+	 * Message: Progress in a quest is possible only when your inventory's weight and volume are less than 80 percent of capacity.
 	 */
 	public static final SystemMessageId INVENTORY_LESS_THAN_80_PERCENT;
 	
 	/**
 	 * ID: 1119<br>
-	 * Message: クエストの進行が正常に行なえない状況でクエストを試みたので、クエストが自動的に取り消されました。
+	 * Message: クエストの進行が正常に行なえない状況でクエストを試みたので、クエストが自動的に取り消されました。<br>
+	 * Message: Quest was automatically canceled when you attempted to settle the accounts of your quest while your inventory exceeded 80 percent of capacity.
 	 */
 	public static final SystemMessageId QUEST_CANCELED_INVENTORY_EXCEEDS_80_PERCENT;
 	
 	/**
 	 * ID: 1120<br>
-	 * Message: 血盟から脱退できませんでした。
+	 * Message: 血盟から脱退できませんでした。<br>
+	 * Message: You are still a member of the clan.
 	 */
 	public static final SystemMessageId STILL_CLAN_MEMBER;
 	
 	/**
 	 * ID: 1121<br>
-	 * Message: 推薦権がありません。
+	 * Message: 推薦権がありません。<br>
+	 * Message: You do not have the right to vote.
 	 */
 	public static final SystemMessageId NO_RIGHT_TO_VOTE;
 	
 	/**
 	 * ID: 1122<br>
-	 * Message: 推薦する相手が存在しません。
+	 * Message: 推薦する相手が存在しません。<br>
+	 * Message: There is no candidate.
 	 */
 	public static final SystemMessageId NO_CANDIDATE;
 	
 	/**
 	 * ID: 1123<br>
-	 * Message: インベントリの重量または個数が制限を越えているため、このスキルは使用できません。
+	 * Message: インベントリの重量または個数が制限を越えているため、このスキルは使用できません。<br>
+	 * Message: Weight and volume limit has been exceeded. That skill is currently unavailable.
 	 */
 	public static final SystemMessageId WEIGHT_EXCEEDED_SKILL_UNAVAILABLE;
 	
 	/**
 	 * ID: 1124<br>
-	 * Message: スキル使用中のため、アイテム製作ウィンドウを開くことができません。
+	 * Message: スキル使用中のため、アイテム製作ウィンドウを開くことができません。<br>
+	 * Message: Your recipe book may not be accessed while using a skill.
 	 */
 	public static final SystemMessageId NO_RECIPE_BOOK_WHILE_CASTING;
 	
 	/**
 	 * ID: 1125<br>
-	 * Message: トレード中は製作できません。
+	 * Message: トレード中は製作できません。<br>
+	 * Message: An item may not be created while engaged in trading.
 	 */
 	public static final SystemMessageId CANNOT_CREATED_WHILE_ENGAGED_IN_TRADING;
 	
 	/**
 	 * ID: 1126<br>
-	 * Message: マイナスの値は入力できません。
+	 * Message: マイナスの値は入力できません。<br>
+	 * Message: You cannot enter a negative number.
 	 */
 	public static final SystemMessageId NO_NEGATIVE_NUMBER;
 	
 	/**
 	 * ID: 1127<br>
-	 * Message: 基本価格の10倍以上の価格は設定できません。
+	 * Message: 基本価格の10倍以上の価格は設定できません。<br>
+	 * Message: The reward must be less than 10 times the standard price.
 	 */
 	public static final SystemMessageId REWARD_LESS_THAN_10_TIMES_STANDARD_PRICE;
 	
 	/**
 	 * ID: 1128<br>
-	 * Message: スキル使用中のため、個人商店や個人工房を開くことができません。
+	 * Message: スキル使用中のため、個人商店や個人工房を開くことができません。<br>
+	 * Message: A private store may not be opened while using a skill.
 	 */
 	public static final SystemMessageId PRIVATE_STORE_NOT_WHILE_CASTING;
 	
 	/**
 	 * ID: 1129<br>
-	 * Message: 乗船中のため、その行動はできませんでした。
+	 * Message: 乗船中のため、その行動はできませんでした。<br>
+	 * Message: This is not allowed while riding a ferry or boat.
 	 */
 	public static final SystemMessageId NOT_ALLOWED_ON_BOAT;
 	
 	/**
 	 * ID: 1130<br>
-	 * Message: 相手に$s1のダメージを与え、ダメージの転移対象に$s2のダメージを与えました。
+	 * Message: 相手に$s1のダメージを与え、ダメージの転移対象に$s2のダメージを与えました。<br>
+	 * Message: You have given $s1 damage to your target and $s2 damage to the servitor.
 	 */
 	public static final SystemMessageId GIVEN_S1_DAMAGE_TO_YOUR_TARGET_AND_S2_DAMAGE_TO_SERVITOR;
 	
 	/**
 	 * ID: 1131<br>
-	 * Message: 深夜になったため、$s1の効果を感じます。
+	 * Message: 深夜になったため、$s1の効果を感じます。<br>
+	 * Message: It is now midnight and the effect of $s1 can be felt.
 	 */
 	public static final SystemMessageId NIGHT_EFFECT_APPLIES;
 	
 	/**
 	 * ID: 1132<br>
-	 * Message: 夜が明けたため、$s1の効果が消えました。
+	 * Message: 夜が明けたため、$s1の効果が消えました。<br>
+	 * Message: It is now dawn and the effect of $s1 will now disappear.
 	 */
 	public static final SystemMessageId DAY_EFFECT_DISAPPEARS;
 	
 	/**
 	 * ID: 1133<br>
-	 * Message: HPが減ったため、$s1の効果を感じます。
+	 * Message: HPが減ったため、$s1の効果を感じます。<br>
+	 * Message: Since HP has decreased, the effect of $s1 can be felt.
 	 */
 	public static final SystemMessageId HP_DECREASED_EFFECT_APPLIES;
 	
 	/**
 	 * ID: 1134<br>
-	 * Message: HPが増えたため、$s1の効果が消えました。
+	 * Message: HPが増えたため、$s1の効果が消えました。<br>
+	 * Message: Since HP has increased, the effect of $s1 will disappear.
 	 */
 	public static final SystemMessageId HP_INCREASED_EFFECT_DISAPPEARS;
 	
 	/**
 	 * ID: 1135<br>
-	 * Message: 戦闘中に個人商店を開くことはできません。
+	 * Message: 戦闘中に個人商店を開くことはできません。<br>
+	 * Message: While you are engaged in combat, you cannot operate a private store or private workshop.
 	 */
 	public static final SystemMessageId CANT_OPERATE_PRIVATE_STORE_DURING_COMBAT;
 	
 	/**
 	 * ID: 1136<br>
-	 * Message: 不正なアクセスを試みたIPアドレスのため、$s1分間このサーバーに接続できません。別のサーバーをご利用ください。
+	 * Message: 不正なアクセスを試みたIPアドレスのため、$s1分間このサーバーに接続できません。別のサーバーをご利用ください。<br>
+	 * Message: Since there was an account that used this IP and attempted to log in illegally, this account is not allowed to connect to the game server for $s1 minutes. Please use another game server.
 	 */
 	public static final SystemMessageId ACCOUNT_NOT_ALLOWED_TO_CONNECT;
 	
 	/**
 	 * ID: 1137<br>
-	 * Message: $c1が $s2 $s3個を収穫しました。
+	 * Message: $c1が $s2 $s3個を収穫しました。<br>
+	 * Message: $c1 harvested $s3 $s2(s).
 	 */
 	public static final SystemMessageId C1_HARVESTED_S3_S2S;
 	
 	/**
 	 * ID: 1138<br>
-	 * Message: $c1が$s2を収穫しました。
+	 * Message: $c1が$s2を収穫しました。<br>
+	 * Message: $c1 harvested $s2(s).
 	 */
 	public static final SystemMessageId C1_HARVESTED_S2S;
 	
 	/**
 	 * ID: 1139<br>
-	 * Message: インベントリの総重量やスロット数の制限を超えることはできません。
+	 * Message: インベントリの総重量やスロット数の制限を超えることはできません。<br>
+	 * Message: The weight and volume limit of your inventory must not be exceeded.
 	 */
 	public static final SystemMessageId INVENTORY_LIMIT_MUST_NOT_BE_EXCEEDED;
 	
 	/**
 	 * ID: 1140<br>
-	 * Message: 門を開けますか。
+	 * Message: 門を開けますか。<br>
+	 * Message: Would you like to open the gate?
 	 */
 	public static final SystemMessageId WOULD_YOU_LIKE_TO_OPEN_THE_GATE;
 	
 	/**
 	 * ID: 1141<br>
-	 * Message: 門を閉じますか。
+	 * Message: 門を閉じますか。<br>
+	 * Message: Would you like to close the gate?
 	 */
 	public static final SystemMessageId WOULD_YOU_LIKE_TO_CLOSE_THE_GATE;
 	
 	/**
 	 * ID: 1142<br>
-	 * Message: 近くにすでに$s1がいるため、重複して召喚できません。
+	 * Message: 近くにすでに$s1がいるため、重複して召喚できません。<br>
+	 * Message: Since $s1 already exists nearby, you cannot summon it again.
 	 */
 	public static final SystemMessageId CANNOT_SUMMON_S1_AGAIN;
 	
 	/**
 	 * ID: 1143<br>
-	 * Message: 召喚獣の維持に必要なアイテムが足りないため、召喚獣が消えてしまいました。
+	 * Message: 召喚獣の維持に必要なアイテムが足りないため、召喚獣が消えてしまいました。<br>
+	 * Message: Since you do not have enough items to maintain the servitor's stay, the servitor will disappear.
 	 */
 	public static final SystemMessageId SERVITOR_DISAPPEARED_NOT_ENOUGH_ITEMS;
 	
 	/**
 	 * ID: 1144<br>
-	 * Message: ゲーム内に対話相手がいません。
+	 * Message: ゲーム内に対話相手がいません。<br>
+	 * Message: Currently, you don't have anybody to chat with in the game.
 	 */
 	public static final SystemMessageId NOBODY_IN_GAME_TO_CHAT;
 	
 	/**
 	 * ID: 1145<br>
-	 * Message: $c1に $s2を $s3 アデナで製作しました。
+	 * Message: $c1に $s2を $s3 アデナで製作しました。<br>
+	 * Message: $s2 has been created for $c1 after the payment of $s3 adena is received.
 	 */
 	public static final SystemMessageId S2_CREATED_FOR_C1_FOR_S3_ADENA;
 	
 	/**
 	 * ID: 1146<br>
-	 * Message: $c1が $s2を $s3 アデナで製作しました。
+	 * Message: $c1が $s2を $s3 アデナで製作しました。<br>
+	 * Message: $c1 created $s2 after receiving $s3 adena.
 	 */
 	public static final SystemMessageId C1_CREATED_S2_FOR_S3_ADENA;
 	
 	/**
 	 * ID: 1147<br>
-	 * Message: $c1に $s2 $s3個を $s4アデナで製作しました。
+	 * Message: $c1に $s2 $s3個を $s4アデナで製作しました。<br>
+	 * Message: $s2 $s3 have been created for $c1 at the price of $s4 adena.
 	 */
 	public static final SystemMessageId S2_S3_S_CREATED_FOR_C1_FOR_S4_ADENA;
 	
 	/**
 	 * ID: 1148<br>
-	 * Message: $c1が $s2 $s3個を $s4アデナで製作しました。
+	 * Message: $c1が $s2 $s3個を $s4アデナで製作しました。<br>
+	 * Message: $c1 created $s2 $s3 at the price of $s4 adena.
 	 */
 	public static final SystemMessageId C1_CREATED_S2_S3_S_FOR_S4_ADENA;
 	
 	/**
 	 * ID: 1149<br>
-	 * Message: $c1に $s2を $s3 アデナで製作できませんでした。
+	 * Message: $c1に $s2を $s3 アデナで製作できませんでした。<br>
+	 * Message: Your attempt to create $s2 for $c1 at the price of $s3 adena has failed.
 	 */
 	public static final SystemMessageId CREATION_OF_S2_FOR_C1_AT_S3_ADENA_FAILED;
 	
 	/**
 	 * ID: 1150<br>
-	 * Message: $c1が $s2を $s3 アデナで製作できませんでした。
+	 * Message: $c1が $s2を $s3 アデナで製作できませんでした。<br>
+	 * Message: $c1 has failed to create $s2 at the price of $s3 adena.
 	 */
 	public static final SystemMessageId C1_FAILED_TO_CREATE_S2_FOR_S3_ADENA;
 	
 	/**
 	 * ID: 1151<br>
-	 * Message: $c1に $s2を $s3 アデナで販売しました。
+	 * Message: $c1に $s2を $s3 アデナで販売しました。<br>
+	 * Message: $s2 is sold to $c1 at the price of $s3 adena.
 	 */
 	public static final SystemMessageId S2_SOLD_TO_C1_FOR_S3_ADENA;
 	
 	/**
 	 * ID: 1152<br>
-	 * Message: $c1に $s2 $s3個を $s4 アデナで販売しました。
+	 * Message: $c1に $s2 $s3個を $s4 アデナで販売しました。<br>
+	 * Message: $s2 $s3 have been sold to $c1 for $s4 adena.
 	 */
 	public static final SystemMessageId S3_S2_S_SOLD_TO_C1_FOR_S4_ADENA;
 	
 	/**
 	 * ID: 1153<br>
-	 * Message: $c1から $s2を $s3 アデナで購入しました。
+	 * Message: $c1から $s2を $s3 アデナで購入しました。<br>
+	 * Message: $s2 has been purchased from $c1 at the price of $s3 adena.
 	 */
 	public static final SystemMessageId S2_PURCHASED_FROM_C1_FOR_S3_ADENA;
 	
 	/**
 	 * ID: 1154<br>
-	 * Message: $c1から $s2 $s3個を $s4 アデナで購入しました。
+	 * Message: $c1から $s2 $s3個を $s4 アデナで購入しました。<br>
+	 * Message: $s3 $s2 has been purchased from $c1 for $s4 adena.
 	 */
 	public static final SystemMessageId S3_S2_S_PURCHASED_FROM_C1_FOR_S4_ADENA;
 	
 	/**
 	 * ID: 1155<br>
-	 * Message: $c1に +$s2$s3を $s4 アデナで販売しました。
+	 * Message: $c1に +$s2$s3を $s4 アデナで販売しました。<br>
+	 * Message: +$s2 $s3 have been sold to $c1 for $s4 adena.
 	 */
 	public static final SystemMessageId S3_S2_SOLD_TO_C1_FOR_S4_ADENA;
 	
 	/**
 	 * ID: 1156<br>
-	 * Message: $c1から +$s2$s3を $s4 アデナで購入しました。
+	 * Message: $c1から +$s2$s3を $s4 アデナで購入しました。<br>
+	 * Message: +$s2 $s3 has been purchased from $c1 for $s4 adena.
 	 */
 	public static final SystemMessageId S2_S3_PURCHASED_FROM_C1_FOR_S4_ADENA;
 	
 	/**
 	 * ID: 1157<br>
-	 * Message: 試着は約10秒間で、状態の変化があると取り消される場合があります。
+	 * Message: 試着は約10秒間で、状態の変化があると取り消される場合があります。<br>
+	 * Message: Trying on state lasts for only 5 seconds. When a character's state changes, it can be cancelled.
 	 */
 	public static final SystemMessageId TRYING_ON_STATE;
 	
 	/**
 	 * ID: 1158<br>
-	 * Message: 高過ぎる所からは飛び降りることができません。
+	 * Message: 高過ぎる所からは飛び降りることができません。<br>
+	 * Message: You cannot dismount from this elevation.
 	 */
 	public static final SystemMessageId CANNOT_DISMOUNT_FROM_ELEVATION;
 	
 	/**
 	 * ID: 1159<br>
-	 * Message: 話せる島発の定期船が約10分後にグルーディン港に到着します。
+	 * Message: 話せる島発の定期船が約10分後にグルーディン港に到着します。<br>
+	 * Message: The ferry from Talking Island will arrive at Gludin Harbor in approximately 10 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_TALKING_ARRIVE_AT_GLUDIN_10_MINUTES;
 	
 	/**
 	 * ID: 1160<br>
-	 * Message: 話せる島発の定期船が約5分後にグルーディン港に到着します。
+	 * Message: 話せる島発の定期船が約5分後にグルーディン港に到着します。<br>
+	 * Message: The ferry from Talking Island will be arriving at Gludin Harbor in approximately 5 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_TALKING_ARRIVE_AT_GLUDIN_5_MINUTES;
 	
 	/**
 	 * ID: 1161<br>
-	 * Message: 話せる島発の定期船が約1分後にグルーディン港に到着します。
+	 * Message: 話せる島発の定期船が約1分後にグルーディン港に到着します。<br>
+	 * Message: The ferry from Talking Island will be arriving at Gludin Harbor in approximately 1 minute.
 	 */
 	public static final SystemMessageId FERRY_FROM_TALKING_ARRIVE_AT_GLUDIN_1_MINUTE;
 	
 	/**
 	 * ID: 1162<br>
-	 * Message: ギラン港発の定期船が約15分後に話せる島に到着します。
+	 * Message: ギラン港発の定期船が約15分後に話せる島に到着します。<br>
+	 * Message: The ferry from Giran Harbor will be arriving at Talking Island in approximately 15 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_GIRAN_ARRIVE_AT_TALKING_15_MINUTES;
 	
 	/**
 	 * ID: 1163<br>
-	 * Message: ギラン港発の定期船が約10分後に話せる島に到着します。
+	 * Message: ギラン港発の定期船が約10分後に話せる島に到着します。<br>
+	 * Message: The ferry from Giran Harbor will be arriving at Talking Island in approximately 10 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_GIRAN_ARRIVE_AT_TALKING_10_MINUTES;
 	
 	/**
 	 * ID: 1164<br>
-	 * Message: ギラン港発の定期船が約5分後に話せる島に到着します。
+	 * Message: ギラン港発の定期船が約5分後に話せる島に到着します。<br>
+	 * Message: The ferry from Giran Harbor will be arriving at Talking Island in approximately 5 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_GIRAN_ARRIVE_AT_TALKING_5_MINUTES;
 	
 	/**
 	 * ID: 1165<br>
-	 * Message: ギラン港発の定期船が約1分後に話せる島に到着します。
+	 * Message: ギラン港発の定期船が約1分後に話せる島に到着します。<br>
+	 * Message: The ferry from Giran Harbor will be arriving at Talking Island in approximately 1 minute.
 	 */
 	public static final SystemMessageId FERRY_FROM_GIRAN_ARRIVE_AT_TALKING_1_MINUTE;
 	
 	/**
 	 * ID: 1166<br>
-	 * Message: 話せる島発の定期船が約20分後にギラン港に到着します。
+	 * Message: 話せる島発の定期船が約20分後にギラン港に到着します。<br>
+	 * Message: The ferry from Talking Island will be arriving at Giran Harbor in approximately 20 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_TALKING_ARRIVE_AT_GIRAN_20_MINUTES;
 	
 	/**
 	 * ID: 1167<br>
-	 * Message: 話せる島発の定期船が約15分後にギラン港に到着します。
+	 * Message: 話せる島発の定期船が約15分後にギラン港に到着します。<br>
+	 * Message: The ferry from Talking Island will be arriving at Giran Harbor in approximately 20 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_TALKING_ARRIVE_AT_GIRAN_15_MINUTES;
 	
 	/**
 	 * ID: 1168<br>
-	 * Message: 話せる島発の定期船が約10分後にギラン港に到着します。
+	 * Message: 話せる島発の定期船が約10分後にギラン港に到着します。<br>
+	 * Message: The ferry from Talking Island will be arriving at Giran Harbor in approximately 20 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_TALKING_ARRIVE_AT_GIRAN_10_MINUTES;
 	
 	/**
 	 * ID: 1169<br>
-	 * Message: 話せる島発の定期船が約5分後にギラン港に到着します。
+	 * Message: 話せる島発の定期船が約5分後にギラン港に到着します。<br>
+	 * Message: The ferry from Talking Island will be arriving at Giran Harbor in approximately 20 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_TALKING_ARRIVE_AT_GIRAN_5_MINUTES;
 	
 	/**
 	 * ID: 1170<br>
-	 * Message: 話せる島発の定期船が約1分後にギラン港に到着します。
+	 * Message: 話せる島発の定期船が約1分後にギラン港に到着します。<br>
+	 * Message: The ferry from Talking Island will be arriving at Giran Harbor in approximately 1 minute.
 	 */
 	public static final SystemMessageId FERRY_FROM_TALKING_ARRIVE_AT_GIRAN_1_MINUTE;
 	
 	/**
 	 * ID: 1171<br>
-	 * Message: 約20分後インナドリル遊覧船が乗船場に到着します。
+	 * Message: 約20分後インナドリル遊覧船が乗船場に到着します。<br>
+	 * Message: The Innadril pleasure boat will arrive in approximately 20 minutes.
 	 */
 	public static final SystemMessageId INNADRIL_BOAT_ARRIVE_20_MINUTES;
 	
 	/**
 	 * ID: 1172<br>
-	 * Message: 約15分後インナドリル遊覧船が乗船場に到着します。
+	 * Message: 約15分後インナドリル遊覧船が乗船場に到着します。<br>
+	 * Message: The Innadril pleasure boat will arrive in approximately 15 minutes.
 	 */
 	public static final SystemMessageId INNADRIL_BOAT_ARRIVE_15_MINUTES;
 	
 	/**
 	 * ID: 1173<br>
-	 * Message: 約10分後インナドリル遊覧船が乗船場に到着します。
+	 * Message: 約10分後インナドリル遊覧船が乗船場に到着します。<br>
+	 * Message: The Innadril pleasure boat will arrive in approximately 10 minutes.
 	 */
 	public static final SystemMessageId INNADRIL_BOAT_ARRIVE_10_MINUTES;
 	
 	/**
 	 * ID: 1174<br>
-	 * Message: 約5分後インナドリル遊覧船が乗船場に到着します。
+	 * Message: 約5分後インナドリル遊覧船が乗船場に到着します。<br>
+	 * Message: The Innadril pleasure boat will arrive in approximately 5 minutes.
 	 */
 	public static final SystemMessageId INNADRIL_BOAT_ARRIVE_5_MINUTES;
 	
 	/**
 	 * ID: 1175<br>
-	 * Message: 約1分後インナドリル遊覧船が乗船場に到着します。
+	 * Message: 約1分後インナドリル遊覧船が乗船場に到着します。<br>
+	 * Message: The Innadril pleasure boat will arrive in approximately 1 minute.
 	 */
 	public static final SystemMessageId INNADRIL_BOAT_ARRIVE_1_MINUTE;
 	
 	/**
 	 * ID: 1176<br>
-	 * Message: 競争期間です。
+	 * Message: 競争期間です。<br>
+	 * Message: The SSQ Competition period is underway.
 	 */
 	public static final SystemMessageId SSQ_COMPETITION_UNDERWAY;
 	
 	/**
 	 * ID: 1177<br>
-	 * Message: 封印有効期間です。
+	 * Message: 封印有効期間です。<br>
+	 * Message: This is the seal validation period.
 	 */
 	public static final SystemMessageId VALIDATION_PERIOD;
 	
 	/**
 	 * ID: 1178<br>
-	 * Message: この封印を所有する決死隊は、封印有効期間中、貪欲の封印によって開かれる特別なダンジョンに入場することができ、特別なダンジョンに出現するマモンの商人と取引することができ、使徒のネクロポリスでアナキム、またはリリスに会うことができます。
+	 * Message: この封印を所有する決死隊は、封印有効期間中、貪欲の封印によって開かれる特別なダンジョンに入場することができ、特別なダンジョンに出現するマモンの商人と取引することができ、使徒のネクロポリスでアナキム、またはリリスに会うことができます。<br>
+	 * Message: <Seal of Avarice description>
 	 */
 	public static final SystemMessageId AVARICE_DESCRIPTION;
 	
 	/**
 	 * ID: 1179<br>
-	 * Message: この封印を所有する決死隊は、封印有効期間中、啓示の封印によって開かれる特別なダンジョンに入場することができ、村にいる司祭から、ダンジョンへのテレポート サービスを受けることができ、ダンジョン内に出現するマモンの鍛冶屋に会うことができます。啓示を言い伝える者(滅亡を叫ぶ者)が村に現れ、勝者側(敗者側)に有益な(有害な)魔法を詠唱します。
+	 * Message: この封印を所有する決死隊は、封印有効期間中、啓示の封印によって開かれる特別なダンジョンに入場することができ、村にいる司祭から、ダンジョンへのテレポート サービスを受けることができ、ダンジョン内に出現するマモンの鍛冶屋に会うことができます。啓示を言い伝える者(滅亡を叫ぶ者)が村に現れ、勝者側(敗者側)に有益な(有害な)魔法を詠唱します。<br>
+	 * Message: <Seal of Gnosis description>
 	 */
 	public static final SystemMessageId GNOSIS_DESCRIPTION;
 	
 	/**
 	 * ID: 1180<br>
-	 * Message: 封印有効期間中、決死隊の最大CP量および守城傭兵/城門、城壁アップ グレード費用/城門、城壁基本防御力/城の税率の限界値がこの封印を所有した決死隊側に有利なように変更されます。また、攻城戦兵器の使用も制限されます。黄昏の革命軍がこの封印を所有すると、攻城戦の際に城所有血盟だけが守城側に参加できるようになります。
+	 * Message: 封印有効期間中、決死隊の最大CP量および守城傭兵/城門、城壁アップ グレード費用/城門、城壁基本防御力/城の税率の限界値がこの封印を所有した決死隊側に有利なように変更されます。また、攻城戦兵器の使用も制限されます。黄昏の革命軍がこの封印を所有すると、攻城戦の際に城所有血盟だけが守城側に参加できるようになります。<br>
+	 * Message: <Seal of Strife description>
 	 */
 	public static final SystemMessageId STRIFE_DESCRIPTION;
 	
 	/**
 	 * ID: 1181<br>
-	 * Message: 本当にタイトルを削除しますか。
+	 * Message: 本当にタイトルを削除しますか。<br>
+	 * Message: Do you really wish to change the title?
 	 */
 	public static final SystemMessageId CHANGE_TITLE_CONFIRM;
 	
 	/**
 	 * ID: 1182<br>
-	 * Message: 本当に削除しますか。
+	 * Message: 本当に削除しますか。<br>
+	 * Message: Are you sure you wish to delete the clan crest?
 	 */
 	public static final SystemMessageId CREST_DELETE_CONFIRM;
 	
 	/**
 	 * ID: 1183<br>
-	 * Message: 初期状態です。
+	 * Message: 初期状態です。<br>
+	 * Message: This is the initial period.
 	 */
 	public static final SystemMessageId INITIAL_PERIOD;
 	
 	/**
 	 * ID: 1184<br>
-	 * Message: サーバー内部集計期間です。
+	 * Message: サーバー内部集計期間です。<br>
+	 * Message: This is a period of calculating statistics in the server.
 	 */
 	public static final SystemMessageId RESULTS_PERIOD;
 	
 	/**
 	 * ID: 1185<br>
-	 * Message: 日後に削除されます。
+	 * Message: 日後に削除されます。<br>
+	 * Message: days left until deletion.
 	 */
 	public static final SystemMessageId DAYS_LEFT_UNTIL_DELETION;
 	
 	/**
 	 * ID: 1186<br>
-	 * Message: 新規アカウントを作成するためには、リネージュII 公式サイト（http://lineage2.plaync.jp/）で会員登録をする必要があります。
+	 * Message: 新規アカウントを作成するためには、リネージュII 公式サイト（http://lineage2.plaync.jp/）で会員登録をする必要があります。<br>
+	 * Message: To create a new account, please visit the PlayNC website (http://www.plaync.com/us/support/)
 	 */
 	public static final SystemMessageId TO_CREATE_ACCOUNT_VISIT_WEBSITE;
 	
 	/**
 	 * ID: 1187<br>
-	 * Message: アカウントを紛失した場合、リネージュII 公式サイト（http://lineage2.plaync.jp/）のサポートからお問い合わせください。
+	 * Message: アカウントを紛失した場合、リネージュII 公式サイト（http://lineage2.plaync.jp/）のサポートからお問い合わせください。<br>
+	 * Message: If you forgotten your account information or password, please visit the Support Center on the PlayNC website(http://www.plaync.com/us/support/)
 	 */
 	public static final SystemMessageId ACCOUNT_INFORMATION_FORGOTTON_VISIT_WEBSITE;
 	
 	/**
 	 * ID: 1188<br>
-	 * Message: これ以上推薦を受けられない状態です。
+	 * Message: これ以上推薦を受けられない状態です。<br>
+	 * Message: Your selected target can no longer receive a recommendation.
 	 */
 	public static final SystemMessageId YOUR_TARGET_NO_LONGER_RECEIVE_A_RECOMMENDATION;
 	
 	/**
 	 * ID: 1189<br>
-	 * Message: 攻城側が臨時同盟を結びました。最初の城主交替時に解除されます。
+	 * Message: 攻城側が臨時同盟を結びました。最初の城主交替時に解除されます。<br>
+	 * Message: This temporary alliance of the Castle Attacker team is in effect. It will be dissolved when the Castle Lord is replaced.
 	 */
 	public static final SystemMessageId TEMPORARY_ALLIANCE;
 	
 	/**
 	 * ID: 1189<br>
-	 * Message: 攻城側が臨時同盟を結びました。最初の城主交替時に解除されます。
+	 * Message: 攻城側が臨時同盟を結びました。最初の城主交替時に解除されます。<br>
+	 * Message: This temporary alliance of the Castle Attacker team has been dissolved.
 	 */
 	public static final SystemMessageId TEMPORARY_ALLIANCE_DISSOLVED;
 	
 	/**
 	 * ID: 1191<br>
-	 * Message: グルーディン港発の定期船が約10分後に話せる島に到着します。
+	 * Message: グルーディン港発の定期船が約10分後に話せる島に到着します。<br>
+	 * Message: The ferry from Gludin Harbor will be arriving at Talking Island in approximately 10 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_GLUDIN_ARRIVE_AT_TALKING_10_MINUTES;
 	
 	/**
 	 * ID: 1192<br>
-	 * Message: グルーディン港発の定期船が約5分後に話せる島に到着します。
+	 * Message: グルーディン港発の定期船が約5分後に話せる島に到着します。<br>
+	 * Message: The ferry from Gludin Harbor will be arriving at Talking Island in approximately 5 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_GLUDIN_ARRIVE_AT_TALKING_5_MINUTES;
 	
 	/**
 	 * ID: 1193<br>
-	 * Message: グルーディン港発の定期船が約1分後に話せる島に到着します。
+	 * Message: グルーディン港発の定期船が約1分後に話せる島に到着します。<br>
+	 * Message: The ferry from Gludin Harbor will be arriving at Talking Island in approximately 1 minute.
 	 */
 	public static final SystemMessageId FERRY_FROM_GLUDIN_ARRIVE_AT_TALKING_1_MINUTE;
 	
 	/**
 	 * ID: 1194<br>
-	 * Message: 傭兵は封印有効期間内に、攻城戦開始前まで配置することができます。
+	 * Message: 傭兵は封印有効期間内に、攻城戦開始前まで配置することができます。<br>
+	 * Message: A mercenary can be assigned to a position from the beginning of the Seal Validatio period until the time when a siege starts.
 	 */
 	public static final SystemMessageId MERC_CAN_BE_ASSIGNED;
 	
 	/**
 	 * ID: 1195<br>
-	 * Message: この傭兵は戦乱の封印により配置できません。
+	 * Message: この傭兵は戦乱の封印により配置できません。<br>
+	 * Message: This mercenary cannot be assigned to a position by using the Seal of Strife.
 	 */
 	public static final SystemMessageId MERC_CANT_BE_ASSIGNED_USING_STRIFE;
 	
 	/**
 	 * ID: 1196<br>
-	 * Message: 気が最高段階に達したため、これ以上気を集めることはできません。
+	 * Message: 気が最高段階に達したため、これ以上気を集めることはできません。<br>
+	 * Message: Your force has reached maximum capacity.
 	 */
 	public static final SystemMessageId FORCE_MAXIMUM;
 	
 	/**
 	 * ID: 1197<br>
-	 * Message: 召喚獣の費用で$s1$s2個が消耗されました。
+	 * Message: 召喚獣の費用で$s1$s2個が消耗されました。<br>
+	 * Message: Summoning a servitor costs $s2 $s1.
 	 */
 	public static final SystemMessageId SUMMONING_SERVITOR_COSTS_S2_S1;
 	
 	/**
 	 * ID: 1198<br>
-	 * Message: クリスタライズしました。
+	 * Message: クリスタライズしました。<br>
+	 * Message: The item has been successfully crystallized.
 	 */
 	public static final SystemMessageId CRYSTALLIZATION_SUCCESSFUL;
 	
 	/**
 	 * ID: 1199<br>
-	 * Message: =======<血盟戦の相手>=======
+	 * Message: =======<血盟戦の相手>=======<br>
+	 * Message: =======<Clan War Target>=======
 	 */
 	public static final SystemMessageId CLAN_WAR_HEADER;
 	
 	/**
 	 * ID: 1200<br>
-	 * Message: =$s1($s2同盟)
+	 * Message:($s1 ($s2 Alliance)
 	 */
 	public static final SystemMessageId S1_S2_ALLIANCE;
 	
 	/**
 	 * ID: 1201<br>
-	 * Message: 中断するクエストを選択してください。
+	 * Message: 中断するクエストを選択してください。<br>
+	 * Message: Please select the quest you wish to abort.
 	 */
 	public static final SystemMessageId SELECT_QUEST_TO_ABOR;
 	
 	/**
 	 * ID: 1202<br>
-	 * Message: =$s1(同盟なし)
+	 * Message:($s1 (No alliance exists)
 	 */
 	public static final SystemMessageId S1_NO_ALLI_EXISTS;
 	
 	/**
 	 * ID: 1203<br>
-	 * Message: 戦争中ではありません。
+	 * Message: 戦争中ではありません。<br>
+	 * Message: There is no clan war in progress.
 	 */
 	public static final SystemMessageId NO_WAR_IN_PROGRESS;
 	
 	/**
 	 * ID: 1204<br>
-	 * Message: スクリーンショットを保存しました。($s1$s2x$s3)
+	 * Message: スクリーンショットを保存しました。($s1$s2x$s3)<br>
+	 * Message: The screenshot has been saved. ($s1 $s2x$s3)
 	 */
 	public static final SystemMessageId SCREENSHOT;
 	
 	/**
 	 * ID: 1205<br>
-	 * Message: 受信トレイがいっぱいになりました。受信トレイは100個まで保存できます。
+	 * Message: 受信トレイがいっぱいになりました。受信トレイは100個まで保存できます。<br>
+	 * Message: Your mailbox is full. There is a 100 message limit.
 	 */
 	public static final SystemMessageId MAILBOX_FULL;
 	
 	/**
 	 * ID: 1206<br>
-	 * Message: メモがいっぱいになりました。メモは100個まで登録できます。
+	 * Message: メモがいっぱいになりました。メモは100個まで登録できます。<br>
+	 * Message: The memo box is full. There is a 100 memo limit.
 	 */
 	public static final SystemMessageId MEMOBOX_FULL;
 	
 	/**
 	 * ID: 1207<br>
-	 * Message: 内容を入力してください。
+	 * Message: 内容を入力してください。<br>
+	 * Message: Please make an entry in the field.
 	 */
 	public static final SystemMessageId MAKE_AN_ENTRY;
 	
 	/**
 	 * ID: 1208<br>
-	 * Message: $c1が死亡し、$s2$s3個を落としました。
+	 * Message: $c1が死亡し、$s2$s3個を落としました。<br>
+	 * Message: $c1 died and dropped $s3 $s2.
 	 */
 	public static final SystemMessageId C1_DIED_DROPPED_S3_S2;
 	
 	/**
 	 * ID: 1209<br>
-	 * Message: 討伐成功、おめでとうございます。
+	 * Message: 討伐成功、おめでとうございます。<br>
+	 * Message: Congratulations. Your raid was successful.
 	 */
 	public static final SystemMessageId RAID_WAS_SUCCESSFUL;
 	
 	/**
 	 * ID: 1210<br>
-	 * Message: セブン サイン：競争期間が始まりました。黎明の司祭か黄昏の司祭を訪ねることで参加できます。
+	 * Message: セブン サイン：競争期間が始まりました。黎明の司祭か黄昏の司祭を訪ねることで参加できます。<br>
+	 * Message: Seven Signs: The quest event period has begun. Visit a Priest of Dawn or Priestess of Dusk to participate in the event.
 	 */
 	public static final SystemMessageId QUEST_EVENT_PERIOD_BEGUN;
 	
 	/**
 	 * ID: 1211<br>
-	 * Message: セブン サイン：競争期間を終了しました。次の競争期間は1週間後に始まります。
+	 * Message: セブン サイン：競争期間を終了しました。次の競争期間は1週間後に始まります。<br>
+	 * Message: Seven Signs: The quest event period has ended. The next quest event will start in one week.
 	 */
 	public static final SystemMessageId QUEST_EVENT_PERIOD_ENDED;
 	
 	/**
 	 * ID: 1212<br>
-	 * Message: セブン サイン：黎明の君主たちが貪欲の封印を獲得しました。
+	 * Message: セブン サイン：黎明の君主たちが貪欲の封印を獲得しました。<br>
+	 * Message: Seven Signs: The Lords of Dawn have obtained the Seal of Avarice.
 	 */
 	public static final SystemMessageId DAWN_OBTAINED_AVARICE;
 	
 	/**
 	 * ID: 1213<br>
-	 * Message: セブン サイン：黎明の君主たちが啓示の封印を獲得しました。
+	 * Message: セブン サイン：黎明の君主たちが啓示の封印を獲得しました。<br>
+	 * Message: Seven Signs: The Lords of Dawn have obtained the Seal of Gnosis.
 	 */
 	public static final SystemMessageId DAWN_OBTAINED_GNOSIS;
 	
 	/**
 	 * ID: 1214<br>
-	 * Message: セブン サイン：黎明の君主たちが戦乱の封印を獲得しました。
+	 * Message: セブン サイン：黎明の君主たちが戦乱の封印を獲得しました。<br>
+	 * Message: Seven Signs: The Lords of Dawn have obtained the Seal of Strife.
 	 */
 	public static final SystemMessageId DAWN_OBTAINED_STRIFE;
 	
 	/**
 	 * ID: 1215<br>
-	 * Message: セブン サイン：黄昏の革命軍が貪欲の封印を獲得しました。
+	 * Message: セブン サイン：黄昏の革命軍が貪欲の封印を獲得しました。<br>
+	 * Message: Seven Signs: The Revolutionaries of Dusk have obtained the Seal of Avarice.
 	 */
 	public static final SystemMessageId DUSK_OBTAINED_AVARICE;
 	
 	/**
 	 * ID: 1216<br>
-	 * Message: セブン サイン：黄昏の革命軍が啓示の封印を獲得しました。
+	 * Message: セブン サイン：黄昏の革命軍が啓示の封印を獲得しました。<br>
+	 * Message: Seven Signs: The Revolutionaries of Dusk have obtained the Seal of Gnosis.
 	 */
 	public static final SystemMessageId DUSK_OBTAINED_GNOSIS;
 	
 	/**
 	 * ID: 1217<br>
-	 * Message: セブン サイン：黄昏の革命軍が戦乱の封印を獲得しました。
+	 * Message: セブン サイン：黄昏の革命軍が戦乱の封印を獲得しました。<br>
+	 * Message: Seven Signs: The Revolutionaries of Dusk have obtained the Seal of Strife.
 	 */
 	public static final SystemMessageId DUSK_OBTAINED_STRIFE;
 	
 	/**
 	 * ID: 1218<br>
-	 * Message: セブン サイン：封印有効期間が始まります。
+	 * Message: セブン サイン：封印有効期間が始まります。<br>
+	 * Message: Seven Signs: The Seal Validation period has begun.
 	 */
 	public static final SystemMessageId SEAL_VALIDATION_PERIOD_BEGUN;
 	
 	/**
 	 * ID: 1219<br>
-	 * Message: セブン サイン：封印有効期間が終了しました。
+	 * Message: セブン サイン：封印有効期間が終了しました。<br>
+	 * Message: Seven Signs: The Seal Validation period has ended.
 	 */
 	public static final SystemMessageId SEAL_VALIDATION_PERIOD_ENDED;
 	
 	/**
 	 * ID: 1220<br>
-	 * Message: 本当に召喚しますか。
+	 * Message: 本当に召喚しますか。<br>
+	 * Message: Are you sure you wish to summon it?
 	 */
 	public static final SystemMessageId SUMMON_CONFIRM;
 	
 	/**
 	 * ID: 1221<br>
-	 * Message: 本当に帰還させますか。
+	 * Message: 本当に帰還させますか。<br>
+	 * Message: Are you sure you wish to return it?
 	 */
 	public static final SystemMessageId RETURN_CONFIRM;
 	
 	/**
 	 * ID: 1222<br>
-	 * Message: 現在地： $s1、$s2、$s3 (サポート相談所)
+	 * Message: 現在地： $s1、$s2、$s3 (サポート相談所)<br>
+	 * Message: Current location : $s1, $s2, $s3 (GM Consultation Service)
 	 */
 	public static final SystemMessageId LOC_GM_CONSULATION_SERVICE_S1_S2_S3;
 	
 	/**
 	 * ID: 1223<br>
-	 * Message: 5分後にギラン港から話せる島へ出発します。
+	 * Message: 5分後にギラン港から話せる島へ出発します。<br>
+	 * Message: We depart for Talking Island in five minutes.
 	 */
 	public static final SystemMessageId DEPART_FOR_TALKING_5_MINUTES;
 	
 	/**
 	 * ID: 1224<br>
-	 * Message: 1分後にギラン港から話せる島へ出発します。
+	 * Message: 1分後にギラン港から話せる島へ出発します。<br>
+	 * Message: We depart for Talking Island in one minute.
 	 */
 	public static final SystemMessageId DEPART_FOR_TALKING_1_MINUTE;
 	
 	/**
 	 * ID: 1225<br>
-	 * Message: 間もなくギラン港から話せる島へ出発します。
+	 * Message: 間もなくギラン港から話せる島へ出発します。<br>
+	 * Message: All aboard for Talking Island
 	 */
 	public static final SystemMessageId DEPART_FOR_TALKING;
 	
 	/**
 	 * ID: 1226<br>
-	 * Message: ギラン港から話せる島へ出発します。
+	 * Message: ギラン港から話せる島へ出発します。<br>
+	 * Message: We are now leaving for Talking Island.
 	 */
 	public static final SystemMessageId LEAVING_FOR_TALKING;
 	
 	/**
 	 * ID: 1227<br>
-	 * Message: $s1個の未読のメールがあります。
+	 * Message: $s1個の未読のメールがあります。<br>
+	 * Message: You have $s1 unread messages.
 	 */
 	public static final SystemMessageId S1_UNREAD_MESSAGES;
 	
 	/**
 	 * ID: 1228<br>
-	 * Message: $c1に遮断されたため、メールが送れません。
+	 * Message: $c1に遮断されたため、メールが送れません。<br>
+	 * Message: $c1 has blocked you. You cannot send mail to $c1.
 	 */
 	public static final SystemMessageId C1_BLOCKED_YOU_CANNOT_MAIL;
 	
 	/**
 	 * ID: 1229<br>
-	 * Message: メールをこれ以上送信できません。アカウント当たり、一日に10通まで送信できます。
+	 * Message: メールをこれ以上送信できません。アカウント当たり、一日に10通まで送信できます。<br>
+	 * Message: No more messages may be sent at this time. Each account is allowed 10 messages per day.
 	 */
 	public static final SystemMessageId NO_MORE_MESSAGES_TODAY;
 	
 	/**
 	 * ID: 1230<br>
-	 * Message: メールの送信は最大5人まで可能です。
+	 * Message: メールの送信は最大5人まで可能です。<br>
+	 * Message: You are limited to five recipients at a time.
 	 */
 	public static final SystemMessageId ONLY_FIVE_RECIPIENTS;
 	
 	/**
 	 * ID: 1231<br>
-	 * Message: メールを送信しました。
+	 * Message: メールを送信しました。<br>
+	 * Message: You've sent mail.
 	 */
 	public static final SystemMessageId SENT_MAIL;
 	
 	/**
 	 * ID: 1232<br>
-	 * Message: メールの送信に失敗しました。
+	 * Message: メールの送信に失敗しました。<br>
+	 * Message: The message was not sent.
 	 */
 	public static final SystemMessageId MESSAGE_NOT_SENT;
 	
 	/**
 	 * ID: 1233<br>
-	 * Message: メールが届きました。
+	 * Message: メールが届きました。<br>
+	 * Message: You've got mail.
 	 */
 	public static final SystemMessageId NEW_MAIL;
 	
 	/**
 	 * ID: 1234<br>
-	 * Message: メールを下書きトレイに保存しました。
+	 * Message: メールを下書きトレイに保存しました。<br>
+	 * Message: The mail has been stored in your temporary mailbox.
 	 */
 	public static final SystemMessageId MAIL_STORED_IN_MAILBOX;
 	
 	/**
 	 * ID: 1235<br>
-	 * Message: 友人をすべて削除しますか。
+	 * Message: 友人をすべて削除しますか。<br>
+	 * Message: Do you wish to delete all your friends?
 	 */
 	public static final SystemMessageId ALL_FRIENDS_DELETE_CONFIRM;
 	
 	/**
 	 * ID: 1236<br>
-	 * Message: セキュリティ カード番号を入力してください。
+	 * Message: セキュリティ カード番号を入力してください。<br>
+	 * Message: Please enter security card number.
 	 */
 	public static final SystemMessageId ENTER_SECURITY_CARD_NUMBER;
 	
 	/**
 	 * ID: 1237<br>
-	 * Message: $s1番のカード番号を入力してください。
+	 * Message: $s1番のカード番号を入力してください。<br>
+	 * Message: Please enter the card number for number $s1.
 	 */
 	public static final SystemMessageId ENTER_CARD_NUMBER_FOR_S1;
 	
 	/**
 	 * ID: 1238<br>
-	 * Message: 下書きトレイがいっぱいになったため、これ以上保存できません。10個まで保存できます。
+	 * Message: 下書きトレイがいっぱいになったため、これ以上保存できません。10個まで保存できます。<br>
+	 * Message: Your temporary mailbox is full. No more mail can be stored; you have reached the 10 message limit.
 	 */
 	public static final SystemMessageId TEMP_MAILBOX_FULL;
 	
 	/**
 	 * ID: 1239<br>
-	 * Message: キーセーフ モジュールのローディングに失敗しました。再度行う場合は、ゲーム終了後再実行してください。
+	 * Message: キーセーフ モジュールのローディングに失敗しました。再度行う場合は、ゲーム終了後再実行してください。<br>
+	 * Message: The keyboard security module has failed to load. Please exit the game and try again.
 	 */
 	public static final SystemMessageId KEYBOARD_MODULE_FAILED_LOAD;
 	
 	/**
 	 * ID: 1240<br>
-	 * Message: セブン サイン：黄昏の革命軍が勝利しました。
+	 * Message: セブン サイン：黄昏の革命軍が勝利しました。<br>
+	 * Message: Seven Signs: The Revolutionaries of Dusk have won.
 	 */
 	public static final SystemMessageId DUSK_WON;
 	
 	/**
 	 * ID: 1241<br>
-	 * Message: セブン サイン：黎明の君主たちが勝利しました。
+	 * Message: セブン サイン：黎明の君主たちが勝利しました。<br>
+	 * Message: Seven Signs: The Lords of Dawn have won.
 	 */
 	public static final SystemMessageId DAWN_WON;
 	
 	/**
 	 * ID: 1242<br>
-	 * Message: 18才認証を受けていないユーザー様は、22時から翌日6時までログインできません。
+	 * Message: 18才認証を受けていないユーザー様は、22時から翌日6時までログインできません。<br>
+	 * Message: Users who have not verified their age may not log in between the hours if 10:00 p.m. and 6:00 a.m.
 	 */
 	public static final SystemMessageId NOT_VERIFIED_AGE_NO_LOGIN;
 	
 	/**
 	 * ID: 1243<br>
-	 * Message: このセキュリティ カード番号は有効ではありません。
+	 * Message: このセキュリティ カード番号は有効ではありません。<br>
+	 * Message: The security card number is invalid.
 	 */
 	public static final SystemMessageId SECURITY_CARD_NUMBER_INVALID;
 	
 	/**
 	 * ID: 1244<br>
-	 * Message: 18才認証を受けていないユーザー様は、22時から翌日6時までの間、接続ができないためゲームが終了されます。
+	 * Message: 18才認証を受けていないユーザー様は、22時から翌日6時までの間、接続ができないためゲームが終了されます。<br>
+	 * Message: Users who have not verified their age may not log in between the hours if 10:00 p.m. and 6:00 a.m. Logging off now
 	 */
 	public static final SystemMessageId NOT_VERIFIED_AGE_LOG_OFF;
 	
 	/**
 	 * ID: 1245<br>
-	 * Message: 接続終了$s1分前です。
+	 * Message: 接続終了$s1分前です。<br>
+	 * Message: You will be loged out in $s1 minutes.
 	 */
 	public static final SystemMessageId LOGOUT_IN_S1_MINUTES;
 	
 	/**
 	 * ID: 1246<br>
-	 * Message: $c1が死亡し、$s2アデナを落としました。
+	 * Message: $c1が死亡し、$s2アデナを落としました。<br>
+	 * Message: $c1 died and has dropped $s2 adena.
 	 */
 	public static final SystemMessageId C1_DIED_DROPPED_S2_ADENA;
 	
 	/**
 	 * ID: 1247<br>
-	 * Message: 制限時間が過ぎたため、死体に該当のスキルを使用できません。
+	 * Message: 制限時間が過ぎたため、死体に該当のスキルを使用できません。<br>
+	 * Message: The corpse is too old. The skill cannot be used.
 	 */
 	public static final SystemMessageId CORPSE_TOO_OLD_SKILL_NOT_USED;
 	
 	/**
 	 * ID: 1248<br>
-	 * Message: 空腹になり、搭乗状態が解除されました。
+	 * Message: 空腹になり、搭乗状態が解除されました。<br>
+	 * Message: You are out of feed. Mount status canceled.
 	 */
 	public static final SystemMessageId OUT_OF_FEED_MOUNT_CANCELED;
 	
 	/**
 	 * ID: 1249<br>
-	 * Message: ワイバーンに乗るためには、ストライダーに乗った状態でなければなりません。
+	 * Message: ワイバーンに乗るためには、ストライダーに乗った状態でなければなりません。<br>
+	 * Message: You may only ride a wyvern while you're riding a strider.
 	 */
 	public static final SystemMessageId YOU_MAY_ONLY_RIDE_WYVERN_WHILE_RIDING_STRIDER;
 	
 	/**
 	 * ID: 1250<br>
-	 * Message: 本当に降伏しますか。同盟戦の降伏時、キャラクター1回の死亡に値する経験値ペナルティがあります。
+	 * Message: 本当に降伏しますか。同盟戦の降伏時、キャラクター1回の死亡に値する経験値ペナルティがあります。<br>
+	 * Message: Do you really want to surrender? If you surrender during an alliance war, your Exp will drop the same as if you were to die once.
 	 */
 	public static final SystemMessageId SURRENDER_ALLY_WAR_CONFIRM;
 	
 	/**
 	 * ID: 1251<br>
-	 * Message: 本当に追放しますか。同盟追放を行なった場合、1日の間、他の血盟を同盟に加入させることができません。
+	 * Message: 本当に追放しますか。同盟追放を行なった場合、1日の間、他の血盟を同盟に加入させることができません。<br>
+	 * Message: Are you sure you want to dismiss the alliance? If you use the /allydismiss command, you will not be able to accept another clan to your alliance for one day.
 	 */
 	public static final SystemMessageId DISMISS_ALLY_CONFIRM;
 	
 	/**
 	 * ID: 1252<br>
-	 * Message: 本当に降伏しますか。1回の死亡に値する経験値ペナルティがあります。
+	 * Message: 本当に降伏しますか。1回の死亡に値する経験値ペナルティがあります。<br>
+	 * Message: Are you sure you want to surrender? Exp penalty will be the same as death.
 	 */
 	public static final SystemMessageId SURRENDER_CONFIRM1;
 	
 	/**
 	 * ID: 1253<br>
-	 * Message: 本当に個人降伏しますか。1回の死亡に値する経験値ペナルティがあり、血盟戦に参加できなくなります。
+	 * Message: 本当に個人降伏しますか。1回の死亡に値する経験値ペナルティがあり、血盟戦に参加できなくなります。<br>
+	 * Message: Are you sure you want to surrender? Exp penalty will be the same as death and you will not be allowed to participate in clan war.
 	 */
 	public static final SystemMessageId SURRENDER_CONFIRM2;
 	
 	/**
 	 * ID: 1254<br>
-	 * Message: 評価に応じて頂き、ありがとうございました。
+	 * Message: 評価に応じて頂き、ありがとうございました。<br>
+	 * Message: Thank you for submitting feedback.
 	 */
 	public static final SystemMessageId THANKS_FOR_FEEDBACK;
 	
 	/**
 	 * ID: 1255<br>
-	 * Message: サポートが開始されました。
+	 * Message: サポートが開始されました。<br>
+	 * Message: GM consultation has begun.
 	 */
 	public static final SystemMessageId GM_CONSULTATION_BEGUN;
 	
 	/**
 	 * ID: 1256<br>
-	 * Message: コマンドの後ろに名前を書いてください。
+	 * Message: コマンドの後ろに名前を書いてください。<br>
+	 * Message: Please write the name after the command.
 	 */
 	public static final SystemMessageId PLEASE_WRITE_NAME_AFTER_COMMAND;
 	
 	/**
 	 * ID: 1257<br>
-	 * Message: ペットと召喚獣の特殊スキルはマクロに登録できません。
+	 * Message: ペットと召喚獣の特殊スキルはマクロに登録できません。<br>
+	 * Message: The special skill of a servitor or pet cannot be registerd as a macro.
 	 */
 	public static final SystemMessageId PET_SKILL_NOT_AS_MACRO;
 	
 	/**
 	 * ID: 1258<br>
-	 * Message: $s1をクリスタライズしました。
+	 * Message: $s1をクリスタライズしました。<br>
+	 * Message: $s1 has been crystallized
 	 */
 	public static final SystemMessageId S1_CRYSTALLIZED;
 	
 	/**
 	 * ID: 1259<br>
-	 * Message: =======<同盟戦の相手>=======
+	 * Message: =======<同盟戦の相手>=======<br>
+	 * Message: =======<Alliance Target>=======
 	 */
 	public static final SystemMessageId ALLIANCE_TARGET_HEADER;
 	
 	/**
 	 * ID: 1260<br>
-	 * Message: セブン サイン：次の競争の準備中です。
+	 * Message: セブン サイン：次の競争の準備中です。<br>
+	 * Message: Seven Signs: Preparations have begun for the next quest event.
 	 */
 	public static final SystemMessageId PREPARATIONS_PERIOD_BEGUN;
 	
 	/**
 	 * ID: 1261<br>
-	 * Message: セブン サイン：競争期間中です。黎明の司祭か黄昏の司祭を訪ねることで参加できます。
+	 * Message: セブン サイン：競争期間中です。黎明の司祭か黄昏の司祭を訪ねることで参加できます。<br>
+	 * Message: Seven Signs: The quest event period has begun. Speak with a Priest of Dawn or Dusk Priestess if you wish to participate in the event.
 	 */
 	public static final SystemMessageId COMPETITION_PERIOD_BEGUN;
 	
 	/**
 	 * ID: 1262<br>
-	 * Message: セブン サイン：競争期間が終了し、結果を集計しています。
+	 * Message: セブン サイン：競争期間が終了し、結果を集計しています。<br>
+	 * Message: Seven Signs: Quest event has ended. Results are being tallied.
 	 */
 	public static final SystemMessageId RESULTS_PERIOD_BEGUN;
 	
 	/**
 	 * ID: 1263<br>
-	 * Message: セブン サイン：封印有効期間中です。競争期間は次の月曜日に開始されます。
+	 * Message: セブン サイン：封印有効期間中です。競争期間は次の月曜日に開始されます。<br>
+	 * Message: Seven Signs: This is the seal validation period. A new quest event period begins next Monday.
 	 */
 	public static final SystemMessageId VALIDATION_PERIOD_BEGUN;
 	
 	/**
 	 * ID: 1264<br>
-	 * Message: 魂の吸収に失敗しました。現在のソウル ストーンではこの魂は吸収できません。
+	 * Message: 魂の吸収に失敗しました。現在のソウル ストーンではこの魂は吸収できません。<br>
+	 * Message: This soul stone cannot currently absorb souls. Absorption has failed.
 	 */
 	public static final SystemMessageId STONE_CANNOT_ABSORB;
 	
 	/**
 	 * ID: 1265<br>
-	 * Message: ソウル ストーンを持っていないので魂を吸収できません。
+	 * Message: ソウル ストーンを持っていないので魂を吸収できません。<br>
+	 * Message: You can't absorb souls without a soul stone.
 	 */
 	public static final SystemMessageId CANT_ABSORB_WITHOUT_STONE;
 	
 	/**
 	 * ID: 1266<br>
-	 * Message: トレードが終了しました。
+	 * Message: トレードが終了しました。<br>
+	 * Message: The exchange has ended.
 	 */
 	public static final SystemMessageId EXCHANGE_HAS_ENDED;
 	
 	/**
 	 * ID: 1267<br>
-	 * Message: 貢献度が$s1上がりました。
+	 * Message: 貢献度が$s1上がりました。<br>
+	 * Message: Your contribution score is increased by $s1.
 	 */
 	public static final SystemMessageId CONTRIB_SCORE_INCREASED_S1;
 	
 	/**
 	 * ID: 1268<br>
-	 * Message: $s1クラスをサブ クラスに追加しますか。
+	 * Message: $s1クラスをサブ クラスに追加しますか。<br>
+	 * Message: Do you wish to add class as your sub class?
 	 */
 	public static final SystemMessageId ADD_SUBCLASS_CONFIRM;
 	
 	/**
 	 * ID: 1269<br>
-	 * Message: 新しいサブ クラスを追加しました。
+	 * Message: 新しいサブ クラスを追加しました。<br>
+	 * Message: The new sub class has been added.
 	 */
 	public static final SystemMessageId ADD_NEW_SUBCLASS;
 	
 	/**
 	 * ID: 1270<br>
-	 * Message: サブ クラス間の変更が完了しました。
+	 * Message: サブ クラス間の変更が完了しました。<br>
+	 * Message: The transfer of sub class has been completed.
 	 */
 	public static final SystemMessageId SUBCLASS_TRANSFER_COMPLETED;
 	
 	/**
 	 * ID: 1271<br>
-	 * Message: 本当に参加しますか。次の封印有効期間まで黎明の君主所属になります。
+	 * Message: 本当に参加しますか。次の封印有効期間まで黎明の君主所属になります。<br>
+	 * Message: Do you wish to participate? Until the next seal validation period, you are a member of the Lords of Dawn.
 	 */
 	public static final SystemMessageId DAWN_CONFIRM;
 	
 	/**
 	 * ID: 1271<br>
-	 * Message: 本当に参加しますか。次の封印有効期間まで黎明の君主所属になります。
+	 * Message: 本当に参加しますか。次の封印有効期間まで黎明の君主所属になります。<br>
+	 * Message: Do you wish to participate? Until the next seal validation period, you are a member of the Revolutionaries of Dusk.
 	 */
 	public static final SystemMessageId DUSK_CONFIRM;
 	
 	/**
 	 * ID: 1273<br>
-	 * Message: 黎明の君主所属でセブン サインに参加しました。
+	 * Message: 黎明の君主所属でセブン サインに参加しました。<br>
+	 * Message: You will participate in the Seven Signs as a member of the Lords of Dawn.
 	 */
 	public static final SystemMessageId SEVENSIGNS_PARTECIPATION_DAWN;
 	
 	/**
 	 * ID: 1274<br>
-	 * Message: 黄昏の革命軍所属でセブン サインに参加しました。
+	 * Message: 黄昏の革命軍所属でセブン サインに参加しました。<br>
+	 * Message: You will participate in the Seven Signs as a member of the Revolutionaries of Dusk.
 	 */
 	public static final SystemMessageId SEVENSIGNS_PARTECIPATION_DUSK;
 	
 	/**
 	 * ID: 1275<br>
-	 * Message: 今回の競争期間は、貪欲の封印のために戦うを選択しました。
+	 * Message: 今回の競争期間は、貪欲の封印のために戦うを選択しました。<br>
+	 * Message: You've chosen to fight for the Seal of Avarice during this quest event period.
 	 */
 	public static final SystemMessageId FIGHT_FOR_AVARICE;
 	
 	/**
 	 * ID: 1276<br>
-	 * Message: 今回の競争期間は、啓示の封印のために戦うを選択しました。
+	 * Message: 今回の競争期間は、啓示の封印のために戦うを選択しました。<br>
+	 * Message: You've chosen to fight for the Seal of Gnosis during this quest event period.
 	 */
 	public static final SystemMessageId FIGHT_FOR_GNOSIS;
 	
 	/**
 	 * ID: 1277<br>
-	 * Message: 今回の競争期間は、戦乱の封印のために戦うを選択しました。
+	 * Message: 今回の競争期間は、戦乱の封印のために戦うを選択しました。<br>
+	 * Message: You've chosen to fight for the Seal of Strife during this quest event period.
 	 */
 	public static final SystemMessageId FIGHT_FOR_STRIFE;
 	
 	/**
 	 * ID: 1278<br>
-	 * Message: NPCサーバーが作動中止状態です。
+	 * Message: NPCサーバーが作動中止状態です。<br>
+	 * Message: The NPC server is not operating at this time.
 	 */
 	public static final SystemMessageId NPC_SERVER_NOT_OPERATING;
 	
 	/**
 	 * ID: 1279<br>
-	 * Message: 貢献度の限度を超過し、続行できません。
+	 * Message: 貢献度の限度を超過し、続行できません。<br>
+	 * Message: Contribution level has exceeded the limit. You may not continue.
 	 */
 	public static final SystemMessageId CONTRIB_SCORE_EXCEEDED;
 	
 	/**
 	 * ID: 1280<br>
-	 * Message: 魔法のクリティカル ヒット！
+	 * Message: 魔法のクリティカル ヒット！<br>
+	 * Message: Magic Critical Hit!
 	 */
 	public static final SystemMessageId CRITICAL_HIT_MAGIC;
 	
 	/**
 	 * ID: 1281<br>
-	 * Message: シールドによる卓越した防御に成功しました。
+	 * Message: シールドによる卓越した防御に成功しました。<br>
+	 * Message: Your excellent shield defense was a success!
 	 */
 	public static final SystemMessageId YOUR_EXCELLENT_SHIELD_DEFENSE_WAS_A_SUCCESS;
 	
 	/**
 	 * ID: 1282<br>
-	 * Message: 性向値が$s1に変更されました。
+	 * Message: 性向値が$s1に変更されました。<br>
+	 * Message: Your Karma has been changed to $s1
 	 */
 	public static final SystemMessageId YOUR_KARMA_HAS_BEEN_CHANGED_TO_S1;
 	
 	/**
 	 * ID: 1283<br>
-	 * Message: 最小フレーム機能で作動させます。
+	 * Message: 最小フレーム機能で作動させます。<br>
+	 * Message: The minimum frame option has been activated.
 	 */
 	public static final SystemMessageId MINIMUM_FRAME_ACTIVATED;
 	
 	/**
 	 * ID: 1284<br>
-	 * Message: 最小フレーム機能が解除されました。
+	 * Message: 最小フレーム機能が解除されました。<br>
+	 * Message: The minimum frame option has been deactivated.
 	 */
 	public static final SystemMessageId MINIMUM_FRAME_DEACTIVATED;
 	
 	/**
 	 * ID: 1285<br>
-	 * Message: 在庫がないため、購入できません。
+	 * Message: 在庫がないため、購入できません。<br>
+	 * Message: No inventory exists: You cannot purchase an item.
 	 */
 	public static final SystemMessageId NO_INVENTORY_CANNOT_PURCHASE;
 	
 	/**
 	 * ID: 1286<br>
-	 * Message: (次の月曜日午後6時まで)
+	 * Message: (次の月曜日午後6時まで)<br>
+	 * Message: (Until next Monday at 6:00 p.m.)
 	 */
 	public static final SystemMessageId UNTIL_MONDAY_6PM;
 	
 	/**
 	 * ID: 1287<br>
-	 * Message: (本日午後6時まで)
+	 * Message: (本日午後6時まで)<br>
+	 * Message: (Until today at 6:00 p.m.)
 	 */
 	public static final SystemMessageId UNTIL_TODAY_6PM;
 	
 	/**
 	 * ID: 1288<br>
-	 * Message: 現在の状態で競争期間が終了すると仮定した時、$s1が勝利し、封印の所有権は以下のようになります。
+	 * Message: 現在の状態で競争期間が終了すると仮定した時、$s1が勝利し、封印の所有権は以下のようになります。<br>
+	 * Message: If trends continue, $s1 will win and the seal will belong to:
 	 */
 	public static final SystemMessageId S1_WILL_WIN_COMPETITION;
 	
 	/**
 	 * ID: 1289<br>
-	 * Message: 以前の周期で封印を所有していて、10％以上の人たちが投票したので
+	 * Message: 以前の周期で封印を所有していて、10％以上の人たちが投票したので<br>
+	 * Message: (Until next Monday at 6:00 p.m.)
 	 */
 	public static final SystemMessageId SEAL_OWNED_10_MORE_VOTED;
 	
 	/**
 	 * ID: 1290<br>
-	 * Message: 以前の周期で封印を所有できなかったが、35％以上の人たちが投票したので
+	 * Message: 以前の周期で封印を所有できなかったが、35％以上の人たちが投票したので<br>
+	 * Message: Although the seal was not owned, since 35 percent or more people have voted.
 	 */
 	public static final SystemMessageId SEAL_NOT_OWNED_35_MORE_VOTED;
 	
 	/**
 	 * ID: 1291<br>
-	 * Message: 以前の周期で封印を所有していたが、10％未満の人たちが投票したので
+	 * Message: 以前の周期で封印を所有していたが、10％未満の人たちが投票したので<br>
+	 * Message: Although the seal was owned during the previous period, less than 10% of people have voted.
 	 */
 	public static final SystemMessageId SEAL_OWNED_10_LESS_VOTED;
 	
 	/**
 	 * ID: 1292<br>
-	 * Message: 以前の周期で封印を所有できず、35％未満の人たちが投票したので
+	 * Message: 以前の周期で封印を所有できず、35％未満の人たちが投票したので<br>
+	 * Message: Since the seal was not owned during the previous period, and since less than 35 percent of people have voted.
 	 */
 	public static final SystemMessageId SEAL_NOT_OWNED_35_LESS_VOTED;
 	
 	/**
 	 * ID: 1293<br>
-	 * Message: 現在の状態で競争期間が終了した場合、引き分けになります。
+	 * Message: 現在の状態で競争期間が終了した場合、引き分けになります。<br>
+	 * Message: If current trends continue, it will end in a tie.
 	 */
 	public static final SystemMessageId COMPETITION_WILL_TIE;
 	
 	/**
 	 * ID: 1294<br>
-	 * Message: 競争が引き分けの場合、封印も未所有になります。
+	 * Message: 競争が引き分けの場合、封印も未所有になります。<br>
+	 * Message: The competition has ended in a tie. Therefore, nobody has been awarded the seal.
 	 */
 	public static final SystemMessageId COMPETITION_TIE_SEAL_NOT_AWARDED;
 	
 	/**
 	 * ID: 1295<br>
-	 * Message: スキル使用中はサブ クラスを作ることや、変更することはできません。
+	 * Message: スキル使用中はサブ クラスを作ることや、変更することはできません。<br>
+	 * Message: Sub classes may not be created or changed while a skill is in use.
 	 */
 	public static final SystemMessageId SUBCLASS_NO_CHANGE_OR_CREATE_WHILE_SKILL_IN_USE;
 	
 	/**
 	 * ID: 1296<br>
-	 * Message: 個人商店を開くことができないエリアです。
+	 * Message: 個人商店を開くことができないエリアです。<br>
+	 * Message: You cannot open a Private Store here.
 	 */
 	public static final SystemMessageId NO_PRIVATE_STORE_HERE;
 	
 	/**
 	 * ID: 1297<br>
-	 * Message: 個人工房を開くことができないエリアです。
+	 * Message: 個人工房を開くことができないエリアです。<br>
+	 * Message: You cannot open a Private Workshop here.
 	 */
 	public static final SystemMessageId NO_PRIVATE_WORKSHOP_HERE;
 	
 	/**
 	 * ID: 1298<br>
-	 * Message: モンスター レース場から出ますか。
+	 * Message: モンスター レース場から出ますか。<br>
+	 * Message: Please confirm that you would like to exit the Monster Race Track.
 	 */
 	public static final SystemMessageId MONS_EXIT_CONFIRM;
 	
 	/**
 	 * ID: 1299<br>
-	 * Message: $c1が妨害を受け、詠唱が中断されました。
+	 * Message: $c1が妨害を受け、詠唱が中断されました。<br>
+	 * Message: $c1's casting has been interrupted.
 	 */
 	public static final SystemMessageId C1_CASTING_INTERRUPTED;
 	
 	/**
 	 * ID: 1300<br>
-	 * Message: 試着がキャンセルされました。
+	 * Message: 試着がキャンセルされました。<br>
+	 * Message: You are no longer trying on equipment.
 	 */
 	public static final SystemMessageId WEAR_ITEMS_STOPPED;
 	
 	/**
 	 * ID: 1301<br>
-	 * Message: 黎明の君主たちに加入しないと利用できません。
+	 * Message: 黎明の君主たちに加入しないと利用できません。<br>
+	 * Message: Only a Lord of Dawn may use this.
 	 */
 	public static final SystemMessageId CAN_BE_USED_BY_DAWN;
 	
 	/**
 	 * ID: 1302<br>
-	 * Message: 黄昏の革命軍に加入しないと利用できません。
+	 * Message: 黄昏の革命軍に加入しないと利用できません。<br>
+	 * Message: Only a Revolutionary of Dusk may use this.
 	 */
 	public static final SystemMessageId CAN_BE_USED_BY_DUSK;
 	
 	/**
 	 * ID: 1303<br>
-	 * Message: 競争期間だけ利用することができます。
+	 * Message: 競争期間だけ利用することができます。<br>
+	 * Message: This may only be used during the quest event period.
 	 */
 	public static final SystemMessageId CAN_BE_USED_DURING_QUEST_EVENT_PERIOD;
 	
 	/**
 	 * ID: 1304<br>
-	 * Message: 戦乱の封印の影響で、血盟の守備登録がすべてキャンセルされました。
+	 * Message: 戦乱の封印の影響で、血盟の守備登録がすべてキャンセルされました。<br>
+	 * Message: The influence of the Seal of Strife has caused all defensive registrations to be canceled.
 	 */
 	public static final SystemMessageId STRIFE_CANCELED_DEFENSIVE_REGISTRATION;
 	
 	/**
 	 * ID: 1305<br>
-	 * Message: 競争期間のみ、封印石を預けることができます。
+	 * Message: 競争期間のみ、封印石を預けることができます。<br>
+	 * Message: Seal Stones may only be transferred during the quest event period.
 	 */
 	public static final SystemMessageId SEAL_STONES_ONLY_WHILE_QUEST;
 	
 	/**
 	 * ID: 1306<br>
-	 * Message: 試着が終了しました。
+	 * Message: 試着が終了しました。<br>
+	 * Message: You are no longer trying on equipment.
 	 */
 	public static final SystemMessageId NO_LONGER_TRYING_ON;
 	
 	/**
 	 * ID: 1307<br>
-	 * Message: 封印有効期間にしか精算できません。
+	 * Message: 封印有効期間にしか精算できません。<br>
+	 * Message: Only during the seal validation period may you settle your account.
 	 */
 	public static final SystemMessageId SETTLE_ACCOUNT_ONLY_IN_SEAL_VALIDATION;
 	
 	/**
 	 * ID: 1308<br>
-	 * Message: おめでとうございます！！新しいクラスに転職しました。
+	 * Message: おめでとうございます！！新しいクラスに転職しました。<br>
+	 * Message: Congratulations - You've completed a class transfer!
 	 */
 	public static final SystemMessageId CLASS_TRANSFER;
 	
 	/**
 	 * ID: 1309<br>
-	 * Message: この機能は、最新バージョンの MSN Messenger で使用できます。
+	 * Message: この機能は、最新バージョンの MSN Messenger で使用できます。<br>
+	 * Message: To use this option, you must have the lastest version of MSN Messenger installed on your computer.
 	 */
 	public static final SystemMessageId LATEST_MSN_REQUIRED;
 	
 	/**
 	 * ID: 1310<br>
-	 * Message: リネージュII で MSN Messengerの機能を使用するには、最新バージョンの MSN Messenger をインストールする必要があります。
+	 * Message: リネージュII で MSN Messengerの機能を使用するには、最新バージョンの MSN Messenger をインストールする必要があります。<br>
+	 * Message: For full functionality, the latest version of MSN Messenger must be installed on your computer.
 	 */
 	public static final SystemMessageId LATEST_MSN_RECOMMENDED;
 	
 	/**
 	 * ID: 1311<br>
-	 * Message: 古いバージョンの MSN Messenger ではインスタント メッセージ機能だけが使用でき、メンバの追加・削除およびオプション機能は使用できません。
+	 * Message: 古いバージョンの MSN Messenger ではインスタント メッセージ機能だけが使用でき、メンバの追加・削除およびオプション機能は使用できません。<br>
+	 * Message: Previous versions of MSN Messenger only provide the basic features for in-game MSN Messenger Chat. Add/Delete Contacts and other MSN Messenger options are not available
 	 */
 	public static final SystemMessageId MSN_ONLY_BASIC;
 	
 	/**
 	 * ID: 1312<br>
-	 * Message: 最新バージョンの MSN Messenger を入手するには、MSN Messenger のサイト(http://messenger.live.jp/download)に移動してください。
+	 * Message: 最新バージョンの MSN Messenger を入手するには、MSN Messenger のサイト(http://messenger.live.jp/download)に移動してください。<br>
+	 * Message: The latest version of MSN Messenger may be obtained from the MSN web site (http://messenger.msn.com).
 	 */
 	public static final SystemMessageId MSN_OBTAINED_FROM;
 	
 	/**
 	 * ID: 1313<br>
-	 * Message: $s2 は、エヌ・シー・ジャパン(株)が提供するサービスに接続しているため、$s1 とのメッセージ履歴は、サービスの運営のために保存されます。ご同意頂けない場合は、この会話ウィンドウを閉じてください。詳しくは弊社ホームページまでお問い合わせください。
+	 * Message: $s2 は、エヌ・シー・ジャパン(株)が提供するサービスに接続しているため、$s1 とのメッセージ履歴は、サービスの運営のために保存されます。ご同意頂けない場合は、この会話ウィンドウを閉じてください。詳しくは弊社ホームページまでお問い合わせください。<br>
+	 * Message: $s1, to better serve our customers, all chat histories [...]
 	 */
 	public static final SystemMessageId S1_CHAT_HISTORIES_STORED;
 	
 	/**
 	 * ID: 1314<br>
-	 * Message: 追加するメンバの電子メール アドレスを入力してください。
+	 * Message: 追加するメンバの電子メール アドレスを入力してください。<br>
+	 * Message: Please enter the passport ID of the person you wish to add to your contact list.
 	 */
 	public static final SystemMessageId ENTER_PASSPORT_FOR_ADDING;
 	
 	/**
 	 * ID: 1315<br>
-	 * Message: この人を削除すると、メンバ リストへの登録が解除されます。ただし、この人を禁止しない限り、この人はあなたのオンライン状態を確認したり、メッセージを送信することができます。
+	 * Message: この人を削除すると、メンバ リストへの登録が解除されます。ただし、この人を禁止しない限り、この人はあなたのオンライン状態を確認したり、メッセージを送信することができます。<br>
+	 * Message: Deleting a contact will remove that contact from MSN Messenger as well. The contact can still check your online status and well not be blocked from sending you a message.
 	 */
 	public static final SystemMessageId DELETING_A_CONTACT;
 	
 	/**
 	 * ID: 1316<br>
-	 * Message: この人を禁止する
+	 * Message: この人を禁止する<br>
+	 * Message: The contact will be deleted and blocked from your contact list.
 	 */
 	public static final SystemMessageId CONTACT_WILL_DELETED;
 	
 	/**
 	 * ID: 1317<br>
-	 * Message: このメンバの登録を解除しますか?
+	 * Message: このメンバの登録を解除しますか?<br>
+	 * Message: Would you like to delete this contact?
 	 */
 	public static final SystemMessageId CONTACT_DELETE_CONFIRM;
 	
 	/**
 	 * ID: 1318<br>
-	 * Message: 禁止または禁止を解除するメンバを選択してください。
+	 * Message: 禁止または禁止を解除するメンバを選択してください。<br>
+	 * Message: Please select the contact you want to block or unblock.
 	 */
 	public static final SystemMessageId SELECT_CONTACT_FOR_BLOCK_UNBLOCK;
 	
 	/**
 	 * ID: 1319<br>
-	 * Message: グループを変更するメンバを選択してください。
+	 * Message: グループを変更するメンバを選択してください。<br>
+	 * Message: Please select the name of the contact you wish to change to another group.
 	 */
 	public static final SystemMessageId SELECT_CONTACT_FOR_CHANGE_GROUP;
 	
 	/**
 	 * ID: 1320<br>
-	 * Message: 移動先のグループを選択して、OK をクリックしてください。
+	 * Message: 移動先のグループを選択して、OK をクリックしてください。<br>
+	 * Message: After selecting the group you wish to move your contact to, press the OK button.
 	 */
 	public static final SystemMessageId SELECT_GROUP_PRESS_OK;
 	
 	/**
 	 * ID: 1321<br>
-	 * Message: 追加するグループ名を入力してください。
+	 * Message: 追加するグループ名を入力してください。<br>
+	 * Message: Enter the name of the group you wish to add.
 	 */
 	public static final SystemMessageId ENTER_GROUP_NAME;
 	
 	/**
 	 * ID: 1322<br>
-	 * Message: 変更するグループを選択して、新しいグループ名を入力してください。
+	 * Message: 変更するグループを選択して、新しいグループ名を入力してください。<br>
+	 * Message: Select the group and enter the new name.
 	 */
 	public static final SystemMessageId SELECT_GROUP_ENTER_NAME;
 	
 	/**
 	 * ID: 1323<br>
-	 * Message: 削除するグループを選択して、OK をクリックしてください。
+	 * Message: 削除するグループを選択して、OK をクリックしてください。<br>
+	 * Message: Select the group you wish to delete and click the OK button.
 	 */
 	public static final SystemMessageId SELECT_GROUP_TO_DELETE;
 	
 	/**
 	 * ID: 1324<br>
-	 * Message: サインイン中...
+	 * Message: サインイン中...<br>
+	 * Message: Signing in...
 	 */
 	public static final SystemMessageId SIGNING_IN;
 	
 	/**
 	 * ID: 1325<br>
-	 * Message: 他の場所で Messenger にサインインしたため、.NET Messenger Service からサインアウトされました。
+	 * Message: 他の場所で Messenger にサインインしたため、.NET Messenger Service からサインアウトされました。<br>
+	 * Message: You've logged into another computer and have been logged out of the .NET Messenger Service on this computer.
 	 */
 	public static final SystemMessageId ANOTHER_COMPUTER_LOGOUT;
 	
 	/**
 	 * ID: 1326<br>
-	 * Message: $s1 の発言:
+	 * Message: $s1 の発言:<br>
+	 * Message: $s1 :
 	 */
 	public static final SystemMessageId S1_D;
 	
 	/**
 	 * ID: 1327<br>
-	 * Message: 次のメッセージを送ることができません。
+	 * Message: 次のメッセージを送ることができません。<br>
+	 * Message: The following message could not be delivered:
 	 */
 	public static final SystemMessageId MESSAGE_NOT_DELIVERED;
 	
 	/**
 	 * ID: 1328<br>
-	 * Message: 黄昏の革命軍所属なので、復活できません。
+	 * Message: 黄昏の革命軍所属なので、復活できません。<br>
+	 * Message: Members of the Revolutionaries of Dusk will not be resurrected.
 	 */
 	public static final SystemMessageId DUSK_NOT_RESURRECTED;
 	
 	/**
 	 * ID: 1329<br>
-	 * Message: 個人商店および個人工房は禁止状態のため、開設ができません。
+	 * Message: 個人商店および個人工房は禁止状態のため、開設ができません。<br>
+	 * Message: You are currently blocked from using the Private Store and Private Workshop.
 	 */
 	public static final SystemMessageId BLOCKED_FROM_USING_STORE;
 	
 	/**
 	 * ID: 1330<br>
-	 * Message: $s1分間個人商店および個人工房の開設が禁止されました。
+	 * Message: $s1分間個人商店および個人工房の開設が禁止されました。<br>
+	 * Message: You may not open a Private Store or Private Workshop for another $s1 minute(s)
 	 */
 	public static final SystemMessageId NO_STORE_FOR_S1_MINUTES;
 	
 	/**
 	 * ID: 1331<br>
-	 * Message: 個人商店および個人工房の開設禁止が解除されました。
+	 * Message: 個人商店および個人工房の開設禁止が解除されました。<br>
+	 * Message: You are no longer blocked from using the Private Store and Private Workshop
 	 */
 	public static final SystemMessageId NO_LONGER_BLOCKED_USING_STORE;
 	
 	/**
 	 * ID: 1332<br>
-	 * Message: 死んでいる状態でアイテムは使えません。
+	 * Message: 死んでいる状態でアイテムは使えません。<br>
+	 * Message: Items may not be used after your character or pet dies.
 	 */
 	public static final SystemMessageId NO_ITEMS_AFTER_DEATH;
 	
 	/**
 	 * ID: 1333<br>
-	 * Message: リプレイ ファイルを読み取れません。Replay.iniファイルを確認してください。
+	 * Message: リプレイ ファイルを読み取れません。Replay.iniファイルを確認してください。<br>
+	 * Message: The replay file is not accessible. Please verify that the replay.ini exists in your Linage 2 directory.
 	 */
 	public static final SystemMessageId REPLAY_INACCESSIBLE;
 	
 	/**
 	 * ID: 1334<br>
-	 * Message: 新しいカメラ情報を保存しました。
+	 * Message: 新しいカメラ情報を保存しました。<br>
+	 * Message: The new camera data has been stored.
 	 */
 	public static final SystemMessageId NEW_CAMERA_STORED;
 	
 	/**
 	 * ID: 1335<br>
-	 * Message: 新しいカメラ情報の保存に失敗しました。
+	 * Message: 新しいカメラ情報の保存に失敗しました。<br>
+	 * Message: The attempt to store the new camera data has failed.
 	 */
 	public static final SystemMessageId CAMERA_STORING_FAILED;
 	
 	/**
 	 * ID: 1336<br>
-	 * Message: リプレイ ファイルが損傷しました。$s1.$s2 ファイルを確認してください。
+	 * Message: リプレイ ファイルが損傷しました。$s1.$s2 ファイルを確認してください。<br>
+	 * Message: The replay file, $s1.$$s2 has been corrupted, please check the fle.
 	 */
 	public static final SystemMessageId REPLAY_S1_S2_CORRUPTED;
 	
 	/**
 	 * ID: 1337<br>
-	 * Message: リプレイを終了します。よろしいですか。
+	 * Message: リプレイを終了します。よろしいですか。<br>
+	 * Message: This will terminate the replay. Do you wish to continue?
 	 */
 	public static final SystemMessageId REPLAY_TERMINATE_CONFIRM;
 	
 	/**
 	 * ID: 1338<br>
-	 * Message: 一度に移すことのできる量を超過しました。
+	 * Message: 一度に移すことのできる量を超過しました。<br>
+	 * Message: You have exceeded the maximum amount that may be transferred at one time.
 	 */
 	public static final SystemMessageId EXCEEDED_MAXIMUM_AMOUNT;
 	
 	/**
 	 * ID: 1339<br>
-	 * Message: マクロに割り当てられたショートカット キーを別のマクロで使用することはできません。
+	 * Message: マクロに割り当てられたショートカット キーを別のマクロで使用することはできません。<br>
+	 * Message: Once a macro is assigned to a shortcut, it cannot be run as a macro again.
 	 */
 	public static final SystemMessageId MACRO_SHORTCUT_NOT_RUN;
 	
 	/**
 	 * ID: 1340<br>
-	 * Message: 現在使用しているクーポンでは接続できないサーバーです。
+	 * Message: 現在使用しているクーポンでは接続できないサーバーです。<br>
+	 * Message: This server cannot be accessed by the coupon you are using.
 	 */
 	public static final SystemMessageId SERVER_NOT_ACCESSED_BY_COUPON;
 	
 	/**
 	 * ID: 1341<br>
-	 * Message: 入力された電子メール アドレスは無効です。
+	 * Message: 入力された電子メール アドレスは無効です。<br>
+	 * Message: Incorrect name and/or email address.
 	 */
 	public static final SystemMessageId INCORRECT_NAME_OR_ADDRESS;
 	
 	/**
 	 * ID: 1342<br>
-	 * Message: すでにサインインしています。
+	 * Message: すでにサインインしています。<br>
+	 * Message: You are already logged in.
 	 */
 	public static final SystemMessageId ALREADY_LOGGED_IN;
 	
 	/**
 	 * ID: 1343<br>
-	 * Message: 入力されたサインイン名が存在しないか、パスワードが正しくないため、サインインできませんでした。
+	 * Message: 入力されたサインイン名が存在しないか、パスワードが正しくないため、サインインできませんでした。<br>
+	 * Message: Incorrect email address and/or password. Your attempt to log into .NET Messenger Service has failed.
 	 */
 	public static final SystemMessageId INCORRECT_ADDRESS_OR_PASSWORD;
 	
 	/**
 	 * ID: 1344<br>
-	 * Message: サービスが見つからないため、NET Messenger Service にサインインできませんでした。インターネットに接続していることを確認してください。
+	 * Message: サービスが見つからないため、NET Messenger Service にサインインできませんでした。インターネットに接続していることを確認してください。<br>
+	 * Message: Your request to log into the .NET Messenger service has failed. Please verify that you are currently connected to the internet.
 	 */
 	public static final SystemMessageId NET_LOGIN_FAILED;
 	
 	/**
 	 * ID: 1345<br>
-	 * Message: この会話に招待する人を選択して、OK をクリックします。
+	 * Message: この会話に招待する人を選択して、OK をクリックします。<br>
+	 * Message: Click the OK button after you have selected a contact name.
 	 */
 	public static final SystemMessageId SELECT_CONTACT_CLICK_OK;
 	
 	/**
 	 * ID: 1346<br>
-	 * Message: がメッセージを入力しています。
+	 * Message: がメッセージを入力しています。<br>
+	 * Message: You are currently entering a chat message.
 	 */
 	public static final SystemMessageId CURRENTLY_ENTERING_CHAT;
 	
 	/**
 	 * ID: 1347<br>
-	 * Message: Lineage II Messenger は 要求を完了できませんでした。
+	 * Message: Lineage II Messenger は 要求を完了できませんでした。<br>
+	 * Message: The Linage II messenger could not carry out the task you requested.
 	 */
 	public static final SystemMessageId MESSENGER_FAILED_CARRYING_OUT_TASK;
 	
 	/**
 	 * ID: 1348<br>
-	 * Message: $s1 が会話に参加しました。
+	 * Message: $s1 が会話に参加しました。<br>
+	 * Message: $s1 has entered the chat room.
 	 */
 	public static final SystemMessageId S1_ENTERED_CHAT_ROOM;
 	
 	/**
 	 * ID: 1349<br>
-	 * Message: $s1 が会話から退席しました。
+	 * Message: $s1 が会話から退席しました。<br>
+	 * Message: $s1 has left the chat room.
 	 */
 	public static final SystemMessageId S1_LEFT_CHAT_ROOM;
 	
 	/**
 	 * ID: 1350<br>
-	 * Message: 状態をオフラインに変更します。すべての会話ウィンドウが終了します。
+	 * Message: 状態をオフラインに変更します。すべての会話ウィンドウが終了します。<br>
+	 * Message: The state will be changed to indicate "off-line." All the chat windows currently opened will be closed.
 	 */
 	public static final SystemMessageId GOING_OFFLINE;
 	
 	/**
 	 * ID: 1351<br>
-	 * Message: 削除するメンバを選択して、削除 をクリックしてください。
+	 * Message: 削除するメンバを選択して、削除 をクリックしてください。<br>
+	 * Message: Click the Delete button after selecting the contact you wish to remove.
 	 */
 	public static final SystemMessageId SELECT_CONTACT_CLICK_REMOVE;
 	
 	/**
 	 * ID: 1352<br>
-	 * Message: $s1 ($s2) のメンバ リストに追加されました。
+	 * Message: $s1 ($s2) のメンバ リストに追加されました。<br>
+	 * Message: You have been added to $s1 ($s2)'s contact list.
 	 */
 	public static final SystemMessageId ADDED_TO_S1_S2_CONTACT_LIST;
 	
 	/**
 	 * ID: 1353<br>
-	 * Message: いつでも自分をオフライン状態にすることができます。
+	 * Message: いつでも自分をオフライン状態にすることができます。<br>
+	 * Message: You can set the option to show your status as always being off-line to all of your contacts.
 	 */
 	public static final SystemMessageId CAN_SET_OPTION_TO_ALWAYS_SHOW_OFFLINE;
 	
 	/**
 	 * ID: 1354<br>
-	 * Message: チャット禁止中のため、会話できません。
+	 * Message: チャット禁止中のため、会話できません。<br>
+	 * Message: You are not allowed to chat with a contact while chatting block is imposed.
 	 */
 	public static final SystemMessageId NO_CHAT_WHILE_BLOCKED;
 	
 	/**
 	 * ID: 1355<br>
-	 * Message: 会話の相手は現在チャット禁止の状態です。
+	 * Message: 会話の相手は現在チャット禁止の状態です。<br>
+	 * Message: The contact is currently blocked from chatting.
 	 */
 	public static final SystemMessageId CONTACT_CURRENTLY_BLOCKED;
 	
 	/**
 	 * ID: 1356<br>
-	 * Message: 会話の相手は現在接続していません。
+	 * Message: 会話の相手は現在接続していません。<br>
+	 * Message: The contact is not currently logged in.
 	 */
 	public static final SystemMessageId CONTACT_CURRENTLY_OFFLINE;
 	
 	/**
 	 * ID: 1357<br>
-	 * Message: 会話の相手によって禁止されている状態です。
+	 * Message: 会話の相手によって禁止されている状態です。<br>
+	 * Message: You have been blocked from chatting with that contact.
 	 */
 	public static final SystemMessageId YOU_ARE_BLOCKED;
 	
 	/**
 	 * ID: 1358<br>
-	 * Message: サインアウト中...
+	 * Message: サインアウト中...<br>
+	 * Message: You are being logged out...
 	 */
 	public static final SystemMessageId YOU_ARE_LOGGING_OUT;
 	
 	/**
 	 * ID: 1359<br>
-	 * Message: $s1 がサインインしました。
+	 * Message: $s1 がサインインしました。<br>
+	 * Message: $s1 has logged in.
 	 */
 	public static final SystemMessageId S1_LOGGED_IN2;
 	
 	/**
 	 * ID: 1360<br>
-	 * Message: $s1 からの新着メッセージが届きました。
+	 * Message: $s1 からの新着メッセージが届きました。<br>
+	 * Message: You have received a message from $s1.
 	 */
 	public static final SystemMessageId GOT_MESSAGE_FROM_S1;
 	
 	/**
 	 * ID: 1361<br>
-	 * Message: システム トラブルによって .NET Messenger Service からサインアウトされました。
+	 * Message: システム トラブルによって .NET Messenger Service からサインアウトされました。<br>
+	 * Message: Due to a system error, you have been logged out of the .NET Messenger Service.
 	 */
 	public static final SystemMessageId LOGGED_OUT_DUE_TO_ERROR;
 	
 	/**
 	 * ID: 1362<br>
-	 * Message: 削除するメンバを選択してください。グループを削除するには、オンライン状態の横にある三角形をクリックし、オプション をクリックします。
+	 * click the button next to My Status and then use the Options menu.
 	 */
 	public static final SystemMessageId SELECT_CONTACT_TO_DELETE;
 	
 	/**
 	 * ID: 1363<br>
-	 * Message: 同盟戦の申し込みが拒否されました。
+	 * Message: 同盟戦の申し込みが拒否されました。<br>
+	 * Message: Your request to participate in the alliance war has been denied.
 	 */
 	public static final SystemMessageId YOUR_REQUEST_ALLIANCE_WAR_DENIED;
 	
 	/**
 	 * ID: 1364<br>
-	 * Message: 同盟戦の申し込みを拒否しました。
+	 * Message: 同盟戦の申し込みを拒否しました。<br>
+	 * Message: The request for an alliance war has been rejected.
 	 */
 	public static final SystemMessageId REQUEST_ALLIANCE_WAR_REJECTED;
 	
 	/**
 	 * ID: 1365<br>
-	 * Message: $s1血盟の$s2が個人降伏しました。
+	 * Message: $s1血盟の$s2が個人降伏しました。<br>
+	 * Message: $s2 of $s1 clan has surrendered as an individual.
 	 */
 	public static final SystemMessageId S2_OF_S1_SURRENDERED_AS_INDIVIDUAL;
 	
 	/**
 	 * ID: 1366<br>
-	 * Message: 削除できるのは、空のグループのみです。このグループのすべてのメンバを他のグループに移動してください。
+	 * Message: 削除できるのは、空のグループのみです。このグループのすべてのメンバを他のグループに移動してください。<br>
+	 * Message: In order to delete a group, you must not [...]
 	 */
 	public static final SystemMessageId DELTE_GROUP_INSTRUCTION;
 	
 	/**
 	 * ID: 1367<br>
-	 * Message: 関連決死隊でないので、記録を追加できません。
+	 * Message: 関連決死隊でないので、記録を追加できません。<br>
+	 * Message: Only members of the group are allowed to add records.
 	 */
 	public static final SystemMessageId ONLY_GROUP_CAN_ADD_RECORDS;
 	
 	/**
 	 * ID: 1368<br>
-	 * Message: 一緒に着用できるアイテムではありません。
+	 * Message: 一緒に着用できるアイテムではありません。<br>
+	 * Message: You can not try those items on at the same time.
 	 */
 	public static final SystemMessageId YOU_CAN_NOT_TRY_THOSE_ITEMS_ON_AT_THE_SAME_TIME;
 	
 	/**
 	 * ID: 1369<br>
-	 * Message: 設定できる最高金額を超過しました。
+	 * Message: 設定できる最高金額を超過しました。<br>
+	 * Message: You've exceeded the maximum.
 	 */
 	public static final SystemMessageId EXCEEDED_THE_MAXIMUM;
 	
 	/**
 	 * ID: 1370<br>
-	 * Message: $c1 は運営者なのでメールを送ることができません。
+	 * Message: $c1 は運営者なのでメールを送ることができません。<br>
+	 * Message: Your message to $c1 did not reach its recipient. You cannot send mail to the GM staff.
 	 */
 	public static final SystemMessageId CANNOT_MAIL_GM_C1;
 	
 	/**
 	 * ID: 1371<br>
-	 * Message: 貴方は正当にプレイしていないと判断され、$s1分間動けなくなる措置がとられました。
+	 * Message: 貴方は正当にプレイしていないと判断され、$s1分間動けなくなる措置がとられました。<br>
+	 * Message: It has been determined that you're not engaged in normal gameplay and a restriction has been imposed upon you. You may not move for $s1 minutes.
 	 */
 	public static final SystemMessageId GAMEPLAY_RESTRICTION_PENALTY_S1;
 	
 	/**
 	 * ID: 1372<br>
-	 * Message: 現在動けない状態です。動けるようになるまでの残り時間はあと$s1分です。
+	 * Message: 現在動けない状態です。動けるようになるまでの残り時間はあと$s1分です。<br>
+	 * Message: Your punishment will continue for $s1 minutes.
 	 */
 	public static final SystemMessageId PUNISHMENT_CONTINUE_S1_MINUTES;
 	
 	/**
 	 * ID: 1373<br>
-	 * Message: $c1がレイド ボスが落とした$s2を手に入れました。
+	 * Message: $c1がレイド ボスが落とした$s2を手に入れました。<br>
+	 * Message: $c1 has picked up $s2 that was dropped by a Raid Boss.
 	 */
 	public static final SystemMessageId C1_PICKED_UP_S2_FROM_RAIDBOSS;
 	
 	/**
 	 * ID: 1374<br>
-	 * Message: $c1がレイド ボスが落とした$s2 $s3個を手に入れました。
+	 * Message: $c1がレイド ボスが落とした$s2 $s3個を手に入れました。<br>
+	 * Message: $c1 has picked up $s3 $s2(s) that was dropped by a Raid Boss.
 	 */
 	public static final SystemMessageId C1_PICKED_UP_S3_S2_S_FROM_RAIDBOSS;
 	
 	/**
 	 * ID: 1375<br>
-	 * Message: $c1がレイド ボスが落とした$s2アデナを手に入れました。
+	 * Message: $c1がレイド ボスが落とした$s2アデナを手に入れました。<br>
+	 * Message: $c1 has picked up $s2 adena that was dropped by a Raid Boss.
 	 */
 	public static final SystemMessageId C1_PICKED_UP_S2_ADENA_FROM_RAIDBOSS;
 	
 	/**
 	 * ID: 1376<br>
-	 * Message: $c1が他の人が落とした$s2を手に入れました。
+	 * Message: $c1が他の人が落とした$s2を手に入れました。<br>
+	 * Message: $c1 has picked up $s2 that was dropped by another character.
 	 */
 	public static final SystemMessageId C1_PICKED_UP_S2_FROM_ANOTHER_CHARACTER;
 	
 	/**
 	 * ID: 1377<br>
-	 * Message: $c1が他の人が落とした$s2 $s3個を手に入れました。
+	 * Message: $c1が他の人が落とした$s2 $s3個を手に入れました。<br>
+	 * Message: $c1 has picked up $s3 $s2(s) that was dropped by a another character.
 	 */
 	public static final SystemMessageId C1_PICKED_UP_S3_S2_S_FROM_ANOTHER_CHARACTER;
 	
 	/**
 	 * ID: 1378<br>
-	 * Message: $c1が他の人が落とした+$s3$s2を手に入れました。
+	 * Message: $c1が他の人が落とした+$s3$s2を手に入れました。<br>
+	 * Message: $c1 has picked up +$s3 $s2 that was dropped by a another character.
 	 */
 	public static final SystemMessageId C1_PICKED_UP_S3_S2_FROM_ANOTHER_CHARACTER;
 	
 	/**
 	 * ID: 1379<br>
-	 * Message: $c1が$s2アデナを手に入れました。
+	 * Message: $c1が$s2アデナを手に入れました。<br>
+	 * Message: $c1 has obtained $s2 adena.
 	 */
 	public static final SystemMessageId C1_OBTAINED_S2_ADENA;
 	
 	/**
 	 * ID: 1380<br>
-	 * Message: 戦場では$s1を召喚できません。
+	 * Message: 戦場では$s1を召喚できません。<br>
+	 * Message: You can't summon a $s1 while on the battleground.
 	 */
 	public static final SystemMessageId CANT_SUMMON_S1_ON_BATTLEGROUND;
 	
 	/**
 	 * ID: 1381<br>
-	 * Message: パーティ リーダーが$s1を$s2個獲得しました。
+	 * Message: パーティ リーダーが$s1を$s2個獲得しました。<br>
+	 * Message: The party leader has obtained $s2 of $s1.
 	 */
 	public static final SystemMessageId LEADER_OBTAINED_S2_OF_S1;
 	
 	/**
 	 * ID: 1382<br>
-	 * Message: 本当にこの武器を選択されますか。 クエストを完遂するためには、選択した武器を必ず持って来なければなりません。
+	 * Message: 本当にこの武器を選択されますか。 クエストを完遂するためには、選択した武器を必ず持って来なければなりません。<br>
+	 * Message: To fulfill the quest, you must bring the chosen weapon. Are you sure you want to choose this weapon?
 	 */
 	public static final SystemMessageId CHOOSE_WEAPON_CONFIRM;
 	
 	/**
 	 * ID: 1383<br>
-	 * Message: 本当に変えられますか。
+	 * Message: 本当に変えられますか。<br>
+	 * Message: Are you sure you want to exchange?
 	 */
 	public static final SystemMessageId EXCHANGE_CONFIRM;
 	
 	/**
 	 * ID: 1384<br>
-	 * Message: $c1がパーティ リーダーになりました。
+	 * Message: $c1がパーティ リーダーになりました。<br>
+	 * Message: $c1 has become the party leader.
 	 */
 	public static final SystemMessageId C1_HAS_BECOME_A_PARTY_LEADER;
 	
 	/**
 	 * ID: 1385<br>
-	 * Message: 降りられないエリアです。
+	 * Message: 降りられないエリアです。<br>
+	 * Message: You are not allowed to dismount at this location.
 	 */
 	public static final SystemMessageId NO_DISMOUNT_HERE;
 	
 	/**
 	 * ID: 1386<br>
-	 * Message: 停止状態が解除されました。
+	 * Message: 停止状態が解除されました。<br>
+	 * Message: You are no longer held in place.
 	 */
 	public static final SystemMessageId NO_LONGER_HELD_IN_PLACE;
 	
 	/**
 	 * ID: 1387<br>
-	 * Message: 着用するアイテムを選択してください。
+	 * Message: 着用するアイテムを選択してください。<br>
+	 * Message: Please select the item you would like to try on.
 	 */
 	public static final SystemMessageId SELECT_ITEM_TO_TRY_ON;
 	
 	/**
 	 * ID: 1388<br>
-	 * Message: パーティ ルームが生成されました。
+	 * Message: パーティ ルームが生成されました。<br>
+	 * Message: A party room has been created.
 	 */
 	public static final SystemMessageId PARTY_ROOM_CREATED;
 	
 	/**
 	 * ID: 1389<br>
-	 * Message: パーティ ルームの情報が修正されました。
+	 * Message: パーティ ルームの情報が修正されました。<br>
+	 * Message: The party room's information has been revised.
 	 */
 	public static final SystemMessageId PARTY_ROOM_REVISED;
 	
 	/**
 	 * ID: 1390<br>
-	 * Message: パーティ ルームに入場できません。
+	 * Message: パーティ ルームに入場できません。<br>
+	 * Message: You are not allowed to enter the party room.
 	 */
 	public static final SystemMessageId PARTY_ROOM_FORBIDDEN;
 	
 	/**
 	 * ID: 1391<br>
-	 * Message: パーティ ルームから退場しました。
+	 * Message: パーティ ルームから退場しました。<br>
+	 * Message: You have exited from the party room.
 	 */
 	public static final SystemMessageId PARTY_ROOM_EXITED;
 	
 	/**
 	 * ID: 1392<br>
-	 * Message: $c1がパーティ ルームから退場しました。
+	 * Message: $c1がパーティ ルームから退場しました。<br>
+	 * Message: $c1 has left the party room.
 	 */
 	public static final SystemMessageId C1_LEFT_PARTY_ROOM;
 	
 	/**
 	 * ID: 1393<br>
-	 * Message: パーティ ルームから追放されました。
+	 * Message: パーティ ルームから追放されました。<br>
+	 * Message: You have been ousted from the party room.
 	 */
 	public static final SystemMessageId OUSTED_FROM_PARTY_ROOM;
 	
 	/**
 	 * ID: 1394<br>
-	 * Message: $c1がパーティ ルームから追放されました。
+	 * Message: $c1がパーティ ルームから追放されました。<br>
+	 * Message: $c1 has been kicked from the party room.
 	 */
 	public static final SystemMessageId C1_KICKED_FROM_PARTY_ROOM;
 	
 	/**
 	 * ID: 1395<br>
-	 * Message: パーティ ルームが終了しました。
+	 * Message: パーティ ルームが終了しました。<br>
+	 * Message: The party room has been disbanded.
 	 */
 	public static final SystemMessageId PARTY_ROOM_DISBANDED;
 	
 	/**
 	 * ID: 1396<br>
-	 * Message: パーティに加入していないか、パーティ リーダーでないと、パーティ ルームのリストを見ることはできません。
+	 * Message: パーティに加入していないか、パーティ リーダーでないと、パーティ ルームのリストを見ることはできません。<br>
+	 * Message: The list of party rooms can only be viewed by a person who has not joined a party or who is currently the leader of a party.
 	 */
 	public static final SystemMessageId CANT_VIEW_PARTY_ROOMS;
 	
 	/**
 	 * ID: 1397<br>
-	 * Message: パーティ ルームのルーム リーダーが変更されました。
+	 * Message: パーティ ルームのルーム リーダーが変更されました。<br>
+	 * Message: The leader of the party room has changed.
 	 */
 	public static final SystemMessageId PARTY_ROOM_LEADER_CHANGED;
 	
 	/**
 	 * ID: 1398<br>
-	 * Message: パーティ メンバーを募集します。
+	 * Message: パーティ メンバーを募集します。<br>
+	 * Message: We are recruiting party members.
 	 */
 	public static final SystemMessageId RECRUITING_PARTY_MEMBERS;
 	
 	/**
 	 * ID: 1399<br>
-	 * Message: パーティ リーダーのみ権限を委譲することができます。
+	 * Message: パーティ リーダーのみ権限を委譲することができます。<br>
+	 * Message: Only the leader of the party can transfer party leadership to another player.
 	 */
 	public static final SystemMessageId ONLY_A_PARTY_LEADER_CAN_TRANSFER_ONES_RIGHTS_TO_ANOTHER_PLAYER;
 	
 	/**
 	 * ID: 1400<br>
-	 * Message: パーティ リーダーの権限を委譲する対象を選択してください。
+	 * Message: パーティ リーダーの権限を委譲する対象を選択してください。<br>
+	 * Message: Please select the person you wish to make the party leader.
 	 */
 	public static final SystemMessageId PLEASE_SELECT_THE_PERSON_TO_WHOM_YOU_WOULD_LIKE_TO_TRANSFER_THE_RIGHTS_OF_A_PARTY_LEADER;
 	
 	/**
 	 * ID: 1401<br>
-	 * Message: 自分自身に権限を委譲することはできません。
+	 * Message: 自分自身に権限を委譲することはできません。<br>
+	 * Message: Slow down.you are already the party leader.
 	 */
 	public static final SystemMessageId YOU_CANNOT_TRANSFER_RIGHTS_TO_YOURSELF;
 	
 	/**
 	 * ID: 1402<br>
-	 * Message: パーティ メンバーにのみ権限の委譲が可能です。
+	 * Message: パーティ メンバーにのみ権限の委譲が可能です。<br>
+	 * Message: You may only transfer party leadership to another member of the party.
 	 */
 	public static final SystemMessageId YOU_CAN_TRANSFER_RIGHTS_ONLY_TO_ANOTHER_PARTY_MEMBER;
 	
 	/**
 	 * ID: 1403<br>
-	 * Message: パーティ リーダーの権限委譲に失敗しました。
+	 * Message: パーティ リーダーの権限委譲に失敗しました。<br>
+	 * Message: You have failed to transfer the party leadership.
 	 */
 	public static final SystemMessageId YOU_HAVE_FAILED_TO_TRANSFER_THE_PARTY_LEADER_RIGHTS;
 	
 	/**
 	 * ID: 1404<br>
-	 * Message: 個人工房の主人が製作価格を変更しました。変更された価格をもう一度確認して御利用ください。
+	 * Message: 個人工房の主人が製作価格を変更しました。変更された価格をもう一度確認して御利用ください。<br>
+	 * Message: The owner of the private manufacturing store has changed the price for creating this item. Please check the new price before trying again.
 	 */
 	public static final SystemMessageId MANUFACTURE_PRICE_HAS_CHANGED;
 	
 	/**
 	 * ID: 1405<br>
-	 * Message: $s1のCPが回復されます。
+	 * Message: $s1のCPが回復されます。<br>
+	 * Message: $s1 CPs have been restored.
 	 */
 	public static final SystemMessageId S1_CP_WILL_BE_RESTORED;
 	
 	/**
 	 * ID: 1406<br>
-	 * Message: $c1によって$s2のCPが回復されます。
+	 * Message: $c1によって$s2のCPが回復されます。<br>
+	 * Message: $s2 CPs has been restored by $c1.
 	 */
 	public static final SystemMessageId S2_CP_WILL_BE_RESTORED_BY_C1;
 	
 	/**
 	 * ID: 1407<br>
-	 * Message: 2つのアカウントで同時にアクセスできないPCを使用されています。
+	 * Message: 2つのアカウントで同時にアクセスできないPCを使用されています。<br>
+	 * Message: You are using a computer that does not allow you to log in with two accounts at the same time.
 	 */
 	public static final SystemMessageId NO_LOGIN_WITH_TWO_ACCOUNTS;
 	
 	/**
 	 * ID: 1408<br>
-	 * Message: 課金時間の残りは$s1時間 $s2分です。予約済みの決済は$s3件です。
+	 * Message: 課金時間の残りは$s1時間 $s2分です。予約済みの決済は$s3件です。<br>
+	 * Message: Your prepaid remaining usage time is $s1 hours and $s2 minutes. You have $s3 paid reservations left.
 	 */
 	public static final SystemMessageId PREPAID_LEFT_S1_S2_S3;
 	
 	/**
 	 * ID: 1409<br>
-	 * Message: 課金時間が満了したので予約済みの決済が有効になります。残り時間は$s1時間 $s2分です。
+	 * Message: 課金時間が満了したので予約済みの決済が有効になります。残り時間は$s1時間 $s2分です。<br>
+	 * Message: Your prepaid usage time has expired. Your new prepaid reservation will be used. The remaining usage time is $s1 hours and $s2 minutes.
 	 */
 	public static final SystemMessageId PREPAID_EXPIRED_S1_S2;
 	
 	/**
 	 * ID: 1410<br>
-	 * Message: 課金時間が満了しました。予約済みの決済はありません。
+	 * Message: 課金時間が満了しました。予約済みの決済はありません。<br>
+	 * Message: Your prepaid usage time has expired. You do not have any more prepaid reservations left.
 	 */
 	public static final SystemMessageId PREPAID_EXPIRED;
 	
 	/**
 	 * ID: 1411<br>
-	 * Message: 課金決済予約件数が変更されました。
+	 * Message: 課金決済予約件数が変更されました。<br>
+	 * Message: The number of your prepaid reservations has changed.
 	 */
 	public static final SystemMessageId PREPAID_CHANGED;
 	
 	/**
 	 * ID: 1412<br>
-	 * Message: 課金時間は残り$s1分です。
+	 * Message: 課金時間は残り$s1分です。<br>
+	 * Message: Your prepaid usage time has $s1 minutes left.
 	 */
 	public static final SystemMessageId PREPAID_LEFT_S1;
 	
 	/**
 	 * ID: 1413<br>
-	 * Message: 条件が合わないため、パーティ ルームに入場できません。
+	 * Message: 条件が合わないため、パーティ ルームに入場できません。<br>
+	 * Message: You do not meet the requirements to enter that party room.
 	 */
 	public static final SystemMessageId CANT_ENTER_PARTY_ROOM;
 	
 	/**
 	 * ID: 1414<br>
-	 * Message: 長さは、横100以上、縦5000未満にしてください。
+	 * Message: 長さは、横100以上、縦5000未満にしてください。<br>
+	 * Message: The width and length should be 100 or more grids and less than 5000 grids respectively.
 	 */
 	public static final SystemMessageId WRONG_GRID_COUNT;
 	
 	/**
 	 * ID: 1415<br>
-	 * Message: コマンド ファイルが指定されていません。
+	 * Message: コマンド ファイルが指定されていません。<br>
+	 * Message: The command file is not sent.
 	 */
 	public static final SystemMessageId COMMAND_FILE_NOT_SENT;
 	
 	/**
 	 * ID: 1416<br>
-	 * Message: 第1チームのリーダーが選択されていません。
+	 * Message: 第1チームのリーダーが選択されていません。<br>
+	 * Message: The representative of Team 1 has not been selected.
 	 */
 	public static final SystemMessageId TEAM_1_NO_REPRESENTATIVE;
 	
 	/**
 	 * ID: 1417<br>
-	 * Message: 第2チームのリーダーが選択されていません。
+	 * Message: 第2チームのリーダーが選択されていません。<br>
+	 * Message: The representative of Team 2 has not been selected.
 	 */
 	public static final SystemMessageId TEAM_2_NO_REPRESENTATIVE;
 	
 	/**
 	 * ID: 1418<br>
-	 * Message: 第1チームの名称が指定されていません。
+	 * Message: 第1チームの名称が指定されていません。<br>
+	 * Message: The name of Team 1 has not yet been chosen.
 	 */
 	public static final SystemMessageId TEAM_1_NO_NAME;
 	
 	/**
 	 * ID: 1419<br>
-	 * Message: 第2チームの名称が指定されていません。
+	 * Message: 第2チームの名称が指定されていません。<br>
+	 * Message: The name of Team 2 has not yet been chosen.
 	 */
 	public static final SystemMessageId TEAM_2_NO_NAME;
 	
 	/**
 	 * ID: 1420<br>
-	 * Message: 第1チームと第2チームの名称が同じです。
+	 * Message: 第1チームと第2チームの名称が同じです。<br>
+	 * Message: The name of Team 1 and the name of Team 2 are identical.
 	 */
 	public static final SystemMessageId TEAM_NAME_IDENTICAL;
 	
 	/**
 	 * ID: 1421<br>
-	 * Message: 競技設定ファイルが指定されていません。
+	 * Message: 競技設定ファイルが指定されていません。<br>
+	 * Message: The race setup file has not been designated.
 	 */
 	public static final SystemMessageId RACE_SETUP_FILE1;
 	
 	/**
 	 * ID: 1422<br>
-	 * Message: 競技設定ファイル エラー：BuffCntが明示されていません。
+	 * Message: 競技設定ファイル エラー：BuffCntが明示されていません。<br>
+	 * Message: Race setup file error - BuffCnt is not specified
 	 */
 	public static final SystemMessageId RACE_SETUP_FILE2;
 	
 	/**
 	 * ID: 1423<br>
-	 * Message: 競技設定ファイル エラー：BuffID$s1が明示されていません。
+	 * Message: 競技設定ファイル エラー：BuffID$s1が明示されていません。<br>
+	 * Message: Race setup file error - BuffID$s1 is not specified.
 	 */
 	public static final SystemMessageId RACE_SETUP_FILE3;
 	
 	/**
 	 * ID: 1424<br>
-	 * Message: 競技設定ファイル エラー：BuffLv$s1が明示されていません。
+	 * Message: 競技設定ファイル エラー：BuffLv$s1が明示されていません。<br>
+	 * Message: Race setup file error - BuffLv$s1 is not specified.
 	 */
 	public static final SystemMessageId RACE_SETUP_FILE4;
 	
 	/**
 	 * ID: 1425<br>
-	 * Message: 競技設定ファイル エラー：DefaultAllowが明示されていません。
+	 * Message: 競技設定ファイル エラー：DefaultAllowが明示されていません。<br>
+	 * Message: Race setup file error - DefaultAllow is not specified
 	 */
 	public static final SystemMessageId RACE_SETUP_FILE5;
 	
 	/**
 	 * ID: 1426<br>
-	 * Message: 競技設定ファイル エラー：ExpSkillCntが明示されていません。
+	 * Message: 競技設定ファイル エラー：ExpSkillCntが明示されていません。<br>
+	 * Message: Race setup file error - ExpSkillCnt is not specified.
 	 */
 	public static final SystemMessageId RACE_SETUP_FILE6;
 	
 	/**
 	 * ID: 1427<br>
-	 * Message: 競技設定ファイル エラー：ExpSkillID$s1が明示されていません。
+	 * Message: 競技設定ファイル エラー：ExpSkillID$s1が明示されていません。<br>
+	 * Message: Race setup file error - ExpSkillID$s1 is not specified.
 	 */
 	public static final SystemMessageId RACE_SETUP_FILE7;
 	
 	/**
 	 * ID: 1428<br>
-	 * Message: 競技設定ファイル エラー：ExpItemCntが明示されていません。
+	 * Message: 競技設定ファイル エラー：ExpItemCntが明示されていません。<br>
+	 * Message: Race setup file error - ExpItemCnt is not specified.
 	 */
 	public static final SystemMessageId RACE_SETUP_FILE8;
 	
 	/**
 	 * ID: 1429<br>
-	 * Message: 競技設定ファイル エラー：ExpItemID$s1が明示されていません。
+	 * Message: 競技設定ファイル エラー：ExpItemID$s1が明示されていません。<br>
+	 * Message: Race setup file error - ExpItemID$s1 is not specified.
 	 */
 	public static final SystemMessageId RACE_SETUP_FILE9;
 	
 	/**
 	 * ID: 1430<br>
-	 * Message: 競技設定ファイル エラー：TeleportDelayが明示されていません。
+	 * Message: 競技設定ファイル エラー：TeleportDelayが明示されていません。<br>
+	 * Message: Race setup file error - TeleportDelay is not specified
 	 */
 	public static final SystemMessageId RACE_SETUP_FILE10;
 	
 	/**
 	 * ID: 1431<br>
-	 * Message: 競技を一時中断します。
+	 * Message: 競技を一時中断します。<br>
+	 * Message: The race will be stopped temporarily.
 	 */
 	public static final SystemMessageId RACE_STOPPED_TEMPORARILY;
 	
 	/**
 	 * ID: 1432<br>
-	 * Message: 相手が石化状態です。
+	 * Message: 相手が石化状態です。<br>
+	 * Message: Your opponent is currently in a petrified state.
 	 */
 	public static final SystemMessageId OPPONENT_PETRIFIED;
 	
 	/**
 	 * ID: 1433<br>
-	 * Message: $s1 の使用を自動にします。
+	 * Message: $s1 の使用を自動にします。<br>
+	 * Message: You will now automatically apply $s1 to your target.
 	 */
 	public static final SystemMessageId USE_OF_S1_WILL_BE_AUTO;
 	
 	/**
 	 * ID: 1434<br>
-	 * Message: $s1 の自動使用を解除します。
+	 * Message: $s1 の自動使用を解除します。<br>
+	 * Message: You will no longer automatically apply $s1 to your weapon.
 	 */
 	public static final SystemMessageId AUTO_USE_OF_S1_CANCELLED;
 	
 	/**
 	 * ID: 1435<br>
-	 * Message: $s1が不足しているので自動使用が解除されました。
+	 * Message: $s1が不足しているので自動使用が解除されました。<br>
+	 * Message: Due to insufficient $s1, the automatic use function has been deactivated.
 	 */
 	public static final SystemMessageId AUTO_USE_CANCELLED_LACK_OF_S1;
 	
 	/**
 	 * ID: 1436<br>
-	 * Message: $s1が不足しているので自動使用ができません。
+	 * Message: $s1が不足しているので自動使用ができません。<br>
+	 * Message: Due to insufficient $s1, the automatic use function cannot be activated.
 	 */
 	public static final SystemMessageId CANNOT_AUTO_USE_LACK_OF_S1;
 	
 	/**
 	 * ID: 1437<br>
-	 * Message: サイコロが使えなくなりました。村にある一般の商店での購入もできません。ただ、村にある一般の商店での販売はできます。
+	 * Message: サイコロが使えなくなりました。村にある一般の商店での購入もできません。ただ、村にある一般の商店での販売はできます。<br>
+	 * Message: Players are no longer allowed to play dice. Dice can no longer be purchased from a village store. However, you can still sell them to any village store.
 	 */
 	public static final SystemMessageId DICE_NO_LONGER_ALLOWED;
 	
 	/**
 	 * ID: 1438<br>
-	 * Message: エンチャント可能なスキルがありません。
+	 * Message: エンチャント可能なスキルがありません。<br>
+	 * Message: There is no skill that enables enchant.
 	 */
 	public static final SystemMessageId THERE_IS_NO_SKILL_THAT_ENABLES_ENCHANT;
 	
 	/**
 	 * ID: 1439<br>
-	 * Message: スキルのエンチャントに必要なアイテムが不足しています。
+	 * Message: スキルのエンチャントに必要なアイテムが不足しています。<br>
+	 * Message: You do not have all of the items needed to enchant that skill.
 	 */
 	public static final SystemMessageId YOU_DONT_HAVE_ALL_OF_THE_ITEMS_NEEDED_TO_ENCHANT_THAT_SKILL;
 	
 	/**
 	 * ID: 1440<br>
-	 * Message: スキルのエンチャントに成功しました。スキルのエンチャントが$s1強化されました。
+	 * Message: スキルのエンチャントに成功しました。スキルのエンチャントが$s1強化されました。<br>
+	 * Message: You have succeeded in enchanting the skill $s1.
 	 */
 	public static final SystemMessageId YOU_HAVE_SUCCEEDED_IN_ENCHANTING_THE_SKILL_S1;
 	
 	/**
 	 * ID: 1441<br>
-	 * Message: スキルのエンチャントに失敗しました。スキルのエンチャントが初期化されました。
+	 * Message: スキルのエンチャントに失敗しました。スキルのエンチャントが初期化されました。<br>
+	 * Message: Skill enchant failed. The skill will be initialized.
 	 */
 	public static final SystemMessageId YOU_HAVE_FAILED_TO_ENCHANT_THE_SKILL_S1;
 	
 	/**
 	 * ID: 1443<br>
-	 * Message: スキルのエンチャントに必要なSPが不足しています。
+	 * Message: スキルのエンチャントに必要なSPが不足しています。<br>
+	 * Message: You do not have enough SP to enchant that skill.
 	 */
 	public static final SystemMessageId YOU_DONT_HAVE_ENOUGH_SP_TO_ENCHANT_THAT_SKILL;
 	
 	/**
 	 * ID: 1444<br>
-	 * Message: スキルのエンチャントに必要な経験値が不足しています。
+	 * Message: スキルのエンチャントに必要な経験値が不足しています。<br>
+	 * Message: You do not have enough experience (Exp) to enchant that skill.
 	 */
 	public static final SystemMessageId YOU_DONT_HAVE_ENOUGH_EXP_TO_ENCHANT_THAT_SKILL;
 	
 	/**
 	 * ID: 1445<br>
-	 * Message: 以前のサブクラスは消滅し、新たなサブクラスのレベル40からスタートします。よろしいですか。
+	 * Message: 以前のサブクラスは消滅し、新たなサブクラスのレベル40からスタートします。よろしいですか。<br>
+	 * Message: Your previous subclass will be removed and replaced with the new subclass at level 40. Do you wish to continue?
 	 */
 	public static final SystemMessageId REPLACE_SUBCLASS_CONFIRM;
 	
 	/**
 	 * ID: 1446<br>
-	 * Message: $s1 発 $s2 行きの定期船の運航に遅れが出ています。
+	 * Message: $s1 発 $s2 行きの定期船の運航に遅れが出ています。<br>
+	 * Message: The ferry from $s1 to $s2 has been delayed.
 	 */
 	public static final SystemMessageId FERRY_FROM_S1_TO_S2_DELAYED;
 	
 	/**
 	 * ID: 1447<br>
-	 * Message: 食いつきの待機中には他のスキルを使用できません。
+	 * Message: 食いつきの待機中には他のスキルを使用できません。<br>
+	 * Message: You cannot do that while fishing.
 	 */
 	public static final SystemMessageId CANNOT_DO_WHILE_FISHING_1;
 	
 	/**
 	 * ID: 1448<br>
-	 * Message: フィッシング専用スキルのみ使用できます。
+	 * Message: フィッシング専用スキルのみ使用できます。<br>
+	 * Message: Only fishing skills may be used at this time.
 	 */
 	public static final SystemMessageId ONLY_FISHING_SKILLS_NOW;
 	
 	/**
 	 * ID: 1449<br>
-	 * Message: 食いつきました。
+	 * Message: 食いつきました。<br>
+	 * Message: You've got a bite!
 	 */
 	public static final SystemMessageId GOT_A_BITE;
 	
 	/**
 	 * ID: 1450<br>
-	 * Message: 時間切れで獲物を逃しました。
+	 * Message: 時間切れで獲物を逃しました。<br>
+	 * Message: That fish is more determined than you are - it spit the hook!
 	 */
 	public static final SystemMessageId FISH_SPIT_THE_HOOK;
 	
 	/**
 	 * ID: 1451<br>
-	 * Message: 獲物を逃しました。
+	 * Message: 獲物を逃しました。<br>
+	 * Message: Your bait was stolen by that fish!
 	 */
 	public static final SystemMessageId BAIT_STOLEN_BY_FISH;
 	
 	/**
 	 * ID: 1452<br>
-	 * Message: 獲物がエサだけ取って逃げました。
+	 * Message: 獲物がエサだけ取って逃げました。<br>
+	 * Message: Baits have been lost because the fish got away.
 	 */
 	public static final SystemMessageId BAIT_LOST_FISH_GOT_AWAY;
 	
 	/**
 	 * ID: 1453<br>
-	 * Message: 釣り竿を装備していません。
+	 * Message: 釣り竿を装備していません。<br>
+	 * Message: You do not have a fishing pole equipped.
 	 */
 	public static final SystemMessageId FISHING_POLE_NOT_EQUIPPED;
 	
 	/**
 	 * ID: 1454<br>
-	 * Message: エサがついていません。
+	 * Message: エサがついていません。<br>
+	 * Message: You must put bait on your hook before you can fish.
 	 */
 	public static final SystemMessageId BAIT_ON_HOOK_BEFORE_FISHING;
 	
 	/**
 	 * ID: 1455<br>
-	 * Message: 水中ではフィッシングできません。
+	 * Message: 水中ではフィッシングできません。<br>
+	 * Message: You cannot fish while under water.
 	 */
 	public static final SystemMessageId CANNOT_FISH_UNDER_WATER;
 	
 	/**
 	 * ID: 1456<br>
-	 * Message: 搭乗した状態ではフィッシングできません。
+	 * Message: 搭乗した状態ではフィッシングできません。<br>
+	 * Message: You cannot fish while riding as a passenger of a boat - it's against the rules.
 	 */
 	public static final SystemMessageId CANNOT_FISH_ON_BOAT;
 	
 	/**
 	 * ID: 1457<br>
-	 * Message: 釣り場ではありません。
+	 * Message: 釣り場ではありません。<br>
+	 * Message: You can't fish here.
 	 */
 	public static final SystemMessageId CANNOT_FISH_HERE;
 	
 	/**
 	 * ID: 1458<br>
-	 * Message: フィッシングを取り消します。
+	 * Message: フィッシングを取り消します。<br>
+	 * Message: Your attempt at fishing has been cancelled.
 	 */
 	public static final SystemMessageId FISHING_ATTEMPT_CANCELLED;
 	
 	/**
 	 * ID: 1459<br>
-	 * Message: エサが不足しています。
+	 * Message: エサが不足しています。<br>
+	 * Message: You do not have enough bait.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_BAIT;
 	
 	/**
 	 * ID: 1460<br>
-	 * Message: フィッシングを終了します。
+	 * Message: フィッシングを終了します。<br>
+	 * Message: You reel your line in and stop fishing.
 	 */
 	public static final SystemMessageId REEL_LINE_AND_STOP_FISHING;
 	
 	/**
 	 * ID: 1461<br>
-	 * Message: フィッシングを開始します。
+	 * Message: フィッシングを開始します。<br>
+	 * Message: You cast your line and start to fish.
 	 */
 	public static final SystemMessageId CAST_LINE_AND_START_FISHING;
 	
 	/**
 	 * ID: 1462<br>
-	 * Message: ポンピングスキルは獲物が食いついた状態でのみ使用できます。
+	 * Message: ポンピングスキルは獲物が食いついた状態でのみ使用できます。<br>
+	 * Message: You may only use the Pumping skill while you are fishing.
 	 */
 	public static final SystemMessageId CAN_USE_PUMPING_ONLY_WHILE_FISHING;
 	
 	/**
 	 * ID: 1463<br>
-	 * Message: リーリングスキルは獲物が食いついた状態でのみ使用できます。
+	 * Message: リーリングスキルは獲物が食いついた状態でのみ使用できます。<br>
+	 * Message: You may only use the Reeling skill while you are fishing.
 	 */
 	public static final SystemMessageId CAN_USE_REELING_ONLY_WHILE_FISHING;
 	
 	/**
 	 * ID: 1464<br>
-	 * Message: 獲物が抵抗しました。
+	 * Message: 獲物が抵抗しました。<br>
+	 * Message: The fish has resisted your attempt to bring it in.
 	 */
 	public static final SystemMessageId FISH_RESISTED_ATTEMPT_TO_BRING_IT_IN;
 	
 	/**
 	 * ID: 1465<br>
-	 * Message: ポンピング成功、ダメージ： $s1
+	 * Message: ポンピング成功、ダメージ： $s1<br>
+	 * Message: Your pumping is successful, causing $s1 damage.
 	 */
 	public static final SystemMessageId PUMPING_SUCCESFUL_S1_DAMAGE;
 	
 	/**
 	 * ID: 1466<br>
-	 * Message: ポンピング失敗、ダメージ： $s1
+	 * Message: ポンピング失敗、ダメージ： $s1<br>
+	 * Message: You failed to do anything with the fish and it regains $s1 HP.
 	 */
 	public static final SystemMessageId FISH_RESISTED_PUMPING_S1_HP_REGAINED;
 	
 	/**
 	 * ID: 1467<br>
-	 * Message: リーリング成功、ダメージ：$s1
+	 * Message: リーリング成功、ダメージ：$s1<br>
+	 * Message: You reel that fish in closer and cause $s1 damage.
 	 */
 	public static final SystemMessageId REELING_SUCCESFUL_S1_DAMAGE;
 	
 	/**
 	 * ID: 1468<br>
-	 * Message: リーリング失敗、ダメージ：$s1
+	 * Message: リーリング失敗、ダメージ：$s1<br>
+	 * Message: You failed to reel that fish in further and it regains $s1 HP.
 	 */
 	public static final SystemMessageId FISH_RESISTED_REELING_S1_HP_REGAINED;
 	
 	/**
 	 * ID: 1469<br>
-	 * Message: 獲物を釣り上げました。
+	 * Message: 獲物を釣り上げました。<br>
+	 * Message: You caught something!
 	 */
 	public static final SystemMessageId YOU_CAUGHT_SOMETHING;
 	
 	/**
 	 * ID: 1470<br>
-	 * Message: フィッシング中にはアイテムの装備、解除、破砕、ドロップはできません。
+	 * Message: フィッシング中にはアイテムの装備、解除、破砕、ドロップはできません。<br>
+	 * Message: You cannot do that while fishing.
 	 */
 	public static final SystemMessageId CANNOT_DO_WHILE_FISHING_2;
 	
 	/**
 	 * ID: 1471<br>
-	 * Message: フィッシング中には他の行動を取ることができません。
+	 * Message: フィッシング中には他の行動を取ることができません。<br>
+	 * Message: You cannot do that while fishing.
 	 */
 	public static final SystemMessageId CANNOT_DO_WHILE_FISHING_3;
 	
 	/**
 	 * ID: 1472<br>
-	 * Message: 釣り竿では攻撃できません。
+	 * Message: 釣り竿では攻撃できません。<br>
+	 * Message: You look oddly at the fishing pole in disbelief and realize that you can't attack anything with this.
 	 */
 	public static final SystemMessageId CANNOT_ATTACK_WITH_FISHING_POLE;
 	
 	/**
 	 * ID: 1473<br>
-	 * Message: $s1が不足しています。
+	 * Message: $s1が不足しています。<br>
+	 * Message: $s1 is not sufficient.
 	 */
 	public static final SystemMessageId S1_NOT_SUFFICIENT;
 	
 	/**
 	 * ID: 1474<br>
-	 * Message: $s1を使用できません。
+	 * Message: $s1を使用できません。<br>
+	 * Message: $s1 is not available.
 	 */
 	public static final SystemMessageId S1_NOT_AVAILABLE;
 	
 	/**
 	 * ID: 1475<br>
-	 * Message: ペットが$s1を落としました。
+	 * Message: ペットが$s1を落としました。<br>
+	 * Message: Pet has dropped $s1.
 	 */
 	public static final SystemMessageId PET_DROPPED_S1;
 	
 	/**
 	 * ID: 1476<br>
-	 * Message: ペットが+$s1$s2を落としました。
+	 * Message: ペットが+$s1$s2を落としました。<br>
+	 * Message: Pet has dropped +$s1 $s2.
 	 */
 	public static final SystemMessageId PET_DROPPED_S1_S2;
 	
 	/**
 	 * ID: 1477<br>
-	 * Message: ペットが$s1 $s2個を落としました。
+	 * Message: ペットが$s1 $s2個を落としました。<br>
+	 * Message: Pet has dropped $s2 of $s1.
 	 */
 	public static final SystemMessageId PET_DROPPED_S2_S1_S;
 	
 	/**
 	 * ID: 1478<br>
-	 * Message: 64x64ピクセルの256色のBMPファイルのみ登録できます。
+	 * Message: 64x64ピクセルの256色のBMPファイルのみ登録できます。<br>
+	 * Message: You may only register a 64 x 64 pixel, 256-color BMP.
 	 */
 	public static final SystemMessageId ONLY_64_PIXEL_256_COLOR_BMP;
 	
 	/**
 	 * ID: 1479<br>
-	 * Message: 釣り竿のグレードに合うフィッシング ショットではありません。
+	 * Message: 釣り竿のグレードに合うフィッシング ショットではありません。<br>
+	 * Message: That is the wrong grade of soulshot for that fishing pole.
 	 */
 	public static final SystemMessageId WRONG_FISHINGSHOT_GRADE;
 	
 	/**
 	 * ID: 1480<br>
-	 * Message: オリンピアードの参加申し込みを取り消しますか。
+	 * Message: オリンピアードの参加申し込みを取り消しますか。<br>
+	 * Message: Are you sure you want to remove yourself from the Grand Olympiad Games waiting list?
 	 */
 	public static final SystemMessageId OLYMPIAD_REMOVE_CONFIRM;
 	
 	/**
 	 * ID: 1481<br>
-	 * Message: クラス無制限個人競技を選択しました。参加しますか。
+	 * Message: クラス無制限個人競技を選択しました。参加しますか。<br>
+	 * Message: You have selected a class irrelevant individual match. Do you wish to participate?
 	 */
 	public static final SystemMessageId OLYMPIAD_NON_CLASS_CONFIRM;
 	
 	/**
 	 * ID: 1482<br>
-	 * Message: クラス別試合を選択しました。参加しますか。
+	 * Message: クラス別試合を選択しました。参加しますか。<br>
+	 * Message: You've selected to join a class specific game. Continue?
 	 */
 	public static final SystemMessageId OLYMPIAD_CLASS_CONFIRM;
 	
 	/**
 	 * ID: 1483<br>
-	 * Message: 今英雄になりますか。
+	 * Message: 今英雄になりますか。<br>
+	 * Message: Are you ready to be a Hero?
 	 */
 	public static final SystemMessageId HERO_CONFIRM;
 	
 	/**
 	 * ID: 1484<br>
-	 * Message: 選択した英雄の武器を使用しますか。カマエルは使用できません。
+	 * Message: 選択した英雄の武器を使用しますか。カマエルは使用できません。<br>
+	 * Message: Are you sure this is the Hero weapon you wish to use? Kamael race cannot use this.
 	 */
 	public static final SystemMessageId HERO_WEAPON_CONFIRM;
 	
 	/**
 	 * ID: 1485<br>
-	 * Message: 話せる島発 グルーディン港行きの定期船の運航に遅れが出ています。
+	 * Message: 話せる島発 グルーディン港行きの定期船の運航に遅れが出ています。<br>
+	 * Message: The ferry from Talking Island to Gludin Harbor has been delayed.
 	 */
 	public static final SystemMessageId FERRY_TALKING_GLUDIN_DELAYED;
 	
 	/**
 	 * ID: 1486<br>
-	 * Message: グルーディン港発 話せる島行きの定期船の運航に遅れが出ています。
+	 * Message: グルーディン港発 話せる島行きの定期船の運航に遅れが出ています。<br>
+	 * Message: The ferry from Gludin Harbor to Talking Island has been delayed.
 	 */
 	public static final SystemMessageId FERRY_GLUDIN_TALKING_DELAYED;
 	
 	/**
 	 * ID: 1487<br>
-	 * Message: ギラン港発 話せる島行きの定期船の運航に遅れが出ています。
+	 * Message: ギラン港発 話せる島行きの定期船の運航に遅れが出ています。<br>
+	 * Message: The ferry from Giran Harbor to Talking Island has been delayed.
 	 */
 	public static final SystemMessageId FERRY_GIRAN_TALKING_DELAYED;
 	
 	/**
 	 * ID: 1488<br>
-	 * Message: 話せる島発 ギラン港行きの定期船の運航に遅れが出ています。
+	 * Message: 話せる島発 ギラン港行きの定期船の運航に遅れが出ています。<br>
+	 * Message: The ferry from Talking Island to Giran Harbor has been delayed.
 	 */
 	public static final SystemMessageId FERRY_TALKING_GIRAN_DELAYED;
 	
 	/**
 	 * ID: 1489<br>
-	 * Message: インナドリル遊覧船の運航に遅れが出ています。
+	 * Message: インナドリル遊覧船の運航に遅れが出ています。<br>
+	 * Message: Innadril cruise service has been delayed.
 	 */
 	public static final SystemMessageId INNADRIL_BOAT_DELAYED;
 	
 	/**
 	 * ID: 1490<br>
-	 * Message: 作物$s1を$s2個精算しました。
+	 * Message: 作物$s1を$s2個精算しました。<br>
+	 * Message: Traded $s2 of crop $s1.
 	 */
 	public static final SystemMessageId TRADED_S2_OF_CROP_S1;
 	
 	/**
 	 * ID: 1491<br>
-	 * Message: 作物$s1を$s2個精算するのに失敗しました。
+	 * Message: 作物$s1を$s2個精算するのに失敗しました。<br>
+	 * Message: Failed in trading $s2 of crop $s1.
 	 */
 	public static final SystemMessageId FAILED_IN_TRADING_S2_OF_CROP_S1;
 	
 	/**
 	 * ID: 1492<br>
-	 * Message: $s1秒後にオリンピアード スタジアムに移動します。
+	 * Message: $s1秒後にオリンピアード スタジアムに移動します。<br>
+	 * Message: You will be moved to the Olympiad Stadium in $s1 second(s).
 	 */
 	public static final SystemMessageId YOU_WILL_ENTER_THE_OLYMPIAD_STADIUM_IN_S1_SECOND_S;
 	
 	/**
 	 * ID: 1493<br>
-	 * Message: 試合相手がゲームを終了したので試合が取り消されました。
+	 * Message: 試合相手がゲームを終了したので試合が取り消されました。<br>
+	 * Message: Your opponent made haste with their tail between their legs), the match has been cancelled.
 	 */
 	public static final SystemMessageId THE_GAME_HAS_BEEN_CANCELLED_BECAUSE_THE_OTHER_PARTY_ENDS_THE_GAME;
 	
 	/**
 	 * ID: 1494<br>
-	 * Message: 試合相手がゲームの参加条件を満たさなかったため、試合が取り消されました。
+	 * Message: 試合相手がゲームの参加条件を満たさなかったため、試合が取り消されました。<br>
+	 * Message: Your opponent does not meet the requirements to do battle), the match has been cancelled.
 	 */
 	public static final SystemMessageId THE_GAME_HAS_BEEN_CANCELLED_BECAUSE_THE_OTHER_PARTY_DOES_NOT_MEET_THE_REQUIREMENTS_FOR_JOINING_THE_GAME;
 	
 	/**
 	 * ID: 1495<br>
-	 * Message: $s1秒後に試合を開始します。
+	 * Message: $s1秒後に試合を開始します。<br>
+	 * Message: The match will start in $s1 second(s).
 	 */
 	public static final SystemMessageId THE_GAME_WILL_START_IN_S1_SECOND_S;
 	
 	/**
 	 * ID: 1496<br>
-	 * Message: 試合を開始します。
+	 * Message: 試合を開始します。<br>
+	 * Message: The match has started, fight!
 	 */
 	public static final SystemMessageId STARTS_THE_GAME;
 	
 	/**
 	 * ID: 1497<br>
-	 * Message: $c1が勝利しました。
+	 * Message: $c1が勝利しました。<br>
+	 * Message: Congratulations, $c1! You win the match!
 	 */
 	public static final SystemMessageId C1_HAS_WON_THE_GAME;
 	
 	/**
 	 * ID: 1498<br>
-	 * Message: 引き分けです。
+	 * Message: 引き分けです。<br>
+	 * Message: There is no victor, the match ends in a tie.
 	 */
 	public static final SystemMessageId THE_GAME_ENDED_IN_A_TIE;
 	
 	/**
 	 * ID: 1499<br>
-	 * Message: $s1秒後に村に帰還します。
+	 * Message: $s1秒後に村に帰還します。<br>
+	 * Message: You will be moved back to town in $s1 second(s).
 	 */
 	public static final SystemMessageId YOU_WILL_BE_MOVED_TO_TOWN_IN_S1_SECONDS;
 	
 	/**
 	 * ID: 1500<br>
-	 * Message: $c1 は参加条件に合いません。サブクラス キャラクターではオリンピアードに参加できません。
+	 * Message: $c1 は参加条件に合いません。サブクラス キャラクターではオリンピアードに参加できません。<br>
+	 * Message: $c1% does not meet the participation requirements. A sub-class character cannot participate in the Olympiad.
 	 */
 	public static final SystemMessageId C1_CANT_JOIN_THE_OLYMPIAD_WITH_A_SUB_CLASS_CHARACTER;
 	
 	/**
 	 * ID: 1501<br>
-	 * Message: $c1 は参加条件に合いません。ノーブレス以外はオリンピアードに参加できません。
+	 * Message: $c1 は参加条件に合いません。ノーブレス以外はオリンピアードに参加できません。<br>
+	 * Message: $c1% does not meet the participation requirements. Only Noblesse can participate in the Olympiad.
 	 */
 	public static final SystemMessageId C1_DOES_NOT_MEET_REQUIREMENTS_ONLY_NOBLESS_CAN_PARTICIPATE_IN_THE_OLYMPIAD;
 	
 	/**
 	 * ID: 1502<br>
-	 * Message: $c1 は競技待機者リストにすでに登録されています。
+	 * Message: $c1 は競技待機者リストにすでに登録されています。<br>
+	 * Message: $c1 is already registered on the match waiting list.
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_REGISTERED_ON_THE_MATCH_WAITING_LIST;
 	
 	/**
 	 * ID: 1503<br>
-	 * Message: クラス別競技種目の待機者リストに登録されました。
+	 * Message: クラス別競技種目の待機者リストに登録されました。<br>
+	 * Message: You have been registered in the Grand Olympiad Games waiting list for a class specific match.
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REGISTERED_IN_A_WAITING_LIST_OF_CLASSIFIED_GAMES;
 	
 	/**
 	 * ID: 1504<br>
-	 * Message: クラス無制限個人競技種目の待機者リストに登録されました。
+	 * Message: クラス無制限個人競技種目の待機者リストに登録されました。<br>
+	 * Message: You have registered on the waiting list for the non-class-limited individual match event.
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REGISTERED_IN_A_WAITING_LIST_OF_NO_CLASS_GAMES;
 	
 	/**
 	 * ID: 1505<br>
-	 * Message: 競技待機者リストから削除されました。
+	 * Message: 競技待機者リストから削除されました。<br>
+	 * Message: You have been removed from the Grand Olympiad Games waiting list.
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_DELETED_FROM_THE_WAITING_LIST_OF_A_GAME;
 	
 	/**
 	 * ID: 1506<br>
-	 * Message: 競技待機者リストに登録されていません。
+	 * Message: 競技待機者リストに登録されていません。<br>
+	 * Message: You are not currently registered on any Grand Olympiad Games waiting list.
 	 */
 	public static final SystemMessageId YOU_HAVE_NOT_BEEN_REGISTERED_IN_A_WAITING_LIST_OF_A_GAME;
 	
 	/**
 	 * ID: 1507<br>
-	 * Message: オリンピアード競技では装備できないアイテムです。
+	 * Message: オリンピアード競技では装備できないアイテムです。<br>
+	 * Message: You cannot equip that item in a Grand Olympiad Games match.
 	 */
 	public static final SystemMessageId THIS_ITEM_CANT_BE_EQUIPPED_FOR_THE_OLYMPIAD_EVENT;
 	
 	/**
 	 * ID: 1508<br>
-	 * Message: オリンピアード競技では使用できないアイテムです。
+	 * Message: オリンピアード競技では使用できないアイテムです。<br>
+	 * Message: You cannot use that item in a Grand Olympiad Games match.
 	 */
 	public static final SystemMessageId THIS_ITEM_IS_NOT_AVAILABLE_FOR_THE_OLYMPIAD_EVENT;
 	
 	/**
 	 * ID: 1509<br>
-	 * Message: オリンピアード競技では使用できないスキルです。
+	 * Message: オリンピアード競技では使用できないスキルです。<br>
+	 * Message: You cannot use that skill in a Grand Olympiad Games match.
 	 */
 	public static final SystemMessageId THIS_SKILL_IS_NOT_AVAILABLE_FOR_THE_OLYMPIAD_EVENT;
 	
 	/**
 	 * ID: 1510<br>
-	 * Message: $c1が$s2の経験値を復旧する復活を試みています。復活しますか。
+	 * Message: $c1が$s2の経験値を復旧する復活を試みています。復活しますか。<br>
+	 * Message: $c1 is making an attempt at resurrection with $s2 experience points. Do you want to be resurrected?
 	 */
 	public static final SystemMessageId RESSURECTION_REQUEST_BY_C1_FOR_S2_XP;
 	
 	/**
 	 * ID: 1511<br>
-	 * Message: ペットの復活を試みている時は、飼い主を復活できません。
+	 * Message: ペットの復活を試みている時は、飼い主を復活できません。<br>
+	 * Message: While a pet is attempting to resurrect, it cannot help in resurrecting its master.
 	 */
 	public static final SystemMessageId MASTER_CANNOT_RES;
 	
 	/**
 	 * ID: 1512<br>
-	 * Message: 飼い主の復活を試みている時は、ペットを復活できません。
+	 * Message: 飼い主の復活を試みている時は、ペットを復活できません。<br>
+	 * Message: You cannot resurrect a pet while their owner is being resurrected.
 	 */
 	public static final SystemMessageId CANNOT_RES_PET;
 	
 	/**
 	 * ID: 1513<br>
-	 * Message: すでにより好条件の復活を提示されている状態です。
+	 * Message: すでにより好条件の復活を提示されている状態です。<br>
+	 * Message: Resurrection has already been proposed.
 	 */
 	public static final SystemMessageId RES_HAS_ALREADY_BEEN_PROPOSED;
 	
 	/**
 	 * ID: 1514<br>
-	 * Message: ペットが復活中なので、飼い主の復活が無効になりました。
+	 * Message: ペットが復活中なので、飼い主の復活が無効になりました。<br>
+	 * Message: You cannot the owner of a pet while their pet is being resurrected
 	 */
 	public static final SystemMessageId CANNOT_RES_MASTER;
 	
 	/**
 	 * ID: 1515<br>
-	 * Message: 飼い主が復活中なので、ペットの復活が無効になりました。
+	 * Message: 飼い主が復活中なので、ペットの復活が無効になりました。<br>
+	 * Message: A pet cannot be resurrected while it's owner is in the process of resurrecting.
 	 */
 	public static final SystemMessageId CANNOT_RES_PET2;
 	
 	/**
 	 * ID: 1516<br>
-	 * Message: 種の植付けができない対象です。
+	 * Message: 種の植付けができない対象です。<br>
+	 * Message: The target is unavailable for seeding.
 	 */
 	public static final SystemMessageId THE_TARGET_IS_UNAVAILABLE_FOR_SEEDING;
 	
 	/**
 	 * ID: 1517<br>
-	 * Message: 祝福された強化に失敗しました。該当アイテムのエンチャント値が0になりました。
+	 * Message: 祝福された強化に失敗しました。該当アイテムのエンチャント値が0になりました。<br>
+	 * Message: Failed in Blessed Enchant. The enchant value of the item became 0.
 	 */
 	public static final SystemMessageId BLESSED_ENCHANT_FAILED;
 	
 	/**
 	 * ID: 1518<br>
-	 * Message: アイテムの装備条件に合わないため、該当アイテムを装備できません。
+	 * Message: アイテムの装備条件に合わないため、該当アイテムを装備できません。<br>
+	 * Message: You do not meet the required condition to equip that item.
 	 */
 	public static final SystemMessageId CANNOT_EQUIP_ITEM_DUE_TO_BAD_CONDITION;
 	
 	/**
 	 * ID: 1519<br>
-	 * Message: ペットが死亡しました。24時間以内に復活させなければペットは消滅して、ペットの持っていたアイテムも消滅します。
+	 * Message: ペットが死亡しました。24時間以内に復活させなければペットは消滅して、ペットの持っていたアイテムも消滅します。<br>
+	 * Message: The pet has been killed. If you don't resurrect it within 24 hours, the pet's body will disappear along with all the pet's items.
 	 */
 	public static final SystemMessageId MAKE_SURE_YOU_RESSURECT_YOUR_PET_WITHIN_24_HOURS;
 	
 	/**
 	 * ID: 1520<br>
-	 * Message: 召喚獣が死亡しました。
+	 * Message: 召喚獣が死亡しました。<br>
+	 * Message: Servitor passed away.
 	 */
 	public static final SystemMessageId SERVITOR_PASSED_AWAY;
 	
 	/**
 	 * ID: 1521<br>
-	 * Message: 召喚時間を越えたので召喚獣が消えます。
+	 * Message: 召喚時間を越えたので召喚獣が消えます。<br>
+	 * Message: Your servitor has vanished! You'll need to summon a new one.
 	 */
 	public static final SystemMessageId YOUR_SERVITOR_HAS_VANISHED;
 	
 	/**
 	 * ID: 1522<br>
-	 * Message: ペットの死亡後、制限時間を越えたので死体が消滅します。
+	 * Message: ペットの死亡後、制限時間を越えたので死体が消滅します。<br>
+	 * Message: Your pet's corpse has decayed!
 	 */
 	public static final SystemMessageId YOUR_PETS_CORPSE_HAS_DECAYED;
 	
 	/**
 	 * ID: 1523<br>
-	 * Message: ペットや召喚獣は船の運航中に水に落ちて死亡する恐れがあるので、出発前に召喚を解除してください。
+	 * Message: ペットや召喚獣は船の運航中に水に落ちて死亡する恐れがあるので、出発前に召喚を解除してください。<br>
+	 * Message: You should release your pet or servitor so that it does not fall off of the boat and drown!
 	 */
 	public static final SystemMessageId RELEASE_PET_ON_BOAT;
 	
 	/**
 	 * ID: 1524<br>
-	 * Message: $c1のペットが$s2を手に入れました。
+	 * Message: $c1のペットが$s2を手に入れました。<br>
+	 * Message: $c1's pet gained $s2.
 	 */
 	public static final SystemMessageId C1_PET_GAINED_S2;
 	
 	/**
 	 * ID: 1525<br>
-	 * Message: $c1のペットが$s2 $s3個を手に入れました。
+	 * Message: $c1のペットが$s2 $s3個を手に入れました。<br>
+	 * Message: $c1's pet gained $s3 of $s2.
 	 */
 	public static final SystemMessageId C1_PET_GAINED_S3_S2_S;
 	
 	/**
 	 * ID: 1526<br>
-	 * Message: $c1のペットが+$s2$s3を手に入れました。
+	 * Message: $c1のペットが+$s2$s3を手に入れました。<br>
+	 * Message: $c1's pet gained +$s2$s3.
 	 */
 	public static final SystemMessageId C1_PET_GAINED_S2_S3;
 	
 	/**
 	 * ID: 1527<br>
-	 * Message: ペットが空腹だったので$s1を食べました。
+	 * Message: ペットが空腹だったので$s1を食べました。<br>
+	 * Message: Your pet was hungry so it ate $s1.
 	 */
 	public static final SystemMessageId PET_TOOK_S1_BECAUSE_HE_WAS_HUNGRY;
 	
 	/**
 	 * ID: 1528<br>
-	 * Message: サポートからのご連絡があります。
+	 * Message: サポートからのご連絡があります。<br>
+	 * Message: You've sent a petition to the GM staff.
 	 */
 	public static final SystemMessageId SENT_PETITION_TO_GM;
 	
 	/**
 	 * ID: 1529<br>
-	 * Message: $c1から連合に招待されました。参加しますか。
+	 * Message: $c1から連合に招待されました。参加しますか。<br>
+	 * Message: $c1 is inviting you to the command channel. Do you want accept?
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_CONFIRM_FROM_C1;
 	
 	/**
 	 * ID: 1530<br>
-	 * Message: 対象を定めるか名前を入力してください。
+	 * Message: 対象を定めるか名前を入力してください。<br>
+	 * Message: Select a target or enter the name.
 	 */
 	public static final SystemMessageId SELECT_TARGET_OR_ENTER_NAME;
 	
 	/**
 	 * ID: 1531<br>
-	 * Message: 宣戦布告する相手の血盟名を入力してください。
+	 * Message: 宣戦布告する相手の血盟名を入力してください。<br>
+	 * Message: Enter the name of the clan that you wish to declare war on.
 	 */
 	public static final SystemMessageId ENTER_CLAN_NAME_TO_DECLARE_WAR2;
 	
 	/**
 	 * ID: 1532<br>
-	 * Message: 戦争を取り消す相手の血盟名を入力してください。
+	 * Message: 戦争を取り消す相手の血盟名を入力してください。<br>
+	 * Message: Enter the name of the clan that you wish to have a cease-fire with.
 	 */
 	public static final SystemMessageId ENTER_CLAN_NAME_TO_CEASE_FIRE;
 	
 	/**
 	 * ID: 1533<br>
-	 * Message: お知らせ： $c1が$s2を手に入れました。
+	 * Message: お知らせ： $c1が$s2を手に入れました。<br>
+	 * Message: Announcement: $c1 has picked up $s2.
 	 */
 	public static final SystemMessageId ANNOUNCEMENT_C1_PICKED_UP_S2;
 	
 	/**
 	 * ID: 1534<br>
-	 * Message: お知らせ： $c1が+$s2$s3を手に入れました。
+	 * Message: お知らせ： $c1が+$s2$s3を手に入れました。<br>
+	 * Message: Announcement: $c1 has picked up +$s2$s3.
 	 */
 	public static final SystemMessageId ANNOUNCEMENT_C1_PICKED_UP_S2_S3;
 	
 	/**
 	 * ID: 1535<br>
-	 * Message: お知らせ： $c1のペットが$s2を手に入れました。
+	 * Message: お知らせ： $c1のペットが$s2を手に入れました。<br>
+	 * Message: Announcement: $c1's pet has picked up $s2.
 	 */
 	public static final SystemMessageId ANNOUNCEMENT_C1_PET_PICKED_UP_S2;
 	
 	/**
 	 * ID: 1536<br>
-	 * Message: お知らせ： $c1のペットが+$s2$s3を手に入れました。
+	 * Message: お知らせ： $c1のペットが+$s2$s3を手に入れました。<br>
+	 * Message: Announcement: $c1's pet has picked up +$s2$s3.
 	 */
 	public static final SystemMessageId ANNOUNCEMENT_C1_PET_PICKED_UP_S2_S3;
 	
 	/**
 	 * ID: 1537<br>
-	 * Message: 現在地： $s1、$s2、$s3 (ルウン城の村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (ルウン城の村付近)<br>
+	 * Message: Current Location: $s1, $s2, $s3 (near Rune Village)
 	 */
 	public static final SystemMessageId LOC_RUNE_S1_S2_S3;
 	
 	/**
 	 * ID: 1538<br>
-	 * Message: 現在地： $s1、$s2、$s3 (ゴダード城の村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (ゴダード城の村付近)<br>
+	 * Message: Current Location: $s1, $s2, $s3 (near the Town of Goddard)
 	 */
 	public static final SystemMessageId LOC_GODDARD_S1_S2_S3;
 	
 	/**
 	 * ID: 1539<br>
-	 * Message: 貨物が話せる島の村に届いています。
+	 * Message: 貨物が話せる島の村に届いています。<br>
+	 * Message: Cargo has arrived at Talking Island Village.
 	 */
 	public static final SystemMessageId CARGO_AT_TALKING_VILLAGE;
 	
 	/**
 	 * ID: 1540<br>
-	 * Message: 貨物がダークエルフ村に届いています。
+	 * Message: 貨物がダークエルフ村に届いています。<br>
+	 * Message: Cargo has arrived at the Dark Elf Village.
 	 */
 	public static final SystemMessageId CARGO_AT_DARKELF_VILLAGE;
 	
 	/**
 	 * ID: 1541<br>
-	 * Message: 貨物がエルフ村に届いています。
+	 * Message: 貨物がエルフ村に届いています。<br>
+	 * Message: Cargo has arrived at Elven Village.
 	 */
 	public static final SystemMessageId CARGO_AT_ELVEN_VILLAGE;
 	
 	/**
 	 * ID: 1542<br>
-	 * Message: 貨物がオーク村に届いています。
+	 * Message: 貨物がオーク村に届いています。<br>
+	 * Message: Cargo has arrived at Orc Village.
 	 */
 	public static final SystemMessageId CARGO_AT_ORC_VILLAGE;
 	
 	/**
 	 * ID: 1543<br>
-	 * Message: 貨物がドワーフ村に届いています。
+	 * Message: 貨物がドワーフ村に届いています。<br>
+	 * Message: Cargo has arrived at Dwarfen Village.
 	 */
 	public static final SystemMessageId CARGO_AT_DWARVEN_VILLAGE;
 	
 	/**
 	 * ID: 1544<br>
-	 * Message: 貨物がアデン城の村に届いています。
+	 * Message: 貨物がアデン城の村に届いています。<br>
+	 * Message: Cargo has arrived at Aden Castle Town.
 	 */
 	public static final SystemMessageId CARGO_AT_ADEN;
 	
 	/**
 	 * ID: 1545<br>
-	 * Message: 貨物がオーレン城の村に届いています。
+	 * Message: 貨物がオーレン城の村に届いています。<br>
+	 * Message: Cargo has arrived at Town of Oren.
 	 */
 	public static final SystemMessageId CARGO_AT_OREN;
 	
 	/**
 	 * ID: 1546<br>
-	 * Message: 貨物が猟師の村に届いています。
+	 * Message: 貨物が猟師の村に届いています。<br>
+	 * Message: Cargo has arrived at Hunters Village.
 	 */
 	public static final SystemMessageId CARGO_AT_HUNTERS;
 	
 	/**
 	 * ID: 1547<br>
-	 * Message: 貨物がディオン城の村に届いています。
+	 * Message: 貨物がディオン城の村に届いています。<br>
+	 * Message: Cargo has arrived at the Town of Dion.
 	 */
 	public static final SystemMessageId CARGO_AT_DION;
 	
 	/**
 	 * ID: 1548<br>
-	 * Message: 貨物がフローラン村に届いています。
+	 * Message: 貨物がフローラン村に届いています。<br>
+	 * Message: Cargo has arrived at Floran Village.
 	 */
 	public static final SystemMessageId CARGO_AT_FLORAN;
 	
 	/**
 	 * ID: 1549<br>
-	 * Message: 貨物がグルーディン村に届いています。
+	 * Message: 貨物がグルーディン村に届いています。<br>
+	 * Message: Cargo has arrived at Gludin Village.
 	 */
 	public static final SystemMessageId CARGO_AT_GLUDIN;
 	
 	/**
 	 * ID: 1550<br>
-	 * Message: 貨物がグルーディオ城の村に届いています。
+	 * Message: 貨物がグルーディオ城の村に届いています。<br>
+	 * Message: Cargo has arrived at the Town of Gludio.
 	 */
 	public static final SystemMessageId CARGO_AT_GLUDIO;
 	
 	/**
 	 * ID: 1551<br>
-	 * Message: 貨物がギラン城の村に届いています。
+	 * Message: 貨物がギラン城の村に届いています。<br>
+	 * Message: Cargo has arrived at Giran Castle Town.
 	 */
 	public static final SystemMessageId CARGO_AT_GIRAN;
 	
 	/**
 	 * ID: 1552<br>
-	 * Message: 貨物がハイネスに届いています。
+	 * Message: 貨物がハイネスに届いています。<br>
+	 * Message: Cargo has arrived at Heine.
 	 */
 	public static final SystemMessageId CARGO_AT_HEINE;
 	
 	/**
 	 * ID: 1553<br>
-	 * Message: 貨物がルウン城の村に届いています。
+	 * Message: 貨物がルウン城の村に届いています。<br>
+	 * Message: Cargo has arrived at Rune Village.
 	 */
 	public static final SystemMessageId CARGO_AT_RUNE;
 	
 	/**
 	 * ID: 1554<br>
-	 * Message: 貨物がゴダード城の村に届いています。
+	 * Message: 貨物がゴダード城の村に届いています。<br>
+	 * Message: Cargo has arrived at the Town of Goddard.
 	 */
 	public static final SystemMessageId CARGO_AT_GODDARD;
 	
 	/**
 	 * ID: 1555<br>
-	 * Message: キャラクターの削除を取り消しますか。
+	 * Message: キャラクターの削除を取り消しますか。<br>
+	 * Message: Do you want to cancel character deletion?
 	 */
 	public static final SystemMessageId CANCEL_CHARACTER_DELETION_CONFIRM;
 	
 	/**
 	 * ID: 1556<br>
-	 * Message: お知らせの内容を保存しました。
+	 * Message: お知らせの内容を保存しました。<br>
+	 * Message: Your clan notice has been saved.
 	 */
 	public static final SystemMessageId CLAN_NOTICE_SAVED;
 	
 	/**
 	 * ID: 1557<br>
-	 * Message: 種の価格は$s1以上$s2以下にしてください。
+	 * Message: 種の価格は$s1以上$s2以下にしてください。<br>
+	 * Message: Seed price should be more than $s1 and less than $s2.
 	 */
 	public static final SystemMessageId SEED_PRICE_SHOULD_BE_MORE_THAN_S1_AND_LESS_THAN_S2;
 	
 	/**
 	 * ID: 1558<br>
-	 * Message: 種の数量は$s1以上$s2以下にしてください。
+	 * Message: 種の数量は$s1以上$s2以下にしてください。<br>
+	 * Message: The quantity of seed should be more than $s1 and less than $s2.
 	 */
 	public static final SystemMessageId THE_QUANTITY_OF_SEED_SHOULD_BE_MORE_THAN_S1_AND_LESS_THAN_S2;
 	
 	/**
 	 * ID: 1559<br>
-	 * Message: 作物の価格は$s1以上$s2以下にしてください。
+	 * Message: 作物の価格は$s1以上$s2以下にしてください。<br>
+	 * Message: Crop price should be more than $s1 and less than $s2.
 	 */
 	public static final SystemMessageId CROP_PRICE_SHOULD_BE_MORE_THAN_S1_AND_LESS_THAN_S2;
 	
 	/**
 	 * ID: 1560<br>
-	 * Message: 作物の数量は$s1以上$s2以下にしてください。
+	 * Message: 作物の数量は$s1以上$s2以下にしてください。<br>
+	 * Message: The quantity of crop should be more than $s1 and less than $s2
 	 */
 	public static final SystemMessageId THE_QUANTITY_OF_CROP_SHOULD_BE_MORE_THAN_S1_AND_LESS_THAN_S2;
 	
 	/**
 	 * ID: 1561<br>
-	 * Message: $s1血盟が血盟戦を布告しました。
+	 * Message: $s1血盟が血盟戦を布告しました。<br>
+	 * Message: The clan, $s1, has declared a Clan War.
 	 */
 	public static final SystemMessageId CLAN_S1_DECLARED_WAR;
 	
 	/**
 	 * ID: 1562<br>
-	 * Message: $s1血盟に対し血盟戦を布告しました。ただ今より相手の血盟員によって死亡した場合、経験値ロストが通常の4分の1になります。
+	 * Message: $s1血盟に対し血盟戦を布告しました。ただ今より相手の血盟員によって死亡した場合、経験値ロストが通常の4分の1になります。<br>
+	 * Message: A Clan War has been declared against the clan, $s1. you will only lose a quarter of the normal experience from death.
 	 */
 	public static final SystemMessageId CLAN_WAR_DECLARED_AGAINST_S1_IF_KILLED_LOSE_LOW_EXP;
 	
 	/**
 	 * ID: 1563<br>
-	 * Message: $s1血盟は血盟レベルまたは血盟員数が足りないので血盟戦を布告できません。
+	 * or they do not have enough members.
 	 */
 	public static final SystemMessageId CANNOT_DECLARE_WAR_TOO_LOW_LEVEL_OR_NOT_ENOUGH_MEMBERS;
 	
 	/**
 	 * ID: 1564<br>
-	 * Message: 血盟レベル3以上、血盟員数15人以上の血盟のみが血盟戦を布告できます。
+	 * Message: 血盟レベル3以上、血盟員数15人以上の血盟のみが血盟戦を布告できます。<br>
+	 * Message: A Clan War can be declared only if the clan is level three or above, and the number of clan members is fifteen or greater.
 	 */
 	public static final SystemMessageId CLAN_WAR_DECLARED_IF_CLAN_LVL3_OR_15_MEMBER;
 	
 	/**
 	 * ID: 1565<br>
-	 * Message: 存在しない血盟または長期間活動していない血盟なので宣戦布告できません。
+	 * Message: 存在しない血盟または長期間活動していない血盟なので宣戦布告できません。<br>
+	 * Message: A Clan War cannot be declared against a clan that does not exist!
 	 */
 	public static final SystemMessageId CLAN_WAR_CANNOT_DECLARED_CLAN_NOT_EXIST;
 	
 	/**
 	 * ID: 1566<br>
-	 * Message: $s1血盟が布告を取り下げました。
+	 * Message: $s1血盟が布告を取り下げました。<br>
+	 * Message: The clan, $s1, has decided to stop the war.
 	 */
 	public static final SystemMessageId CLAN_S1_HAS_DECIDED_TO_STOP;
 	
 	/**
 	 * ID: 1567<br>
-	 * Message: $s1血盟への布告を取り下げました。
+	 * Message: $s1血盟への布告を取り下げました。<br>
+	 * Message: The war against $s1 Clan has been stopped.
 	 */
 	public static final SystemMessageId WAR_AGAINST_S1_HAS_STOPPED;
 	
 	/**
 	 * ID: 1568<br>
-	 * Message: 布告の対象が正しくありません。
+	 * Message: 布告の対象が正しくありません。<br>
+	 * Message: The target for declaration is wrong.
 	 */
 	public static final SystemMessageId WRONG_DECLARATION_TARGET;
 	
 	/**
 	 * ID: 1569<br>
-	 * Message: 同盟を結んだ血盟には血盟戦を布告できません。
+	 * Message: 同盟を結んだ血盟には血盟戦を布告できません。<br>
+	 * Message: A declaration of Clan War against an allied clan can't be made.
 	 */
 	public static final SystemMessageId CLAN_WAR_AGAINST_A_ALLIED_CLAN_NOT_WORK;
 	
 	/**
 	 * ID: 1570<br>
-	 * Message: 30以上の血盟に同時に宣戦布告することはできません。
+	 * Message: 30以上の血盟に同時に宣戦布告することはできません。<br>
+	 * Message: A declaration of war against more than 30 Clans can't be made at the same time
 	 */
 	public static final SystemMessageId TOO_MANY_CLAN_WARS;
 	
 	/**
 	 * ID: 1571<br>
-	 * Message: =======<布告リスト>=======
+	 * Message: =======<布告リスト>=======<br>
+	 * Message: ======<Clans You've Declared War On>======
 	 */
 	public static final SystemMessageId CLANS_YOU_DECLARED_WAR_ON;
 	
 	/**
 	 * ID: 1572<br>
-	 * Message: ======<被布告リスト>======
+	 * Message: ======<被布告リスト>======<br>
+	 * Message: ======<Clans That Have Declared War On You>======
 	 */
 	public static final SystemMessageId CLANS_THAT_HAVE_DECLARED_WAR_ON_YOU;
 	
 	/**
 	 * ID: 1573<br>
-	 * Message: 布告する血盟が存在しません。
+	 * Message: 布告する血盟が存在しません。<br>
+	 * Message: All is well. There are no clans that have declared war against your clan.
 	 */
 	public static final SystemMessageId NO_WARS_AGAINST_YOU;
 	
 	/**
 	 * ID: 1574<br>
-	 * Message: 布告を受ける血盟が存在しません。
+	 * Message: 布告を受ける血盟が存在しません。<br>
+	 * Message: Command Channels can only be formed by a party leader who is also the leader of a level 5 clan.
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_ONLY_BY_LEVEL_5_CLAN_LEADER_PARTY_LEADER;
 	
 	/**
 	 * ID: 1575<br>
-	 * Message: 連合の結成は血盟レベル5以上の血盟主でありパーティ リーダーのみが可能です。
+	 * Message: 連合の結成は血盟レベル5以上の血盟主でありパーティ リーダーのみが可能です。<br>
+	 * Message: Your pet uses spiritshot.
 	 */
 	public static final SystemMessageId PET_USE_SPIRITSHOT;
 	
 	/**
 	 * ID: 1576<br>
-	 * Message: ペットが精霊の力を使用します。
+	 * Message: ペットが精霊の力を使用します。<br>
+	 * Message: Your servitor uses spiritshot.
 	 */
 	public static final SystemMessageId SERVITOR_USE_SPIRITSHOT;
 	
 	/**
 	 * ID: 1577<br>
-	 * Message: 召喚獣が精霊の力を使用します。
+	 * Message: 召喚獣が精霊の力を使用します。<br>
+	 * Message: Servitor uses the power of spirit.
 	 */
 	public static final SystemMessageId SERVITOR_USE_THE_POWER_OF_SPIRIT;
 	
 	/**
 	 * ID: 1578<br>
-	 * Message: 個人商店や個人工房を開いている時はアイテムを装備できません。
+	 * Message: 個人商店や個人工房を開いている時はアイテムを装備できません。<br>
+	 * Message: Items are not available for a private store or a private manufacture.
 	 */
 	public static final SystemMessageId ITEMS_UNAVAILABLE_FOR_STORE_MANUFACTURE;
 	
 	/**
 	 * ID: 1579<br>
-	 * Message: $c1のペットが$s2アデナを手に入れました。
+	 * Message: $c1のペットが$s2アデナを手に入れました。<br>
+	 * Message: $c1's pet gained $s2 adena.
 	 */
 	public static final SystemMessageId C1_PET_GAINED_S2_ADENA;
 	
 	/**
 	 * ID: 1580<br>
-	 * Message: 連合が結成されました。
+	 * Message: 連合が結成されました。<br>
+	 * Message: The Command Channel has been formed.
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_FORMED;
 	
 	/**
 	 * ID: 1581<br>
-	 * Message: 連合を解除しました。
+	 * Message: 連合を解除しました。<br>
+	 * Message: The Command Channel has been disbanded.
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_DISBANDED;
 	
 	/**
 	 * ID: 1582<br>
-	 * Message: 連合に参加しました。
+	 * Message: 連合に参加しました。<br>
+	 * Message: You have joined the Command Channel.
 	 */
 	public static final SystemMessageId JOINED_COMMAND_CHANNEL;
 	
 	/**
 	 * ID: 1583<br>
-	 * Message: 連合から追放されました。
+	 * Message: 連合から追放されました。<br>
+	 * Message: You were dismissed from the Command Channel.
 	 */
 	public static final SystemMessageId DISMISSED_FROM_COMMAND_CHANNEL;
 	
 	/**
 	 * ID: 1584<br>
-	 * Message: $c1のパーティを連合から追放しました。
+	 * Message: $c1のパーティを連合から追放しました。<br>
+	 * Message: $c1's party has been dismissed from the Command Channel.
 	 */
 	public static final SystemMessageId C1_PARTY_DISMISSED_FROM_COMMAND_CHANNEL;
 	
 	/**
 	 * ID: 1585<br>
-	 * Message: 連合が非アクティブになりました。
+	 * Message: 連合が非アクティブになりました。<br>
+	 * Message: The Command Channel has been disbanded.
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_DISBANDED2;
 	
 	/**
 	 * ID: 1586<br>
-	 * Message: 連合から脱退しました。
+	 * Message: 連合から脱退しました。<br>
+	 * Message: You have quit the Command Channel.
 	 */
 	public static final SystemMessageId LEFT_COMMAND_CHANNEL;
 	
 	/**
 	 * ID: 1587<br>
-	 * Message: $c1のパーティが連合チャンネルから脱退しました。
+	 * Message: $c1のパーティが連合チャンネルから脱退しました。<br>
+	 * Message: $c1's party has left the Command Channel.
 	 */
 	public static final SystemMessageId C1_PARTY_LEFT_COMMAND_CHANNEL;
 	
 	/**
 	 * ID: 1588<br>
-	 * Message: 連合は5つ以上のパーティが参加した時のみアクティブになります。
+	 * Message: 連合は5つ以上のパーティが参加した時のみアクティブになります。<br>
+	 * Message: The Command Channel is activated only when there are at least 5 parties participating.
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_ONLY_AT_LEAST_5_PARTIES;
 	
 	/**
 	 * ID: 1589<br>
-	 * Message: $c1に連合の権限が与えられました。
+	 * Message: $c1に連合の権限が与えられました。<br>
+	 * Message: Command Channel authority has been transferred to $c1.
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_LEADER_NOW_C1;
 	
 	/**
 	 * ID: 1590<br>
-	 * Message: ===<連合情報（全パーティ数：$s1)>===
+	 * Message: ===<連合情報（全パーティ数：$s1)>===<br>
+	 * Message: ===<Guild Info (Total Parties: $s1)>===
 	 */
 	public static final SystemMessageId GUILD_INFO_HEADER;
 	
 	/**
 	 * ID: 1591<br>
-	 * Message: 連合に招待したプレイヤーがいません。
+	 * Message: 連合に招待したプレイヤーがいません。<br>
+	 * Message: No user has been invited to the Command Channel.
 	 */
 	public static final SystemMessageId NO_USER_INVITED_TO_COMMAND_CHANNEL;
 	
 	/**
 	 * ID: 1592<br>
-	 * Message: これ以上連合を開設できません。
+	 * Message: これ以上連合を開設できません。<br>
+	 * Message: You can no longer set up a Command Channel.
 	 */
 	public static final SystemMessageId CANNOT_LONGER_SETUP_COMMAND_CHANNEL;
 	
 	/**
 	 * ID: 1593<br>
-	 * Message: 連合に招待できる権限がありません。
+	 * Message: 連合に招待できる権限がありません。<br>
+	 * Message: You do not have authority to invite someone to the Command Channel.
 	 */
 	public static final SystemMessageId CANNOT_INVITE_TO_COMMAND_CHANNEL;
 	
 	/**
 	 * ID: 1594<br>
-	 * Message: $c1のパーティはすでに連合に参加しています。
+	 * Message: $c1のパーティはすでに連合に参加しています。<br>
+	 * Message: $c1's party is already a member of the Command Channel.
 	 */
 	public static final SystemMessageId C1_ALREADY_MEMBER_OF_COMMAND_CHANNEL;
 	
 	/**
 	 * ID: 1595<br>
-	 * Message: $s1に成功しました。
+	 * Message: $s1に成功しました。<br>
+	 * Message: $s1 has succeeded.
 	 */
 	public static final SystemMessageId S1_SUCCEEDED;
 	
 	/**
 	 * ID: 1596<br>
-	 * Message: $s1に当たりました。
+	 * Message: $s1に当たりました。<br>
+	 * Message: You were hit by $s1!
 	 */
 	public static final SystemMessageId HIT_BY_S1;
 	
 	/**
 	 * ID: 1597<br>
-	 * Message: $s1が失敗しました。
+	 * Message: $s1が失敗しました。<br>
+	 * Message: $s1 has failed.
 	 */
 	public static final SystemMessageId S1_FAILED;
 	
 	/**
 	 * ID: 1598<br>
-	 * Message: ペットおよび召喚獣が死亡した状態では、ペットおよび召喚獣用ソウル ショットまたはスピリット ショットは使用できません。
+	 * Message: ペットおよび召喚獣が死亡した状態では、ペットおよび召喚獣用ソウル ショットまたはスピリット ショットは使用できません。<br>
+	 * Message: Soulshots and spiritshots are not available for a dead pet or servitor. Sad, isn't it?
 	 */
 	public static final SystemMessageId SOULSHOTS_AND_SPIRITSHOTS_ARE_NOT_AVAILABLE_FOR_A_DEAD_PET;
 	
 	/**
 	 * ID: 1599<br>
-	 * Message: 戦闘中は観戦できません。
+	 * Message: 戦闘中は観戦できません。<br>
+	 * Message: You cannot observe while you are in combat!
 	 */
 	public static final SystemMessageId CANNOT_OBSERVE_IN_COMBAT;
 	
 	/**
 	 * ID: 1600<br>
-	 * Message: 明日の項目の数値がすべて0に初期化されます。よろしいですか。
+	 * Message: 明日の項目の数値がすべて0に初期化されます。よろしいですか。<br>
+	 * Message: Tomorrow's items will ALL be set to 0. Do you wish to continue?
 	 */
 	public static final SystemMessageId TOMORROW_ITEM_ZERO_CONFIRM;
 	
 	/**
 	 * ID: 1601<br>
-	 * Message: 明日の項目の数値がすべて今日と同じ数値に設定されます。よろしいですか。
+	 * Message: 明日の項目の数値がすべて今日と同じ数値に設定されます。よろしいですか。<br>
+	 * Message: Tomorrow's items will all be set to the same value as today's items. Do you wish to continue?
 	 */
 	public static final SystemMessageId TOMORROW_ITEM_SAME_CONFIRM;
 	
 	/**
 	 * ID: 1602<br>
-	 * Message: 連合チャットはパーティ リーダーのみ参加できます。
+	 * Message: 連合チャットはパーティ リーダーのみ参加できます。<br>
+	 * Message: Only a party leader can access the Command Channel.
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_ONLY_FOR_PARTY_LEADER;
 	
 	/**
 	 * ID: 1603<br>
-	 * Message: 全体命令はチャンネル開設者のみ行うことができます。
+	 * Message: 全体命令はチャンネル開設者のみ行うことができます。<br>
+	 * Message: Only channel operator can give All Command.
 	 */
 	public static final SystemMessageId ONLY_COMMANDER_GIVE_COMMAND;
 	
 	/**
 	 * ID: 1604<br>
-	 * Message: 礼服着用中はすべてのスキルと、発動モーションが必要なアイテムが使用できません。
+	 * Message: 礼服着用中はすべてのスキルと、発動モーションが必要なアイテムが使用できません。<br>
+	 * Message: While dressed in formal wear, you can't use items that require all skills and casting operations.
 	 */
 	public static final SystemMessageId CANNOT_USE_ITEMS_SKILLS_WITH_FORMALWEAR;
 	
 	/**
 	 * ID: 1605<br>
-	 * Message: *ここでは$s1荘園の種のみ購入できます。
+	 * Message: *ここでは$s1荘園の種のみ購入できます。<br>
+	 * Message: * Here, you can buy only seeds of $s1 Manor.
 	 */
 	public static final SystemMessageId HERE_YOU_CAN_BUY_ONLY_SEEDS_OF_S1_MANOR;
 	
 	/**
 	 * ID: 1606<br>
-	 * Message: 3次転職クエストをクリアし、新たなクラスに転職しました。おめでとうございます！
+	 * Message: 3次転職クエストをクリアし、新たなクラスに転職しました。おめでとうございます！<br>
+	 * Message: Congratulations - You've completed the third-class transfer quest!
 	 */
 	public static final SystemMessageId THIRD_CLASS_TRANSFER;
 	
 	/**
 	 * ID: 1607<br>
-	 * Message: $s1アデナを買取り手数料として支払いました。
+	 * Message: $s1アデナを買取り手数料として支払いました。<br>
+	 * Message: $s1 adena has been withdrawn to pay for purchasing fees.
 	 */
 	public static final SystemMessageId S1_ADENA_HAS_BEEN_WITHDRAWN_TO_PAY_FOR_PURCHASING_FEES;
 	
 	/**
 	 * ID: 1608<br>
-	 * Message: アデナが不足して他城の買取りができません。
+	 * Message: アデナが不足して他城の買取りができません。<br>
+	 * Message: Due to insufficient adena you cannot buy another castle.
 	 */
 	public static final SystemMessageId INSUFFICIENT_ADENA_TO_BUY_CASTLE;
 	
 	/**
 	 * ID: 1609<br>
-	 * Message: すでに宣戦布告した血盟です。
+	 * Message: すでに宣戦布告した血盟です。<br>
+	 * Message: War has already been declared against that clan... but I'll make note that you really don't like them.
 	 */
 	public static final SystemMessageId WAR_ALREADY_DECLARED;
 	
 	/**
 	 * ID: 1610<br>
-	 * Message: 自分の血盟には宣戦布告できません。
+	 * Message: 自分の血盟には宣戦布告できません。<br>
+	 * Message: Fool! You cannot declare war against your own clan!
 	 */
 	public static final SystemMessageId CANNOT_DECLARE_AGAINST_OWN_CLAN;
 	
 	/**
 	 * ID: 1611<br>
-	 * Message: パーティ リーダー： $c1
+	 * Message: パーティ リーダー： $c1<br>
+	 * Message: Leader: $c1
 	 */
 	public static final SystemMessageId PARTY_LEADER_C1;
 	
 	/**
 	 * ID: 1612<br>
-	 * Message: =====<双方布告リスト>=====
+	 * Message: =====<双方布告リスト>=====<br>
+	 * Message: =====<War List>=====
 	 */
 	public static final SystemMessageId WAR_LIST;
 	
 	/**
 	 * ID: 1613<br>
-	 * Message: 双方布告した血盟がありません。
+	 * Message: 双方布告した血盟がありません。<br>
+	 * Message: There is no clan listed on War List.
 	 */
 	public static final SystemMessageId NO_CLAN_ON_WAR_LIST;
 	
 	/**
 	 * ID: 1614<br>
-	 * Message: すでに開設されたチャンネルに参加しています。
+	 * Message: すでに開設されたチャンネルに参加しています。<br>
+	 * Message: You have joined a channel that was already open.
 	 */
 	public static final SystemMessageId JOINED_CHANNEL_ALREADY_OPEN;
 	
 	/**
 	 * ID: 1615<br>
-	 * Message: チャンネルがアクティブ化するまで$s1のパーティが参加できます。
+	 * Message: チャンネルがアクティブ化するまで$s1のパーティが参加できます。<br>
+	 * Message: The number of remaining parties is $s1 until a channel is activated
 	 */
 	public static final SystemMessageId S1_PARTIES_REMAINING_UNTIL_CHANNEL;
 	
 	/**
 	 * ID: 1616<br>
-	 * Message: 連合がアクティブになりました。
+	 * Message: 連合がアクティブになりました。<br>
+	 * Message: The Command Channel has been activated.
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_ACTIVATED;
 	
 	/**
 	 * ID: 1617<br>
-	 * Message: 連合を利用できる権限がありません。
+	 * Message: 連合を利用できる権限がありません。<br>
+	 * Message: You do not have the authority to use the Command Channel.
 	 */
 	public static final SystemMessageId CANT_USE_COMMAND_CHANNEL;
 	
 	/**
 	 * ID: 1618<br>
-	 * Message: ルウン港発 グルーディン港行きの定期船の運航に遅れが出ています。
+	 * Message: ルウン港発 グルーディン港行きの定期船の運航に遅れが出ています。<br>
+	 * Message: The ferry from Rune Harbor to Gludin Harbor has been delayed.
 	 */
 	public static final SystemMessageId FERRY_RUNE_GLUDIN_DELAYED;
 	
 	/**
 	 * ID: 1619<br>
-	 * Message: グルーディン港発 ルウン港行きの定期船の運航に遅れが出ています。
+	 * Message: グルーディン港発 ルウン港行きの定期船の運航に遅れが出ています。<br>
+	 * Message: The ferry from Gludin Harbor to Rune Harbor has been delayed.
 	 */
 	public static final SystemMessageId FERRY_GLUDIN_RUNE_DELAYED;
 	
 	/**
 	 * ID: 1620<br>
-	 * Message: ルウン港に到着しました。
+	 * Message: ルウン港に到着しました。<br>
+	 * Message: Arrived at Rune Harbor.
 	 */
 	public static final SystemMessageId ARRIVED_AT_RUNE;
 	
 	/**
 	 * ID: 1621<br>
-	 * Message: 5分後、ルウン港からグルーディン港行きの船が出航します。
+	 * Message: 5分後、ルウン港からグルーディン港行きの船が出航します。<br>
+	 * Message: Departure for Gludin Harbor will take place in five minutes!
 	 */
 	public static final SystemMessageId DEPARTURE_FOR_GLUDIN_5_MINUTES;
 	
 	/**
 	 * ID: 1622<br>
-	 * Message: 1分後、ルウン港からグルーディン港行きの船が出航します。
+	 * Message: 1分後、ルウン港からグルーディン港行きの船が出航します。<br>
+	 * Message: Departure for Gludin Harbor will take place in one minute!
 	 */
 	public static final SystemMessageId DEPARTURE_FOR_GLUDIN_1_MINUTE;
 	
 	/**
 	 * ID: 1623<br>
-	 * Message: まもなく、ルウン港からグルーディン港行きの船が出航します。
+	 * Message: まもなく、ルウン港からグルーディン港行きの船が出航します。<br>
+	 * Message: Make haste! We will be departing for Gludin Harbor shortly...
 	 */
 	public static final SystemMessageId DEPARTURE_FOR_GLUDIN_SHORTLY;
 	
 	/**
 	 * ID: 1624<br>
-	 * Message: ルウン港からグルーディン港行きの船が出航します。
+	 * Message: ルウン港からグルーディン港行きの船が出航します。<br>
+	 * Message: We are now departing for Gludin Harbor Hold on and enjoy the ride!
 	 */
 	public static final SystemMessageId DEPARTURE_FOR_GLUDIN_NOW;
 	
 	/**
 	 * ID: 1625<br>
-	 * Message: 10分間停泊後、ルウン港に出発します。
+	 * Message: 10分間停泊後、ルウン港に出発します。<br>
+	 * Message: Departure for Rune Harbor will take place after anchoring for ten minutes.
 	 */
 	public static final SystemMessageId DEPARTURE_FOR_RUNE_10_MINUTES;
 	
 	/**
 	 * ID: 1626<br>
-	 * Message: 5分後、グルーディン港からルウン港行きの船が出航します。
+	 * Message: 5分後、グルーディン港からルウン港行きの船が出航します。<br>
+	 * Message: Departure for Rune Harbor will take place in five minutes!
 	 */
 	public static final SystemMessageId DEPARTURE_FOR_RUNE_5_MINUTES;
 	
 	/**
 	 * ID: 1627<br>
-	 * Message: 1分後、グルーディン港からルウン港行きの船が出航します。
+	 * Message: 1分後、グルーディン港からルウン港行きの船が出航します。<br>
+	 * Message: Departure for Rune Harbor will take place in one minute!
 	 */
 	public static final SystemMessageId DEPARTURE_FOR_RUNE_1_MINUTE;
 	
 	/**
 	 * ID: 1628<br>
-	 * Message: まもなく、グルーディン港からルウン港行きの船が出航します。
+	 * Message: まもなく、グルーディン港からルウン港行きの船が出航します。<br>
+	 * Message: Make haste! We will be departing for Gludin Harbor shortly...
 	 */
 	public static final SystemMessageId DEPARTURE_FOR_GLUDIN_SHORTLY2;
 	
 	/**
 	 * ID: 1629<br>
-	 * Message: グルーディン港からルウン港行きの船が出航します。
+	 * Message: グルーディン港からルウン港行きの船が出航します。<br>
+	 * Message: We are now departing for Rune Harbor Hold on and enjoy the ride!
 	 */
 	public static final SystemMessageId DEPARTURE_FOR_RUNE_NOW;
 	
 	/**
 	 * ID: 1630<br>
-	 * Message: ルウン港発の定期船が、約15分後グルーディン港に到着します。
+	 * Message: ルウン港発の定期船が、約15分後グルーディン港に到着します。<br>
+	 * Message: The ferry from Rune Harbor will be arriving at Gludin Harbor in approximately 15 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_RUNE_AT_GLUDIN_15_MINUTES;
 	
 	/**
 	 * ID: 1631<br>
-	 * Message: ルウン港発の定期船が、約10分後グルーディン港に到着します。
+	 * Message: ルウン港発の定期船が、約10分後グルーディン港に到着します。<br>
+	 * Message: The ferry from Rune Harbor will be arriving at Gludin Harbor in approximately 10 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_RUNE_AT_GLUDIN_10_MINUTES;
 	
 	/**
 	 * ID: 1632<br>
-	 * Message: ルウン港発の定期船が、約5分後グルーディン港に到着します。
+	 * Message: ルウン港発の定期船が、約5分後グルーディン港に到着します。<br>
+	 * Message: The ferry from Rune Harbor will be arriving at Gludin Harbor in approximately 10 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_RUNE_AT_GLUDIN_5_MINUTES;
 	
 	/**
 	 * ID: 1633<br>
-	 * Message: ルウン港発の定期船が、約1分後グルーディン港に到着します。
+	 * Message: ルウン港発の定期船が、約1分後グルーディン港に到着します。<br>
+	 * Message: The ferry from Rune Harbor will be arriving at Gludin Harbor in approximately 1 minute.
 	 */
 	public static final SystemMessageId FERRY_FROM_RUNE_AT_GLUDIN_1_MINUTE;
 	
 	/**
 	 * ID: 1634<br>
-	 * Message: グルーディン港発の定期船が、約15分後ルウン港に到着します。
+	 * Message: グルーディン港発の定期船が、約15分後ルウン港に到着します。<br>
+	 * Message: The ferry from Gludin Harbor will be arriving at Rune Harbor in approximately 15 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_GLUDIN_AT_RUNE_15_MINUTES;
 	
 	/**
 	 * ID: 1635<br>
-	 * Message: グルーディン港発の定期船が、約10分後ルウン港に到着します。
+	 * Message: グルーディン港発の定期船が、約10分後ルウン港に到着します。<br>
+	 * Message: The ferry from Gludin Harbor will be arriving at Rune harbor in approximately 10 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_GLUDIN_AT_RUNE_10_MINUTES;
 	
 	/**
 	 * ID: 1636<br>
-	 * Message: グルーディン港発の定期船が、約5分後ルウン港に到着します。
+	 * Message: グルーディン港発の定期船が、約5分後ルウン港に到着します。<br>
+	 * Message: The ferry from Gludin Harbor will be arriving at Rune Harbor in approximately 10 minutes.
 	 */
 	public static final SystemMessageId FERRY_FROM_GLUDIN_AT_RUNE_5_MINUTES;
 	
 	/**
 	 * ID: 1637<br>
-	 * Message: グルーディン港発の定期船が、約1分後ルウン港に到着します。
+	 * Message: グルーディン港発の定期船が、約1分後ルウン港に到着します。<br>
+	 * Message: The ferry from Gludin Harbor will be arriving at Rune Harbor in approximately 1 minute.
 	 */
 	public static final SystemMessageId FERRY_FROM_GLUDIN_AT_RUNE_1_MINUTE;
 	
 	/**
 	 * ID: 1638<br>
-	 * Message: 製作図集、個人工房、個人商店の使用中にはフィッシングができません。
+	 * Message: 製作図集、個人工房、個人商店の使用中にはフィッシングができません。<br>
+	 * Message: You cannot fish while using a recipe book, private manufacture or private store.
 	 */
 	public static final SystemMessageId CANNOT_FISH_WHILE_USING_RECIPE_BOOK;
 	
 	/**
 	 * ID: 1639<br>
-	 * Message: 第$s1期オリンピアード期間が始まりました。
+	 * Message: 第$s1期オリンピアード期間が始まりました。<br>
+	 * Message: Period $s1 of the Grand Olympiad Games has started!
 	 */
 	public static final SystemMessageId OLYMPIAD_PERIOD_S1_HAS_STARTED;
 	
 	/**
 	 * ID: 1640<br>
-	 * Message: 第$s1期オリンピアード期間が終了しました。
+	 * Message: 第$s1期オリンピアード期間が終了しました。<br>
+	 * Message: Period $s1 of the Grand Olympiad Games has now ended.
 	 */
 	public static final SystemMessageId OLYMPIAD_PERIOD_S1_HAS_ENDED;
 	
 	/**
 	 * ID: 1641<br>
-	 * Message: オリンピアード競技が始まりました。
+	 * Message: オリンピアード競技が始まりました。<br>
+	 * Message: Sharpen your swords, tighten the stitching in your armor, and make haste to a Grand Olympiad Manager! Battles in the Grand Olympiad Games are now taking place!
 	 */
 	public static final SystemMessageId THE_OLYMPIAD_GAME_HAS_STARTED;
 	
 	/**
 	 * ID: 1642<br>
-	 * Message: オリンピアード競技が終了しました。
+	 * Message: オリンピアード競技が終了しました。<br>
+	 * Message: Much carnage has been left for the cleanup crew of the Olympiad Stadium. Battles in the Grand Olympiad Games are now over!
 	 */
 	public static final SystemMessageId THE_OLYMPIAD_GAME_HAS_ENDED;
 	
 	/**
 	 * ID: 1643<br>
-	 * Message: 現在地： $s1、$s2、$s3 (次元の狭間)
+	 * Message: 現在地： $s1、$s2、$s3 (次元の狭間)<br>
+	 * Message: Current Location: $s1, $s2, $s3 (Dimensional Gap)
 	 */
 	public static final SystemMessageId LOC_DIMENSIONAL_GAP_S1_S2_S3;
 	
@@ -9603,5262 +11191,6138 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 1649<br>
-	 * Message: 接続時間の累積を再開します。
+	 * Message: 接続時間の累積を再開します。<br>
+	 * Message: Play time is now accumulating.
 	 */
 	public static final SystemMessageId PLAY_TIME_NOW_ACCUMULATING;
 	
 	/**
 	 * ID: 1650<br>
-	 * Message: 大変混みあっていますので接続できません。しばらくしてから再度アクセスしてください。
+	 * Message: 大変混みあっていますので接続できません。しばらくしてから再度アクセスしてください。<br>
+	 * Message: Due to high server traffic, your login attempt has failed. Please try again soon.
 	 */
 	public static final SystemMessageId TRY_LOGIN_LATER;
 	
 	/**
 	 * ID: 1651<br>
-	 * Message: オリンピアード競技が行われる時間ではありません。
+	 * Message: オリンピアード競技が行われる時間ではありません。<br>
+	 * Message: The Grand Olympiad Games are not currently in progress.
 	 */
 	public static final SystemMessageId THE_OLYMPIAD_GAME_IS_NOT_CURRENTLY_IN_PROGRESS;
 	
 	/**
 	 * ID: 1652<br>
-	 * Message: リプレイ録画を始めます。
+	 * Message: リプレイ録画を始めます。<br>
+	 * Message: You are now recording gameplay.
 	 */
 	public static final SystemMessageId RECORDING_GAMEPLAY_START;
 	
 	/**
 	 * ID: 1653<br>
-	 * Message: リプレイ ファイルを保存しました。($s1)
+	 * Message: リプレイ ファイルを保存しました。($s1)<br>
+	 * Message: Your recording has been successfully stored. ($s1)
 	 */
 	public static final SystemMessageId RECORDING_GAMEPLAY_STOP_S1;
 	
 	/**
 	 * ID: 1654<br>
-	 * Message: リプレイ録画に失敗しました。
+	 * Message: リプレイ録画に失敗しました。<br>
+	 * Message: Your attempt to record the replay file has failed.
 	 */
 	public static final SystemMessageId RECORDING_GAMEPLAY_FAILED;
 	
 	/**
 	 * ID: 1655<br>
-	 * Message: モンスターが釣れました！
+	 * Message: モンスターが釣れました！<br>
+	 * Message: You caught something smelly and scary, maybe you should throw it back!?
 	 */
 	public static final SystemMessageId YOU_CAUGHT_SOMETHING_SMELLY_THROW_IT_BACK;
 	
 	/**
 	 * ID: 1656<br>
-	 * Message: NPCとのトレードに成功しました。
+	 * Message: NPCとのトレードに成功しました。<br>
+	 * Message: You have successfully traded the item with the NPC.
 	 */
 	public static final SystemMessageId SUCCESSFULLY_TRADED_WITH_NPC;
 	
 	/**
 	 * ID: 1657<br>
-	 * Message: $c1がオリンピアード ポイント$s2ポイントを得ました。
+	 * Message: $c1がオリンピアード ポイント$s2ポイントを得ました。<br>
+	 * Message: $c1 has earned $s2 points in the Grand Olympiad Games.
 	 */
 	public static final SystemMessageId C1_HAS_GAINED_S2_OLYMPIAD_POINTS;
 	
 	/**
 	 * ID: 1658<br>
-	 * Message: $c1がオリンピアード ポイント$s2ポイントを失いました。
+	 * Message: $c1がオリンピアード ポイント$s2ポイントを失いました。<br>
+	 * Message: $c1 has lost $s2 points in the Grand Olympiad Games.
 	 */
 	public static final SystemMessageId C1_HAS_LOST_S2_OLYMPIAD_POINTS;
 	
 	/**
 	 * ID: 1659<br>
-	 * Message: 現在地： $s1、$s2、$s3 (帝国の墓地)
+	 * Message: 現在地： $s1、$s2、$s3 (帝国の墓地)<br>
+	 * Message: Current Location: $s1, $s2, $s3 (Cemetery of the Empire)
 	 */
 	public static final SystemMessageId LOC_CEMETARY_OF_THE_EMPIRE_S1_S2_S3;
 	
 	/**
 	 * ID: 1660<br>
-	 * Message: チャンネル開設者： $c1
+	 * Message: チャンネル開設者： $c1<br>
+	 * Message: Channel Creator: $c1.
 	 */
 	public static final SystemMessageId CHANNEL_CREATOR_C1;
 	
 	/**
 	 * ID: 1661<br>
-	 * Message: $c1が$s2 $s3個を手に入れました。
+	 * Message: $c1が$s2 $s3個を手に入れました。<br>
+	 * Message: $c1 has obtained $s3 $s2s.
 	 */
 	public static final SystemMessageId C1_OBTAINED_S3_S2_S;
 	
 	/**
 	 * ID: 1662<br>
-	 * Message: 一箇所で長時間釣っていると食いつく確率が低くなります。他の場所に移動して続けてください。
+	 * Message: 一箇所で長時間釣っていると食いつく確率が低くなります。他の場所に移動して続けてください。<br>
+	 * Message: The fish are no longer biting here because you've caught too many! Try fishing in another location.
 	 */
 	public static final SystemMessageId FISH_NO_MORE_BITING_TRY_OTHER_LOCATION;
 	
 	/**
 	 * ID: 1663<br>
-	 * Message: エンサインを登録または削除しました。アジトまたは城を所有する血盟にのみ、血盟関連アイテムにエンサインが表示されます。
+	 * Message: エンサインを登録または削除しました。アジトまたは城を所有する血盟にのみ、血盟関連アイテムにエンサインが表示されます。<br>
+	 * Message: The clan crest was successfully registered. Remember, only a clan that owns a clan hall or castle can have their crest displayed.
 	 */
 	public static final SystemMessageId CLAN_EMBLEM_WAS_SUCCESSFULLY_REGISTERED;
 	
 	/**
 	 * ID: 1664<br>
-	 * Message: 魚が抵抗しているのでウキが激しく動いています。
+	 * Message: 魚が抵抗しているのでウキが激しく動いています。<br>
+	 * Message: The fish is resisting your efforts to haul it in! Look at that bobber go!
 	 */
 	public static final SystemMessageId FISH_RESISTING_LOOK_BOBBLER;
 	
 	/**
 	 * ID: 1665<br>
-	 * Message: 魚が疲れているのでウキの動きが弱いです。
+	 * Message: 魚が疲れているのでウキの動きが弱いです。<br>
+	 * Message: You've worn that fish out! It can't even pull the bobber under the water!
 	 */
 	public static final SystemMessageId YOU_WORN_FISH_OUT;
 	
 	/**
 	 * ID: 1666<br>
-	 * Message: +$s1$s2を手に入れました。
+	 * Message: +$s1$s2を手に入れました。<br>
+	 * Message: You have obtained +$s1 $s2.
 	 */
 	public static final SystemMessageId OBTAINED_S1_S2;
 	
 	/**
 	 * ID: 1667<br>
-	 * Message: インスタント キル！
+	 * Message: インスタント キル！<br>
+	 * Message: Lethal Strike!
 	 */
 	public static final SystemMessageId LETHAL_STRIKE;
 	
 	/**
 	 * ID: 1668<br>
-	 * Message: 即死スキルがヒットしました！
+	 * Message: 即死スキルがヒットしました！<br>
+	 * Message: Your lethal strike was successful!
 	 */
 	public static final SystemMessageId LETHAL_STRIKE_SUCCESSFUL;
 	
 	/**
 	 * ID: 1669<br>
-	 * Message: アイテム変換に失敗しました。
+	 * Message: アイテム変換に失敗しました。<br>
+	 * Message: There was nothing found inside of that.
 	 */
 	public static final SystemMessageId NOTHING_INSIDE_THAT;
 	
 	/**
 	 * ID: 1670<br>
-	 * Message: リーリング(ポンピング)スキルのレベルがフィッシング マスタリーのレベルよりも高いので$s1のペナルティが適用されます。
+	 * Message: リーリング(ポンピング)スキルのレベルがフィッシング マスタリーのレベルよりも高いので$s1のペナルティが適用されます。<br>
+	 * Message: Due to your Reeling and/or Pumping skill being three or more levels higher than your Fishing skill, a 50 damage penalty will be applied.
 	 */
 	public static final SystemMessageId REELING_PUMPING_3_LEVELS_HIGHER_THAN_FISHING_PENALTY;
 	
 	/**
 	 * ID: 1671<br>
-	 * Message: リーリング成功！(マスタリー ペナルティ：$s1)
+	 * Message: リーリング成功！(マスタリー ペナルティ：$s1)<br>
+	 * Message: Your reeling was successful! (Mastery Penalty:$s1 )
 	 */
 	public static final SystemMessageId REELING_SUCCESSFUL_PENALTY_S1;
 	
 	/**
 	 * ID: 1672<br>
-	 * Message: ポンピング成功！(マスタリー ペナルティ：$s1)
+	 * Message: ポンピング成功！(マスタリー ペナルティ：$s1)<br>
+	 * Message: Your pumping was successful! (Mastery Penalty:$s1 )
 	 */
 	public static final SystemMessageId PUMPING_SUCCESSFUL_PENALTY_S1;
 	
 	/**
 	 * ID: 1673<br>
-	 * Message: 今回のオリンピアードの現在の戦績は$s1戦$s2勝$s3敗です。獲得したオリンピアード ポイントは$s4ポイントです。
+	 * Message: 今回のオリンピアードの現在の戦績は$s1戦$s2勝$s3敗です。獲得したオリンピアード ポイントは$s4ポイントです。<br>
+	 * Message: Your current record for this Grand Olympiad is $s1 match(es), $s2 win(s) and $s3 defeat(s). You have earned $s4 Olympiad Point(s).
 	 */
 	public static final SystemMessageId THE_CURRENT_RECORD_FOR_THIS_OLYMPIAD_SESSION_IS_S1_MATCHES_S2_WINS_S3_DEFEATS_YOU_HAVE_EARNED_S4_OLYMPIAD_POINTS;
 	
 	/**
 	 * ID: 1674<br>
-	 * Message: 対象がノーブレスの場合、このコマンドは使えません。
+	 * Message: 対象がノーブレスの場合、このコマンドは使えません。<br>
+	 * Message: This command can only be used by a Noblesse.
 	 */
 	public static final SystemMessageId NOBLESSE_ONLY;
 	
 	/**
 	 * ID: 1675<br>
-	 * Message: 04時30分から20時の間は荘園の設定を変更できません。
+	 * Message: 04時30分から20時の間は荘園の設定を変更できません。<br>
+	 * Message: A manor cannot be set up between 6 a.m. and 8 p.m.
 	 */
 	public static final SystemMessageId A_MANOR_CANNOT_BE_SET_UP_BETWEEN_6_AM_AND_8_PM;
 	
 	/**
 	 * ID: 1676<br>
-	 * Message: 召喚獣またはペットがいないので自動使用できません。
+	 * Message: 召喚獣またはペットがいないので自動使用できません。<br>
+	 * Message: You do not have a servitor or pet and therefore cannot use the automatic-use function.
 	 */
 	public static final SystemMessageId NO_SERVITOR_CANNOT_AUTOMATE_USE;
 	
 	/**
 	 * ID: 1677<br>
-	 * Message: 戦闘中の血盟員が存在するので布告を取り消せません。
+	 * Message: 戦闘中の血盟員が存在するので布告を取り消せません。<br>
+	 * Message: A cease-fire during a Clan War can not be called while members of your clan are engaged in battle.
 	 */
 	public static final SystemMessageId CANT_STOP_CLAN_WAR_WHILE_IN_COMBAT;
 	
 	/**
 	 * ID: 1678<br>
-	 * Message: $s1血盟に血盟戦を布告しませんでした。
+	 * Message: $s1血盟に血盟戦を布告しませんでした。<br>
+	 * Message: You have not declared a Clan War against the clan $s1.
 	 */
 	public static final SystemMessageId NO_CLAN_WAR_AGAINST_CLAN_S1;
 	
 	/**
 	 * ID: 1679<br>
-	 * Message: 全体命令はチャンネル開設者のみ実行できます。
+	 * Message: 全体命令はチャンネル開設者のみ実行できます。<br>
+	 * Message: Only the creator of a channel can issue a global command.
 	 */
 	public static final SystemMessageId ONLY_CHANNEL_CREATOR_CAN_GLOBAL_COMMAND;
 	
 	/**
 	 * ID: 1680<br>
-	 * Message: $c1がチャンネル招待を拒否しました。
+	 * Message: $c1がチャンネル招待を拒否しました。<br>
+	 * Message: $c1 has declined the channel invitation.
 	 */
 	public static final SystemMessageId C1_DECLINED_CHANNEL_INVITATION;
 	
 	/**
 	 * ID: 1681<br>
-	 * Message: $c1の応答がないのでチャンネル招待に失敗しました。
+	 * Message: $c1の応答がないのでチャンネル招待に失敗しました。<br>
+	 * Message: Since $c1 did not respond, your channel invitation has failed.
 	 */
 	public static final SystemMessageId C1_DID_NOT_RESPOND_CHANNEL_INVITATION_FAILED;
 	
 	/**
 	 * ID: 1682<br>
-	 * Message: チャンネル追放は開設者のみ実行できます。
+	 * Message: チャンネル追放は開設者のみ実行できます。<br>
+	 * Message: Only the creator of a channel can use the channel dismiss command.
 	 */
 	public static final SystemMessageId ONLY_CHANNEL_CREATOR_CAN_DISMISS;
 	
 	/**
 	 * ID: 1683<br>
-	 * Message: チャンネル脱退はパーティ リーダーのみ実行できます。
+	 * Message: チャンネル脱退はパーティ リーダーのみ実行できます。<br>
+	 * Message: Only a party leader can choose the option to leave a channel.
 	 */
 	public static final SystemMessageId ONLY_PARTY_LEADER_CAN_LEAVE_CHANNEL;
 	
 	/**
 	 * ID: 1684<br>
-	 * Message: 血盟解散中には血盟戦を布告できません。
+	 * Message: 血盟解散中には血盟戦を布告できません。<br>
+	 * Message: A Clan War can not be declared against a clan that is being dissolved.
 	 */
 	public static final SystemMessageId NO_CLAN_WAR_AGAINST_DISSOLVING_CLAN;
 	
 	/**
 	 * ID: 1685<br>
-	 * Message: PKカウントが1以上だと装備できないアイテムです。
+	 * Message: PKカウントが1以上だと装備できないアイテムです。<br>
+	 * Message: You are unable to equip this item when your PK count is greater or equal to one.
 	 */
 	public static final SystemMessageId YOU_ARE_UNABLE_TO_EQUIP_THIS_ITEM_WHEN_YOUR_PK_COUNT_IS_GREATER_THAN_OR_EQUAL_TO_ONE;
 	
 	/**
 	 * ID: 1686<br>
-	 * Message: 城壁が崩れました。
+	 * Message: 城壁が崩れました。<br>
+	 * Message: Stones and mortar tumble to the earth - the castle wall has taken damage!
 	 */
 	public static final SystemMessageId CASTLE_WALL_DAMAGED;
 	
 	/**
 	 * ID: 1687<br>
-	 * Message: ワイバーンに乗ったままでは行けないエリアです。引き続き留まると搭乗が解除されます。
+	 * Message: ワイバーンに乗ったままでは行けないエリアです。引き続き留まると搭乗が解除されます。<br>
+	 * Message: This area cannot be entered while mounted atop of a Wyvern. You will be dismounted from your Wyvern if you do not leave!
 	 */
 	public static final SystemMessageId AREA_CANNOT_BE_ENTERED_WHILE_MOUNTED_WYVERN;
 	
 	/**
 	 * ID: 1688<br>
-	 * Message: 個人商店や個人工房の状態ではエンチャントできません。
+	 * Message: 個人商店や個人工房の状態ではエンチャントできません。<br>
+	 * Message: You cannot enchant while operating a Private Store or Private Workshop.
 	 */
 	public static final SystemMessageId CANNOT_ENCHANT_WHILE_STORE;
 	
 	/**
 	 * ID: 1689<br>
-	 * Message: $c1 はクラス別競技の待機者リストにすでに登録されています。
+	 * Message: $c1 はクラス別競技の待機者リストにすでに登録されています。<br>
+	 * Message: $c1 is already registered on the class match waiting list.
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_REGISTERED_ON_THE_CLASS_MATCH_WAITING_LIST;
 	
 	/**
 	 * ID: 1690<br>
-	 * Message: $c1 はクラス無制限個人競技の待機者リストにすでに登録されています。
+	 * Message: $c1 はクラス無制限個人競技の待機者リストにすでに登録されています。<br>
+	 * Message: $c1 is already registered on the waiting list for the non-class-limited individual match event.
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_REGISTERED_ON_THE_NON_CLASS_LIMITED_MATCH_WAITING_LIST;
 	
 	/**
 	 * ID: 1691<br>
-	 * Message: $c1 は参加条件に合いません。インベントリ スロットが80％を超えているため、オリンピアードに参加できません。
+	 * Message: $c1 は参加条件に合いません。インベントリ スロットが80％を超えているため、オリンピアードに参加できません。<br>
+	 * Message: $c1% does not meet the participation requirements. You cannot participate in the Olympiad because your inventory slot exceeds 80%.
 	 */
 	public static final SystemMessageId C1_CANNOT_PARTICIPATE_IN_OLYMPIAD_INVENTORY_SLOT_EXCEEDS_80_PERCENT;
 	
 	/**
 	 * ID: 1692<br>
-	 * Message: $c1 は参加条件に合いません。クラスをサブクラスに変更したため、参加できません。
+	 * Message: $c1 は参加条件に合いません。クラスをサブクラスに変更したため、参加できません。<br>
+	 * Message: $c1% does not meet the participation requirements. You cannot participate in the Olympiad because you have changed to your sub-class.
 	 */
 	public static final SystemMessageId C1_CANNOT_PARTICIPATE_IN_OLYMPIAD_WHILE_CHANGED_TO_SUB_CLASS;
 	
 	/**
 	 * ID: 1693<br>
-	 * Message: 待機者リストに登録した状態では競技を観覧できません。
+	 * Message: 待機者リストに登録した状態では競技を観覧できません。<br>
+	 * Message: You may not observe a Grand Olympiad Games match while you are on the waiting list.
 	 */
 	public static final SystemMessageId WHILE_YOU_ARE_ON_THE_WAITING_LIST_YOU_ARE_NOT_ALLOWED_TO_WATCH_THE_GAME;
 	
 	/**
 	 * ID: 1694<br>
-	 * Message: 攻城戦時、ノーブレスの血盟主のみ使用できます。
+	 * Message: 攻城戦時、ノーブレスの血盟主のみ使用できます。<br>
+	 * Message: Only a clan leader that is a Noblesse can view the Siege War Status window during a siege war.
 	 */
 	public static final SystemMessageId ONLY_NOBLESSE_LEADER_CAN_VIEW_SIEGE_STATUS_WINDOW;
 	
 	/**
 	 * ID: 1695<br>
-	 * Message: 攻城戦時のみ使用できます。
+	 * Message: 攻城戦時のみ使用できます。<br>
+	 * Message: You can only use that during a Siege War!
 	 */
 	public static final SystemMessageId ONLY_DURING_SIEGE;
 	
 	/**
 	 * ID: 1696<br>
-	 * Message: プレイ時間は $s1時間です。
+	 * Message: プレイ時間は $s1時間です。<br>
+	 * Message: Your accumulated play time is $s1.
 	 */
 	public static final SystemMessageId ACCUMULATED_PLAY_TIME_IS_S1;
 	
 	/**
 	 * ID: 1697<br>
-	 * Message: ゲーム プレイ時間が「疲労度」を超えたため、ゲーム効率が正常値の50％に低下しました。健康のために今すぐログアウトし、休憩をとったあとに、適切なストレッチ等を行い、勉学とのバランスをとってください。
+	 * Message: ゲーム プレイ時間が「疲労度」を超えたため、ゲーム効率が正常値の50％に低下しました。健康のために今すぐログアウトし、休憩をとったあとに、適切なストレッチ等を行い、勉学とのバランスをとってください。<br>
+	 * Message: Your accumulated play time has reached Fatigue level, so you will receive experience or item drops at only 50 percent [...]
 	 */
 	public static final SystemMessageId ACCUMULATED_PLAY_TIME_WARNING1;
 	
 	/**
 	 * ID: 1698<br>
-	 * Message: 健康を害する恐れのあるゲーム時間に入りました。健康のために今すぐログアウトし、休憩をおとりください。ログアウトしない場合、健康を害してゲーム効率が0％に低下し、ログアウト後の累積時間が5時間に達しないと元には戻りません。
+	 * Message: 健康を害する恐れのあるゲーム時間に入りました。健康のために今すぐログアウトし、休憩をおとりください。ログアウトしない場合、健康を害してゲーム効率が0％に低下し、ログアウト後の累積時間が5時間に達しないと元には戻りません。<br>
+	 * Message: Your accumulated play time has reached Ill-health level, so you will no longer gain experience or item drops. [...}
 	 */
 	public static final SystemMessageId ACCUMULATED_PLAY_TIME_WARNING2;
 	
 	/**
 	 * ID: 1699<br>
-	 * Message: パーティ メンバーを強制追放できません。
+	 * Message: パーティ メンバーを強制追放できません。<br>
+	 * Message: You cannot dismiss a party member by force.
 	 */
 	public static final SystemMessageId CANNOT_DISMISS_PARTY_MEMBER;
 	
 	/**
 	 * ID: 1700<br>
-	 * Message: ペットおよび召喚獣用スピリット ショットが足りません。
+	 * Message: ペットおよび召喚獣用スピリット ショットが足りません。<br>
+	 * Message: You don't have enough spiritshots needed for a pet/servitor.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_SPIRITHOTS_FOR_PET;
 	
 	/**
 	 * ID: 1701<br>
-	 * Message: ペットおよび召喚獣用ソウル ショットが足りません。
+	 * Message: ペットおよび召喚獣用ソウル ショットが足りません。<br>
+	 * Message: You don't have enough soulshots needed for a pet/servitor.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_SOULSHOTS_FOR_PET;
 	
 	/**
 	 * ID: 1702<br>
-	 * Message: 先ほどチェックしたユーザー$s1はBOT使用者と判明しました。
+	 * Message: 先ほどチェックしたユーザー$s1はBOT使用者と判明しました。<br>
+	 * Message: $s1 is using a third party program.
 	 */
 	public static final SystemMessageId S1_USING_THIRD_PARTY_PROGRAM;
 	
 	/**
 	 * ID: 1703<br>
-	 * Message: 先ほどチェックしたユーザーはBOT使用者ではないようです。
+	 * Message: 先ほどチェックしたユーザーはBOT使用者ではないようです。<br>
+	 * Message: The previous investigated user is not using a third party program
 	 */
 	public static final SystemMessageId NOT_USING_THIRD_PARTY_PROGRAM;
 	
 	/**
 	 * ID: 1704<br>
-	 * Message: 個人工房、商店設定ウィンドウを閉じてから実行してください。
+	 * Message: 個人工房、商店設定ウィンドウを閉じてから実行してください。<br>
+	 * Message: Please close the setup window for your private manufacturing store or private store, and try again.
 	 */
 	public static final SystemMessageId CLOSE_STORE_WINDOW_AND_TRY_AGAIN;
 	
 	/**
 	 * ID: 1705<br>
-	 * Message: ネットカフェ ポイント獲得期間です。
+	 * Message: ネットカフェ ポイント獲得期間です。<br>
+	 * Message: PC Bang Points acquisition period. Points acquisition period left $s1 hour.
 	 */
 	public static final SystemMessageId PCPOINT_ACQUISITION_PERIOD;
 	
 	/**
 	 * ID: 1706<br>
-	 * Message: ネットカフェ ポイント有効期間です。
+	 * Message: ネットカフェ ポイント有効期間です。<br>
+	 * Message: PC Bang Points use period. Points acquisition period left $s1 hour.
 	 */
 	public static final SystemMessageId PCPOINT_USE_PERIOD;
 	
 	/**
 	 * ID: 1707<br>
-	 * Message: ネットカフェ ポイント $s1ポイントを獲得しました。
+	 * Message: ネットカフェ ポイント $s1ポイントを獲得しました。<br>
+	 * Message: You acquired $s1 PC Bang Point.
 	 */
 	public static final SystemMessageId ACQUIRED_S1_PCPOINT;
 	
 	/**
 	 * ID: 1708<br>
-	 * Message: ダブル ポイント！ネットカフェ ポイント $s1ポイントを獲得しました。
+	 * Message: ダブル ポイント！ネットカフェ ポイント $s1ポイントを獲得しました。<br>
+	 * Message: Double points! You acquired $s1 PC Bang Point.
 	 */
 	public static final SystemMessageId ACQUIRED_S1_PCPOINT_DOUBLE;
 	
 	/**
 	 * ID: 1709<br>
-	 * Message: $s1ポイントを使用します。
+	 * Message: $s1ポイントを使用します。<br>
+	 * Message: You are using $s1 point.
 	 */
 	public static final SystemMessageId USING_S1_PCPOINT;
 	
 	/**
 	 * ID: 1710<br>
-	 * Message: ポイントが足りません。
+	 * Message: ポイントが足りません。<br>
+	 * Message: You are short of accumulated points.
 	 */
 	public static final SystemMessageId SHORT_OF_ACCUMULATED_POINTS;
 	
 	/**
 	 * ID: 1711<br>
-	 * Message: ネットカフェ ポイント有効期限が切れています。
+	 * Message: ネットカフェ ポイント有効期限が切れています。<br>
+	 * Message: PC Bang Points use period has expired.
 	 */
 	public static final SystemMessageId PCPOINT_USE_PERIOD_EXPIRED;
 	
 	/**
 	 * ID: 1712<br>
-	 * Message: ネットカフェ ポイント獲得期間が終了しました。
+	 * Message: ネットカフェ ポイント獲得期間が終了しました。<br>
+	 * Message: The PC Bang Points accumulation period has expired.
 	 */
 	public static final SystemMessageId PCPOINT_ACCUMULATION_PERIOD_EXPIRED;
 	
 	/**
 	 * ID: 1713<br>
-	 * Message: 待機者数が足りないので、競技開始に遅れが出る場合があります。
+	 * Message: 待機者数が足りないので、競技開始に遅れが出る場合があります。<br>
+	 * Message: The games may be delayed due to an insufficient number of players waiting.
 	 */
 	public static final SystemMessageId GAMES_DELAYED;
 	
 	/**
 	 * ID: 1714<br>
-	 * Message: 現在地： $s1、$s2、$s3 (シュチュッツガルト城の村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (シュチュッツガルト城の村付近)<br>
+	 * Message: Current Location: $s1, $s2, $s3 (Near the Town of Schuttgart)
 	 */
 	public static final SystemMessageId LOC_SCHUTTGART_S1_S2_S3;
 	
 	/**
 	 * ID: 1715<br>
-	 * Message: ピースゾーン\n- PvPができないエリアです。
+	 * Message: ピースゾーン\n- PvPができないエリアです。<br>
+	 * Message: This is a Peaceful Zone - PvP is not allowed in this area.
 	 */
 	public static final SystemMessageId PEACEFUL_ZONE;
 	
 	/**
 	 * ID: 1716<br>
-	 * Message: 異常状態エリア
+	 * Message: 異常状態エリア<br>
+	 * Message: Altered Zone
 	 */
 	public static final SystemMessageId ALTERED_ZONE;
 	
 	/**
 	 * ID: 1717<br>
-	 * Message: 攻城戦ゾーン\n-攻城戦が行われているエリアです。\n死亡時の復活に制限があるエリアです。
+	 * Message: 攻城戦ゾーン\n-攻城戦が行われているエリアです。\n死亡時の復活に制限があるエリアです。<br>
+	 * Message: Siege War Zone - A siege is currently in progress in this area. If a character dies in this zone, their resurrection ability may be restricted.
 	 */
 	public static final SystemMessageId SIEGE_ZONE;
 	
 	/**
 	 * ID: 1718<br>
-	 * Message: 一般フィールド
+	 * Message: 一般フィールド<br>
+	 * Message: General Field
 	 */
 	public static final SystemMessageId GENERAL_ZONE;
 	
 	/**
 	 * ID: 1719<br>
-	 * Message: セブン サイン ゾーン\n- レベル アップしてもHP、MPが\n回復されないエリアです。
+	 * Message: セブン サイン ゾーン\n- レベル アップしてもHP、MPが\n回復されないエリアです。<br>
+	 * Message: Seven Signs Zone - Although a character's level may increase while in this area, HP and MP will not be regenerated.
 	 */
 	public static final SystemMessageId SEVENSIGNS_ZONE;
 	
 	/**
 	 * ID: 1720<br>
+	 * Message: ---<br>
 	 * Message: ---
 	 */
 	public static final SystemMessageId UNKNOWN1;
 	
 	/**
 	 * ID: 1721<br>
-	 * Message: 紛争エリア
+	 * Message: 紛争エリア<br>
+	 * Message: Combat Zone
 	 */
 	public static final SystemMessageId COMBAT_ZONE;
 	
 	/**
 	 * ID: 1722<br>
-	 * Message: 個人商店、個人工房で検索するアイテム名を入力してください。
+	 * Message: 個人商店、個人工房で検索するアイテム名を入力してください。<br>
+	 * Message: Please enter the name of the item you wish to search for.
 	 */
 	public static final SystemMessageId ENTER_ITEM_NAME_SEARCH;
 	
 	/**
 	 * ID: 1723<br>
-	 * Message: サポートに対する評価をして頂ければ幸いです。
+	 * Message: サポートに対する評価をして頂ければ幸いです。<br>
+	 * Message: Please take a moment to provide feedback about the petition service.
 	 */
 	public static final SystemMessageId PLEASE_PROVIDE_PETITION_FEEDBACK;
 	
 	/**
 	 * ID: 1724<br>
-	 * Message: 戦闘中は召喚獣を戻せません。
+	 * Message: 戦闘中は召喚獣を戻せません。<br>
+	 * Message: A servitor whom is engaged in battle cannot be de-activated.
 	 */
 	public static final SystemMessageId SERVITOR_NOT_RETURN_IN_BATTLE;
 	
 	/**
 	 * ID: 1725<br>
-	 * Message: $s1のレイド ポイントを獲得しました。
+	 * Message: $s1のレイド ポイントを獲得しました。<br>
+	 * Message: You have earned $s1 raid point(s).
 	 */
 	public static final SystemMessageId EARNED_S1_RAID_POINTS;
 	
 	/**
 	 * ID: 1726<br>
-	 * Message: 有効期間が満了したので$s1が消えました。
+	 * Message: 有効期間が満了したので$s1が消えました。<br>
+	 * Message: $s1 has disappeared because its time period has expired.
 	 */
 	public static final SystemMessageId S1_PERIOD_EXPIRED_DISAPPEARED;
 	
 	/**
 	 * ID: 1727<br>
-	 * Message: $s1 から$s2パーティー ルームに招待されました。応じますか。
+	 * Message: $s1 から$s2パーティー ルームに招待されました。応じますか。<br>
+	 * Message: $c1 has invited you to a party room. Do you accept?
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY_ROOM_CONFIRM;
 	
 	/**
 	 * ID: 1728<br>
-	 * Message: 相手がパーティ マッチの招待に応じませんでした。
+	 * Message: 相手がパーティ マッチの招待に応じませんでした。<br>
+	 * Message: The recipient of your invitation did not accept the party matching invitation.
 	 */
 	public static final SystemMessageId PARTY_MATCHING_REQUEST_NO_RESPONSE;
 	
 	/**
 	 * ID: 1729<br>
-	 * Message: 連合がテレポート中であるため、連合のパーティに加入できません。
+	 * Message: 連合がテレポート中であるため、連合のパーティに加入できません。<br>
+	 * Message: You cannot join a Command Channel while teleporting.
 	 */
 	public static final SystemMessageId NOT_JOIN_CHANNEL_WHILE_TELEPORTING;
 	
 	/**
 	 * ID: 1730<br>
-	 * Message: 血盟アカデミーを創設するには、血盟のレベルが5以上でなければなりません。
+	 * Message: 血盟アカデミーを創設するには、血盟のレベルが5以上でなければなりません。<br>
+	 * Message: To establish a Clan Academy, your clan must be Level 5 or higher.
 	 */
 	public static final SystemMessageId YOU_DO_NOT_MEET_CRITERIA_IN_ORDER_TO_CREATE_A_CLAN_ACADEMY;
 	
 	/**
 	 * ID: 1731<br>
-	 * Message: 血盟主のみ血盟アカデミーを創設することができます。
+	 * Message: 血盟主のみ血盟アカデミーを創設することができます。<br>
+	 * Message: Only the leader can create a Clan Academy.
 	 */
 	public static final SystemMessageId ONLY_LEADER_CAN_CREATE_ACADEMY;
 	
 	/**
 	 * ID: 1732<br>
-	 * Message: 血盟アカデミーを創設するにはアイテム「血の証」が必要です。
+	 * Message: 血盟アカデミーを創設するにはアイテム「血の証」が必要です。<br>
+	 * Message: To create a Clan Academy, a Blood Mark is needed.
 	 */
 	public static final SystemMessageId NEED_BLOODMARK_FOR_ACADEMY;
 	
 	/**
 	 * ID: 1733<br>
-	 * Message: 血盟アカデミーを創設するにはアデナが足りません。
+	 * Message: 血盟アカデミーを創設するにはアデナが足りません。<br>
+	 * Message: You do not have enough adena to create a Clan Academy.
 	 */
 	public static final SystemMessageId NEED_ADENA_FOR_ACADEMY;
 	
 	/**
 	 * ID: 1734<br>
-	 * Message: 血盟アカデミーに加入するには、他の血盟に所属しておらず、2次転職を終えていないレベル40以下のキャラクターでなければなりません。
+	 * Message: 血盟アカデミーに加入するには、他の血盟に所属しておらず、2次転職を終えていないレベル40以下のキャラクターでなければなりません。<br>
+	 * Message: To join a Clan Academy, characters must be Level 40 or below, not belong another clan and not yet completed their 2nd class transfer.
 	 */
 	public static final SystemMessageId ACADEMY_REQUIREMENTS;
 	
 	/**
 	 * ID: 1735<br>
-	 * Message: $s1 は血盟アカデミーの加入条件に合いません。
+	 * Message: $s1 は血盟アカデミーの加入条件に合いません。<br>
+	 * Message: $s1 does not meet the requirements to join a Clan Academy.
 	 */
 	public static final SystemMessageId S1_DOESNOT_MEET_REQUIREMENTS_TO_JOIN_ACADEMY;
 	
 	/**
 	 * ID: 1736<br>
-	 * Message: 血盟アカデミーの制限人数に達したため、アカデミー員の加入受け付けができません。
+	 * Message: 血盟アカデミーの制限人数に達したため、アカデミー員の加入受け付けができません。<br>
+	 * Message: The Clan Academy has reached its maximum enrollment.
 	 */
 	public static final SystemMessageId ACADEMY_MAXIMUM;
 	
 	/**
 	 * ID: 1737<br>
-	 * Message: 現在所属している血盟の血盟アカデミーは開設されていません。血盟アカデミーを開設できます。
+	 * Message: 現在所属している血盟の血盟アカデミーは開設されていません。血盟アカデミーを開設できます。<br>
+	 * Message: Your clan has not established a Clan Academy but is eligible to do so.
 	 */
 	public static final SystemMessageId CLAN_CAN_CREATE_ACADEMY;
 	
 	/**
 	 * ID: 1738<br>
-	 * Message: 現在所属している血盟の血盟アカデミーはすでに開設されています。
+	 * Message: 現在所属している血盟の血盟アカデミーはすでに開設されています。<br>
+	 * Message: Your clan has already established a Clan Academy.
 	 */
 	public static final SystemMessageId CLAN_HAS_ALREADY_ESTABLISHED_A_CLAN_ACADEMY;
 	
 	/**
 	 * ID: 1739<br>
-	 * Message: 血盟アカデミーを創設しますか。
+	 * Message: 血盟アカデミーを創設しますか。<br>
+	 * Message: Would you like to create a Clan Academy?
 	 */
 	public static final SystemMessageId CLAN_ACADEMY_CREATE_CONFIRM;
 	
 	/**
 	 * ID: 1740<br>
-	 * Message: 血盟アカデミー名を入力してください。
+	 * Message: 血盟アカデミー名を入力してください。<br>
+	 * Message: Please enter the name of the Clan Academy.
 	 */
 	public static final SystemMessageId ACADEMY_CREATE_ENTER_NAME;
 	
 	/**
 	 * ID: 1741<br>
-	 * Message: おめでとうございます！$s1血盟の血盟アカデミーが創設されました。
+	 * Message: おめでとうございます！$s1血盟の血盟アカデミーが創設されました。<br>
+	 * Message: Congratulations! The $s1's Clan Academy has been created.
 	 */
 	public static final SystemMessageId THE_S1S_CLAN_ACADEMY_HAS_BEEN_CREATED;
 	
 	/**
 	 * ID: 1742<br>
-	 * Message: 血盟アカデミー加入を勧誘するメッセージを$s1に送ります。
+	 * Message: 血盟アカデミー加入を勧誘するメッセージを$s1に送ります。<br>
+	 * Message: A message inviting $s1 to join the Clan Academy is being sent.
 	 */
 	public static final SystemMessageId ACADEMY_INVITATION_SENT_TO_S1;
 	
 	/**
 	 * ID: 1743<br>
-	 * Message: 血盟アカデミーを創設するには、血盟レベルが5以上で血盟主がアイテム「血の証」XX個または一定量のアデナを支払わなければなりません。
+	 * Message: 血盟アカデミーを創設するには、血盟レベルが5以上で血盟主がアイテム「血の証」XX個または一定量のアデナを支払わなければなりません。<br>
+	 * Message: To open a Clan Academy, the leader of a Level 5 clan or above must pay XX Proofs of Blood or a certain amount of adena.
 	 */
 	public static final SystemMessageId OPEN_ACADEMY_CONDITIONS;
 	
 	/**
 	 * ID: 1744<br>
-	 * Message: 相手が応答しなかったため、血盟アカデミー加入の勧誘がキャンセルされました。
+	 * Message: 相手が応答しなかったため、血盟アカデミー加入の勧誘がキャンセルされました。<br>
+	 * Message: There was no response to your invitation to join the Clan Academy, so the invitation has been rescinded.
 	 */
 	public static final SystemMessageId ACADEMY_JOIN_NO_RESPONSE;
 	
 	/**
 	 * ID: 1745<br>
-	 * Message: 相手が血盟アカデミー加入の勧誘を拒否しました。
+	 * Message: 相手が血盟アカデミー加入の勧誘を拒否しました。<br>
+	 * Message: The recipient of your invitation to join the Clan Academy has declined.
 	 */
 	public static final SystemMessageId ACADEMY_JOIN_DECLINE;
 	
 	/**
 	 * ID: 1746<br>
-	 * Message: すでに血盟アカデミーに加入しています。
+	 * Message: すでに血盟アカデミーに加入しています。<br>
+	 * Message: You have already joined a Clan Academy.
 	 */
 	public static final SystemMessageId ALREADY_JOINED_ACADEMY;
 	
 	/**
 	 * ID: 1747<br>
-	 * Message: $s1が$s2血盟所属の血盟アカデミー加入の勧誘をしてきました。招待に応じますか。
+	 * Message: $s1が$s2血盟所属の血盟アカデミー加入の勧誘をしてきました。招待に応じますか。<br>
+	 * Message: $s1 has sent you an invitation to join the Clan Academy belonging to the $s2 clan. Do you accept?
 	 */
 	public static final SystemMessageId JOIN_ACADEMY_REQUEST_BY_S1_FOR_CLAN_S2;
 	
 	/**
 	 * ID: 1748<br>
-	 * Message: 血盟アカデミー員$s1が2次転職に成功し血盟名声値$s2ポイントを獲得しました。
+	 * Message: 血盟アカデミー員$s1が2次転職に成功し血盟名声値$s2ポイントを獲得しました。<br>
+	 * Message: Clan Academy member $s1 has successfully completed the 2nd class transfer and obtained $s2 Clan Reputation points.
 	 */
 	public static final SystemMessageId CLAN_MEMBER_GRADUATED_FROM_ACADEMY;
 	
 	/**
 	 * ID: 1749<br>
-	 * Message: おめでとうございます！血盟アカデミーを卒業し、所属血盟から脱退します。卒業者はペナルティーなしで正式に血盟員として即加入できます。
+	 * Message: おめでとうございます！血盟アカデミーを卒業し、所属血盟から脱退します。卒業者はペナルティーなしで正式に血盟員として即加入できます。<br>
+	 * Message: Congratulations! You will now graduate from the Clan Academy and leave your current clan. As a graduate of the academy, you can immediately join a clan as a regular member without being subject to any penalties.
 	 */
 	public static final SystemMessageId ACADEMY_MEMBERSHIP_TERMINATED;
 	
 	/**
 	 * ID: 1750<br>
-	 * Message: $c1 は参加条件に合いません。$s2の所有者はオリンピアードに参加できません。
+	 * Message: $c1 は参加条件に合いません。$s2の所有者はオリンピアードに参加できません。<br>
+	 * Message: $c1% does not meet the participation requirements. The owner of $s2 cannot participate in the Olympiad.
 	 */
 	public static final SystemMessageId C1_CANNOT_JOIN_OLYMPIAD_POSSESSING_S2;
 	
 	/**
 	 * ID: 1751<br>
-	 * Message: グランド マスターから記念アイテムを与えられました。
+	 * Message: グランド マスターから記念アイテムを与えられました。<br>
+	 * Message: The Grand Master has given you a commemorative item.
 	 */
 	public static final SystemMessageId GRAND_MASTER_COMMEMORATIVE_ITEM;
 	
 	/**
 	 * ID: 1752<br>
-	 * Message: 血盟アカデミー卒業者が血盟員として加入し、血盟名声値$s1ポイントを得ました。
+	 * Message: 血盟アカデミー卒業者が血盟員として加入し、血盟名声値$s1ポイントを得ました。<br>
+	 * Message: Since the clan has received a graduate of the Clan Academy, it has earned $s1 points towards its reputation score.
 	 */
 	public static final SystemMessageId MEMBER_GRADUATED_EARNED_S1_REPU;
 	
 	/**
 	 * ID: 1753<br>
-	 * Message: 血盟アカデミー員には血盟主が設定した権限により該当権限は与えられません。
+	 * Message: 血盟アカデミー員には血盟主が設定した権限により該当権限は与えられません。<br>
+	 * Message: The clan leader has decreed that that particular privilege cannot be granted to a Clan Academy member.
 	 */
 	public static final SystemMessageId CANT_TRANSFER_PRIVILEGE_TO_ACADEMY_MEMBER;
 	
 	/**
 	 * ID: 1754<br>
-	 * Message: 血盟アカデミー員には該当権限が与えられません。
+	 * Message: 血盟アカデミー員には該当権限が与えられません。<br>
+	 * Message: That privilege cannot be granted to a Clan Academy member.
 	 */
 	public static final SystemMessageId RIGHT_CANT_TRANSFERRED_TO_ACADEMY_MEMBER;
 	
 	/**
 	 * ID: 1755<br>
-	 * Message: 血盟員$s1の訓練生として$s2を指定しました。
+	 * Message: 血盟員$s1の訓練生として$s2を指定しました。<br>
+	 * Message: $s2 has been designated as the apprentice of clan member $s1.
 	 */
 	public static final SystemMessageId S2_HAS_BEEN_DESIGNATED_AS_APPRENTICE_OF_CLAN_MEMBER_S1;
 	
 	/**
 	 * ID: 1756<br>
-	 * Message: 血盟アカデミー訓練生$s1が接続しました。
+	 * Message: 血盟アカデミー訓練生$s1が接続しました。<br>
+	 * Message: Your apprentice, $s1, has logged in.
 	 */
 	public static final SystemMessageId YOUR_APPRENTICE_S1_HAS_LOGGED_IN;
 	
 	/**
 	 * ID: 1757<br>
-	 * Message: 血盟アカデミー訓練生$c1が接続を中断しました。
+	 * Message: 血盟アカデミー訓練生$c1が接続を中断しました。<br>
+	 * Message: Your apprentice, $c1, has logged out.
 	 */
 	public static final SystemMessageId YOUR_APPRENTICE_C1_HAS_LOGGED_OUT;
 	
 	/**
 	 * ID: 1758<br>
-	 * Message: 血盟アカデミー後見人$c1が接続しました。
+	 * Message: 血盟アカデミー後見人$c1が接続しました。<br>
+	 * Message: Your sponsor, $c1, has logged in.
 	 */
 	public static final SystemMessageId YOUR_SPONSOR_C1_HAS_LOGGED_IN;
 	
 	/**
 	 * ID: 1759<br>
-	 * Message: 血盟アカデミー後見人$c1が接続を中断しました。
+	 * Message: 血盟アカデミー後見人$c1が接続を中断しました。<br>
+	 * Message: Your sponsor, $c1, has logged out.
 	 */
 	public static final SystemMessageId YOUR_SPONSOR_C1_HAS_LOGGED_OUT;
 	
 	/**
 	 * ID: 1760<br>
-	 * Message: 血盟員$c1のタイトルが$s2に指定されました。
+	 * Message: 血盟員$c1のタイトルが$s2に指定されました。<br>
+	 * Message: Clan member $c1's name title has been changed to $2.
 	 */
 	public static final SystemMessageId CLAN_MEMBER_C1_TITLE_CHANGED_TO_S2;
 	
 	/**
 	 * ID: 1761<br>
-	 * Message: 血盟員$c1の権限クラスが$s2に指定されました。
+	 * Message: 血盟員$c1の権限クラスが$s2に指定されました。<br>
+	 * Message: Clan member $c1's privilege level has been changed to $s2.
 	 */
 	public static final SystemMessageId CLAN_MEMBER_C1_PRIVILEGE_CHANGED_TO_S2;
 	
 	/**
 	 * ID: 1762<br>
-	 * Message: 訓練生を解任する権限はありません。
+	 * Message: 訓練生を解任する権限はありません。<br>
+	 * Message: You do not have the right to dismiss an apprentice.
 	 */
 	public static final SystemMessageId YOU_DO_NOT_HAVE_THE_RIGHT_TO_DISMISS_AN_APPRENTICE;
 	
 	/**
 	 * ID: 1763<br>
-	 * Message: 血盟員$c1の訓練生$s2が削除されました。
+	 * Message: 血盟員$c1の訓練生$s2が削除されました。<br>
+	 * Message: $s2, clan member $c1's apprentice, has been removed.
 	 */
 	public static final SystemMessageId S2_CLAN_MEMBER_C1_APPRENTICE_HAS_BEEN_REMOVED;
 	
 	/**
 	 * ID: 1764<br>
-	 * Message: 血盟アカデミー員のみ装備できるアイテムです。
+	 * Message: 血盟アカデミー員のみ装備できるアイテムです。<br>
+	 * Message: This item can only be worn by a member of the Clan Academy.
 	 */
 	public static final SystemMessageId EQUIP_ONLY_FOR_ACADEMY;
 	
 	/**
 	 * ID: 1765<br>
-	 * Message: 血盟アカデミーを卒業すると装備できません。
+	 * Message: 血盟アカデミーを卒業すると装備できません。<br>
+	 * Message: As a graduate of the Clan Academy, you can no longer wear this item.
 	 */
 	public static final SystemMessageId EQUIP_NOT_FOR_GRADUATES;
 	
 	/**
 	 * ID: 1766<br>
-	 * Message: $c1に$s2として血盟加入申請を送ります。
+	 * Message: $c1に$s2として血盟加入申請を送ります。<br>
+	 * Message: An application to join the clan has been sent to $c1 in $s2.
 	 */
 	public static final SystemMessageId CLAN_JOIN_APPLICATION_SENT_TO_C1_IN_S2;
 	
 	/**
 	 * ID: 1767<br>
-	 * Message: $c1に血盟アカデミーへ加入申請を送ります。
+	 * Message: $c1に血盟アカデミーへ加入申請を送ります。<br>
+	 * Message: An application to join the clan Academy has been sent to $c1.
 	 */
 	public static final SystemMessageId ACADEMY_JOIN_APPLICATION_SENT_TO_C1;
 	
 	/**
 	 * ID: 1768<br>
-	 * Message: $c1 から$s2 血盟の血盟アカデミーとして加入申請が送られました。加入しますか。
+	 * Message: $c1 から$s2 血盟の血盟アカデミーとして加入申請が送られました。加入しますか。<br>
+	 * Message: $c1 has invited you to join the Clan Academy of $s2 clan. Would you like to join?
 	 */
 	public static final SystemMessageId JOIN_REQUEST_BY_C1_TO_CLAN_S2_ACADEMY;
 	
 	/**
 	 * ID: 1769<br>
-	 * Message: $c1 から$s2 血盟所属$s3 騎士団として加入招待を送られました。加入しますか。
+	 * Message: $c1 から$s2 血盟所属$s3 騎士団として加入招待を送られました。加入しますか。<br>
+	 * Message: $c1 has sent you an invitation to join the $s3 Order of Knights under the $s2 clan. Would you like to join?
 	 */
 	public static final SystemMessageId JOIN_REQUEST_BY_C1_TO_ORDER_OF_KNIGHTS_S3_UNDER_CLAN_S2;
 	
 	/**
 	 * ID: 1770<br>
-	 * Message: 血盟名声値が0ポイント以下となり制約を受けます。
+	 * Message: 血盟名声値が0ポイント以下となり制約を受けます。<br>
+	 * Message: The clan's reputation score has dropped below 0. The clan may face certain penalties as a result.
 	 */
 	public static final SystemMessageId CLAN_REPU_0_MAY_FACE_PENALTIES;
 	
 	/**
 	 * ID: 1771<br>
-	 * Message: 血盟レベル5以上になり血盟名声値を蓄えることができます。
+	 * Message: 血盟レベル5以上になり血盟名声値を蓄えることができます。<br>
+	 * Message: Now that your clan level is above Level 5, it can accumulate clan reputation points.
 	 */
 	public static final SystemMessageId CLAN_CAN_ACCUMULATE_CLAN_REPUTATION_POINTS;
 	
 	/**
 	 * ID: 1772<br>
-	 * Message: 所属血盟が攻城戦で敗北し相手の血盟に血盟名声値が$s1ポイント奪われました。
+	 * Message: 所属血盟が攻城戦で敗北し相手の血盟に血盟名声値が$s1ポイント奪われました。<br>
+	 * Message: Since your clan was defeated in a siege, $s1 points have been deducted from your clan's reputation score and given to the opposing clan.
 	 */
 	public static final SystemMessageId CLAN_WAS_DEFEATED_IN_SIEGE_AND_LOST_S1_REPUTATION_POINTS;
 	
 	/**
 	 * ID: 1773<br>
-	 * Message: 所属血盟が攻城戦で勝利し相手の血盟名声値$s1ポイントを奪いました。
+	 * Message: 所属血盟が攻城戦で勝利し相手の血盟名声値$s1ポイントを奪いました。<br>
+	 * Message: Since your clan emerged victorious from the siege, $s1 points have been added to your clan's reputation score.
 	 */
 	public static final SystemMessageId CLAN_VICTORIOUS_IN_SIEGE_AND_GAINED_S1_REPUTATION_POINTS;
 	
 	/**
 	 * ID: 1774<br>
-	 * Message: 所属血盟が戦闘型アジトを新規に獲得して、血盟名声値を$s1ポイント手に入れました。
+	 * Message: 所属血盟が戦闘型アジトを新規に獲得して、血盟名声値を$s1ポイント手に入れました。<br>
+	 * Message: Your clan's newly acquired contested clan hall has added $s1 points to your clan's reputation score.
 	 */
 	public static final SystemMessageId CLAN_ACQUIRED_CONTESTED_CLAN_HALL_AND_S1_REPUTATION_POINTS;
 	
 	/**
 	 * ID: 1775<br>
-	 * Message: 所属血盟の血盟員$c1が闇の祭典1位パーティの一員として活躍し、血盟名声値$s2ポイントを手に入れました。
+	 * Message: 所属血盟の血盟員$c1が闇の祭典1位パーティの一員として活躍し、血盟名声値$s2ポイントを手に入れました。<br>
+	 * Message: Clan member $c1 was an active member of the highest-ranked party in the Festival of Darkness. $s2 points have been added to your clan's reputation score.
 	 */
 	public static final SystemMessageId CLAN_MEMBER_C1_WAS_IN_HIGHEST_RANKED_PARTY_IN_FESTIVAL_OF_DARKNESS_AND_GAINED_S2_REPUTATION;
 	
 	/**
 	 * ID: 1776<br>
-	 * Message: 所属血盟の血盟員$c1 が英雄となり血盟名声値$s2ポイントを手に入れました。
+	 * Message: 所属血盟の血盟員$c1 が英雄となり血盟名声値$s2ポイントを手に入れました。<br>
+	 * Message: Clan member $c1 was named a hero. $2s points have been added to your clan's reputation score.
 	 */
 	public static final SystemMessageId CLAN_MEMBER_C1_BECAME_HERO_AND_GAINED_S2_REPUTATION_POINTS;
 	
 	/**
 	 * ID: 1777<br>
-	 * Message: 血盟クエストを無事クリアし、$s1の血盟名声値を獲得しました。
+	 * Message: 血盟クエストを無事クリアし、$s1の血盟名声値を獲得しました。<br>
+	 * Message: You have successfully completed a clan quest. $s1 points have been added to your clan's reputation score.
 	 */
 	public static final SystemMessageId CLAN_QUEST_COMPLETED_AND_S1_POINTS_GAINED;
 	
 	/**
 	 * ID: 1778<br>
-	 * Message: 相手の血盟へ戦闘型アジトを奪われ、所属血盟の血盟名声値$s1ポイントを奪われました。
+	 * Message: 相手の血盟へ戦闘型アジトを奪われ、所属血盟の血盟名声値$s1ポイントを奪われました。<br>
+	 * Message: An opposing clan has captured your clan's contested clan hall. $s1 points have been deducted from your clan's reputation score.
 	 */
 	public static final SystemMessageId OPPOSING_CLAN_CAPTURED_CLAN_HALL_AND_YOUR_CLAN_LOSES_S1_POINTS;
 	
 	/**
 	 * ID: 1779<br>
-	 * Message: 戦闘型アジトを奪われ血盟名声値300ポイントを失いました。
+	 * Message: 戦闘型アジトを奪われ血盟名声値300ポイントを失いました。<br>
+	 * Message: After losing the contested clan hall, 300 points have been deducted from your clan's reputation score.
 	 */
 	public static final SystemMessageId CLAN_LOST_CONTESTED_CLAN_HALL_AND_300_POINTS;
 	
 	/**
 	 * ID: 1780<br>
-	 * Message: 所属血盟が戦闘型アジトを争奪して相手の血盟から血盟名声値$s1ポイントを奪いました。
+	 * Message: 所属血盟が戦闘型アジトを争奪して相手の血盟から血盟名声値$s1ポイントを奪いました。<br>
+	 * Message: Your clan has captured your opponent's contested clan hall. $s1 points have been deducted from your opponent's clan reputation score.
 	 */
 	public static final SystemMessageId CLAN_CAPTURED_CONTESTED_CLAN_HALL_AND_S1_POINTS_DEDUCTED_FROM_OPPONENT;
 	
 	/**
 	 * ID: 1781<br>
-	 * Message: 所属血盟の血盟名声値$s1ポイントを得ました。
+	 * Message: 所属血盟の血盟名声値$s1ポイントを得ました。<br>
+	 * Message: Your clan has added $1s points to its clan reputation score.
 	 */
 	public static final SystemMessageId CLAN_ADDED_S1S_POINTS_TO_REPUTATION_SCORE;
 	
 	/**
 	 * ID: 1782<br>
-	 * Message: 所属血盟の血盟員$c1が殺されたので、相手の血盟に名声値を$s2ポイント奪われました。
+	 * Message: 所属血盟の血盟員$c1が殺されたので、相手の血盟に名声値を$s2ポイント奪われました。<br>
+	 * Message: Your clan member $c1 was killed. $s2 points have been deducted from your clan's reputation score and added to your opponent's clan reputation score.
 	 */
 	public static final SystemMessageId CLAN_MEMBER_C1_WAS_KILLED_AND_S2_POINTS_DEDUCTED_FROM_REPUTATION;
 	
 	/**
 	 * ID: 1783<br>
-	 * Message: 相手の血盟のプレイヤーを倒し所属血盟の血盟名声値$s1ポイントを奪いました。
+	 * Message: 相手の血盟のプレイヤーを倒し所属血盟の血盟名声値$s1ポイントを奪いました。<br>
+	 * Message: For killing an opposing clan member, $s1 points have been deducted from your opponents' clan reputation score.
 	 */
 	public static final SystemMessageId FOR_KILLING_OPPOSING_MEMBER_S1_POINTS_WERE_DEDUCTED_FROM_OPPONENTS;
 	
 	/**
 	 * ID: 1784<br>
-	 * Message: 所属血盟が守城に失敗し相手の血盟に血盟名声値$s1ポイントを奪われました。
+	 * Message: 所属血盟が守城に失敗し相手の血盟に血盟名声値$s1ポイントを奪われました。<br>
+	 * Message: Your clan has failed to defend the castle. $s1 points have been deducted from your clan's reputation score and added to your opponents'.
 	 */
 	public static final SystemMessageId YOUR_CLAN_FAILED_TO_DEFEND_CASTLE_AND_S1_POINTS_LOST_AND_ADDED_TO_OPPONENT;
 	
 	/**
 	 * ID: 1785<br>
-	 * Message: 所属血盟が保有している城が初期化され$s1ポイントを失いました。
+	 * Message: 所属血盟が保有している城が初期化され$s1ポイントを失いました。<br>
+	 * Message: The clan you belong to has been initialized. $s1 points have been deducted from your clan reputation score.
 	 */
 	public static final SystemMessageId YOUR_CLAN_HAS_BEEN_INITIALIZED_AND_S1_POINTS_LOST;
 	
 	/**
 	 * ID: 1786<br>
-	 * Message: 所属している血盟が守城に失敗し血盟名声値$s1ポイントを失いました。
+	 * Message: 所属している血盟が守城に失敗し血盟名声値$s1ポイントを失いました。<br>
+	 * Message: Your clan has failed to defend the castle. $s1 points have been deducted from your clan's reputation score.
 	 */
 	public static final SystemMessageId YOUR_CLAN_FAILED_TO_DEFEND_CASTLE_AND_S1_POINTS_LOST;
 	
 	/**
 	 * ID: 1787<br>
-	 * Message: 血盟名声値$s1ポイントが消耗されました。
+	 * Message: 血盟名声値$s1ポイントが消耗されました。<br>
+	 * Message: $s1 points have been deducted from the clan's reputation score.
 	 */
 	public static final SystemMessageId S1_DEDUCTED_FROM_CLAN_REP;
 	
 	/**
 	 * ID: 1788<br>
-	 * Message: 血盟スキル$s1を手に入れました。
+	 * Message: 血盟スキル$s1を手に入れました。<br>
+	 * Message: The clan skill $s1 has been added.
 	 */
 	public static final SystemMessageId CLAN_SKILL_S1_ADDED;
 	
 	/**
 	 * ID: 1789<br>
-	 * Message: 血盟名声値が0以下になったので、血盟スキルが非アクティブ化します。
+	 * Message: 血盟名声値が0以下になったので、血盟スキルが非アクティブ化します。<br>
+	 * Message: Since the Clan Reputation Score has dropped to 0 or lower, your clan skill(s) will be de-activated.
 	 */
 	public static final SystemMessageId REPUTATION_POINTS_0_OR_LOWER_CLAN_SKILLS_DEACTIVATED;
 	
 	/**
 	 * ID: 1790<br>
-	 * Message: 条件に満たないため、血盟のレベル アップはできません。
+	 * Message: 条件に満たないため、血盟のレベル アップはできません。<br>
+	 * Message: The conditions necessary to increase the clan's level have not been met.
 	 */
 	public static final SystemMessageId FAILED_TO_INCREASE_CLAN_LEVEL;
 	
 	/**
 	 * ID: 1791<br>
-	 * Message: 条件に満たないため、単位部隊の創設ができません。
+	 * Message: 条件に満たないため、単位部隊の創設ができません。<br>
+	 * Message: The conditions necessary to create a military unit have not been met.
 	 */
 	public static final SystemMessageId YOU_DO_NOT_MEET_CRITERIA_IN_ORDER_TO_CREATE_A_MILITARY_UNIT;
 	
 	/**
 	 * ID: 1792<br>
-	 * Message: 創設する騎士団の管理者を指定してください。
+	 * Message: 創設する騎士団の管理者を指定してください。<br>
+	 * Message: Please assign a manager for your new Order of Knights.
 	 */
 	public static final SystemMessageId ASSIGN_MANAGER_FOR_ORDER_OF_KNIGHTS;
 	
 	/**
 	 * ID: 1793<br>
-	 * Message: $c1 が$s2の団長に任命されました。
+	 * Message: $c1 が$s2の団長に任命されました。<br>
+	 * Message: $c1 has been selected as the captain of $s2.
 	 */
 	public static final SystemMessageId C1_HAS_BEEN_SELECTED_AS_CAPTAIN_OF_S2;
 	
 	/**
 	 * ID: 1794<br>
-	 * Message: $s1騎士団が創設されました。
+	 * Message: $s1騎士団が創設されました。<br>
+	 * Message: The Knights of $s1 have been created.
 	 */
 	public static final SystemMessageId THE_KNIGHTS_OF_S1_HAVE_BEEN_CREATED;
 	
 	/**
 	 * ID: 1795<br>
-	 * Message: $s1近衛隊が創設されました。
+	 * Message: $s1近衛隊が創設されました。<br>
+	 * Message: The Royal Guard of $s1 have been created.
 	 */
 	public static final SystemMessageId THE_ROYAL_GUARD_OF_S1_HAVE_BEEN_CREATED;
 	
 	/**
 	 * ID: 1796<br>
-	 * Message: お客様のアカウントは、不正アカウント盗用や他人に被害を与えるゲーム プレイなどが認められたため、一時的にご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートに直接お問い合わせください。
+	 * Message: お客様のアカウントは、不正アカウント盗用や他人に被害を与えるゲーム プレイなどが認められたため、一時的にご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートに直接お問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE17;
 	
 	/**
 	 * ID: 1797<br>
-	 * Message: $c1のレベルが$s2に指定されました。
+	 * Message: $c1のレベルが$s2に指定されました。<br>
+	 * Message: $c1 has been promoted to $s2.
 	 */
 	public static final SystemMessageId C1_PROMOTED_TO_S2;
 	
 	/**
 	 * ID: 1798<br>
-	 * Message: 血盟主の権限を$c1 に委譲しました。
+	 * Message: 血盟主の権限を$c1 に委譲しました。<br>
+	 * Message: Clan lord privileges have been transferred to $c1.
 	 */
 	public static final SystemMessageId CLAN_LEADER_PRIVILEGES_HAVE_BEEN_TRANSFERRED_TO_C1;
 	
 	/**
 	 * ID: 1799<br>
-	 * Message: 以前のBOT使用者をチェック中です。しばらくしてからお使いください。
+	 * Message: 以前のBOT使用者をチェック中です。しばらくしてからお使いください。<br>
+	 * Message: We are searching for BOT users. Please try again later.
 	 */
 	public static final SystemMessageId SEARCHING_FOR_BOT_USERS_TRY_AGAIN_LATER;
 	
 	/**
 	 * ID: 1800<br>
-	 * Message: ユーザー$c1 はBOT使用歴があります。
+	 * Message: ユーザー$c1 はBOT使用歴があります。<br>
+	 * Message: User $c1 has a history of using BOT.
 	 */
 	public static final SystemMessageId C1_HISTORY_USING_BOT;
 	
 	/**
 	 * ID: 1801<br>
-	 * Message: 販売できませんでした。
+	 * Message: 販売できませんでした。<br>
+	 * Message: The attempt to sell has failed.
 	 */
 	public static final SystemMessageId SELL_ATTEMPT_FAILED;
 	
 	/**
 	 * ID: 1802<br>
-	 * Message: 取引に失敗しました。
+	 * Message: 取引に失敗しました。<br>
+	 * Message: The attempt to trade has failed.
 	 */
 	public static final SystemMessageId TRADE_ATTEMPT_FAILED;
 	
 	/**
 	 * ID: 1803<br>
-	 * Message: 試合締め切り10分前からは参加申し込みができません。
+	 * Message: 試合締め切り10分前からは参加申し込みができません。<br>
+	 * Message: The request to participate in the game cannot be made starting from 10 minutes before the end of the game.
 	 */
 	public static final SystemMessageId GAME_REQUEST_CANNOT_BE_MADE;
 	
 	/**
 	 * ID: 1804<br>
-	 * Message: お客様のアカウントは、現金、アカウント取引などの行為が認められたため、7日間、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、現金、アカウント取引などの行為が認められたため、7日間、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE18;
 	
 	/**
 	 * ID: 1805<br>
-	 * Message: お客様のアカウントは、現金、アカウント取引などの行為が2度認められたため、30日間、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、現金、アカウント取引などの行為が2度認められたため、30日間、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE19;
 	
 	/**
 	 * ID: 1806<br>
-	 * Message: お客様のアカウントは、現金、アカウント取引などの行為が3度以上認められたため、無期限でご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、現金、アカウント取引などの行為が3度以上認められたため、無期限でご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE20;
 	
 	/**
 	 * ID: 1807<br>
-	 * Message: お客様のアカウントは、現金取引の事実が認められたため、30日間、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、現金取引の事実が認められたため、30日間、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE21;
 	
 	/**
 	 * ID: 1808<br>
-	 * Message: お客様のアカウントは、現金、アカウント取引などの行為が2度認められたため、無期限でご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、現金、アカウント取引などの行為が2度認められたため、無期限でご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE22;
 	
 	/**
 	 * ID: 1809<br>
-	 * Message: お客様のアカウントは、ご本人様確認の手続きが必要です。リネージュII 公式サイト（http://lineage2.plaync.jp/）より手続きを行ってください。
+	 * Message: お客様のアカウントは、ご本人様確認の手続きが必要です。リネージュII 公式サイト（http://lineage2.plaync.jp/）より手続きを行ってください。<br>
+	 * Message: Your account must be verified. For information on verification procedures, please visit the PlayNC website (http://us.ncsoft.com/support/).
 	 */
 	public static final SystemMessageId ACCOUNT_MUST_VERIFIED;
 	
 	/**
 	 * ID: 1810<br>
-	 * Message: 招待拒否状態になりました。
+	 * Message: 招待拒否状態になりました。<br>
+	 * Message: The refuse invitation state has been activated.
 	 */
 	public static final SystemMessageId REFUSE_INVITATION_ACTIVATED;
 	
 	/**
 	 * ID: 1812<br>
-	 * Message: 現在、招待拒否状態なので招待できません。
+	 * Message: 現在、招待拒否状態なので招待できません。<br>
+	 * Message: Since the refuse invitation state is currently activated, no invitation can be made
 	 */
 	public static final SystemMessageId REFUSE_INVITATION_CURRENTLY_ACTIVE;
 	
 	/**
 	 * ID: 1813<br>
-	 * Message: $s1の使用可能時間は残り$s2時間です。
+	 * Message: $s1の使用可能時間は残り$s2時間です。<br>
+	 * Message: $s1 has $s2 hour(s) of usage time remaining.
 	 */
 	public static final SystemMessageId THERE_IS_S1_HOUR_AND_S2_MINUTE_LEFT_OF_THE_FIXED_USAGE_TIME;
 	
 	/**
 	 * ID: 1814<br>
-	 * Message: $s1の使用可能時間は残り$s2分です。
+	 * Message: $s1の使用可能時間は残り$s2分です。<br>
+	 * Message: $s1 has $s2 minute(s) of usage time remaining.
 	 */
 	public static final SystemMessageId S2_MINUTE_OF_USAGE_TIME_ARE_LEFT_FOR_S1;
 	
 	/**
 	 * ID: 1815<br>
-	 * Message: $s1エリアに$s2が落ちました。
+	 * Message: $s1エリアに$s2が落ちました。<br>
+	 * Message: $s2 was dropped in the $s1 region.
 	 */
 	public static final SystemMessageId S2_WAS_DROPPED_IN_THE_S1_REGION;
 	
 	/**
 	 * ID: 1816<br>
-	 * Message: $s1エリアに$s2の所有者が現れました。
+	 * Message: $s1エリアに$s2の所有者が現れました。<br>
+	 * Message: The owner of $s2 has appeared in the $s1 region.
 	 */
 	public static final SystemMessageId THE_OWNER_OF_S2_HAS_APPEARED_IN_THE_S1_REGION;
 	
 	/**
 	 * ID: 1817<br>
-	 * Message: $s1エリアに$s2の所有者がログインしました。
+	 * Message: $s1エリアに$s2の所有者がログインしました。<br>
+	 * Message: $s2's owner has logged into the $s1 region.
 	 */
 	public static final SystemMessageId S2_OWNER_HAS_LOGGED_INTO_THE_S1_REGION;
 	
 	/**
 	 * ID: 1818<br>
-	 * Message: $s1が消滅しました。
+	 * Message: $s1が消滅しました。<br>
+	 * Message: $s1 has disappeared.
 	 */
 	public static final SystemMessageId S1_HAS_DISAPPEARED;
 	
 	/**
 	 * ID: 1819<br>
-	 * Message: $s1エリアにいる何者かから$s2の邪悪な気配を感じます。
+	 * Message: $s1エリアにいる何者かから$s2の邪悪な気配を感じます。<br>
+	 * Message: An evil is pulsating from $s2 in $s1.
 	 */
 	public static final SystemMessageId EVIL_FROM_S2_IN_S1;
 	
 	/**
 	 * ID: 1820<br>
-	 * Message: $s1は現在眠っています。
+	 * Message: $s1は現在眠っています。<br>
+	 * Message: $s1 is currently asleep.
 	 */
 	public static final SystemMessageId S1_CURRENTLY_SLEEP;
 	
 	/**
 	 * ID: 1821<br>
-	 * Message: $s1エリアで$s2の邪悪な気配を感じます。
+	 * Message: $s1エリアで$s2の邪悪な気配を感じます。<br>
+	 * Message: $s2's evil presence is felt in $s1.
 	 */
 	public static final SystemMessageId S2_EVIL_PRESENCE_FELT_IN_S1;
 	
 	/**
 	 * ID: 1822<br>
-	 * Message: $s1は封印されています。
+	 * Message: $s1は封印されています。<br>
+	 * Message: $s1 has been sealed.
 	 */
 	public static final SystemMessageId S1_SEALED;
 	
 	/**
 	 * ID: 1823<br>
-	 * Message: アジト戦登録は締め切られました。
+	 * Message: アジト戦登録は締め切られました。<br>
+	 * Message: The registration period for a clan hall war has ended.
 	 */
 	public static final SystemMessageId CLANHALL_WAR_REGISTRATION_PERIOD_ENDED;
 	
 	/**
 	 * ID: 1824<br>
-	 * Message: アジト戦に登録しました。アジトの東にある競技場へ移動し、準備してください。
+	 * Message: アジト戦に登録しました。アジトの東にある競技場へ移動し、準備してください。<br>
+	 * Message: You have been registered for a clan hall war. Please move to the left side of the clan hall's arena and get ready.
 	 */
 	public static final SystemMessageId REGISTERED_FOR_CLANHALL_WAR;
 	
 	/**
 	 * ID: 1825<br>
-	 * Message: アジト戦に登録できませんでした。次の機会にお越しください。
+	 * Message: アジト戦に登録できませんでした。次の機会にお越しください。<br>
+	 * Message: You have failed in your attempt to register for the clan hall war. Please try again.
 	 */
 	public static final SystemMessageId CLANHALL_WAR_REGISTRATION_FAILED;
 	
 	/**
 	 * ID: 1826<br>
-	 * Message: 開始まであと$s1分です。参加者は急いでアジトの東にある競技場に移動してください。
+	 * Message: 開始まであと$s1分です。参加者は急いでアジトの東にある競技場に移動してください。<br>
+	 * Message: In $s1 minute(s), the game will begin. All players must hurry and move to the left side of the clan hall's arena.
 	 */
 	public static final SystemMessageId CLANHALL_WAR_BEGINS_IN_S1_MINUTES;
 	
 	/**
 	 * ID: 1827<br>
-	 * Message: 開始まであと$s1分です。参加者は競技場の中に入ってください。
+	 * Message: 開始まであと$s1分です。参加者は競技場の中に入ってください。<br>
+	 * Message: In $s1 minute(s), the game will begin. All players must, please enter the arena now
 	 */
 	public static final SystemMessageId CLANHALL_WAR_BEGINS_IN_S1_MINUTES_ENTER_NOW;
 	
 	/**
 	 * ID: 1828<br>
-	 * Message: 開始まであと$s1秒です。
+	 * Message: 開始まであと$s1秒です。<br>
+	 * Message: In $s1 seconds(s), the game will begin.
 	 */
 	public static final SystemMessageId CLANHALL_WAR_BEGINS_IN_S1_SECONDS;
 	
 	/**
 	 * ID: 1829<br>
-	 * Message: 連合の最大パーティ数を越えたので、新しいパーティを加えられません。
+	 * Message: 連合の最大パーティ数を越えたので、新しいパーティを加えられません。<br>
+	 * Message: The Command Channel is full.
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_FULL;
 	
 	/**
 	 * ID: 1830<br>
-	 * Message: $c1 をパーティ ルームへ招待できません。待機者リストを更新してください。
+	 * Message: $c1 をパーティ ルームへ招待できません。待機者リストを更新してください。<br>
+	 * Message: $c1 is not allowed to use the party room invite command. Please update the waiting list.
 	 */
 	public static final SystemMessageId C1_NOT_ALLOWED_INVITE_TO_PARTY_ROOM;
 	
 	/**
 	 * ID: 1831<br>
-	 * Message: $c1 はパーティ ルームの条件に合いません。待機者リストを更新してください。
+	 * Message: $c1 はパーティ ルームの条件に合いません。待機者リストを更新してください。<br>
+	 * Message: $c1 does not meet the conditions of the party room. Please update the waiting list.
 	 */
 	public static final SystemMessageId C1_NOT_MEET_CONDITIONS_FOR_PARTY_ROOM;
 	
 	/**
 	 * ID: 1832<br>
-	 * Message: パーティ ルームへはルームリーダーのみ招待できます。
+	 * Message: パーティ ルームへはルームリーダーのみ招待できます。<br>
+	 * Message: Only a room leader may invite others to a party room.
 	 */
 	public static final SystemMessageId ONLY_ROOM_LEADER_CAN_INVITE;
 	
 	/**
 	 * ID: 1833<br>
-	 * Message: $s1を全部捨てます。よろしいですか。
+	 * Message: $s1を全部捨てます。よろしいですか。<br>
+	 * Message: All of $s1 will be dropped. Would you like to continue?
 	 */
 	public static final SystemMessageId CONFIRM_DROP_ALL_OF_S1;
 	
 	/**
 	 * ID: 1834<br>
-	 * Message: パーティ ルームの定員が満員のため、これ以上招待できません。
+	 * Message: パーティ ルームの定員が満員のため、これ以上招待できません。<br>
+	 * Message: The party room is full. No more characters can be invitet in
 	 */
 	public static final SystemMessageId PARTY_ROOM_FULL;
 	
 	/**
 	 * ID: 1835<br>
-	 * Message: $s1の定員が満員のため、新たな血盟員を加入させることはできません。
+	 * Message: $s1の定員が満員のため、新たな血盟員を加入させることはできません。<br>
+	 * Message: $s1 is full and cannot accept additional clan members at this time.
 	 */
 	public static final SystemMessageId S1_CLAN_IS_FULL;
 	
 	/**
 	 * ID: 1836<br>
-	 * Message: 2次転職を終えているので血盟アカデミーの加入条件に合いません。
+	 * Message: 2次転職を終えているので血盟アカデミーの加入条件に合いません。<br>
+	 * Message: You cannot join a Clan Academy because you have successfully completed your 2nd class transfer.
 	 */
 	public static final SystemMessageId CANNOT_JOIN_ACADEMY_AFTER_2ND_OCCUPATION;
 	
 	/**
 	 * ID: 1837<br>
-	 * Message: $c1 が$s2血盟所属の$s3近衛隊への加入を勧めています。加入しますか。
+	 * Message: $c1 が$s2血盟所属の$s3近衛隊への加入を勧めています。加入しますか。<br>
+	 * Message: $c1 has sent you an invitation to join the $s3 Royal Guard under the $s2 clan. Would you like to join?
 	 */
 	public static final SystemMessageId C1_SENT_INVITATION_TO_ROYAL_GUARD_S3_OF_CLAN_S2;
 	
 	/**
 	 * ID: 1838<br>
-	 * Message: 1. クーポンはキャラクターあたり1枚のみ使用できます。
+	 * Message: 1. クーポンはキャラクターあたり1枚のみ使用できます。<br>
+	 * Message: 1. The coupon an be used once per character.
 	 */
 	public static final SystemMessageId COUPON_ONCE_PER_CHARACTER;
 	
 	/**
 	 * ID: 1839<br>
-	 * Message: 2. 使用済みのシリアル番号は再び使用できません。
+	 * Message: 2. 使用済みのシリアル番号は再び使用できません。<br>
+	 * Message: 2. A used serial number may not be used again.
 	 */
 	public static final SystemMessageId SERIAL_MAY_USED_ONCE;
 	
 	/**
 	 * ID: 1840<br>
-	 * Message: 3. シリアル番号の入力を5回以上間違えた場合、一定時間\n 経過後に再度入力を試みてください。
+	 * Message: 3. シリアル番号の入力を5回以上間違えた場合、一定時間\n 経過後に再度入力を試みてください。<br>
+	 * Message: 3. If you enter the incorrect serial number more than 5 times, you may use it again after a certain amount of time passes.
 	 */
 	public static final SystemMessageId SERIAL_INPUT_INCORRECT;
 	
 	/**
 	 * ID: 1841<br>
-	 * Message: 参加申し込みの血盟数が足りないため、アジト戦はキャンセルされました。
+	 * Message: 参加申し込みの血盟数が足りないため、アジト戦はキャンセルされました。<br>
+	 * Message: The clan hall war has been cancelled. Not enough clans have registered.
 	 */
 	public static final SystemMessageId CLANHALL_WAR_CANCELLED;
 	
 	/**
 	 * ID: 1842<br>
-	 * Message: $c1 が$s2から召喚を申し込みました。召喚に応じますか。
+	 * Message: $c1 が$s2から召喚を申し込みました。召喚に応じますか。<br>
+	 * Message: $c1 wishes to summon you from $s2. Do you accept?
 	 */
 	public static final SystemMessageId C1_WISHES_TO_SUMMON_YOU_FROM_S2_DO_YOU_ACCEPT;
 	
 	/**
 	 * ID: 1843<br>
-	 * Message: $c1 は戦闘中のため召喚できません。
+	 * Message: $c1 は戦闘中のため召喚できません。<br>
+	 * Message: $c1 is engaged in combat and cannot be summoned.
 	 */
 	public static final SystemMessageId C1_IS_ENGAGED_IN_COMBAT_AND_CANNOT_BE_SUMMONED;
 	
 	/**
 	 * ID: 1844<br>
-	 * Message: $c1 は現在死亡状態のため召喚できません。
+	 * Message: $c1 は現在死亡状態のため召喚できません。<br>
+	 * Message: $c1 is dead at the moment and cannot be summoned.
 	 */
 	public static final SystemMessageId C1_IS_DEAD_AT_THE_MOMENT_AND_CANNOT_BE_SUMMONED;
 	
 	/**
 	 * ID: 1845<br>
-	 * Message: 英雄用武器は破壊できません。
+	 * Message: 英雄用武器は破壊できません。<br>
+	 * Message: Hero weapons cannot be destroyed.
 	 */
 	public static final SystemMessageId HERO_WEAPONS_CANT_DESTROYED;
 	
 	/**
 	 * ID: 1846<br>
-	 * Message: 乗り物との距離が離れ過ぎているので、搭乗できません。
+	 * Message: 乗り物との距離が離れ過ぎているので、搭乗できません。<br>
+	 * Message: You are too far away from the Fenrir to mount it.
 	 */
 	public static final SystemMessageId TOO_FAR_AWAY_FROM_FENRIR_TO_MOUNT;
 	
 	/**
 	 * ID: 1847<br>
-	 * Message: 長さ$s1の魚が釣れました。
+	 * Message: 長さ$s1の魚が釣れました。<br>
+	 * Message: You caught a fish $s1 in length.
 	 */
 	public static final SystemMessageId CAUGHT_FISH_S1_LENGTH;
 	
 	/**
 	 * ID: 1848<br>
-	 * Message: 大物を釣ったのでランキングに登録されました。
+	 * Message: 大物を釣ったのでランキングに登録されました。<br>
+	 * Message: Because of the size of fish caught, you will be registered in the ranking
 	 */
 	public static final SystemMessageId REGISTERED_IN_FISH_SIZE_RANKING;
 	
 	/**
 	 * ID: 1849<br>
-	 * Message: $s1を全部捨てます。よろしいですか。
+	 * Message: $s1を全部捨てます。よろしいですか。<br>
+	 * Message: All of $s1 will be discarded. Would you like to continue?
 	 */
 	public static final SystemMessageId CONFIRM_DISCARD_ALL_OF_S1;
 	
 	/**
 	 * ID: 1850<br>
-	 * Message: 騎士団長に任命できません。
+	 * Message: 騎士団長に任命できません。<br>
+	 * Message: The Captain of the Order of Knights cannot be appointed.
 	 */
 	public static final SystemMessageId CAPTAIN_OF_ORDER_OF_KNIGHTS_CANNOT_BE_APPOINTED;
 	
 	/**
 	 * ID: 1851<br>
-	 * Message: 近衛隊長に任命できません。
+	 * Message: 近衛隊長に任命できません。<br>
+	 * Message: The Captain of the Royal Guard cannot be appointed.
 	 */
 	public static final SystemMessageId CAPTAIN_OF_ROYAL_GUARD_CANNOT_BE_APPOINTED;
 	
 	/**
 	 * ID: 1852<br>
-	 * Message: 血盟名声値が足りないのでスキルを習得できませんでした。
+	 * Message: 血盟名声値が足りないのでスキルを習得できませんでした。<br>
+	 * Message: The attempt to acquire the skill has failed because of an insufficient Clan Reputation Score.
 	 */
 	public static final SystemMessageId ACQUIRE_SKILL_FAILED_BAD_CLAN_REP_SCORE;
 	
 	/**
 	 * ID: 1853<br>
-	 * Message: 同じ種類の数量性アイテムを同時にトレードできません。
+	 * Message: 同じ種類の数量性アイテムを同時にトレードできません。<br>
+	 * Message: Quantity items of the same type cannot be exchanged at the same time
 	 */
 	public static final SystemMessageId CANT_EXCHANGE_QUANTITY_ITEMS_OF_SAME_TYPE;
 	
 	/**
 	 * ID: 1854<br>
-	 * Message: アイテム変換に成功しました。
+	 * Message: アイテム変換に成功しました。<br>
+	 * Message: The item was converted successfully.
 	 */
 	public static final SystemMessageId ITEM_CONVERTED_SUCCESSFULLY;
 	
 	/**
 	 * ID: 1855<br>
-	 * Message: 他の部隊と名称が重複します。別の名前を入力してください。
+	 * Message: 他の部隊と名称が重複します。別の名前を入力してください。<br>
+	 * Message: Another military unit is already using that name. Please enter a different name.
 	 */
 	public static final SystemMessageId ANOTHER_MILITARY_UNIT_IS_ALREADY_USING_THAT_NAME;
 	
 	/**
 	 * ID: 1856<br>
-	 * Message: 相手が$s1の所有者になったので、オリンピアードがキャンセルされました。
+	 * Message: 相手が$s1の所有者になったので、オリンピアードがキャンセルされました。<br>
+	 * Message: Since your opponent is now the owner of $s1, the Olympiad has been cancelled.
 	 */
 	public static final SystemMessageId OPPONENT_POSSESSES_S1_OLYMPIAD_CANCELLED;
 	
 	/**
 	 * ID: 1857<br>
-	 * Message: $c1 は$s2の所有者になっているため、オリンピアードに参加できません。
+	 * Message: $c1 は$s2の所有者になっているため、オリンピアードに参加できません。<br>
+	 * Message: $c1 is the owner of $s2 and cannot participate in the Olympiad.
 	 */
 	public static final SystemMessageId C1_OWNS_S2_AND_CANNOT_PARTICIPATE_IN_OLYMPIAD;
 	
 	/**
 	 * ID: 1858<br>
-	 * Message: $c1 は死亡状態であるため、オリンピアードに参加できません。
+	 * Message: $c1 は死亡状態であるため、オリンピアードに参加できません。<br>
+	 * Message: $c1 is currently dead and cannot participate in the Olympiad.
 	 */
 	public static final SystemMessageId C1_CANNOT_PARTICIPATE_OLYMPIAD_WHILE_DEAD;
 	
 	/**
 	 * ID: 1859<br>
-	 * Message: 一度に移動可能な数量を超えました。
+	 * Message: 一度に移動可能な数量を超えました。<br>
+	 * Message: You exceeded the quantity that can be moved at one time.
 	 */
 	public static final SystemMessageId EXCEEDED_QUANTITY_FOR_MOVED;
 	
 	/**
 	 * ID: 1860<br>
-	 * Message: 血盟名声値が足りません。
+	 * Message: 血盟名声値が足りません。<br>
+	 * Message: The Clan Reputation Score is too low.
 	 */
 	public static final SystemMessageId THE_CLAN_REPUTATION_SCORE_IS_TOO_LOW;
 	
 	/**
 	 * ID: 1861<br>
-	 * Message: 血盟エンサインを削除しました。
+	 * Message: 血盟エンサインを削除しました。<br>
+	 * Message: The clan's crest has been deleted.
 	 */
 	public static final SystemMessageId CLAN_CREST_HAS_BEEN_DELETED;
 	
 	/**
 	 * ID: 1862<br>
-	 * Message: 血盟名声値が0以上になったので血盟スキルがアクティブ化します。
+	 * Message: 血盟名声値が0以上になったので血盟スキルがアクティブ化します。<br>
+	 * Message: Clan skills will now be activated since the clan's reputation score is 0 or higher.
 	 */
 	public static final SystemMessageId CLAN_SKILLS_WILL_BE_ACTIVATED_SINCE_REPUTATION_IS_0_OR_HIGHER;
 	
 	/**
 	 * ID: 1863<br>
-	 * Message: $c1 がアイテムを購入したので、血盟名声値が$s2差し引かれます。
+	 * Message: $c1 がアイテムを購入したので、血盟名声値が$s2差し引かれます。<br>
+	 * Message: $c1 purchased a clan item, reducing the Clan Reputation by $s2 points.
 	 */
 	public static final SystemMessageId C1_PURCHASED_CLAN_ITEM_REDUCING_S2_REPU_POINTS;
 	
 	/**
 	 * ID: 1864<br>
-	 * Message: ペットまたは召喚獣が異常状態になり、命令を聞きません。
+	 * Message: ペットまたは召喚獣が異常状態になり、命令を聞きません。<br>
+	 * Message: Your pet/servitor is unresponsive and will not obey any orders.
 	 */
 	public static final SystemMessageId PET_REFUSING_ORDER;
 	
 	/**
 	 * ID: 1865<br>
-	 * Message: ペットまたは召喚獣が異常状態です。
+	 * Message: ペットまたは召喚獣が異常状態です。<br>
+	 * Message: Your pet/servitor is currently in a state of distress.
 	 */
 	public static final SystemMessageId PET_IN_STATE_OF_DISTRESS;
 	
 	/**
 	 * ID: 1866<br>
-	 * Message: $s1のMPが消えました。
+	 * Message: $s1のMPが消えました。<br>
+	 * Message: MP was reduced by $s1.
 	 */
 	public static final SystemMessageId MP_REDUCED_BY_S1;
 	
 	/**
 	 * ID: 1867<br>
-	 * Message: 相手のMP $s1ほどを消しました。
+	 * Message: 相手のMP $s1ほどを消しました。<br>
+	 * Message: Your opponent's MP was reduced by $s1.
 	 */
 	public static final SystemMessageId YOUR_OPPONENTS_MP_WAS_REDUCED_BY_S1;
 	
 	/**
 	 * ID: 1868<br>
-	 * Message: アイテム使用中はトレードできません。
+	 * Message: アイテム使用中はトレードできません。<br>
+	 * Message: You cannot exchange an item while it is being used.
 	 */
 	public static final SystemMessageId CANNOT_EXCHANCE_USED_ITEM;
 	
 	/**
 	 * ID: 1869<br>
-	 * Message: $c1が指揮する連合のマスター パーティに、アイテム分配の権限が与えられました。
+	 * Message: $c1が指揮する連合のマスター パーティに、アイテム分配の権限が与えられました。<br>
+	 * Message: $c1 has granted the Command Channel's master party the privilege of item looting.
 	 */
 	public static final SystemMessageId C1_GRANTED_MASTER_PARTY_LOOTING_RIGHTS;
 	
 	/**
 	 * ID: 1870<br>
-	 * Message: すでにアイテム分配の権限が与えられた連合チャンネルが存在します。
+	 * Message: すでにアイテム分配の権限が与えられた連合チャンネルが存在します。<br>
+	 * Message: A Command Channel with looting rights already exists.
 	 */
 	public static final SystemMessageId COMMAND_CHANNEL_WITH_LOOTING_RIGHTS_EXISTS;
 	
 	/**
 	 * ID: 1871<br>
-	 * Message: $c1を血盟から除名しますか。
+	 * Message: $c1を血盟から除名しますか。<br>
+	 * Message: Do you want to dismiss $c1 from the clan?
 	 */
 	public static final SystemMessageId CONFIRM_DISMISS_C1_FROM_CLAN;
 	
 	/**
 	 * ID: 1872<br>
-	 * Message: 個人ユーザーの残り時間はあと$s1時間 $s2分です。
+	 * Message: 個人ユーザーの残り時間はあと$s1時間 $s2分です。<br>
+	 * Message: You have $s1 hour(s) and $s2 minute(s) left.
 	 */
 	public static final SystemMessageId S1_HOURS_S2_MINUTES_LEFT;
 	
 	/**
 	 * ID: 1873<br>
-	 * Message: ネットカフェ定量の残り時間はあと$s1時間 $s2分です。
+	 * Message: ネットカフェ定量の残り時間はあと$s1時間 $s2分です。<br>
+	 * Message: There are $s1 hour(s) and $s2 minute(s) left in the fixed use time for this PC Cafe.
 	 */
 	public static final SystemMessageId S1_HOURS_S2_MINUTES_LEFT_FOR_THIS_PCCAFE;
 	
 	/**
 	 * ID: 1874<br>
-	 * Message: 個人ユーザーの残り時間はあと$s1分です。
+	 * Message: 個人ユーザーの残り時間はあと$s1分です。<br>
+	 * Message: There are $s1 minute(s) left for this individual user.
 	 */
 	public static final SystemMessageId S1_MINUTES_LEFT_FOR_THIS_USER;
 	
 	/**
 	 * ID: 1875<br>
-	 * Message: ネットカフェ定量の残り時間はあと$s1分です。
+	 * Message: ネットカフェ定量の残り時間はあと$s1分です。<br>
+	 * Message: There are $s1 minute(s) left in the fixed use time for this PC Cafe.
 	 */
 	public static final SystemMessageId S1_MINUTES_LEFT_FOR_THIS_PCCAFE;
 	
 	/**
 	 * ID: 1876<br>
-	 * Message: $s1血盟から脱退しますか。
+	 * Message: $s1血盟から脱退しますか。<br>
+	 * Message: Do you want to leave $s1 clan?
 	 */
 	public static final SystemMessageId CONFIRM_LEAVE_S1_CLAN;
 	
 	/**
 	 * ID: 1877<br>
-	 * Message: 終了まであと$s1分です。
+	 * Message: 終了まであと$s1分です。<br>
+	 * Message: The game will end in $s1 minutes.
 	 */
 	public static final SystemMessageId GAME_WILL_END_IN_S1_MINUTES;
 	
 	/**
 	 * ID: 1878<br>
-	 * Message: 終了まであと$s1秒です。
+	 * Message: 終了まであと$s1秒です。<br>
+	 * Message: The game will end in $s1 seconds.
 	 */
 	public static final SystemMessageId GAME_WILL_END_IN_S1_SECONDS;
 	
 	/**
 	 * ID: 1879<br>
-	 * Message: $s1分後、競技場の外にテレポートします。
+	 * Message: $s1分後、競技場の外にテレポートします。<br>
+	 * Message: In $s1 minute(s), you will be teleported outside of the game arena.
 	 */
 	public static final SystemMessageId IN_S1_MINUTES_TELEPORTED_OUTSIDE_OF_GAME_ARENA;
 	
 	/**
 	 * ID: 1880<br>
-	 * Message: $s1秒後、競技場の外にテレポートします。
+	 * Message: $s1秒後、競技場の外にテレポートします。<br>
+	 * Message: In $s1 seconds(s), you will be teleported outside of the game arena.
 	 */
 	public static final SystemMessageId IN_S1_SECONDS_TELEPORTED_OUTSIDE_OF_GAME_ARENA;
 	
 	/**
 	 * ID: 1881<br>
-	 * Message: $s1秒後に予選がスタートします。準備してください。
+	 * Message: $s1秒後に予選がスタートします。準備してください。<br>
+	 * Message: The preliminary match will begin in $s1 second(s). Prepare yourself.
 	 */
 	public static final SystemMessageId PRELIMINARY_MATCH_BEGIN_IN_S1_SECONDS;
 	
 	/**
 	 * ID: 1882<br>
-	 * Message: 現在このサーバーにはキャラクターを生成できません。
+	 * Message: 現在このサーバーにはキャラクターを生成できません。<br>
+	 * Message: Characters cannot be created from this server.
 	 */
 	public static final SystemMessageId CHARACTERS_NOT_CREATED_FROM_THIS_SERVER;
 	
 	/**
 	 * ID: 1883<br>
-	 * Message: 所有もしくは入札したものがありません。
+	 * Message: 所有もしくは入札したものがありません。<br>
+	 * Message: There are no offerings I own or I made a bid for.
 	 */
 	public static final SystemMessageId NO_OFFERINGS_OWN_OR_MADE_BID_FOR;
 	
 	/**
 	 * ID: 1884<br>
-	 * Message: ネットカフェ クーポンのシリアル番号を入力してください。
+	 * Message: ネットカフェ クーポンのシリアル番号を入力してください。<br>
+	 * Message: Enter the PC Room coupon serial number.
 	 */
 	public static final SystemMessageId ENTER_PCROOM_SERIAL_NUMBER;
 	
 	/**
 	 * ID: 1885<br>
-	 * Message: シリアル番号を入力できません。$s1分後に再度試みてください。
+	 * Message: シリアル番号を入力できません。$s1分後に再度試みてください。<br>
+	 * Message: This serial number cannot be entered. Please try again in minute(s).
 	 */
 	public static final SystemMessageId SERIAL_NUMBER_CANT_ENTERED;
 	
 	/**
 	 * ID: 1886<br>
-	 * Message: すでに使用されたシリアル番号です。
+	 * Message: すでに使用されたシリアル番号です。<br>
+	 * Message: This serial has already been used.
 	 */
 	public static final SystemMessageId SERIAL_NUMBER_ALREADY_USED;
 	
 	/**
 	 * ID: 1887<br>
-	 * Message: シリアル番号が正しくありません。$s1回入力に失敗したので、あと$s2回のチャンスがあります。
+	 * Message: シリアル番号が正しくありません。$s1回入力に失敗したので、あと$s2回のチャンスがあります。<br>
+	 * Message: Invalid serial number. Your attempt to enter the number has failed time(s). You will be allowed to make more attempt(s).
 	 */
 	public static final SystemMessageId SERIAL_NUMBER_ENTERING_FAILED;
 	
 	/**
 	 * ID: 1888<br>
-	 * Message: シリアル番号が正しくありません。5回入力に失敗しました。4時間後に再度試みてください。
+	 * Message: シリアル番号が正しくありません。5回入力に失敗しました。4時間後に再度試みてください。<br>
+	 * Message: Invalid serial number. Your attempt to enter the number has failed 5 time(s). Please try again in 4 hours.
 	 */
 	public static final SystemMessageId SERIAL_NUMBER_ENTERING_FAILED_5_TIMES;
 	
 	/**
 	 * ID: 1889<br>
-	 * Message: おめでとうございます。$s1を受け取りました。
+	 * Message: おめでとうございます。$s1を受け取りました。<br>
+	 * Message: Congratulations! You have received $s1.
 	 */
 	public static final SystemMessageId CONGRATULATIONS_RECEIVED_S1;
 	
 	/**
 	 * ID: 1890<br>
-	 * Message: このクーポンはすでに使用済みなのでシリアル番号を入力できません。
+	 * Message: このクーポンはすでに使用済みなのでシリアル番号を入力できません。<br>
+	 * Message: Since you have already used this coupon, you may not use this serial number.
 	 */
 	public static final SystemMessageId ALREADY_USED_COUPON_NOT_USE_SERIAL_NUMBER;
 	
 	/**
 	 * ID: 1891<br>
-	 * Message: 個人商店または個人工房中はアイテムを使用できません。
+	 * Message: 個人商店または個人工房中はアイテムを使用できません。<br>
+	 * Message: You may not use items in a private store or private work shop.
 	 */
 	public static final SystemMessageId NOT_USE_ITEMS_IN_PRIVATE_STORE;
 	
 	/**
 	 * ID: 1892<br>
-	 * Message: 以前のバージョンのリプレイ ファイルは再生できません。
+	 * Message: 以前のバージョンのリプレイ ファイルは再生できません。<br>
+	 * Message: The replay file for the previous version cannot be played.
 	 */
 	public static final SystemMessageId REPLAY_FILE_PREVIOUS_VERSION_CANT_PLAYED;
 	
 	/**
 	 * ID: 1893<br>
-	 * Message: 再生できないファイルです。
+	 * Message: 再生できないファイルです。<br>
+	 * Message: This file cannot be replayed.
 	 */
 	public static final SystemMessageId FILE_CANT_REPLAYED;
 	
 	/**
 	 * ID: 1894<br>
-	 * Message: 許容重量を超えるため、サブ クラスの追加や変更ができません。
+	 * Message: 許容重量を超えるため、サブ クラスの追加や変更ができません。<br>
+	 * Message: A sub-class cannot be created or changed while you are over your weight limit.
 	 */
 	public static final SystemMessageId NOT_SUBCLASS_WHILE_OVERWEIGHT;
 	
 	/**
 	 * ID: 1895<br>
-	 * Message: $c1 は現在召喚できない地域にいます。
+	 * Message: $c1 は現在召喚できない地域にいます。<br>
+	 * Message: $c1 is in an area which blocks summoning.
 	 */
 	public static final SystemMessageId C1_IN_SUMMON_BLOCKING_AREA;
 	
 	/**
 	 * ID: 1896<br>
-	 * Message: $c1 はすでに召喚中です。
+	 * Message: $c1 はすでに召喚中です。<br>
+	 * Message: $c1 has already been summoned.
 	 */
 	public static final SystemMessageId C1_ALREADY_SUMMONED;
 	
 	/**
 	 * ID: 1897<br>
-	 * Message: 召喚に必要なアイテム$s1がありません。
+	 * Message: 召喚に必要なアイテム$s1がありません。<br>
+	 * Message: $s1 is required for summoning.
 	 */
 	public static final SystemMessageId S1_REQUIRED_FOR_SUMMONING;
 	
 	/**
 	 * ID: 1898<br>
-	 * Message: $c1 はトレードか個人商店を行っているため召喚できません。
+	 * Message: $c1 はトレードか個人商店を行っているため召喚できません。<br>
+	 * Message: $c1 is currently trading or operating a private store and cannot be summoned.
 	 */
 	public static final SystemMessageId C1_CURRENTLY_TRADING_OR_OPERATING_PRIVATE_STORE_AND_CANNOT_BE_SUMMONED;
 	
 	/**
 	 * ID: 1899<br>
-	 * Message: 現在他人を召喚できない場所にいるため、相手を召喚できません。
+	 * Message: 現在他人を召喚できない場所にいるため、相手を召喚できません。<br>
+	 * Message: Your target is in an area which blocks summoning.
 	 */
 	public static final SystemMessageId YOUR_TARGET_IS_IN_AN_AREA_WHICH_BLOCKS_SUMMONING;
 	
 	/**
 	 * ID: 1900<br>
-	 * Message: $c1 がパーティ ルームに入室しました。
+	 * Message: $c1 がパーティ ルームに入室しました。<br>
+	 * Message: $c1 has entered the party room.
 	 */
 	public static final SystemMessageId C1_ENTERED_PARTY_ROOM;
 	
 	/**
 	 * ID: 1901<br>
-	 * Message: $s1 から$s2パーティー ルームに招待されました。
+	 * Message: $s1 から$s2パーティー ルームに招待されました。<br>
+	 * Message: $c1 has invited you to enter the party room.
 	 */
 	public static final SystemMessageId C1_INVITED_YOU_TO_PARTY_ROOM;
 	
 	/**
 	 * ID: 1902<br>
-	 * Message: アイテムのグレードが一致しないため使用できません。
+	 * Message: アイテムのグレードが一致しないため使用できません。<br>
+	 * Message: Incompatible item grade. This item cannot be used.
 	 */
 	public static final SystemMessageId INCOMPATIBLE_ITEM_GRADE;
 	
 	/**
 	 * ID: 1903<br>
-	 * Message: NCOTPにお申し込みの場合は携帯電話の\nNCOTPを行い表示された\nNCOTP パスワードを1分以内に入力し、\nお申し込みでない場合は空欄のまま\nログインを行ってください。
+	 * Message: NCOTPにお申し込みの場合は携帯電話の\nNCOTPを行い表示された\nNCOTP パスワードを1分以内に入力し、\nお申し込みでない場合は空欄のまま\nログインを行ってください。<br>
+	 * Message: Those of you who have requested NCOTP should run NCOTP by using your cell phone to get the NCOTP password and enter it within 1 minute. If you have not requested NCOTP, leave this field blank and click the Login button.
 	 */
 	public static final SystemMessageId NCOTP;
 	
 	/**
 	 * ID: 1904<br>
-	 * Message: 召喚獣やペットを召喚した状態からは、サブ クラスの追加や変更ができません。
+	 * Message: 召喚獣やペットを召喚した状態からは、サブ クラスの追加や変更ができません。<br>
+	 * Message: A sub-class may not be created or changed while a servitor or pet is summoned.
 	 */
 	public static final SystemMessageId CANT_SUBCLASS_WITH_SUMMONED_SERVITOR;
 	
 	/**
 	 * ID: 1905<br>
-	 * Message: $s1所属の$c2を$s3所属の$c4に交替します。
+	 * Message: $s1所属の$c2を$s3所属の$c4に交替します。<br>
+	 * Message: $s2 of $s1 will be replaced with $s4 of $s3.
 	 */
 	public static final SystemMessageId S2_OF_S1_WILL_REPLACED_WITH_S4_OF_S3;
 	
 	/**
 	 * ID: 1906<br>
-	 * Message: 所属変更する部隊を選択します。
+	 * Message: 所属変更する部隊を選択します。<br>
+	 * Message: Select the combat unit to transfer to.
 	 */
 	public static final SystemMessageId SELECT_COMBAT_UNIT;
 	
 	/**
 	 * ID: 1907<br>
-	 * Message: 選択対象を他の人と交替する場合\n交替する対象を選択します。
+	 * Message: 選択対象を他の人と交替する場合\n交替する対象を選択します。<br>
+	 * Message: Select the character who will replace the current character.
 	 */
 	public static final SystemMessageId SELECT_CHARACTER_WHO_WILL;
 	
 	/**
 	 * ID: 1908<br>
-	 * Message: $c1 は召喚できない状態です。
+	 * Message: $c1 は召喚できない状態です。<br>
+	 * Message: $c1 in a state which prevents summoning.
 	 */
 	public static final SystemMessageId C1_STATE_FORBIDS_SUMMONING;
 	
 	/**
 	 * ID: 1909<br>
-	 * Message: ==<最近一週間の血盟アカデミー卒業者>==
+	 * Message: ==<最近一週間の血盟アカデミー卒業者>==<br>
+	 * Message: ==< List of Academy Graduates During the Past Week >==
 	 */
 	public static final SystemMessageId ACADEMY_LIST_HEADER;
 	
 	/**
 	 * ID: 1910<br>
-	 * Message: 卒業者：$c1
+	 * Message: 卒業者：$c1<br>
+	 * Message: Graduates: $c1.
 	 */
 	public static final SystemMessageId GRADUATES_C1;
 	
 	/**
 	 * ID: 1911<br>
-	 * Message: オリンピアードに参加中のユーザーは召喚できません。
+	 * Message: オリンピアードに参加中のユーザーは召喚できません。<br>
+	 * Message: You cannot summon players who are currently participating in the Grand Olympiad.
 	 */
 	public static final SystemMessageId YOU_CANNOT_SUMMON_PLAYERS_WHO_ARE_IN_OLYMPIAD;
 	
 	/**
 	 * ID: 1912<br>
-	 * Message: NCOTPにお申し込みの方のみ入力。
+	 * Message: NCOTPにお申し込みの方のみ入力。<br>
+	 * Message: Only those requesting NCOTP should make an entry into this field.
 	 */
 	public static final SystemMessageId NCOTP2;
 	
 	/**
 	 * ID: 1913<br>
-	 * Message: $s1の再使用時間は残り$s2分です。
+	 * Message: $s1の再使用時間は残り$s2分です。<br>
+	 * Message: The remaining recycle time for $s1 is $s2 minute(s).
 	 */
 	public static final SystemMessageId TIME_FOR_S1_IS_S2_MINUTES_REMAINING;
 	
 	/**
 	 * ID: 1914<br>
-	 * Message: $s1の再使用時間は残り$s2秒です。
+	 * Message: $s1の再使用時間は残り$s2秒です。<br>
+	 * Message: The remaining recycle time for $s1 is $s2 seconds(s).
 	 */
 	public static final SystemMessageId TIME_FOR_S1_IS_S2_SECONDS_REMAINING;
 	
 	/**
 	 * ID: 1915<br>
-	 * Message: 競技終了時間まで残り$s1秒です。
+	 * Message: 競技終了時間まで残り$s1秒です。<br>
+	 * Message: The game will end in $s1 second(s).
 	 */
 	public static final SystemMessageId GAME_ENDS_IN_S1_SECONDS;
 	
 	/**
 	 * ID: 1916<br>
-	 * Message: 死がもたらす傷レベル$s1が適用されます。
+	 * Message: 死がもたらす傷レベル$s1が適用されます。<br>
+	 * Message: Your Death Penalty is now level $s1.
 	 */
 	public static final SystemMessageId DEATH_PENALTY_LEVEL_S1_ADDED;
 	
 	/**
 	 * ID: 1917<br>
-	 * Message: 死がもたらす傷が消えました。
+	 * Message: 死がもたらす傷が消えました。<br>
+	 * Message: Your Death Penalty has been lifted.
 	 */
 	public static final SystemMessageId DEATH_PENALTY_LIFTED;
 	
 	/**
 	 * ID: 1918<br>
-	 * Message: ペットのレベルが高過ぎるため、コントロールできません。
+	 * Message: ペットのレベルが高過ぎるため、コントロールできません。<br>
+	 * Message: Your pet is too high level to control.
 	 */
 	public static final SystemMessageId PET_TOO_HIGH_TO_CONTROL;
 	
 	/**
 	 * ID: 1919<br>
-	 * Message: オリンピアードの参加登録が締め切られました。
+	 * Message: オリンピアードの参加登録が締め切られました。<br>
+	 * Message: The Grand Olympiad registration period has ended.
 	 */
 	public static final SystemMessageId OLYMPIAD_REGISTRATION_PERIOD_ENDED;
 	
 	/**
 	 * ID: 1920<br>
-	 * Message: アカウントは休眠アカウント状態です。一定期間ゲームに接続しない場合は休眠アカウント状態となり、公式サイト（http://lineage2.plaync.jp/）でゲーム接続が可能な状態に変更できます。
+	 * Message: アカウントは休眠アカウント状態です。一定期間ゲームに接続しない場合は休眠アカウント状態となり、公式サイト（http://lineage2.plaync.jp/）でゲーム接続が可能な状態に変更できます。<br>
+	 * Message: Your account is currently inactive because you have not logged into the game for some time. You may reactivate your account by visiting the PlayNC website (http://www.plaync.com/us/support/).
 	 */
 	public static final SystemMessageId ACCOUNT_INACTIVITY;
 	
 	/**
 	 * ID: 1921<br>
-	 * Message: $s1が殺戮を行ってから$s2時間$s3分が経過しました。
+	 * Message: $s1が殺戮を行ってから$s2時間$s3分が経過しました。<br>
+	 * Message: $s2 hour(s) and $s3 minute(s) have passed since $s1 has killed.
 	 */
 	public static final SystemMessageId S2_HOURS_S3_MINUTES_SINCE_S1_KILLED;
 	
 	/**
 	 * ID: 1922<br>
-	 * Message: $s1が丸一日殺戮を行わず、消滅しました。
+	 * Message: $s1が丸一日殺戮を行わず、消滅しました。<br>
+	 * Message: Because $s1 has failed to kill for one full day, it has expired.
 	 */
 	public static final SystemMessageId S1_FAILED_KILLING_EXPIRED;
 	
 	/**
 	 * ID: 1923<br>
-	 * Message: 宮廷魔術師：クラン ゲートが生成されました！
+	 * Message: 宮廷魔術師：クラン ゲートが生成されました！<br>
+	 * Message: Court Magician: The portal has been created!
 	 */
 	public static final SystemMessageId COURT_MAGICIAN_CREATED_PORTAL;
 	
 	/**
 	 * ID: 1924<br>
-	 * Message: 現在地： $s1、$s2、$s3 (太古の島付近)
+	 * Message: 現在地： $s1、$s2、$s3 (太古の島付近)<br>
+	 * Message: Current Location: $s1, $s2, $s3 (Near the Primeval Isle)
 	 */
 	public static final SystemMessageId LOC_PRIMEVAL_ISLE_S1_S2_S3;
 	
 	/**
 	 * ID: 1925<br>
-	 * Message: 戦乱の封印の影響により召喚できません。
+	 * Message: 戦乱の封印の影響により召喚できません。<br>
+	 * Message: Due to the affects of the Seal of Strife, it is not possible to summon at this time.
 	 */
 	public static final SystemMessageId SEAL_OF_STRIFE_FORBIDS_SUMMONING;
 	
 	/**
 	 * ID: 1926<br>
-	 * Message: 決闘を申し込む相手がいません。
+	 * Message: 決闘を申し込む相手がいません。<br>
+	 * Message: There is no opponent to receive your challenge for a duel.
 	 */
 	public static final SystemMessageId THERE_IS_NO_OPPONENT_TO_RECEIVE_YOUR_CHALLENGE_FOR_A_DUEL;
 	
 	/**
 	 * ID: 1927<br>
-	 * Message: $c1 に1対1での決闘を申し込みます。
+	 * Message: $c1 に1対1での決闘を申し込みます。<br>
+	 * Message: $c1 has been challenged to a duel.
 	 */
 	public static final SystemMessageId C1_HAS_BEEN_CHALLENGED_TO_A_DUEL;
 	
 	/**
 	 * ID: 1928<br>
-	 * Message: $c1 のパーティにパーティ同士での決闘を申し込みます。
+	 * Message: $c1 のパーティにパーティ同士での決闘を申し込みます。<br>
+	 * Message: $c1's party has been challenged to a duel.
 	 */
 	public static final SystemMessageId C1_PARTY_HAS_BEEN_CHALLENGED_TO_A_DUEL;
 	
 	/**
 	 * ID: 1929<br>
-	 * Message: $c1 が1対1での決闘を受け入れました。しばらくすると決闘が始まります。
+	 * Message: $c1 が1対1での決闘を受け入れました。しばらくすると決闘が始まります。<br>
+	 * Message: $c1 has accepted your challenge to a duel. The duel will begin in a few moments.
 	 */
 	public static final SystemMessageId C1_HAS_ACCEPTED_YOUR_CHALLENGE_TO_A_DUEL_THE_DUEL_WILL_BEGIN_IN_A_FEW_MOMENTS;
 	
 	/**
 	 * ID: 1930<br>
-	 * Message: $c1 からの1対1での決闘の申し込みを受け入れました。しばらくすると決闘が始まります。
+	 * Message: $c1 からの1対1での決闘の申し込みを受け入れました。しばらくすると決闘が始まります。<br>
+	 * Message: You have accepted $c1's challenge to a duel. The duel will begin in a few moments.
 	 */
 	public static final SystemMessageId YOU_HAVE_ACCEPTED_C1_CHALLENGE_TO_A_DUEL_THE_DUEL_WILL_BEGIN_IN_A_FEW_MOMENTS;
 	
 	/**
 	 * ID: 1931<br>
-	 * Message: $c1 が1対1での決闘を拒否しました。
+	 * Message: $c1 が1対1での決闘を拒否しました。<br>
+	 * Message: $c1 has declined your challenge to a duel.
 	 */
 	public static final SystemMessageId C1_HAS_DECLINED_YOUR_CHALLENGE_TO_A_DUEL;
 	
 	/**
 	 * ID: 1932<br>
-	 * Message: $c1 が決闘の申し込みを拒否しました。
+	 * Message: $c1 が決闘の申し込みを拒否しました。<br>
+	 * Message: $c1 has declined your challenge to a duel.
 	 */
 	public static final SystemMessageId C1_HAS_DECLINED_YOUR_CHALLENGE_TO_A_DUEL2;
 	
 	/**
 	 * ID: 1933<br>
-	 * Message: $c1 のパーティからのパーティ同士での決闘の申し込みを受け入れました。しばらくすると決闘が始まります。
+	 * Message: $c1 のパーティからのパーティ同士での決闘の申し込みを受け入れました。しばらくすると決闘が始まります。<br>
+	 * Message: You have accepted $c1's challenge to a party duel. The duel will begin in a few moments.
 	 */
 	public static final SystemMessageId YOU_HAVE_ACCEPTED_C1_CHALLENGE_TO_A_PARTY_DUEL_THE_DUEL_WILL_BEGIN_IN_A_FEW_MOMENTS;
 	
 	/**
 	 * ID: 1934<br>
-	 * Message: $c1 がパーティ同士での決闘を受け入れました。しばらくすると決闘が始まります。
+	 * Message: $c1 がパーティ同士での決闘を受け入れました。しばらくすると決闘が始まります。<br>
+	 * Message: $s1 has accepted your challenge to duel against their party. The duel will begin in a few moments.
 	 */
 	public static final SystemMessageId S1_HAS_ACCEPTED_YOUR_CHALLENGE_TO_DUEL_AGAINST_THEIR_PARTY_THE_DUEL_WILL_BEGIN_IN_A_FEW_MOMENTS;
 	
 	/**
 	 * ID: 1935<br>
-	 * Message: $c1 がパーティ同士での決闘を拒否しました。
+	 * Message: $c1 がパーティ同士での決闘を拒否しました。<br>
+	 * Message: $c1 has declined your challenge to a party duel.
 	 */
 	public static final SystemMessageId C1_HAS_DECLINED_YOUR_CHALLENGE_TO_A_PARTY_DUEL;
 	
 	/**
 	 * ID: 1936<br>
-	 * Message: 相手のパーティが決闘の申し込みを拒否しました。
+	 * Message: 相手のパーティが決闘の申し込みを拒否しました。<br>
+	 * Message: The opposing party has declined your challenge to a duel.
 	 */
 	public static final SystemMessageId THE_OPPOSING_PARTY_HAS_DECLINED_YOUR_CHALLENGE_TO_A_DUEL;
 	
 	/**
 	 * ID: 1937<br>
-	 * Message: 相手がパーティ状態ではないため、パーティ同士での決闘の申し込みができません。
+	 * Message: 相手がパーティ状態ではないため、パーティ同士での決闘の申し込みができません。<br>
+	 * Message: Since the person you challenged is not currently in a party, they cannot duel against your party.
 	 */
 	public static final SystemMessageId SINCE_THE_PERSON_YOU_CHALLENGED_IS_NOT_CURRENTLY_IN_A_PARTY_THEY_CANNOT_DUEL_AGAINST_YOUR_PARTY;
 	
 	/**
 	 * ID: 1938<br>
-	 * Message: $c1 が1対1での決闘を申し込みました。
+	 * Message: $c1 が1対1での決闘を申し込みました。<br>
+	 * Message: $c1 has challenged you to a duel.
 	 */
 	public static final SystemMessageId C1_HAS_CHALLENGED_YOU_TO_A_DUEL;
 	
 	/**
 	 * ID: 1939<br>
-	 * Message: $c1 のパーティがパーティ同士での決闘を申し込みました。
+	 * Message: $c1 のパーティがパーティ同士での決闘を申し込みました。<br>
+	 * Message: $c1's party has challenged your party to a duel.
 	 */
 	public static final SystemMessageId C1_PARTY_HAS_CHALLENGED_YOUR_PARTY_TO_A_DUEL;
 	
 	/**
 	 * ID: 1940<br>
-	 * Message: 条件が合わないため、決闘を申し込めません。
+	 * Message: 条件が合わないため、決闘を申し込めません。<br>
+	 * Message: You are unable to request a duel at this time.
 	 */
 	public static final SystemMessageId YOU_ARE_UNABLE_TO_REQUEST_A_DUEL_AT_THIS_TIME;
 	
 	/**
 	 * ID: 1941<br>
-	 * Message: 決闘を行える場所ではありません。
+	 * Message: 決闘を行える場所ではありません。<br>
+	 * Message: This is no suitable place to challenge anyone or party to a duel.
 	 */
 	public static final SystemMessageId NO_PLACE_FOR_DUEL;
 	
 	/**
 	 * ID: 1942<br>
-	 * Message: 相手のパーティが決闘を行える状態ではありません。
+	 * Message: 相手のパーティが決闘を行える状態ではありません。<br>
+	 * Message: The opposing party is currently unable to accept a challenge to a duel.
 	 */
 	public static final SystemMessageId THE_OPPOSING_PARTY_IS_CURRENTLY_UNABLE_TO_ACCEPT_A_CHALLENGE_TO_A_DUEL;
 	
 	/**
 	 * ID: 1943<br>
-	 * Message: 相手のパーティが決闘を行える場所にいません。
+	 * Message: 相手のパーティが決闘を行える場所にいません。<br>
+	 * Message: The opposing party is currently not in a suitable location for a duel.
 	 */
 	public static final SystemMessageId THE_OPPOSING_PARTY_IS_AT_BAD_LOCATION_FOR_A_DUEL;
 	
 	/**
 	 * ID: 1944<br>
-	 * Message: しばらくすると決闘場に移動します。
+	 * Message: しばらくすると決闘場に移動します。<br>
+	 * Message: In a moment, you will be transported to the site where the duel will take place.
 	 */
 	public static final SystemMessageId IN_A_MOMENT_YOU_WILL_BE_TRANSPORTED_TO_THE_SITE_WHERE_THE_DUEL_WILL_TAKE_PLACE;
 	
 	/**
 	 * ID: 1945<br>
-	 * Message: $s1秒後に決闘が始まります。
+	 * Message: $s1秒後に決闘が始まります。<br>
+	 * Message: The duel will begin in $s1 second(s).
 	 */
 	public static final SystemMessageId THE_DUEL_WILL_BEGIN_IN_S1_SECONDS;
 	
 	/**
 	 * ID: 1946<br>
-	 * Message: $c1 が1対1での決闘を申し込みました。受け入れますか。
+	 * Message: $c1 が1対1での決闘を申し込みました。受け入れますか。<br>
+	 * Message: $c1 has challenged you to a duel. Will you accept?
 	 */
 	public static final SystemMessageId C1_CHALLENGED_YOU_TO_A_DUEL;
 	
 	/**
 	 * ID: 1947<br>
-	 * Message: $c1 のパーティがパーティ同士での決闘を申し込みました。受け入れますか。
+	 * Message: $c1 のパーティがパーティ同士での決闘を申し込みました。受け入れますか。<br>
+	 * Message: $c1's party has challenged your party to a duel. Will you accept?
 	 */
 	public static final SystemMessageId C1_CHALLENGED_YOU_TO_A_PARTY_DUEL;
 	
 	/**
 	 * ID: 1948<br>
-	 * Message: 決闘が $s1秒後に始まります。
+	 * Message: 決闘が $s1秒後に始まります。<br>
+	 * Message: The duel will begin in $s1 second(s).
 	 */
 	public static final SystemMessageId THE_DUEL_WILL_BEGIN_IN_S1_SECONDS2;
 	
 	/**
 	 * ID: 1949<br>
-	 * Message: 決闘開始！
+	 * Message: 決闘開始！<br>
+	 * Message: Let the duel begin!
 	 */
 	public static final SystemMessageId LET_THE_DUEL_BEGIN;
 	
 	/**
 	 * ID: 1950<br>
-	 * Message: $c1 が決闘に勝利しました。
+	 * Message: $c1 が決闘に勝利しました。<br>
+	 * Message: $c1 has won the duel.
 	 */
 	public static final SystemMessageId C1_HAS_WON_THE_DUEL;
 	
 	/**
 	 * ID: 1951<br>
-	 * Message: $c1 のパーティが決闘に勝利しました。
+	 * Message: $c1 のパーティが決闘に勝利しました。<br>
+	 * Message: $c1's party has won the duel.
 	 */
 	public static final SystemMessageId C1_PARTY_HAS_WON_THE_DUEL;
 	
 	/**
 	 * ID: 1952<br>
-	 * Message: 引き分けです。
+	 * Message: 引き分けです。<br>
+	 * Message: The duel has ended in a tie.
 	 */
 	public static final SystemMessageId THE_DUEL_HAS_ENDED_IN_A_TIE;
 	
 	/**
 	 * ID: 1953<br>
-	 * Message: $c1が失格となり$s2が勝利しました。
+	 * Message: $c1が失格となり$s2が勝利しました。<br>
+	 * Message: Since $c1 was disqualified, $s2 has won.
 	 */
 	public static final SystemMessageId SINCE_C1_WAS_DISQUALIFIED_S2_HAS_WON;
 	
 	/**
 	 * ID: 1954<br>
-	 * Message: $c1のパーティが失格となり$s2 のパーティが勝利しました。
+	 * Message: $c1のパーティが失格となり$s2 のパーティが勝利しました。<br>
+	 * Message: Since $c1's party was disqualified, $s2's party has won.
 	 */
 	public static final SystemMessageId SINCE_C1_PARTY_WAS_DISQUALIFIED_S2_PARTY_HAS_WON;
 	
 	/**
 	 * ID: 1955<br>
-	 * Message: $c1が決闘を放棄したため$s2が勝利しました。
+	 * Message: $c1が決闘を放棄したため$s2が勝利しました。<br>
+	 * Message: Since $c1 withdrew from the duel, $s2 has won.
 	 */
 	public static final SystemMessageId SINCE_C1_WITHDREW_FROM_THE_DUEL_S2_HAS_WON;
 	
 	/**
 	 * ID: 1956<br>
-	 * Message: $c1のパーティが決闘を放棄したため$s2のパーティが勝利しました。
+	 * Message: $c1のパーティが決闘を放棄したため$s2のパーティが勝利しました。<br>
+	 * Message: Since $c1's party withdrew from the duel, $s2's party has won.
 	 */
 	public static final SystemMessageId SINCE_C1_PARTY_WITHDREW_FROM_THE_DUEL_S2_PARTY_HAS_WON;
 	
 	/**
 	 * ID: 1957<br>
-	 * Message: 精錬するアイテムを置いてください。
+	 * Message: 精錬するアイテムを置いてください。<br>
+	 * Message: Select the item to be augmented.
 	 */
 	public static final SystemMessageId SELECT_THE_ITEM_TO_BE_AUGMENTED;
 	
 	/**
 	 * ID: 1958<br>
-	 * Message: 精錬材を置いてください。
+	 * Message: 精錬材を置いてください。<br>
+	 * Message: Select the catalyst for augmentation.
 	 */
 	public static final SystemMessageId SELECT_THE_CATALYST_FOR_AUGMENTATION;
 	
 	/**
 	 * ID: 1959<br>
-	 * Message: $s1 $s2個を置いてください。
+	 * Message: $s1 $s2個を置いてください。<br>
+	 * Message: Requires $s1 $s2.
 	 */
 	public static final SystemMessageId REQUIRES_S1_S2;
 	
 	/**
 	 * ID: 1960<br>
-	 * Message: アイテムが適していません。
+	 * Message: アイテムが適していません。<br>
+	 * Message: This is not a suitable item.
 	 */
 	public static final SystemMessageId THIS_IS_NOT_A_SUITABLE_ITEM;
 	
 	/**
 	 * ID: 1961<br>
-	 * Message: ジェムストーンの数が合っていません。
+	 * Message: ジェムストーンの数が合っていません。<br>
+	 * Message: Gemstone quantity is incorrect.
 	 */
 	public static final SystemMessageId GEMSTONE_QUANTITY_IS_INCORRECT;
 	
 	/**
 	 * ID: 1962<br>
-	 * Message: アイテム精錬成功！
+	 * Message: アイテム精錬成功！<br>
+	 * Message: The item was successfully augmented!
 	 */
 	public static final SystemMessageId THE_ITEM_WAS_SUCCESSFULLY_AUGMENTED;
 	
 	/**
 	 * ID: 1963<br>
-	 * Message: 精錬を解除するアイテムを置いてください。
+	 * Message: 精錬を解除するアイテムを置いてください。<br>
+	 * Message: Select the item from which you wish to remove augmentation.
 	 */
 	public static final SystemMessageId SELECT_THE_ITEM_FROM_WHICH_YOU_WISH_TO_REMOVE_AUGMENTATION;
 	
 	/**
 	 * ID: 1964<br>
-	 * Message: 精錬されていないアイテムは精錬解除を行うことができません。
+	 * Message: 精錬されていないアイテムは精錬解除を行うことができません。<br>
+	 * Message: Augmentation removal can only be done on an augmented item.
 	 */
 	public static final SystemMessageId AUGMENTATION_REMOVAL_CAN_ONLY_BE_DONE_ON_AN_AUGMENTED_ITEM;
 	
 	/**
 	 * ID: 1965<br>
-	 * Message: $s1の精錬解除に成功しました。
+	 * Message: $s1の精錬解除に成功しました。<br>
+	 * Message: Augmentation has been successfully removed from your $s1.
 	 */
 	public static final SystemMessageId AUGMENTATION_HAS_BEEN_SUCCESSFULLY_REMOVED_FROM_YOUR_S1;
 	
 	/**
 	 * ID: 1966<br>
-	 * Message: 指揮コマンドは連合の指揮者だけが使用できます。
+	 * Message: 指揮コマンドは連合の指揮者だけが使用できます。<br>
+	 * Message: Only the clan leader may issue commands.
 	 */
 	public static final SystemMessageId ONLY_CLAN_LEADER_CAN_ISSUE_COMMANDS;
 	
 	/**
 	 * ID: 1967<br>
-	 * Message: 門が固く閉ざされています。しばらくしてからもう一度行ってください。
+	 * Message: 門が固く閉ざされています。しばらくしてからもう一度行ってください。<br>
+	 * Message: The gate is firmly locked. Please try again later.
 	 */
 	public static final SystemMessageId GATE_LOCKED_TRY_AGAIN_LATER;
 	
 	/**
 	 * ID: 1968<br>
-	 * Message: $s1の所有者
+	 * Message: $s1の所有者<br>
+	 * Message: $s1's owner.
 	 */
 	public static final SystemMessageId S1_OWNER;
 	
 	/**
 	 * ID: 1968<br>
-	 * Message: $s1の所有者
+	 * Message: $s1の所有者<br>
+	 * Message: Area where $s1 appears.
 	 */
 	public static final SystemMessageId AREA_S1_APPEARS;
 	
 	/**
 	 * ID: 1970<br>
-	 * Message: 精錬されたアイテムをまた精錬することはできません。
+	 * Message: 精錬されたアイテムをまた精錬することはできません。<br>
+	 * Message: Once an item is augmented, it cannot be augmented again.
 	 */
 	public static final SystemMessageId ONCE_AN_ITEM_IS_AUGMENTED_IT_CANNOT_BE_AUGMENTED_AGAIN;
 	
 	/**
 	 * ID: 1971<br>
-	 * Message: 強化材のレベルが高過ぎるため、使用できません。
+	 * Message: 強化材のレベルが高過ぎるため、使用できません。<br>
+	 * Message: The level of the hardener is too high to be used.
 	 */
 	public static final SystemMessageId HARDENER_LEVEL_TOO_HIGH;
 	
 	/**
 	 * ID: 1972<br>
-	 * Message: 個人商店や個人工房の途中では精錬できません。
+	 * Message: 個人商店や個人工房の途中では精錬できません。<br>
+	 * Message: You cannot augment items while a private store or private workshop is in operation.
 	 */
 	public static final SystemMessageId YOU_CANNOT_AUGMENT_ITEMS_WHILE_A_PRIVATE_STORE_OR_PRIVATE_WORKSHOP_IS_IN_OPERATION;
 	
 	/**
 	 * ID: 1973<br>
-	 * Message: フリーズ状態では精錬できません。
+	 * Message: フリーズ状態では精錬できません。<br>
+	 * Message: You cannot augment items while frozen.
 	 */
 	public static final SystemMessageId YOU_CANNOT_AUGMENT_ITEMS_WHILE_FROZEN;
 	
 	/**
 	 * ID: 1974<br>
-	 * Message: 死亡した状態では精錬できません。
+	 * Message: 死亡した状態では精錬できません。<br>
+	 * Message: You cannot augment items while dead.
 	 */
 	public static final SystemMessageId YOU_CANNOT_AUGMENT_ITEMS_WHILE_DEAD;
 	
 	/**
 	 * ID: 1975<br>
-	 * Message: トレード中は精錬できません。
+	 * Message: トレード中は精錬できません。<br>
+	 * Message: You cannot augment items while engaged in trade activities.
 	 */
 	public static final SystemMessageId YOU_CANNOT_AUGMENT_ITEMS_WHILE_TRADING;
 	
 	/**
 	 * ID: 1976<br>
-	 * Message: 石化状態では精錬できません。
+	 * Message: 石化状態では精錬できません。<br>
+	 * Message: You cannot augment items while paralyzed.
 	 */
 	public static final SystemMessageId YOU_CANNOT_AUGMENT_ITEMS_WHILE_PARALYZED;
 	
 	/**
 	 * ID: 1977<br>
-	 * Message: フィッシング中は精錬できません。
+	 * Message: フィッシング中は精錬できません。<br>
+	 * Message: You cannot augment items while fishing.
 	 */
 	public static final SystemMessageId YOU_CANNOT_AUGMENT_ITEMS_WHILE_FISHING;
 	
 	/**
 	 * ID: 1978<br>
-	 * Message: 座っている状態では精錬できません。
+	 * Message: 座っている状態では精錬できません。<br>
+	 * Message: You cannot augment items while sitting down.
 	 */
 	public static final SystemMessageId YOU_CANNOT_AUGMENT_ITEMS_WHILE_SITTING_DOWN;
 	
 	/**
 	 * ID: 1979<br>
-	 * Message: $s1の残存魔力は10になりました。
+	 * Message: $s1の残存魔力は10になりました。<br>
+	 * Message: $s1's remaining Mana is now 10.
 	 */
 	public static final SystemMessageId S1S_REMAINING_MANA_IS_NOW_10;
 	
 	/**
 	 * ID: 1980<br>
-	 * Message: $s1の残存魔力は5になりました。
+	 * Message: $s1の残存魔力は5になりました。<br>
+	 * Message: $s1's remaining Mana is now 5.
 	 */
 	public static final SystemMessageId S1S_REMAINING_MANA_IS_NOW_5;
 	
 	/**
 	 * ID: 1981<br>
-	 * Message: $s1の残存魔力は1になりました。しばらくすると消滅します。
+	 * Message: $s1の残存魔力は1になりました。しばらくすると消滅します。<br>
+	 * Message: $s1's remaining Mana is now 1. It will disappear soon.
 	 */
 	public static final SystemMessageId S1S_REMAINING_MANA_IS_NOW_1;
 	
 	/**
 	 * ID: 1982<br>
-	 * Message: $s1の残存魔力が0となり、アイテムが消滅しました。
+	 * Message: $s1の残存魔力が0となり、アイテムが消滅しました。<br>
+	 * Message: $s1's remaining Mana is now 0, and the item has disappeared.
 	 */
 	public static final SystemMessageId S1S_REMAINING_MANA_IS_NOW_0;
 	
 	/**
 	 * ID: 1984<br>
-	 * Message: 精錬ボタンを押すと精錬が始まります。
+	 * Message: 精錬ボタンを押すと精錬が始まります。<br>
+	 * Message: Press the Augment button to begin.
 	 */
 	public static final SystemMessageId PRESS_THE_AUGMENT_BUTTON_TO_BEGIN;
 	
 	/**
 	 * ID: 1985<br>
-	 * Message: $s1のドロップ地域($s2)
+	 * Message: $s1のドロップ地域($s2)<br>
+	 * Message: $s1's drop area ($s2)
 	 */
 	public static final SystemMessageId S1_DROP_AREA_S2;
 	
 	/**
 	 * ID: 1986<br>
-	 * Message: $s1の所有者($s2)
+	 * Message: $s1の所有者($s2)<br>
+	 * Message: $s1's owner ($s2)
 	 */
 	public static final SystemMessageId S1_OWNER_S2;
 	
 	/**
 	 * ID: 1987<br>
+	 * Message: $s1<br>
 	 * Message: $s1
 	 */
 	public static final SystemMessageId S1;
 	
 	/**
 	 * ID: 1988<br>
-	 * Message: 太古の島に到着しました。
+	 * Message: 太古の島に到着しました。<br>
+	 * Message: The ferry has arrived at Primeval Isle.
 	 */
 	public static final SystemMessageId FERRY_ARRIVED_AT_PRIMEVAL;
 	
 	/**
 	 * ID: 1989<br>
-	 * Message: 3分間停泊後、ルウン港に出発します。
+	 * Message: 3分間停泊後、ルウン港に出発します。<br>
+	 * Message: The ferry will leave for Rune Harbor after anchoring for three minutes.
 	 */
 	public static final SystemMessageId FERRY_LEAVING_FOR_RUNE_3_MINUTES;
 	
 	/**
 	 * ID: 1990<br>
-	 * Message: 太古の島からルウン港へ出発します。
+	 * Message: 太古の島からルウン港へ出発します。<br>
+	 * Message: The ferry is now departing Primeval Isle for Rune Harbor.
 	 */
 	public static final SystemMessageId FERRY_LEAVING_PRIMEVAL_FOR_RUNE_NOW;
 	
 	/**
 	 * ID: 1991<br>
-	 * Message: 3分間停泊後、太古の島に出発します。
+	 * Message: 3分間停泊後、太古の島に出発します。<br>
+	 * Message: The ferry will leave for Primeval Isle after anchoring for three minutes.
 	 */
 	public static final SystemMessageId FERRY_LEAVING_FOR_PRIMEVAL_3_MINUTES;
 	
 	/**
 	 * ID: 1992<br>
-	 * Message: ルウン港から太古の島へ出発します。
+	 * Message: ルウン港から太古の島へ出発します。<br>
+	 * Message: The ferry is now departing Rune Harbor for Primeval Isle.
 	 */
 	public static final SystemMessageId FERRY_LEAVING_RUNE_FOR_PRIMEVAL_NOW;
 	
 	/**
 	 * ID: 1993<br>
-	 * Message: 太古の島発 ルウン港行きの定期船の運航に遅れが出ています。
+	 * Message: 太古の島発 ルウン港行きの定期船の運航に遅れが出ています。<br>
+	 * Message: The ferry from Primeval Isle to Rune Harbor has been delayed.
 	 */
 	public static final SystemMessageId FERRY_FROM_PRIMEVAL_TO_RUNE_DELAYED;
 	
 	/**
 	 * ID: 1994<br>
-	 * Message: ルウン港発 太古の島行きの定期船の運航に遅れが出ています。
+	 * Message: ルウン港発 太古の島行きの定期船の運航に遅れが出ています。<br>
+	 * Message: The ferry from Rune Harbor to Primeval Isle has been delayed.
 	 */
 	public static final SystemMessageId FERRY_FROM_RUNE_TO_PRIMEVAL_DELAYED;
 	
 	/**
 	 * ID: 1995<br>
-	 * Message: $s1ﾁｬﾝﾈﾙ ﾌｨﾙﾀﾘﾝｸﾞ ｵﾌﾟｼｮﾝ
+	 * Message: $s1ﾁｬﾝﾈﾙ ﾌｨﾙﾀﾘﾝｸﾞ ｵﾌﾟｼｮﾝ<br>
+	 * Message: $s1 channel filtering option
 	 */
 	public static final SystemMessageId S1_CHANNEL_FILTER_OPTION;
 	
 	/**
 	 * ID: 1996<br>
-	 * Message: 相手が無敵状態です。
+	 * Message: 相手が無敵状態です。<br>
+	 * Message: The attack has been blocked.
 	 */
 	public static final SystemMessageId ATTACK_WAS_BLOCKED;
 	
 	/**
 	 * ID: 1997<br>
-	 * Message: $c1がスキル攻撃に反撃します。
+	 * Message: $c1がスキル攻撃に反撃します。<br>
+	 * Message: $c1 is performing a counterattack.
 	 */
 	public static final SystemMessageId C1_PERFORMING_COUNTERATTACK;
 	
 	/**
 	 * ID: 1998<br>
-	 * Message: $c1のスキル攻撃に反撃します。
+	 * Message: $c1のスキル攻撃に反撃します。<br>
+	 * Message: You countered $c1's attack.
 	 */
 	public static final SystemMessageId COUNTERED_C1_ATTACK;
 	
 	/**
 	 * ID: 1999<br>
-	 * Message: $c1がスキル攻撃を避けました。
+	 * Message: $c1がスキル攻撃を避けました。<br>
+	 * Message: $c1 dodges the attack.
 	 */
 	public static final SystemMessageId C1_DODGES_ATTACK;
 	
 	/**
 	 * ID: 2000<br>
-	 * Message: $c1のスキル攻撃を避けました。
+	 * Message: $c1のスキル攻撃を避けました。<br>
+	 * Message: You have avoided $c1's attack.
 	 */
 	public static final SystemMessageId AVOIDED_C1_ATTACK2;
 	
 	/**
 	 * ID: 2001<br>
-	 * Message: 精錬が正常に行われず、精錬が失敗しました。
+	 * Message: 精錬が正常に行われず、精錬が失敗しました。<br>
+	 * Message: Augmentation failed due to inappropriate conditions.
 	 */
 	public static final SystemMessageId AUGMENTATION_FAILED_DUE_TO_INAPPROPRIATE_CONDITIONS;
 	
 	/**
 	 * ID: 2002<br>
-	 * Message: 捕獲に失敗しました。
+	 * Message: 捕獲に失敗しました。<br>
+	 * Message: Trap failed.
 	 */
 	public static final SystemMessageId TRAP_FAILED;
 	
 	/**
 	 * ID: 2003<br>
-	 * Message: 一般属性を得ました。
+	 * Message: 一般属性を得ました。<br>
+	 * Message: You obtained an ordinary material.
 	 */
 	public static final SystemMessageId OBTAINED_ORDINARY_MATERIAL;
 	
 	/**
 	 * ID: 2004<br>
-	 * Message: レア属性を得ました。
+	 * Message: レア属性を得ました。<br>
+	 * Message: You obtained a rare material.
 	 */
 	public static final SystemMessageId OBTAINED_RATE_MATERIAL;
 	
 	/**
 	 * ID: 2005<br>
-	 * Message: ユニーク属性を得ました。
+	 * Message: ユニーク属性を得ました。<br>
+	 * Message: You obtained a unique material.
 	 */
 	public static final SystemMessageId OBTAINED_UNIQUE_MATERIAL;
 	
 	/**
 	 * ID: 2006<br>
-	 * Message: 唯一属性を得ました。
+	 * Message: 唯一属性を得ました。<br>
+	 * Message: You obtained the only material of this kind.
 	 */
 	public static final SystemMessageId OBTAINED_ONLY_MATERIAL;
 	
 	/**
 	 * ID: 2007<br>
-	 * Message: 受信先を入力してください。
+	 * Message: 受信先を入力してください。<br>
+	 * Message: Please enter the recipient's name.
 	 */
 	public static final SystemMessageId ENTER_RECIPIENTS_NAME;
 	
 	/**
 	 * ID: 2008<br>
-	 * Message: 本文を入力してください。
+	 * Message: 本文を入力してください。<br>
+	 * Message: Please enter the text.
 	 */
 	public static final SystemMessageId ENTER_TEXT;
 	
 	/**
 	 * ID: 2009<br>
-	 * Message: 1500文字を過ぎています。
+	 * Message: 1500文字を過ぎています。<br>
+	 * Message: You cannot exceed 1500 characters.
 	 */
 	public static final SystemMessageId CANT_EXCEED_1500_CHARACTERS;
 	
 	/**
 	 * ID: 2009<br>
-	 * Message: 1500文字を過ぎています。
+	 * Message: 1500文字を過ぎています。<br>
+	 * Message: $s2 $s1
 	 */
 	public static final SystemMessageId S2_S1;
 	
 	/**
 	 * ID: 2011<br>
-	 * Message: 精錬済みアイテムは捨てることができません。
+	 * Message: 精錬済みアイテムは捨てることができません。<br>
+	 * Message: The augmented item cannot be discarded.
 	 */
 	public static final SystemMessageId AUGMENTED_ITEM_CANNOT_BE_DISCARDED;
 	
 	/**
 	 * ID: 2012<br>
-	 * Message: $s1が発動されました。
+	 * Message: $s1が発動されました。<br>
+	 * Message: $s1 has been activated.
 	 */
 	public static final SystemMessageId S1_HAS_BEEN_ACTIVATED;
 	
 	/**
 	 * ID: 2013<br>
-	 * Message: 種または購入の残りが不足しています。
+	 * Message: 種または購入の残りが不足しています。<br>
+	 * Message: Your seed or remaining purchase amount is inadequate.
 	 */
 	public static final SystemMessageId YOUR_SEED_OR_REMAINING_PURCHASE_AMOUNT_IS_INADEQUATE;
 	
 	/**
 	 * ID: 2014<br>
-	 * Message: 異常事態が発生して進行できません。
+	 * Message: 異常事態が発生して進行できません。<br>
+	 * Message: You cannot proceed because the manor cannot accept any more crops. All crops have been returned and no adena withdrawn.
 	 */
 	public static final SystemMessageId MANOR_CANT_ACCEPT_MORE_CROPS;
 	
 	/**
 	 * ID: 2015<br>
-	 * Message: 卓越したスキルの効果が発動し、スキルの再使用が可能です。
+	 * Message: 卓越したスキルの効果が発動し、スキルの再使用が可能です。<br>
+	 * Message: A skill is ready to be used again.
 	 */
 	public static final SystemMessageId SKILL_READY_TO_USE_AGAIN;
 	
 	/**
 	 * ID: 2016<br>
-	 * Message: 卓越したスキルの効果が発動し、スキルの異常状態の効果時間が増加しました。
+	 * Message: 卓越したスキルの効果が発動し、スキルの異常状態の効果時間が増加しました。<br>
+	 * Message: A skill is ready to be used again but its re-use counter time has increased.
 	 */
 	public static final SystemMessageId SKILL_READY_TO_USE_AGAIN_BUT_TIME_INCREASED;
 	
 	/**
 	 * ID: 2017<br>
-	 * Message: $c1 は個人商店や個人工房を開いているため決闘できません。
+	 * Message: $c1 は個人商店や個人工房を開いているため決闘できません。<br>
+	 * Message: $c1 cannot duel because $c1 is currently engaged in a private store or manufacture.
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_ENGAGED_IN_A_PRIVATE_STORE_OR_MANUFACTURE;
 	
 	/**
 	 * ID: 2018<br>
-	 * Message: $c1 はフィッシング中のため決闘できません。
+	 * Message: $c1 はフィッシング中のため決闘できません。<br>
+	 * Message: $c1 cannot duel because $c1 is currently fishing.
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_FISHING;
 	
 	/**
 	 * ID: 2019<br>
-	 * Message: $c1 はHPまたはMPが50％以下のため決闘できません。
+	 * Message: $c1 はHPまたはMPが50％以下のため決闘できません。<br>
+	 * Message: $c1 cannot duel because $c1's HP or MP is below 50%.
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_HP_OR_MP_IS_BELOW_50_PERCENT;
 	
 	/**
 	 * ID: 2020<br>
-	 * Message: $c1 は決闘不可能な地域（ピースゾーン、セブン サイン、水中、リスタート不可能な地域）にいるため決闘を申し込めません。
+	 * Message: $c1 は決闘不可能な地域（ピースゾーン、セブン サイン、水中、リスタート不可能な地域）にいるため決闘を申し込めません。<br>
+	 * Message: $c1 cannot make a challenge to a duel because $c1 is currently in a duel-prohibited area (Peaceful Zone / Seven Signs Zone / Near Water / Restart Prohibited Area).
 	 */
 	public static final SystemMessageId C1_CANNOT_MAKE_A_CHALLANGE_TO_A_DUEL_BECAUSE_C1_IS_CURRENTLY_IN_A_DUEL_PROHIBITED_AREA;
 	
 	/**
 	 * ID: 2021<br>
-	 * Message: $c1 は戦闘中のため、決闘できません。
+	 * Message: $c1 は戦闘中のため、決闘できません。<br>
+	 * Message: $c1 cannot duel because $c1 is currently engaged in battle.
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_ENGAGED_IN_BATTLE;
 	
 	/**
 	 * ID: 2022<br>
-	 * Message: $c1 はすでに決闘中のため決闘できません。
+	 * Message: $c1 はすでに決闘中のため決闘できません。<br>
+	 * Message: $c1 cannot duel because $c1 is already engaged in a duel.
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_ALREADY_ENGAGED_IN_A_DUEL;
 	
 	/**
 	 * ID: 2023<br>
-	 * Message: $c1 はカオティック性向のため決闘できません。
+	 * Message: $c1 はカオティック性向のため決闘できません。<br>
+	 * Message: $c1 cannot duel because $c1 is in a chaotic state.
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_IN_A_CHAOTIC_STATE;
 	
 	/**
 	 * ID: 2024<br>
-	 * Message: $c1 はオリンピアードを行っているため、決闘できません。
+	 * Message: $c1 はオリンピアードを行っているため、決闘できません。<br>
+	 * Message: $c1 cannot duel because $c1 is participating in the Olympiad.
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_PARTICIPATING_IN_THE_OLYMPIAD;
 	
 	/**
 	 * ID: 2025<br>
-	 * Message: $c1 はアジト戦遂行中のため決闘できません。
+	 * Message: $c1 はアジト戦遂行中のため決闘できません。<br>
+	 * Message: $c1 cannot duel because $c1 is participating in a clan hall war.
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_PARTICIPATING_IN_A_CLAN_HALL_WAR;
 	
 	/**
 	 * ID: 2026<br>
-	 * Message: $c1 は攻城戦に参加中のため決闘できません。
+	 * Message: $c1 は攻城戦に参加中のため決闘できません。<br>
+	 * Message: $c1 cannot duel because $c1 is participating in a siege war.
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_PARTICIPATING_IN_A_SIEGE_WAR;
 	
 	/**
 	 * ID: 2027<br>
-	 * Message: $c1 は船、ワイバーン、ストライダーなどに搭乗中のため決闘できません。
+	 * Message: $c1 は船、ワイバーン、ストライダーなどに搭乗中のため決闘できません。<br>
+	 * Message: $c1 cannot duel because $c1 is currently riding a boat, steed, or strider.
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_RIDING_A_BOAT_STEED_OR_STRIDER;
 	
 	/**
 	 * ID: 2028<br>
-	 * Message: $c1 は遠距離にいるため決闘を承諾できません。
+	 * Message: $c1 は遠距離にいるため決闘を承諾できません。<br>
+	 * Message: $c1 cannot receive a duel challenge because $c1 is too far away.
 	 */
 	public static final SystemMessageId C1_CANNOT_RECEIVE_A_DUEL_CHALLENGE_BECAUSE_C1_IS_TOO_FAR_AWAY;
 	
 	/**
 	 * ID: 2029<br>
-	 * Message: $c1 はテレポート中であるため、オリンピアードに参加できません。
+	 * Message: $c1 はテレポート中であるため、オリンピアードに参加できません。<br>
+	 * Message: $c1 is currently teleporting and cannot participate in the Olympiad.
 	 */
 	public static final SystemMessageId C1_CANNOT_PARTICIPATE_IN_OLYMPIAD_DURING_TELEPORT;
 	
 	/**
 	 * ID: 2030<br>
-	 * Message: ログイン中です。
+	 * Message: ログイン中です。<br>
+	 * Message: You are currently logging in.
 	 */
 	public static final SystemMessageId CURRENTLY_LOGGING_IN;
 	
 	/**
 	 * ID: 2031<br>
-	 * Message: しばらくお待ちください。
+	 * Message: しばらくお待ちください。<br>
+	 * Message: Please wait a moment.
 	 */
 	public static final SystemMessageId PLEASE_WAIT_A_MOMENT;
 	
 	/**
 	 * ID: 2032<br>
-	 * Message: アイテムの購入可能時間内ではありません。
+	 * Message: アイテムの購入可能時間内ではありません。<br>
+	 * Message: It is not the right time for purchasing the item.
 	 */
 	public static final SystemMessageId NOT_TIME_TO_PURCHASE_ITEM;
 	
 	/**
 	 * ID: 2033<br>
-	 * Message: インベントリの数量制限を超えたため、サブ クラスを作ることや変更ができません。
+	 * Message: インベントリの数量制限を超えたため、サブ クラスを作ることや変更ができません。<br>
+	 * Message: A sub-class cannot be created or changed because you have exceeded your inventory limit.
 	 */
 	public static final SystemMessageId NOT_SUBCLASS_WHILE_INVENTORY_FULL;
 	
 	/**
 	 * ID: 2034<br>
-	 * Message: アイテムの購入可能時間まで残り$s1時間 $s2分です。
+	 * Message: アイテムの購入可能時間まで残り$s1時間 $s2分です。<br>
+	 * Message: There are $s1 hour(s) and $s2 minute(s) remaining until the time when the item can be purchased.
 	 */
 	public static final SystemMessageId ITEM_PURCHASABLE_IN_S1_HOURS_S2_MINUTES;
 	
 	/**
 	 * ID: 2035<br>
-	 * Message: アイテムの購入可能時間まで残り $s1分です。
+	 * Message: アイテムの購入可能時間まで残り $s1分です。<br>
+	 * Message: There are $s1 minute(s) remaining until the time when the item can be purchased.
 	 */
 	public static final SystemMessageId ITEM_PURCHASABLE_IN_S1_MINUTES;
 	
 	/**
 	 * ID: 2036<br>
-	 * Message: パーティがロックされているため招待できません。
+	 * Message: パーティがロックされているため招待できません。<br>
+	 * Message: Unable to invite because the party is locked.
 	 */
 	public static final SystemMessageId NO_INVITE_PARTY_LOCKED;
 	
 	/**
 	 * ID: 2037<br>
-	 * Message: キャラクターを生成できません。該当サーバーは以前生成したキャラクターがいない場合は、新規キャラクターを生成できないように制限されています。他のサーバーをご利用ください。
+	 * Message: キャラクターを生成できません。該当サーバーは以前生成したキャラクターがいない場合は、新規キャラクターを生成できないように制限されています。他のサーバーをご利用ください。<br>
+	 * Message: Unable to create character. You are unable to create a new character on the selected server. A restriction is in place which restricts users from creating characters on different servers where no previous characters exists. Please choose another server.
 	 */
 	public static final SystemMessageId CANT_CREATE_CHARACTER_DURING_RESTRICTION;
 	
 	/**
 	 * ID: 2038<br>
-	 * Message: アイテムのドロップができないアカウントです。
+	 * Message: アイテムのドロップができないアカウントです。<br>
+	 * Message: Some Lineage II features have been limited for free trials. Trial accounts aren't allowed to drop items and/or Adena. To unlock all of the features of Lineage II, purchase the full version today.
 	 */
 	public static final SystemMessageId ACCOUNT_CANT_DROP_ITEMS;
 	
 	/**
 	 * ID: 2039<br>
-	 * Message: アイテムのトレードができないアカウントです。
+	 * Message: アイテムのトレードができないアカウントです。<br>
+	 * Message: Some Lineage II features have been limited for free trials. Trial accounts aren't allowed to trade items and/or Adena. To unlock all of the features of Lineage II, purchase the full version today.
 	 */
 	public static final SystemMessageId ACCOUNT_CANT_TRADE_ITEMS;
 	
 	/**
 	 * ID: 2040<br>
-	 * Message: 対象のユーザーとアイテムのトレードができません。
+	 * Message: 対象のユーザーとアイテムのトレードができません。<br>
+	 * Message: Cannot trade items with the targeted user.
 	 */
 	public static final SystemMessageId CANT_TRADE_WITH_TARGET;
 	
 	/**
 	 * ID: 2041<br>
-	 * Message: 個人商店を開くことはできません。
+	 * Message: 個人商店を開くことはできません。<br>
+	 * Message: Some Lineage II features have been limited for free trials. Trial accounts aren't allowed to setup private stores. To unlock all of the features of Lineage II, purchase the full version today.
 	 */
 	public static final SystemMessageId CANT_OPEN_PRIVATE_STORE;
 	
 	/**
 	 * ID: 2042<br>
-	 * Message: お客様のアカウントは、料金未納により一時的にご利用が制限されている状態です。\n詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、料金未納により一時的にご利用が制限されている状態です。\n詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: This account has been suspended for non-payment based on the cell phone payment agreement. Please submit proof of payment by fax (02-2186-3499) and contact customer service at 1600-0020.
 	 */
 	public static final SystemMessageId ILLEGAL_USE23;
 	
 	/**
 	 * ID: 2043<br>
-	 * Message: インベントリの重量または個数が制限を越えているため、クエストの精算ができません。インベントリにスペースを確保してからやり直してください。
+	 * Message: インベントリの重量または個数が制限を越えているため、クエストの精算ができません。インベントリにスペースを確保してからやり直してください。<br>
+	 * Message: You have exceeded your inventory volume limit and may not take this quest item. Please make room in your inventory and try again
 	 */
 	public static final SystemMessageId YOU_HAVE_EXCEEDED_YOUR_INVENTORY_VOLUME_LIMIT_AND_CANNOT_TAKE_THIS_QUESTITEM;
 	
 	/**
 	 * ID: 2044<br>
-	 * Message: 個人工房が開けないアカウントです。
+	 * Message: 個人工房が開けないアカウントです。<br>
+	 * Message: Some Lineage II features have been limited for free trials. Trial accounts aren't allowed to set up private manufacturing stores. To unlock all of the features of Lineage II, purchase the full version today.
 	 */
 	public static final SystemMessageId CANT_SETUP_PRIVATE_WORKSHOP;
 	
 	/**
 	 * ID: 2045<br>
-	 * Message: 個人工房がご利用できないアカウントです。
+	 * Message: 個人工房がご利用できないアカウントです。<br>
+	 * Message: Some Lineage II features have been limited for free trials. Trial accounts aren't allowed to use private manufacturing stores. To unlock all of the features of Lineage II, purchase the full version today.
 	 */
 	public static final SystemMessageId CANT_USE_PRIVATE_WORKSHOP;
 	
 	/**
 	 * ID: 2046<br>
-	 * Message: 個人商店をご利用できないアカウントです。
+	 * Message: 個人商店をご利用できないアカウントです。<br>
+	 * Message: Some Lineage II features have been limited for free trials. Trial accounts aren't allowed buy items from private stores. To unlock all of the features of Lineage II, purchase the full version today.
 	 */
 	public static final SystemMessageId CANT_USE_PRIVATE_STORES;
 	
 	/**
 	 * ID: 2047<br>
-	 * Message: 血盟倉庫をご利用できないアカウントです。
+	 * Message: 血盟倉庫をご利用できないアカウントです。<br>
+	 * Message: Some Lineage II features have been limited for free trials. Trial accounts aren't allowed to access clan warehouses. To unlock all of the features of Lineage II, purchase the full version today.
 	 */
 	public static final SystemMessageId CANT_USE_CLAN_WH;
 	
 	/**
 	 * ID: 2048<br>
-	 * Message: $s1ですでに使用されているショートカット キーと重複しています。重複しているショートカット キーをリセットし、入力したショートカット キーを使いますか。
+	 * Message: $s1ですでに使用されているショートカット キーと重複しています。重複しているショートカット キーをリセットし、入力したショートカット キーを使いますか。<br>
+	 * Message: The shortcut in use conflicts with $s1. Do you wish to reset the conflicting shortcuts and use the saved shortcut?
 	 */
 	public static final SystemMessageId CONFLICTING_SHORTCUT;
 	
 	/**
 	 * ID: 2049<br>
-	 * Message: ショートカットキーを適用してサーバーに保存します。よろしいですか。
+	 * Message: ショートカットキーを適用してサーバーに保存します。よろしいですか。<br>
+	 * Message: The shortcut will be applied and saved in the server. Will you continue?
 	 */
 	public static final SystemMessageId CONFIRM_SHORTCUT_WILL_SAVED_ON_SERVER;
 	
 	/**
 	 * ID: 2050<br>
-	 * Message: $s1血盟が旗の掲揚を行います。
+	 * Message: $s1血盟が旗の掲揚を行います。<br>
+	 * Message: $s1 Blood Pledge is trying to display a flag.
 	 */
 	public static final SystemMessageId S1_TRYING_RAISE_FLAG;
 	
 	/**
 	 * ID: 2051<br>
-	 * Message: お客様は、まだリネージュIIのプレイに同意されていないため、リネージュIIのプレイはできません。公式サイト（http://lineage2.plaync.jp/）でゲームに同意してから、もう一度ログインしてください。
+	 * Message: お客様は、まだリネージュIIのプレイに同意されていないため、リネージュIIのプレイはできません。公式サイト（http://lineage2.plaync.jp/）でゲームに同意してから、もう一度ログインしてください。<br>
+	 * Message: You must accept the User Agreement before this account can access Lineage II.
 	 */
 	public static final SystemMessageId MUST_ACCEPT_AGREEMENT;
 	
 	/**
 	 * ID: 2052<br>
-	 * Message: お客様のアカウントは保護者の同意を得ていません。\n保護者の同意を済ませた後で、もう一度ログインしてください。
+	 * Message: お客様のアカウントは保護者の同意を得ていません。\n保護者の同意を済ませた後で、もう一度ログインしてください。<br>
+	 * Message: A guardian's consent is required before this account can be used to play Lineage II.
 	 */
 	public static final SystemMessageId NEED_CONSENT_TO_PLAY_THIS_ACCOUNT;
 	
 	/**
 	 * ID: 2053<br>
-	 * Message: お客様のアカウントは、ゲームに同意していないか、解約申請中となっています。\nゲームに同意するか、解約申請をキャンセルした後で、もう一度ログインしてください。
+	 * Message: お客様のアカウントは、ゲームに同意していないか、解約申請中となっています。\nゲームに同意するか、解約申請をキャンセルした後で、もう一度ログインしてください。<br>
+	 * Message: This account has declined the User Agreement or is pending a withdrawl request.
 	 */
 	public static final SystemMessageId ACCOUNT_DECLINED_AGREEMENT_OR_PENDING;
 	
 	/**
 	 * ID: 2054<br>
-	 * Message: お客様のアカウントは、すべてのサービスのご利用が制限されている状態です。\n詳しくは公式サイト（http://lineage2.plaync.jp/）までお問い合わせください。
+	 * Message: お客様のアカウントは、すべてのサービスのご利用が制限されている状態です。\n詳しくは公式サイト（http://lineage2.plaync.jp/）までお問い合わせください。<br>
+	 * Message: This account has been suspended.
 	 */
 	public static final SystemMessageId ACCOUNT_SUSPENDED;
 	
 	/**
 	 * ID: 2055<br>
-	 * Message: お客様のアカウントは、すべてのゲーム サービスのご利用ができないように制限されています。\n詳しくは公式サイト（http://lineage2.plaync.jp/）までお問い合わせください。
+	 * Message: お客様のアカウントは、すべてのゲーム サービスのご利用ができないように制限されています。\n詳しくは公式サイト（http://lineage2.plaync.jp/）までお問い合わせください。<br>
+	 * Message: Your account has been suspended from all game services.
 	 */
 	public static final SystemMessageId ACCOUNT_SUSPENDED_FROM_ALL_SERVICES;
 	
 	/**
 	 * ID: 2056<br>
-	 * Message: お客様のアカウントは統合アカウントに変更されたため、今後接続できません。\n変更後の統合アカウントでもう一度ログインしてください。
+	 * Message: お客様のアカウントは統合アカウントに変更されたため、今後接続できません。\n変更後の統合アカウントでもう一度ログインしてください。<br>
+	 * Message: Your account has been converted to an integrated account, and is unable to be accessed.
 	 */
 	public static final SystemMessageId ACCOUNT_CONVERTED;
 	
 	/**
 	 * ID: 2057<br>
-	 * Message: あなたは$c1を遮断しました。
+	 * Message: あなたは$c1を遮断しました。<br>
+	 * Message: You have blocked $c1.
 	 */
 	public static final SystemMessageId BLOCKED_C1;
 	
 	/**
 	 * ID: 2058<br>
-	 * Message: すでに変身状態であるため、変身ができません。
+	 * Message: すでに変身状態であるため、変身ができません。<br>
+	 * Message: You are already polymorphed and cannot polymorph again.
 	 */
 	public static final SystemMessageId YOU_ALREADY_POLYMORPHED_AND_CANNOT_POLYMORPH_AGAIN;
 	
 	/**
 	 * ID: 2059<br>
-	 * Message: 周りが狭いため、変身できません。別の場所に移動してからもう一度行ってください。
+	 * Message: 周りが狭いため、変身できません。別の場所に移動してからもう一度行ってください。<br>
+	 * Message: The nearby area is too narrow for you to polymorph. Please move to another area and try to polymorph again.
 	 */
 	public static final SystemMessageId AREA_UNSUITABLE_FOR_POLYMORPH;
 	
 	/**
 	 * ID: 2060<br>
-	 * Message: 水の中ではお望みの姿に変身できません。
+	 * Message: 水の中ではお望みの姿に変身できません。<br>
+	 * Message: You cannot polymorph into the desired form in water.
 	 */
 	public static final SystemMessageId YOU_CANNOT_POLYMORPH_INTO_THE_DESIRED_FORM_IN_WATER;
 	
 	/**
 	 * ID: 2061<br>
-	 * Message: 変身後遺症が続いているため変身できません。
+	 * Message: 変身後遺症が続いているため変身できません。<br>
+	 * Message: You are still under transform penalty and cannot be polymorphed.
 	 */
 	public static final SystemMessageId CANT_MORPH_DUE_TO_MORPH_PENALTY;
 	
 	/**
 	 * ID: 2062<br>
-	 * Message: 召喚獣、ペットを召喚した状態では変身できません。
+	 * Message: 召喚獣、ペットを召喚した状態では変身できません。<br>
+	 * Message: You cannot polymorph when you have summoned a servitor/pet.
 	 */
 	public static final SystemMessageId YOU_CANNOT_POLYMORPH_WHEN_YOU_HAVE_SUMMONED_A_SERVITOR;
 	
 	/**
 	 * ID: 2063<br>
-	 * Message: ペットに乗っている状態では変身できません。
+	 * Message: ペットに乗っている状態では変身できません。<br>
+	 * Message: You cannot polymorph while riding a pet.
 	 */
 	public static final SystemMessageId YOU_CANNOT_POLYMORPH_WHILE_RIDING_A_PET;
 	
 	/**
 	 * ID: 2064<br>
-	 * Message: 特殊なスキルの影響を受けている間は変身できません。
+	 * Message: 特殊なスキルの影響を受けている間は変身できません。<br>
+	 * Message: You cannot polymorph while under the effect of a special skill
 	 */
 	public static final SystemMessageId CANT_MORPH_WHILE_UNDER_SPECIAL_SKILL_EFFECT;
 	
 	/**
 	 * ID: 2065<br>
-	 * Message: 該当アイテムは解除できません。
+	 * Message: 該当アイテムは解除できません。<br>
+	 * Message: That item cannot be taken off
 	 */
 	public static final SystemMessageId ITEM_CANNOT_BE_TAKEN_OFF;
 	
 	/**
 	 * ID: 2066<br>
-	 * Message: 該当の武器は攻撃ができません。
+	 * Message: 該当の武器は攻撃ができません。<br>
+	 * Message: That weapon cannot perform any attacks.
 	 */
 	public static final SystemMessageId THAT_WEAPON_CANT_ATTACK;
 	
 	/**
 	 * ID: 2067<br>
-	 * Message: 該当の武器は武器スキル以外のその他のスキルは使用できません。
+	 * Message: 該当の武器は武器スキル以外のその他のスキルは使用できません。<br>
+	 * Message: That weapon cannot use any other skill except the weapon's skill.
 	 */
 	public static final SystemMessageId WEAPON_CAN_USE_ONLY_WEAPON_SKILL;
 	
 	/**
 	 * ID: 2068<br>
-	 * Message: エンチャント スキルのアントレインに必要なアイテムが不足しています。
+	 * Message: エンチャント スキルのアントレインに必要なアイテムが不足しています。<br>
+	 * Message: You do not have all of the items needed to untrain the enchant skill.
 	 */
 	public static final SystemMessageId YOU_DONT_HAVE_ALL_ITENS_NEEDED_TO_UNTRAIN_SKILL_ENCHANT;
 	
 	/**
 	 * ID: 2069<br>
-	 * Message: エンチャント スキルのアントレインに成功しました。エンチャント スキル$s1のエンチャントLvが1低下しました。
+	 * Message: エンチャント スキルのアントレインに成功しました。エンチャント スキル$s1のエンチャントLvが1低下しました。<br>
+	 * Message: Untrain of enchant skill was successful. Current level of enchant skill $s1 has been decreased by 1.
 	 */
 	public static final SystemMessageId UNTRAIN_SUCCESSFUL_SKILL_S1_ENCHANT_LEVEL_DECREASED_BY_ONE;
 	
 	/**
 	 * ID: 2070<br>
-	 * Message: エンチャント スキルのアントレインに成功しました。エンチャント スキル$s1のエンチャントLvが0になりエンチャント スキルが初期化されます。
+	 * Message: エンチャント スキルのアントレインに成功しました。エンチャント スキル$s1のエンチャントLvが0になりエンチャント スキルが初期化されます。<br>
+	 * Message: Untrain of enchant skill was successful. Current level of enchant skill $s1 became 0 and enchant skill will be initialized.
 	 */
 	public static final SystemMessageId UNTRAIN_SUCCESSFUL_SKILL_S1_ENCHANT_LEVEL_RESETED;
 	
 	/**
 	 * ID: 2071<br>
-	 * Message: エンチャント スキル ルート チェンジに必要なアイテムが足りません。
+	 * Message: エンチャント スキル ルート チェンジに必要なアイテムが足りません。<br>
+	 * Message: You do not have all of the items needed to enchant skill route change.
 	 */
 	public static final SystemMessageId YOU_DONT_HAVE_ALL_ITENS_NEEDED_TO_CHANGE_SKILL_ENCHANT_ROUTE;
 	
 	/**
 	 * ID: 2072<br>
-	 * Message: エンチャント スキル ルート チェンジに成功しました。エンチャント スキル$s1のLvが$s2低下しました。
+	 * Message: エンチャント スキル ルート チェンジに成功しました。エンチャント スキル$s1のLvが$s2低下しました。<br>
+	 * Message: Enchant skill route change was successful. Lv of enchant skill $s1 has been decreased by $s2.
 	 */
 	public static final SystemMessageId SKILL_ENCHANT_CHANGE_SUCCESSFUL_S1_LEVEL_WAS_DECREASED_BY_S2;
 	
 	/**
 	 * ID: 2073<br>
-	 * Message: エンチャント スキル ルート チェンジに成功しました。エンチャントスキル$s1のLvが維持されます。
+	 * Message: エンチャント スキル ルート チェンジに成功しました。エンチャントスキル$s1のLvが維持されます。<br>
+	 * Message: Enchant skill route change was successful. Lv of enchant skill $s1 will remain.
 	 */
 	public static final SystemMessageId SKILL_ENCHANT_CHANGE_SUCCESSFUL_S1_LEVEL_WILL_REMAIN;
 	
 	/**
 	 * ID: 2074<br>
-	 * Message: スキル エンチャントに失敗しました。エンチャント スキル$s1のエンチャントLvが維持されます。
+	 * Message: スキル エンチャントに失敗しました。エンチャント スキル$s1のエンチャントLvが維持されます。<br>
+	 * Message: Skill enchant failed. Current level of enchant skill $s1 will remain unchanged.
 	 */
 	public static final SystemMessageId SKILL_ENCHANT_FAILED_S1_LEVEL_WILL_REMAIN;
 	
 	/**
 	 * ID: 2075<br>
-	 * Message: 競売期間ではありません。
+	 * Message: 競売期間ではありません。<br>
+	 * Message: It is not auction period.
 	 */
 	public static final SystemMessageId NO_AUCTION_PERIOD;
 	
 	/**
 	 * ID: 2076<br>
-	 * Message: 最高入札価格が1000億を超えるため、入札ができません。
+	 * Message: 最高入札価格が1000億を超えるため、入札ができません。<br>
+	 * Message: Bidding is not allowed because the maximum bidding price exceeds 100 billion.
 	 */
 	public static final SystemMessageId BID_CANT_EXCEED_100_BILLION;
 	
 	/**
 	 * ID: 2077<br>
-	 * Message: 最高入札価格より高い金額で入札してください。
+	 * Message: 最高入札価格より高い金額で入札してください。<br>
+	 * Message: Your bid must be higher than the current highest bid.
 	 */
 	public static final SystemMessageId BID_MUST_BE_HIGHER_THAN_CURRENT_BID;
 	
 	/**
 	 * ID: 2078<br>
-	 * Message: 入札に必要なアデナが足りません。
+	 * Message: 入札に必要なアデナが足りません。<br>
+	 * Message: You do not have enough adena for this bid.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_ADENA_FOR_THIS_BID;
 	
 	/**
 	 * ID: 2079<br>
-	 * Message: すでに最高額入札となったか、流札となった金額があります。
+	 * Message: すでに最高額入札となったか、流札となった金額があります。<br>
+	 * Message: You currently have the highest bid, but the reserve has not been met.
 	 */
 	public static final SystemMessageId HIGHEST_BID_BUT_RESERVE_NOT_MET;
 	
 	/**
 	 * ID: 2080<br>
-	 * Message: 上位入札者により入札がキャンセルされました。
+	 * Message: 上位入札者により入札がキャンセルされました。<br>
+	 * Message: You have been outbid.
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_OUTBID;
 	
 	/**
 	 * ID: 2081<br>
-	 * Message: 流札となった金額がありません。
+	 * Message: 流札となった金額がありません。<br>
+	 * Message: There are no funds presently due to you.
 	 */
 	public static final SystemMessageId NO_FUNDS_DUE;
 	
 	/**
 	 * ID: 2082<br>
-	 * Message: インベントリのアデナが許容値を超えます。
+	 * Message: インベントリのアデナが許容値を超えます。<br>
+	 * Message: You have exceeded the total amount of adena allowed in inventory.
 	 */
 	public static final SystemMessageId EXCEEDED_MAX_ADENA_AMOUNT_IN_INVENTORY;
 	
 	/**
 	 * ID: 2083<br>
-	 * Message: 競売が始まります。
+	 * Message: 競売が始まります。<br>
+	 * Message: The auction has begun.
 	 */
 	public static final SystemMessageId AUCTION_BEGUN;
 	
 	/**
 	 * ID: 2084<br>
-	 * Message: 要塞に敵の血盟が侵入しました。
+	 * Message: 要塞に敵の血盟が侵入しました。<br>
+	 * Message: Enemy Blood Pledges have intruded into the fortress.
 	 */
 	public static final SystemMessageId ENEMIES_INTRUDED_FORTRESS;
 	
 	/**
 	 * ID: 2085<br>
-	 * Message: 呪われた武器を所有した状態では叫びとトレード チャットは利用できません。
+	 * Message: 呪われた武器を所有した状態では叫びとトレード チャットは利用できません。<br>
+	 * Message: Shout and trade chatting cannot be used while possessing a cursed weapon.
 	 */
 	public static final SystemMessageId SHOUT_AND_TRADE_CHAT_CANNOT_BE_USED_WHILE_POSSESSING_CURSED_WEAPON;
 	
 	/**
 	 * ID: 2086<br>
-	 * Message: $s1分後にユーザー$c2についてのBOT検査が終了します。
+	 * Message: $s1分後にユーザー$c2についてのBOT検査が終了します。<br>
+	 * Message: Search on user $s2 for third-party program use will be completed in $s1 minute(s).
 	 */
 	public static final SystemMessageId SEARCH_ON_S2_FOR_BOT_USE_COMPLETED_IN_S1_MINUTES;
 	
 	/**
 	 * ID: 2087<br>
-	 * Message: 要塞が攻撃されています！
+	 * Message: 要塞が攻撃されています！<br>
+	 * Message: A fortress is under attack!
 	 */
 	public static final SystemMessageId A_FORTRESS_IS_UNDER_ATTACK;
 	
 	/**
 	 * ID: 2088<br>
-	 * Message: 要塞戦開始まで残り$s1分です。
+	 * Message: 要塞戦開始まで残り$s1分です。<br>
+	 * Message: $s1 minute(s) until the fortress battle starts.
 	 */
 	public static final SystemMessageId S1_MINUTES_UNTIL_THE_FORTRESS_BATTLE_STARTS;
 	
 	/**
 	 * ID: 2089<br>
-	 * Message: 要塞戦開始まで残り$s1秒です。
+	 * Message: 要塞戦開始まで残り$s1秒です。<br>
+	 * Message: $s1 minute(s) until the fortress battle starts.
 	 */
 	public static final SystemMessageId S1_SECONDS_UNTIL_THE_FORTRESS_BATTLE_STARTS;
 	
 	/**
 	 * ID: 2090<br>
-	 * Message: $s1の要塞戦が始まりました。
+	 * Message: $s1の要塞戦が始まりました。<br>
+	 * Message: The fortress battle $s1 has begun.
 	 */
 	public static final SystemMessageId THE_FORTRESS_BATTLE_S1_HAS_BEGUN;
 	
 	/**
 	 * ID: 2091<br>
-	 * Message: お客様のアカウントはパスワードの変更をしなければ接続ができません。\n公式サイト（http://lineage2.plaync.jp/）でパスワードを変更した後で、もう一度やり直してください。
+	 * Message: お客様のアカウントはパスワードの変更をしなければ接続ができません。\n公式サイト（http://lineage2.plaync.jp/）でパスワードを変更した後で、もう一度やり直してください。<br>
+	 * Message: Your account can only be used after changing your password and quiz.
 	 */
 	public static final SystemMessageId CHANGE_PASSWORT_FIRST;
 	
 	/**
 	 * ID: 2092<br>
-	 * Message: 流札となった金額があるため入札ができません。
+	 * Message: 流札となった金額があるため入札ができません。<br>
+	 * Message: You cannot bid due to a passed-in price.
 	 */
 	public static final SystemMessageId CANNOT_BID_DUE_TO_PASSED_IN_PRICE;
 	
 	/**
 	 * ID: 2093<br>
-	 * Message: 競売の流札となった金額は$s1アデナです。流札となった金額を返金しますか。
+	 * Message: 競売の流札となった金額は$s1アデナです。流札となった金額を返金しますか。<br>
+	 * Message: The passed-in price is $s1 adena. Would you like to return the passed-in price?
 	 */
 	public static final SystemMessageId PASSED_IN_PRICE_IS_S1_ADENA_WOULD_YOU_LIKE_TO_RETURN_IT;
 	
 	/**
 	 * ID: 2094<br>
-	 * Message: 他のユーザーが購入中です。しばらく経ってからもう一度お試しください。
+	 * Message: 他のユーザーが購入中です。しばらく経ってからもう一度お試しください。<br>
+	 * Message: Another user is purchasing. Please try again later.
 	 */
 	public static final SystemMessageId ANOTHER_USER_PURCHASING_TRY_AGAIN_LATER;
 	
 	/**
 	 * ID: 2095<br>
-	 * Message: 叫びができないアカウントです。
+	 * Message: 叫びができないアカウントです。<br>
+	 * Message: Some Lineage II features have been limited for free trials. Trial accounts have limited chatting capabilities. To unlock all of the features of Lineage II, purchase the full version today.
 	 */
 	public static final SystemMessageId ACCOUNT_CANNOT_SHOUT;
 	
 	/**
 	 * ID: 2096<br>
-	 * Message: $c1 が入場できない位置にいるため進行できません。
+	 * Message: $c1 が入場できない位置にいるため進行できません。<br>
+	 * Message: $c1 is in a location which cannot be entered, therefore it cannot be processed.
 	 */
 	public static final SystemMessageId C1_IS_IN_LOCATION_THAT_CANNOT_BE_ENTERED;
 	
 	/**
 	 * ID: 2097<br>
-	 * Message: $c1 のレベル条件が満たないため入場できません。
+	 * Message: $c1 のレベル条件が満たないため入場できません。<br>
+	 * Message: $c1's level requirement is not sufficient and cannot be entered.
 	 */
 	public static final SystemMessageId C1_LEVEL_REQUIREMENT_NOT_SUFFICIENT;
 	
 	/**
 	 * ID: 2098<br>
-	 * Message: $c1 のクエスト条件が満たないため入場できません。
+	 * Message: $c1 のクエスト条件が満たないため入場できません。<br>
+	 * Message: $c1's quest requirement is not sufficient and cannot be entered.
 	 */
 	public static final SystemMessageId C1_QUEST_REQUIREMENT_NOT_SUFFICIENT;
 	
 	/**
 	 * ID: 2099<br>
-	 * Message: $c1 のアイテム条件が満たないため入場できません。
+	 * Message: $c1 のアイテム条件が満たないため入場できません。<br>
+	 * Message: $c1's item requirement is not sufficient and cannot be entered.
 	 */
 	public static final SystemMessageId C1_ITEM_REQUIREMENT_NOT_SUFFICIENT;
 	
 	/**
 	 * ID: 2100<br>
-	 * Message: $c1 が再入場可能時間にならないため、入場できません。
+	 * Message: $c1 が再入場可能時間にならないため、入場できません。<br>
+	 * Message: $c1 may not re-enter yet.
 	 */
 	public static final SystemMessageId C1_MAY_NOT_REENTER_YET;
 	
 	/**
 	 * ID: 2101<br>
-	 * Message: 現在パーティ状態ではないため入場できません。
+	 * Message: 現在パーティ状態ではないため入場できません。<br>
+	 * Message: You are not currently in a party, so you cannot enter.
 	 */
 	public static final SystemMessageId NOT_IN_PARTY_CANT_ENTER;
 	
 	/**
 	 * ID: 2102<br>
-	 * Message: 該当パーティが入場定員数を超えたため、入場できません。
+	 * Message: 該当パーティが入場定員数を超えたため、入場できません。<br>
+	 * Message: You cannot enter due to the party having exceeded the limit.
 	 */
 	public static final SystemMessageId PARTY_EXCEEDED_THE_LIMIT_CANT_ENTER;
 	
 	/**
 	 * ID: 2103<br>
-	 * Message: 現在、連合チャンネルに所属していないため入場できません。
+	 * Message: 現在、連合チャンネルに所属していないため入場できません。<br>
+	 * Message: You cannot enter because you are not associated with the current command channel.
 	 */
 	public static final SystemMessageId NOT_IN_COMMAND_CHANNEL_CANT_ENTER;
 	
 	/**
 	 * ID: 2104<br>
-	 * Message: 該当インスタント ゾーンの最大生成数を超えたため、入場できません。
+	 * Message: 該当インスタント ゾーンの最大生成数を超えたため、入場できません。<br>
+	 * Message: The maximum number of instance zones has been exceeded. You cannot enter.
 	 */
 	public static final SystemMessageId MAXIMUM_INSTANCE_ZONE_NUMBER_EXCEEDED_CANT_ENTER;
 	
 	/**
 	 * ID: 2105<br>
-	 * Message: 他のインスタント ゾーンに入場した状態であるため、該当ダンジョンに入場できません。
+	 * Message: 他のインスタント ゾーンに入場した状態であるため、該当ダンジョンに入場できません。<br>
+	 * Message: You have entered another instance zone, therefore you cannot enter corresponding dungeon.
 	 */
 	public static final SystemMessageId ALREADY_ENTERED_ANOTHER_INSTANCE_CANT_ENTER;
 	
 	/**
 	 * ID: 2106<br>
-	 * Message: 該当ダンジョンの利用時間終了まで残り$s1分です。時間が終了するとダンジョンの外へ強制移動します。
+	 * Message: 該当ダンジョンの利用時間終了まで残り$s1分です。時間が終了するとダンジョンの外へ強制移動します。<br>
+	 * Message: This dungeon will expire in $s1 minute(s). You will be forced out of the dungeon when the time expires.
 	 */
 	public static final SystemMessageId DUNGEON_EXPIRES_IN_S1_MINUTES;
 	
 	/**
 	 * ID: 2107<br>
-	 * Message: インスタント ゾーンが$s1分後に削除され、該当時間終了後にダンジョンの外へ強制移動します。
+	 * Message: インスタント ゾーンが$s1分後に削除され、該当時間終了後にダンジョンの外へ強制移動します。<br>
+	 * Message: This instance zone will be terminated in $s1 minute(s). You will be forced out of the dungeon when the time expires.
 	 */
 	public static final SystemMessageId INSTANCE_ZONE_TERMINATES_IN_S1_MINUTES;
 	
 	/**
 	 * ID: 2108<br>
-	 * Message: お客様のアカウントは、不正ユーティリティの利用が認められたため10日間、ゲームサービスすべてのご利用が制限されています。今後同様の違反行為が確認された場合、永久に制限されますのでご注意ください。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは、不正ユーティリティの利用が認められたため10日間、ゲームサービスすべてのご利用が制限されています。今後同様の違反行為が確認された場合、永久に制限されますのでご注意ください。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE24;
 	
 	/**
 	 * ID: 2109<br>
-	 * Message: サーバーが統合された為、既存でご使用のキャラクター$s1は、他の名前と重複しています。変更するキャラクター名を入力してください。
+	 * Message: サーバーが統合された為、既存でご使用のキャラクター$s1は、他の名前と重複しています。変更するキャラクター名を入力してください。<br>
+	 * Message: The server has been integrated, and your character, $s1, has overlapped with another name. Please enter a new name for your character
 	 */
 	public static final SystemMessageId CHARACTER_NAME_OVERLAPPING_RENAME_CHARACTER;
 	
 	/**
 	 * ID: 2110<br>
-	 * Message: ご入力の名前は既に存在しているか、ご利用ができない名前です。変更するキャラクター名をもう一度ご入力ください。
+	 * Message: ご入力の名前は既に存在しているか、ご利用ができない名前です。変更するキャラクター名をもう一度ご入力ください。<br>
+	 * Message: This character name already exists or is an invalid name. Please enter a new name
 	 */
 	public static final SystemMessageId CHARACTER_NAME_INVALID_RENAME_CHARACTER;
 	
 	/**
 	 * ID: 2111<br>
-	 * Message: 指定のショートカットキーを入力します。
+	 * Message: 指定のショートカットキーを入力します。<br>
+	 * Message: Enter a shortcut to assign.
 	 */
 	public static final SystemMessageId ENTER_SHORTCUT_TO_ASSIGN;
 	
 	/**
 	 * ID: 2112<br>
-	 * Message: 補助キーはCTRL、ALT、SHIFTキーが使用でき、一度に二つの補助キーを入力できます。\n例) 「CTRL + ALT + A」
+	 * Message: 補助キーはCTRL、ALT、SHIFTキーが使用でき、一度に二つの補助キーを入力できます。\n例) 「CTRL + ALT + A」<br>
+	 * Message: Sub-key can be CTRL, ALT, SHIFT and you may enter two sub-keys at a time.
 	 */
 	public static final SystemMessageId SUBKEY_EXPLANATION1;
 	
 	/**
 	 * ID: 2113<br>
-	 * Message: 拡張 補助キー モードではCTRL、ALT、SHIFTキーを補助キーとして活用でき、一般ショートカットキー モードでは補助キーでALTのみ使用できます。
+	 * Message: 拡張 補助キー モードではCTRL、ALT、SHIFTキーを補助キーとして活用でき、一般ショートカットキー モードでは補助キーでALTのみ使用できます。<br>
+	 * Message: (Sub key explanation)
 	 */
 	public static final SystemMessageId SUBKEY_EXPLANATION2;
 	
 	/**
 	 * ID: 2114<br>
-	 * Message: 拡張 補助キー モードに設定すると、既存でCtrlとShiftに指定されていた強制攻撃とその場での攻撃がAlt + QとAlt + Eに変更され、CTRLキーとSHIFTキーを別のショートカットキーの指定キーで使用可能となるように変更されます。よろしいですか。
+	 * Message: 拡張 補助キー モードに設定すると、既存でCtrlとShiftに指定されていた強制攻撃とその場での攻撃がAlt + QとAlt + Eに変更され、CTRLキーとSHIFTキーを別のショートカットキーの指定キーで使用可能となるように変更されます。よろしいですか。<br>
+	 * Message: Forced attack and stand-in-place attacks assigned previously to Ctrl and Shift will be changed to Alt + Q and Alt + E when set as expanded sub-key mode, and CTRL and SHIFT will be available to assign to another shortcut. Will you continue?
 	 */
 	public static final SystemMessageId SUBKEY_EXPLANATION3;
 	
 	/**
 	 * ID: 2115<br>
-	 * Message: お客様のアカウントはNCコインに関するバグを悪用したことが認められたため、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントはNCコインに関するバグを悪用したことが認められたため、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE25;
 	
 	/**
 	 * ID: 2116<br>
-	 * Message: お客様のアカウントは無料で支給されたコインを悪用したことが認められたためご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは無料で支給されたコインを悪用したことが認められたためご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE26;
 	
 	/**
 	 * ID: 2117<br>
-	 * Message: お客様のアカウントは他人の名義を利用した加入などが認められたため、一時的にゲームサービスのご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは他人の名義を利用した加入などが認められたため、一時的にゲームサービスのご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE27;
 	
 	/**
 	 * ID: 2118<br>
-	 * Message: お客様のアカウントは決済の盗用が認められたため、ゲームサービスすべてのご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは決済の盗用が認められたため、ゲームサービスすべてのご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE28;
 	
 	/**
 	 * ID: 2119<br>
-	 * Message: お客様のアカウントは決済の盗用が認められため、ゲームサービスすべてのご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは決済の盗用が認められため、ゲームサービスすべてのご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE29;
 	
 	/**
 	 * ID: 2120<br>
-	 * Message: お客様のアカウントは不正ユーティリティの利用が認められたため、10日間ゲームサービスの利用がすべて制限されています。今後同様の違反行為が確認された場合は永久に制限されますのでご注意ください。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは不正ユーティリティの利用が認められたため、10日間ゲームサービスの利用がすべて制限されています。今後同様の違反行為が確認された場合は永久に制限されますのでご注意ください。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE30;
 	
 	/**
 	 * ID: 2121<br>
-	 * Message: お客様のアカウントは不正ユーティリティの利用が認められたため、ゲームサービスすべての利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは不正ユーティリティの利用が認められたため、ゲームサービスすべての利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE31;
 	
 	/**
 	 * ID: 2122<br>
-	 * Message: お客様のアカウントは不正ユーティリティの利用が認められたため、ゲームサービスすべての利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは不正ユーティリティの利用が認められたため、ゲームサービスすべての利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE32;
 	
 	/**
 	 * ID: 2123<br>
-	 * Message: お客様のアカウントはお客様からの要請によりゲームサービスすべての利用ができないようになっています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントはお客様からの要請によりゲームサービスすべての利用ができないようになっています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE33;
 	
 	/**
 	 * ID: 2124<br>
-	 * Message: サーバーが統合され既存にご使用されていた血盟名である$s1は、他の名前と重複しています。変更する血盟名を入力してください。
+	 * Message: サーバーが統合され既存にご使用されていた血盟名である$s1は、他の名前と重複しています。変更する血盟名を入力してください。<br>
+	 * Message: The server has been integrated, and your Clan name, $s1, has been overlapped with another name. Please enter the Clan name to be changed.
 	 */
 	public static final SystemMessageId CLAN_NAME_OVERLAPPING_RENAME_CLAN;
 	
 	/**
 	 * ID: 2125<br>
-	 * Message: ご入力の名前は既に存在しているかご使用ができない名前です。変更する血盟名をもう一度入力してください。
+	 * Message: ご入力の名前は既に存在しているかご使用ができない名前です。変更する血盟名をもう一度入力してください。<br>
+	 * Message: This name already exists or is an invalid name. Please enter the Clan name to be changed.
 	 */
 	public static final SystemMessageId CLAN_NAME_INVALID_RENAME_CLAN;
 	
 	/**
 	 * ID: 2126<br>
-	 * Message: お客様のアカウントは公序良俗に反する内容の度重なるアップロードが認められたため、サービスのご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは公序良俗に反する内容の度重なるアップロードが認められたため、サービスのご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE34;
 	
 	/**
 	 * ID: 2127<br>
-	 * Message: お客様のアカウントは違反となる書き込みが認められたため、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは違反となる書き込みが認められたため、ご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE35;
 	
 	/**
 	 * ID: 2128<br>
-	 * Message: お客様のアカウントは商業目的のゲーム利用が認められたため、ゲームサービスすべてのご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。
+	 * Message: お客様のアカウントは商業目的のゲーム利用が認められたため、ゲームサービスすべてのご利用が制限されています。詳しくは公式サイト（http://lineage2.plaync.jp/）のサポートまでお問い合わせください。<br>
+	 * Message: Your account has been suspended ...
 	 */
 	public static final SystemMessageId ILLEGAL_USE36;
 	
 	/**
 	 * ID: 2129<br>
-	 * Message: 精錬されたアイテムは変換できません。精錬を解除した後に変換してください。
+	 * Message: 精錬されたアイテムは変換できません。精錬を解除した後に変換してください。<br>
+	 * Message: The augmented item cannot be converted. Please convert after the augmentation has been removed.
 	 */
 	public static final SystemMessageId AUGMENTED_ITEM_CANT_CONVERTED;
 	
 	/**
 	 * ID: 2130<br>
-	 * Message: 変換できないアイテムです。
+	 * Message: 変換できないアイテムです。<br>
+	 * Message: You cannot convert this item.
 	 */
 	public static final SystemMessageId CANT_CONVERT_THIS_ITEM;
 	
 	/**
 	 * ID: 2131<br>
-	 * Message: 最高金額をつけてアイテムが落札されました。落札されたアイテムは個人倉庫から受け取ることができます。
+	 * Message: 最高金額をつけてアイテムが落札されました。落札されたアイテムは個人倉庫から受け取ることができます。<br>
+	 * Message: You have bid the highest price and have won the item. The item can be found in your personal warehouse.
 	 */
 	public static final SystemMessageId WON_BID_ITEM_CAN_BE_FOUND_IN_WAREHOUSE;
 	
 	/**
 	 * ID: 2132<br>
-	 * Message: 一般サーバーに接続しました。
+	 * Message: 一般サーバーに接続しました。<br>
+	 * Message: You have entered a common server.
 	 */
 	public static final SystemMessageId ENTERED_COMMON_SERVER;
 	
 	/**
 	 * ID: 2133<br>
-	 * Message: 成人サーバーに接続しました。
+	 * Message: 成人サーバーに接続しました。<br>
+	 * Message: You have entered an adults-only server.
 	 */
 	public static final SystemMessageId ENTERED_ADULTS_ONLY_SERVER;
 	
 	/**
 	 * ID: 2134<br>
-	 * Message: 青少年サーバーに接続しました。
+	 * Message: 青少年サーバーに接続しました。<br>
+	 * Message: You have entered a server for juveniles.
 	 */
 	public static final SystemMessageId ENTERED_JUVENILES_SERVER;
 	
 	/**
 	 * ID: 2135<br>
-	 * Message: 疲労度のため行えません。
+	 * Message: 疲労度のため行えません。<br>
+	 * Message: Because of your Fatigue level, this is not allowed.
 	 */
 	public static final SystemMessageId NOT_ALLOWED_DUE_TO_FATIGUE_LEVEL;
 	
 	/**
 	 * ID: 2136<br>
-	 * Message: 血盟名変更の申請が受け付けられました。
+	 * Message: 血盟名変更の申請が受け付けられました。<br>
+	 * Message: A clan name change application has been submitted.
 	 */
 	public static final SystemMessageId CLAN_NAME_CHANCE_PETITION_SUBMITTED;
 	
 	/**
 	 * ID: 2137<br>
-	 * Message: $s1アイテムを$s2アデナで入札しようとしています。よろしいですか。
+	 * Message: $s1アイテムを$s2アデナで入札しようとしています。よろしいですか。<br>
+	 * Message: You are about to bid $s1 item with $s2 adena. Will you continue?
 	 */
 	public static final SystemMessageId CONFIRM_BID_S2_ADENA_FOR_S1_ITEM;
 	
 	/**
 	 * ID: 2138<br>
-	 * Message: 入札価格を入力して下さい。
+	 * Message: 入札価格を入力して下さい。<br>
+	 * Message: Please enter a bid price.
 	 */
 	public static final SystemMessageId ENTER_BID_PRICE;
 	
 	/**
 	 * ID: 2139<br>
-	 * Message: $c1のペット
+	 * Message: $c1のペット<br>
+	 * Message: $c1's Pet.
 	 */
 	public static final SystemMessageId C1_PET;
 	
 	/**
 	 * ID: 2140<br>
-	 * Message: $c1の召喚獣
+	 * Message: $c1の召喚獣<br>
+	 * Message: $c1's Servitor.
 	 */
 	public static final SystemMessageId C1_SERVITOR;
 	
 	/**
 	 * ID: 2141<br>
-	 * Message: $c1の魔法に弱く抵抗しました。
+	 * Message: $c1の魔法に弱く抵抗しました。<br>
+	 * Message: You slightly resisted $c1's magic.
 	 */
 	public static final SystemMessageId SLIGHTLY_RESISTED_C1_MAGICC;
 	
 	/**
 	 * ID: 2142<br>
-	 * Message: $c1 はパーティ メンバーではないため追放できません。
+	 * Message: $c1 はパーティ メンバーではないため追放できません。<br>
+	 * Message: You cannot expel $c1 because $c1 is not a party member.
 	 */
 	public static final SystemMessageId CANT_EXPEL_C1_NOT_A_PARTY_MEMBER;
 	
 	/**
 	 * ID: 2143<br>
-	 * Message: 個人商店や個人工房の途中では属性を付与できません。
+	 * Message: 個人商店や個人工房の途中では属性を付与できません。<br>
+	 * Message: You cannot add elemental power while operating a Private Store or Private Workshop.
 	 */
 	public static final SystemMessageId CANNOT_ADD_ELEMENTAL_POWER_WHILE_OPERATING_PRIVATE_STORE_OR_WORKSHOP;
 	
 	/**
 	 * ID: 2144<br>
-	 * Message: 属性を付与したいアイテムをお選びください。
+	 * Message: 属性を付与したいアイテムをお選びください。<br>
+	 * Message: Please select item to add elemental power.
 	 */
 	public static final SystemMessageId SELECT_ITEM_TO_ADD_ELEMENTAL_POWER;
 	
 	/**
 	 * ID: 2145<br>
-	 * Message: 属性強化材の使用が取り消されました。
+	 * Message: 属性強化材の使用が取り消されました。<br>
+	 * Message: Attribute item usage has been cancelled.
 	 */
 	public static final SystemMessageId ELEMENTAL_ENHANCE_CANCELED;
 	
 	/**
 	 * ID: 2146<br>
-	 * Message: 属性強化材の使用条件に合いません。
+	 * Message: 属性強化材の使用条件に合いません。<br>
+	 * Message: Elemental power enhancer usage requirement is not sufficient.
 	 */
 	public static final SystemMessageId ELEMENTAL_ENHANCE_REQUIREMENT_NOT_SUFFICIENT;
 	
 	/**
 	 * ID: 2147<br>
-	 * Message: $s1に$s2の属性の付与に成功しました。
+	 * Message: $s1に$s2の属性の付与に成功しました。<br>
+	 * Message: $s2 elemental power has been added successfully to $s1.
 	 */
 	public static final SystemMessageId ELEMENTAL_POWER_S2_SUCCESSFULLY_ADDED_TO_S1;
 	
 	/**
 	 * ID: 2148<br>
-	 * Message: +$s1$s2に$s3の属性を成功的に付与しました。
+	 * Message: +$s1$s2に$s3の属性を成功的に付与しました。<br>
+	 * Message: $s3 elemental power has been added successfully to +$s1 $s2.
 	 */
 	public static final SystemMessageId ELEMENTAL_POWER_S3_SUCCESSFULLY_ADDED_TO_S1_S2;
 	
 	/**
 	 * ID: 2149<br>
-	 * Message: 属性の付与に失敗しました。
+	 * Message: 属性の付与に失敗しました。<br>
+	 * Message: You have failed to add elemental power.
 	 */
 	public static final SystemMessageId FAILED_ADDING_ELEMENTAL_POWER;
 	
 	/**
 	 * ID: 2150<br>
-	 * Message: すでに別の属性が付与されているため、属性が付与できません。
+	 * Message: すでに別の属性が付与されているため、属性が付与できません。<br>
+	 * Message: Another elemental power has already been added. This elemental power cannot be added.
 	 */
 	public static final SystemMessageId ANOTHER_ELEMENTAL_POWER_ALREADY_ADDED;
 	
 	/**
 	 * ID: 2151<br>
-	 * Message: 相手が魔法に抵抗したためダメージが低下しました。
+	 * Message: 相手が魔法に抵抗したためダメージが低下しました。<br>
+	 * Message: Your opponent has resistance to magic, the damage was decreased.
 	 */
 	public static final SystemMessageId OPPONENT_HAS_RESISTANCE_MAGIC_DAMAGE_DECREASED;
 	
 	/**
 	 * ID: 2152<br>
-	 * Message: 指定のショートカットキーをすべて消去して、ショートカットキーを初期設定に戻します。よろしいですか。
+	 * Message: 指定のショートカットキーをすべて消去して、ショートカットキーを初期設定に戻します。よろしいですか。<br>
+	 * Message: The assigned shortcut will be deleted and the initial shortcut setting restored. Will you continue?
 	 */
 	public static final SystemMessageId CONFIRM_SHORCUT_DELETE;
 	
 	/**
 	 * ID: 2153<br>
-	 * Message: 現在お持ちのアカウントの中の10個が同時に接続されているため、これ以上別のアカウントでの接続はできません。
+	 * Message: 現在お持ちのアカウントの中の10個が同時に接続されているため、これ以上別のアカウントでの接続はできません。<br>
+	 * Message: You are currently logged into 10 of your accounts and can no longer access your other accounts.
 	 */
 	public static final SystemMessageId MAXIMUM_ACCOUNT_LOGINS_REACHED;
 	
 	/**
 	 * ID: 2154<br>
-	 * Message: ターゲットがフラッグ ポールではないため、旗の掲揚はできません。
+	 * Message: ターゲットがフラッグ ポールではないため、旗の掲揚はできません。<br>
+	 * Message: The target is not a flagpole so a flag cannot be displayed.
 	 */
 	public static final SystemMessageId THE_TARGET_IS_NOT_A_FLAGPOLE_SO_A_FLAG_CANNOT_BE_DISPLAYED;
 	
 	/**
 	 * ID: 2155<br>
-	 * Message: すでに旗が掲揚されているため掲揚できません。
+	 * Message: すでに旗が掲揚されているため掲揚できません。<br>
+	 * Message: A flag is already being displayed, another flag cannot be displayed.
 	 */
 	public static final SystemMessageId A_FLAG_IS_ALREADY_BEING_DISPLAYED_ANOTHER_FLAG_CANNOT_BE_DISPLAYED;
 	
 	/**
 	 * ID: 2156<br>
-	 * Message: 必要なアイテムが足りないためスキルが使用できません。
+	 * Message: 必要なアイテムが足りないためスキルが使用できません。<br>
+	 * Message: There are not enough necessary items to use the skill.
 	 */
 	public static final SystemMessageId THERE_ARE_NOT_ENOUGH_NECESSARY_ITEMS_TO_USE_THE_SKILL;
 	
 	/**
 	 * ID: 2157<br>
-	 * Message: $s1アデナで入札します。
+	 * Message: $s1アデナで入札します。<br>
+	 * Message: Bid will be attempted with $s1 adena.
 	 */
 	public static final SystemMessageId BID_WILL_BE_ATTEMPTED_WITH_S1_ADENA;
 	
 	/**
 	 * ID: 2158<br>
-	 * Message: 攻城側の臨時連合員をターゲットには強制攻撃ができません。
+	 * Message: 攻城側の臨時連合員をターゲットには強制攻撃ができません。<br>
+	 * Message: Force attack is impossible against a temporary allied member during a siege.
 	 */
 	public static final SystemMessageId FORCED_ATTACK_IS_IMPOSSIBLE_AGAINST_SIEGE_SIDE_TEMPORARY_ALLIED_MEMBERS;
 	
 	/**
 	 * ID: 2159<br>
-	 * Message: 入札者がいるため競売時間が5分間延長されました。
+	 * Message: 入札者がいるため競売時間が5分間延長されました。<br>
+	 * Message: Bidder exists, the auction time has been extended by 5 minutes.
 	 */
 	public static final SystemMessageId BIDDER_EXISTS_AUCTION_TIME_EXTENDED_BY_5_MINUTES;
 	
 	/**
 	 * ID: 2160<br>
-	 * Message: 入札者がいるため競売時間が3分間延長されました。
+	 * Message: 入札者がいるため競売時間が3分間延長されました。<br>
+	 * Message: Bidder exists, the auction time has been extended by 3 minutes.
 	 */
 	public static final SystemMessageId BIDDER_EXISTS_AUCTION_TIME_EXTENDED_BY_3_MINUTES;
 	
 	/**
 	 * ID: 2161<br>
-	 * Message: 移動スペースがないため、スキルが使用できません。
+	 * Message: 移動スペースがないため、スキルが使用できません。<br>
+	 * Message: There is not enough space to move, the skill cannot be used.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_SPACE_FOR_SKILL;
 	
 	/**
 	 * ID: 2162<br>
-	 * Message: 魂が$s1個増えたため、合計$s2個になりました。
+	 * Message: 魂が$s1個増えたため、合計$s2個になりました。<br>
+	 * Message: Your soul has increased by $s1, so it is now at $s2.
 	 */
 	public static final SystemMessageId YOUR_SOUL_HAS_INCREASED_BY_S1_SO_IT_IS_NOW_AT_S2;
 	
 	/**
 	 * ID: 2163<br>
-	 * Message: これ以上魂を増やすことはできません。
+	 * Message: これ以上魂を増やすことはできません。<br>
+	 * Message: Soul cannot be increased anymore.
 	 */
 	public static final SystemMessageId SOUL_CANNOT_BE_INCREASED_ANYMORE;
 	
 	/**
 	 * ID: 2164<br>
-	 * Message: 幕舎を占領しました。
+	 * Message: 幕舎を占領しました。<br>
+	 * Message: The barracks have been seized.
 	 */
 	public static final SystemMessageId SEIZED_BARRACKS;
 	
 	/**
 	 * ID: 2165<br>
-	 * Message: 幕舎機能が復旧されました。
+	 * Message: 幕舎機能が復旧されました。<br>
+	 * Message: The barracks function has been restored.
 	 */
 	public static final SystemMessageId BARRACKS_FUNCTION_RESTORED;
 	
 	/**
 	 * ID: 2166<br>
-	 * Message: すべての幕舎が占領されました。
+	 * Message: すべての幕舎が占領されました。<br>
+	 * Message: All barracks are occupied.
 	 */
 	public static final SystemMessageId ALL_BARRACKS_OCCUPIED;
 	
 	/**
 	 * ID: 2167<br>
-	 * Message: 悪意のあるスキルはピースゾーンで使用できません。
+	 * Message: 悪意のあるスキルはピースゾーンで使用できません。<br>
+	 * Message: A malicious skill cannot be used in a peace zone.
 	 */
 	public static final SystemMessageId A_MALICIOUS_SKILL_CANNOT_BE_USED_IN_PEACE_ZONE;
 	
 	/**
 	 * ID: 2168<br>
-	 * Message: $c1が旗を拾いました。
+	 * Message: $c1が旗を拾いました。<br>
+	 * Message: $c1 has acquired the flag.
 	 */
 	public static final SystemMessageId C1_ACQUIRED_THE_FLAG;
 	
 	/**
 	 * ID: 2169<br>
-	 * Message: $s1の要塞戦に登録されました。
+	 * Message: $s1の要塞戦に登録されました。<br>
+	 * Message: Your clan has been registered to $s1's fortress battle.
 	 */
 	public static final SystemMessageId REGISTERED_TO_S1_FORTRESS_BATTLE;
 	
 	/**
 	 * ID: 2170<br>
-	 * Message: 悪意のあるスキルは相手がピースゾーンにいる時は使用できません。
+	 * Message: 悪意のあるスキルは相手がピースゾーンにいる時は使用できません。<br>
+	 * Message: A malicious skill cannot be used when an opponent is in the peace zone
 	 */
 	public static final SystemMessageId CANT_USE_BAD_MAGIC_WHEN_OPPONENT_IN_PEACE_ZONE;
 	
 	/**
 	 * ID: 2171<br>
-	 * Message: クリスタライズできないアイテムです。
+	 * Message: クリスタライズできないアイテムです。<br>
+	 * Message: This item cannot be crystallized.
 	 */
 	public static final SystemMessageId ITEM_CANNOT_CRYSTALLIZED;
 	
 	/**
 	 * ID: 2172<br>
-	 * Message: +$s1$s2の競売が終了しました。
+	 * Message: +$s1$s2の競売が終了しました。<br>
+	 * Message: +$s1 $s2's auction has ended.
 	 */
 	public static final SystemMessageId S1_S2_AUCTION_ENDED;
 	
 	/**
 	 * ID: 2173<br>
-	 * Message: $s1の競売が終了しました。
+	 * Message: $s1の競売が終了しました。<br>
+	 * Message: $s1's auction has ended.
 	 */
 	public static final SystemMessageId S1_AUCTION_ENDED;
 	
 	/**
 	 * ID: 2174<br>
-	 * Message: $c1 が変身状態のため決闘できません。
+	 * Message: $c1 が変身状態のため決闘できません。<br>
+	 * Message: $c1 cannot duel because $c1 is currently polymorphed.
 	 */
 	public static final SystemMessageId C1_CANNOT_DUEL_WHILE_POLYMORPHED;
 	
 	/**
 	 * ID: 2175<br>
-	 * Message: 変身状態のパーティ メンバーがいるためパーティ同士での決闘ができません。
+	 * Message: 変身状態のパーティ メンバーがいるためパーティ同士での決闘ができません。<br>
+	 * Message: Party duel cannot be initiated due to a polymorphed partymember
 	 */
 	public static final SystemMessageId CANNOT_PARTY_DUEL_WHILE_A_MEMBER_IS_POLYMORPHED;
 	
 	/**
 	 * ID: 2176<br>
-	 * Message: $s1の$s2属性を解除しました。
+	 * Message: $s1の$s2属性を解除しました。<br>
+	 * Message: $s1's elemental power has been removed.
 	 */
 	public static final SystemMessageId S1_ELEMENTAL_POWER_REMOVED;
 	
 	/**
 	 * ID: 2177<br>
-	 * Message: +$s1$s2の$s3の属性を解除しました。
+	 * Message: +$s1$s2の$s3の属性を解除しました。<br>
+	 * Message: +$s1 $s2's elemental power has been removed.
 	 */
 	public static final SystemMessageId S1_S2_ELEMENTAL_POWER_REMOVED;
 	
 	/**
 	 * ID: 2178<br>
-	 * Message: 属性の解除に失敗しました。
+	 * Message: 属性の解除に失敗しました。<br>
+	 * Message: You failed to remove the elemental power.
 	 */
 	public static final SystemMessageId FAILED_TO_REMOVE_ELEMENTAL_POWER;
 	
 	/**
 	 * ID: 2179<br>
-	 * Message: ギラン城の競売に最高額を入札中です。
+	 * Message: ギラン城の競売に最高額を入札中です。<br>
+	 * Message: You have the highest bid submitted in Giran Castle Auction.
 	 */
 	public static final SystemMessageId HIGHEST_BID_FOR_GIRAN_CASTLE;
 	
 	/**
 	 * ID: 2180<br>
-	 * Message: アデン城の競売に最高額を入札中です。
+	 * Message: アデン城の競売に最高額を入札中です。<br>
+	 * Message: You have the highest bid submitted in Aden Castle Auction.
 	 */
 	public static final SystemMessageId HIGHEST_BID_FOR_ADEN_CASTLE;
 	
 	/**
 	 * ID: 2181<br>
-	 * Message: ルウン城の競売に最高額を入札中です。
+	 * Message: ルウン城の競売に最高額を入札中です。<br>
+	 * Message: You have the highest bid submitted in Rune Castle Auction.
 	 */
 	public static final SystemMessageId HIGHEST_BID_FOR_RUNE_CASTLE;
 	
 	/**
 	 * ID: 2182<br>
-	 * Message: 船に乗った状態では変身できません。
+	 * Message: 船に乗った状態では変身できません。<br>
+	 * Message: You cannot polymorph while riding a boat.
 	 */
 	public static final SystemMessageId CANT_POLYMORPH_ON_BOAT;
 	
 	/**
 	 * ID: 2183<br>
-	 * Message: $s1の要塞戦が終了しました。
+	 * Message: $s1の要塞戦が終了しました。<br>
+	 * Message: The fortress battle of $s1 has finished.
 	 */
 	public static final SystemMessageId THE_FORTRESS_BATTLE_OF_S1_HAS_FINISHED;
 	
 	/**
 	 * ID: 2184<br>
-	 * Message: $s1血盟が$s2の要塞戦で勝利しました。
+	 * Message: $s1血盟が$s2の要塞戦で勝利しました。<br>
+	 * Message: $s1 clan is victorious in the fortress battle of $s2.
 	 */
 	public static final SystemMessageId S1_CLAN_IS_VICTORIOUS_IN_THE_FORTRESS_BATTLE_OF_S2;
 	
 	/**
 	 * ID: 2185<br>
-	 * Message: パーティ リーダーのみが入場することができます。
+	 * Message: パーティ リーダーのみが入場することができます。<br>
+	 * Message: Only a party leader can try to enter.
 	 */
 	public static final SystemMessageId ONLY_PARTY_LEADER_CAN_ENTER;
 	
 	/**
 	 * ID: 2186<br>
-	 * Message: これ以上の魂は吸収できません。
+	 * Message: これ以上の魂は吸収できません。<br>
+	 * Message: Soul cannot be absorbed anymore.
 	 */
 	public static final SystemMessageId SOUL_CANNOT_BE_ABSORBED_ANYMORE;
 	
 	/**
 	 * ID: 2187<br>
-	 * Message: 相手が突撃できない位置にいます。
+	 * Message: 相手が突撃できない位置にいます。<br>
+	 * Message: The target is located where you cannot charge.
 	 */
 	public static final SystemMessageId CANT_REACH_TARGET_TO_CHARGE;
 	
 	/**
 	 * ID: 2188<br>
-	 * Message: 他のエンチャントが行われています。前の作業を終了された後また行ってください。
+	 * Message: 他のエンチャントが行われています。前の作業を終了された後また行ってください。<br>
+	 * Message: Another enchantment is in progress. Please complete previous task and try again.
 	 */
 	public static final SystemMessageId ENCHANTMENT_ALREADY_IN_PROGRESS;
 	
 	/**
 	 * ID: 2189<br>
-	 * Message: 現在地： $s1、$s2、$s3 (カマエル村付近)
+	 * Message: 現在地： $s1、$s2、$s3 (カマエル村付近)<br>
+	 * Message: Current Location: $s1, $s2, $s3 (near Near Kamael Village)
 	 */
 	public static final SystemMessageId LOC_KAMAEL_VILLAGE_S1_S2_S3;
 	
 	/**
 	 * ID: 2190<br>
-	 * Message: 現在地：$s1、$s2、$s3 (荒地南側のキャンプ付近)
+	 * Message: 現在地：$s1、$s2、$s3 (荒地南側のキャンプ付近)<br>
+	 * Message: Current Location: $s1, $s2, $s3 (Near south of Wastelands Camp)
 	 */
 	public static final SystemMessageId LOC_WASTELANDS_CAMP_S1_S2_S3;
 	
 	/**
 	 * ID: 2191<br>
-	 * Message: 選択したオプションを適用するには、再びゲームをロードする必要があります。今すぐ適用しない場合は、次回ゲームを実行する際に適用されます。今すぐ適用しますか。
+	 * Message: 選択したオプションを適用するには、再びゲームをロードする必要があります。今すぐ適用しない場合は、次回ゲームを実行する際に適用されます。今すぐ適用しますか。<br>
+	 * Message: To apply selected options, the game needs to be reloaded. If you don't apply now, it will be applied when you start the game next time. Will you apply now?
 	 */
 	public static final SystemMessageId CONFIRM_APPLY_SELECTIONS;
 	
 	/**
 	 * ID: 2192<br>
-	 * Message: アイテム競売に入札しました。
+	 * Message: アイテム競売に入札しました。<br>
+	 * Message: You have bid on an item auction.
 	 */
 	public static final SystemMessageId BID_ON_ITEM_AUCTION;
 	
 	/**
 	 * ID: 2193<br>
-	 * Message: NPCとの距離が遠いため作動しません。
+	 * Message: NPCとの距離が遠いため作動しません。<br>
+	 * Message: It's too far from the NPC to work.
 	 */
 	public static final SystemMessageId TOO_FAR_FROM_NPC;
 	
 	/**
 	 * ID: 2194<br>
-	 * Message: 現在変身中の変身体では該当の効果を適用できません。
+	 * Message: 現在変身中の変身体では該当の効果を適用できません。<br>
+	 * Message: Current polymorph form cannot be applied with corresponding effects.
 	 */
 	public static final SystemMessageId CANT_APPLY_CURRENT_POLYMORPH_WITH_CORRESPONDING_EFFECTS;
 	
 	/**
 	 * ID: 2195<br>
-	 * Message: 魂が足りません。
+	 * Message: 魂が足りません。<br>
+	 * Message: There is not enough soul.
 	 */
 	public static final SystemMessageId THERE_IS_NOT_ENOUGH_SOUL;
 	
 	/**
 	 * ID: 2196<br>
-	 * Message: 所有血盟なし
+	 * Message: 所有血盟なし<br>
+	 * Message: No Owned Clan.
 	 */
 	public static final SystemMessageId NO_OWNED_CLAN;
 	
 	/**
 	 * ID: 2197<br>
-	 * Message: $s1血盟所有中
+	 * Message: $s1血盟所有中<br>
+	 * Message: Owned by clan $s1.
 	 */
 	public static final SystemMessageId OWNED_S1_CLAN;
 	
 	/**
 	 * ID: 2198<br>
-	 * Message: アイテム競売に最高額を入札中です。
+	 * Message: アイテム競売に最高額を入札中です。<br>
+	 * Message: You have the highest bid in an item auction.
 	 */
 	public static final SystemMessageId HIGHEST_BID_IN_ITEM_AUCTION;
 	
 	/**
 	 * ID: 2199<br>
-	 * Message: NPCサーバーが作動中止状態のため、インスタント ゾーンに入場できません。
+	 * Message: NPCサーバーが作動中止状態のため、インスタント ゾーンに入場できません。<br>
+	 * Message: You cannot enter this instance zone while the NPC server is unavailable.
 	 */
 	public static final SystemMessageId CANT_ENTER_INSTANCE_ZONE_NPC_SERVER_OFFLINE;
 	
 	/**
 	 * ID: 2200<br>
-	 * Message: NPCサーバー作動中止により該当インスタント ゾーンが削除されるため、しばらくしてから強制退場されます。
+	 * Message: NPCサーバー作動中止により該当インスタント ゾーンが削除されるため、しばらくしてから強制退場されます。<br>
+	 * Message: This instance zone will be terminated because the NPC server is unavailable. You will be forcibly removed from the dungeon shortly
 	 */
 	public static final SystemMessageId INSTANCE_ZONE_TERMINATED_NPC_SERVER_OFFLINE;
 	
 	/**
 	 * ID: 2201<br>
-	 * Message: $s1年$s2月$s3月
+	 * Message: $s1年$s2月$s3月<br>
+	 * Message: $s1 year(s) $s2 month(s) $s3 day(s)
 	 */
 	public static final SystemMessageId S1_YEARS_S2_MONTHS_S3_DAYS;
 	
 	/**
 	 * ID: 2202<br>
-	 * Message: $s1時$s2分$s3秒
+	 * Message: $s1時$s2分$s3秒<br>
+	 * Message: $s1 hour(s) $s2 minute(s) $s3 second(s)
 	 */
 	public static final SystemMessageId S1_HOURS_S2_MINUTES_S3_SECONDS;
 	
 	/**
 	 * ID: 2203<br>
-	 * Message: $s1月$s2日
+	 * Message: $s1月$s2日<br>
+	 * Message: $s1 month(s) $s2 day(s)
 	 */
 	public static final SystemMessageId S1_MONTHS_S2_DAYS;
 	
 	/**
 	 * ID: 2204<br>
-	 * Message: $s1時
+	 * Message: $s1時<br>
+	 * Message: $s1 hour(s)
 	 */
 	public static final SystemMessageId S1_HOURS;
 	
 	/**
 	 * ID: 2205<br>
-	 * Message: ミニマップが使えない地域に入りました。ミニマップを閉じます。
+	 * Message: ミニマップが使えない地域に入りました。ミニマップを閉じます。<br>
+	 * Message: You have entered an area where the mini map cannot be used. The mini map will be closed.
 	 */
 	public static final SystemMessageId AREA_FORBIDS_MINIMAP;
 	
 	/**
 	 * ID: 2206<br>
-	 * Message: ミニマップが使える地域に入りました。
+	 * Message: ミニマップが使える地域に入りました。<br>
+	 * Message: You have entered an area where the mini map can be used.
 	 */
 	public static final SystemMessageId AREA_ALLOWS_MINIMAP;
 	
 	/**
 	 * ID: 2207<br>
-	 * Message: ミニマップが使えない地域のため、ミニマップが開けません。
+	 * Message: ミニマップが使えない地域のため、ミニマップが開けません。<br>
+	 * Message: This is an area where you cannot use the mini map. The mini map will not be opened.
 	 */
 	public static final SystemMessageId CANT_OPEN_MINIMAP;
 	
 	/**
 	 * ID: 2208<br>
-	 * Message: スキル習得に必要なスキル レベル条件が合いません。
+	 * Message: スキル習得に必要なスキル レベル条件が合いません。<br>
+	 * Message: You do not meet the skill level requirements.
 	 */
 	public static final SystemMessageId YOU_DONT_MEET_SKILL_LEVEL_REQUIREMENTS;
 	
 	/**
 	 * ID: 2209<br>
-	 * Message: レーダーが作動しない地域
+	 * Message: レーダーが作動しない地域<br>
+	 * Message: This is an area where radar cannot be used
 	 */
 	public static final SystemMessageId AREA_WHERE_RADAR_CANNOT_BE_USED;
 	
 	/**
 	 * ID: 2210<br>
-	 * Message: エンチャントされていない状態に戻します。
+	 * Message: エンチャントされていない状態に戻します。<br>
+	 * Message: It will return to an unenchanted condition.
 	 */
 	public static final SystemMessageId RETURN_TO_UNENCHANTED_CONDITION;
 	
 	/**
 	 * ID: 2211<br>
-	 * Message: 先行スキルを習得していないため新しいスキルを習得できません。
+	 * Message: 先行スキルを習得していないため新しいスキルを習得できません。<br>
+	 * Message: You must learn the Onyx Beast skill before you can acquire further skills.
 	 */
 	public static final SystemMessageId YOU_MUST_LEARN_ONYX_BEAST_SKILL;
 	
 	/**
 	 * ID: 2212<br>
-	 * Message: スキル習得に必要なクエストをまだ遂行していません。
+	 * Message: スキル習得に必要なクエストをまだ遂行していません。<br>
+	 * Message: You have not completed the necessary quest for skill acquisition.
 	 */
 	public static final SystemMessageId NOT_COMPLETED_QUEST_FOR_SKILL_ACQUISITION;
 	
 	/**
 	 * ID: 2213<br>
-	 * Message: 変身した状態では船に乗船できません。
+	 * Message: 変身した状態では船に乗船できません。<br>
+	 * Message: Cannot board a ship while polymorphed.
 	 */
 	public static final SystemMessageId CANT_BOARD_SHIP_POLYMORPHED;
 	
 	/**
 	 * ID: 2214<br>
-	 * Message: 今設定したセッティングで新しいキャラクターを生成します。よろしいですか。
+	 * Message: 今設定したセッティングで新しいキャラクターを生成します。よろしいですか。<br>
+	 * Message: A new character will be created with the current settings. Continue
 	 */
 	public static final SystemMessageId CONFIRM_CHARACTER_CREATION;
 	
 	/**
 	 * ID: 2215<br>
-	 * Message: $s1防御力
+	 * Message: $s1防御力<br>
+	 * Message: $s1 P.Def
 	 */
 	public static final SystemMessageId S1_PDEF;
 	
 	/**
 	 * ID: 2216<br>
-	 * Message: CPUドライバーが最新バージョンではありません。AMDデュアルコア以上のCPUをお使いの場合、AMDのウェブサイトからAMDデュアルコアオプティマイザーをダウンロード、インストールして下さい。
+	 * Message: CPUドライバーが最新バージョンではありません。AMDデュアルコア以上のCPUをお使いの場合、AMDのウェブサイトからAMDデュアルコアオプティマイザーをダウンロード、インストールして下さい。<br>
+	 * Message: The CPU driver is not up to date. Please install an up-to-date CPU driver.
 	 */
 	public static final SystemMessageId PLEASE_UPDATE_CPU_DRIVER;
 	
 	/**
 	 * ID: 2217<br>
-	 * Message: バリスタの爆破に成功して、血盟名声値が上がります。
+	 * Message: バリスタの爆破に成功して、血盟名声値が上がります。<br>
+	 * Message: The ballista has been successfully destroyed and the clan's reputation will be increased.
 	 */
 	public static final SystemMessageId BALLISTA_DESTROYED_CLAN_REPU_INCREASED;
 	
 	/**
 	 * ID: 2218<br>
-	 * Message: メイン クラスの時にだけ使えるスキルです。
+	 * Message: メイン クラスの時にだけ使えるスキルです。<br>
+	 * Message: This is a main class skill only.
 	 */
 	public static final SystemMessageId MAIN_CLASS_SKILL_ONLY;
 	
 	/**
 	 * ID: 2219<br>
-	 * Message: すでに習得した下位血盟のスキルです。
+	 * Message: すでに習得した下位血盟のスキルです。<br>
+	 * Message: This squad skill has already been acquired.
 	 */
 	public static final SystemMessageId SQUAD_SKILL_ALREADY_ACQUIRED;
 	
 	/**
 	 * ID: 2220<br>
-	 * Message: 前段階レベルのスキルを習っていません。
+	 * Message: 前段階レベルのスキルを習っていません。<br>
+	 * Message: The previous level skill has not been learned.
 	 */
 	public static final SystemMessageId PREVIOUS_LEVEL_SKILL_NOT_LEARNED;
 	
 	/**
 	 * ID: 2221<br>
-	 * Message: 選んだ機能をアクティブにしますか。
+	 * Message: 選んだ機能をアクティブにしますか。<br>
+	 * Message: Will you activate the selected functions?
 	 */
 	public static final SystemMessageId ACTIVATE_SELECTED_FUNTIONS_CONFIRM;
 	
 	/**
 	 * ID: 2222<br>
-	 * Message: 偵察兵の配置には15万アデナがかかります。配置しますか。
+	 * Message: 偵察兵の配置には15万アデナがかかります。配置しますか。<br>
+	 * Message: It will cost 150,000 adena to place scouts. Will you place them.
 	 */
 	public static final SystemMessageId SCOUT_COSTS_150000_ADENA;
 	
 	/**
 	 * ID: 2223<br>
-	 * Message: 要塞門の強化には20万アデナがかかります。強化しますか。
+	 * Message: 要塞門の強化には20万アデナがかかります。強化しますか。<br>
+	 * Message: It will cost 200,000 adena for a fortress gate enhancement. Will you enhance it?
 	 */
 	public static final SystemMessageId FORTRESS_GATE_COSTS_200000_ADENA;
 	
 	/**
 	 * ID: 2224<br>
-	 * Message: ボウガン発射準備中です。
+	 * Message: ボウガン発射準備中です。<br>
+	 * Message: Crossbow is preparing to fire.
 	 */
 	public static final SystemMessageId CROSSBOW_PREPARING_TO_FIRE;
 	
 	/**
 	 * ID: 2225<br>
-	 * Message: これ以上習うスキルはありません。$s1次転職をしてから来てください。
+	 * Message: これ以上習うスキルはありません。$s1次転職をしてから来てください。<br>
+	 * Message: There are no other skills to learn. Please come back after $s1nd class change.
 	 */
 	public static final SystemMessageId NO_SKILLS_TO_LEARN_RETURN_AFTER_S1_CLASS_CHANGE;
 	
 	/**
 	 * ID: 2226<br>
-	 * Message: ボルトが足りません。
+	 * Message: ボルトが足りません。<br>
+	 * Message: Not enough bolts.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_BOLTS;
 	
 	/**
 	 * ID: 2227<br>
-	 * Message: 契約している上位の城の攻城戦には攻城側に登録はできません。
+	 * Message: 契約している上位の城の攻城戦には攻城側に登録はできません。<br>
+	 * Message: It is not possible to register for the castle siege side or castle siege of a higher castle in the contract
 	 */
 	public static final SystemMessageId NOT_POSSIBLE_TO_REGISTER_TO_CASTLE_SIEGE;
 	
 	/**
 	 * ID: 2228<br>
-	 * Message: 利用時間制限状態のインスタント ゾーン：
+	 * Message: 利用時間制限状態のインスタント ゾーン：<br>
+	 * Message: Instance zone time limit:
 	 */
 	public static final SystemMessageId INSTANCE_ZONE_TIME_LIMIT;
 	
 	/**
 	 * ID: 2229<br>
-	 * Message: 利用時間制限状態のインスタント ゾーンはありません。
+	 * Message: 利用時間制限状態のインスタント ゾーンはありません。<br>
+	 * Message: There is no instance zone under a time limit
 	 */
 	public static final SystemMessageId NO_INSTANCEZONE_TIME_LIMIT;
 	
 	/**
 	 * ID: 2230<br>
-	 * Message: $s1 $s2時間 $s3分後にご利用できます。
+	 * Message: $s1 $s2時間 $s3分後にご利用できます。<br>
+	 * Message: Available to use after $s1 $s2hour(s) $s3minute(s).
 	 */
 	public static final SystemMessageId AVAILABLE_AFTER_S1_S2_HOURS_S3_MINUTES;
 	
 	/**
 	 * ID: 2231<br>
-	 * Message: 契約している上位の城の血盟名声値が足らないため、補給品が支給されませんでした。
+	 * Message: 契約している上位の城の血盟名声値が足らないため、補給品が支給されませんでした。<br>
+	 * Message: The reputation score of the upper castle in contract is not enough and supply was not granted.
 	 */
 	public static final SystemMessageId REPUTATION_SCORE_FOR_CONTRACT_NOT_ENOUGH;
 	
 	/**
 	 * ID: 2232<br>
-	 * Message: $s1を砕く前にクリスタライズします。続けますか。
+	 * Message: $s1を砕く前にクリスタライズします。続けますか。<br>
+	 * Message: $s1 will be crystallized before destruction. Will you continue?
 	 */
 	public static final SystemMessageId S1_CRYSTALLIZED_BEFORE_DESTRUCTION;
 	
 	/**
 	 * ID: 2233<br>
-	 * Message: 上位の城と契約しているため、攻城登録はできません。
+	 * Message: 上位の城と契約しているため、攻城登録はできません。<br>
+	 * Message: Siege registration is not possible due to a contract with a higher castle.
 	 */
 	public static final SystemMessageId CANT_REGISTER_TO_SIEGE_DUE_TO_CONTRACT;
 	
 	/**
 	 * ID: 2234<br>
-	 * Message: 選択したカマエル専用の英雄武器を使いますか。
+	 * Message: 選択したカマエル専用の英雄武器を使いますか。<br>
+	 * Message: Will you use the selected Kamael-race-only Hero Weapon?
 	 */
 	public static final SystemMessageId CONFIRM_KAMAEL_HERO_WEAPON;
 	
 	/**
 	 * ID: 2235<br>
-	 * Message: ご利用中のインスタント ゾーンが消えたため、入場できません。
+	 * Message: ご利用中のインスタント ゾーンが消えたため、入場できません。<br>
+	 * Message: The instance zone in use has been deleted and cannot be accessed.
 	 */
 	public static final SystemMessageId INSTANCE_ZONE_DELETED_CANT_ACCESSED;
 	
 	/**
 	 * ID: 2236<br>
-	 * Message: ワイバーン搭乗時間は残り$s1分です。
+	 * Message: ワイバーン搭乗時間は残り$s1分です。<br>
+	 * Message: $s1 minute(s) left for wyvern riding.
 	 */
 	public static final SystemMessageId S1_MINUTES_LEFT_ON_WYVERN;
 	
 	/**
 	 * ID: 2237<br>
-	 * Message: ワイバーン搭乗時間は残り$s1秒です。
+	 * Message: ワイバーン搭乗時間は残り$s1秒です。<br>
+	 * Message: $s1 seconds(s) left for wyvern riding.
 	 */
 	public static final SystemMessageId S1_SECONDS_LEFT_ON_WYVERN;
 	
 	/**
 	 * ID: 2238<br>
-	 * Message: $s1の攻城戦に参戦しました。この攻城戦は2時間行われます。
+	 * Message: $s1の攻城戦に参戦しました。この攻城戦は2時間行われます。<br>
+	 * Message: You have participated in the siege of $s1. This siege will continue for 2 hours.
 	 */
 	public static final SystemMessageId PARTICIPATING_IN_SIEGE_OF_S1;
 	
 	/**
 	 * ID: 2239<br>
-	 * Message: 参戦した$s1の攻城戦が終了しました。
+	 * Message: 参戦した$s1の攻城戦が終了しました。<br>
+	 * Message: The siege of $s1, in which you are participating, has finished.
 	 */
 	public static final SystemMessageId SIEGE_OF_S1_FINIHSED;
 	
 	/**
 	 * ID: 2240<br>
-	 * Message: 血盟主委譲の申し込み手続き中である血盟はチーム バトル アジト戦に登録できません。
+	 * Message: 血盟主委譲の申し込み手続き中である血盟はチーム バトル アジト戦に登録できません。<br>
+	 * Message: You cannot register for the Team Battle Clan Hall War when your Clan Lord is on the waiting list for a transaction.
 	 */
 	public static final SystemMessageId CANT_REGISTER_TO_TEAM_BATTLE_CLAN_HALL_WAR_WHILE_LORD_ON_TRANSACTION_WAITING_LIST;
 	
 	/**
 	 * ID: 2241<br>
-	 * Message: チーム バトル アジト戦に登録した血盟は血盟主委譲の申し込みはできません。
+	 * Message: チーム バトル アジト戦に登録した血盟は血盟主委譲の申し込みはできません。<br>
+	 * Message: You cannot apply for a Clan Lord transaction if your clan has registed for the Team Battle Clan Hall War.
 	 */
 	public static final SystemMessageId CANT_APPLY_ON_LORD_TRANSACTION_WHILE_REGISTERED_TO_TEAM_BATTLE_CLAN_HALL_WAR;
 	
 	/**
 	 * ID: 2242<br>
-	 * Message: チーム バトル アジト戦に登録した血盟員は脱退もしくは追放ができません。
+	 * Message: チーム バトル アジト戦に登録した血盟員は脱退もしくは追放ができません。<br>
+	 * Message: Clan members cannot leave or be expelled when they are regisered for the Team Battle Clan Hall War.
 	 */
 	public static final SystemMessageId MEMBERS_CANT_LEAVE_WHEN_REGISTERED_TO_TEAM_BATTLE_CLAN_HALL_WAR;
 	
 	/**
 	 * ID: 2243<br>
-	 * Message: 山賊の巣窟、ビースト ファーム アジトを所有する血盟主が委任する場合、変更後の血盟主ではなく変更前の血盟主がアジト戦に参加します。
+	 * Message: 山賊の巣窟、ビースト ファーム アジトを所有する血盟主が委任する場合、変更後の血盟主ではなく変更前の血盟主がアジト戦に参加します。<br>
+	 * Message: During the Bandit Stronghold or Wild Beast Reserve clan hall war, the previous clan lord rather than the new clan lord participates in battle.
 	 */
 	public static final SystemMessageId WHEN_BANDITSTRONGHOLD_WILDBEASTRESERVRE_CLANLORD_IN_DANGER_PREVIOUS_LORD_PARTICIPATES_IN_BATTLE;
 	
 	/**
 	 * ID: 2244<br>
-	 * Message: 終了時間まで残り$s1分です。
+	 * Message: 終了時間まで残り$s1分です。<br>
+	 * Message: $s1 minute(s) remaining.
 	 */
 	public static final SystemMessageId S1_MINUTES_REMAINING;
 	
 	/**
 	 * ID: 2245<br>
-	 * Message: 終了時間まで残り$s1秒です。
+	 * Message: 終了時間まで残り$s1秒です。<br>
+	 * Message: $s1 second(s) remaining.
 	 */
 	public static final SystemMessageId S1_SECONDS_REMAINING;
 	
 	/**
 	 * ID: 2246<br>
-	 * Message: $s1分後に予選が始まります。
+	 * Message: $s1分後に予選が始まります。<br>
+	 * Message: The contest will begin in $s1 minute(s).
 	 */
 	public static final SystemMessageId CONTEST_BEGIN_IN_S1_MINUTES;
 	
 	/**
 	 * ID: 2247<br>
-	 * Message: 変身中は乗り物に搭乗できません。
+	 * Message: 変身中は乗り物に搭乗できません。<br>
+	 * Message: You cannot board an airship while transformed.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOARD_AN_AIRSHIP_WHILE_TRANSFORMED;
 	
 	/**
 	 * ID: 2248<br>
-	 * Message: 石化状態では乗り物に搭乗できません。
+	 * Message: 石化状態では乗り物に搭乗できません。<br>
+	 * Message: You cannot board an airship while petrified.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOARD_AN_AIRSHIP_WHILE_PETRIFIED;
 	
 	/**
 	 * ID: 2249<br>
-	 * Message: 死亡状態では乗り物に搭乗できません。
+	 * Message: 死亡状態では乗り物に搭乗できません。<br>
+	 * Message: You cannot board an airship while dead.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOARD_AN_AIRSHIP_WHILE_DEAD;
 	
 	/**
 	 * ID: 2250<br>
-	 * Message: フィッシング中は乗り物に搭乗できません。
+	 * Message: フィッシング中は乗り物に搭乗できません。<br>
+	 * Message: You cannot board an airship while fishing.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOARD_AN_AIRSHIP_WHILE_FISHING;
 	
 	/**
 	 * ID: 2251<br>
-	 * Message: 戦闘中は乗り物に搭乗できません。
+	 * Message: 戦闘中は乗り物に搭乗できません。<br>
+	 * Message: You cannot board an airship while in battle.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOARD_AN_AIRSHIP_WHILE_IN_BATTLE;
 	
 	/**
 	 * ID: 2252<br>
-	 * Message: 決闘中は乗り物に搭乗できません。
+	 * Message: 決闘中は乗り物に搭乗できません。<br>
+	 * Message: You cannot board an airship while in a duel.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOARD_AN_AIRSHIP_WHILE_IN_A_DUEL;
 	
 	/**
 	 * ID: 2253<br>
-	 * Message: 座った状態では乗り物に搭乗できません。
+	 * Message: 座った状態では乗り物に搭乗できません。<br>
+	 * Message: You cannot board an airship while sitting.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOARD_AN_AIRSHIP_WHILE_SITTING;
 	
 	/**
 	 * ID: 2254<br>
-	 * Message: スキル詠唱中は乗り物に搭乗できません。
+	 * Message: スキル詠唱中は乗り物に搭乗できません。<br>
+	 * Message: You cannot board an airship while casting.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOARD_AN_AIRSHIP_WHILE_CASTING;
 	
 	/**
 	 * ID: 2255<br>
-	 * Message: 呪われた武器を装備した状態では乗り物に搭乗できません。
+	 * Message: 呪われた武器を装備した状態では乗り物に搭乗できません。<br>
+	 * Message: You cannot board an airship when a cursed weapon is equipped.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOARD_AN_AIRSHIP_WHILE_A_CURSED_WEAPON_IS_EQUIPPED;
 	
 	/**
 	 * ID: 2256<br>
-	 * Message: 旗を持った状態では乗り物に搭乗できません。
+	 * Message: 旗を持った状態では乗り物に搭乗できません。<br>
+	 * Message: You cannot board an airship while holding a flag.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOARD_AN_AIRSHIP_WHILE_HOLDING_A_FLAG;
 	
 	/**
 	 * ID: 2257<br>
-	 * Message: ペットおよび召喚獣を召喚した状態では乗り物に搭乗できません。
+	 * Message: ペットおよび召喚獣を召喚した状態では乗り物に搭乗できません。<br>
+	 * Message: You cannot board an airship while a pet or a servitor is summoned.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOARD_AN_AIRSHIP_WHILE_A_PET_OR_A_SERVITOR_IS_SUMMONED;
 	
 	/**
 	 * ID: 2258<br>
-	 * Message: すでに別の乗り物に搭乗している状態です。
+	 * Message: すでに別の乗り物に搭乗している状態です。<br>
+	 * Message: You have already boarded another airship.
 	 */
 	public static final SystemMessageId YOU_HAVE_ALREADY_BOARDED_ANOTHER_AIRSHIP;
 	
 	/**
 	 * ID: 2259<br>
-	 * Message: 現在地：$s1、$s2、$s3 (幻想の島付近)
+	 * Message: 現在地：$s1、$s2、$s3 (幻想の島付近)<br>
+	 * Message: Current Location: $s1, $s2, $s3 (near Fantasy Isle)
 	 */
 	public static final SystemMessageId LOC_FANTASY_ISLAND_S1_S2_S3;
 	
 	/**
 	 * ID: 2260<br>
-	 * Message: 空腹感ゲージを10％以上に満たし続けなければ、ペットが逃げ出すことがあります。
+	 * Message: 空腹感ゲージを10％以上に満たし続けなければ、ペットが逃げ出すことがあります。<br>
+	 * Message: A pet can run away if you do not fill its hunger gauge to 10% or above.
 	 */
 	public static final SystemMessageId PET_CAN_RUN_AWAY_WHEN_HUNGER_BELOW_10_PERCENT;
 	
 	/**
 	 * ID: 2261<br>
-	 * Message: $c1が$c2に$s3のダメージを与えました。
+	 * Message: $c1が$c2に$s3のダメージを与えました。<br>
+	 * Message: $c1 has given $c2 damage of $s3.
 	 */
 	public static final SystemMessageId C1_GAVE_C2_DAMAGE_OF_S3;
 	
 	/**
 	 * ID: 2262<br>
-	 * Message: $c1が$c2から$s3のダメージを負いました。
+	 * Message: $c1が$c2から$s3のダメージを負いました。<br>
+	 * Message: $c1 has received $s3 damage from $c2.
 	 */
 	public static final SystemMessageId C1_RECEIVED_DAMAGE_OF_S3_FROM_C2;
 	
 	/**
 	 * ID: 2263<br>
-	 * Message: $c1が$c2により$s3のダメージを負いました。
+	 * Message: $c1が$c2により$s3のダメージを負いました。<br>
+	 * Message: $c1 has received damage of $s3 through $c2.
 	 */
 	public static final SystemMessageId C1_RECEIVED_DAMAGE_OF_S3_THROUGH_C2;
 	
 	/**
 	 * ID: 2264<br>
-	 * Message: $c1が$c2の攻撃を避けました。
+	 * Message: $c1が$c2の攻撃を避けました。<br>
+	 * Message: $c1 has evaded $c2's attack.
 	 */
 	public static final SystemMessageId C1_EVADED_C2_ATTACK;
 	
 	/**
 	 * ID: 2265<br>
-	 * Message: $c1の攻撃が外れました。
+	 * Message: $c1の攻撃が外れました。<br>
+	 * Message: $c1's attack went astray.
 	 */
 	public static final SystemMessageId C1_ATTACK_WENT_ASTRAY;
 	
 	/**
 	 * ID: 2266<br>
-	 * Message: $c1のクリティカル ヒット！
+	 * Message: $c1のクリティカル ヒット！<br>
+	 * Message: $c1 had a critical hit!
 	 */
 	public static final SystemMessageId C1_HAD_CRITICAL_HIT;
 	
 	/**
 	 * ID: 2267<br>
-	 * Message: $c1が$c2のドレインに抵抗しました。
+	 * Message: $c1が$c2のドレインに抵抗しました。<br>
+	 * Message: $c1 resisted $c2's drain.
 	 */
 	public static final SystemMessageId C1_RESISTED_C2_DRAIN;
 	
 	/**
 	 * ID: 2268<br>
-	 * Message: $c1が攻撃に失敗しました。
+	 * Message: $c1が攻撃に失敗しました。<br>
+	 * Message: $c1's attack failed.
 	 */
 	public static final SystemMessageId C1_ATTACK_FAILED;
 	
 	/**
 	 * ID: 2269<br>
-	 * Message: $c1が$c2の魔法に抵抗しました。
+	 * Message: $c1が$c2の魔法に抵抗しました。<br>
+	 * Message: $c1 resisted $c2's magic.
 	 */
 	public static final SystemMessageId C1_RESISTED_C2_DRAIN2;
 	
 	/**
 	 * ID: 2270<br>
-	 * Message: 魔法の炎により$c1が$s2のダメージを負いました。
+	 * Message: 魔法の炎により$c1が$s2のダメージを負いました。<br>
+	 * Message: $c1 has received damage from $s2 through the fire of magic
 	 */
 	public static final SystemMessageId C1_RECEIVED_DAMAGE_FROM_S2_THROUGH_FIRE_OF_MAGIC;
 	
 	/**
 	 * ID: 2271<br>
-	 * Message: $c1が$c2の魔法に若干抵抗しました。
+	 * Message: $c1が$c2の魔法に若干抵抗しました。<br>
+	 * Message: $c1 weakly resisted $c2's magic.
 	 */
 	public static final SystemMessageId C1_WEAKLY_RESISTED_C2_MAGIC;
 	
 	/**
 	 * ID: 2272<br>
-	 * Message: 一般チャット モードでは指定したキーをショートカットキーに指定することはできません。
+	 * Message: 一般チャット モードでは指定したキーをショートカットキーに指定することはできません。<br>
+	 * Message: You have selected shortcuts without settings up sub-keys. You can only use the set shortcut in the Enter Chat mode. Do you still wish to use the set shortcuts
 	 */
 	public static final SystemMessageId USE_SHORTCUT_CONFIRM;
 	
 	/**
 	 * ID: 2273<br>
-	 * Message: サブ クラスの状態では習得できないスキルです。メイン クラスに変更してからもう一度行ってください。
+	 * Message: サブ クラスの状態では習得できないスキルです。メイン クラスに変更してからもう一度行ってください。<br>
+	 * Message: This skill cannot be learned while in the sub-class state. Please try again after changing to the main class.
 	 */
 	public static final SystemMessageId SKILL_NOT_FOR_SUBCLASS;
 	
 	/**
 	 * ID: 2276<br>
-	 * Message: レジスタンスの要塞を奪還しました。
+	 * Message: レジスタンスの要塞を奪還しました。<br>
+	 * Message: The rebel army recaptured the fortress.
 	 */
 	public static final SystemMessageId NPCS_RECAPTURED_FORTRESS;
 	
 	/**
 	 * ID: 2283<br>
-	 * Message: 座った状態では変身できません。
+	 * Message: 座った状態では変身できません。<br>
+	 * Message: You cannot transform while sitting.
 	 */
 	public static final SystemMessageId CANNOT_TRANSFORM_WHILE_SITTING;
 	
 	/**
 	 * ID: 2291<br>
-	 * Message: パーティに参加した状態でのみ機械操作が可能です。
+	 * Message: パーティに参加した状態でのみ機械操作が可能です。<br>
+	 * Message: You can operate the machine when you participate in the party.
 	 */
 	public static final SystemMessageId CAN_OPERATE_MACHINE_WHEN_IN_PARTY;
 	
 	/**
 	 * ID: 2293<br>
-	 * Message: 現在地：$s1、$s2、$s3 (鋼鉄の城内部)
+	 * Message: 現在地：$s1、$s2、$s3 (鋼鉄の城内部)<br>
+	 * Message: Current location: $s1, $s2, $s3 (inside the Steel Citadel)
 	 */
 	public static final SystemMessageId LOC_IN_STEEL_CITADEL_S1_S2_S3;
 	
 	/**
 	 * ID: 2296<br>
-	 * Message: バイタリティ ポイントを獲得しました。
+	 * Message: バイタリティ ポイントを獲得しました。<br>
+	 * Message: You have gained Vitality points.
 	 */
 	public static final SystemMessageId GAINED_VITALITY_POINTS;
 	
 	/**
 	 * ID: 2301<br>
-	 * Message: 現在地：鋼鉄の城内郭
+	 * Message: 現在地：鋼鉄の城内郭<br>
+	 * Message: Current location: Steel Citadel
 	 */
 	public static final SystemMessageId LOC_STEEL_CITADEL;
 	
 	/**
 	 * ID: 2302<br>
-	 * Message: トッピング アイテムが到着しました。各村の境界の商人からプレゼントを受け取れます。
+	 * Message: トッピング アイテムが到着しました。各村の境界の商人からプレゼントを受け取れます。<br>
+	 * Message: Your Vitamin Item has arrived! Visit the Vitamin Manager in any village to obtain it
 	 */
 	public static final SystemMessageId YOUR_VITAMIN_ITEM_HAS_ARRIVED;
 	
 	/**
 	 * ID: 2303<br>
-	 * Message: $s1の再使用時間は残り$s2秒です。
+	 * Message: $s1の再使用時間は残り$s2秒です。<br>
+	 * Message: There are $s2 second(s) remaining in $s1's re-use time.
 	 */
 	public static final SystemMessageId S2_SECONDS_REMAINING_FOR_REUSE_S1;
 	
 	/**
 	 * ID: 2304<br>
-	 * Message: $s1の再使用時間は残り$s2分$s3秒です。
+	 * Message: $s1の再使用時間は残り$s2分$s3秒です。<br>
+	 * Message: There are $s2 minute(s), $s3 second(s) remaining in $s1's re-use time.
 	 */
 	public static final SystemMessageId S2_MINUTES_S3_SECONDS_REMAINING_FOR_REUSE_S1;
 	
 	/**
 	 * ID: 2305<br>
-	 * Message: $s1の再使用時間は残り$s2時間$s3分$s4秒です。
+	 * Message: $s1の再使用時間は残り$s2時間$s3分$s4秒です。<br>
+	 * Message: There are $s2 hour(s), $s3 minute(s), and $s4 second(s) remaining in $s1's re-use time.
 	 */
 	public static final SystemMessageId S2_HOURS_S3_MINUTES_S4_SECONDS_REMAINING_FOR_REUSE_S1;
 	
 	/**
 	 * ID: 2306<br>
-	 * Message: 勇気のお守りの効果により復活できます。今すぐに復活しますか。\n
+	 * Message: 勇気のお守りの効果により復活できます。今すぐに復活しますか。\n<br>
+	 * Message: Resurrection is possible because of the courage charm's effect. Would you like to resurrect now?
 	 */
 	public static final SystemMessageId RESURRECT_USING_CHARM_OF_COURAGE;
 	
 	/**
 	 * ID: 2314<br>
-	 * Message: バイタリティが満ちあふれます。
+	 * Message: バイタリティが満ちあふれます。<br>
+	 * Message: Your Vitality is at maximum.
 	 */
 	public static final SystemMessageId VITALITY_IS_AT_MAXIMUM;
 	
 	/**
 	 * ID: 2315<br>
-	 * Message: バイタリティが増加しました。
+	 * Message: バイタリティが増加しました。<br>
+	 * Message: You have gained Vitality points.
 	 */
 	public static final SystemMessageId VITALITY_HAS_INCREASED;
 	
 	/**
 	 * ID: 2316<br>
-	 * Message: バイタリティが減少しました。
+	 * Message: バイタリティが減少しました。<br>
+	 * Message: You have lost Vitality points.
 	 */
 	public static final SystemMessageId VITALITY_HAS_DECREASED;
 	
 	/**
 	 * ID: 2317<br>
-	 * Message: バイタリティがすべてなくなりました。
+	 * Message: バイタリティがすべてなくなりました。<br>
+	 * Message: Your Vitality is fully exhausted.
 	 */
 	public static final SystemMessageId VITALITY_IS_EXHAUSTED;
 	
 	/**
 	 * ID: 2319<br>
-	 * Message: $s1の名声値を手に入れました。
+	 * Message: $s1の名声値を手に入れました。<br>
+	 * Message: You have acquired $s1 reputation score.
 	 */
 	public static final SystemMessageId ACQUIRED_S1_REPUTATION_SCORE;
 	
 	/**
 	 * ID: 2321<br>
-	 * Message: 現在地：カマロカ内部
+	 * Message: 現在地：カマロカ内部<br>
+	 * Message: Current location: Inside Kamaloka
 	 */
 	public static final SystemMessageId LOC_KAMALOKA;
 	
 	/**
 	 * ID: 2322<br>
-	 * Message: 現在地：ニア カマロカ内部
+	 * Message: 現在地：ニア カマロカ内部<br>
+	 * Message: Current location: Inside Nia Kamaloka
 	 */
 	
 	public static final SystemMessageId LOC_NIA_KAMALOKA;
 	/**
 	 * ID: 2323<br>
-	 * Message: 現在地：リム カマロカ内部
+	 * Message: 現在地：リム カマロカ内部<br>
+	 * Message: Current location: Inside Rim Kamaloka
 	 */
 	public static final SystemMessageId LOC_RIM_KAMALOKA;
 	
 	/**
 	 * ID: 2326<br>
-	 * Message: 血盟名声値 50点を獲得しました。
+	 * Message: 血盟名声値 50点を獲得しました。<br>
+	 * Message: You have acquired 50 Clan's Fame Points..
 	 */
 	public static final SystemMessageId ACQUIRED_50_CLAN_FAME_POINTS;
 	
 	/**
 	 * ID: 2327<br>
-	 * Message: 名声値が足りません。
+	 * Message: 名声値が足りません。<br>
+	 * Message: You don't have enough reputation score.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_FAME_POINTS;
 	
 	/**
 	 * ID: 2333<br>
-	 * Message: インベントリの重さ/個数制限を超えているため、トッピング アイテムが受取れません。
+	 * Message: インベントリの重さ/個数制限を超えているため、トッピング アイテムが受取れません。<br>
+	 * Message: You cannot receive the vitamin item because you have exceed your inventory weight/quantity limit.
 	 */
 	public static final SystemMessageId YOU_CANNOT_RECEIVE_THE_VITAMIN_ITEM;
 	
 	/**
 	 * ID: 2335<br>
-	 * Message: 受け取れるトッピング アイテムはありません。
+	 * Message: 受け取れるトッピング アイテムはありません。<br>
+	 * Message: There are no more vitamin items to be found
 	 */
 	public static final SystemMessageId THERE_ARE_NO_MORE_VITAMIN_ITEMS_TO_BE_FOUND;
 	
 	/**
 	 * ID: 2336<br>
-	 * Message: ハーフキル！
+	 * Message: ハーフキル！<br>
+	 * Message: Half-Kill!
 	 */
 	public static final SystemMessageId HALF_KILL;
 	
 	/**
 	 * ID: 2337<br>
-	 * Message: ハーフ キルスキルに当たりCPが消えます。
+	 * Message: ハーフ キルスキルに当たりCPが消えます。<br>
+	 * Message: Your CP was drained because you were hit with a CP siphon skill.
 	 */
 	public static final SystemMessageId CP_DISAPPEARS_WHEN_HIT_WITH_A_HALF_KILL_SKILL;
 	
 	/**
 	 * ID: 2348<br>
-	 * Message: 戦闘中はフリーテレポート機能は使用できません。
+	 * Message: 戦闘中はフリーテレポート機能は使用できません。<br>
+	 * Message: You cannot use My Teleports during a battle.
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_MY_TELEPORTS_DURING_A_BATTLE;
 	
 	/**
 	 * ID: 2349<br>
-	 * Message: 攻城戦、要塞戦、アジト戦などの大規模戦闘への参加中はフリーテレポート機能は使用できません。
+	 * Message: 攻城戦、要塞戦、アジト戦などの大規模戦闘への参加中はフリーテレポート機能は使用できません。<br>
+	 * Message: You cannot use My Teleports while participating a large-scale battle such as a castle siege, fortress siege, or hideout siege..
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_MY_TELEPORTS_WHILE_PARTICIPATING;
 	
 	/**
 	 * ID: 2350<br>
-	 * Message: 決闘中はフリーテレポート機能は使用できません。
+	 * Message: 決闘中はフリーテレポート機能は使用できません。<br>
+	 * Message: You cannot use My Teleports during a duel
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_MY_TELEPORTS_DURING_A_DUEL;
 	
 	/**
 	 * ID: 2351<br>
-	 * Message: 飛行中はフリーテレポート機能は使用できません。
+	 * Message: 飛行中はフリーテレポート機能は使用できません。<br>
+	 * Message: You cannot use My Teleports while flying
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_MY_TELEPORTS_WHILE_FLYING;
 	
 	/**
 	 * ID: 2352<br>
-	 * Message: オリンピアード競技進行中はフリーテレポート機能は使用できません。
+	 * Message: オリンピアード競技進行中はフリーテレポート機能は使用できません。<br>
+	 * Message: You cannot use My Teleports while participating in an Olympiad match
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_MY_TELEPORTS_WHILE_PARTICIPATING_IN_AN_OLYMPIAD_MATCH;
 	
 	/**
 	 * ID: 2353<br>
-	 * Message: 石化、麻痺状態ではフリーテレポート機能は使用できません。
+	 * Message: 石化、麻痺状態ではフリーテレポート機能は使用できません。<br>
+	 * Message: You cannot use My Teleports while you are in a flint or paralyzed state
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_MY_TELEPORTS_WHILE_YOU_ARE_PARALYZED;
 	
 	/**
 	 * ID: 2354<br>
-	 * Message: 死亡状態ではフリーテレポート機能は使用できません。
+	 * Message: 死亡状態ではフリーテレポート機能は使用できません。<br>
+	 * Message: You cannot use My Teleports while you are dead
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_MY_TELEPORTS_WHILE_YOU_ARE_DEAD;
 	
 	/**
 	 * ID: 2355<br>
-	 * Message: この地域ではフリーテレポート機能は使用できません。
+	 * Message: この地域ではフリーテレポート機能は使用できません。<br>
+	 * Message: You cannot use My Teleports in this area
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_MY_TELEPORTS_IN_THIS_AREA;
 	
 	/**
 	 * ID: 2356<br>
-	 * Message: 水中ではフリーテレポート機能は使用できません。
+	 * Message: 水中ではフリーテレポート機能は使用できません。<br>
+	 * Message: You cannot use My Teleports underwater
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_MY_TELEPORTS_UNDERWATER;
 	
 	/**
 	 * ID: 2357<br>
-	 * Message: インスタントゾーンでは フリーテレポート機能は使用できません。
+	 * Message: インスタントゾーンでは フリーテレポート機能は使用できません。<br>
+	 * Message: You cannot use My Teleports in an instant zone
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_MY_TELEPORTS_IN_AN_INSTANT_ZONE;
 	
 	/**
 	 * ID: 2358<br>
-	 * Message: テレポート位置を保存するスペースがありません。
+	 * Message: テレポート位置を保存するスペースがありません。<br>
+	 * Message: You have no space to save the teleport location
 	 */
 	public static final SystemMessageId YOU_HAVE_NO_SPACE_TO_SAVE_THE_TELEPORT_LOCATION;
 	
 	/**
 	 * ID: 2359<br>
-	 * Message: テレポートアイテムがないため、テレポートできません。
+	 * Message: テレポートアイテムがないため、テレポートできません。<br>
+	 * Message: You cannot teleport because you do not have a teleport item
 	 */
 	public static final SystemMessageId YOU_CANNOT_TELEPORT_BECAUSE_YOU_DO_NOT_HAVE_A_TELEPORT_ITEM;
 	
 	/**
 	 * ID: 2361<br>
-	 * Message: 現在地：$s1
+	 * Message: 現在地：$s1<br>
+	 * Message: Current Location: $s1
 	 */
 	public static final SystemMessageId CURRENT_LOCATION_S1;
 	
 	/**
 	 * ID: 2366<br>
-	 * Message: 期間限定アイテムを削除しました。
+	 * Message: 期間限定アイテムを削除しました。<br>
+	 * Message: The limited-time item has been deleted..
 	 */
 	public static final SystemMessageId TIME_LIMITED_ITEM_DELETED;
 	
 	/**
 	 * ID: 2372<br>
-	 * Message: ハントサポートペットがまもなくいなくなります。
+	 * Message: ハントサポートペットがまもなくいなくなります。<br>
+	 * Message: There is not much time remaining until the hunting helper pet leaves.
 	 */
 	public static final SystemMessageId THERE_NOT_MUCH_TIME_REMAINING_UNTIL_HELPER_LEAVES;
 	
 	/**
 	 * ID: 2373<br>
-	 * Message: ハントサポートペットがあなたのもとから去る時間となりました。
+	 * Message: ハントサポートペットがあなたのもとから去る時間となりました。<br>
+	 * Message: The hunting helper pet is now leaving.
 	 */
 	public static final SystemMessageId THE_HELPER_PET_LEAVING;
 	
 	/**
 	 * ID: 2375<br>
-	 * Message: ハントサポートペットがまもなくいなくなります。今からは戻せません。
+	 * Message: ハントサポートペットがまもなくいなくなります。今からは戻せません。<br>
+	 * Message: The hunting helper pet cannot be returned ecause there is not much time remaining until it leaves.
 	 */
 	public static final SystemMessageId THE_HELPER_PET_CANNOT_BE_RETURNED;
 	
 	/**
 	 * ID: 2376<br>
-	 * Message: 交換中にはトッピング アイテムを受け取れません。
+	 * Message: 交換中にはトッピング アイテムを受け取れません。<br>
+	 * Message: You cannot receive a vitamin item during an exchange.
 	 */
 	public static final SystemMessageId YOU_CANNOT_RECEIVE_A_VITAMIN_ITEM_DURING_AN_EXCHANGE;
 	
 	/**
 	 * ID: 2390<br>
-	 * Message: フリーテレポート スロットが最大限に拡張されています。これ以上の拡張はできません。
+	 * Message: フリーテレポート スロットが最大限に拡張されています。これ以上の拡張はできません。<br>
+	 * Message: Your number of My Teleports slots has reached its maximum limit.
 	 */
 	public static final SystemMessageId YOUR_NUMBER_OF_MY_TELEPORTS_SLOTS_HAS_REACHED_ITS_MAXIMUM_LIMIT;
 	
 	/**
 	 * ID: 2396<br>
-	 * Message: ペット/召喚獣のこのスキルは再使用中であるため使えません。
+	 * Message: ペット/召喚獣のこのスキルは再使用中であるため使えません。<br>
+	 * Message: That pet/servitor skill cannot be used because it is recharging.
 	 */
 	public static final SystemMessageId PET_SKILL_CANNOT_BE_USED_RECHARCHING;
 	
 	/**
 	 * ID: 2398<br>
-	 * Message: スロットが非アクティブになっています。
+	 * Message: スロットが非アクティブになっています。<br>
+	 * Message: You have no open My Teleports slots.
 	 */
 	public static final SystemMessageId YOU_HAVE_NO_OPEN_MY_TELEPORTS_SLOTS;
 	
 	/**
 	 * ID: 2440<br>
-	 * Message: $c1 はクラス無制限競技種目の待機者リストにすでに登録されています。
+	 * Message: $c1 はクラス無制限競技種目の待機者リストにすでに登録されています。<br>
+	 * Message: $c1 is already registered on the waiting list for the non-class-limited match event.
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_REGISTERED_NON_CLASS_LIMITED_EVENT_TEAMS;
 	
 	/**
 	 * ID: 2441<br>
-	 * Message: チーム競技の申し込みはパーティリーダーしかできません。
+	 * Message: チーム競技の申し込みはパーティリーダーしかできません。<br>
+	 * Message: Only a party leader can request a team match.
 	 */
 	public static final SystemMessageId ONLY_PARTY_LEADER_CAN_REQUEST_TEAM_MATCH;
 	
 	/**
 	 * ID: 2442<br>
-	 * Message: 条件が合わないため、申し込みできません。チーム競技に参加するためには3人以上のパーティを作らなければなりません。
+	 * Message: 条件が合わないため、申し込みできません。チーム競技に参加するためには3人以上のパーティを作らなければなりません。<br>
+	 * Message: The request cannot be made because the requirements have not been made. To participate in a team match you must first form a 3-member party.
 	 */
 	public static final SystemMessageId PARTY_REQUIREMENTS_NOT_MET;
 	
 	/**
 	 * ID: 2936<br>
-	 * Message: 所属の領地とスクロールが一致しないため、偽装できません。
+	 * Message: 所属の領地とスクロールが一致しないため、偽装できません。<br>
+	 * Message: The disguise scroll cannot be used because it is meant for use in a different territory.
 	 */
 	public static final SystemMessageId THE_DISGUISE_SCROLL_MEANT_FOR_DIFFERENT_TERRITORY;
 	
 	/**
 	 * ID: 2937<br>
-	 * Message: 領地を持っている血盟の血盟員は偽装できません。
+	 * Message: 領地を持っている血盟の血盟員は偽装できません。<br>
+	 * Message: A territory owning clan member cannot use a disguise scroll.
 	 */
 	public static final SystemMessageId TERRITORY_OWNING_CLAN_CANNOT_USE_DISGUISE_SCROLL;
 	
 	/**
 	 * ID: 2955<br>
-	 * Message: 領地戦専用の偽装、変身は領地戦開始20分前から終了10分後まで使えます。
+	 * Message: 領地戦専用の偽装、変身は領地戦開始20分前から終了10分後まで使えます。<br>
+	 * Message: The territory war exclusive disguise and transformation can be used 20 minutes before the start of the territory war to 10 minutes after its end.
 	 */
 	public static final SystemMessageId TERRITORY_WAR_SCROLL_CAN_NOT_USED_NOW;
 	
 	/**
 	 * ID: 2400<br>
-	 * Message: 現在使用中のインスタント ゾーン：$s1
+	 * Message: 現在使用中のインスタント ゾーン：$s1<br>
+	 * Message: Instant Zone currently in use: $s1
 	 */
 	public static final SystemMessageId INSTANT_ZONE_CURRENTLY_INUSE_S1;
 	
 	/**
 	 * ID: 2402<br>
-	 * Message: 領地戦の申し込みは既に締め切られています。
+	 * Message: 領地戦の申し込みは既に締め切られています。<br>
+	 * Message: The Territory War request period has ended.
 	 */
 	public static final SystemMessageId THE_TERRITORY_WAR_REGISTERING_PERIOD_ENDED;
 	
 	/**
 	 * ID: 2403<br>
-	 * Message: 領地戦開始まであと10分です。
+	 * Message: 領地戦開始まであと10分です。<br>
+	 * Message: Territory War begins in 10 minutes!
 	 */
 	public static final SystemMessageId TERRITORY_WAR_BEGINS_IN_10_MINUTES;
 	
 	/**
 	 * ID: 2404<br>
-	 * Message: 領地戦開始まであと5分です。
+	 * Message: 領地戦開始まであと5分です。<br>
+	 * Message: Territory War begins in 5 minutes!
 	 */
 	public static final SystemMessageId TERRITORY_WAR_BEGINS_IN_5_MINUTES;
 	
 	/**
 	 * ID: 2405<br>
-	 * Message: 領地戦開始まであと1分です。
+	 * Message: 領地戦開始まであと1分です。<br>
+	 * Message: Territory War begins in 1 minute!
 	 */
 	public static final SystemMessageId TERRITORY_WAR_BEGINS_IN_1_MINUTE;
 	
 	/**
 	 * ID: 2408<br>
-	 * Message: クラス無制限競技種目の待機者リストに登録されました。
+	 * Message: クラス無制限競技種目の待機者リストに登録されました。<br>
+	 * Message: You have registered on the waiting list for the non-class-limited team match event.
 	 */
 	public static final SystemMessageId YOU_HAVE_REGISTERED_IN_A_WAITING_LIST_OF_TEAM_GAMES;
 	
 	/**
 	 * ID: 2409<br>
-	 * Message: フリーテレポート スロットが拡張されました。
+	 * Message: フリーテレポート スロットが拡張されました。<br>
+	 * Message: The number of My Teleports slots has been increased.
 	 */
 	public static final SystemMessageId THE_NUMBER_OF_MY_TELEPORTS_SLOTS_HAS_BEEN_INCREASED;
 	
 	/**
 	 * ID: 2410<br>
-	 * Message: フリーテレポートでは行けない地域です。
+	 * Message: フリーテレポートでは行けない地域です。<br>
+	 * Message: You cannot use My Teleports to reach this area!
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_MY_TELEPORTS_TO_REACH_THIS_AREA;
 	
 	/**
 	 * ID: 2424<br>
-	 * Message: 採集に失敗しました。
+	 * Message: 採集に失敗しました。<br>
+	 * Message: The collection has failed.
 	 */
 	public static final SystemMessageId THE_COLLECTION_HAS_FAILED;
 	
 	/**
 	 * ID: 2448<br>
-	 * Message: お誕生日おめでとうございます！アレグリアがバースデイ プレゼントをお届けします。
+	 * Message: お誕生日おめでとうございます！アレグリアがバースデイ プレゼントをお届けします。<br>
+	 * Message: Your birthday gift has arrived
 	 */
 	public static final SystemMessageId YOUR_BIRTHDAY_GIFT_HAS_ARRIVED;
 	
 	/**
 	 * ID: 2449<br>
-	 * Message: 誕生日まであと$s1日です。誕生日になったら、アレグリアが心を込めて準備したプレゼントを郵便でお届けします。
+	 * Message: 誕生日まであと$s1日です。誕生日になったら、アレグリアが心を込めて準備したプレゼントを郵便でお届けします。<br>
+	 * Message: There are $s1 days until your character's birthday.
 	 */
 	public static final SystemMessageId THERE_ARE_S1_DAYS_UNTIL_YOUR_CHARACTERS_BIRTHDAY;
 	
 	/**
 	 * ID: 2450<br>
-	 * Message: $c1 の誕生日は$s2年$s3月$s4日です。
+	 * Message: $c1 の誕生日は$s2年$s3月$s4日です。<br>
+	 * Message: $c1's character birthday is $s3/$s4/$s2.
 	 */
 	public static final SystemMessageId C1_BIRTHDAY_IS_S3_S4_S2;
 	
 	/**
 	 * ID: 2451<br>
-	 * Message: アーマー セットの装着を解除したため、クロークの装着も解除されます。
+	 * Message: アーマー セットの装着を解除したため、クロークの装着も解除されます。<br>
+	 * Message: The cloak equip has been removed because the armor set equip has been removed.
 	 */
 	public static final SystemMessageId CLOAK_REMOVED_BECAUSE_ARMOR_SET_REMOVED;
 	
 	/**
 	 * ID: 2455<br>
-	 * Message: 召喚された飛行船が存在しないため、搭乗できません。
+	 * Message: 召喚された飛行船が存在しないため、搭乗できません。<br>
+	 * Message: The airship must be summoned in order for you to board.
 	 */
 	public static final SystemMessageId THE_AIRSHIP_MUST_BE_SUMMONED_TO_BOARD;
 	
 	/**
 	 * ID: 2456<br>
-	 * Message: 飛行船を獲得するには、血盟レベルが5以上でなければなりません。
+	 * Message: 飛行船を獲得するには、血盟レベルが5以上でなければなりません。<br>
+	 * Message: In order to acquire an airship, the clan's level must be level 5 or higher.
 	 */
 	public static final SystemMessageId THE_AIRSHIP_NEED_CLANLVL_5_TO_SUMMON;
 	
 	/**
 	 * ID: 2457<br>
-	 * Message: 飛行船召喚許可書を入力していないか、血盟所有の飛行船が存在しないため、飛行船を召喚できません。
+	 * Message: 飛行船召喚許可書を入力していないか、血盟所有の飛行船が存在しないため、飛行船を召喚できません。<br>
+	 * Message: An airship cannot be summoned because either you have not registered your airship license, or the airship has not yet been summoned
 	 */
 	public static final SystemMessageId THE_AIRSHIP_NEED_LICENSE_TO_SUMMON;
 	
 	/**
 	 * ID: 2458<br>
-	 * Message: 血盟所有の飛行船はすでに他の血盟員が使用しています。
+	 * Message: 血盟所有の飛行船はすでに他の血盟員が使用しています。<br>
+	 * Message: The airship owned by the clan is already being used by another clan member.
 	 */
 	public static final SystemMessageId THE_AIRSHIP_ALREADY_USED;
 	
 	/**
 	 * ID: 2459<br>
-	 * Message: 飛行船召喚許可書をすでに獲得しています。
+	 * Message: 飛行船召喚許可書をすでに獲得しています。<br>
+	 * Message: The Airship Summon License has already been acquired.
 	 */
 	public static final SystemMessageId THE_AIRSHIP_SUMMON_LICENSE_ALREADY_ACQUIRED;
 	
 	/**
 	 * ID: 2460<br>
-	 * Message: 血盟所有の飛行船はすでに存在しています。
+	 * Message: 血盟所有の飛行船はすでに存在しています。<br>
+	 * Message: The clan owned airship already exists.
 	 */
 	public static final SystemMessageId THE_AIRSHIP_IS_ALREADY_EXISTS;
 	
 	/**
 	 * ID: 2461<br>
-	 * Message: 血盟所有の飛行船は血盟主のみ買えます。
+	 * Message: 血盟所有の飛行船は血盟主のみ買えます。<br>
+	 * Message: The airship owned by the clan can only be purchased by the clan lord.
 	 */
 	public static final SystemMessageId THE_AIRSHIP_NO_PRIVILEGES;
 	
 	/**
 	 * ID: 2462<br>
-	 * Message: $s1が不足しているため、飛行船を召喚できません。
+	 * Message: $s1が不足しているため、飛行船を召喚できません。<br>
+	 * Message: The airship cannot be summoned because you don't have enough $s1%.
 	 */
 	public static final SystemMessageId THE_AIRSHIP_NEED_MORE_S1;
 	
 	/**
 	 * ID: 2463<br>
-	 * Message: 飛行船の燃料（EP）がなくなりそうです。
+	 * Message: 飛行船の燃料（EP）がなくなりそうです。<br>
+	 * Message: The airship's fuel (EP) will soon run out.
 	 */
 	public static final SystemMessageId THE_AIRSHIP_FUEL_SOON_RUN_OUT;
 	
 	/**
 	 * ID: 2464<br>
-	 * Message: 飛行船の燃料(EP)をすべて使い切りました。この状態では飛行船のスピードが大幅に減速します。
+	 * Message: 飛行船の燃料(EP)をすべて使い切りました。この状態では飛行船のスピードが大幅に減速します。<br>
+	 * Message: The airship's fuel (EP) has run out. The airship's speed will be greatly decreased in this condition.
 	 */
 	public static final SystemMessageId THE_AIRSHIP_FUEL_RUN_OUT;
 	
 	/**
 	 * ID: 2465<br>
-	 * Message: クラス無制限チーム競技を選択しました。参加しますか。
+	 * Message: クラス無制限チーム競技を選択しました。参加しますか。<br>
+	 * Message: You have selected a 3 vs 3 class irrelevant team match. Do you wish to participate?
 	 */
 	public static final SystemMessageId OLYMPIAD_3VS3_CONFIRM;
 	
 	/**
 	 * ID: 2491<br>
-	 * Message: 飛行船の燃料が足らないため、テレポートできません。
+	 * Message: 飛行船の燃料が足らないため、テレポートできません。<br>
+	 * Message: Your ship cannot teleport because it does not have enough fuel for the trip.
 	 */
 	public static final SystemMessageId THE_AIRSHIP_CANNOT_TELEPORT;
 	
 	/**
 	 * ID: 2492<br>
-	 * Message: 飛行船が召喚されました。%s分後に自動的に出発します。
+	 * Message: 飛行船が召喚されました。%s分後に自動的に出発します。<br>
+	 * Message: The airship has been summoned. It will automatically depart in %s minutes.
 	 */
 	public static final SystemMessageId THE_AIRSHIP_SUMMONED;
 	
 	/**
 	 * ID: 2500<br>
-	 * Message: 採集に成功しました。
+	 * Message: 採集に成功しました。<br>
+	 * Message: The collection has succeeded.
 	 */
 	public static final SystemMessageId THE_COLLECTION_HAS_SUCCEEDED;
 	
 	/**
 	 * ID: 2701<br>
-	 * Message: 競技準備中です。しばらくしてから再度お試しください。
+	 * Message: 競技準備中です。しばらくしてから再度お試しください。<br>
+	 * Message: The match is being prepared. Please try again later.
 	 */
 	public static final SystemMessageId MATCH_BEING_PREPARED_TRY_LATER;
 	
 	/**
 	 * ID: 2702<br>
-	 * Message: 人数が合わないため、チームから除外されました。
+	 * Message: 人数が合わないため、チームから除外されました。<br>
+	 * Message: You were excluded from the match because the registration count was not correct.
 	 */
 	public static final SystemMessageId EXCLUDED_FROM_MATCH_DUE_INCORRECT_COUNT;
 	
 	/**
 	 * ID: 2703<br>
-	 * Message: 人員の比率が合わないため、チームが調整されました。
+	 * Message: 人員の比率が合わないため、チームが調整されました。<br>
+	 * Message: The team was adjusted because the population ratio was not correct.
 	 */
 	public static final SystemMessageId TEAM_ADJUSTED_BECAUSE_WRONG_POPULATION_RATIO;
 	
 	/**
 	 * ID: 2704<br>
-	 * Message: 定員を超過したため、登録できません。
+	 * Message: 定員を超過したため、登録できません。<br>
+	 * Message: You cannot register because capacity has been exceeded.
 	 */
 	public static final SystemMessageId CANNOT_REGISTER_CAUSE_QUEUE_FULL;
 	
 	/**
 	 * ID: 2705<br>
-	 * Message: 競技待機時間が1分間延長されました。
+	 * Message: 競技待機時間が1分間延長されました。<br>
+	 * Message: The match waiting time was extended by 1 minute.
 	 */
 	public static final SystemMessageId MATCH_WAITING_TIME_EXTENDED;
 	
 	/**
 	 * ID: 2706<br>
-	 * Message: 条件が合わないため、入場できません。
+	 * Message: 条件が合わないため、入場できません。<br>
+	 * Message: You cannot enter because you do not meet the requirements.
 	 */
 	public static final SystemMessageId CANNOT_ENTER_CAUSE_DONT_MATCH_REQUIREMENTS;
 	
 	/**
 	 * ID: 2707<br>
-	 * Message: 競技登録キャンセル後10数秒間は再度の申し込みはできません。
+	 * Message: 競技登録キャンセル後10数秒間は再度の申し込みはできません。<br>
+	 * Message: You cannot make another request for 10 seconds after cancelling a match registration.
 	 */
 	public static final SystemMessageId CANNOT_REQUEST_REGISTRATION_10_SECS_AFTER;
 	
 	/**
 	 * ID: 2708<br>
-	 * Message: 呪われた武器を持っているため、登録できません。
+	 * Message: 呪われた武器を持っているため、登録できません。<br>
+	 * Message: You cannot register while possessing a cursed weapon.
 	 */
 	public static final SystemMessageId CANNOT_REGISTER_PROCESSING_CURSED_WEAPON;
 	
 	/**
 	 * ID: 2709<br>
-	 * Message: オリンピアード、地下コロシアム、クラトのキューブに申し込み中は登録できません。
+	 * Message: オリンピアード、地下コロシアム、クラトのキューブに申し込み中は登録できません。<br>
+	 * Message: Applicants for the Olympiad, Underground Coliseum, or Kratei's Cube matches cannot register.
 	 */
 	public static final SystemMessageId COLISEUM_OLYMPIAD_KRATEIS_APPLICANTS_CANNOT_PARTICIPATE;
 	
 	/**
 	 * ID: 2710<br>
-	 * Message: 現在地： $s1, $s2, $s3（クセルス同盟の連合基地のそば）
+	 * Message: 現在地： $s1, $s2, $s3（クセルス同盟の連合基地のそば）<br>
+	 * Message: Current location: $s1, $s2, $s3 (near the Keucereus clan association location)
 	 */
 	public static final SystemMessageId LOC_KEUCEREUS_S1_S2_S3;
 	
 	/**
 	 * ID: 2711<br>
-	 * Message: 現在地： $s1, $s2, $s3（不滅の種の内部）
+	 * Message: 現在地： $s1, $s2, $s3（不滅の種の内部）<br>
+	 * Message: Current location: $s1, $s2, $s3 (inside the Seed of Infinity)
 	 */
 	public static final SystemMessageId LOC_IN_SEED_INFINITY_S1_S2_S3;
 	
 	/**
 	 * ID: 2712<br>
-	 * Message: 現在地： $s1, $s2, $s3（破滅の種の内部）
+	 * Message: 現在地： $s1, $s2, $s3（破滅の種の内部）<br>
+	 * Message: Current location: $s1, $s2, $s3 (outside the Seed of Infinity)
 	 */
 	public static final SystemMessageId LOC_OUT_SEED_INFINITY_S1_S2_S3;
 	
 	/**
 	 * ID: 2716<br>
-	 * Message: 現在地： $s1, $s2, $s3（クラフトの内部）
+	 * Message: 現在地： $s1, $s2, $s3（クラフトの内部）<br>
+	 * Message: Current location: $s1, $s2, $s3 (inside Aerial Cleft)
 	 */
 	public static final SystemMessageId LOC_CLEFT_S1_S2_S3;
 	
 	/**
 	 * ID: 2720<br>
-	 * Message: 今からインスタント ゾーン：$s1への入場が制限されます。次の入場可能時間を調べるにはコマンド「/instantzone」を使います。
+	 * Message: 今からインスタント ゾーン：$s1への入場が制限されます。次の入場可能時間を調べるにはコマンド「/instantzone」を使います。<br>
+	 * Message: Instant zone from here: $s1's entry has been restricted.
 	 */
 	public static final SystemMessageId INSTANT_ZONE_S1_RESTRICTED;
 	
 	/**
 	 * ID: 2721<br>
-	 * Message: ここは飛行体に搭乗、搭乗解除ができない地域です。
+	 * Message: ここは飛行体に搭乗、搭乗解除ができない地域です。<br>
+	 * Message: Boarding or cancellation of boarding on Airships is not allowed in the current area.
 	 */
 	public static final SystemMessageId BOARD_OR_CANCEL_NOT_POSSIBLE_HERE;
 	
 	/**
 	 * ID: 2722<br>
-	 * Message: 発着場には他の飛行船が召喚されています。また後ほどご利用ください。
+	 * Message: 発着場には他の飛行船が召喚されています。また後ほどご利用ください。<br>
+	 * Message: Another airship has already been summoned at the wharf. Please try again later.
 	 */
 	public static final SystemMessageId ANOTHER_AIRSHIP_ALREADY_SUMMONED;
 	
 	/**
 	 * ID: 2727<br>
-	 * Message: 条件が合わないため乗れません。
+	 * Message: 条件が合わないため乗れません。<br>
+	 * Message: You cannot board because you do not meet the requirements.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOARD_NOT_MEET_REQUEIREMENTS;
 	
 	/**
 	 * ID: 2729<br>
-	 * Message: 変身中には対象を操縦できません。
+	 * Message: 変身中には対象を操縦できません。<br>
+	 * Message: You cannot control the helm while transformed.
 	 */
 	public static final SystemMessageId YOU_CANNOT_CONTROL_THE_HELM_WHILE_TRANSFORMED;
 	
 	/**
 	 * ID: 2730<br>
-	 * Message: 石化状態では対象を操縦できません。
+	 * Message: 石化状態では対象を操縦できません。<br>
+	 * Message: You cannot control the helm while you are petrified.
 	 */
 	public static final SystemMessageId YOU_CANNOT_CONTROL_THE_HELM_WHILE_YOU_ARE_PETRIFIED;
 	
 	/**
 	 * ID: 2731<br>
-	 * Message: 死んだ状態では対象を操縦できません。
+	 * Message: 死んだ状態では対象を操縦できません。<br>
+	 * Message: You cannot control the helm when you are dead.
 	 */
 	public static final SystemMessageId YOU_CANNOT_CONTROL_THE_HELM_WHEN_YOU_ARE_DEAD;
 	
 	/**
 	 * ID: 2732<br>
-	 * Message: 釣り中には対象を操縦できません。
+	 * Message: 釣り中には対象を操縦できません。<br>
+	 * Message: You cannot control the helm while fishing.
 	 */
 	public static final SystemMessageId YOU_CANNOT_CONTROL_THE_HELM_WHILE_FISHING;
 	
 	/**
 	 * ID: 2733<br>
-	 * Message: 戦闘中には対象を操縦できません。
+	 * Message: 戦闘中には対象を操縦できません。<br>
+	 * Message: You cannot control the helm while in a battle.
 	 */
 	public static final SystemMessageId YOU_CANNOT_CONTROL_THE_HELM_WHILE_IN_A_BATTLE;
 	
 	/**
 	 * ID: 2734<br>
-	 * Message: 決闘中には対象を操縦できません。
+	 * Message: 決闘中には対象を操縦できません。<br>
+	 * Message: You cannot control the helm while in a duel.
 	 */
 	public static final SystemMessageId YOU_CANNOT_CONTROL_THE_HELM_WHILE_IN_A_DUEL;
 	/**
 	 * ID: 2735<br>
-	 * Message: 座った状態では対象を操縦できません。
+	 * Message: 座った状態では対象を操縦できません。<br>
+	 * Message: You cannot control the helm while in a sitting position.
 	 */
 	public static final SystemMessageId YOU_CANNOT_CONTROL_THE_HELM_WHILE_IN_A_SITTING_POSITION;
 	
 	/**
 	 * ID: 2736<br>
-	 * Message: スキル詠唱中には対象を操縦できません。
+	 * Message: スキル詠唱中には対象を操縦できません。<br>
+	 * Message: You cannot control the helm while using a skill.
 	 */
 	public static final SystemMessageId YOU_CANNOT_CONTROL_THE_HELM_WHILE_USING_A_SKILL;
 	
 	/**
 	 * ID: 2737<br>
-	 * Message: 呪われた武器を装着した状態では対象を操縦できません。
+	 * Message: 呪われた武器を装着した状態では対象を操縦できません。<br>
+	 * Message: You cannot control the helm while a cursed weapon is equipped.
 	 */
 	public static final SystemMessageId YOU_CANNOT_CONTROL_THE_HELM_WHILE_A_CURSED_WEAPON_IS_EQUIPPED;
 	
 	/**
 	 * ID: 2738<br>
-	 * Message: 旗を持った状態では対象を操縦できません。
+	 * Message: 旗を持った状態では対象を操縦できません。<br>
+	 * Message: You cannot control the helm while holding a flag.
 	 */
 	public static final SystemMessageId YOU_CANNOT_CONTROL_THE_HELM_WHILE_HOLDING_A_FLAG;
 	
 	/**
 	 * ID: 2750<br>
-	 * Message: $s1守護物、破壊！守護物を$c2が奪取しました。
+	 * Message: $s1守護物、破壊！守護物を$c2が奪取しました。<br>
+	 * Message: The $s1 ward has been destroyed! $c2 now has the territory ward.
 	 */
 	public static final SystemMessageId THE_S1_WARD_HAS_BEEN_DESTROYED_C2_HAS_THE_WARD;
 	
 	/**
 	 * ID: 2751<br>
-	 * Message: $s1守護物を拾得したキャラクターが死亡しました。
+	 * Message: $s1守護物を拾得したキャラクターが死亡しました。<br>
+	 * Message: The character that acquired $s1 ward has been killed.
 	 */
 	public static final SystemMessageId THE_CHAR_THAT_ACQUIRED_S1_WARD_HAS_BEEN_KILLED;
 	
 	/**
 	 * ID: 2762<br>
-	 * Message: 距離が離れているため、対象を操縦できません。
+	 * Message: 距離が離れているため、対象を操縦できません。<br>
+	 * Message: You cannot control because you are too far.
 	 */
 	public static final SystemMessageId CANT_CONTROL_TOO_FAR;
 	
 	/**
 	 * ID: 2764<br>
-	 * Message: この連合チャンネルは人数超過のため入れません。
+	 * Message: この連合チャンネルは人数超過のため入れません。<br>
+	 * Message: You cannot enter because the corresponding alliance channel's maximum number of entrants has been reached.
 	 */
 	public static final SystemMessageId YOU_CANNOT_ENTER_BECAUSE_MAXIMUM_ENTRANTS;
 	
 	/**
 	 * ID: 2765<br>
-	 * Message: 連合チャンネルリーダー以外は入れません。
+	 * Message: 連合チャンネルリーダー以外は入れません。<br>
+	 * Message: Only the alliance channel leader can attempt entry.
 	 */
 	public static final SystemMessageId ONLY_ALLIANCE_CHANNEL_LEADER_CAN_ENTER;
 	
 	/**
 	 * ID: 2766<br>
-	 * Message: 不滅の種レベル1攻撃中
+	 * Message: 不滅の種レベル1攻撃中<br>
+	 * Message: Seed of Infinity Stage 1 Attack In Progress.
 	 */
 	public static final SystemMessageId SEED_OF_INFINITY_STAGE_1_ATTACK_IN_PROGRESS;
 	
 	/**
 	 * ID: 2767<br>
-	 * Message: 不滅の種レベル2攻撃中
+	 * Message: 不滅の種レベル2攻撃中<br>
+	 * Message: Seed of Infinity Stage 2 Attack In Progress.
 	 */
 	public static final SystemMessageId SEED_OF_INFINITY_STAGE_2_ATTACK_IN_PROGRESS;
 	
 	/**
 	 * ID: 2768<br>
-	 * Message: 不滅の種占領完了
+	 * Message: 不滅の種占領完了<br>
+	 * Message: Seed of Infinity Conquest Complete.
 	 */
 	public static final SystemMessageId SEED_OF_INFINITY_CONQUEST_COMPLETE;
 	
 	/**
 	 * ID: 2769<br>
-	 * Message: 不滅の種レベル1防御中
+	 * Message: 不滅の種レベル1防御中<br>
+	 * Message: Seed of Infinity Stage 1 Defense In Progress.
 	 */
 	public static final SystemMessageId SEED_OF_INFINITY_STAGE_1_DEFENSE_IN_PROGRESS;
 	
 	/**
 	 * ID: 2770<br>
-	 * Message: 不滅の種レベル2防御中
+	 * Message: 不滅の種レベル2防御中<br>
+	 * Message: Seed of Infinity Stage 2 Defense In Progress.
 	 */
 	public static final SystemMessageId SEED_OF_INFINITY_STAGE_2_DEFENSE_IN_PROGRESS;
 	
 	/**
 	 * ID: 2771<br>
-	 * Message: 破滅の種攻撃中
+	 * Message: 破滅の種攻撃中<br>
+	 * Message: Seed of Destruction Attack in Progress.
 	 */
 	public static final SystemMessageId SEED_OF_DESTRUCTION_ATTACK_IN_PROGRESS;
 	
 	/**
 	 * ID: 2772<br>
-	 * Message: 破滅の種占領完了
+	 * Message: 破滅の種占領完了<br>
+	 * Message: Seed of Destruction Conquest Complete.
 	 */
 	public static final SystemMessageId SEED_OF_DESTRUCTION_CONQUEST_COMPLETE;
 	
 	/**
 	 * ID: 2773<br>
-	 * Message: 破滅の種防御中
+	 * Message: 破滅の種防御中<br>
+	 * Message: Seed of Destruction Defense in Progress.
 	 */
 	public static final SystemMessageId SEED_OF_DESTRUCTION_DEFENSE_IN_PROGRESS;
 	
 	/**
 	 * ID: 2777<br>
-	 * Message: 飛行船の召喚許可書が入力できました。貴血盟は今後、飛行船の召喚ができるようになります。
+	 * Message: 飛行船の召喚許可書が入力できました。貴血盟は今後、飛行船の召喚ができるようになります。<br>
+	 * Message: The airship's summon license has been entered. Your clan can now summon the airship.
 	 */
 	public static final SystemMessageId THE_AIRSHIP_SUMMON_LICENSE_ENTERED;
 	
 	/**
 	 * ID: 2778<br>
-	 * Message: 守護物を持っている状態では瞬間移動効果が適用されません。
+	 * Message: 守護物を持っている状態では瞬間移動効果が適用されません。<br>
+	 * Message: You cannot teleport while in possession of a ward.
 	 */
 	public static final SystemMessageId YOU_CANNOT_TELEPORT_WHILE_IN_POSSESSION_OF_A_WARD;
 	
 	/**
 	 * ID: 2793<br>
-	 * Message: インスタント ゾーンの最少人数（$s1人）に達していないため、入れません。
+	 * Message: インスタント ゾーンの最少人数（$s1人）に達していないため、入れません。<br>
+	 * Message: You must have a minimum of ($s1) people to enter this Instant Zone. Your request for entry is denied
 	 */
 	public static final SystemMessageId YOU_MUST_HAVE_MINIMUM_OF_S1_PEOPLE_TO_ENTER;
 	
 	/**
 	 * ID: 2795<br>
-	 * Message: 既に他の領地戦を申し込んでいる状態です。
+	 * Message: 既に他の領地戦を申し込んでいる状態です。<br>
+	 * Message: You've already requested a territory war in another territory elsewhere.
 	 */
 	public static final SystemMessageId YOU_ALREADY_REQUESTED_TW_REGISTRATION;
 	
 	/**
 	 * ID: 2796<br>
-	 * Message: 領地を持っている血盟は領地戦に傭兵の資格では参戦できません。
+	 * Message: 領地を持っている血盟は領地戦に傭兵の資格では参戦できません。<br>
+	 * Message: The clan who owns the territory cannot participate in the territory war as mercenaries.
 	 */
 	public static final SystemMessageId THE_TERRITORY_OWNER_CLAN_CANNOT_PARTICIPATE_AS_MERCENARIES;
 	
 	/**
 	 * ID: 2797<br>
-	 * Message: 今は領地戦申込期間ではありません。
+	 * Message: 今は領地戦申込期間ではありません。<br>
+	 * Message: It is not a territory war registration period, so a request cannot be made at this time.
 	 */
 	public static final SystemMessageId NOT_TERRITORY_REGISTRATION_PERIOD;
 	
 	/**
 	 * ID: 2798<br>
-	 * Message: 領地戦終了$s1時間前！
+	 * Message: 領地戦終了$s1時間前！<br>
+	 * Message: The territory war will end in $s1-hour(s).
 	 */
 	public static final SystemMessageId THE_TERRITORY_WAR_WILL_END_IN_S1_HOURS;
 	
 	/**
 	 * ID: 2799<br>
-	 * Message: 領地戦終了$s1分前！
+	 * Message: 領地戦終了$s1分前！<br>
+	 * Message: The territory war will end in $s1-minute(s).
 	 */
 	public static final SystemMessageId THE_TERRITORY_WAR_WILL_END_IN_S1_MINUTES;
 	
 	/**
 	 * ID: 2900<br>
-	 * Message: 領地戦終了$s1秒前！
+	 * Message: 領地戦終了$s1秒前！<br>
+	 * Message: $s1-second(s) to the end of territory war!
 	 */
 	public static final SystemMessageId S1_SECONDS_TO_THE_END_OF_TERRITORY_WAR;
 	
 	/**
 	 * ID: 2901<br>
-	 * Message: 対象が同じ領地所属のため、強制攻撃はできません。
+	 * Message: 対象が同じ領地所属のため、強制攻撃はできません。<br>
+	 * Message: You cannot force attack a member of the same territory.
 	 */
 	public static final SystemMessageId YOU_CANNOT_ATTACK_A_MEMBER_OF_THE_SAME_TERRITORY;
 	
 	/**
 	 * ID: 2902<br>
-	 * Message: 守護物を得ました。早急に味方の前哨基地に移動してください。
+	 * Message: 守護物を得ました。早急に味方の前哨基地に移動してください。<br>
+	 * Message: You've acquired the ward. Move quickly to your forces' outpost.
 	 */
 	public static final SystemMessageId YOU_VE_ACQUIRED_THE_WARD;
 	
 	/**
 	 * ID: 2903<br>
-	 * Message: 領地戦が始まりました。
+	 * Message: 領地戦が始まりました。<br>
+	 * Message: Territory war has begun.
 	 */
 	public static final SystemMessageId TERRITORY_WAR_HAS_BEGUN;
 	
 	/**
 	 * ID: 2904<br>
-	 * Message: 領地戦が終わりました。
+	 * Message: 領地戦が終わりました。<br>
+	 * Message: Territory war has ended.
 	 */
 	public static final SystemMessageId TERRITORY_WAR_HAS_ENDED;
 	
 	/**
 	 * ID: 2911<br>
-	 * Message: $c1 に友人登録を申し込みました。
+	 * You've requested $c1 to be on your Friends List.
 	 */
 	public static final SystemMessageId YOU_REQUESTED_C1_TO_BE_FRIEND;
 	
 	/**
 	 * ID: 2913<br>
-	 * Message: $s1血盟が$s2守護物の奪取に成功しました。
+	 * Message: $s1血盟が$s2守護物の奪取に成功しました。<br>
+	 * Message: Clan $s1 has succeeded in capturing $s2's territory ward.
 	 */
 	public static final SystemMessageId CLAN_S1_HAS_SUCCEDED_IN_CAPTURING_S2_TERRITORY_WARD;
 	
 	/**
 	 * ID: 2914<br>
-	 * Message: 領地戦開始20分前です。ただいまから戦場チャンネルがアクティブになります。専用偽装、変装ができます。
+	 * Message: 領地戦開始20分前です。ただいまから戦場チャンネルがアクティブになります。専用偽装、変装ができます。<br>
+	 * Message: The territory war will begin in 20 minutes! Territory related functions (ie: battlefield channel, Disguise Scrolls, Transformations, etc...) can now be used.
 	 */
 	public static final SystemMessageId TERRITORY_WAR_BEGINS_IN_20_MINUTES;
 	
 	/**
 	 * ID: 2922<br>
-	 * Message: ブロックチェッカー終了5秒前！
+	 * Message: ブロックチェッカー終了5秒前！<br>
+	 * Message: Block Checker will end in 5 seconds!
 	 */
 	public static final SystemMessageId BLOCK_CHECKER_ENDS_5;
 	
 	/**
 	 * ID: 2923<br>
-	 * Message: ブロックチェッカー終了4秒前！
+	 * Message: ブロックチェッカー終了4秒前！<br>
+	 * Message: Block Checker will end in 4 seconds!!
 	 */
 	public static final SystemMessageId BLOCK_CHECKER_ENDS_4;
 	
 	/**
 	 * ID: 2924<br>
-	 * Message: 飛行変体状態では種の内部には入れません。
+	 * Message: 飛行変体状態では種の内部には入れません。<br>
+	 * Message: You cannot enter a Seed while in a flying transformation state.
 	 */
 	public static final SystemMessageId YOU_CANNOT_ENTER_SEED_IN_FLYING_TRANSFORM;
 	
 	/**
 	 * ID: 2925<br>
-	 * Message: ブロックチェッカー終了3秒前！
+	 * Message: ブロックチェッカー終了3秒前！<br>
+	 * Message: Block Checker will end in 3 seconds!!!
 	 */
 	public static final SystemMessageId BLOCK_CHECKER_ENDS_3;
 	
 	/**
 	 * ID: 2926<br>
-	 * Message: ブロックチェッカー終了2秒前！
+	 * Message: ブロックチェッカー終了2秒前！<br>
+	 * Message: Block Checker will end in 2 seconds!!!!
 	 */
 	public static final SystemMessageId BLOCK_CHECKER_ENDS_2;
 	
 	/**
 	 * ID: 2927<br>
-	 * Message: ブロックチェッカー終了1秒前！
+	 * Message: ブロックチェッカー終了1秒前！<br>
+	 * Message: Block Checker will end in 1 second!!!!!
 	 */
 	public static final SystemMessageId BLOCK_CHECKER_ENDS_1;
 	
 	/**
 	 * ID: 2928<br>
-	 * Message: $c1のチームが競技で勝利しました。
+	 * Message: $c1のチームが競技で勝利しました。<br>
+	 * Message: The $c1 team has won.
 	 */
 	public static final SystemMessageId TEAM_C1_WON;
 	
 	/**
 	 * ID: 2961<br>
-	 * Message: アイテム$s1が$s2個必要です。
+	 * Message: アイテム$s1が$s2個必要です。<br>
+	 * Message: $s2 unit(s) of the item $s1 is/are required.
 	 */
 	public static final SystemMessageId S2_UNIT_OF_THE_ITEM_S1_REQUIRED;
 	
 	/**
 	 * ID: 2964<br>
-	 * Message: ノーブレスに任命される場合、遂行中の関連クエストが削除されます。よろしいですか。
+	 * Message: ノーブレスに任命される場合、遂行中の関連クエストが削除されます。よろしいですか。<br>
+	 * Message: Being appointed as a Noblesse will cancel all related quests. Do you wish to continue?
 	 */
 	public static final SystemMessageId CANCEL_NOBLESSE_QUESTS;
 	
 	/**
 	 * ID: 2966<br>
-	 * Message: 代引郵便はアイテムを添付しなければ差出できません。アイテムを添付してください。
+	 * Message: 代引郵便はアイテムを添付しなければ差出できません。アイテムを添付してください。<br>
+	 * Message: This is a Payment Request transaction. Please attach the item.
 	 */
 	public static final SystemMessageId PAYMENT_REQUEST_NO_ITEM;
 	
 	/**
 	 * ID: 2968<br>
-	 * Message: このキャラクターの郵便の限度数(240通)を超えたため、差出できません。
+	 * Message: このキャラクターの郵便の限度数(240通)を超えたため、差出できません。<br>
+	 * Message: The mail limit (240) has been exceeded and this cannot be forwarded.
 	 */
 	public static final SystemMessageId CANT_FORWARD_MAIL_LIMIT_EXCEEDED;
 	
 	/**
 	 * ID: 2969<br>
-	 * Message: 前回郵便を差出してから10秒経っていないため、差出できません。
+	 * Message: 前回郵便を差出してから10秒経っていないため、差出できません。<br>
+	 * Message: The previous mail was forwarded less than 1 minute ago and this cannot be forwarded.
 	 */
 	public static final SystemMessageId CANT_FORWARD_LESS_THAN_MINUTE;
 	
 	/**
 	 * ID: 2970<br>
-	 * Message: ピースゾーンでないところには発送できません。
+	 * Message: ピースゾーンでないところには発送できません。<br>
+	 * Message: You cannot forward in a non-peace zone.
 	 */
 	public static final SystemMessageId CANT_FORWARD_NOT_IN_PEACE_ZONE;
 	
 	/**
 	 * ID: 2971<br>
-	 * Message: トレード中には発送できません。
+	 * Message: トレード中には発送できません。<br>
+	 * Message: You cannot forward during exchange.
 	 */
 	public static final SystemMessageId CANT_FORWARD_DURING_EXCHANGE;
 	
 	/**
 	 * ID: 2972<br>
-	 * Message: 個人商店、または工房を使用中のため発送できません。
+	 * Message: 個人商店、または工房を使用中のため発送できません。<br>
+	 * Message: You cannot forward because the private shop or workshop is in progress.
 	 */
 	public static final SystemMessageId CANT_FORWARD_PRIVATE_STORE;
 	
 	/**
 	 * ID: 2973<br>
-	 * Message: アイテム強化、属性強化中には発送できません。
+	 * Message: アイテム強化、属性強化中には発送できません。<br>
+	 * Message: You cannot forward during an item enhancement or attribute enhancement.
 	 */
 	public static final SystemMessageId CANT_FORWARD_DURING_ENCHANT;
 	
 	/**
 	 * ID: 2974<br>
-	 * Message: 発送するアイテムが適切でないため発送できません。
+	 * Message: 発送するアイテムが適切でないため発送できません。<br>
+	 * Message: The item that you're trying to send cannot be forwarded because it isn't proper.
 	 */
 	public static final SystemMessageId CANT_FORWARD_BAD_ITEM;
 	
 	/**
 	 * ID: 2975<br>
-	 * Message: アデナが不足しているため発送できません。
+	 * Message: アデナが不足しているため発送できません。<br>
+	 * Message: You cannot forward because you don't have enough adena.
 	 */
 	public static final SystemMessageId CANT_FORWARD_NO_ADENA;
 	
 	/**
 	 * ID: 2976<br>
-	 * Message: ピースゾーンでないところでは受信できません。
+	 * Message: ピースゾーンでないところでは受信できません。<br>
+	 * Message: You cannot receive in a non-peace zone location.
 	 */
 	public static final SystemMessageId CANT_RECEIVE_NOT_IN_PEACE_ZONE;
 	
 	/**
 	 * ID: 2977<br>
-	 * Message: トレード中には受信できません。
+	 * Message: トレード中には受信できません。<br>
+	 * Message: You cannot receive during an exchange.
 	 */
 	public static final SystemMessageId CANT_RECEIVE_DURING_EXCHANGE;
 	
 	/**
 	 * ID: 2978<br>
-	 * Message: 個人商店、または工房を開いているため受信できません。
+	 * Message: 個人商店、または工房を開いているため受信できません。<br>
+	 * Message: You cannot receive because the private shop or workshop is in progress.
 	 */
 	public static final SystemMessageId CANT_RECEIVE_PRIVATE_STORE;
 	
 	/**
 	 * ID: 2979<br>
-	 * Message: アイテム強化、属性強化中には受信できません。
+	 * Message: アイテム強化、属性強化中には受信できません。<br>
+	 * Message: You cannot receive during an item enhancement or attribute enhancement.
 	 */
 	public static final SystemMessageId CANT_RECEIVE_DURING_ENCHANT;
 	
 	/**
 	 * ID: 2980<br>
-	 * Message: アデナが不足しているため受信できません。
+	 * Message: アデナが不足しているため受信できません。<br>
+	 * Message: You cannot receive because you don't have enough adena.
 	 */
 	public static final SystemMessageId CANT_RECEIVE_NO_ADENA;
 	
 	/**
 	 * ID: 2981<br>
-	 * Message: 受取に失敗しました。
+	 * Message: 受取に失敗しました。<br>
+	 * Message: You cannot receive because your inventory is full.
 	 */
 	public static final SystemMessageId CANT_RECEIVE_INVENTORY_FULL;
 	
 	/**
 	 * ID: 2982<br>
-	 * Message: ピースゾーンでないところにはキャンセルできません。
+	 * Message: ピースゾーンでないところにはキャンセルできません。<br>
+	 * Message: You cannot cancel in a non-peace zone location.
 	 */
 	public static final SystemMessageId CANT_CANCEL_NOT_IN_PEACE_ZONE;
 	
 	/**
 	 * ID: 2983<br>
-	 * Message: トレード中にはキャンセルできません。
+	 * Message: トレード中にはキャンセルできません。<br>
+	 * Message: You cannot cancel during an exchange.
 	 */
 	public static final SystemMessageId CANT_CANCEL_DURING_EXCHANGE;
 	
 	/**
 	 * ID: 2984<br>
-	 * Message: 個人商店、または工房を開いているためキャンセルできません。
+	 * Message: 個人商店、または工房を開いているためキャンセルできません。<br>
+	 * Message: You cannot cancel because the private shop or workshop is in progress.
 	 */
 	public static final SystemMessageId CANT_CANCEL_PRIVATE_STORE;
 	
 	/**
 	 * ID: 2985<br>
-	 * Message: アイテム強化、属性強化中にはキャンセルできません。
+	 * Message: アイテム強化、属性強化中にはキャンセルできません。<br>
+	 * Message: You cannot cancel during an item enhancement or attribute enhancement.
 	 */
 	public static final SystemMessageId CANT_CANCEL_DURING_ENCHANT;
 	
 	/**
 	 * ID: 2988<br>
-	 * Message: インベントリ エラーのため、受取をキャンセルできませんでした。
+	 * Message: インベントリ エラーのため、受取をキャンセルできませんでした。<br>
+	 * Message: You could not cancel receipt because your inventory is full.
 	 */
 	public static final SystemMessageId CANT_CANCEL_INVENTORY_FULL;
 	
 	/**
 	 * ID: 3002<br>
-	 * Message: 受信者が存在しないか、削除されたキャラクターには郵便発送ができません。
+	 * Message: 受信者が存在しないか、削除されたキャラクターには郵便発送ができません。<br>
+	 * Message: When the recipient doesn't exist or the character is deleted, sending mail is not possible.
 	 */
 	public static final SystemMessageId RECIPIENT_NOT_EXIST;
 	
 	/**
 	 * ID: 3008<br>
-	 * Message: 郵便が届きました。
+	 * Message: 郵便が届きました。<br>
+	 * Message: The mail has arrived.
 	 */
 	public static final SystemMessageId MAIL_ARRIVED;
 	
 	/**
 	 * ID: 3009<br>
-	 * Message: 郵便の差出が成功しました。
+	 * Message: 郵便の差出が成功しました。<br>
+	 * Message: Mail successfully sent.
 	 */
 	public static final SystemMessageId MAIL_SUCCESSFULLY_SENT;
 	
 	/**
 	 * ID: 3010<br>
-	 * Message: 郵便の返送が成功しました。
+	 * Message: 郵便の返送が成功しました。<br>
+	 * Message: Mail successfully returned.
 	 */
 	public static final SystemMessageId MAIL_SUCCESSFULLY_RETURNED;
 	
 	/**
 	 * ID: 3011<br>
-	 * Message: 郵便のキャンセルが成功しました。
+	 * Message: 郵便のキャンセルが成功しました。<br>
+	 * Message: Mail successfully cancelled.
 	 */
 	public static final SystemMessageId MAIL_SUCCESSFULLY_CANCELLED;
 	
 	/**
 	 * ID: 3012<br>
-	 * Message: 郵便の受取が成功しました。
+	 * Message: 郵便の受取が成功しました。<br>
+	 * Message: Mail successfully received.
 	 */
 	public static final SystemMessageId MAIL_SUCCESSFULLY_RECEIVED;
 	
 	/**
 	 * ID: 3013<br>
-	 * Message: $c1 が+$s2$s3エンチャントに成功しました。
+	 * Message: $c1 が+$s2$s3エンチャントに成功しました。<br>
+	 * Message: $c1 has successfuly enchanted a +$s2 $s3.
 	 */
 	public static final SystemMessageId C1_SUCCESSFULY_ENCHANTED_A_S2_S3;
 	
 	/**
 	 * ID: 3014<br>
-	 * Message: 選択したメールを削除しますか。
+	 * Message: 選択したメールを削除しますか。<br>
+	 * Message: Do you wish to erase the selected mail ?
 	 */
 	public static final SystemMessageId DO_YOU_WISH_TO_ERASE_MAIL;
 	
 	/**
 	 * ID: 3015<br>
-	 * Message: 削除するメールを選択してください。
+	 * Message: 削除するメールを選択してください。<br>
+	 * Message: Please select the mail to be deleted.
 	 */
 	public static final SystemMessageId PLEASE_SELECT_MAIL_TO_BE_DELETED;
 	
 	/**
 	 * ID: 3016<br>
-	 * Message: アイテムの添付は最大8個までできます。
+	 * Message: アイテムの添付は最大8個までできます。<br>
+	 * Message: Item selection is possible up to 8.
 	 */
 	public static final SystemMessageId ITEM_SELECTION_POSSIBLE_UP_TO_8;
 	
 	/**
 	 * ID: 3019<br>
-	 * Message: 自分自身には郵便を差出できません。
+	 * Message: 自分自身には郵便を差出できません。<br>
+	 * Message: You cannot send mail to yourself.
 	 */
 	public static final SystemMessageId YOU_CANT_SEND_MAIL_TO_YOURSELF;
 	
 	/**
 	 * ID: 3020<br>
-	 * Message: 代引郵便は受け取る金額を入力しなければ差出できません。
+	 * Message: 代引郵便は受け取る金額を入力しなければ差出できません。<br>
+	 * Message: When not entering the amount for the payment request, you cannot send any mail.
 	 */
 	public static final SystemMessageId PAYMENT_AMOUNT_NOT_ENTERED;
 	
 	/**
 	 * ID: 3023<br>
-	 * Message: カーシャの目から流れ出る気が急速に強まりつつあるのが感じられます。
+	 * Message: カーシャの目から流れ出る気が急速に強まりつつあるのが感じられます。<br>
+	 * Message: I can feel that the energy being flown in the Kasha's eye is getting stronger rapidly.
 	 */
 	public static final SystemMessageId I_CAN_FEEL_ENERGY_KASHA_EYE_GETTING_STRONGER_RAPIDLY;
 	
 	/**
 	 * ID: 3024<br>
-	 * Message: カーシャの目が今にでも破裂せんばかりの勢いでもんどりうちます。
+	 * Message: カーシャの目が今にでも破裂せんばかりの勢いでもんどりうちます。<br>
+	 * Message: Kasha's eye pitches and tosses like it's about to explode.
 	 */
 	public static final SystemMessageId KASHA_EYE_PITCHES_TOSSES_EXPLODE;
 	
 	/**
 	 * ID: 3025<br>
-	 * Message: $s2 が代金を支払いました。$s1アデナを獲得しました。
+	 * Message: $s2 が代金を支払いました。$s1アデナを獲得しました。<br>
+	 * Message: Payment of $s1 Adena was completed by $s2.
 	 */
 	public static final SystemMessageId PAYMENT_OF_S1_ADENA_COMPLETED_BY_S2;
 	
 	/**
 	 * ID: 3026<br>
-	 * Message: スキル エンチャント機能を使えるレベルではありません。この機能を使うには、レベル76以上でなければなりません。
+	 * Message: スキル エンチャント機能を使えるレベルではありません。この機能を使うには、レベル76以上でなければなりません。<br>
+	 * Message: You cannot use the skill enhancing function on this level. You can use the corresponding function on levels higher than 76Lv .
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_SKILL_ENCHANT_ON_THIS_LEVEL;
 	
 	/**
 	 * ID: 3027<br>
-	 * Message: スキル エンチャント機能を使えるクラスではありません。この機能を使うには、3次転職を終えていなければなりません。
+	 * Message: スキル エンチャント機能を使えるクラスではありません。この機能を使うには、3次転職を終えていなければなりません。<br>
+	 * Message: You cannot use the skill enhancing function in this class. You can use corresponding function when completing the third class change.
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_SKILL_ENCHANT_IN_THIS_CLASS;
 	
 	/**
 	 * ID: 3028<br>
-	 * Message: スキル エンチャント機能を使える状態ではありません。この機能は非戦闘状態で使えます。変身、戦闘、搭乗の各状態では使えません。
+	 * Message: スキル エンチャント機能を使える状態ではありません。この機能は非戦闘状態で使えます。変身、戦闘、搭乗の各状態では使えません。<br>
+	 * Message: You cannot use the skill enhancing function in this class. You can use the skill enhancing function under off-battle status, and cannot use the function while transforming, battling and on-board.
 	 */
 	public static final SystemMessageId YOU_CANNOT_USE_SKILL_ENCHANT_ATTACKING_TRANSFORMED_BOAT;
 	
 	/**
 	 * ID: 3029<br>
-	 * Message: $s1 が郵便を返送しました。
+	 * Message: $s1 が郵便を返送しました。<br>
+	 * Message: $s1 returned the mail.
 	 */
 	public static final SystemMessageId S1_RETURNED_MAIL;
 	
 	/**
 	 * ID: 3030<br>
-	 * Message: 受取人がすでに受け取っているため、差出のキャンセルはできません。
+	 * Message: 受取人がすでに受け取っているため、差出のキャンセルはできません。<br>
+	 * Message: You cannot cancel sent mail since the recipient received it.
 	 */
 	public static final SystemMessageId YOU_CANT_CANCEL_RECEIVED_MAIL;
 	
 	/**
 	 * ID: 3059<br>
-	 * Message: $s1 が受取待機期間中に受け取らなかったため、自動的に返送されました。
+	 * Message: $s1 が受取待機期間中に受け取らなかったため、自動的に返送されました。<br>
+	 * Message: $s1 did not receive it during the waiting time, so it was returned automatically.
 	 */
 	public static final SystemMessageId S1_NOT_RECEIVE_DURING_WAITING_TIME_MAIL_RETURNED;
 	
 	/**
 	 * ID: 3062<br>
-	 * Message: $s1アデナで決済しますか。
+	 * Message: $s1アデナで決済しますか。<br>
+	 * Message: Do you want to pay $s1 Adena ?
 	 */
 	public static final SystemMessageId DO_YOU_WANT_TO_PAY_S1_ADENA;
 	
 	/**
 	 * ID: 3063<br>
-	 * Message: 本当に返送しますか。
+	 * Message: 本当に返送しますか。<br>
+	 * Message: Do you really want to forward ?
 	 */
 	public static final SystemMessageId DO_YOU_WANT_TO_FORWARD;
 	
 	/**
 	 * ID: 3064<br>
-	 * Message: 未読の郵便があります。
+	 * Message: 未読の郵便があります。<br>
+	 * Message: There is an unread mail.
 	 */
 	public static final SystemMessageId UNREAD_MAIL;
 	
 	/**
 	 * ID: 3065<br>
-	 * Message: 現在地：無限の結界内部
+	 * Message: 現在地：無限の結界内部<br>
+	 * Message: Current location: Inside the Chamber of Delusion
 	 */
 	public static final SystemMessageId LOC_DELUSION_CHAMBER;
 	
 	/**
 	 * ID: 3066<br>
-	 * Message: ピースゾーン以外の場所では、郵便に添付されたアイテムの受取や差出はできません。文面を見ることだけ可能です。
+	 * Message: ピースゾーン以外の場所では、郵便に添付されたアイテムの受取や差出はできません。文面を見ることだけ可能です。<br>
+	 * Message: You cannot use the mail function outside the Peace Zone.
 	 */
 	public static final SystemMessageId CANT_USE_MAIL_OUTSIDE_PEACE_ZONE;
 	
 	/**
 	 * ID: 3067<br>
-	 * Message: $s1 が郵便の差出をキャンセルしました。
+	 * Message: $s1 が郵便の差出をキャンセルしました。<br>
+	 * Message: $s1 cancelled the sent mail.
 	 */
 	public static final SystemMessageId S1_CANCELLED_MAIL;
 	
 	/**
 	 * ID: 3068<br>
-	 * Message: 受取待機期間が過ぎたため、郵便が返送されました。
+	 * Message: 受取待機期間が過ぎたため、郵便が返送されました。<br>
+	 * Message: The mail was returned due to the exceeded waiting time.
 	 */
 	public static final SystemMessageId MAIL_RETURNED;
 	
 	/**
 	 * ID: 3069<br>
-	 * Message: 本当に取引をキャンセルしますか。
+	 * Message: 本当に取引をキャンセルしますか。<br>
+	 * Message: Do you really want to cancel the transaction ?
 	 */
 	public static final SystemMessageId DO_YOU_WANT_TO_CANCEL_TRANSACTION;
 	
 	/**
 	 * ID: 3072<br>
-	 * Message: $s1 が郵便に添付されたアイテムを獲得しました。
+	 * Message: $s1 が郵便に添付されたアイテムを獲得しました。<br>
+	 * Message: $s1 acquired the attached item to your mail.
 	 */
 	public static final SystemMessageId S1_ACQUIRED_ATTACHED_ITEM;
 	
 	/**
 	 * ID: 3073<br>
-	 * Message: $s1アイテムを$s2個獲得しました。
+	 * Message: $s1アイテムを$s2個獲得しました。<br>
+	 * Message: You have acquired $s2 $s1.
 	 */
 	public static final SystemMessageId YOU_ACQUIRED_S2_S1;
 	
 	/**
 	 * ID: 3074<br>
-	 * Message: 規定の受取人名の長さを超えています。
+	 * Message: 規定の受取人名の長さを超えています。<br>
+	 * Message: The allowed length for recipient exceeded.
 	 */
 	public static final SystemMessageId ALLOWED_LENGTH_FOR_RECIPIENT_EXCEEDED;
 	
 	/**
 	 * ID: 3075<br>
-	 * Message: 規定のタイトルの長さを超えています。
+	 * Message: 規定のタイトルの長さを超えています。<br>
+	 * Message: The allowed length for a title exceeded.
 	 */
 	public static final SystemMessageId ALLOWED_LENGTH_FOR_TITLE_EXCEEDED;
 	
 	/**
 	 * ID: 3077<br>
-	 * Message: 相手のキャラクターが郵便の限度数(240通)を超えたため、差出できません。
+	 * Message: 相手のキャラクターが郵便の限度数(240通)を超えたため、差出できません。<br>
+	 * Message: The mail limit (240) of the opponent's character has been exceeded and this cannot be forwarded.
 	 */
 	public static final SystemMessageId MAIL_LIMIT_EXCEEDED;
 	
 	/**
 	 * ID: 3078<br>
-	 * Message: 代引郵便です。本当に差し出しますか。
+	 * Message: 代引郵便です。本当に差し出しますか。<br>
+	 * Message: You're making a request for payment. Do you want to proceed ?
 	 */
 	public static final SystemMessageId YOU_MAKING_PAYMENT_REQUEST;
 	
 	/**
 	 * ID: 3079<br>
-	 * Message: ペット インベントリにアイテムがあるため、ペットの販売、個人商店の販売登録、アイテムのドロップはできません。ペット インベントリを空にしてください。
+	 * Message: ペット インベントリにアイテムがあるため、ペットの販売、個人商店の販売登録、アイテムのドロップはできません。ペット インベントリを空にしてください。<br>
+	 * Message: There are items in the Pet Inventory so you cannot register as an individual store or drop items. Please empty the items in the Pet Inventory.
 	 */
 	public static final SystemMessageId ITEMS_IN_PET_INVENTORY;
 	
 	/**
 	 * ID: 3080<br>
-	 * Message: アデナが不足しているためスキル リンクをリセットできません。
+	 * Message: アデナが不足しているためスキル リンクをリセットできません。<br>
+	 * Message: You cannot reset the Skill Link because there is not enough Adena.
 	 */
 	public static final SystemMessageId CANNOT_RESET_SKILL_LINK_BECAUSE_NOT_ENOUGH_ADENA;
 	
 	/**
 	 * ID: 3081<br>
-	 * Message: 相手が決済アデナを獲得できない条件になっているため、受け取れません。
+	 * Message: 相手が決済アデナを獲得できない条件になっているため、受け取れません。<br>
+	 * Message: You cannot receive it because you are under condition that the opponent cannot acquire any Adena for payment
 	 */
 	public static final SystemMessageId YOU_CANNOT_RECEIVE_CONDITION_OPPONENT_CANT_ACQUIRE_ADENA;
 	
 	/**
 	 * ID: 3082<br>
-	 * Message: 遮断しているキャラクターには郵便を差し出せません。
+	 * Message: 遮断しているキャラクターには郵便を差し出せません。<br>
+	 * Message: You cannot send mail to any character that has blocked you.
 	 */
 	public static final SystemMessageId YOU_CANNOT_SEND_MAIL_TO_CHAR_BLOCK_YOU;
 	
 	/**
 	 * ID: 3094<br>
-	 * Message: オリンピアード参加中のユーザーはパーティ、友人の招待はできません。
+	 * Message: オリンピアード参加中のユーザーはパーティ、友人の招待はできません。<br>
+	 * Message: A user currently participating in the Olympiad cannot send party and friend invitations.
 	 */
 	public static final SystemMessageId A_USER_CURRENTLY_PARTICIPATING_IN_THE_OLYMPIAD_CANNOT_SEND_PARTY_AND_FRIEND_INVITATIONS;
 	
 	/**
 	 * ID: 3108<br>
-	 * Message: 今後、アクティブ モンスターを刺激するおそれがあります。
+	 * Message: 今後、アクティブ モンスターを刺激するおそれがあります。<br>
+	 * Message: You are no longer protected from aggressive monsters.
 	 */
 	public static final SystemMessageId YOU_ARE_NO_LONGER_PROTECTED_FROM_AGGRESSIVE_MONSTERS;
 	
 	/**
 	 * ID: 3119<br>
-	 * Message: カップル アクションの申し込みが拒否されました。
+	 * Message: カップル アクションの申し込みが拒否されました。<br>
+	 * Message: The couple action was denied.
 	 */
 	public static final SystemMessageId COUPLE_ACTION_DENIED;
 	
 	/**
 	 * ID: 3120<br>
-	 * Message: 対象との位置条件が合わないため申し込みできません。
+	 * Message: 対象との位置条件が合わないため申し込みできません。<br>
+	 * Message: The request cannot be completed because the target does not meet location requirements.
 	 */
 	public static final SystemMessageId TARGET_DO_NOT_MEET_LOC_REQUIREMENTS;
 	
 	/**
 	 * ID: 3121<br>
-	 * Message: カップル アクションがキャンセルされました。
+	 * Message: カップル アクションがキャンセルされました。<br>
+	 * Message: The couple action was cancelled.
 	 */
 	public static final SystemMessageId COUPLE_ACTION_CANCELED;
 	
 	/**
 	 * ID: 3122<br>
-	 * Message: アップロードしたエンブレムまたはエンサインは規格に合いません。
+	 * Message: アップロードしたエンブレムまたはエンサインは規格に合いません。<br>
+	 * Message: The size of the uploaded crest or insignia does not meet the standard requirements.
 	 */
 	public static final SystemMessageId WRONG_SIZE_UPLOADED_CREST;
 	
 	/**
 	 * ID: 3123<br>
-	 * Message: $c1 は個人商店や個人工房を開いているため、カップル アクションの申し込みはできません。
+	 * Message: $c1 は個人商店や個人工房を開いているため、カップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is in Private Shop mode or in a battle and cannot be requested for a couple action.
 	 */
 	public static final SystemMessageId C1_IS_IN_PRIVATE_SHOP_MODE_OR_IN_A_BATTLE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3124<br>
-	 * Message: $c1 はフィッシング中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 はフィッシング中のため、カップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is fishing and cannot be requested for a couple action.
 	 */
 	public static final SystemMessageId C1_IS_FISHING_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3125<br>
-	 * Message: $c1 は戦闘中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 は戦闘中のため、カップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is in a battle and cannot be requested for a couple action.
 	 */
 	public static final SystemMessageId C1_IS_IN_A_BATTLE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3126<br>
-	 * Message: $c1 はすでにカップル アクション中のため、新たにカップル アクションの申し込みはできません。
+	 * Message: $c1 はすでにカップル アクション中のため、新たにカップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is already participating in a couple action and cannot be requested for another couple action.
 	 */
 	public static final SystemMessageId C1_IS_ALREADY_PARTICIPATING_IN_A_COUPLE_ACTION_AND_CANNOT_BE_REQUESTED_FOR_ANOTHER_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3127<br>
-	 * Message: $c1 はカオティック性向のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 はカオティック性向のため、カップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is in a chaotic state and cannot be requested for a couple action.
 	 */
 	public static final SystemMessageId C1_IS_IN_A_CHAOTIC_STATE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3128<br>
-	 * Message: $c1 はオリンピアード参加中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 はオリンピアード参加中のため、カップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is participating in the Olympiad and cannot be requested for a couple action.
 	 */
 	public static final SystemMessageId C1_IS_PARTICIPATING_IN_THE_OLYMPIAD_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3129<br>
-	 * Message: $c1 はアジト戦遂行中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 はアジト戦遂行中のため、カップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is participating in a hideout siege and cannot be requested for a couple action.
 	 */
 	public static final SystemMessageId C1_IS_PARTICIPATING_IN_A_HIDEOUT_SIEGE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3130<br>
-	 * Message: $c1 は攻城戦に参加中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 は攻城戦に参加中のため、カップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is in a castle siege and cannot be requested for a couple action.
 	 */
 	public static final SystemMessageId C1_IS_IN_A_CASTLE_SIEGE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3131<br>
-	 * Message: $c1 は船、ワイバーン、ストライダーなどに搭乗中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 は船、ワイバーン、ストライダーなどに搭乗中のため、カップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is riding a ship, steed, or strider and cannot be requested for a couple action.
 	 */
 	public static final SystemMessageId C1_IS_RIDING_A_SHIP_STEED_OR_STRIDER_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3132<br>
-	 * Message: $c1 はテレポート中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 はテレポート中のため、カップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is currently teleporting and cannot be requested for a couple action.
 	 */
 	public static final SystemMessageId C1_IS_CURRENTLY_TELEPORTING_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3133<br>
-	 * Message: $c1 は変身中のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 は変身中のため、カップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is currently transforming and cannot be requested for a couple action.
 	 */
 	public static final SystemMessageId C1_IS_CURRENTLY_TRANSFORMING_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3135<br>
-	 * Message: $s1への変更について、同意を求めています。
+	 * Message: $s1への変更について、同意を求めています。<br>
+	 * Message: Requesting approval for changing party loot to "$s1".
 	 */
 	public static final SystemMessageId REQUESTING_APPROVAL_CHANGE_PARTY_LOOT_S1;
 	
 	/**
 	 * ID: 3137<br>
-	 * Message: アイテム分配タイプの変更がキャンセルされました。
+	 * Message: アイテム分配タイプの変更がキャンセルされました。<br>
+	 * Message: Party loot change was cancelled.
 	 */
 	public static final SystemMessageId PARTY_LOOT_CHANGE_CANCELLED;
 	
 	/**
 	 * ID: 3138<br>
-	 * Message: アイテム分配タイプが$s1に変更されました。
+	 * Message: アイテム分配タイプが$s1に変更されました。<br>
+	 * Message: Party loot was changed to "$s1".
 	 */
 	public static final SystemMessageId PARTY_LOOT_CHANGED_S1;
 	
 	/**
 	 * ID: 3139<br>
-	 * Message: $c1 は現在死亡状態のため、カップル アクションの申し込みはできません。
+	 * Message: $c1 は現在死亡状態のため、カップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is currently dead and cannot be requested for a couple action.
 	 */
 	public static final SystemMessageId C1_IS_CURRENTLY_DEAD_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
 	 * ID: 3144<br>
-	 * Message: $s1に$s2の属性を付与しました。$s3に対する耐性が向上しました。
+	 * Message: $s1に$s2の属性を付与しました。$s3に対する耐性が向上しました。<br>
+	 * Message: The $s2's attribute was successfully bestowed on $s1, and resistance to $s3 was increased.
 	 */
 	public static final SystemMessageId THE_S2_ATTRIBUTE_WAS_SUCCESSFULLY_BESTOWED_ON_S1_RES_TO_S3_INCREASED;
 	
 	/**
 	 * ID: 3150<br>
-	 * Message: $c1 にカップル アクションを申し込みました。
+	 * Message: $c1 にカップル アクションを申し込みました。<br>
+	 * Message: You have requested a couple action with $c1.
 	 */
 	public static final SystemMessageId YOU_HAVE_REQUESTED_COUPLE_ACTION_C1;
 	
 	/**
 	 * ID: 3152<br>
-	 * Message: $s1の$s2の属性を解除しました。$s3に対する耐性が低下しました。
+	 * Message: $s1の$s2の属性を解除しました。$s3に対する耐性が低下しました。<br>
+	 * Message: $s1's $s2 attribute was removed, and resistance to $s3 was decreased.
 	 */
 	public static final SystemMessageId S1_S2_ATTRIBUTE_REMOVED_RESISTANCE_S3_DECREASED;
 	
 	/**
 	 * ID: 3156<br>
-	 * Message: 手数料が不足しているため、属性を解除できません。
+	 * Message: 手数料が不足しているため、属性を解除できません。<br>
+	 * Message: You do not have enough funds to cancel this attribute.
 	 */
 	public static final SystemMessageId YOU_DO_NOT_HAVE_ENOUGH_FUNDS_TO_CANCEL_ATTRIBUTE;
 	
 	/**
 	 * ID: 3160<br>
-	 * Message: +$s1$s2の$s3の属性を解除しました。$s4に対する耐性が低下しました。
+	 * Message: +$s1$s2の$s3の属性を解除しました。$s4に対する耐性が低下しました。<br>
+	 * Message: +$s1$s2's $s3 attribute was removed, so resistance to $s4 was decreased.
 	 */
 	public static final SystemMessageId S1_S2_S3_ATTRIBUTE_REMOVED_RESISTANCE_TO_S4_DECREASED;
 	
 	/**
 	 * ID: 3163<br>
-	 * Message: +$s1$s2に$s3の属性を付与しました。$s4に対する耐性が向上しました。
+	 * Message: +$s1$s2に$s3の属性を付与しました。$s4に対する耐性が向上しました。<br>
+	 * Message: The $s3's attribute was successfully bestowed on +$s1$s2, and resistance to $s4 was increased.
 	 */
 	public static final SystemMessageId THE_S3_ATTRIBUTE_BESTOWED_ON_S1_S2_RESISTANCE_TO_S4_INCREASED;
 	
 	/**
 	 * ID: 3164<br>
-	 * Message: $c1 はすでにカップル拒否状態のため、新たにカップル アクションの申し込みはできません。
+	 * Message: $c1 はすでにカップル拒否状態のため、新たにカップル アクションの申し込みはできません。<br>
+	 * Message: $c1 is set to refuse couple actions and cannot be requested for a couple action.
 	 */
 	public static final SystemMessageId C1_IS_SET_TO_REFUSE_COUPLE_ACTIONS;
 	
 	/**
 	 * ID: 3168<br>
-	 * Message: $c1 はすでにカップル拒否状態のため、新たにパーティの申し込みはできません。
+	 * Message: $c1 はすでにカップル拒否状態のため、新たにパーティの申し込みはできません。<br>
+	 * Message: $c1 is set to refuse party requests and cannot receive a party request.
 	 */
 	public static final SystemMessageId C1_IS_SET_TO_REFUSE_PARTY_REQUEST;
 	
 	/**
 	 * ID: 3169<br>
-	 * Message: $c1 はすでに決闘申込拒否状態のため、新たに決闘の申し込みはできません。
+	 * Message: $c1 はすでに決闘申込拒否状態のため、新たに決闘の申し込みはできません。<br>
+	 * Message: $c1 is set to refuse duel requests and cannot receive a duel request.
 	 */
 	public static final SystemMessageId C1_IS_SET_TO_REFUSE_DUEL_REQUEST;
 	
 	/**
 	 * ID: 3206<br>
-	 * Message: 現在、持っている推薦権はありません。
+	 * Message: 現在、持っている推薦権はありません。<br>
+	 * Message: You currently do not have any Recommendations.
 	 */
 	public static final SystemMessageId YOU_CURRENTLY_DO_NOT_HAVE_ANY_RECOMMENDATIONS;
 	
 	/**
 	 * ID: 3207<br>
-	 * Message: 推薦権を$s1手に入れました。
+	 * Message: 推薦権を$s1手に入れました。<br>
+	 * Message: You obtained $s1 Recommendations
 	 */
 	public static final SystemMessageId YOU_OBTAINED_S1_RECOMMENDATIONS;
 	
 	/**
 	 * ID: 3214<br>
-	 * Message: $s1 が受取人リストに登録されました。
+	 * Message: $s1 が受取人リストに登録されました。<br>
+	 * Message: $s1 was successfully added to your Contact List.
 	 */
 	public static final SystemMessageId S1_SUCCESSFULLY_ADDED_TO_CONTACT_LIST;
 	
 	/**
 	 * ID: 3215<br>
-	 * Message: $s1は存在しないユーザーです。正しい名前を入力してください。
+	 * Message: $s1は存在しないユーザーです。正しい名前を入力してください。<br>
+	 * Message: The name $s1% doesn't exist. Please try another name.
 	 */
 	public static final SystemMessageId NAME_S1_NOT_EXIST_TRY_ANOTHER_NAME;
 	
 	/**
 	 * ID: 3216<br>
-	 * Message: すでに受取人リストに登録されている名前です。
+	 * Message: すでに受取人リストに登録されている名前です。<br>
+	 * Message: The name already exists on the added list.
 	 */
 	public static final SystemMessageId NAME_ALREADY_EXIST_ON_CONTACT_LIST;
 	
 	/**
 	 * ID: 3217<br>
-	 * Message: 現在、名前をリストに登録できません。
+	 * Message: 現在、名前をリストに登録できません。<br>
+	 * Message: The name is not currently registered.
 	 */
 	public static final SystemMessageId NAME_NOT_REGISTERED_ON_CONTACT_LIST;
 	
 	/**
 	 * ID: 3219<br>
-	 * Message: $s1 が受取人リストから削除されました。
+	 * Message: $s1 が受取人リストから削除されました。<br>
+	 * Message: $s1 was successfully deleted from your Contact List.
 	 */
 	public static final SystemMessageId S1_SUCCESFULLY_DELETED_FROM_CONTACT_LIST;
 	
 	/**
 	 * ID: 3221<br>
-	 * Message: 自分の名前を登録することはできません。
+	 * Message: 自分の名前を登録することはできません。<br>
+	 * Message: You cannot add your own name.
 	 */
 	public static final SystemMessageId CANNOT_ADD_YOUR_NAME_ON_CONTACT_LIST;
 	
 	/**
 	 * ID: 3222<br>
-	 * Message: 名前の登録上限(100人)に達したため、登録できません。
+	 * Message: 名前の登録上限(100人)に達したため、登録できません。<br>
+	 * Message: The maximum number of names (100) has been reached. You cannot register any more.
 	 */
 	public static final SystemMessageId CONTACT_LIST_LIMIT_REACHED;
 	
 	/**
 	 * ID: 3224<br>
-	 * Message: 1週間に参加できる最大競技数は70です。
+	 * Message: 1週間に参加できる最大競技数は70です。<br>
+	 * Message: The maximum matches you can participate in 1 week is 70.
 	 */
 	public static final SystemMessageId MAX_OLY_WEEKLY_MATCHES_REACHED;
 	
 	/**
 	 * ID: 3225<br>
-	 * Message: 1週間に参加できる最大競技数は無制限競技60、クラス別競技30、チーム競技10です。
+	 * Message: 1週間に参加できる最大競技数は無制限競技60、クラス別競技30、チーム競技10です。<br>
+	 * Message: The total number of matches that can be entered in 1 week is 60 class irrelevant individual matches, 30 specific matches, and 10 team matches.
 	 */
 	public static final SystemMessageId MAX_OLY_WEEKLY_MATCHES_REACHED_60_NON_CLASSED_30_CLASSED_10_TEAM;
 	
 	/**
 	 * ID: 3226<br>
-	 * Message: チャット開始後すぐには移動できません。しばらくお待ちください。
+	 * Message: チャット開始後すぐには移動できません。しばらくお待ちください。<br>
+	 * Message: You cannot move while speaking to an NPC. One moment please.
 	 */
 	public static final SystemMessageId CANNOT_MOVE_WHILE_SPEAKING_TO_AN_NPC;
 	
 	/**
 	 * ID: 3255<br>
-	 * Message: アケイン シールドの影響で、HPの代わりにMPが$s1のダメージを受けました。
+	 * Message: アケイン シールドの影響で、HPの代わりにMPが$s1のダメージを受けました。<br>
+	 * Message: Arcane Shield decreased your MP by $1 instead of HP.
 	 */
 	public static final SystemMessageId ARCANE_SHIELD_DECREASED_YOUR_MP_BY_S1_INSTEAD_OF_HP;
 	
 	/**
 	 * ID: 3259<br>
-	 * Message: $s1の経験値(ボーナス：$s2)と$s3のSP(ボーナス：$s4)を得ました。
+	 * Message: $s1の経験値(ボーナス：$s2)と$s3のSP(ボーナス：$s4)を得ました。<br>
+	 * Message: You have acquired $s1 EXP (Bonus: $s2) and $s3 SP (Bonus: $s4).
 	 */
 	public static final SystemMessageId YOU_EARNED_S1_EXP_BONUS_S2_AND_S3_SP_BONUS_S4;
 	
 	/**
 	 * ID: 3256<br>
-	 * Message: MPが0になって、アケイン シールドが消滅します。
+	 * Message: MPが0になって、アケイン シールドが消滅します。<br>
+	 * Message: MP became 0 and the Arcane Shield is disappearing.
 	 */
 	public static final SystemMessageId MP_BECAME_0_ARCANE_SHIELD_DISAPPEARING;
 	
 	/**
 	 * ID: 3261<br>
-	 * Message: 今週、参加できる競技の数は$s1です。(クラス別競技：$s2、無制限競技：$s3、チーム競技：$s4)
+	 * Message: 今週、参加できる競技の数は$s1です。(クラス別競技：$s2、無制限競技：$s3、チーム競技：$s4)<br>
+	 * Message: You have $s1 match(es) remaining that you can participate in this week ($s2 1 vs 1 Class matches, $s3 1 vs 1 matches, & $s4 3 vs 3 Team matches).
 	 */
 	public static final SystemMessageId YOU_HAVE_S1_MATCHES_REMAINING_THAT_YOU_CAN_PARTECIPATE_IN_THIS_WEEK_S2_CLASSED_S3_NON_CLASSED_S4_TEAM;
 	
 	/**
 	 * ID: 6004<br>
-	 * Message: エンチャントに失敗しました。当該アイテムのエンチャント値はそのままです。
+	 * Message: エンチャントに失敗しました。当該アイテムのエンチャント値はそのままです。<br>
+	 * Message: Enchant failed. The enchant level for the corresponding item will be exactly retained.
 	 */
 	public static final SystemMessageId SAFE_ENCHANT_FAILED;
 	
 	/**
 	 * ID: 6501<br>
-	 * Message: フリーテレポートの旗がないため、ブックマークを保存できません。
+	 * Message: フリーテレポートの旗がないため、ブックマークを保存できません。<br>
+	 * Message: You cannot bookmark this location because you do not have a My Teleport Flag.
 	 */
 	public static final SystemMessageId YOU_CANNOT_BOOKMARK_THIS_LOCATION_BECAUSE_YOU_DO_NOT_HAVE_A_MY_TELEPORT_FLAG;
 	
 	/**
 	 * ID: 6503<br>
-	 * Message: キャプテン ターキーが現れました。クリスマス サンタを救い出しましょう。
+	 * Message: キャプテン ターキーが現れました。クリスマス サンタを救い出しましょう。<br>
+	 * Message: The evil Thomas D. Turkey has appeared. Please save Santa.
 	 */
 	public static final SystemMessageId THOMAS_D_TURKEY_APPEARED;
 	
 	/**
 	 * ID: 6504<br>
-	 * Message: キャプテン ターキーとの戦いに勝って、クリスマス サンタを救い出しました。
+	 * Message: キャプテン ターキーとの戦いに勝って、クリスマス サンタを救い出しました。<br>
+	 * Message: You won the battle against Thomas D. Turkey. Santa has been rescued.
 	 */
 	public static final SystemMessageId THOMAS_D_TURKEY_DEFETED;
 	
 	/**
 	 * ID: 6505<br>
-	 * Message: クリスマス サンタを救い出せないまま、キャプテン ターキーが消えてしまいました。
+	 * Message: クリスマス サンタを救い出せないまま、キャプテン ターキーが消えてしまいました。<br>
+	 * Message: You did not rescue Santa, and Thomas D. Turkey has disappeared.
 	 */
 	public static final SystemMessageId THOMAS_D_TURKEY_DISAPPEARED;
 	
