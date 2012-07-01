@@ -2045,8 +2045,8 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		broadcastPacket(new MagicSkillUse(this, target, displayId, level, hitTime, reuseDelay));
 		
 		// Send a system message USE_S1 to the L2Character
-		if (!skill.isPotion() && isPlayer() && magicId != 1312) //[L2J_JP EDIT - TSL]
-	//	if (isPlayer() && magicId != 1312)
+	//	if (!skill.isPotion() && isPlayer() && magicId != 1312) //[L2J_JP EDIT - TSL]	//[JOJO]r5394îpé~
+		if (isPlayer() && magicId != 1312)
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.USE_S1);
 			sm.addSkillName(skill);
