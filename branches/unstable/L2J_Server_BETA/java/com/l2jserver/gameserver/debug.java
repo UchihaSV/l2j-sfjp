@@ -18,6 +18,7 @@ public class debug
 //		System.out.println("[TRACE] "+title + ": " + message);	/*example*/
 	}
 	public static String STR(com.l2jserver.gameserver.model.actor.L2Npc npc) { return npc == null ? "NULL" : npc.getNpcId() + npc.getName(); }
+	public static String STR(com.l2jserver.gameserver.model.items.instance.L2ItemInstance item) { return item == null ? "NULL" : item.getItemId() + item.getName(); }
 	public static String STR(com.l2jserver.gameserver.model.L2Object obj) { return obj == null ? "NULL" : obj.getName(); }
 	public static String STR(com.l2jserver.gameserver.model.skills.L2Skill skill) { return skill == null ? "NULL" : (skill.getId()+"-"+skill.getLevel()+" "+skill.getName()); }
 	public static String STR(com.l2jserver.gameserver.model.L2Object[] targets) {
