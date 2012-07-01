@@ -9265,10 +9265,11 @@ public final class L2PcInstance extends L2Playable
 			SystemMessage sm = null;
 			if (_reuseTimeStampsSkills.containsKey(skill.getReuseHashCode()))
 			{
-				int remainingTime = (int)(_reuseTimeStampsSkills.get(skill.getReuseHashCode()).getRemaining()/1000);
-				int hours = remainingTime/3600;
-				int minutes = (remainingTime%3600)/60;
-				int seconds = (remainingTime%60);
+				long remainingTime = _reuseTimeStampsSkills.get(skill.getReuseHashCode()).getRemaining();
+				remainingTime += 999;
+				int hours = (int) (remainingTime / 3600000);
+				int minutes = (int) (remainingTime / 60000 % 60);
+				int seconds = (int) (remainingTime / 1000 % 60);
 				if (hours > 0)
 				{
 					sm = SystemMessage.getSystemMessage(SystemMessageId.S2_HOURS_S3_MINUTES_S4_SECONDS_REMAINING_FOR_REUSE_S1);

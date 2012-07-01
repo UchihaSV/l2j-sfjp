@@ -378,9 +378,10 @@ public final class UseItem extends L2GameClientPacket
 	private void reuseData(L2PcInstance activeChar, L2ItemInstance item)
 	{
 		SystemMessage sm = null;
-		final long remainingTime = activeChar.getItemRemainingReuseTime(item.getObjectId());
-		final int hours = (int) (remainingTime / 3600000L);
-		final int minutes = (int) (remainingTime % 3600000L) / 60000;
+		long remainingTime = activeChar.getItemRemainingReuseTime(item.getObjectId());
+		remainingTime += 999;
+		final int hours = (int) (remainingTime / 3600000);
+		final int minutes = (int) (remainingTime / 60000 % 60);
 		final int seconds = (int) (remainingTime / 1000 % 60);
 		if (hours > 0)
 		{
