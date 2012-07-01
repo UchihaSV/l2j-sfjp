@@ -45,7 +45,6 @@ import com.l2jserver.gameserver.network.serverpackets.RecipeShopItemInfo;
 import com.l2jserver.gameserver.network.serverpackets.SetupGauge;
 import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
-import com.l2jserver.gameserver.taskmanager.AttackStanceTaskManager;
 import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
 
@@ -60,7 +59,8 @@ public class RecipeController
 	
 	public void requestBookOpen(L2PcInstance player, boolean isDwarvenCraft)
 	{
-		if (Config.ALT_GAME_CREATION && !_activeMakers.containsKey(player.getObjectId()))
+		// Check if player is trying to alter recipe book while engaged in manufacturing.
+		if (!_activeMakers.containsKey(player.getObjectId()))
 		{
 			RecipeBookItemList response = new RecipeBookItemList(isDwarvenCraft, player.getMaxMp());
 			response.addRecipes(isDwarvenCraft ? player.getDwarvenRecipeBook() : player.getCommonRecipeBook());
@@ -92,11 +92,11 @@ public class RecipeController
 			return;
 		}
 		
-		// check if busy
-		if (Config.ALT_GAME_CREATION && _activeMakers.containsKey(manufacturer.getObjectId()))
+		// Check if manufacturer is under manufacturing store or private store.
+		if (Config.ALT_GAME_CREATION && (_activeMakers.containsKey(manufacturer.getObjectId()) || manufacturer.isInStoreMode()))
 		{
 			manufacturer.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.C1_IS_BUSY_TRY_LATER).addString(manufacturer.getName()));	//[JOJO]
-		//	player.sendMessage("Manufacturer is busy, please try later.");
+		//	player.sendPacket(SystemMessageId.CLOSE_STORE_WINDOW_AND_TRY_AGAIN);
 			return;
 		}
 		
@@ -117,7 +117,8 @@ public class RecipeController
 	
 	public void requestMakeItem(L2PcInstance player, int recipeListId)
 	{
-		if (AttackStanceTaskManager.getInstance().getAttackStanceTask(player) || player.isInDuel())
+		// Check if player is trying to operate a private store or private workshop while engaged in combat.
+		if (player.isInCombat() || player.isInDuel())
 		{
 			player.sendPacket(SystemMessageId.CANT_OPERATE_PRIVATE_STORE_DURING_COMBAT);
 			return;
@@ -138,10 +139,8 @@ public class RecipeController
 			return;
 		}
 		
-		RecipeItemMaker maker;
-		
-		// check if already busy (possible in alt mode only)
-		if (Config.ALT_GAME_CREATION && ((maker = _activeMakers.get(player.getObjectId())) != null))
+		// Check if player is busy (possible if alt game creation is enabled)
+		if (Config.ALT_GAME_CREATION && _activeMakers.containsKey(player.getObjectId()))
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1);
 			sm.addItemName(recipeList.getItemId());
@@ -150,7 +149,7 @@ public class RecipeController
 			return;
 		}
 		
-		maker = new RecipeItemMaker(player, recipeList, player);
+		final RecipeItemMaker maker = new RecipeItemMaker(player, recipeList, player);
 		if (maker._isValid)
 		{
 			if (Config.ALT_GAME_CREATION)
@@ -317,7 +316,7 @@ public class RecipeController
 				return;
 			}
 			
-			if (Config.ALT_GAME_CREATION && _activeMakers.containsKey(_player.getObjectId()))
+			if (Config.ALT_GAME_CREATION && !_activeMakers.containsKey(_player.getObjectId()))
 			{
 				if (_target != _player)
 				{
