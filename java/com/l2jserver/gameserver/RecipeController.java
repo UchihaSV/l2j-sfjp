@@ -15,7 +15,6 @@
 package com.l2jserver.gameserver;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -75,18 +74,26 @@ public class RecipeController
 		_activeMakers.remove(player.getObjectId()); // TODO: anything else here?
 	}
 	
-	public void requestManufactureItem(L2PcInstance manufacturer, int recipeListId, L2PcInstance player)
+	public void requestManufactureItem(L2PcInstance manufacturer, int recipeListId, L2PcInstance player)	// <<== RequestRecipeShopMakeItem
 	{
+		//[JOJO]-------------------------------------------------
+		verify_cost:
+		{
+			for (L2ManufactureItem temp : manufacturer.getCreateList().getList())
+				if (temp.getRecipeId() == recipeListId /*&& temp.getCost() > 0*/)
+					break verify_cost;
+			player.sendPacket(SystemMessageId.MANUFACTURE_PRICE_HAS_CHANGED);	//TODO:
+			return;
+		}
+		//-------------------------------------------------------
+		
 		final L2RecipeList recipeList = RecipeData.getInstance().getValidRecipeList(player, recipeListId);
 		if (recipeList == null)
 		{
 			return;
 		}
 		
-		List<L2RecipeList> dwarfRecipes = Arrays.asList(manufacturer.getDwarvenRecipeBook());
-		List<L2RecipeList> commonRecipes = Arrays.asList(manufacturer.getCommonRecipeBook());
-		
-		if (!dwarfRecipes.contains(recipeList) && !commonRecipes.contains(recipeList))
+		if (!manufacturer.hasRecipeList(recipeListId))
 		{
 			Util.handleIllegalPlayerAction(player, "Warning!! Character " + player.getName() + " of account " + player.getAccountName() + " sent a false recipe id.", Config.DEFAULT_PUNISH);
 			return;
@@ -95,8 +102,7 @@ public class RecipeController
 		// Check if manufacturer is under manufacturing store or private store.
 		if (Config.ALT_GAME_CREATION && (_activeMakers.containsKey(manufacturer.getObjectId()) || manufacturer.isInStoreMode()))
 		{
-			manufacturer.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.C1_IS_BUSY_TRY_LATER).addString(manufacturer.getName()));	//[JOJO]
-		//	player.sendPacket(SystemMessageId.CLOSE_STORE_WINDOW_AND_TRY_AGAIN);
+			player.sendPacket(SystemMessageId.CLOSE_STORE_WINDOW_AND_TRY_AGAIN);
 			return;
 		}
 		
@@ -115,7 +121,7 @@ public class RecipeController
 		}
 	}
 	
-	public void requestMakeItem(L2PcInstance player, int recipeListId)
+	public void requestMakeItem(L2PcInstance player, int recipeListId)	// <<== RequestRecipeItemMakeSelf
 	{
 		// Check if player is trying to operate a private store or private workshop while engaged in combat.
 		if (player.isInCombat() || player.isInDuel())
@@ -130,10 +136,7 @@ public class RecipeController
 			return;
 		}
 		
-		List<L2RecipeList> dwarfRecipes = Arrays.asList(player.getDwarvenRecipeBook());
-		List<L2RecipeList> commonRecipes = Arrays.asList(player.getCommonRecipeBook());
-		
-		if (!dwarfRecipes.contains(recipeList) && !commonRecipes.contains(recipeList))
+		if (!player.hasRecipeList(recipeListId))
 		{
 			Util.handleIllegalPlayerAction(player, "Warning!! Character " + player.getName() + " of account " + player.getAccountName() + " sent a false recipe id.", Config.DEFAULT_PUNISH);
 			return;

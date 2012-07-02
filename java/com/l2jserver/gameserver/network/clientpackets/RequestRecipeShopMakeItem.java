@@ -17,6 +17,8 @@ package com.l2jserver.gameserver.network.clientpackets;
 import com.l2jserver.gameserver.RecipeController;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.Util;
 
 /**
@@ -56,22 +58,18 @@ public final class RequestRecipeShopMakeItem extends L2GameClientPacket
 		if (manufacturer.getInstanceId() != activeChar.getInstanceId() && activeChar.getInstanceId() != -1)
 			return;
 		
-		if (activeChar.getPrivateStoreType() != 0)
+		//[JOJO]-------------------------------------------------
+		if (activeChar.getPrivateStoreType() != L2PcInstance.STORE_PRIVATE_NONE || activeChar.isInCraftMode())
 		{
-			activeChar.sendMessage("You cannot create items while trading.");
+			activeChar.sendPacket(SystemMessageId.CLOSE_STORE_WINDOW_AND_TRY_AGAIN);
 			return;
 		}
-		if (manufacturer.getPrivateStoreType() != 5)
+		if (manufacturer.getPrivateStoreType() != L2PcInstance.STORE_PRIVATE_MANUFACTURE || manufacturer.isInCraftMode())
 		{
-			//activeChar.sendMessage("You cannot create items while trading.");
+			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.C1_IS_BUSY_TRY_LATER).addPcName(manufacturer));
 			return;
 		}
-		
-		if (activeChar.isInCraftMode() || manufacturer.isInCraftMode())
-		{
-			activeChar.sendMessage("You are currently in Craft Mode.");
-			return;
-		}
+		//-------------------------------------------------------
 		if (Util.checkIfInRange(150, activeChar, manufacturer, true))
 			RecipeController.getInstance().requestManufactureItem(manufacturer, _recipeId, activeChar);
 	}
