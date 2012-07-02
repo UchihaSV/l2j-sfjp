@@ -20,8 +20,8 @@ my $LogFile = UTF8(__FILE__);
    $LogFile =~ s!\.[^.\/\\]*$!.log!;
 open LOG, '>:utf8', FS($LogFile)  or die "'$LogFile' $!";
 
-my %array_name_jp = ();
-my %array_name_tw = ();
+my %array_message_jp = ();
+my %array_message_tw = ();
 &loadSystemMessageAll();
 
 &start('.svn/text-base/NpcStringId.java.svn-base', 'NpcStringId.java');
@@ -44,19 +44,19 @@ sub start {
 	my @ALL = split /(?=[ \t]\/\*\*)/, $text;
 	foreach my $item (@ALL) {
 		next unless $item =~ m/ID: (\d+)/m;     my $id = $1;
-		next unless $item =~ m/Message: (.*)/m; my $name_en = $1;
+		next unless $item =~ m/Message: (.*)/m; my $message_en = $1;
 
-		my $name_jp = $array_name_jp{$id};
-		my $name_tw = $array_name_tw{$id};
-		next unless $name_jp;
+		my $message_jp = $array_message_jp{$id};
+		my $message_tw = $array_message_tw{$id};
+		next unless $message_jp;
 
-		$name_tw =~ s/(.)/'&#'.ord($1).';'/eg;	# html encode
+		$message_tw =~ s/(.)/'&#'.ord($1).';'/eg;	# html encode
 
 		$item =~ s{/\*\*.*\*/}{/**
 \t * ID: $id<br>
-\t * Message: $name_jp<br>
-\t * Message: $name_tw<br>
-\t * Message: $name_en
+\t * Message: $message_jp<br>
+\t * Message: $message_tw<br>
+\t * Message: $message_en
 \t */}s;
 		$UPDATE = 1;
 		print $item;
@@ -78,8 +78,8 @@ sub loadSystemMessageAll {
 		my $line = <FILE>;
 		next if $line =~ m!^/!;
 		chomp $line;
-		my ($N_id, $N_name) = split /\t/, $line;
-		$array_name_jp{$N_id} = $N_name
+		my ($N_id, $N_message) = split /\t/, $line;
+		$array_message_jp{$N_id} = $N_message
 	}
 	close FILE;
 
@@ -88,8 +88,8 @@ sub loadSystemMessageAll {
 		my $line = <FILE>;
 		next if $line =~ m!^/!;
 		chomp $line;
-		my ($N_id, $N_name) = split /\t/, $line;
-		$array_name_tw{$N_id} = $N_name
+		my ($N_id, $N_message) = split /\t/, $line;
+		$array_message_tw{$N_id} = $N_message
 	}
 	close FILE;
 }
