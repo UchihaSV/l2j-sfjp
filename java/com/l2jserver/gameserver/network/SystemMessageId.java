@@ -15650,9 +15650,9 @@ public final class SystemMessageId
 	public static final SystemMessageId CANT_EXCEED_1500_CHARACTERS;
 	
 	/**
-	 * ID: 2009<br>
-	 * Message: 1500•¶š‚ğ‰ß‚¬‚Ä‚¢‚Ü‚·B<br>
-	 * Message: &#19981;&#24471;&#36229;&#36942;&#49;&#44;&#53;&#48;&#48;&#23383;&#12290;<br>
+	 * ID: 2010<br>
+	 * Message: $s2 $s1<br>
+	 * Message: &#12300;&#36;&#115;&#50;&#32;&#36;&#115;&#49;&#12301;<br>
 	 * Message: $s2 $s1
 	 */
 	public static final SystemMessageId S2_S1;
