@@ -2252,7 +2252,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (getActiveWeaponItem() != null)
 		{
 			L2Weapon wep = getActiveWeaponItem();
-			if (wep.useWeaponSkillsOnly() && !isGM())
+			if (wep.useWeaponSkillsOnly() && !isGM() && wep.hasSkills())
 			{
 				boolean found = false;
 				for (SkillHolder sh : wep.getSkills())

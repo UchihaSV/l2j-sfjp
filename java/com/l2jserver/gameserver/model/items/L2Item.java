@@ -892,6 +892,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			_preConditions.add(c);
 	}
 	
+	public boolean hasSkills()
+	{
+		return _skillHolder != null;
+	}
+	
 	/**
 	 * Method to retrive skills linked to this item
 	 *
