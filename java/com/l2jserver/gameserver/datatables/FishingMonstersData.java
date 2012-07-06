@@ -15,7 +15,6 @@
 package com.l2jserver.gameserver.datatables;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -30,7 +29,7 @@ import com.l2jserver.gameserver.model.fishing.L2FishingMonster;
  */
 public final class FishingMonstersData extends DocumentParser
 {
-	private static final Map<Integer, L2FishingMonster> _fishingMonstersData = new HashMap<>();
+	private static final HashMap<Integer, L2FishingMonster> _fishingMonstersData = new HashMap<>();
 	
 	/**
 	 * Instantiates a new fishing monsters data.
@@ -104,11 +103,7 @@ public final class FishingMonstersData extends DocumentParser
 	 */
 	public L2FishingMonster getFishingMonsterById(int id)
 	{
-		if (_fishingMonstersData.containsKey(id))
-		{
-			return _fishingMonstersData.get(id);
-		}
-		return null;
+		return _fishingMonstersData.get(id);
 	}
 	
 	/**
