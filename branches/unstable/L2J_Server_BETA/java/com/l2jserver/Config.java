@@ -800,7 +800,7 @@ public final class Config
 	public static double RAID_MDEFENCE_MULTIPLIER;
 	public static double RAID_PATTACK_MULTIPLIER;
 	public static double RAID_MATTACK_MULTIPLIER;
-	public static double RAID_MINION_RESPAWN_TIMER;
+	public static int RAID_MINION_RESPAWN_TIMER;	//[JOJO] -double +int
 	public static TIntIntHashMap MINIONS_RESPAWN_TIME;
 	public static float RAID_MIN_RESPAWN_MULTIPLIER;
 	public static float RAID_MAX_RESPAWN_MULTIPLIER;
