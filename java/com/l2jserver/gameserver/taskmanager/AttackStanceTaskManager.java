@@ -34,14 +34,13 @@ public class AttackStanceTaskManager
 {
 	protected static final Logger _log = Logger.getLogger(AttackStanceTaskManager.class.getName());
 	
-	protected static final FastMap<L2Character, Long> _attackStanceTasks = new FastMap<>();
+	protected static final FastMap<L2Character, Long> _attackStanceTasks = new FastMap<L2Character, Long>().shared();
 	
 	/**
 	 * Instantiates a new attack stance task manager.
 	 */
 	protected AttackStanceTaskManager()
 	{
-		_attackStanceTasks.shared();
 		ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new FightModeScheduler(), 0, 1000);
 	}
 	
@@ -51,7 +50,8 @@ public class AttackStanceTaskManager
 	 */
 	public void addAttackStanceTask(L2Character actor)
 	{
-		if ((actor != null) && actor.isPlayable())
+		if (actor == null) return;
+		if (actor.isPlayable())
 		{
 			final L2PcInstance player = actor.getActingPlayer();
 			for (L2CubicInstance cubic : player.getCubics().values())
@@ -71,7 +71,8 @@ public class AttackStanceTaskManager
 	 */
 	public void removeAttackStanceTask(L2Character actor)
 	{
-		if ((actor != null) && actor.isSummon())
+		if (actor == null) return;
+		if (actor.isSummon())
 		{
 			actor = actor.getActingPlayer();
 		}
@@ -86,7 +87,8 @@ public class AttackStanceTaskManager
 	 */
 	public boolean getAttackStanceTask(L2Character actor)
 	{
-		if ((actor != null) && actor.isSummon())
+		if (actor == null) return false;
+		if (actor.isSummon())
 		{
 			actor = actor.getActingPlayer();
 		}
@@ -101,15 +103,12 @@ public class AttackStanceTaskManager
 			long current = System.currentTimeMillis();
 			try
 			{
-				final Iterator<Entry<L2Character, Long>> iter = _attackStanceTasks.entrySet().iterator();
-				Entry<L2Character, Long> e;
-				L2Character actor;
-				while (iter.hasNext())
+				for (Iterator<Entry<L2Character, Long>> iter = _attackStanceTasks.entrySet().iterator(); iter.hasNext(); )
 				{
-					e = iter.next();
+					Entry<L2Character, Long> e = iter.next();
 					if ((current - e.getValue()) > 15000)
 					{
-						actor = e.getKey();
+						L2Character actor = e.getKey();
 						if (actor != null)
 						{
 							actor.broadcastPacket(new AutoAttackStop(actor.getObjectId()));
