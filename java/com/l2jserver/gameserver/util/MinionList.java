@@ -188,7 +188,10 @@ public class MinionList
 			_reusedMinionReferences.add(minion);
 		}
 		
-		final int time = respawnTime < 0 ? _master.isRaid() ? (int) Config.RAID_MINION_RESPAWN_TIMER : 0 : respawnTime;
+	//	final int time; if (respawnTime >= 0) time = respawnTime; else if (_master.isRaid()) time = Config.RAID_MINION_RESPAWN_TIMER; else time = 0;	//[JOJO]
+		final int time = respawnTime >= 0 ? respawnTime : _master.isRaid() ? Config.RAID_MINION_RESPAWN_TIMER : 0;	//[JOJO]
+	//	final int time = respawnTime < 0 ? (_master.isRaid() ? (int) Config.RAID_MINION_RESPAWN_TIMER : 0) : respawnTime;	//[JOJO]
+	//	final int time = respawnTime < 0 ? _master.isRaid() ? (int) Config.RAID_MINION_RESPAWN_TIMER : 0 : respawnTime;
 		if ((time > 0) && !_master.isAlikeDead())
 		{
 			ThreadPoolManager.getInstance().scheduleGeneral(new MinionRespawnTask(minion), time);
