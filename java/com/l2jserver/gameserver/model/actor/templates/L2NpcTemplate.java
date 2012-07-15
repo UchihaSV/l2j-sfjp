@@ -27,11 +27,15 @@ import java.util.logging.Logger;
 import javolution.util.FastMap;
 
 import com.l2jserver.gameserver.datatables.HerbDropTable;
+import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.model.L2DropCategory;
 import com.l2jserver.gameserver.model.L2DropData;
 import com.l2jserver.gameserver.model.L2MinionData;
 import com.l2jserver.gameserver.model.L2NpcAIData;
+import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.StatsSet;
+import com.l2jserver.gameserver.model.actor.L2Npc;
+import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.base.ClassId;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.quest.Quest.QuestEventType;
@@ -456,6 +460,36 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				quests.add(q);
 			}
 		}
+if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
+		if (EventType == QuestEventType.ON_SPAWN && !q.getName().equals("L2AttackableAIScript")) {
+			boolean hasOnSpawn;
+			try {
+				q.getClass().getDeclaredMethod("onSpawn", L2Npc.class);	// @Override public String onSpawn(L2Npc npc)
+				hasOnSpawn = true;
+			}
+			catch (NoSuchMethodException | SecurityException e) {
+				hasOnSpawn = false;
+			}
+			if (hasOnSpawn)
+				for (L2Spawn spawn : SpawnTable.getInstance().getSpawnTable()) {
+					L2Npc npc;
+					if (spawn != null && (npc = spawn.getLastSpawn()) != null) {
+						if (npc.getNpcId() == _npcId && npc.isVisible()) {
+						//	System.out.println("__BASENAME__:__LINE__: " + q.getClass().getSimpleName() + ".onSpawn(" + npc.getNpcId() + npc.getName() + ")");
+							q.onSpawn(npc);
+						}
+						L2MonsterInstance leader;
+						if (npc instanceof L2MonsterInstance && (leader = (L2MonsterInstance)npc).hasMinions()) {
+							for (L2MonsterInstance minion : leader.getMinionList().getSpawnedMinions())
+								if (minion.getNpcId() == _npcId && minion.isVisible()) {
+								//	System.out.println("__BASENAME__:__LINE__: " + q.getClass().getSimpleName() + ".onSpawn(+" + minion.getNpcId() + minion.getName() + ")");
+									q.onSpawn(minion);
+								}
+						}
+					}
+				}
+		}
+}}
 	}
 
 	public void removeQuest(Quest q)
