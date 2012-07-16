@@ -545,6 +545,10 @@ if (com.l2jserver.Config.TEST_GET_AI) {{
 			
 			if (player != null)
 			{
+if (com.l2jserver.Config.FIX_L2AttackableAIScript_super) {{
+				// TODO: L2QuestGuardInstance Ç…Ç‡ON_KILLèàóùÇ™Ç†ÇÈÇ™...
+				ThreadPoolManager.getInstance().scheduleEffect(new OnKillNotifyTask(this, null, player, killer instanceof L2Summon), _onKillDelay);
+}} else {{
 				if (getTemplate().getEventQuests(Quest.QuestEventType.ON_KILL) != null)
 				{
 					for (Quest quest : getTemplate().getEventQuests(Quest.QuestEventType.ON_KILL))
@@ -552,6 +556,7 @@ if (com.l2jserver.Config.TEST_GET_AI) {{
 						ThreadPoolManager.getInstance().scheduleEffect(new OnKillNotifyTask(this, quest, player, killer instanceof L2Summon), _onKillDelay);
 					}
 				}
+}}
 			}
 		}
 		catch (Exception e)
@@ -579,7 +584,12 @@ if (com.l2jserver.Config.TEST_GET_AI) {{
 		@Override
 		public void run()
 		{
+if (com.l2jserver.Config.FIX_L2AttackableAIScript_super) {{
+			for (Quest quest : _attackable.getTemplate().getEventQuests(Quest.QuestEventType.ON_KILL))
+				quest.notifyKill(_attackable, _killer, _isPet);
+}} else {{
 			_quest.notifyKill(_attackable, _killer, _isPet);
+}}
 		}
 	}
 	

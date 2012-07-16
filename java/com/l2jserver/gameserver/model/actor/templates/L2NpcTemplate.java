@@ -441,16 +441,15 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	
 	public void addQuestEvent(QuestEventType EventType, Quest q)
 	{
-		if (!_questEvents.containsKey(EventType))
+		List<Quest> quests = _questEvents.get(EventType);
+		if (quests == null)
 		{
-			List<Quest> quests = new ArrayList<>();
+			quests = new ArrayList<>();
 			quests.add(q);
 			_questEvents.put(EventType, quests);
 		}
 		else
 		{
-			List<Quest> quests = _questEvents.get(EventType);
-			
 			if (!EventType.isMultipleRegistrationAllowed() && !quests.isEmpty())
 			{
 				_log.warning("Quest event not allowed in multiple quests.  Skipped addition of Event Type \"" + EventType + "\" for NPC \"" + _name + "\" and quest \"" + q.getName() + "\".");
@@ -460,6 +459,12 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				quests.add(q);
 			}
 		}
+if (com.l2jserver.Config.FIX_L2AttackableAIScript_super) {{
+		// L2AttackableAIScript#onXXX ‚ÍÅŒã‚ÉŒÄ‚Î‚ê‚é‚æ‚¤‡”Ô‚ð•Ï‚¦‚é.
+		for (int i = quests.size() - 1; --i >= 0; )
+			if (quests.get(i).getName().equals("L2AttackableAIScript"))
+				quests.add(quests.remove(i));
+}}
 if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 		if (EventType == QuestEventType.ON_SPAWN && !q.getName().equals("L2AttackableAIScript")) {
 			boolean hasOnSpawn;

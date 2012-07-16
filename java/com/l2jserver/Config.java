@@ -1181,6 +1181,7 @@ public final class Config
 	public static final boolean DEBUG_object_already_exist_in_OID_map = true;		//[JOJO]L2World#storeObjectのデバッグモードON/OFF
 	public static final boolean INITIALIZE_EMPTY_COLLECTION = true;		//[JOJO]遅延初期化する
 	public static final boolean CUSTOM_WALKERROUTES_LOAD = true;		//[JOJO]data/WalkerRoutes_*.xml を読み込む.
+	public static final boolean FIX_L2AttackableAIScript_super = true;	//[JOJO]L2AttackableAIScript の派生クラスでイベントの最後に super.onKill() などをコールすると L2AttackableAIScript#onKill() が複数スレッドで同時にコールされてしまう不具合の修正.
 	public static final boolean FIX_onSpawn_for_SpawnTable = true;		//[JOJO]spawnlist.sqlをロードしたあとにAIスクリプトがロードされるため、onSpawnによるNPCの初期化がなされていない不具合の修正.
 	
 
