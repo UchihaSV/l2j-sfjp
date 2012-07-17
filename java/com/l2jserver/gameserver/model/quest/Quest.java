@@ -2533,7 +2533,7 @@ public class Quest extends ManagedScript
 				spawn.setHeading(heading);
 				spawn.setLocx(x);
 				spawn.setLocy(y);
-				spawn.setLocz(z + 20);
+				spawn.setLocz(z);
 				spawn.stopRespawn();
 				result = spawn.spawnOne(isSummonSpawn);
 				
