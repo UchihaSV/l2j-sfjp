@@ -93,7 +93,7 @@ public class L2SkillSpawn extends L2Skill
 		
 		spawn.setLocx(x);
 		spawn.setLocy(y);
-		spawn.setLocz(caster.getZ());
+		spawn.setLocz(caster.getZ() + com.l2jserver.Config.NPC_SPAWN_Z_MARGIN);
 		spawn.setHeading(caster.getHeading());
 		spawn.stopRespawn();
 		spawn.setInstanceId(caster.getInstanceId());	//+[JOJO]
