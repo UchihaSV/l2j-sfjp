@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -427,23 +428,27 @@ public class Quest extends ManagedScript
 	//[JOJO]-------------------------------------------------
 	public void cancelQuestTimers(String name, int instanceId)
 	{
-		List<QuestTimer> timers = getQuestTimers(name);
+		List<QuestTimer> timers = _allEventTimers.get(name);
 		if (timers == null)
 			return;
+		_writeLock.lock();
 		try
 		{
-			_rwLock.writeLock().lock();
-			for (QuestTimer timer : timers)
+			for (Iterator<QuestTimer> it = timers.iterator(); it.hasNext(); )
 			{
+				QuestTimer timer = it.next();
 				if (timer != null && timer.getInstanceId() == instanceId)	// <--
 				{
 					timer.cancel();
+					it.remove();
 				}
 			}
+	//		if (timers.size() == 0)
+	//			_allEventTimers.remove(name);
 		}
 		finally
 		{
-			_rwLock.writeLock().unlock();
+			_writeLock.unlock();
 		}
 	}
 	//-------------------------------------------------------
