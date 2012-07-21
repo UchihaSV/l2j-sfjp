@@ -9905,12 +9905,10 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (!_cubics.isEmpty())
 		{
-			final Iterator<L2CubicInstance> iter = _cubics.values().iterator();
-			L2CubicInstance cubic;
 			boolean broadcast = false;
-			while(iter.hasNext())
+			for (Iterator<L2CubicInstance> iter = _cubics.values().iterator(); iter.hasNext(); )
 			{
-				cubic = iter.next();
+				final L2CubicInstance cubic = iter.next();
 				if (cubic.givenByOther())
 				{
 					cubic.stopAction();
