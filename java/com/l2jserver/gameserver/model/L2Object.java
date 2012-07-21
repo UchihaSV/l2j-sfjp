@@ -688,7 +688,7 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of {@link L2PcInstance}
+	 * @return {@code true} if object is instance of L2PcInstance
 	 */
 	public boolean isPlayer()
 	{
@@ -696,7 +696,7 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of {@link L2Playable}
+	 * @return {@code true} if object is instance of L2Playable
 	 */
 	public boolean isPlayable()
 	{
@@ -704,7 +704,7 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of {@link L2Summon}
+	 * @return {@code true} if object is instance of L2Summon
 	 */
 	public boolean isSummon()
 	{
@@ -712,7 +712,7 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of {@link L2PetInstance}
+	 * @return {@code true} if object is instance of L2PetInstance
 	 */
 	public boolean isPet()
 	{
@@ -720,7 +720,15 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of {@link L2DoorInstance}
+	 * @return {@code true} if object is instance of L2ServitorInstance
+	 */
+	public boolean isServitor()
+	{
+		return false;
+	}
+	
+	/**
+	 * @return {@code true} if object is instance of L2DoorInstance
 	 */
 	public boolean isDoor()
 	{
@@ -728,7 +736,7 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of {@link L2Npc}
+	 * @return {@code true} if object is instance of L2Npc
 	 */
 	public boolean isNpc()
 	{
@@ -736,7 +744,7 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of {@link L2Attackable}
+	 * @return {@code true} if object is instance of L2Attackable
 	 */
 	public boolean isL2Attackable()
 	{
@@ -744,7 +752,7 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of {@link L2MonsterInstance}
+	 * @return {@code true} if object is instance of L2MonsterInstance
 	 */
 	public boolean isMonster()
 	{
@@ -752,7 +760,7 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of {@link L2TrapInstance}
+	 * @return {@code true} if object is instance of L2TrapInstance
 	 */
 	public boolean isTrap()
 	{
@@ -760,7 +768,7 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of {@link L2ItemInstance}
+	 * @return {@code true} if object is instance of L2ItemInstance
 	 */
 	public boolean isItem()
 	{
