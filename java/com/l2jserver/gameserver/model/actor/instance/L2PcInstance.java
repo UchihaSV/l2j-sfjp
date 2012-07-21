@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -9904,16 +9905,24 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (!_cubics.isEmpty())
 		{
-			for (L2CubicInstance cubic : _cubics.values())
+			final Iterator<L2CubicInstance> iter = _cubics.values().iterator();
+			L2CubicInstance cubic;
+			boolean broadcast = false;
+			while(iter.hasNext())
 			{
+				cubic = iter.next();
 				if (cubic.givenByOther())
 				{
 					cubic.stopAction();
 					cubic.cancelDisappear();
+					iter.remove();
+					broadcast = true;
 				}
 			}
-			_cubics.clear();
-			broadcastUserInfo();
+			if (broadcast)
+			{
+				broadcastUserInfo();
+			}
 		}
 	}
 	
