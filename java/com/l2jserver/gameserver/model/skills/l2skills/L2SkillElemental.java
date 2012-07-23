@@ -17,14 +17,13 @@ package com.l2jserver.gameserver.model.skills.l2skills;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Character;
-import com.l2jserver.gameserver.model.actor.L2Summon;
-import com.l2jserver.gameserver.network.SystemMessageId;
-import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.model.effects.L2Effect;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.stats.Env;
 import com.l2jserver.gameserver.model.stats.Formulas;
+import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 public class L2SkillElemental extends L2Skill {
 	
@@ -50,52 +49,17 @@ public class L2SkillElemental extends L2Skill {
 		if (activeChar.isAlikeDead())
 			return;
 		
-		boolean ss = false;
-		boolean bss = false;
-		
 		L2ItemInstance weaponInst = activeChar.getActiveWeaponInstance();
 		
 		/* [L2J_JP EDIT]
-		if (activeChar instanceof L2PcInstance)
+		if (activeChar.isPlayer())
 		{
 			if (weaponInst == null)
 			{
-				SystemMessage sm2 = SystemMessage.getSystemMessage(SystemMessageId.S1_S2);
-				sm2.addString("You must equip one weapon before cast spell.");
-				activeChar.sendPacket(sm2);
+				activeChar.sendMessage("You must equip your weapon before casting a spell.");
 				return;
 			}
 		}*/
-		
-		if (weaponInst != null)
-		{
-			if (weaponInst.getChargedSpiritshot() == L2ItemInstance.CHARGED_BLESSED_SPIRITSHOT)
-			{
-				bss = true;
-				weaponInst.setChargedSpiritshot(L2ItemInstance.CHARGED_NONE);
-			}
-			else if (weaponInst.getChargedSpiritshot() == L2ItemInstance.CHARGED_SPIRITSHOT)
-			{
-				ss = true;
-				weaponInst.setChargedSpiritshot(L2ItemInstance.CHARGED_NONE);
-			}
-		}
-		// If there is no weapon equipped, check for an active summon.
-		else if (activeChar instanceof L2Summon)
-		{
-			L2Summon activeSummon = (L2Summon)activeChar;
-			
-			if (activeSummon.getChargedSpiritShot() == L2ItemInstance.CHARGED_BLESSED_SPIRITSHOT)
-			{
-				bss = true;
-				activeSummon.setChargedSpiritShot(L2ItemInstance.CHARGED_NONE);
-			}
-			else if (activeSummon.getChargedSpiritShot() == L2ItemInstance.CHARGED_SPIRITSHOT)
-			{
-				ss = true;
-				activeSummon.setChargedSpiritShot(L2ItemInstance.CHARGED_NONE);
-			}
-		}
 		
 		for (L2Character target: (L2Character[]) targets)
 		{
@@ -136,7 +100,7 @@ public class L2SkillElemental extends L2Skill {
 			byte shld = Formulas.calcShldUse(activeChar, target, this);
 			
 			int damage = (int)Formulas.calcMagicDam(
-					activeChar, target, this, shld, ss, bss, mcrit);
+					activeChar, target, this, shld, activeChar.isSpiritshotCharged(this), activeChar.isBlessedSpiritshotCharged(this), mcrit);
 			
 			if (damage > 0)
 			{
@@ -155,7 +119,8 @@ public class L2SkillElemental extends L2Skill {
 			
 			// activate attacked effects, if any
 			target.stopSkillEffects(getId());
-			getEffects(activeChar, target, new Env(shld, ss, false, bss));
+			getEffects(activeChar, target, new Env(shld, activeChar.isSpiritshotCharged(this), false, activeChar.isBlessedSpiritshotCharged(this)));
+			activeChar.ssChecker();
 		}
 	}
 }
