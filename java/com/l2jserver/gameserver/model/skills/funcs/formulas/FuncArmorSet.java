@@ -34,11 +34,13 @@ public class FuncArmorSet extends Func
 	
 	public static Func getInstance(Stats st)
 	{
-		if (!_fh_instance.containsKey(st))
+		FuncArmorSet instance = _fh_instance.get(st);
+		if (instance == null)
 		{
-			_fh_instance.put(st, new FuncArmorSet(st));
+			instance = new FuncArmorSet(st);
+			_fh_instance.put(st, instance);
 		}
-		return _fh_instance.get(st);
+		return instance;
 	}
 	
 	private FuncArmorSet(Stats stat)
