@@ -31,11 +31,13 @@ public class FuncHenna extends Func
 	
 	public static Func getInstance(Stats st)
 	{
-		if (!_fh_instance.containsKey(st))
+		FuncHenna instance = _fh_instance.get(st);
+		if (instance == null)
 		{
-			_fh_instance.put(st, new FuncHenna(st));
+			instance = new FuncHenna(st);
+			_fh_instance.put(st, instance);
 		}
-		return _fh_instance.get(st);
+		return instance;
 	}
 	
 	private FuncHenna(Stats stat)
