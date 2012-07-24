@@ -8097,7 +8097,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public boolean isSpiritshotCharged(L2Skill skill)
 	{
 		L2ItemInstance weaponInst = getActiveWeaponInstance();
-		if (isPlayer() && skill.isMagic() && weaponInst.getChargedSpiritshot() == L2ItemInstance.CHARGED_SPIRITSHOT)
+		if (isPlayer() && skill.isMagic() && weaponInst != null && weaponInst.getChargedSpiritshot() == L2ItemInstance.CHARGED_SPIRITSHOT)
 		{
 			return true;
 		}
@@ -8112,7 +8112,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public boolean isBlessedSpiritshotCharged(L2Skill skill)
 	{
 		L2ItemInstance weaponInst = getActiveWeaponInstance();
-		if (isPlayer() && skill.isMagic() && weaponInst.getChargedSpiritshot() == L2ItemInstance.CHARGED_BLESSED_SPIRITSHOT)
+		if (isPlayer() && skill.isMagic() && weaponInst != null && weaponInst.getChargedSpiritshot() == L2ItemInstance.CHARGED_BLESSED_SPIRITSHOT)
 		{
 			return true;
 		}
