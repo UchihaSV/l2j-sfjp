@@ -82,7 +82,14 @@ public class PcStatus extends PlayableStatus
 		if (!isHPConsumption)
 		{
 			getActiveChar().stopEffectsOnDamage(awake);
-			if (getActiveChar().isSitting())
+			// Attacked players in craft/shops stand up.
+			if (getActiveChar().isInCraftMode() || getActiveChar().isInStoreMode())
+			{
+				getActiveChar().setPrivateStoreType(L2PcInstance.STORE_PRIVATE_NONE);
+				getActiveChar().standUp();
+				getActiveChar().broadcastUserInfo();
+			}
+			else if (getActiveChar().isSitting())
 				getActiveChar().standUp();
 			
 			if (!isDOT)
