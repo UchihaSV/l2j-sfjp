@@ -2262,13 +2262,10 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 		}
 	}
 	
-	@SuppressWarnings("null")
 	private void aggroReconsider()
 	{
-		
 		L2Attackable actor = getActiveChar();
 		L2Character MostHate = actor.getMostHated();
-		
 		if (actor.getHateList() != null)
 		{
 			
@@ -2300,7 +2297,6 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				actor.setTarget(obj);
 				setAttackTarget(obj);
 				return;
-				
 			}
 		}
 		
@@ -2314,7 +2310,8 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					obj = (L2Character) target;
 				else
 					continue;
-				if (obj == null || !GeoData.getInstance().canSeeTarget(actor, obj) || obj.isDead() || obj != MostHate || obj == actor)
+				
+				if (!GeoData.getInstance().canSeeTarget(actor, obj) || obj.isDead() || obj != MostHate || obj == actor)
 					continue;
 				if (obj instanceof L2PcInstance)
 				{
