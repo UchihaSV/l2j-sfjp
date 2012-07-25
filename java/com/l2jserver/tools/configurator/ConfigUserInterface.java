@@ -74,10 +74,7 @@ import com.l2jserver.tools.images.ImagesTable;
  */
 public class ConfigUserInterface extends JFrame implements ActionListener
 {
-	/**
-	 * Comment for <code>serialVersionUID</code>
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2609592249095305857L;
 	
 	private final JTabbedPane _tabPane = new JTabbedPane();
 	
@@ -187,10 +184,6 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 		return button;
 	}
 	
-	/**
-	 * 
-	 */
-	@SuppressWarnings("serial")
 	private void buildInterface()
 	{
 		ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
@@ -205,6 +198,8 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 		{
 			JPanel panel = new JPanel()
 			{
+				private static final long serialVersionUID = -323928678804839054L;
+				
 				@Override
 				public void scrollRectToVisible(Rectangle r)
 				{
@@ -247,9 +242,6 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 		}
 	}
 	
-	/**
-	 * 
-	 */
 	private void loadConfigs()
 	{
 		File configsDir = new File("config");
@@ -265,7 +257,6 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 				{
 					JOptionPane.showMessageDialog(ConfigUserInterface.this, getBundle().getString("errorReading") + file.getName(), getBundle().getString("error"), JOptionPane.ERROR_MESSAGE);
 					System.exit(3);
-					// e.printStackTrace();
 				}
 			}
 		}
@@ -650,7 +641,6 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 				sb.append("\r\n");
 				sb.append("\r\n");
 				writer.write(sb.toString());
-				
 			}
 		}
 	}
@@ -691,9 +681,6 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 		}
 	}
 	
-	/**
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
