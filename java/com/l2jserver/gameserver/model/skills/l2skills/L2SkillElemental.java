@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.effects.L2Effect;
-import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.stats.Env;
 import com.l2jserver.gameserver.model.stats.Formulas;
@@ -49,9 +48,9 @@ public class L2SkillElemental extends L2Skill {
 		if (activeChar.isAlikeDead())
 			return;
 		
+		/* [L2J_JP EDIT]
 		L2ItemInstance weaponInst = activeChar.getActiveWeaponInstance();
 		
-		/* [L2J_JP EDIT]
 		if (activeChar.isPlayer())
 		{
 			if (weaponInst == null)
