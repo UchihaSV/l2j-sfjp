@@ -240,6 +240,17 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 			panel.add(new JLabel(), cons); // filler
 			_tabPane.addTab(cf.getName(), new JScrollPane(panel));
 		}
+		/////////////////////////////////////////////////////
+		// [JOJO]
+		for (int index = _tabPane.getTabCount(); --index >= 0; ) {
+			String title = _tabPane.getTitleAt(index);
+			if (title.endsWith("server")) {
+		//	if (title.equals("server") || title.equals("loginserver")) {
+				_tabPane.setSelectedIndex(index);
+				break;
+			}
+		}
+		/////////////////////////////////////////////////////
 	}
 	
 	private void loadConfigs()
