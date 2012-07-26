@@ -1717,14 +1717,14 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (skill.useSoulShot())
 		{
 			if (isPlayer())
-				((L2PcInstance) this).rechargeAutoSoulShot(true, false, false);
+				getActingPlayer().rechargeAutoSoulShot(true, false, false);
 			else if (isSummon())
 				((L2Summon) this).getOwner().rechargeAutoSoulShot(true, false, true);
 		}
 		else if (skill.useSpiritShot())
 		{
 			if (isPlayer())
-				((L2PcInstance) this).rechargeAutoSoulShot(false, true, false);
+				getActingPlayer().rechargeAutoSoulShot(false, true, false);
 			else if (isSummon())
 				((L2Summon) this).getOwner().rechargeAutoSoulShot(false, true, true);
 		}
@@ -1885,7 +1885,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		{
 			if (skill.isMagic() && !effectWhileCasting)
 			{
-				if ((weaponInst.getChargedSpiritshot() == L2ItemInstance.CHARGED_BLESSED_SPIRITSHOT) || (weaponInst.getChargedSpiritshot() == L2ItemInstance.CHARGED_SPIRITSHOT))
+				if (weaponInst.getChargedSpiritshot() != L2ItemInstance.CHARGED_NONE)
 				{
 					// Using SPS/BSPS Casting Time of Magic Skills is reduced in 40%
 					hitTime = (int) (0.60 * hitTime);
@@ -8048,41 +8048,44 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		globalSkillUseListeners.remove(listener);
 	}
 	
-	public void ssChecker()
+	public void spsChecker(L2Skill skill)
 	{
 		L2ItemInstance weaponInst = getActiveWeaponInstance();
 		
-		if (weaponInst != null && isPlayer())
+		if (!skill.isStatic())
 		{
-			if (weaponInst.getChargedSpiritshot() != L2ItemInstance.CHARGED_NONE || weaponInst.getChargedSoulshot() != L2ItemInstance.CHARGED_NONE)
+			if (weaponInst != null && isPlayer())
 			{
-				weaponInst.setChargedSpiritshot(L2ItemInstance.CHARGED_NONE);
+				if (weaponInst.getChargedSpiritshot() != L2ItemInstance.CHARGED_NONE)
+				{
+					weaponInst.setChargedSpiritshot(L2ItemInstance.CHARGED_NONE);
+				}
 			}
-		}
-		// If there is no weapon equipped, check for an active summon.
-		else if (isSummon())
-		{
-			L2Summon activeSummon = (L2Summon) this;
-			
-			if (activeSummon.getChargedSpiritShot() != L2ItemInstance.CHARGED_NONE)
+			// If there is no weapon equipped, check for an active summon.
+			else if (isSummon())
 			{
-				activeSummon.setChargedSpiritShot(L2ItemInstance.CHARGED_NONE);
+				L2Summon activeSummon = (L2Summon) this;
+				
+				if (activeSummon.getChargedSpiritShot() != L2ItemInstance.CHARGED_NONE)
+				{
+					activeSummon.setChargedSpiritShot(L2ItemInstance.CHARGED_NONE);
+				}
 			}
-		}
-		else if (isNpc())
-		{
-			L2Npc activeNpc = (L2Npc) this;
-			if (activeNpc._soulshotcharged)
+			else if (isNpc())
 			{
-				activeNpc._soulshotcharged = false;
-			}
-			else if(activeNpc._spiritshotcharged)
-			{
-				activeNpc._spiritshotcharged = false;
+				L2Npc activeNpc = (L2Npc) this;
+				if (activeNpc._soulshotcharged)
+				{
+					activeNpc._soulshotcharged = false;
+				}
+				else if(activeNpc._spiritshotcharged)
+				{
+					activeNpc._spiritshotcharged = false;
+				}
 			}
 		}
 	}
-	
+		
 	public boolean isSoulshotCharged(L2Skill skill)
 	{
 		L2ItemInstance weaponInst = getActiveWeaponInstance();
