@@ -24,7 +24,7 @@ my %array_message_jp = ();
 my %array_message_tw = ();
 &loadSystemMessageAll();
 
-&start('.svn/text-base/NpcStringId.java.svn-base', 'NpcStringId.java');
+&start('NpcStringId.java', 'NpcStringId.java');
 # &start('NpcStringId.java', 'NpcStringId.java.text');
 
 close LOG;
@@ -41,6 +41,7 @@ sub start {
 
 	my $UPDATE = 0;
 
+	$text =~ s/^.*Message: (.*)<br>//gm;
 	my @ALL = split /(?=[ \t]\/\*\*)/, $text;
 	foreach my $item (@ALL) {
 		next unless $item =~ m/ID: (\d+)/m;     my $id = $1;

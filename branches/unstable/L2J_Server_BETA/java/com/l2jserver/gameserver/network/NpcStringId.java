@@ -14,10 +14,11 @@
  */
 package com.l2jserver.gameserver.network;
 
+import gnu.trove.map.hash.TIntObjectHashMap;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -28791,7 +28792,7 @@ public final class NpcStringId
 	 * Array containing all NpcStringId<br>
 	 * Important: Always initialize with a length of the highest NpcStringId + 1!!!
 	 */
-	private static NpcStringId[] VALUES;
+	private static TIntObjectHashMap<NpcStringId> VALUES;
 	
 	static
 	{
@@ -32394,36 +32395,26 @@ public final class NpcStringId
 	
 	private static final void buildFastLookupTable()
 	{
+		VALUES = new TIntObjectHashMap<>();
 		final Field[] fields = NpcStringId.class.getDeclaredFields();
-		final ArrayList<NpcStringId> nsIds = new ArrayList<>(fields.length);
 		
-		int maxId = 0, mod;
-		NpcStringId nsId;
 		for (final Field field : fields)
 		{
-			mod = field.getModifiers();
+			int mod = field.getModifiers();
 			if (Modifier.isStatic(mod) && Modifier.isPublic(mod) && Modifier.isFinal(mod) && field.getType().equals(NpcStringId.class))
 			{
 				try
 				{
-					nsId = (NpcStringId) field.get(null);
+					NpcStringId nsId = (NpcStringId) field.get(null);
 					nsId.setName(field.getName());
 					nsId.setParamCount(parseMessageParameters(field.getName()));
-					maxId = Math.max(maxId, nsId.getId());
-					nsIds.add(nsId);
+					VALUES.put(nsId.getId(), nsId);
 				}
 				catch (final Exception e)
 				{
 					_log.log(Level.WARNING, "NpcStringId: Failed field access for '" + field.getName() + "'", e);
 				}
 			}
-		}
-		
-		VALUES = new NpcStringId[maxId + 1];
-		for (int i = nsIds.size(); i-- > 0;)
-		{
-			nsId = nsIds.get(i);
-			VALUES[nsId.getId()] = nsId;
 		}
 	}
 	
@@ -32455,10 +32446,7 @@ public final class NpcStringId
 
 	private static final NpcStringId getNpcStringIdInternal(final int id)
 	{
-		if (id < 0 || id >= VALUES.length)
-			return null;
-		
-		return VALUES[id];
+		return VALUES.get(id);
 	}
 	
 	public static final NpcStringId getNpcStringId(final String name)
@@ -32475,7 +32463,7 @@ public final class NpcStringId
 	
 	public static final void reloadLocalisations()
 	{
-		for (final NpcStringId nsId : VALUES)
+		for (final NpcStringId nsId : VALUES.valueCollection())
 		{
 			if (nsId != null)
 				nsId.removeAllLocalisations();
