@@ -1,0 +1,93 @@
+### Eclipse Workspace Patch 1.0
+#P L2J_Server_BETA
+Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
+===================================================================
+--- java/com/l2jserver/gameserver/network/SystemMessageId.java	(revision 5458)
++++ java/com/l2jserver/gameserver/network/SystemMessageId.java	(working copy)
+@@ -14,10 +14,11 @@
+  */
+ package com.l2jserver.gameserver.network;
+ 
++import gnu.trove.map.hash.TIntObjectHashMap;
++
+ import java.io.File;
+ import java.lang.reflect.Field;
+ import java.lang.reflect.Modifier;
+-import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.List;
+ import java.util.logging.Level;
+@@ -14867,7 +14868,7 @@
+ 	 * Array containing all SystemMessageIds<br>
+ 	 * Important: Always initialize with a length of the highest SystemMessageId + 1!!!
+ 	 */
+-	private static SystemMessageId[] VALUES;
++	private static TIntObjectHashMap<SystemMessageId> VALUES;
+ 	
+ 	static
+ 	{
+@@ -17347,23 +17348,20 @@
+ 	
+ 	private static final void buildFastLookupTable()
+ 	{
++		VALUES = new TIntObjectHashMap<>();
+ 		final Field[] fields = SystemMessageId.class.getDeclaredFields();
+-		final ArrayList<SystemMessageId> smIds = new ArrayList<>(fields.length);
+ 		
+-		int maxId = 0, mod;
+-		SystemMessageId smId;
+ 		for (final Field field : fields)
+ 		{
+-			mod = field.getModifiers();
++			int mod = field.getModifiers();
+ 			if (Modifier.isStatic(mod) && Modifier.isPublic(mod) && Modifier.isFinal(mod) && field.getType().equals(SystemMessageId.class))
+ 			{
+ 				try
+ 				{
+-					smId = (SystemMessageId) field.get(null);
++					SystemMessageId smId = (SystemMessageId) field.get(null);
+ 					smId.setName(field.getName());
+ 					smId.setParamCount(parseMessageParameters(field.getName()));
+-					maxId = Math.max(maxId, smId.getId());
+-					smIds.add(smId);
++					VALUES.put(smId.getId(), smId);
+ 				}
+ 				catch (final Exception e)
+ 				{
+@@ -17371,13 +17369,6 @@
+ 				}
+ 			}
+ 		}
+-		
+-		VALUES = new SystemMessageId[maxId + 1];
+-		for (int i = smIds.size(); i-- > 0;)
+-		{
+-			smId = smIds.get(i);
+-			VALUES[smId.getId()] = smId;
+-		}
+ 	}
+ 	
+ 	private static final int parseMessageParameters(final String name)
+@@ -17408,12 +17399,7 @@
+ 	
+ 	private static final SystemMessageId getSystemMessageIdInternal(final int id)
+ 	{
+-		if ((id < 0) || (id >= VALUES.length))
+-		{
+-			return null;
+-		}
+-		
+-		return VALUES[id];
++		return VALUES.get(id);
+ 	}
+ 	
+ 	public static final SystemMessageId getSystemMessageId(final String name)
+@@ -17430,7 +17416,7 @@
+ 	
+ 	public static final void reloadLocalisations()
+ 	{
+-		for (final SystemMessageId smId : VALUES)
++		for (final SystemMessageId smId : VALUES.valueCollection())
+ 		{
+ 			if (smId != null)
+ 			{

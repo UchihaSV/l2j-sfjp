@@ -24,7 +24,7 @@ my %array_message_jp = ();
 my %array_message_tw = ();
 &loadSystemMessageAll();
 
-&start('.svn/text-base/SystemMessageId.java.svn-base', 'SystemMessageId.java');
+&start('SystemMessageId.java', 'SystemMessageId.java');
 # &start('SystemMessageId.java', 'SystemMessageId.java.text');
 
 close LOG;
@@ -43,6 +43,7 @@ sub start {
 
 	$text =~ s!\bSUBMITTED_A_BID\b!SUBMITTED_A_BID_OF_S1!g;	# FIX BUG
 
+	$text =~ s/^.*Message: (.*)<br>//gm;
 	my @ALL = split /(?=[ \t]\/\*\*)/, $text;
 	foreach my $item (@ALL) {
 		next unless $item =~ m/ID: (\d+)/m;     my $id = $1;
