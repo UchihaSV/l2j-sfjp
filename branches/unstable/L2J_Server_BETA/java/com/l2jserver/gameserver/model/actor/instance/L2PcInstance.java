@@ -11527,7 +11527,7 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	@Override
-	public void teleToLocation(int x, int y, int z, int heading, boolean allowRandomOffset)
+	public void teleToLocation(int x, int y, int z, int heading, int randomOffset)			//[JOJO]
 	{
 		if (getVehicle() != null && !getVehicle().isTeleporting())
 			setVehicle(null);
@@ -11535,7 +11535,7 @@ public final class L2PcInstance extends L2Playable
 		if (isFlyingMounted() && z < -1005)
 			z = -1005;
 		
-		super.teleToLocation(x, y, z, heading, allowRandomOffset);
+		super.teleToLocation(x, y, z, heading, randomOffset);	//[JOJO]
 	}
 	
 	@Override
