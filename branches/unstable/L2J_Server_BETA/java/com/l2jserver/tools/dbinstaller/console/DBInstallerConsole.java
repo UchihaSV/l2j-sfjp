@@ -35,7 +35,8 @@ public class DBInstallerConsole implements DBOutputInterface
 		System.out.println("Welcome to L2J DataBase installer");
 		Preferences prop = Preferences.userRoot();
 		RunTasks rt = null;
-		try (Scanner scn = new Scanner(System.in))
+		@SuppressWarnings("resource") Scanner scn = new Scanner(System.in);	//[JOJO]
+	//	try (Scanner scn = new Scanner(System.in))
 		{
 			while (_con == null)
 			{
@@ -123,7 +124,8 @@ public class DBInstallerConsole implements DBOutputInterface
 	public int requestConfirm(String title, String message, int type)
 	{
 		System.out.print(message);
-		try (Scanner scn = new Scanner(System.in))
+		@SuppressWarnings("resource") Scanner scn = new Scanner(System.in);
+	//	try (Scanner scn = new Scanner(System.in))
 		{
 			String res = scn.next();
 			if (res.equalsIgnoreCase("y"))
