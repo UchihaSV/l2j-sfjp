@@ -363,12 +363,13 @@ public class L2Event
 			if (NpcTable.getInstance().getTemplate(_npcId) == null)
 				return "Cannot start event, invalid npc id.";
 			
-			BufferedReader inbr = Util.utf8BufferedReader(Config.DATAPACK_ROOT+"/data/events/" + _eventName);	//[JOJO] UTF-8
-		//	DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(Config.DATAPACK_ROOT+"/data/events/" + _eventName)));
-		//	BufferedReader inbr = new BufferedReader(new InputStreamReader(in));
-			_eventCreator = inbr.readLine();
-			_eventInfo = inbr.readLine();
-			inbr.close();
+			try (BufferedReader br = Util.utf8BufferedReader(Config.DATAPACK_ROOT+"/data/events/" + _eventName))	//[JOJO] UTF-8
+		//	try (FileReader fr = new FileReader(Config.DATAPACK_ROOT + "/data/events/" + _eventName);
+		//		BufferedReader br = new BufferedReader(fr))
+			{
+				_eventCreator = br.readLine();
+				_eventInfo = br.readLine();
+			}
 			
 			List<L2PcInstance> temp = new FastList<>();
 			for (L2PcInstance player : L2World.getInstance().getAllPlayersArray())
