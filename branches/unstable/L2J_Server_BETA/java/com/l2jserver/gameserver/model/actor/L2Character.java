@@ -2420,7 +2420,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public void deleteMe()
 	{
 		setDebug(null);
-		setStatus(null);
 		
 		if (hasAI())
 			getAI().stopAITask();
