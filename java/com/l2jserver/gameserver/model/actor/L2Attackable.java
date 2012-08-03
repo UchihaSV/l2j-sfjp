@@ -1170,7 +1170,7 @@ if (com.l2jserver.Config.FIX_L2AttackableAIScript_super) {{
 			L2PcInstance act = (L2PcInstance) ai.getAttacker();
 			if (act.getAppearance().getInvisible() || ai.getAttacker().isInvul() || act.isSpawnProtected())
 			{
-				//Remove Object Should Use This Method and Can be Blocked While Interating
+				// Remove Object Should Use This Method and Can be Blocked While Interacting
 				getAggroList().remove(target);
 				return 0;
 			}

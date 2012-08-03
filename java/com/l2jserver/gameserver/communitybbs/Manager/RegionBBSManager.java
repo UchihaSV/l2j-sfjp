@@ -59,10 +59,6 @@ public class RegionBBSManager extends BaseBBSManager
 		}
 	};
 	
-	/**
-	 * 
-	 * @see com.l2jserver.gameserver.communitybbs.Manager.BaseBBSManager#parsecmd(java.lang.String, com.l2jserver.gameserver.model.actor.instance.L2PcInstance)
-	 */
 	@Override
 	public void parsecmd(String command, L2PcInstance activeChar)
 	{
@@ -113,8 +109,9 @@ public class RegionBBSManager extends BaseBBSManager
 	}
 	
 	/**
-	 * @param activeChar
-	 * @param name
+	 * Show old community player info.
+	 * @param activeChar the active char
+	 * @param name the player name
 	 */
 	private void showOldCommunityPI(L2PcInstance activeChar, String name)
 	{
@@ -187,8 +184,9 @@ public class RegionBBSManager extends BaseBBSManager
 	}
 	
 	/**
-	 * @param activeChar
-	 * @param page 
+	 * Show old community.
+	 * @param activeChar the active char
+	 * @param page the page
 	 */
 	private void showOldCommunity(L2PcInstance activeChar, int page)
 	{
@@ -288,7 +286,8 @@ public class RegionBBSManager extends BaseBBSManager
 	private static final String SHORTFORMAT = "HŽž mm•ª";
 
 	/**
-	 * @return
+	 * Gets the single instance of RegionBBSManager.
+	 * @return single instance of RegionBBSManager
 	 */
 	public static RegionBBSManager getInstance()
 	{
@@ -303,6 +302,9 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 }}
 	}
 	
+	/**
+	 * Change community board.
+	 */
 	public void changeCommunityBoard()
 	{
 if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
@@ -334,6 +336,10 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 		writeCommunityPages(sortedPlayers);
 	}
 
+	/**
+	 * Adds the online player.
+	 * @param player the player
+	 */
 	private void addOnlinePlayer(L2PcInstance player)
 	{
 		++_onlineCounts[FOR_GM];
@@ -341,6 +347,9 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 			++_onlineCounts[FOR_PLAYER];
 	}
 	
+	/**
+	 * Write community pages.
+	 */
 	private void writeCommunityPages(FastList<L2PcInstance> sortedPlayers)
 	{
 		final String trOpen = "<tr>";
@@ -532,6 +541,12 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 		} /*for type*/
 	}
 	
+	/**
+	 * Gets the community page.
+	 * @param page the page
+	 * @param type the type
+	 * @return the community page
+	 */
 	private String getCommunityPage(int page, int type)
 	{
 		FastList<String> pages = _communityPages[type];
