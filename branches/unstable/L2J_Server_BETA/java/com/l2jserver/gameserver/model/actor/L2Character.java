@@ -2420,6 +2420,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public void deleteMe()
 	{
 		setDebug(null);
+		setStatus(null);
 		
 		if (hasAI())
 			getAI().stopAITask();
@@ -7202,11 +7203,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	}
 	
 	/**
-	 * @return 1.
+	 * @return (100 - 11 + level) / 100;.
 	 */
 	public double getLevelMod()
 	{
-		return 1;
+		return (100.0 - 11 + getLevel()) / 100.0;
 	}
 	
 	public final void setSkillCast(Future<?> newSkillCast)
