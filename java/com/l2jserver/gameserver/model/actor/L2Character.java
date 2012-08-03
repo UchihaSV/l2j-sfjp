@@ -7202,11 +7202,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	}
 	
 	/**
-	 * @return (100 - 11 + level) / 100;.
+	 * @return the Level Modifier ((level + 89) / 100).
 	 */
-	public double getLevelMod()
+	public float getLevelMod()
 	{
-		return (100.0 - 11 + getLevel()) / 100.0;
+		return ((getLevel() + 89) / 100f);
 	}
 	
 	public final void setSkillCast(Future<?> newSkillCast)
