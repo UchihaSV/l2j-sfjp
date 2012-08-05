@@ -184,6 +184,14 @@ public final class NewCrypt
 		raw[pos++] = (byte) ((ecx >> 24) & 0xFF);
 	}
 	
+	//[JOJO]-------------------------------------------------
+	public void decrypt(byte[] raw)
+	{
+		for (int i = 0, length = raw.length & -8; i < length; i += 8)
+			_cipher.decryptBlock(raw, i, raw, i);
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * Method to decrypt using Blowfish-Blockcipher in ECB mode. The results<br>
 	 * will be directly placed inside {@code raw} array.<br>
@@ -201,6 +209,14 @@ public final class NewCrypt
 			_cipher.decryptBlock(raw, i);
 		}
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public void crypt(byte[] raw)
+	{
+		for (int i = 0, length = raw.length & -8; i < length; i += 8)
+			_cipher.encryptBlock(raw, i, raw, i);
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * Method to encrypt using Blowfish-Blockcipher in ECB mode. The results<br>
