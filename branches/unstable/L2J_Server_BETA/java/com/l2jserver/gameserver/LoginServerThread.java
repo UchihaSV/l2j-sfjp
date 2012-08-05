@@ -202,7 +202,7 @@ public class LoginServerThread extends Thread
 					}
 					
 					// decrypt if we have a key
-					_blowfish.decrypt(incoming, 0, incoming.length);
+					_blowfish.decrypt(incoming);	//[JOJO]
 					checksumOk = NewCrypt.verifyChecksum(incoming);
 					
 					if (!checksumOk)
@@ -711,7 +711,7 @@ public class LoginServerThread extends Thread
 		{
 			_log.finest("[S]\n" + Util.printData(data));
 		}
-		_blowfish.crypt(data, 0, data.length);
+		_blowfish.crypt(data);	//[JOJO]
 		
 		int len = data.length + 2;
 		synchronized (_out) // avoids tow threads writing in the mean time
