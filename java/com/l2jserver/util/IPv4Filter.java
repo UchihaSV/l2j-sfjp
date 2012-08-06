@@ -46,7 +46,7 @@ public class IPv4Filter implements IAcceptFilter, Runnable
 	 */
 	private static final int hash(byte[] ip)
 	{
-		return (ip[0] & 0xFF) | ((ip[1] << 8) & 0xFF00) | ((ip[2] << 16) & 0xFF0000) | ((ip[3] << 24) & 0xFF000000);
+		return (ip[0] & 0xFF) | (ip[1] & 0xFF) << 8 | (ip[2] & 0xFF) << 16 | (ip[3] & 0xFF) << 24;
 	}
 	
 	protected static final class Flood

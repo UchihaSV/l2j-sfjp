@@ -702,7 +702,7 @@ public class Base64
 		// In case decoding returned null
 		if ((bytes != null) && (bytes.length >= 2))
 		{
-			final int head = (bytes[0] & 0xff) | ((bytes[1] << 8) & 0xff00);
+			final int head = (bytes[0] & 0xFF) | (bytes[1] & 0xFF) << 8;
 			// Don't want to get ArrayIndexOutOfBounds exception
 			if (bytes.length >= 4 && GZIPInputStream.GZIP_MAGIC == head)
 			{
