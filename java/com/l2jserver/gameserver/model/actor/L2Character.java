@@ -759,7 +759,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		
 		if (isPlayer() && DimensionalRiftManager.getInstance().checkIfInRiftZone(getX(), getY(), getZ(), true)) // true -> ignore waiting room :)
 		{
-			L2PcInstance player = (L2PcInstance) this;
+			L2PcInstance player = getActingPlayer();
 			player.sendMessage("You have been sent to the waiting room.");
 			if (player.isInParty() && player.getParty().isInDimensionalRift())
 			{
@@ -849,7 +849,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					return;
 				}
 				
-				L2PcInstance actor = (L2PcInstance) this;
+				L2PcInstance actor = getActingPlayer();
 				/*
 				 * Players riding wyvern or with special (flying) transformations can do melee attacks, only with skills
 				 */
@@ -1516,7 +1516,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			// Check if the L2Object is a L2Character
 			if (obj instanceof L2Character)
 			{
-				if (obj.isPet() && isPlayer() && ((L2PetInstance) obj).getOwner() == ((L2PcInstance) this))
+				if (obj.isPet() && isPlayer() && ((L2PetInstance) obj).getOwner() == getActingPlayer())
 					continue;
 				
 				if (!Util.checkIfInRange(maxRadius, this, obj, false))
@@ -1529,7 +1529,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				if (!isFacing(obj, maxAngleDiff))
 					continue;
 				
-				if (isL2Attackable() && obj.isPlayer() && getTarget() instanceof L2Attackable)
+				if (isL2Attackable() && obj.isPlayer() && getTarget().isL2Attackable())
 					continue;
 				
 				if (isL2Attackable() && obj.isL2Attackable() && ((L2Attackable) this).getEnemyClan() == null && ((L2Attackable) this).getIsChaos() == 0)
@@ -1714,21 +1714,9 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		stopEffectsOnAction();
 		
 		//Recharge AutoSoulShot
-		if (skill.useSoulShot())
-		{
-			if (isPlayer())
-				getActingPlayer().rechargeAutoSoulShot(true, false, false);
-			else if (isSummon())
-				((L2Summon) this).getOwner().rechargeAutoSoulShot(true, false, true);
-		}
-		else if (skill.useSpiritShot())
-		{
-			if (isPlayer())
-				getActingPlayer().rechargeAutoSoulShot(false, true, false);
-			else if (isSummon())
-				((L2Summon) this).getOwner().rechargeAutoSoulShot(false, true, true);
-		}
-		
+		if (isPlayer() || isSummon())
+			getActingPlayer().rechargeAutoSoulShot(skill.useSoulShot(), skill.useSpiritShot(), isSummon());
+				
 		// Set the target of the skill in function of Skill Type and Target Type
 		L2Character target = null;
 		// Get all possible targets of the skill in a table in function of the skill target type
@@ -2019,7 +2007,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			{
 				if (isPlayer())
 				{
-					if (!((L2PcInstance) this).decreaseSouls(skill.getSoulConsumeCount(), skill))
+					if (!getActingPlayer().decreaseSouls(skill.getSoulConsumeCount(), skill))
 					{
 						if (simultaneously)
 							setIsCastingSimultaneouslyNow(false);
@@ -2208,7 +2196,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			boolean canCast = true;
 			if (skill.getTargetType() == L2TargetType.TARGET_GROUND && isPlayer())
 			{
-				Point3D wp = ((L2PcInstance) this).getCurrentSkillWorldPosition();
+				Point3D wp = getActingPlayer().getCurrentSkillWorldPosition();
 				if (!region.checkEffectRangeInsidePeaceZone(skill, wp.getX(), wp.getY(), wp.getZ()))
 					canCast = false;
 			}
@@ -2369,8 +2357,8 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		else
 			stopAllEffectsExceptThoseThatLastThroughDeath();
 		
-		if (isPlayer() && ((L2PcInstance) this).getAgathionId() != 0)
-			((L2PcInstance) this).setAgathionId(0);
+		if (isPlayer() && getActingPlayer().getAgathionId() != 0)
+			getActingPlayer().setAgathionId(0);
 		calculateRewards(killer);
 		
 		// Send the Server->Client packet StatusUpdate with current HP and MP to all other L2PcInstance to inform
@@ -2395,10 +2383,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (isPlayer())
 		{
 			if (((L2Playable) this).isPhoenixBlessed())
-				((L2PcInstance) this).reviveRequest(((L2PcInstance) this), null, false);
-			else if (isAffected(CharEffectList.EFFECT_FLAG_CHARM_OF_COURAGE) && ((L2PcInstance) this).isInSiege())
+				getActingPlayer().reviveRequest(getActingPlayer(), null, false);
+			else if (isAffected(CharEffectList.EFFECT_FLAG_CHARM_OF_COURAGE) && getActingPlayer().isInSiege())
 			{
-				((L2PcInstance) this).reviveRequest(((L2PcInstance) this), null, false);
+				getActingPlayer().reviveRequest(getActingPlayer(), null, false);
 			}
 		}
 		try
@@ -2757,7 +2745,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (getRunSpeed() != 0)
 			broadcastPacket(new ChangeMoveType(this));
 		if (isPlayer())
-			((L2PcInstance) this).broadcastUserInfo();
+			getActingPlayer().broadcastUserInfo();
 		else if (isSummon())
 		{
 			((L2Summon) this).broadcastStatusUpdate();
@@ -3337,7 +3325,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					isFakeDeath = false;
 			}
 		}
-		((L2PcInstance) this).setIsFakeDeath(isFakeDeath);
+		getActingPlayer().setIsFakeDeath(isFakeDeath);
 		// [L2J_JP ADD END]
 		
 		/* Aborts any attacks/casts if fake dead */
@@ -3589,8 +3577,8 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		// if this is a player instance, start the grace period for this character (grace from mobs only)!
 		if (isPlayer())
 		{
-			((L2PcInstance) this).setIsFakeDeath(false);
-			((L2PcInstance) this).setRecentFakeDeath(true);
+			getActingPlayer().setIsFakeDeath(false);
+			getActingPlayer().setRecentFakeDeath(true);
 		}
 		
 		ChangeWaitType revive = new ChangeWaitType(this, ChangeWaitType.WT_STOP_FAKEDEATH);
@@ -3729,9 +3717,9 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		// if this is a player instance, then untransform, also set the transform_id column equal to 0 if not cursed.
 		if (isPlayer())
 		{
-			if (((L2PcInstance) this).getTransformation() != null)
+			if (getActingPlayer().getTransformation() != null)
 			{
-				((L2PcInstance) this).untransform();
+				getActingPlayer().untransform();
 			}
 		}
 		
@@ -4346,10 +4334,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (isPlayer())
 		{
 			if (broadcastFull)
-				((L2PcInstance) this).updateAndBroadcastStatus(2);
+				getActingPlayer().updateAndBroadcastStatus(2);
 			else
 			{
-				((L2PcInstance) this).updateAndBroadcastStatus(1);
+				getActingPlayer().updateAndBroadcastStatus(1);
 				if (su != null)
 				{
 					broadcastPacket(su);
@@ -4653,7 +4641,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			short geoHeight = GeoData.getInstance().getSpawnHeight(xPrev, yPrev, zPrev - 30, zPrev + 30, null);
 			dz = m._zDestination - geoHeight;
 			// quite a big difference, compare to validatePosition packet
-			if (isPlayer() && Math.abs(((L2PcInstance) this).getClientZ() - geoHeight) > 200 && Math.abs(((L2PcInstance) this).getClientZ() - geoHeight) < 1500)
+			if (isPlayer() && Math.abs(getActingPlayer().getClientZ() - geoHeight) > 200 && Math.abs(getActingPlayer().getClientZ() - geoHeight) < 1500)
 			{
 				dz = m._zDestination - zPrev; // allow diff
 			}
@@ -4961,7 +4949,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				&& (!isInsideZone(ZONE_WATER) || isInsideZone(ZONE_SIEGE)) // swimming also not checked unless in siege zone - but distance is limited
 				&& !(this instanceof L2NpcWalkerInstance)) // npc walkers not checked
 		{
-			final boolean isInVehicle = isPlayer() && ((L2PcInstance) this).getVehicle() != null;
+			final boolean isInVehicle = isPlayer() && getActingPlayer().getVehicle() != null;
 			if (isInVehicle)
 				m.disregardingGeodata = true;
 			
@@ -4998,7 +4986,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					_log.warning("Character " + this.getName() + " outside world area, in coordinates x:" + curX + " y:" + curY);
 					getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
 					if (isPlayer())
-						((L2PcInstance) this).logout();
+						getActingPlayer().logout();
 					else if (isSummon())
 						return; // preventation when summon get out of world coords, player will not loose him, unsummon handled from pcinstance
 					else
@@ -5856,11 +5844,12 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		}
 		if (player.isInOlympiadMode() && player.getTarget() != null && player.getTarget().isPlayable())
 		{
-			L2PcInstance target;
-			if (player.getTarget() instanceof L2Summon)
-				target = ((L2Summon) player.getTarget()).getOwner();
-			else
-				target = (L2PcInstance) player.getTarget();
+			L2PcInstance target = null;
+			L2Object object = player.getTarget();
+			if (object != null && object.isPlayable())
+			{
+				target = object.getActingPlayer();
+			}
 			
 			if (target == null || (target.isInOlympiadMode() && (!player.isOlympiadStart() || player.getOlympiadGameId() != target.getOlympiadGameId())))
 			{
@@ -5915,14 +5904,14 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	{
 		if (target == null)
 			return false;
-		if (!(target.isPlayable() && attacker instanceof L2Playable))
+		if (!(target.isPlayable() && attacker.isPlayable()))
 			return false;
 		if (InstanceManager.getInstance().getInstance(this.getInstanceId()).isPvPInstance())
 			return false;
 		
 		if (TerritoryWarManager.PLAYER_WITH_WARD_CAN_BE_KILLED_IN_PEACEZONE && TerritoryWarManager.getInstance().isTWInProgress())
 		{
-			if (target.isPlayer() && ((L2PcInstance) target).isCombatFlagEquipped())
+			if (target.isPlayer() && target.getActingPlayer().isCombatFlagEquipped())
 				return false;
 		}
 		
@@ -6204,22 +6193,22 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				}
 			}
 			
-			if (oldSkill instanceof L2SkillAgathion && isPlayer() && ((L2PcInstance) this).getAgathionId() > 0)
+			if (oldSkill instanceof L2SkillAgathion && isPlayer() && getActingPlayer().getAgathionId() > 0)
 			{
-				((L2PcInstance) this).setAgathionId(0);
-				((L2PcInstance) this).broadcastUserInfo();
+				getActingPlayer().setAgathionId(0);
+				getActingPlayer().broadcastUserInfo();
 			}
 			
-			if (oldSkill instanceof L2SkillMount && isPlayer() && ((L2PcInstance) this).isMounted())
-				((L2PcInstance) this).dismount();
+			if (oldSkill instanceof L2SkillMount && isPlayer() && getActingPlayer().isMounted())
+				getActingPlayer().dismount();
 			
 			if (oldSkill.isChance() && _chanceSkills != null)
 			{
 				removeChanceSkill(oldSkill.getId());
 			}
-			if (oldSkill instanceof L2SkillSummon && oldSkill.getId() == 710 && isPlayer() && ((L2PcInstance) this).getPet() != null && ((L2PcInstance) this).getPet().getNpcId() == 14870)
+			if (oldSkill instanceof L2SkillSummon && oldSkill.getId() == 710 && isPlayer() && getActingPlayer().getPet() != null && getActingPlayer().getPet().getNpcId() == 14870)
 			{
-				((L2PcInstance) this).getPet().unSummon(((L2PcInstance) this));
+				getActingPlayer().getPet().unSummon(getActingPlayer());
 			}
 		}
 		
@@ -6430,7 +6419,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					{
 						if (isPlayer())
 						{
-							if (((L2Character) target).isInsidePeaceZone((L2PcInstance) this))
+							if (((L2Character) target).isInsidePeaceZone(getActingPlayer()))
 							{
 								_skippeace++;
 								continue;
@@ -6553,7 +6542,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			// Go through targets table
 			for (L2Object tgt : targets)
 			{
-				if (tgt instanceof L2Playable)
+				if (tgt.isPlayable())
 				{
 					L2Character target = (L2Character) tgt;
 					
@@ -6626,7 +6615,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			
 			if (isPlayer())
 			{
-				int charges = ((L2PcInstance) this).getCharges();
+				int charges = getActingPlayer().getCharges();
 				// check for charges
 				if (skill.getMaxCharges() == 0 && charges < skill.getNumCharges())
 				{
@@ -6640,15 +6629,15 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				if (skill.getNumCharges() > 0)
 				{
 					if (skill.getMaxCharges() > 0)
-						((L2PcInstance) this).increaseCharges(skill.getNumCharges(), skill.getMaxCharges());
+						getActingPlayer().increaseCharges(skill.getNumCharges(), skill.getMaxCharges());
 					else
-						((L2PcInstance) this).decreaseCharges(skill.getNumCharges());
+						getActingPlayer().decreaseCharges(skill.getNumCharges());
 				}
 				
 				// Consume Souls if necessary
 				if (skill.getSoulConsumeCount() > 0 || skill.getMaxSoulConsumeCount() > 0)
 				{
-					if (!((L2PcInstance) this).decreaseSouls(skill.getSoulConsumeCount() > 0 ? skill.getSoulConsumeCount() : skill.getMaxSoulConsumeCount(), skill))
+					if (!getActingPlayer().decreaseSouls(skill.getSoulConsumeCount() > 0 ? skill.getSoulConsumeCount() : skill.getMaxSoulConsumeCount(), skill))
 					{
 						abortCast();
 						return;
@@ -6745,7 +6734,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		 */
 		if (isPlayer())
 		{
-			L2PcInstance currPlayer = (L2PcInstance) this;
+			L2PcInstance currPlayer = getActingPlayer();
 			SkillDat queuedSkill = currPlayer.getQueuedSkill();
 			
 			currPlayer.setCurrentSkill(null, false, false);
@@ -6938,7 +6927,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					// Check if over-hit is possible
 					if (skill.isOverhit())
 					{
-						if (target instanceof L2Attackable)
+						if (target.isL2Attackable())
 							((L2Attackable) target).overhitEnabled(true);
 					}
 					
@@ -6991,14 +6980,14 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						}
 						else if (skill.isOffensive())
 						{
-							if (target.isPlayer() || target.isSummon() || target instanceof L2Trap)
+							if (target.isPlayer() || target.isSummon() || target.isTrap())
 							{
 								// Signets are a special case, casted on target_self but don't harm self
 								if (skill.getSkillType() != L2SkillType.SIGNET && skill.getSkillType() != L2SkillType.SIGNET_CASTTIME)
 								{
 									if (target.isPlayer())
 									{
-										((L2PcInstance) target).getAI().clientStartAutoAttack();
+										target.getActingPlayer().getAI().clientStartAutoAttack();
 									}
 									else if (target.isSummon() && ((L2Character) target).hasAI())
 									{
@@ -7045,7 +7034,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 							if (target.isPlayer())
 							{
 								// Casting non offensive skill on player with pvp flag set or with karma
-								if (!(target.equals(this) || target.equals(player)) && (((L2PcInstance) target).getPvpFlag() > 0 || ((L2PcInstance) target).getKarma() > 0))
+								if (!(target.equals(this) || target.equals(player)) && (target.getActingPlayer().getPvpFlag() > 0 || target.getActingPlayer().getKarma() > 0))
 									player.updatePvPStatus();
 							}
 							else if (target.isL2Attackable())
@@ -7070,7 +7059,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				Collection<L2Object> objs = player.getKnownList().getKnownObjects().values();
 				for (L2Object spMob : objs)
 				{
-					if (spMob instanceof L2Npc)
+					if (spMob.isNpc())
 					{
 						L2Npc npcMob = (L2Npc) spMob;
 						
@@ -7897,7 +7886,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			}
 			for (DeathListener listener : globalDeathListeners)
 			{
-				if (killer instanceof L2PcInstance || isPlayer())
+				if (killer.isPlayer() || isPlayer())
 				{
 					if (!listener.onDeath(event))
 					{
