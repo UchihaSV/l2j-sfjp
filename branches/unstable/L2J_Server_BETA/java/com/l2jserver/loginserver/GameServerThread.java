@@ -244,8 +244,8 @@ public class GameServerThread extends Thread
 			int len = data.length + 2;
 			synchronized (_out)
 			{
-				_out.write(len & 0xff);
-				_out.write((len >> 8) & 0xff);
+				_out.write(len);
+				_out.write(len >>> 8);
 				_out.write(data);
 				_out.flush();
 			}

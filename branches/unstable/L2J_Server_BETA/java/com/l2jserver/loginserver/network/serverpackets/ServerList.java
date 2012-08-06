@@ -128,10 +128,10 @@ public final class ServerList extends L2LoginServerPacket
 		{
 			writeC(server._serverId); // server id
 			
-			writeC(server._ip[0] & 0xff);
-			writeC(server._ip[1] & 0xff);
-			writeC(server._ip[2] & 0xff);
-			writeC(server._ip[3] & 0xff);
+			writeC(server._ip[0]);
+			writeC(server._ip[1]);
+			writeC(server._ip[2]);
+			writeC(server._ip[3]);
 			
 			writeD(server._port);
 			writeC(server._ageLimit); // Age Limit 0, 15, 18

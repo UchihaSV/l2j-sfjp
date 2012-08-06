@@ -37,34 +37,34 @@ public abstract class BaseSendablePacket
 	
 	protected void writeD(int value)
 	{
-		_bao.write(value & 0xff);
-		_bao.write((value >> 8) & 0xff);
-		_bao.write((value >> 16) & 0xff);
-		_bao.write((value >> 24) & 0xff);
+		_bao.write(value);
+		_bao.write(value >>> 8);
+		_bao.write(value >>> 16);
+		_bao.write(value >>> 24);
 	}
 	
 	protected void writeH(int value)
 	{
-		_bao.write(value & 0xff);
-		_bao.write((value >> 8) & 0xff);
+		_bao.write(value);
+		_bao.write(value >>> 8);
 	}
 	
 	protected void writeC(int value)
 	{
-		_bao.write(value & 0xff);
+		_bao.write(value);
 	}
 	
 	protected void writeF(double org)
 	{
 		long value = Double.doubleToRawLongBits(org);
-		_bao.write((int) (value & 0xff));
-		_bao.write((int) ((value >> 8) & 0xff));
-		_bao.write((int) ((value >> 16) & 0xff));
-		_bao.write((int) ((value >> 24) & 0xff));
-		_bao.write((int) ((value >> 32) & 0xff));
-		_bao.write((int) ((value >> 40) & 0xff));
-		_bao.write((int) ((value >> 48) & 0xff));
-		_bao.write((int) ((value >> 56) & 0xff));
+		_bao.write((int) (value));
+		_bao.write((int) (value >>> 8));
+		_bao.write((int) (value >>> 16));
+		_bao.write((int) (value >>> 24));
+		_bao.write((int) (value >>> 32));
+		_bao.write((int) (value >>> 40));
+		_bao.write((int) (value >>> 48));
+		_bao.write((int) (value >>> 56));
 	}
 	
 	protected void writeS(String text)
@@ -99,14 +99,14 @@ public abstract class BaseSendablePacket
 	
 	protected void writeQ(long value)
 	{
-		_bao.write((int) (value & 0xff));
-		_bao.write((int) ((value >> 8) & 0xff));
-		_bao.write((int) ((value >> 16) & 0xff));
-		_bao.write((int) ((value >> 24) & 0xff));
-		_bao.write((int) ((value >> 32) & 0xff));
-		_bao.write((int) ((value >> 40) & 0xff));
-		_bao.write((int) ((value >> 48) & 0xff));
-		_bao.write((int) ((value >> 56) & 0xff));
+		_bao.write((int) (value));
+		_bao.write((int) (value >>> 8));
+		_bao.write((int) (value >>> 16));
+		_bao.write((int) (value >>> 24));
+		_bao.write((int) (value >>> 32));
+		_bao.write((int) (value >>> 40));
+		_bao.write((int) (value >>> 48));
+		_bao.write((int) (value >>> 56));
 	}
 	
 	public int getLength()
@@ -124,10 +124,8 @@ public abstract class BaseSendablePacket
 		int padding = _bao.size() % 8;
 		if (padding != 0)
 		{
-			for (int i = padding; i < 8; i++)
-			{
+			for (; padding < 8; ++padding)
 				writeC(0x00);
-			}
 		}
 		
 		return _bao.toByteArray();

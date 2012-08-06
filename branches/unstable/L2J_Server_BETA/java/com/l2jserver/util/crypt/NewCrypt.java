@@ -65,30 +65,30 @@ public final class NewCrypt
 	public static boolean verifyChecksum(final byte[] raw, final int offset, final int size)
 	{
 		// check if size is multiple of 4 and if there is more then only the checksum
-		if (((size & 3) != 0) || (size <= 4))
+		if ((size & 3) != 0 || size <= 4)
 		{
 			return false;
 		}
 		
 		long chksum = 0;
 		int count = size - 4;
-		long check = -1;
-		int i;
+		long check;
+		int i = offset;
 		
-		for (i = offset; i < count; i += 4)
+		while (i < count)
 		{
-			check = raw[i] & 0xff;
-			check |= (raw[i + 1] << 8) & 0xff00;
-			check |= (raw[i + 2] << 0x10) & 0xff0000;
-			check |= (raw[i + 3] << 0x18) & 0xff000000;
+			check = (raw[i++] & 0xFF)
+			      | (raw[i++] & 0xFF) << 8
+			      | (raw[i++] & 0xFF) << 16
+			      | (raw[i++] & 0xFF) << 24;
 			
 			chksum ^= check;
 		}
 		
-		check = raw[i] & 0xff;
-		check |= (raw[i + 1] << 8) & 0xff00;
-		check |= (raw[i + 2] << 0x10) & 0xff0000;
-		check |= (raw[i + 3] << 0x18) & 0xff000000;
+		check = (raw[i++] & 0xFF)
+		      | (raw[i++] & 0xFF) << 8
+		      | (raw[i++] & 0xFF) << 16
+		      | (raw[i++] & 0xFF) << 24;
 		
 		return check == chksum;
 	}
@@ -114,27 +114,22 @@ public final class NewCrypt
 		long chksum = 0;
 		int count = size - 4;
 		long ecx;
-		int i;
+		int i = offset;
 		
-		for (i = offset; i < count; i += 4)
+		while (i < count)
 		{
-			ecx = raw[i] & 0xff;
-			ecx |= (raw[i + 1] << 8) & 0xff00;
-			ecx |= (raw[i + 2] << 0x10) & 0xff0000;
-			ecx |= (raw[i + 3] << 0x18) & 0xff000000;
+			ecx = (raw[i++] & 0xFF)
+			    | (raw[i++] & 0xFF) << 8
+			    | (raw[i++] & 0xFF) << 16
+			    | (raw[i++] & 0xFF) << 24;
 			
 			chksum ^= ecx;
 		}
 		
-		ecx = raw[i] & 0xff;
-		ecx |= (raw[i + 1] << 8) & 0xff00;
-		ecx |= (raw[i + 2] << 0x10) & 0xff0000;
-		ecx |= (raw[i + 3] << 0x18) & 0xff000000;
-		
-		raw[i] = (byte) (chksum & 0xff);
-		raw[i + 1] = (byte) ((chksum >> 0x08) & 0xff);
-		raw[i + 2] = (byte) ((chksum >> 0x10) & 0xff);
-		raw[i + 3] = (byte) ((chksum >> 0x18) & 0xff);
+		raw[i++] = (byte) (chksum);
+		raw[i++] = (byte) (chksum >>> 8);
+		raw[i++] = (byte) (chksum >>> 16);
+		raw[i++] = (byte) (chksum >>> 24);
 	}
 	
 	/**
@@ -163,25 +158,25 @@ public final class NewCrypt
 		
 		while (pos < stop)
 		{
-			edx = (raw[pos] & 0xFF);
-			edx |= (raw[pos + 1] & 0xFF) << 8;
-			edx |= (raw[pos + 2] & 0xFF) << 16;
-			edx |= (raw[pos + 3] & 0xFF) << 24;
+			edx = (raw[pos    ] & 0xFF)
+			    | (raw[pos + 1] & 0xFF) << 8
+			    | (raw[pos + 2] & 0xFF) << 16
+			    | (raw[pos + 3] & 0xFF) << 24;
 			
 			ecx += edx;
 			
 			edx ^= ecx;
 			
-			raw[pos++] = (byte) (edx & 0xFF);
-			raw[pos++] = (byte) ((edx >> 8) & 0xFF);
-			raw[pos++] = (byte) ((edx >> 16) & 0xFF);
-			raw[pos++] = (byte) ((edx >> 24) & 0xFF);
+			raw[pos++] = (byte) (edx);
+			raw[pos++] = (byte) (edx >>> 8);
+			raw[pos++] = (byte) (edx >>> 16);
+			raw[pos++] = (byte) (edx >>> 24);
 		}
 		
-		raw[pos++] = (byte) (ecx & 0xFF);
-		raw[pos++] = (byte) ((ecx >> 8) & 0xFF);
-		raw[pos++] = (byte) ((ecx >> 16) & 0xFF);
-		raw[pos++] = (byte) ((ecx >> 24) & 0xFF);
+		raw[pos++] = (byte) (ecx);
+		raw[pos++] = (byte) (ecx >>> 8);
+		raw[pos++] = (byte) (ecx >>> 16);
+		raw[pos++] = (byte) (ecx >>> 24);
 	}
 	
 	//[JOJO]-------------------------------------------------

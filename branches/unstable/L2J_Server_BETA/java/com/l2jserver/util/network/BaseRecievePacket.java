@@ -33,47 +33,49 @@ public abstract class BaseRecievePacket
 	
 	public int readD()
 	{
-		int result = _decrypt[_off++] & 0xff;
-		result |= (_decrypt[_off++] << 8) & 0xff00;
-		result |= (_decrypt[_off++] << 0x10) & 0xff0000;
-		result |= (_decrypt[_off++] << 0x18) & 0xff000000;
-		return result;
+		return (_decrypt[_off++] & 0xFF)
+		     | (_decrypt[_off++] & 0xFF) << 8
+		     | (_decrypt[_off++] & 0xFF) << 16
+		     | (_decrypt[_off++] & 0xFF) << 24;
 	}
 	
 	public int readC()
 	{
-		int result = _decrypt[_off++] & 0xff;
-		return result;
+		return _decrypt[_off++] & 0xFF;
 	}
 	
 	public int readH()
 	{
-		int result = _decrypt[_off++] & 0xff;
-		result |= (_decrypt[_off++] << 8) & 0xff00;
-		return result;
+		return (_decrypt[_off++] & 0xFF)
+		     | (_decrypt[_off++] & 0xFF) << 8;
 	}
 	
 	public double readF()
 	{
-		long result = _decrypt[_off++] & 0xff;
-		result |= (_decrypt[_off++] & 0xffL) << 8L;
-		result |= (_decrypt[_off++] & 0xffL) << 16L;
-		result |= (_decrypt[_off++] & 0xffL) << 24L;
-		result |= (_decrypt[_off++] & 0xffL) << 32L;
-		result |= (_decrypt[_off++] & 0xffL) << 40L;
-		result |= (_decrypt[_off++] & 0xffL) << 48L;
-		result |= (_decrypt[_off++] & 0xffL) << 56L;
-		return Double.longBitsToDouble(result);
+		int off = _off; _off += 8;
+		return Double.longBitsToDouble(
+			        (_decrypt[off++] & 0xFF)
+			|       (_decrypt[off++] & 0xFF) << 8
+			|       (_decrypt[off++] & 0xFF) << 16
+			|       (_decrypt[off++] & 0xFF) << 24
+			| (long)(_decrypt[off++] & 0xFF) << 32
+			| (long)(_decrypt[off++] & 0xFF) << 40
+			| (long)(_decrypt[off++] & 0xFF) << 48
+			| (long)(_decrypt[off++] & 0xFF) << 56 );
 	}
 	
 	public String readS()
 	{
-		String result;
-		result = new String(_decrypt, _off, _decrypt.length - _off, UTF_16LE);
-		result = result.substring(0, result.indexOf(0x00));
-		_off += result.length() * 2 + 2;
-		
-		return result;
+		for (int off = _off, length = _decrypt.length; off < length; off += 2)
+		{
+			if (_decrypt[off] == 0 && _decrypt[off + 1] == 0)
+			{
+				String result = new String(_decrypt, _off, off - _off, UTF_16LE);
+				_off = off + 2;
+				return result;
+			}
+		}
+		return null;
 	}
 	
 	public final byte[] readB(int length)
@@ -89,14 +91,14 @@ public abstract class BaseRecievePacket
 	
 	public long readQ()
 	{
-		long result = _decrypt[_off++] & 0xff;
-		result |= (_decrypt[_off++] & 0xffL) << 8L;
-		result |= (_decrypt[_off++] & 0xffL) << 16L;
-		result |= (_decrypt[_off++] & 0xffL) << 24L;
-		result |= (_decrypt[_off++] & 0xffL) << 32L;
-		result |= (_decrypt[_off++] & 0xffL) << 40L;
-		result |= (_decrypt[_off++] & 0xffL) << 48L;
-		result |= (_decrypt[_off++] & 0xffL) << 56L;
-		return result;
+		int off = _off; _off += 8;
+		return    (_decrypt[off++] & 0xFF)
+		  |       (_decrypt[off++] & 0xFF) << 8
+		  |       (_decrypt[off++] & 0xFF) << 16
+		  |       (_decrypt[off++] & 0xFF) << 24
+		  | (long)(_decrypt[off++] & 0xFF) << 32
+		  | (long)(_decrypt[off++] & 0xFF) << 40
+		  | (long)(_decrypt[off++] & 0xFF) << 48
+		  | (long)(_decrypt[off++] & 0xFF) << 56;
 	}
 }
