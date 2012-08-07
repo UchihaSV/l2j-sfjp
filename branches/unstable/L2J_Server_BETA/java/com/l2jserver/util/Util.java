@@ -234,23 +234,23 @@ public class Util
 	/**
 	 * 
 	 */
-	public static BufferedReader utf8BufferedReader(String name) throws FileNotFoundException
+	@SuppressWarnings("resource") public static BufferedReader utf8BufferedReader(String name) throws FileNotFoundException
 	{
 		return skipBOM(new BufferedReader(new UTF8StreamReader().setInput(new FileInputStream(name))));
 	}
-	public static BufferedReader utf8BufferedReader(File file) throws FileNotFoundException
+	@SuppressWarnings("resource") public static BufferedReader utf8BufferedReader(File file) throws FileNotFoundException
 	{
 		return skipBOM(new BufferedReader(new UTF8StreamReader().setInput(new FileInputStream(file))));
 	}
-	public static UTF8StreamWriter utf8StreamWriter(String name) throws FileNotFoundException
+	@SuppressWarnings("resource") public static UTF8StreamWriter utf8StreamWriter(String name) throws FileNotFoundException
 	{
 		return new UTF8StreamWriter().setOutput(new FileOutputStream(name));
 	}
-	public static UTF8StreamWriter utf8StreamWriter(String name, boolean flag) throws FileNotFoundException
+	@SuppressWarnings("resource") public static UTF8StreamWriter utf8StreamWriter(String name, boolean flag) throws FileNotFoundException
 	{
 		return new UTF8StreamWriter().setOutput(new FileOutputStream(name, flag));
 	}
-	public static UTF8StreamWriter utf8StreamWriter(File file) throws FileNotFoundException
+	@SuppressWarnings("resource") public static UTF8StreamWriter utf8StreamWriter(File file) throws FileNotFoundException
 	{
 		return new UTF8StreamWriter().setOutput(new FileOutputStream(file));
 	}
