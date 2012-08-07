@@ -15,6 +15,7 @@
 package com.l2jserver.gameserver;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -22,7 +23,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javolution.io.UTF8StreamWriter;
 import javolution.util.FastList;
 
 import com.l2jserver.Config;
@@ -205,7 +205,7 @@ public class Announcements
 			list = _announcements;
 		}
 		
-		try (UTF8StreamWriter save = com.l2jserver.util.Util.utf8StreamWriter(path))	//[JOJO] UTF-8
+		try (BufferedWriter save = com.l2jserver.util.Util.utf8BufferedWriter(path))	//[JOJO] UTF-8
 		{
 			for (String announce : list)
 			{

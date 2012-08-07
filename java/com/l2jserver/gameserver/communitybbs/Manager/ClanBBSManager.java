@@ -15,12 +15,11 @@
 package com.l2jserver.gameserver.communitybbs.Manager;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.StringTokenizer;
-
-import javolution.io.UTF8StreamWriter;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.ClanTable;
@@ -539,7 +538,7 @@ public class ClanBBSManager extends BaseBBSManager
 		try
 		{
 			file.createNewFile();
-			UTF8StreamWriter save = Util.utf8StreamWriter(file); // [JOJO] UTF-8
+			BufferedWriter save = Util.utf8BufferedWriter(file); // [JOJO] UTF-8
 			MsgData = MsgData.replace("\r\n", "<br1>\r\n");
 			save.write(MsgData);
 			save.close();
