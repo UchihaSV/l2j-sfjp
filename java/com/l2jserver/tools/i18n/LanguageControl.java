@@ -14,15 +14,16 @@
  */
 package com.l2jserver.tools.i18n;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
-
-import javolution.io.UTF8StreamReader;
 
 /**
  * @author KenM
@@ -54,8 +55,8 @@ public class LanguageControl extends Control
 			format = "properties";
 			String bundleName = toBundleName(baseName, locale);
 			String resourceName = LANGUAGES_DIRECTORY + toResourceName(bundleName, format);
-			try (BufferedReader bis = new BufferedReader(new UTF8StreamReader().setInput(new FileInputStream(resourceName))))	//[JOJO] UTF-8
-		//	try (FileInputStream fis = new FileInputStream(resourceName); BufferedInputStream bis = new BufferedInputStream(fis))
+			
+			try (BufferedReader bis = new BufferedReader(new InputStreamReader(new FileInputStream(resourceName), UTF_8)))	//[JOJO] UTF-8
 			{
 				bundle = new PropertyResourceBundle(bis);
 			}
