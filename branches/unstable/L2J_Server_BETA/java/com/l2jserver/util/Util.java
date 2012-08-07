@@ -14,21 +14,23 @@
  */
 package com.l2jserver.util;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.util.logging.Logger;
-
-import javolution.io.UTF8StreamReader;
-import javolution.io.UTF8StreamWriter;
 
 /**
  * This class ...
@@ -234,25 +236,29 @@ public class Util
 	/**
 	 * 
 	 */
-	@SuppressWarnings("resource") public static BufferedReader utf8BufferedReader(String name) throws FileNotFoundException
+	public static BufferedReader utf8BufferedReader(String name) throws FileNotFoundException
 	{
-		return skipBOM(new BufferedReader(new UTF8StreamReader().setInput(new FileInputStream(name))));
+		return skipBOM(new BufferedReader(new InputStreamReader(new FileInputStream(name), UTF_8)));
 	}
-	@SuppressWarnings("resource") public static BufferedReader utf8BufferedReader(File file) throws FileNotFoundException
+	public static BufferedReader utf8BufferedReader(File file) throws FileNotFoundException
 	{
-		return skipBOM(new BufferedReader(new UTF8StreamReader().setInput(new FileInputStream(file))));
+		return skipBOM(new BufferedReader(new InputStreamReader(new FileInputStream(file), UTF_8)));
 	}
-	@SuppressWarnings("resource") public static UTF8StreamWriter utf8StreamWriter(String name) throws FileNotFoundException
+	public static BufferedWriter utf8BufferedWriter(String name) throws FileNotFoundException
 	{
-		return new UTF8StreamWriter().setOutput(new FileOutputStream(name));
+		return new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name), UTF_8));
 	}
-	@SuppressWarnings("resource") public static UTF8StreamWriter utf8StreamWriter(String name, boolean flag) throws FileNotFoundException
+	public static BufferedWriter utf8BufferedWriter(String name, boolean append) throws FileNotFoundException
 	{
-		return new UTF8StreamWriter().setOutput(new FileOutputStream(name, flag));
+		return new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name, append), UTF_8));
 	}
-	@SuppressWarnings("resource") public static UTF8StreamWriter utf8StreamWriter(File file) throws FileNotFoundException
+	public static BufferedWriter utf8BufferedWriter(File file) throws FileNotFoundException
 	{
-		return new UTF8StreamWriter().setOutput(new FileOutputStream(file));
+		return new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), UTF_8));
+	}
+	public static BufferedWriter utf8BufferedWriter(File file, boolean append) throws FileNotFoundException
+	{
+		return new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, append), UTF_8));
 	}
 	private static BufferedReader skipBOM(BufferedReader reader)
 	{

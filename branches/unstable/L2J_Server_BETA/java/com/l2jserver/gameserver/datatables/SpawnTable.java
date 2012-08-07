@@ -14,6 +14,7 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import java.io.BufferedWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +22,6 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javolution.io.UTF8StreamWriter;
 import javolution.util.FastSet;
 
 import com.l2jserver.Config;
@@ -441,7 +441,7 @@ public class SpawnTable
     {
 	    System.out.print(sql);
 	    try {
-			UTF8StreamWriter save = Util.utf8StreamWriter("log/_spawnlist.sql", true); // [JOJO] UTF-8
+			BufferedWriter save = Util.utf8BufferedWriter("log/_spawnlist.sql", true); // [JOJO] UTF-8
 			save.write(sql);
 			save.flush();
 			save.close();
