@@ -176,7 +176,7 @@ public class DBConfigGUI extends JFrame
 					
 					dbi.setVisible(true);
 					
-					RunTasks task = new RunTasks(dbi, _db, _dir, _cleanUp, cleanInstall, log);
+					RunTasks task = new RunTasks(dbi, _dbHost.getText(), _db, _dir, _cleanUp, cleanInstall, log);
 					task.setPriority(Thread.MAX_PRIORITY);
 					task.start();
 				}

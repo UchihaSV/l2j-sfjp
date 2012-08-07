@@ -39,7 +39,7 @@ public class MySqlConnect
 			
 			try (Statement s = con.createStatement())
 			{
-				s.execute("CREATE DATABASE IF NOT EXISTS `" + db + "`");
+				s.execute("CREATE DATABASE IF NOT EXISTS `" + db + "` DEFAULT CHARACTER SET utf8");	//[JOJO] UTF-8
 				s.execute("USE `" + db + "`");
 			}
 		}

@@ -31,7 +31,8 @@ public class DBInstallerConsole implements DBOutputInterface
 	
 	public DBInstallerConsole(String db, String dir, String cleanUp)
 	{
-		String log = "dbinst_" + "localhost" + "_" + db + ".log";
+		String host = "localhost";
+		String log = "dbinst_" + host + "_" + db + ".log";
 		System.out.println("Welcome to L2J DataBase installer");
 		Preferences prop = Preferences.userRoot();
 		RunTasks rt = null;
@@ -51,13 +52,14 @@ public class DBInstallerConsole implements DBOutputInterface
 				System.out.printf("%s (%s): ", "Database", prop.get("dbDbse_" + db, db));
 				String dbDbse = scn.nextLine();
 				
-				dbHost = dbHost.isEmpty() ? prop.get("dbHost_" + db, "localhost") : dbHost;
-				dbPort = dbPort.isEmpty() ? prop.get("dbPort_" + db, "3306") : dbPort;
-				dbUser = dbUser.isEmpty() ? prop.get("dbUser_" + db, "root") : dbUser;
-				dbDbse = dbDbse.isEmpty() ? prop.get("dbDbse_" + db, db) : dbDbse;
+				if (dbHost.isEmpty()) dbHost = prop.get("dbHost_" + db, "localhost");
+				if (dbPort.isEmpty()) dbPort = prop.get("dbPort_" + db, "3306");
+				if (dbUser.isEmpty()) dbUser = prop.get("dbUser_" + db, "root");
+				if (dbDbse.isEmpty()) dbDbse = prop.get("dbDbse_" + db, db);
 				
 				MySqlConnect connector = new MySqlConnect(dbHost, dbPort, dbUser, dbPass, dbDbse, true);
-				log = "dbinst_" + dbHost.replaceAll("[^0-9a-zA-Z.]+", "-") + "_" + dbDbse + ".log";
+				host = dbHost;
+				log = "dbinst_" + host.replaceAll("[^0-9a-zA-Z.]+", "-") + "_" + dbDbse + ".log";
 				
 				_con = connector.getConnection();
 			}
@@ -69,12 +71,12 @@ public class DBInstallerConsole implements DBOutputInterface
 				System.out.print("Do you really want to destroy your db (Y/N)?");
 				if (scn.next().equalsIgnoreCase("y"))
 				{
-					rt = new RunTasks(this, db, dir, cleanUp, true, log);
+					rt = new RunTasks(this, host, db, dir, cleanUp, true, log);
 				}
 			}
 			else if (resp.equalsIgnoreCase("u"))
 			{
-				rt = new RunTasks(this, db, dir, cleanUp, false, log);
+				rt = new RunTasks(this, host, db, dir, cleanUp, false, log);
 			}
 		}
 		

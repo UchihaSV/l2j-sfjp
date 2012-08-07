@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,8 +32,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
-
-import javolution.io.UTF8StreamWriter;
 
 import com.l2jserver.tools.dbinstaller.DBOutputInterface;
 import com.l2jserver.util.file.filter.SQLFilter;
@@ -76,6 +75,7 @@ public class ScriptExecutor
 	
 	public void execSqlFile(File file, boolean skipErrors)
 	{
+		String sql = null;
 		try
 		{
 			log(file.getPath() + ":");
@@ -108,13 +108,23 @@ public class ScriptExecutor
 					
 					if (line.endsWith(";"))
 					{
-						String sql = sb.toString();
+						sql = sb.toString();
 						sb.setLength(0);
 						Matcher m = patternSourceStatement.matcher(sql);
 						if (m.find())
 							execSqlFile(new File(m.group(1)), skipErrors);	//recursive call
+						else if (skipErrors)
+							try
+							{
+								stmt.execute(sql);
+							}
+							catch (SQLException e)
+							{
+								log(e.getMessage());
+							}
 						else
 							stmt.execute(sql);
+						sql = null;
 					}
 				}
 			}
@@ -134,7 +144,10 @@ public class ScriptExecutor
 					"Continue",
 					"Abort"
 				};
-				int n = JOptionPane.showOptionDialog(null, "MySQL Error: " + e.getMessage(), "Script Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+				int n = JOptionPane.showOptionDialog(null, "MySQL Error: " + e.getMessage()
+					+ "\r\n" + file.getPath()
+					+ (sql == null ? "" : "\r\n" + sql)
+					, "Script Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 				
 				if (n == 1)
 				{
@@ -145,20 +158,22 @@ public class ScriptExecutor
 		catch (Exception e)
 		{
 			log(e.getMessage());
-			e.printStackTrace();  //console: java -cp dbinst_gs.jar com.l2jserver.tools.dbinstaller.LauncherGS
+			e.printStackTrace();  //console: java -jar dbinst_gs.jar
 			
 			Object[] options =
 			{
 				"Abort"
 			};
-			JOptionPane.showOptionDialog(null, "Error: " + e.getMessage(), "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);
+			JOptionPane.showOptionDialog(null, "Error: " + e.getMessage()
+				+ "\r\n" + file.getPath()
+				, "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);
 			
 			System.exit(0);
 		}
 	}
 	private void log(String msg)
 	{
-		try (BufferedWriter log = new BufferedWriter(new UTF8StreamWriter().setOutput((new FileOutputStream(_log, true))));)
+		try (BufferedWriter log = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(_log, true), UTF_8)))
 		{
 			log.write(msg);
 			log.write("\r\n");
