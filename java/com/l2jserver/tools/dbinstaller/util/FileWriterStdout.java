@@ -14,12 +14,13 @@
  */
 package com.l2jserver.tools.dbinstaller.util;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import javolution.io.UTF8StreamWriter;
+import java.io.OutputStreamWriter;
 
 /**
  * @author mrTJO
@@ -28,21 +29,22 @@ public class FileWriterStdout extends BufferedWriter
 {
 	public FileWriterStdout(File file) throws IOException
 	{
-		super(new UTF8StreamWriter().setOutput(new FileOutputStream(file)));
+		super(new OutputStreamWriter(new FileOutputStream(file), UTF_8));
 	}
 	
 	public void println() throws IOException
 	{
-		append("\n");
+		write("\n");
 	}
 	
 	public void println(String line) throws IOException
 	{
-		append(line + "\n");
+		write(line);
+		write("\n");
 	}
 	
 	public void print(String text) throws IOException
 	{
-		append(text);
+		write(text);
 	}
 }

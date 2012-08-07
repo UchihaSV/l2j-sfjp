@@ -16,13 +16,11 @@ package com.l2jserver.tools.dbinstaller;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.util.prefs.Preferences;
 
 import javax.swing.JOptionPane;
 
 import com.l2jserver.tools.dbinstaller.util.mysql.DBDumper;
 import com.l2jserver.tools.dbinstaller.util.mysql.ScriptExecutor;
-import com.l2jserver.util.file.filter.SQLFilter;
 
 /**
  * @author mrTJO
@@ -31,14 +29,16 @@ public class RunTasks extends Thread
 {
 	DBOutputInterface _frame;
 	boolean _cleanInstall;
+	String _host;
 	String _db;
 	String _sqlDir;
 	String _cleanUpFile;
 	String _log;
 	
-	public RunTasks(DBOutputInterface frame, String db, String sqlDir, String cleanUpFile, boolean cleanInstall, String log)
+	public RunTasks(DBOutputInterface frame, String host, String db, String sqlDir, String cleanUpFile, boolean cleanInstall, String log)
 	{
 		_frame = frame;
+		_host = host;
 		_db = db;
 		_cleanInstall = cleanInstall;
 		_sqlDir = sqlDir;
@@ -49,17 +49,12 @@ public class RunTasks extends Thread
 	@Override
 	public void run()
 	{
-		new DBDumper(_frame, _db);
+		new DBDumper(_frame, _host, _db);
 		ScriptExecutor exec = new ScriptExecutor(_frame, _log);
-		
-		File clnFile = new File(_cleanUpFile);
-		File updDir = new File(_sqlDir, "updates");
-		File[] files = updDir.listFiles(new SQLFilter());
-		
-		Preferences prefs = Preferences.userRoot();
 		
 		if (_cleanInstall)
 		{
+			File clnFile = new File(_cleanUpFile);
 			if (clnFile.exists())
 			{
 				_frame.appendToProgressArea("Cleaning Database...");
@@ -70,31 +65,14 @@ public class RunTasks extends Thread
 			{
 				_frame.appendToProgressArea("Database Cleaning Script Not Found!");
 			}
-			
-			if (updDir.exists())
-			{
-				StringBuilder sb = new StringBuilder();
-				for (File cf : files)
-				{
-					sb.append(cf.getName() + ';');
-				}
-				prefs.put(_db + "_upd", sb.toString());
-			}
 		}
 		else
 		{
-			if (!_cleanInstall && updDir.exists())
+			File updDir = new File(_sqlDir, "updates");
+			if (updDir.exists())
 			{
 				_frame.appendToProgressArea("Installing Updates...");
-				
-				for (File cf : files)
-				{
-					if (!prefs.get(_db + "_upd", "").contains(cf.getName()))
-					{
-						exec.execSqlFile(cf, true);
-						prefs.put(_db + "_upd", prefs.get(_db + "_upd", "") + cf.getName() + ";");
-					}
-				}
+				exec.execSqlBatch(updDir, true);
 				_frame.appendToProgressArea("Database Updates Installed!");
 			}
 		}
@@ -136,10 +114,9 @@ public class RunTasks extends Thread
 			JOptionPane.showMessageDialog(null, "Cannot close MySQL Connection: " + e.getMessage(), "Connection Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
-		_frame.setFrameVisible(false);
+	//	_frame.setFrameVisible(false);
 		_frame.showMessage("Done!", "Database Installation Complete!", JOptionPane.INFORMATION_MESSAGE);
 		System.exit(0);
-		
 	}
 	
 }

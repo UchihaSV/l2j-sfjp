@@ -32,11 +32,13 @@ import com.l2jserver.tools.dbinstaller.util.FileWriterStdout;
 public class DBDumper
 {
 	DBOutputInterface _frame;
+	String _host;
 	String _db;
 	
-	public DBDumper(DBOutputInterface frame, String db)
+	public DBDumper(DBOutputInterface frame, String host, String db)
 	{
 		_frame = frame;
+		_host = host;
 		_db = db;
 		createDump();
 	}
@@ -46,6 +48,16 @@ public class DBDumper
 		try (Formatter form = new Formatter())
 		{
 			Connection con = _frame.getConnection();
+			
+			String serverVersion = "Unknown";
+			try (Statement s = con.createStatement();
+				ResultSet rset = s.executeQuery("SELECT VERSION()"))
+			{
+				if (rset.next())
+					serverVersion = rset.getString(1);
+			}
+			catch (Exception e) {/*ignore error*/}
+			
 			try (Statement s = con.createStatement();
 				ResultSet rset = s.executeQuery("SHOW TABLES"))
 			{
@@ -67,7 +79,13 @@ public class DBDumper
 				
 				try (FileWriterStdout fws = new FileWriterStdout(dump))
 				{
-					fws.println("-- SET NAMES utf8;");
+					fws.println("-- L2J DBDumper 1.0");
+					fws.println("--");
+					fws.println("-- Host: " + _host + "    Database: " + _db);
+					fws.println("-- ------------------------------------------------------");
+					fws.println("-- Server version\t	" + serverVersion);
+					fws.println();
+					fws.println("SET NAMES utf8;");
 					fws.println();
 					while (rset.next())
 					{
@@ -77,7 +95,7 @@ public class DBDumper
 						try (Statement desc = con.createStatement();
 							ResultSet dset = desc.executeQuery("SHOW CREATE TABLE " + table))
 						{
-							fws.println("-- DROP TABLE IF EXISTS `" + table + "`;");
+							fws.println("DROP TABLE IF EXISTS `" + table + "`;");
 							while (dset.next())
 								fws.println(dset.getString(2) + ";");
 						}
@@ -88,12 +106,14 @@ public class DBDumper
 							int cnt = 0;
 							while (dset.next())
 							{
+								if (cnt == 0)
+									fws.println("\nLOCK TABLES `" + table + "` WRITE;");
 								if (cnt % 100 == 0)
 									fws.println("INSERT INTO `" + table + "` VALUES ");
 								else
 									fws.println(",");
 								
-								fws.print("\t(");
+								fws.print("(");
 								for (int i = 1; i <= dset.getMetaData().getColumnCount(); i++)
 								{
 									final String value = dset.getString(i);
@@ -113,6 +133,8 @@ public class DBDumper
 							}
 							if (cnt % 100 != 0)
 								fws.println(";");
+							if (cnt > 0)
+								fws.println("UNLOCK TABLES;");
 							fws.println();
 						}
 					}
