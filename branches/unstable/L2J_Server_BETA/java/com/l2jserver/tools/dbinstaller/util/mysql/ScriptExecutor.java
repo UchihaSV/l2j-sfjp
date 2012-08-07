@@ -14,6 +14,8 @@
  */
 package com.l2jserver.tools.dbinstaller.util.mysql;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,7 +32,6 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import javolution.io.UTF8StreamReader;
 import javolution.io.UTF8StreamWriter;
 
 import com.l2jserver.tools.dbinstaller.DBOutputInterface;
@@ -81,40 +83,41 @@ public class ScriptExecutor
 			String line;
 			Connection con = _frame.getConnection();
 			Statement stmt = con.createStatement();
-			BufferedReader scn = new BufferedReader(new UTF8StreamReader().setInput(new FileInputStream(file)));
-			StringBuilder sb = new StringBuilder();
-			Pattern patternSourceStatement = Pattern.compile("^SOURCE[ \t]+(.+);$", Pattern.CASE_INSENSITIVE);
-			while ((line = scn.readLine()) != null)
+			try (BufferedReader scn = new BufferedReader(new InputStreamReader(new FileInputStream(file), UTF_8)))
 			{
-				if (line.startsWith("\uFEFF"))
-					line = line.substring(1);
-				if (line.startsWith("--"))
+				StringBuilder sb = new StringBuilder();
+				Pattern patternSourceStatement = Pattern.compile("^SOURCE[ \t]+(.+);$", Pattern.CASE_INSENSITIVE);
+				while ((line = scn.readLine()) != null)
 				{
-					continue;
-				}
-				else if (line.contains("--"))
-				{
-					line = line.split("--")[0];
-				}
-				
-				line = line.trim();
-				if (!line.isEmpty())
-				{
-					sb.append(line).append('\n');
-				}
-				
-				if (line.endsWith(";"))
-				{
-					String sql = sb.toString();
-					sb.setLength(0);
-					Matcher m = patternSourceStatement.matcher(sql);
-					if (m.find())
-						execSqlFile(new File(m.group(1)), skipErrors);	//recursive call
-					else
-						stmt.execute(sql);
+					if (line.startsWith("\uFEFF"))
+						line = line.substring(1);
+					if (line.startsWith("--"))
+					{
+						continue;
+					}
+					else if (line.contains("--"))
+					{
+						line = line.split("--")[0];
+					}
+					
+					line = line.trim();
+					if (!line.isEmpty())
+					{
+						sb.append(line).append('\n');
+					}
+					
+					if (line.endsWith(";"))
+					{
+						String sql = sb.toString();
+						sb.setLength(0);
+						Matcher m = patternSourceStatement.matcher(sql);
+						if (m.find())
+							execSqlFile(new File(m.group(1)), skipErrors);	//recursive call
+						else
+							stmt.execute(sql);
+					}
 				}
 			}
-			scn.close();
 		}
 		catch (FileNotFoundException e)
 		{

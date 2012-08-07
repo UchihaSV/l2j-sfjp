@@ -14,15 +14,16 @@
  */
 package com.l2jserver.util;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Properties;
 import java.util.logging.Logger;
-
-import javolution.io.UTF8StreamReader;
 
 /**
  * Specialized {@link java.util.Properties} class.<br>
@@ -73,21 +74,14 @@ public final class L2Properties extends Properties
 	@Override
 	public void load(InputStream inStream) throws IOException
 	{
-		UTF8StreamReader reader = null;	//[JOJO]
-	//	InputStreamReader reader = null;
-		try
+		try (InputStreamReader isr = new InputStreamReader(inStream, UTF_8);)	//[JOJO]
+	//	try (InputStreamReader isr = new InputStreamReader(inStream, Charset.defaultCharset());)
 		{
-			reader = new UTF8StreamReader().setInput(inStream);	//[JOJO]
-	//		reader = new InputStreamReader(inStream, Charset.defaultCharset());
-			super.load(reader);
+			super.load(isr);
 		}
 		finally
 		{
 			inStream.close();
-			if (reader != null)
-			{
-				reader.close();
-			}
 		}
 	}
 	
