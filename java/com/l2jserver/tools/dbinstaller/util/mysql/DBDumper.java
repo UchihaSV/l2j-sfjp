@@ -17,9 +17,9 @@ package com.l2jserver.tools.dbinstaller.util.mysql;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Formatter;
 import java.util.GregorianCalendar;
 
@@ -46,82 +46,79 @@ public class DBDumper
 		try (Formatter form = new Formatter())
 		{
 			Connection con = _frame.getConnection();
-			PreparedStatement stmt = con.prepareStatement("SHOW TABLES");
-			ResultSet rset = stmt.executeQuery();
-			File dump = new File("dumps", form.format("%1$s_dump_%2$tY%2$tm%2$td-%2$tH%2$tM%2$tS.sql", _db, new GregorianCalendar().getTime()).toString());
-			new File("dumps").mkdir();
-			dump.createNewFile();
-			
-			_frame.appendToProgressArea("Writing dump " + dump.getName());
-			if (rset.last())
+			try (Statement s = con.createStatement();
+				ResultSet rset = s.executeQuery("SHOW TABLES"))
 			{
-				int rows = rset.getRow();
-				rset.beforeFirst();
-				if (rows > 0)
-				{
-					_frame.setProgressIndeterminate(false);
-					_frame.setProgressMaximum(rows);
-				}
-			}
-			
-			FileWriterStdout ps = new FileWriterStdout(dump);
-			ps.println("-- SET NAMES utf8;");
-			ps.println();
-			while (rset.next())
-			{
-				final String table = rset.getString(1);
-				_frame.setProgressValue(rset.getRow());
-				_frame.appendToProgressArea("Dumping Table " + table);
-				PreparedStatement desc;
-				ResultSet dset;
-				desc = con.prepareStatement("SHOW CREATE TABLE " + table);
-				dset = desc.executeQuery();
-				ps.println("-- DROP TABLE IF EXISTS `" + table + "`;");
-				while (dset.next())
-					ps.println(dset.getString(2) + ";");
-				ps.flush();
-				dset.close();
-				desc.close();
+				File dump = new File("dumps", form.format("%1$s_dump_%2$tY%2$tm%2$td-%2$tH%2$tM%2$tS.sql", _db, new GregorianCalendar().getTime()).toString());
+				new File("dumps").mkdir();
+				dump.createNewFile();
 				
-				desc = con.prepareStatement("SELECT * FROM " + table);
-				dset = desc.executeQuery();
-				int cnt = 0;
-				while (dset.next())
+				_frame.appendToProgressArea("Writing dump " + dump.getName());
+				if (rset.last())
 				{
-					if (cnt % 100 == 0)
-						ps.println("INSERT INTO `" + table + "` VALUES ");
-					else
-						ps.println(",");
-					
-					ps.print("\t(");
-					for (int i = 1; i <= dset.getMetaData().getColumnCount(); i++)
+					int rows = rset.getRow();
+					rset.beforeFirst();
+					if (rows > 0)
 					{
-						final String value = dset.getString(i);
-						if (i > 1)
-							ps.print(", ");
-						
-						if (value == null)
-							ps.print("NULL");
-						else
-							ps.print("'" + value.replace("\'", "\\\'") + "'");
+						_frame.setProgressIndeterminate(false);
+						_frame.setProgressMaximum(rows);
 					}
-					ps.print(")");
-					
-					++cnt;
-					if (cnt % 100 == 0)
-						ps.println(";");
 				}
-				if (cnt % 100 != 0)
-					ps.println(";");
-				ps.println();
-				ps.flush();
-				dset.close();
-				desc.close();
+				
+				try (FileWriterStdout fws = new FileWriterStdout(dump))
+				{
+					fws.println("-- SET NAMES utf8;");
+					fws.println();
+					while (rset.next())
+					{
+						final String table = rset.getString(1);
+						_frame.setProgressValue(rset.getRow());
+						_frame.appendToProgressArea("Dumping Table " + table);
+						try (Statement desc = con.createStatement();
+							ResultSet dset = desc.executeQuery("SHOW CREATE TABLE " + table))
+						{
+							fws.println("-- DROP TABLE IF EXISTS `" + table + "`;");
+							while (dset.next())
+								fws.println(dset.getString(2) + ";");
+						}
+						
+						try (Statement desc = con.createStatement();
+							ResultSet dset = desc.executeQuery("SELECT * FROM " + table))
+						{
+							int cnt = 0;
+							while (dset.next())
+							{
+								if (cnt % 100 == 0)
+									fws.println("INSERT INTO `" + table + "` VALUES ");
+								else
+									fws.println(",");
+								
+								fws.print("\t(");
+								for (int i = 1; i <= dset.getMetaData().getColumnCount(); i++)
+								{
+									final String value = dset.getString(i);
+									if (i > 1)
+										fws.print(", ");
+									
+									if (value == null)
+										fws.print("NULL");
+									else
+										fws.print("'" + value.replace("\'", "\\\'") + "'");
+								}
+								fws.print(")");
+								
+								++cnt;
+								if (cnt % 100 == 0)
+									fws.println(";");
+							}
+							if (cnt % 100 != 0)
+								fws.println(";");
+							fws.println();
+						}
+					}
+					fws.flush();
+				}
 			}
-			rset.close();
-			stmt.close();
-			ps.flush();
-			ps.close();
 		}
 		catch (SQLException e)
 		{

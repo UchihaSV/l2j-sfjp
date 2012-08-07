@@ -279,57 +279,59 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 	 */
 	private void parsePropertiesFile(File file) throws IOException
 	{
-		LineNumberReader lnr = new LineNumberReader(new InputStreamReader(new FileInputStream(file), UTF_8));	//[JOJO] UTF-8
-		
-		String line;
-		StringBuilder commentBuffer = new StringBuilder();
-		ConfigFile cf = new ConfigFile(file);
-		while ((line = lnr.readLine()) != null)
+		try (FileInputStream fis = new FileInputStream(file);
+			InputStreamReader isr = new InputStreamReader(fis, UTF_8);	//[JOJO] UTF-8
+			LineNumberReader lnr = new LineNumberReader(isr))
 		{
-			line = line.trim();
-			
-			if (line.startsWith("#"))
+			String line;
+			StringBuilder commentBuffer = new StringBuilder();
+			ConfigFile cf = new ConfigFile(file);
+			while ((line = lnr.readLine()) != null)
 			{
-				if (commentBuffer.length() > 0)
-				{
-					commentBuffer.append("\r\n");
-				}
-				commentBuffer.append(line.substring(1));
-			}
-			else if (line.length() == 0)
-			{
-				// blank line, reset comments
-				if (commentBuffer.length() > 0)
-				{
-					cf.addConfigComment(commentBuffer.toString());
-				}
-				commentBuffer.setLength(0);
-			}
-			else if (line.indexOf('=') >= 0)
-			{
-				String[] kv = line.split("=", 2);	//[JOJO]
-				String key = kv[0].trim();
-				StringBuilder value = new StringBuilder();
-				if (kv.length > 1)
-				{
-					value.append(kv[1].trim());
-				}
+				line = line.trim();
 				
-				while (line.endsWith("\\"))	//[JOJO]
+				if (line.startsWith("#"))
 				{
-					if ((line = lnr.readLine()) == null)
-						break;
-					value.append("\r\n").append(line);
+					if (commentBuffer.length() > 0)
+					{
+						commentBuffer.append("\r\n");
+					}
+					commentBuffer.append(line.substring(1));
 				}
-				
-				String comments = commentBuffer.toString();
-				commentBuffer.setLength(0); // reset
-				
-				cf.addConfigProperty(key, parseValue(value.toString()), comments);
+				else if (line.length() == 0)
+				{
+					// blank line, reset comments
+					if (commentBuffer.length() > 0)
+					{
+						cf.addConfigComment(commentBuffer.toString());
+					}
+					commentBuffer.setLength(0);
+				}
+				else if (line.indexOf('=') >= 0)
+				{
+					String[] kv = line.split("=", 2);	//[JOJO]
+					String key = kv[0].trim();
+					StringBuilder value = new StringBuilder();
+					if (kv.length > 1)
+					{
+						value.append(kv[1].trim());
+					}
+					
+					while (line.endsWith("\\"))	//[JOJO]
+					{
+						if ((line = lnr.readLine()) == null)
+							break;
+						value.append("\r\n").append(line);
+					}
+					
+					String comments = commentBuffer.toString();
+					commentBuffer.setLength(0); // reset
+					
+					cf.addConfigProperty(key, parseValue(value.toString()), comments);
+				}
 			}
+			getConfigs().add(cf);
 		}
-		getConfigs().add(cf);
-		lnr.close();
 	}
 	
 	/**
