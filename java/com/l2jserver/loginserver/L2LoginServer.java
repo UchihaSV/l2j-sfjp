@@ -86,6 +86,8 @@ public final class L2LoginServer
 			_log.warning(getClass().getSimpleName() + ": " + e.getMessage());
 		}
 		
+		System.out.println(com.l2jserver.util.Util.dateFormat());
+		
 		// Load Config
 		Config.load();
 		
