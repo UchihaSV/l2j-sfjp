@@ -26,7 +26,6 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.SevenSignsFestival;
 import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.communitybbs.Manager.favorite.PartyMatch;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.instancemanager.DuelManager;
@@ -377,11 +376,6 @@ public class L2Party extends AbstractPlayerGroup
 			broadcastPacket(new ExPartyPetWindowAdd(player.getPet()));
 		}
 		
-		// [L2J_JP ADD - TSL][JOJO]
-		int roomId = PartyMatch.getInstance().getRoomIdByCharId(player.getObjectId());
-		if (roomId != -1)
-			PartyMatch.getInstance().brodeCastRoomInfo(player, roomId);
-		
 		// add player to party, adjust party level
 		getMembers().add(player);
 		if (player.getLevel() > _partyLvl)
@@ -508,11 +502,6 @@ public class L2Party extends AbstractPlayerGroup
 			{
 				broadcastPacket(new ExPartyPetWindowDelete(summon));
 			}
-			
-			// [L2J_JP ADD - TSL][JOJO]
-			int roomId = PartyMatch.getInstance().getRoomIdByCharId(player.getObjectId());
-			if (roomId != -1)
-				PartyMatch.getInstance().brodeCastRoomInfo(player, roomId);
 			
 			if (isInDimensionalRift())
 			{

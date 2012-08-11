@@ -48,11 +48,8 @@ public class FavoriteManager extends BaseFavoriteManager
 			StringTokenizer st = new StringTokenizer(command, ";");
 			st.nextToken();	// skip "_bbsgetfav"
 			String subcmd = st.nextToken();
-			//簡易パーティーマッチ
-			if (subcmd.equals("bbs_party_match"))
-				PartyMatch.getInstance().parsecmd(command, activeChar);
 			//ドロップリスト検索
-			else if (subcmd.equals("bbs_droplist"))
+			if (subcmd.equals("bbs_droplist"))
 				DropList.getInstance().parsecmd(command, activeChar);
 			// サーバ再起動申請
 			else if (subcmd.equals("restart_srv"))
