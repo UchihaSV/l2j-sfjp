@@ -7979,7 +7979,8 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		}
 	}
 	
-	public static List<DeathListener> getGlobalDeathListeners(){
+	public static List<DeathListener> getGlobalDeathListeners()
+	{
 		return globalDeathListeners;
 	}
 	
