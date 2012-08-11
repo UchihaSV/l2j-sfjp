@@ -110,7 +110,7 @@ public class Native2Ascii
 					
 					// Step 2: unicode --> ascii
 					asciiBuffer.setLength(0);
-					Formatter fm = new Formatter(asciiBuffer);
+					@SuppressWarnings("resource") Formatter fm = new Formatter(asciiBuffer);
 					boolean modify = false;
 					int i = 0, length = unicodeBuffer.length;
 					//----------------------------------------
