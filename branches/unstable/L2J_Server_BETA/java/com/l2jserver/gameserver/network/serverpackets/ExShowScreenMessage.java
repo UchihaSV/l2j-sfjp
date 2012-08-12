@@ -24,22 +24,21 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 
 /**
  * @author Kerberos
- *
  */
 public class ExShowScreenMessage extends L2GameServerPacket
 {
-	private int _type;
-	private int _sysMessageId;
-	private int _position;
-	private int _unk1;
-	private int _size;
-	private int _unk2;
-	private int _unk3;
-	private boolean _effect;
-	private int _time;
-	private boolean _fade;
-	private String _text;
-	private int _npcString;
+	private final int _type;
+	private final int _sysMessageId;
+	private final int _position;
+	private final int _unk1;
+	private final int _size;
+	private final int _unk2;
+	private final int _unk3;
+	private final boolean _effect;
+	private final int _time;
+	private final boolean _fade;
+	private final String _text;
+	private final int _npcString;
 	private List<String> _parameters;
 	
 	public ExShowScreenMessage(String text, int time)
@@ -117,15 +116,9 @@ public class ExShowScreenMessage extends L2GameServerPacket
 	}
 	
 	@Override
-	public String getType()
-	{
-		return "[S]FE:39 ExShowScreenMessage";
-	}
-	
-	@Override
 	protected void writeImpl()
 	{
-		writeC(0xfe);
+		writeC(0xFE);
 		writeH(0x39);
 		writeD(_type); // 0 - system messages, 1 - your defined text, 2 - npcstring
 		writeD(_sysMessageId); // system message id (_type must be 0 otherwise no effect)
@@ -139,7 +132,9 @@ public class ExShowScreenMessage extends L2GameServerPacket
 		writeD(_fade ? 1 : 0); // fade effect (0 - disabled, 1 enabled)
 		writeD(_npcString); // npcString
 		if (_npcString == -1)
+		{
 			writeS(_text); // your text (_type must be 1, otherwise no effect)
+		}
 		else
 		{
 			if (_parameters != null)
@@ -150,4 +145,3 @@ public class ExShowScreenMessage extends L2GameServerPacket
 		}
 	}
 }
-	

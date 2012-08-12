@@ -22,8 +22,6 @@ import com.l2jserver.gameserver.model.L2Clan;
 
 /**
  * Sent in response to {@link RequestAllyInfo}, if applicable.<BR>
- * <BR>
- * Exclusively for <a href="http://www.l2jserver.com/">L2jServer</a>.
  * @author afk5min
  */
 public class AllianceInfo extends L2GameServerPacket
@@ -78,12 +76,6 @@ public class AllianceInfo extends L2GameServerPacket
 			writeD(aci.getTotal());
 			writeD(aci.getOnline());
 		}
-	}
-	
-	@Override
-	public String getType()
-	{
-		return "[S] B5 AllianceInfoPacket";
 	}
 	
 	public String getName()

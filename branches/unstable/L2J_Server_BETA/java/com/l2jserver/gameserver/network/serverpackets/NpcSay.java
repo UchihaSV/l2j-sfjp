@@ -22,18 +22,15 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.NpcStringId;
 
 /**
- *
  * @author Kerberos
  */
 public final class NpcSay extends L2GameServerPacket
 {
-	// cddddS
-	private static final String _S__30_NPCSAY = "[S] 30 NpcSay";
 	private final int _objectId;
 	private final int _textType;
 	private final int _npcId;
 	private String _text;
-	private int _npcString;
+	private final int _npcString;
 	private List<String> _parameters;
 	
 	/**
@@ -103,18 +100,15 @@ public final class NpcSay extends L2GameServerPacket
 		writeD(_npcId);
 		writeD(_npcString);
 		if (_npcString == -1)
+		{
 			writeS(_text);
+		}
 		else if (_parameters != null)
+		{
 			for (String s : _parameters)
+			{
 				writeS(s);
-	}
-	
-	/**
-	 * @see com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket#getType()
-	 */
-	@Override
-	public String getType()
-	{
-		return _S__30_NPCSAY;
+			}
+		}
 	}
 }

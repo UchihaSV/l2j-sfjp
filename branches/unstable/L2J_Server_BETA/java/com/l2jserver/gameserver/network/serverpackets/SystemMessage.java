@@ -144,7 +144,7 @@ public final class SystemMessage extends L2GameServerPacket
 	
 	/**
 	 * Use SystemMessage.getSystemMessage(SystemMessageId smId) where possible instead
-	 * @param id 
+	 * @param id
 	 * @deprecated
 	 */
 	@Deprecated
@@ -222,19 +222,19 @@ public final class SystemMessage extends L2GameServerPacket
 	{
 		if (cha instanceof L2Npc)
 		{
-			if (((L2Npc)cha).getTemplate().isServerSideName())
-				return addString(((L2Npc)cha).getTemplate().getName());
-			return addNpcName((L2Npc)cha);
+			if (((L2Npc) cha).getTemplate().isServerSideName())
+				return addString(((L2Npc) cha).getTemplate().getName());
+			return addNpcName((L2Npc) cha);
 		}
 		else if (cha instanceof L2PcInstance)
 		{
-			return addPcName((L2PcInstance)cha);
+			return addPcName((L2PcInstance) cha);
 		}
 		else if (cha instanceof L2Summon)
 		{
-			if (((L2Summon)cha).getTemplate().isServerSideName())
-				return addString(((L2Summon)cha).getTemplate().getName());
-			return addNpcName((L2Summon)cha);
+			if (((L2Summon) cha).getTemplate().isServerSideName())
+				return addString(((L2Summon) cha).getTemplate().getName());
+			return addNpcName((L2Summon) cha);
 		}
 		return addString(cha.getName());
 	}
@@ -283,7 +283,12 @@ public final class SystemMessage extends L2GameServerPacket
 	
 	public final SystemMessage addZoneName(final int x, final int y, final int z)
 	{
-		return append(new SMParam(TYPE_ZONE_NAME, new int[]{x, y, z}));
+		return append(new SMParam(TYPE_ZONE_NAME, new int[]
+		{
+			x,
+			y,
+			z
+		}));
 	}
 	
 	public final SystemMessage addSkillName(final L2Effect effect)
@@ -293,7 +298,7 @@ public final class SystemMessage extends L2GameServerPacket
 	
 	public final SystemMessage addSkillName(final L2Skill skill)
 	{
-		if (skill.getId() != skill.getDisplayId()) //custom skill -  need nameId or smth like this.
+		if (skill.getId() != skill.getDisplayId()) // custom skill - need nameId or smth like this.
 			return addString(skill.getName());
 		return addSkillName(skill.getId(), skill.getLevel());
 	}
@@ -305,7 +310,11 @@ public final class SystemMessage extends L2GameServerPacket
 	
 	public final SystemMessage addSkillName(final int id, final int lvl)
 	{
-		return append(new SMParam(TYPE_SKILL_NAME, new int[]{id, lvl}));
+		return append(new SMParam(TYPE_SKILL_NAME, new int[]
+		{
+			id,
+			lvl
+		}));
 	}
 	
 	/**
@@ -410,13 +419,13 @@ public final class SystemMessage extends L2GameServerPacket
 				
 				case TYPE_SYSTEM_STRING:
 				{
-					params[i] = "SYS-S-" + param.getIntValue(); //super.writeD(param.getIntValue());
+					params[i] = "SYS-S-" + param.getIntValue(); // super.writeD(param.getIntValue());
 					break;
 				}
 				
 				case TYPE_INSTANCE_NAME:
 				{
-					params[i] = "INS-N-" + param.getIntValue(); //super.writeD(param.getIntValue());
+					params[i] = "INS-N-" + param.getIntValue(); // super.writeD(param.getIntValue());
 					break;
 				}
 				
@@ -431,9 +440,9 @@ public final class SystemMessage extends L2GameServerPacket
 				case TYPE_ZONE_NAME:
 				{
 					final int[] array = param.getIntArrayValue();
-					//super.writeD(array[0]); // x
-					//super.writeD(array[1]); // y
-					//super.writeD(array[2]); // z
+					// super.writeD(array[0]); // x
+					// super.writeD(array[1]); // y
+					// super.writeD(array[2]); // z
 					params[i] = "ZON-N-" + Arrays.toString(array);
 					break;
 				}
@@ -563,11 +572,5 @@ public final class SystemMessage extends L2GameServerPacket
 				}
 			}
 		}
-	}
-	
-	@Override
-	public final String getType()
-	{
-		return "[S] 0x62 SystemMessage".intern();
 	}
 }
