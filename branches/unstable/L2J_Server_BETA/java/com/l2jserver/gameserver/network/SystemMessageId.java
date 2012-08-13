@@ -919,7 +919,7 @@ public final class SystemMessageId
 	 * ID: 112<br>
 	 * Message: –î‚ª‘«‚è‚Ü‚¹‚ñB<br>
 	 * Message: &#31661;&#25976;&#19981;&#36275;&#12290;<br>
-	 * Message: You may no longer adjust items in the trade because the trade has been confirmed.
+	 * Message: You have run out of arrows.
 	 */
 	public static final SystemMessageId NOT_ENOUGH_ARROWS;
 	
