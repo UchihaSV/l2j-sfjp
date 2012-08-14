@@ -817,15 +817,6 @@ public class LoginServerThread extends Thread
 	}
 	
 	/**
-	 * Checks if is bracket shown.
-	 * @return true, if is bracket shown
-	 */
-	public boolean isBracketShown()
-	{
-		return Config.SERVER_LIST_BRACKET;
-	}
-	
-	/**
 	 * Gets the server name.
 	 * @return the server name.
 	 */

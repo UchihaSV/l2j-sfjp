@@ -287,7 +287,6 @@ public class SpawnTable
 	
 	public void deleteSpawn(L2Spawn spawn, boolean updateDb)
 	{
-		
 		if (!_spawntable.remove(spawn))
 			return;
 		
@@ -316,7 +315,6 @@ public class SpawnTable
 			{
 				L2DatabaseFactory.close(con);
 			}
-			
 			//[JOJO]
 			String zoneName = MapRegionManager.getInstance().getClosestTownName(spawn.getLocx(),spawn.getLocy());
 			addSqlLog("-- " + Util.dateFormat() + " " + spawn.getTemplate().getTitle() + " " + spawn.getTemplate().getName() + " - " + zoneName + "\r\n"
