@@ -28,6 +28,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -578,10 +580,11 @@ public class LoginController
 			byte[] expected = null;
 			int access = 0;
 			int lastServer = 1;
-			String userIP = null;
+			List<InetAddress> ipWhiteList = new ArrayList<>();
+			List<InetAddress> ipBlackList = new ArrayList<>();
 			
 			con = L2DatabaseFactory.getInstance().getConnection();
-			try (PreparedStatement ps = con.prepareStatement(USER_INFO_SELECT);)
+			try (PreparedStatement ps = con.prepareStatement(USER_INFO_SELECT))
 			{
 				ps.setString(1, Long.toString(System.currentTimeMillis()));
 				ps.setString(2, user);
@@ -592,7 +595,6 @@ public class LoginController
 						expected = Base64.decode(rset.getString("password"));
 						access = rset.getInt("accessLevel");
 						lastServer = rset.getInt("lastServer");
-						userIP = rset.getString("userIP");
 						if (lastServer <= 0)
 						{
 							lastServer = 1; // minServerId is 1 in Interlude
@@ -600,6 +602,33 @@ public class LoginController
 						if (Config.DEBUG)
 						{
 							_log.fine("account exists");
+						}
+					}
+				}
+			}
+			try (PreparedStatement ps = con.prepareStatement("SELECT * FROM accounts_ipauth WHERE login = ?"))
+			{
+				ps.setString(1, user);
+				try (
+					ResultSet rset = ps.executeQuery())
+				{
+					String ip, type;
+					while (rset.next())
+					{
+						ip = rset.getString("ip");
+						type = rset.getString("type");
+						
+						if (!isValidIPAddress(ip))
+						{
+							continue;
+						}
+						else if (type.equals("allow"))
+						{
+							ipWhiteList.add(InetAddress.getByName(ip));
+						}
+						else if (type.equals("deny"))
+						{
+							ipBlackList.add(InetAddress.getByName(ip));
 						}
 					}
 				}
@@ -679,43 +708,27 @@ public class LoginController
 				client.setAccessLevel(access);
 				return false;
 			}
+			
 			// Check IP
-			if (userIP != null)
+			if (!ipWhiteList.isEmpty() || !ipBlackList.isEmpty())
 			{
-				if (!isValidIPAddress(userIP))
-				{
-					// Address is not valid so it's a domain name, get IP
-					try
-					{
-						InetAddress addr = InetAddress.getByName(userIP);
-						userIP = addr.getHostAddress();
-					}
-					catch (Exception e)
-					{
-						return false;
-					}
-				}
-				if (!address.getHostAddress().equalsIgnoreCase(userIP))
+				if (!ipWhiteList.isEmpty() && !ipWhiteList.contains(address))
 				{
 					if (Config.LOG_LOGIN_CONTROLLER)
-					{
-						Log.add("'" + user + "' " + address.getHostAddress() + "/" + userIP + " - ERR : INCORRECT IP", "loginlog");
-					}
-					
+						Log.add("'" + user + "' " + address.getHostAddress() + " - ERR : INCORRECT IP", "loginlog");
+					return false;
+				}
+				
+				if (!ipBlackList.isEmpty() && ipBlackList.contains(address))
+				{
+					if (Config.LOG_LOGIN_CONTROLLER)
+						Log.add("'" + user + "' " + address.getHostAddress() + " - ERR : BLACKLISTED IP", "loginlog");
 					return false;
 				}
 			}
+
 			// check password hash
-			ok = true;
-			for (int i = 0; i < expected.length; i++)
-			{
-				if (hash[i] != expected[i])
-				{
-					ok = false;
-					break;
-				}
-			}
-			
+			ok = Arrays.equals(hash, expected);
 			if (ok)
 			{
 				client.setAccessLevel(access);
