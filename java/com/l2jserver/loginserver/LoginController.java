@@ -612,23 +612,29 @@ public class LoginController
 				ps.setString(1, user);
 				try (ResultSet rset = ps.executeQuery())
 				{
-					String ip, type;
 					while (rset.next())
 					{
-						ip = rset.getString("ip");
-						type = rset.getString("type");
+						String ip = rset.getString("ip");
+						String type = rset.getString("type");
 						
 						if (!isValidIPAddress(ip))
 						{
 							continue;
 						}
-						else if (type.equals("allow"))
+						try
 						{
-							ipWhiteList.add(InetAddress.getByName(ip));
+							if (type.equals("allow"))
+							{
+								ipWhiteList.add(InetAddress.getByName(ip));
+							}
+							else if (type.equals("deny"))
+							{
+								ipBlackList.add(InetAddress.getByName(ip));
+							}
 						}
-						else if (type.equals("deny"))
+						catch (UnknownHostException e)
 						{
-							ipBlackList.add(InetAddress.getByName(ip));
+							continue;	//é¿ç€Ç…ÇÕÇ±Ç±Ç…ÇÕóàÇ»Ç¢.
 						}
 					}
 				}
