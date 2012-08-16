@@ -245,9 +245,10 @@ public class LoginController
 	}
 	// [L2J_JP ADD END - TSL]
 
-	public AuthLoginResult tryAuthLogin(String account, String password, L2LoginClient client)
+	public AuthLoginResult tryAuthLogin(String account, String password, L2LoginClient client, LoginFailReason[] loginFailReason)	//[JOJO]
 	{
 		AuthLoginResult ret = AuthLoginResult.INVALID_PASSWORD;
+		loginFailReason[0] = LoginFailReason.REASON_USER_OR_PASS_WRONG;
 		// [L2J_JP ADD START - TSL]
 		String ip = client.getConnection().getInetAddress().getHostAddress();
 		if (Config.DENY_BANNED_USER_BY_IPADDR && isIPinBanList(account, ip))
@@ -255,9 +256,10 @@ public class LoginController
 		// [L2J_JP ADD END - TSL]
 
 		// check auth
-		if (loginValid(account, password, client))
+		if (loginValid(account, password, client, loginFailReason))
 		{
 			// login was successful, verify presence on Gameservers
+			loginFailReason[0] = LoginFailReason.REASON_ACCOUNT_IN_USE;
 			ret = AuthLoginResult.ALREADY_ON_GS;
 			if (!isAccountInAnyGameServer(account))
 			{
@@ -276,6 +278,7 @@ public class LoginController
 				// [L2J_JP ADD END - TSL]
 
 				// account isnt on any GS verify LS itself
+				loginFailReason[0] = LoginFailReason.REASON_ACCOUNT_IN_USE;
 				ret = AuthLoginResult.ALREADY_ON_LS;
 				
 				if (_loginServerClients.putIfAbsent(account, client) == null)
@@ -560,8 +563,9 @@ public class LoginController
 	 * @param client
 	 * @return
 	 */
-	public boolean loginValid(String user, String password, L2LoginClient client)// throws HackingException
+	private boolean loginValid(String user, String password, L2LoginClient client, LoginFailReason[] loginFailReason)// throws HackingException	//[JOJO]
 	{
+		loginFailReason[0] = LoginFailReason.REASON_USER_OR_PASS_WRONG;
 		boolean ok = false;
 		InetAddress address = client.getConnection().getInetAddress();
 		
@@ -700,6 +704,7 @@ public class LoginController
 						this.addBanForAddress(address, Config.LOGIN_BLOCK_AFTER_BAN * 1000);
 					}
 				}
+				loginFailReason[0] = LoginFailReason.REASON_USER_OR_PASS_WRONG;
 				return false;
 			}
 			
@@ -722,6 +727,7 @@ public class LoginController
 				{
 					if (Config.LOG_LOGIN_CONTROLLER)
 						Log.add("'" + user + "' " + address.getHostAddress() + " - ERR : INCORRECT IP", "loginlog");
+					loginFailReason[0] = LoginFailReason.REASON_RESTRICTED_IP;
 					return false;
 				}
 				
@@ -729,6 +735,7 @@ public class LoginController
 				{
 					if (Config.LOG_LOGIN_CONTROLLER)
 						Log.add("'" + user + "' " + address.getHostAddress() + " - ERR : BLACKLISTED IP", "loginlog");
+					loginFailReason[0] = LoginFailReason.REASON_RESTRICTED_IP;
 					return false;
 				}
 			}
@@ -750,7 +757,8 @@ public class LoginController
 		}
 		catch (SQLException | NoSuchAlgorithmException e)
 		{
-			_log.log(Level.WARNING, "Could not check password:" + e.getMessage(), e);
+			_log.log(Level.WARNING, "Could not check password.", e);
+			loginFailReason[0] = LoginFailReason.REASON_SYSTEM_ERROR_LOGIN_LATER;
 			ok = false;
 		}
 		finally
