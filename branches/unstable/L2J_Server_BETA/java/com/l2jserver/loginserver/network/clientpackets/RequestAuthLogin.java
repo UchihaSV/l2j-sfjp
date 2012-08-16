@@ -114,7 +114,8 @@ public class RequestAuthLogin extends L2LoginClientPacket
 		}
 		
 		final LoginController lc = LoginController.getInstance();
-		AuthLoginResult result = lc.tryAuthLogin(_user, _password, client);
+		LoginFailReason[] loginFailReason = new LoginFailReason[1];
+		AuthLoginResult result = lc.tryAuthLogin(_user, _password, client, loginFailReason);	//[JOJO]
 		switch (result)
 		{
 			case AUTH_SUCCESS:
@@ -132,7 +133,7 @@ public class RequestAuthLogin extends L2LoginClientPacket
 				}
 				break;
 			case INVALID_PASSWORD:
-				client.close(LoginFailReason.REASON_USER_OR_PASS_WRONG);
+				client.close(loginFailReason[0]);	//[JOJO]
 				break;
 			case ACCOUNT_BANNED:
 				client.close(new AccountKicked(AccountKickedReason.REASON_PERMANENTLY_BANNED));
