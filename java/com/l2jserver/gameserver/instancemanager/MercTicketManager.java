@@ -132,10 +132,8 @@ public class MercTicketManager
 	 */
 	private final void load()
 	{
-		Connection con = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement("SELECT * FROM castle_siege_guards Where isHired = 1");
 			ResultSet rs = statement.executeQuery();
 			
@@ -188,10 +186,6 @@ public class MercTicketManager
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Exception: loadMercenaryData(): " + e.getMessage(), e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 	}
 	

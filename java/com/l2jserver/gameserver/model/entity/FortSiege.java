@@ -65,6 +65,10 @@ public class FortSiege implements Siegable
 		All, Attacker, Owner,
 	}
 	
+	// SQL
+	private static final String DELETE_FORT_SIEGECLANS_BY_CLAN_ID = "DELETE FROM fortsiege_clans WHERE fort_id = ? AND clan_id = ?";
+	private static final String DELETE_FORT_SIEGECLANS = "DELETE FROM fortsiege_clans WHERE fort_id = ?";
+	
 	public class ScheduleEndSiegeTask implements Runnable
 	{
 		@Override
@@ -480,20 +484,19 @@ public class FortSiege implements Siegable
 	/** Clear all registered siege clans from database for fort */
 	public void clearSiegeClan()
 	{
-		Connection con = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement("DELETE FROM fortsiege_clans WHERE fort_id=?"))
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement("DELETE FROM fortsiege_clans WHERE fort_id=?");
-			statement.setInt(1, getFort().getFortId());
-			statement.execute();
-			statement.close();
+			ps.setInt(1, getFort().getFortId());
+			ps.execute();
 			
 			if (getFort().getOwnerClan() != null)
 			{
-				statement = con.prepareStatement("DELETE FROM fortsiege_clans WHERE clan_id=?");
-				statement.setInt(1, getFort().getOwnerClan().getClanId());
-				statement.execute();
+				try (PreparedStatement delete = con.prepareStatement("DELETE FROM fortsiege_clans WHERE clan_id=?"))
+				{
+					delete.setInt(1, getFort().getOwnerClan().getClanId());
+					delete.execute();
+				}
 			}
 			
 			getAttackerClans().clear();
@@ -502,7 +505,7 @@ public class FortSiege implements Siegable
 			if (getIsInProgress())
 				endSiege();
 			
-			// if siege isnt in progress (1hr waiting time till siege starts), cancel waiting time
+			// if siege isn't in progress (1hr waiting time till siege starts), cancel waiting time
 			if (_siegeStartTask != null)
 			{
 				_siegeStartTask.cancel(true);
@@ -512,10 +515,6 @@ public class FortSiege implements Siegable
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Exception: clearSiegeClan(): " + e.getMessage(), e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 	}
 	
@@ -701,19 +700,15 @@ public class FortSiege implements Siegable
 	 */
 	private void removeSiegeClan(int clanId)
 	{
-		Connection con = null;
-		PreparedStatement statement = null;
-		try
+		final String query = (clanId != 0) ? DELETE_FORT_SIEGECLANS_BY_CLAN_ID : DELETE_FORT_SIEGECLANS;
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement(query))
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			if (clanId != 0)
-				statement = con.prepareStatement("DELETE FROM fortsiege_clans WHERE fort_id=? AND clan_id=?");
-			else
-				statement = con.prepareStatement("DELETE FROM fortsiege_clans WHERE fort_id=?");
-			
 			statement.setInt(1, getFort().getFortId());
 			if (clanId != 0)
+			{
 				statement.setInt(2, clanId);
+			}
 			statement.execute();
 			
 			loadSiegeClan();
@@ -734,10 +729,6 @@ public class FortSiege implements Siegable
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Exception on removeSiegeClan: " + e.getMessage(), e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 	}
 	
@@ -956,11 +947,9 @@ public class FortSiege implements Siegable
 	/** Load siege clans. */
 	private void loadSiegeClan()
 	{
-		Connection con = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
 			getAttackerClans().clear();
-			con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement("SELECT clan_id FROM fortsiege_clans WHERE fort_id=?");
 			statement.setInt(1, getFort().getFortId());
 			ResultSet rs = statement.executeQuery();
@@ -974,10 +963,6 @@ public class FortSiege implements Siegable
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Exception: loadSiegeClan(): " + e.getMessage(), e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 	}
 	
@@ -1020,23 +1005,16 @@ public class FortSiege implements Siegable
 	/** Save siege date to database. */
 	private void saveSiegeDate()
 	{
-		Connection con = null;
-		PreparedStatement statement = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement("UPDATE fort SET siegeDate = ? WHERE id = ?"))
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			statement = con.prepareStatement("UPDATE fort SET siegeDate = ? WHERE id = ?");
-			statement.setLong(1, getSiegeDate().getTimeInMillis());
-			statement.setInt(2, getFort().getFortId());
-			statement.execute();
+			ps.setLong(1, getSiegeDate().getTimeInMillis());
+			ps.setInt(2, getFort().getFortId());
+			ps.execute();
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Exception: saveSiegeDate(): " + e.getMessage(), e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 	}
 	
@@ -1047,14 +1025,13 @@ public class FortSiege implements Siegable
 	private void saveSiegeClan(L2Clan clan)
 	{
 		if (getAttackerClans().size() >= FortSiegeManager.getInstance().getAttackerMaxClans())
-			return;
-		
-		Connection con = null;
-		PreparedStatement statement = null;
-		try
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			statement = con.prepareStatement("INSERT INTO fortsiege_clans (clan_id,fort_id) values (?,?)");
+			return;
+		}
+		
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("INSERT INTO fortsiege_clans (clan_id,fort_id) values (?,?)"))
+		{
 			statement.setInt(1, clan.getClanId());
 			statement.setInt(2, getFort().getFortId());
 			statement.execute();
@@ -1064,10 +1041,6 @@ public class FortSiege implements Siegable
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Exception: saveSiegeClan(L2Clan clan): " + e.getMessage(), e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 	}
 	

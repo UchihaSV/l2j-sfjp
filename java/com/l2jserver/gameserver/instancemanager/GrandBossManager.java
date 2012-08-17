@@ -125,11 +125,8 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		_bosses = new FastMap<>();
 		_storedInfo = new TIntObjectHashMap<>();
 		_bossStatus = new TIntIntHashMap();
-		Connection con = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			
 			PreparedStatement statement = con.prepareStatement("SELECT * from grandboss_data ORDER BY boss_id");
 			ResultSet rset = statement.executeQuery();
 			while (rset.next())
@@ -171,10 +168,6 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		{
 			_log.log(Level.WARNING, "Error while initializing GrandBossManager: " + e.getMessage(), e);
 		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
-		}
 	}
 	
 	/**
@@ -182,8 +175,6 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	 */
 	public void initZones()
 	{
-		Connection con = null;
-		
 		FastMap<Integer, FastSet/*L2FastList*/<Integer>> zones = new FastMap<>();
 		
 		if (_zones == null)
@@ -199,10 +190,8 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			zones.put(zone.getId(), new FastSet/*L2FastList*/<Integer>());
 		}
 		
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			
 			PreparedStatement statement = con.prepareStatement("SELECT * from grandboss_list ORDER BY player_id");
 			ResultSet rset = statement.executeQuery();
 			
@@ -225,10 +214,6 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Error while initializing GrandBoss zones: " + e.getMessage(), e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 		
 		for (L2BossZone zone : _zones)
@@ -343,34 +328,30 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	private void storeToDb()
 	{
-		Connection con = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement delete = con.prepareStatement(DELETE_GRAND_BOSS_LIST))
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
+			delete.executeUpdate();
 			
-			PreparedStatement statement = con.prepareStatement(DELETE_GRAND_BOSS_LIST);
-			statement.executeUpdate();
-			statement.close();
-			
-			statement = con.prepareStatement(INSERT_GRAND_BOSS_LIST);
-			for (L2BossZone zone : _zones)
+			try (PreparedStatement insert = con.prepareStatement(INSERT_GRAND_BOSS_LIST))
 			{
-				if (zone == null)
-					continue;
-				int/*Integer*/ id = zone.getId();
-				FastSet/*L2FastList*/<Integer> list = zone.getAllowedPlayers();
-				if (list == null || list.isEmpty())
-					continue;
-				for (Integer player : list)
+				for (L2BossZone zone : _zones)
 				{
-					statement.setInt(1, player);
-					statement.setInt(2, id);
-					statement.executeUpdate();
-					statement.clearParameters();
+					if (zone == null)
+						continue;
+					int/*Integer*/ id = zone.getId();
+					FastSet/*L2FastList*/<Integer> list = zone.getAllowedPlayers();
+					if (list == null || list.isEmpty())
+						continue;
+					for (Integer player : list)
+					{
+						insert.setInt(1, player);
+						insert.setInt(2, id);
+						insert.executeUpdate();
+						insert.clearParameters();
+					}
 				}
 			}
-			statement.close();
-			
 			for (Integer bossId : _storedInfo.keys())
 			{
 				final L2GrandBossInstance boss = _bosses.get(bossId);
@@ -378,20 +359,91 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 				if (boss == null && info == null)
 			//	if (boss == null || info == null)
 				{
-					statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA2);
-					statement.setInt(1, _bossStatus.get(bossId));
-					statement.setInt(2, bossId);
+					try (PreparedStatement update = con.prepareStatement(UPDATE_GRAND_BOSS_DATA2))
+					{
+						update.setInt(1, _bossStatus.get(bossId));
+						update.setInt(2, bossId);
+						update.executeUpdate();
+						update.clearParameters();
+					}
 				}
 				else if (boss == null && info != null)
 				{
-					statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA3);
-					statement.setLong(1, info.getLong("respawn_time"));
-					statement.setInt(2, _bossStatus.get(bossId));
-					statement.setInt(3, bossId);
+					try (PreparedStatement update = con.prepareStatement(UPDATE_GRAND_BOSS_DATA3))
+					{
+						update.setLong(1, info.getLong("respawn_time"));
+						update.setInt(2, _bossStatus.get(bossId));
+						update.setInt(3, bossId);
+						update.executeUpdate();
+						update.clearParameters();
+					}
 				}
 				else if (boss != null && info != null)
 				{
-					statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA);
+					try (PreparedStatement update = con.prepareStatement(UPDATE_GRAND_BOSS_DATA))
+					{
+						update.setInt(1, boss.getX());
+						update.setInt(2, boss.getY());
+						update.setInt(3, boss.getZ());
+						update.setInt(4, boss.getHeading());
+						update.setLong(5, info.getLong("respawn_time"));
+						double hp = boss.getCurrentHp();
+						double mp = boss.getCurrentMp();
+						if (boss.isDead())
+						{
+							hp = boss.getMaxHp();
+							mp = boss.getMaxMp();
+						}
+						update.setDouble(6, hp);
+						update.setDouble(7, mp);
+						update.setInt(8, _bossStatus.get(bossId));
+						update.setInt(9, bossId);
+						update.executeUpdate();
+						update.clearParameters();
+					}
+				}
+				else /*if (boss != null && info == null)*/
+					throw new RuntimeException();
+			}
+		}
+		catch (SQLException e)
+		{
+			_log.log(Level.WARNING, "GrandBossManager: Couldn't store grandbosses to database:" + e.getMessage(), e);
+			e.printStackTrace();
+		}
+	}
+	
+	private void updateDb(int bossId, boolean statusOnly)
+	{
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		{
+			L2GrandBossInstance boss = _bosses.get(bossId);
+			StatsSet info = _storedInfo.get(bossId);
+			
+			if (statusOnly || (boss == null && info == null))
+		//	if (statusOnly || boss == null || info == null)
+			{
+				try (PreparedStatement statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA2))
+				{
+					statement.setInt(1, _bossStatus.get(bossId));
+					statement.setInt(2, bossId);
+					statement.executeUpdate();
+				}
+			}
+			else if (boss == null && info != null)
+			{
+				try (PreparedStatement statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA3))
+				{
+					statement.setLong(1, info.getLong("respawn_time"));
+					statement.setInt(2, _bossStatus.get(bossId));
+					statement.setInt(3, bossId);
+					statement.executeUpdate();
+				}
+			}
+			else if (boss != null && info != null)
+			{
+				try (PreparedStatement statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA))
+				{
 					statement.setInt(1, boss.getX());
 					statement.setInt(2, boss.getY());
 					statement.setInt(3, boss.getZ());
@@ -408,82 +460,16 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 					statement.setDouble(7, mp);
 					statement.setInt(8, _bossStatus.get(bossId));
 					statement.setInt(9, bossId);
+					statement.executeUpdate();
 				}
-				else /*if (boss != null && info == null)*/
-					throw new RuntimeException();
-				statement.executeUpdate();
-				statement.clearParameters();
-				statement.close();
-			}
-		}
-		catch (SQLException e)
-		{
-			_log.log(Level.WARNING, "GrandBossManager: Couldn't store grandbosses to database:" + e.getMessage(), e);
-			e.printStackTrace();
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
-		}
-	}
-	
-	private void updateDb(int bossId, boolean statusOnly)
-	{
-		Connection con = null;
-		try
-		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = null;
-			L2GrandBossInstance boss = _bosses.get(bossId);
-			StatsSet info = _storedInfo.get(bossId);
-			
-			if (statusOnly || (boss == null && info == null))
-		//	if (statusOnly || boss == null || info == null)
-			{
-				statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA2);
-				statement.setInt(1, _bossStatus.get(bossId));
-				statement.setInt(2, bossId);
-			}
-			else if (boss == null && info != null)
-			{
-				statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA3);
-				statement.setLong(1, info.getLong("respawn_time"));
-				statement.setInt(2, _bossStatus.get(bossId));
-				statement.setInt(3, bossId);
-			}
-			else if (boss != null && info != null)
-			{
-				statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA);
-				statement.setInt(1, boss.getX());
-				statement.setInt(2, boss.getY());
-				statement.setInt(3, boss.getZ());
-				statement.setInt(4, boss.getHeading());
-				statement.setLong(5, info.getLong("respawn_time"));
-				double hp = boss.getCurrentHp();
-				double mp = boss.getCurrentMp();
-				if (boss.isDead())
-				{
-					hp = boss.getMaxHp();
-					mp = boss.getMaxMp();
-				}
-				statement.setDouble(6, hp);
-				statement.setDouble(7, mp);
-				statement.setInt(8, _bossStatus.get(bossId));
-				statement.setInt(9, bossId);
 			}
 			else /*if (boss != null && info == null)*/
 				throw new RuntimeException();
-			statement.executeUpdate();
-			statement.close();
 		}
 		catch (SQLException e)
 		{
 			_log.log(Level.WARNING, "GrandBossManager: Couldn't update grandbosses to database:" + e.getMessage(), e);
 			e.printStackTrace();
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 	}
 	

@@ -153,7 +153,7 @@ public class HtmCache
 		final String relpath = Util.getRelativePath(Config.DATAPACK_ROOT, file);
 		final int hashcode = relpath.hashCode();
 		String content = null;
-		try (FileInputStream fis = new FileInputStream(file);)
+		try (FileInputStream fis = new FileInputStream(file))
 		{
 			byte[] raw = new byte[fis.available()];
 			

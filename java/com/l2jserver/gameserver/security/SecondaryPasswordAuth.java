@@ -70,37 +70,31 @@ public class SecondaryPasswordAuth
 	private void loadPassword()
 	{
 		String var, value = null;
-		
-		Connection con = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement(SELECT_PASSWORD))
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement(SELECT_PASSWORD);
 			statement.setString(1, _activeClient.getAccountName());
-			ResultSet rs = statement.executeQuery();
-			while (rs.next())
+			try (ResultSet rs = statement.executeQuery())
 			{
-				var = rs.getString("var");
-				value = rs.getString("value");
-				
-				if (var.equals(VAR_PWD))
+				while (rs.next())
 				{
-					_password = value;
-				}
-				else if (var.equals(VAR_WTE))
-				{
-					_wrongAttempts = Integer.parseInt(value);
+					var = rs.getString("var");
+					value = rs.getString("value");
+					
+					if (var.equals(VAR_PWD))
+					{
+						_password = value;
+					}
+					else if (var.equals(VAR_WTE))
+					{
+						_wrongAttempts = Integer.parseInt(value);
+					}
 				}
 			}
-			statement.close();
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.SEVERE, "Error while reading password.", e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 	}
 	
@@ -121,25 +115,18 @@ public class SecondaryPasswordAuth
 		
 		password = cryptPassword(password);
 		
-		Connection con = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement(INSERT_PASSWORD))
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement(INSERT_PASSWORD);
 			statement.setString(1, _activeClient.getAccountName());
 			statement.setString(2, VAR_PWD);
 			statement.setString(3, password);
 			statement.execute();
-			statement.close();
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.SEVERE, "Error while writing password.", e);
 			return false;
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 		_password = password;
 		return true;
@@ -147,26 +134,19 @@ public class SecondaryPasswordAuth
 	
 	public boolean insertWrongAttempt(int attempts)
 	{
-		Connection con = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement(INSERT_ATTEMPT))
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement(INSERT_ATTEMPT);
 			statement.setString(1, _activeClient.getAccountName());
 			statement.setString(2, VAR_WTE);
 			statement.setString(3, Integer.toString(attempts));
 			statement.setString(4, Integer.toString(attempts));
 			statement.execute();
-			statement.close();
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.SEVERE, "Error while writing wrong attempts.", e);
 			return false;
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 		return true;
 	}
@@ -193,26 +173,20 @@ public class SecondaryPasswordAuth
 		
 		newPassword = cryptPassword(newPassword);
 		
-		Connection con = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement(UPDATE_PASSWORD))
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement(UPDATE_PASSWORD);
 			statement.setString(1, newPassword);
 			statement.setString(2, _activeClient.getAccountName());
 			statement.setString(3, VAR_PWD);
 			statement.execute();
-			statement.close();
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.SEVERE, "Error while reading password.", e);
 			return false;
 		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
-		}
+		
 		_password = newPassword;
 		_authed = false;
 		return true;

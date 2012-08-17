@@ -44,7 +44,7 @@ public class SpawnTable
 {
 	private static Logger _log = Logger.getLogger(SpawnTable.class.getName());
 	
-	private FastSet<L2Spawn> _spawntable = new FastSet<L2Spawn>().shared();
+	private FastSet<L2Spawn> _spawntable = new FastSet<>();
 	private int _npcSpawnCount;
 	private int _customSpawnCount;
 	
@@ -55,6 +55,7 @@ public class SpawnTable
 	
 	protected SpawnTable()
 	{
+		_spawntable.shared();
 		if (!Config.ALT_DEV_NO_SPAWNS)
 			fillSpawnTable();
 	}
@@ -66,11 +67,8 @@ public class SpawnTable
 	
 	private void fillSpawnTable()
 	{
-		Connection con = null;
-		
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement("SELECT count, npc_templateid, locx, locy, locz, heading, respawn_delay, loc_id, periodOfDay FROM spawnlist");
 			ResultSet rset = statement.executeQuery();
 			
@@ -137,18 +135,13 @@ public class SpawnTable
 			// problem with initializing spawn, go to next one
 			_log.log(Level.WARNING, "SpawnTable: Spawn could not be initialized: " + e.getMessage(), e);
 		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
-		}
 		
 		_log.info("SpawnTable: Loaded " + _spawntable.size() + " Npc Spawn Locations.");
 		
 		if (Config.CUSTOM_SPAWNLIST_TABLE)
 		{
-			try
+			try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 			{
-				con = L2DatabaseFactory.getInstance().getConnection();
 				PreparedStatement statement = con.prepareStatement("SELECT count, npc_templateid, locx, locy, locz, heading, respawn_delay, loc_id, periodOfDay FROM custom_spawnlist");
 				ResultSet rset = statement.executeQuery();
 				
@@ -216,10 +209,6 @@ public class SpawnTable
 				// problem with initializing spawn, go to next one
 				_log.log(Level.WARNING, "CustomSpawnTable: Spawn could not be initialized: " + e.getMessage(), e);
 			}
-			finally
-			{
-				L2DatabaseFactory.close(con);
-			}
 			_log.info("CustomSpawnTable: Loaded " + _customSpawnCount + " Npc Spawn Locations.");
 			
 		}
@@ -241,12 +230,9 @@ public class SpawnTable
 			else
 				spawnTable = "spawnlist";
 			
-			Connection con = null;
-			try
+			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+				PreparedStatement statement = con.prepareStatement("INSERT INTO " + spawnTable + "(count,npc_templateid,locx,locy,locz,heading,respawn_delay,loc_id) values(?,?,?,?,?,?,?,?)"))
 			{
-				con = L2DatabaseFactory.getInstance().getConnection();
-				PreparedStatement statement = con.prepareStatement("INSERT INTO " + spawnTable
-						+ "(count,npc_templateid,locx,locy,locz,heading,respawn_delay,loc_id) values(?,?,?,?,?,?,?,?)");
 				statement.setInt(1, spawn.getAmount());
 				statement.setInt(2, spawn.getNpcid());
 				statement.setInt(3, spawn.getLocx());
@@ -256,16 +242,11 @@ public class SpawnTable
 				statement.setInt(7, spawn.getRespawnDelay() / 1000);
 				statement.setInt(8, spawn.getLocation());
 				statement.execute();
-				statement.close();
 			}
 			catch (Exception e)
 			{
 				// problem with storing spawn
 				_log.log(Level.WARNING, "SpawnTable: Could not store spawn in the DB:" + e.getMessage(), e);
-			}
-			finally
-			{
-				L2DatabaseFactory.close(con);
 			}
 			
 			//[JOJO]
@@ -292,28 +273,20 @@ public class SpawnTable
 		
 		if (updateDb)
 		{
-			Connection con = null;
-			try
+			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+				PreparedStatement statement = con.prepareStatement("DELETE FROM " + (spawn.isCustom() ? "custom_spawnlist" : "spawnlist") + " WHERE locx=? AND locy=? AND locz=? AND npc_templateid=? AND heading=?"))
 			{
-				con = L2DatabaseFactory.getInstance().getConnection();
-				PreparedStatement statement = con.prepareStatement("DELETE FROM "
-						+ (spawn.isCustom() ? "custom_spawnlist" : "spawnlist") + " WHERE locx=? AND locy=? AND locz=? AND npc_templateid=? AND heading=?");
 				statement.setInt(1, spawn.getLocx());
 				statement.setInt(2, spawn.getLocy());
 				statement.setInt(3, spawn.getLocz());
 				statement.setInt(4, spawn.getNpcid());
 				statement.setInt(5, spawn.getHeading());
 				statement.execute();
-				statement.close();
 			}
 			catch (Exception e)
 			{
 				// problem with deleting spawn
 				_log.log(Level.WARNING, "SpawnTable: Spawn " + spawn + " could not be removed from DB: " + e.getMessage(), e);
-			}
-			finally
-			{
-				L2DatabaseFactory.close(con);
 			}
 			//[JOJO]
 			String zoneName = MapRegionManager.getInstance().getClosestTownName(spawn.getLocx(),spawn.getLocy());
