@@ -15,9 +15,9 @@
 package com.l2jserver.gameserver.datatables;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -40,13 +40,11 @@ public final class CharTemplateTable
 	
 	protected CharTemplateTable()
 	{
-		Connection con = null;
-		try
+		StringIntern.begin();
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			Statement s = con.createStatement();
+			ResultSet rset = s.executeQuery("SELECT * FROM char_templates, lvlupgain WHERE char_templates.classId = lvlupgain.classId ORDER BY char_templates.ClassId"))
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			final PreparedStatement statement = con.prepareStatement("SELECT * FROM char_templates, lvlupgain WHERE char_templates.classId = lvlupgain.classId ORDER BY char_templates.ClassId");
-			final ResultSet rset = statement.executeQuery();
-			StringIntern.begin();
 			while (rset.next())
 			{
 				StatsSet set = new StatsSet();
@@ -94,8 +92,6 @@ public final class CharTemplateTable
 				final L2PcTemplate ct = new L2PcTemplate(set);
 				_charTemplates.put(ClassId.getClassId(cId), ct);
 			}
-			rset.close();
-			statement.close();
 			_log.info("CharTemplateTable: Loaded " + _charTemplates.size() + " Character Templates.");
 		}
 		catch (SQLException e)
@@ -104,7 +100,6 @@ public final class CharTemplateTable
 		}
 		finally
 		{
-			L2DatabaseFactory.close(con);
 			StringIntern.end();
 		}
 	}

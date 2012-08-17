@@ -76,56 +76,53 @@ public class ScriptExecutor
 	public void execSqlFile(File file, boolean skipErrors)
 	{
 		String sql = null;
-		try
-		{
-			log(file.getPath() + ":");
-			_frame.appendToProgressArea("Installing " + file.getName());
-			String line;
-			Connection con = _frame.getConnection();
+		log(file.getPath() + ":");
+		_frame.appendToProgressArea("Installing " + file.getName());
+		try (Connection con = _frame.getConnection();
 			Statement stmt = con.createStatement();
-			try (BufferedReader scn = new BufferedReader(new InputStreamReader(new FileInputStream(file), UTF_8)))
+			BufferedReader scn = new BufferedReader(new InputStreamReader(new FileInputStream(file), UTF_8)))
+		{
+			StringBuilder sb = new StringBuilder();
+			Pattern patternSourceStatement = Pattern.compile("^SOURCE[ \t]+(.+);$", Pattern.CASE_INSENSITIVE);
+			String line;
+			while ((line = scn.readLine()) != null)
 			{
-				StringBuilder sb = new StringBuilder();
-				Pattern patternSourceStatement = Pattern.compile("^SOURCE[ \t]+(.+);$", Pattern.CASE_INSENSITIVE);
-				while ((line = scn.readLine()) != null)
+				if (line.startsWith("\uFEFF"))
+					line = line.substring(1);
+				if (line.startsWith("--"))
 				{
-					if (line.startsWith("\uFEFF"))
-						line = line.substring(1);
-					if (line.startsWith("--"))
-					{
-						continue;
-					}
-					else if (line.contains("--"))
-					{
-						line = line.split("--")[0];
-					}
-					
-					line = line.trim();
-					if (!line.isEmpty())
-					{
-						sb.append(line).append('\n');
-					}
-					
-					if (line.endsWith(";"))
-					{
-						sql = sb.toString();
-						sb.setLength(0);
-						Matcher m = patternSourceStatement.matcher(sql);
-						if (m.find())
-							execSqlFile(new File(m.group(1)), skipErrors);	//recursive call
-						else if (skipErrors)
-							try
-							{
-								stmt.execute(sql);
-							}
-							catch (SQLException e)
-							{
-								log(e.getMessage());
-							}
-						else
+					continue;
+				}
+				else if (line.contains("--"))
+				{
+					line = line.split("--")[0];
+				}
+				
+				line = line.trim();
+				if (!line.isEmpty())
+				{
+					sb.append(line).append('\n');
+				}
+				
+				if (line.endsWith(";"))
+				{
+					sql = sb.toString();
+					sb.setLength(0);
+					Matcher m = patternSourceStatement.matcher(sql);
+					if (m.find())
+						execSqlFile(new File(m.group(1)), skipErrors);	//recursive call
+					else if (skipErrors)
+						try
+						{
 							stmt.execute(sql);
-						sql = null;
-					}
+						}
+						catch (SQLException e)
+						{
+							log(e.getMessage());
+						}
+					else
+						stmt.execute(sql);
+					sql = null;
 				}
 			}
 		}

@@ -450,24 +450,16 @@ public class LoginController
 			
 			if (loginOk && (client.getLastServer() != serverId))
 			{
-				Connection con = null;
-				try
+				try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+					PreparedStatement ps = con.prepareStatement(ACCOUNT_LAST_SERVER_UPDATE))
 				{
-					con = L2DatabaseFactory.getInstance().getConnection();
-					try (PreparedStatement ps = con.prepareStatement(ACCOUNT_LAST_SERVER_UPDATE))
-					{
-						ps.setInt(1, serverId);
-						ps.setString(2, client.getAccount());
-						ps.executeUpdate();
-					}
+					ps.setInt(1, serverId);
+					ps.setString(2, client.getAccount());
+					ps.executeUpdate();
 				}
 				catch (Exception e)
 				{
 					_log.log(Level.WARNING, "Could not set lastServer: " + e.getMessage(), e);
-				}
-				finally
-				{
-					L2DatabaseFactory.close(con);
 				}
 			}
 			return loginOk;
@@ -477,51 +469,35 @@ public class LoginController
 	
 	public void setAccountAccessLevel(String account, int banLevel)
 	{
-		Connection con = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement(ACCOUNT_ACCESS_LEVEL_UPDATE))
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			try (PreparedStatement ps = con.prepareStatement(ACCOUNT_ACCESS_LEVEL_UPDATE))
-			{
-				ps.setInt(1, banLevel);
-				ps.setString(2, account);
-				ps.executeUpdate();
-			}
+			ps.setInt(1, banLevel);
+			ps.setString(2, account);
+			ps.executeUpdate();
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Could not set accessLevel: " + e.getMessage(), e);
 		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
-		}
 	}
 	
 	public void setAccountLastTracert(String account, String pcIp, String hop1, String hop2, String hop3, String hop4)
 	{
-		Connection con = null;
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement(ACCOUNT_IPS_UPDATE))
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			try (PreparedStatement ps = con.prepareStatement(ACCOUNT_IPS_UPDATE))
-			{
-				ps.setString(1, pcIp);
-				ps.setString(2, hop1);
-				ps.setString(3, hop2);
-				ps.setString(4, hop3);
-				ps.setString(5, hop4);
-				ps.setString(6, account);
-				ps.executeUpdate();
-			}
+			ps.setString(1, pcIp);
+			ps.setString(2, hop1);
+			ps.setString(3, hop2);
+			ps.setString(4, hop3);
+			ps.setString(5, hop4);
+			ps.setString(6, account);
+			ps.executeUpdate();
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Could not set last tracert: " + e.getMessage(), e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 	}
 	
@@ -575,7 +551,6 @@ public class LoginController
 			return false;
 		}
 		
-		Connection con = null;
 		try
 		{
 			MessageDigest md = MessageDigest.getInstance("SHA");
@@ -587,9 +562,8 @@ public class LoginController
 			int lastServer = 1;
 			List<InetAddress> ipWhiteList = new ArrayList<>();
 			List<InetAddress> ipBlackList = new ArrayList<>();
-			
-			con = L2DatabaseFactory.getInstance().getConnection();
-			try (PreparedStatement ps = con.prepareStatement(USER_INFO_SELECT))
+			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+				PreparedStatement ps = con.prepareStatement(USER_INFO_SELECT))
 			{
 				ps.setString(1, Long.toString(System.currentTimeMillis()));
 				ps.setString(2, user);
@@ -611,7 +585,8 @@ public class LoginController
 					}
 				}
 			}
-			try (PreparedStatement ps = con.prepareStatement(ACCOUNT_IPAUTH_SELECT))
+			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+				PreparedStatement ps = con.prepareStatement(ACCOUNT_IPAUTH_SELECT))
 			{
 				ps.setString(1, user);
 				try (ResultSet rset = ps.executeQuery())
@@ -644,14 +619,15 @@ public class LoginController
 				}
 			}
 			
-			// if account doesnt exists
+			// if account doesn't exists
 			if (expected == null)
 			{
 				if (Config.AUTO_CREATE_ACCOUNTS)
 				{
 					if ((user.length() >= 2) && (user.length() <= 14))
 					{
-						try (PreparedStatement ps = con.prepareStatement(AUTOCREATE_ACCOUNTS_INSERT))
+						try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+							PreparedStatement ps = con.prepareStatement(AUTOCREATE_ACCOUNTS_INSERT))
 						{
 							ps.setString(1, user);
 							ps.setString(2, Base64.encodeBytes(hash));
@@ -746,7 +722,8 @@ public class LoginController
 			{
 				client.setAccessLevel(access);
 				client.setLastServer(lastServer);
-				try (PreparedStatement ps = con.prepareStatement(ACCOUNT_INFO_UPDATE))
+				try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+					PreparedStatement ps = con.prepareStatement(ACCOUNT_INFO_UPDATE))
 				{
 					ps.setLong(1, System.currentTimeMillis());
 					ps.setString(2, address.getHostAddress());
@@ -760,10 +737,6 @@ public class LoginController
 			_log.log(Level.WARNING, "Could not check password.", e);
 			loginFailReason[0] = LoginFailReason.REASON_SYSTEM_ERROR_LOGIN_LATER;
 			ok = false;
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 		
 		if (!ok)

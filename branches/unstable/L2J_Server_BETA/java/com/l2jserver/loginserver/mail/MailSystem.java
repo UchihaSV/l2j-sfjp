@@ -86,7 +86,8 @@ public class MailSystem
 					String maFile = d.getAttributes().getNamedItem("file").getNodeValue();
 					
 					File mailFile = new File(Config.DATAPACK_ROOT, "data/mail/" + maFile);
-					try (FileInputStream fis = new FileInputStream(mailFile); BufferedInputStream bis = new BufferedInputStream(fis);)
+					try (FileInputStream fis = new FileInputStream(mailFile);
+						BufferedInputStream bis = new BufferedInputStream(fis))
 					{
 						int bytes = bis.available();
 						byte[] raw = new byte[bytes];
