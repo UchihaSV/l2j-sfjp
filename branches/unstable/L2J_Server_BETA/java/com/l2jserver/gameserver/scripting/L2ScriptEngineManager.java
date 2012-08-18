@@ -14,6 +14,8 @@
  */
 package com.l2jserver.gameserver.scripting;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,7 +43,6 @@ import javolution.util.FastMap;
 import com.l2jserver.Config;
 //import com.sun.script.jython.JythonScriptEngine;			//ê≥ãKî≈
 //import com.l2jserver.script.jython.JythonScriptEngine;	//ì˙ñ{åÍÉoÉOÇ†ÇË
-import com.l2jserver.util.Util;
 
 /**
  * Caches script engines and provides functionality for executing and managing scripts.
@@ -188,7 +189,7 @@ public final class L2ScriptEngineManager
 		if (list.isFile())
 		{
 			try (FileInputStream fis = new FileInputStream(list);
-				InputStreamReader isr = new InputStreamReader(fis);
+				InputStreamReader isr = new InputStreamReader(fis, UTF_8);
 				LineNumberReader lnr = new LineNumberReader(isr))
 			{
 				String line;
@@ -355,10 +356,9 @@ public final class L2ScriptEngineManager
 			}
 		}
 		
-		try (BufferedReader reader = Util.utf8BufferedReader(file))	//[JOJO] UTF-8 TODO:BOMëŒçÙ
-	//		FileInputStream fis = new FileInputStream(file);
-	//		InputStreamReader isr = new InputStreamReader(fis);
-	//		BufferedReader reader = new BufferedReader(isr))
+		try(FileInputStream fis = new FileInputStream(file);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader reader = new BufferedReader(isr))
 		{
 			if ((engine instanceof Compilable) && ATTEMPT_COMPILATION)
 			{
