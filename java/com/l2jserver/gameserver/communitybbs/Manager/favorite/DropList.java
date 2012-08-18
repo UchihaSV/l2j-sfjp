@@ -16,6 +16,8 @@ package com.l2jserver.gameserver.communitybbs.Manager.favorite;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.l2jserver.L2DatabaseFactory;
@@ -79,17 +81,15 @@ public class DropList extends BaseFavoriteManager
 		}
 		_log.info("UserName: " + activeChar.getName() + " SearchWord : " + where_str);
 		StringBuilder dropList = new StringBuilder();
-		java.sql.Connection con = null;
-		try
-		{
-			con = L2DatabaseFactory.getInstance().getConnection();
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement("SELECT level, npc.name as mobname, itemname_ja.name as itemname, category"
-																+ " FROM droplist,npc,itemname_ja"
-																+ " WHERE droplist.mobId = npc.id"
-																+ " AND droplist.itemId = itemname_ja.id"
-																+ " AND droplist.itemId != 57"
-																+ where_str
-																+ " ORDER BY level, npc.name, itemname_ja.name LIMIT 21");
+				+ " FROM droplist,npc,itemname_ja"
+				+ " WHERE droplist.mobId = npc.id"
+				+ " AND droplist.itemId = itemname_ja.id"
+				+ " AND droplist.itemId != 57"
+				+ where_str
+				+ " ORDER BY level, npc.name, itemname_ja.name LIMIT 21") )
+		{
 			statement.setString(1, "%" + optionWord + "%");
 			ResultSet result = statement.executeQuery();
 			int count = 0;
@@ -107,19 +107,13 @@ public class DropList extends BaseFavoriteManager
 				dropList.append("<td width=50 align=center>" + (result.getInt("category") == -1 ? "＊" : "－") + "</td>");
 				dropList.append("</tr></table>");
 			}
-			result.close();
-			statement.close();
 			
 			html = html.replace("%dropList%", dropList);
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			e.printStackTrace();
+			_log.log(Level.WARNING, "ドロップリスト作成中にエラーが発生しました。", e);
 			html = "ドロップリスト作成中にエラーが発生しました。";
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
 		}
 		separateAndSend(html, activeChar);
 	}

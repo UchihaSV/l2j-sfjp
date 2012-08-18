@@ -20,7 +20,10 @@ package com.l2jserver.gameserver.communitybbs.BB;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.l2jserver.L2DatabaseFactory;
@@ -49,68 +52,57 @@ public class CustomComment /**extends CustomMsg**/
 	{
 		int comTotal = -1;
 
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement
-				= con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS com_id,msg_date,from_name,from_id,message"
-												+ " FROM commentz"
-												+ " WHERE msg_id=?"
-												+ " AND delflg=0 ORDER BY com_id DESC"
-												+ " LIMIT ?,?");
-			statement.setInt(1, msgId);
-			statement.setInt(2, offset);
-			statement.setInt(3, limit);
-			ResultSet result = statement.executeQuery();			
-			while (result.next())
+			try (PreparedStatement statement = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS com_id,msg_date,from_name,from_id,message"
+											+ " FROM commentz"
+											+ " WHERE msg_id=?"
+											+ " AND delflg=0 ORDER BY com_id DESC"
+											+ " LIMIT ?,?"))
 			{
-				CustomComment t = new CustomComment();
-					t._msgId = msgId;
-					t._comId = result.getInt("com_id");
-					t._msgDate = result.getLong("msg_date");
-					t._fromName = result.getString("from_name");
-					t._fromId = result.getString("from_id");
-					t._message = result.getString("message");
-				comTable.add(t);
+				statement.setInt(1, msgId);
+				statement.setInt(2, offset);
+				statement.setInt(3, limit);
+				ResultSet result = statement.executeQuery();
+				while (result.next())
+				{
+					CustomComment t = new CustomComment();
+						t._msgId = msgId;
+						t._comId = result.getInt("com_id");
+						t._msgDate = result.getLong("msg_date");
+						t._fromName = result.getString("from_name");
+						t._fromId = result.getString("from_id");
+						t._message = result.getString("message");
+					comTable.add(t);
+				}
 			}
-			result.close();
-			statement.close();
-
-			statement = con.prepareStatement("SELECT FOUND_ROWS()");
-			result = statement.executeQuery();
-			if (result.next()) comTotal = result.getInt(1);
-			result.close();
-			statement.close();
+			try (Statement statement = con.createStatement())
+			{
+				ResultSet result = statement.executeQuery("SELECT FOUND_ROWS()");
+				if (result.next()) comTotal = result.getInt(1);
+			}
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			_log.warning("data error on commentz: " + e);
-			e.printStackTrace();
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "data error on commentz: ", e);
 		}
 		return comTotal;
 	}
 
 	public CustomComment load(int msgId, int comId)
 	{
-		java.sql.Connection con = null;
-		try
-		{
-			con = L2DatabaseFactory.getInstance().getConnection();
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement
 				= con.prepareStatement("SELECT C.msg_date,C.from_name,C.from_id,C.message"
 												+ ",M.title"
 												+ " FROM commentz AS C"
 												+ " LEFT JOIN messagez AS M ON C.msg_id=M.msg_id"
 												+ " WHERE C.msg_id=? AND com_id=?"
-												+ " AND C.delflg=0");
+												+ " AND C.delflg=0") )
+		{
 			statement.setInt(1, msgId);
 			statement.setInt(2, comId);
-			ResultSet result = statement.executeQuery();			
+			ResultSet result = statement.executeQuery();
 			if (result.next())
 			{
 				_msgId = msgId;
@@ -121,18 +113,10 @@ public class CustomComment /**extends CustomMsg**/
 				_message = result.getString("message");
 				_title = result.getString("title");
 			}
-			result.close();
-			statement.close();
-
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			_log.warning("data error on commentz: " + e);
-			e.printStackTrace();
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "data error on commentz: ", e);
 		}
 		return this;
 	}
@@ -140,46 +124,37 @@ public class CustomComment /**extends CustomMsg**/
 	public static boolean insert(int msgId, String comment, L2PcInstance activeChar)
 	{
 		boolean isSuccess = false;
-//-		if (activeChar == null) return isSuccess;
-//-		System.out.println("__BASENAME__:__LINE__: post " + activeChar.getName() + "[" + activeChar.getClient().getConnection().getInetAddress().getHostName() + "]");
 
-		java.sql.Connection con = null;
-		try
+		final long now = System.currentTimeMillis();
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-
-			PreparedStatement statement;
-			long now = System.currentTimeMillis();
-
-			statement = con.prepareStatement("INSERT INTO commentz"
-					+ " SET msg_date=?, from_name=?, from_id=?, message=?"
-					+ ", msg_id=?");
-			statement.setLong(1, now);
-			statement.setString(2, activeChar.getName());
-			statement.setString(3, activeChar.getAccountName2());
-			statement.setString(4, comment);
-			statement.setInt(5, msgId);
-			statement.executeUpdate();
-			statement.close();
+			try (PreparedStatement statement = con.prepareStatement("INSERT INTO commentz"
+				+ " SET msg_date=?, from_name=?, from_id=?, message=?"
+				+ ", msg_id=?") )
+			{
+				statement.setLong(1, now);
+				statement.setString(2, activeChar.getName());
+				statement.setString(3, activeChar.getAccountName2());
+				statement.setString(4, comment);
+				statement.setInt(5, msgId);
+				statement.executeUpdate();
+			}
 
 			// "age"
-			statement = con.prepareStatement("UPDATE messagez SET last_date=?"
+			try (PreparedStatement statement = con.prepareStatement("UPDATE messagez SET last_date=?"
 					+ ", com_max=(SELECT MAX(com_id) FROM commentz WHERE commentz.msg_id=messagez.msg_id GROUP BY msg_id)"
-					+ " WHERE msg_id=?");
-			statement.setLong(1, now);
-			statement.setInt(2, msgId);
-			statement.executeUpdate();
-			statement.close();
+					+ " WHERE msg_id=?"))
+			{
+				statement.setLong(1, now);
+				statement.setInt(2, msgId);
+				statement.executeUpdate();
+			}
 
 			isSuccess = true;
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			_log.warning("error while insert commentz to db " + e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "error while insert commentz to db ", e);
 		}
 		return isSuccess;
 	}
@@ -190,27 +165,19 @@ public class CustomComment /**extends CustomMsg**/
 		if (msgId == 0) return isSuccess;
 		if (comId == 0) return isSuccess;
 		
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("UPDATE commentz SET delflg=? WHERE msg_id=? AND com_id=?") )
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement;
-			statement = con.prepareStatement("UPDATE commentz SET delflg=? WHERE msg_id=? AND com_id=?");
 			statement.setInt(1, delflg);
 			statement.setInt(2, msgId);
 			statement.setInt(3, comId);
 			statement.executeUpdate();
-			statement.close();
 			
 			isSuccess = true;
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			_log.warning("error while delete commentz from db " + e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "error while delete commentz from db ", e);
 		}
 		return isSuccess;
 	}
