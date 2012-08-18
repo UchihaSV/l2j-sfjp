@@ -20,10 +20,13 @@ package com.l2jserver.gameserver.communitybbs.BB;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.l2jserver.L2DatabaseFactory;
@@ -167,51 +170,42 @@ public class CustomMsg
 			break;
 		}
 
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement;
-			String sql = "SELECT SQL_CALC_FOUND_ROWS msg_id,from_name,title,last_date,com_max,readflg"
-						+ " FROM messagez"
-						+ " WHERE msg_type=?"
-						+ "  AND to_id=?"
-						+ "  AND delflg=0"
-						+ " ORDER BY last_date DESC,msg_id DESC LIMIT ?,?";
-			statement = con.prepareStatement(sql);
-			statement.setInt(1, msgType.ordinal());
-			statement.setString(2, toId);
-			statement.setInt(3, offset);
-			statement.setInt(4, limit);
-			ResultSet result = statement.executeQuery();			
-			while (result.next())
+			try (PreparedStatement statement = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS msg_id,from_name,title,last_date,com_max,readflg"
+				+ " FROM messagez"
+				+ " WHERE msg_type=?"
+				+ "  AND to_id=?"
+				+ "  AND delflg=0"
+				+ " ORDER BY last_date DESC,msg_id DESC LIMIT ?,?") )
 			{
-				CustomMsg t = new CustomMsg();
-					t._msgId = result.getInt("msg_id");
-					t._fromName = result.getString("from_name");
-					t._title = result.getString("title");
-					t._msgDate = result.getLong("last_date");
-					t._readflg = result.getInt("readflg");
-					t._comCount = result.getInt("com_max");
-				msgTable.add(t);
+				statement.setInt(1, msgType.ordinal());
+				statement.setString(2, toId);
+				statement.setInt(3, offset);
+				statement.setInt(4, limit);
+				ResultSet result = statement.executeQuery();
+				while (result.next())
+				{
+					CustomMsg t = new CustomMsg();
+						t._msgId = result.getInt("msg_id");
+						t._fromName = result.getString("from_name");
+						t._title = result.getString("title");
+						t._msgDate = result.getLong("last_date");
+						t._readflg = result.getInt("readflg");
+						t._comCount = result.getInt("com_max");
+					msgTable.add(t);
+				}
 			}
-			result.close();
-			statement.close();
-
-			statement = con.prepareStatement("SELECT FOUND_ROWS()");
-			result = statement.executeQuery();
-			if (result.next()) msgTotal = result.getInt(1);
-			result.close();
-			statement.close();
+			
+			try (Statement statement = con.createStatement())
+			{
+				ResultSet result = statement.executeQuery("SELECT FOUND_ROWS()");
+				if (result.next()) msgTotal = result.getInt(1);
+			}
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			_log.warning("data error on messagez: " + e);
-			e.printStackTrace();
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "data error on messagez: ", e);
 		}
 		return msgTotal;
 	}
@@ -223,11 +217,9 @@ public class CustomMsg
 		_isSuccess = false;
 		if (_msgId == 0) return this;
 		
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM messagez WHERE msg_id=? AND delflg=0") )
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement("SELECT * FROM messagez WHERE msg_id=? AND delflg=0");
 			statement.setInt(1, _msgId);
 			ResultSet result = statement.executeQuery();
 			if (result.next())
@@ -242,19 +234,12 @@ public class CustomMsg
 				_message = result.getString("message");
 				_readflg = result.getInt("readflg");
 			}
-			result.close();
-			statement.close();
 			
 			_isSuccess = true;
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			_log.warning("data error on messagez " + _msgId + " : " + e);
-			e.printStackTrace();
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "data error on messagez " + _msgId + " : ", e);
 		}
 		return this;
 	}
@@ -303,16 +288,13 @@ public class CustomMsg
 			break;
 		}
 		
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("INSERT INTO messagez " +
+					"(msg_date, last_date, msg_type, to_name, to_id, from_name, from_id, title, message) " +
+					"values " +
+					"(?,?,?,?,?,?,?,?,?)") )
 		{
 			long now = System.currentTimeMillis();
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement;
-			statement = con.prepareStatement("INSERT INTO messagez " + 
-					"(msg_date, last_date, msg_type, to_name, to_id, from_name, from_id, title, message) " + 
-					"values " + 
-					"(?,?,?,?,?,?,?,?,?)");
 			statement.setLong(1, now);
 			statement.setLong(2, now);
 			statement.setInt(3, msgType.ordinal());
@@ -323,7 +305,6 @@ public class CustomMsg
 			statement.setString(8, title);
 			statement.setString(9, message);
 			statement.executeUpdate();
-			statement.close();
 
 //			statement = con.prepareStatement("SELECT LAST_INSERT_ID()");	//MySQL 5.1.12
 //			ResultSet result = statement.executeQuery();
@@ -336,13 +317,9 @@ public class CustomMsg
 
 			_isSuccess = true;
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			_log.warning("error while insert messagez to db " + e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "error while insert messagez to db ", e);
 		}
 		return _isSuccess;
 	}
@@ -355,29 +332,21 @@ public class CustomMsg
 		boolean isSuccess = false;
 		if (msgId == 0) return isSuccess;
 		
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("UPDATE messagez SET last_date=?, title=?, message=? WHERE msg_id=?") )
 		{
 			long now = System.currentTimeMillis();
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement;
-			statement = con.prepareStatement("UPDATE messagez SET last_date=?, title=?, message=? WHERE msg_id=?");
 			statement.setLong(1, now);
 			statement.setString(2, title);
 			statement.setString(3, message);
 			statement.setInt(4, msgId);
 			statement.executeUpdate();
-			statement.close();
 			
 			isSuccess = true;			
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			_log.warning("error while update messagez to db " + e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "error while update messagez to db ", e);
 		}
 		return isSuccess;
 	}
@@ -390,26 +359,18 @@ public class CustomMsg
 		boolean isSuccess = false;
 		if (msgId == 0) return isSuccess;
 		
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("UPDATE messagez SET delflg=? WHERE msg_id=?") )
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement;
-			statement = con.prepareStatement("UPDATE messagez SET delflg=? WHERE msg_id=?");
 			statement.setInt(1, delflg);
 			statement.setInt(2, msgId);
 			statement.executeUpdate();
-			statement.close();
 
 			isSuccess = true;
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			_log.warning("error while delete messagez from db " + e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "error while delete messagez from db ", e);
 		}
 		return isSuccess;
 	}
@@ -422,27 +383,19 @@ public class CustomMsg
 		_isSuccess = false;
 		if (_msgId == 0) return;
 		
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("UPDATE messagez SET readflg=? WHERE msg_id=?") )
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement;
-			statement = con.prepareStatement("UPDATE messagez SET readflg=? WHERE msg_id=?");
-			statement.setInt(1, (readFlg) ? 1 : 0);
+			statement.setInt(1, readFlg ? 1 : 0);
 			statement.setInt(2, _msgId);
 			statement.executeUpdate();
-			statement.close();
 			
-			_readflg = (readFlg) ? 1 : 0;
+			_readflg = readFlg ? 1 : 0;
 			_isSuccess = true;			
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			_log.warning("error while update messagez to db " + e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "error while update messagez to db ", e);
 		}
 	}
 
@@ -452,31 +405,21 @@ public class CustomMsg
 	public static int getPrivateMsgCnt(L2PcInstance activeChar)
 	{
 		int ret = 0;
-		java.sql.Connection con = null;
-		try
-		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement;
-			statement = con.prepareStatement("SELECT COUNT(*) FROM messagez"
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("SELECT COUNT(*) FROM messagez"
 					+ " WHERE msg_type=2"
 					+ " AND to_id=?"
 					+ " AND readflg=0"
-					+ " AND delflg=0");
+					+ " AND delflg=0") )
+		{
 			statement.setString(1, activeChar.getAccountName2());
 			ResultSet result = statement.executeQuery();
 			if (result.next())
 				ret = result.getInt(1);
-			result.close();
-			statement.close();
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			_log.warning("data error on messagez: " + e);
-			e.printStackTrace();
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "data error on messagez: ", e);
 		}
 		return ret;
 	}
@@ -493,30 +436,17 @@ public class CustomMsg
 		if (pc != null) return pc.getClient().getAccountName();
 //		pc = null;
 
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("SELECT account_name FROM characters WHERE char_name=?") )
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement;
-			statement = con.prepareStatement("SELECT account_name FROM characters WHERE char_name=?");
 			statement.setString(1, name);
 			ResultSet result = statement.executeQuery();
-
 			if (result.next())
-			{
 				ret = result.getString("account_name");
-			}
-			result.close();
-			statement.close();
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
-			_log.warning("data error on characters : " + e);
-			e.printStackTrace();
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "data error on characters : ", e);
 		}
 		return ret;
 	}

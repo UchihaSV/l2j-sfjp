@@ -20,6 +20,8 @@ package com.l2jserver.gameserver.communitybbs.Manager;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.l2jserver.L2DatabaseFactory;
@@ -76,11 +78,9 @@ public class FriendListManager extends BaseBBSManager
 			+ "<TD fixWIDTH=5></td>"
 			+ "<TD fixWIDTH=600>");
 		
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("SELECT characters.char_name AS friend_name FROM character_friends LEFT JOIN characters ON (character_friends.friendId=characters.charId) WHERE character_friends.charId=? ORDER BY friend_name") )
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement("SELECT characters.char_name AS friend_name FROM character_friends LEFT JOIN characters ON (character_friends.friendId=characters.charId) WHERE character_friends.charId=? ORDER BY friend_name");
 			statement.setInt(1, activeChar.getObjectId());
 			ResultSet rset = statement.executeQuery();
 			while (rset.next())
@@ -90,14 +90,9 @@ public class FriendListManager extends BaseBBSManager
 				html.append("<A action=\"bypass _bbscustom;msgnew;private;").append(friendName).append("\">").append(friendName).append("</A>"
 					+ " (").append(friend != null && friend.isOnline() ? "&$1006;":"&$1007;").append(") &nbsp;");
 			}
-			rset.close();
-			statement.close();
 		}
-		catch (Exception e) {
-			_log.warning("Error in friendlist : " + e);
-		}
-		finally	{
-			L2DatabaseFactory.close(con);
+		catch (SQLException e) {
+			_log.log(Level.WARNING, "Error in friendlist : ", e);
 		}
 		
 		html.append("</TD>"

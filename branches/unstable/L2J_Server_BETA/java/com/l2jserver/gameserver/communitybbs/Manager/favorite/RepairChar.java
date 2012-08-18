@@ -16,7 +16,9 @@ package com.l2jserver.gameserver.communitybbs.Manager.favorite;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.l2jserver.Config;
@@ -108,86 +110,82 @@ public class RepairChar extends BaseFavoriteManager
 	@SuppressWarnings("deprecation")
 	private void doRepairChar(L2PcInstance activeChar, int obj_id)
 	{
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement;
-
 			int nx = Config.CUSTOM_CHARA_REPAIR_LOC[0], ny = Config.CUSTOM_CHARA_REPAIR_LOC[1], nz = Config.CUSTOM_CHARA_REPAIR_LOC[2];
 			if (CUSTOM_CHARA_REPAIR_NEAREST_TOWN)
 			{
 				// 最寄の村
-				statement = con.prepareStatement("SELECT x,y,z,pkkills,accesslevel FROM characters WHERE charId=?");
-				statement.setInt(1, obj_id);
-				ResultSet rs = statement.executeQuery();
-				if (rs.next())
+				try (PreparedStatement statement = con.prepareStatement("SELECT x,y,z,pkkills,accesslevel FROM characters WHERE charId=?"))
 				{
-					if (rs.getInt("accesslevel") < 0)
+					statement.setInt(1, obj_id);
+					ResultSet rs = statement.executeQuery();
+					if (rs.next())
 					{
-						showMessage(activeChar, "復旧できないキャラクターです。");
-						return;
-					}
-					final int x = rs.getInt("x"), y = rs.getInt("y"), z = rs.getInt("z");
-					L2MapRegion mr = MapRegionManager.getInstance().getClosestTown(x, y);	/*最寄の村*/
-					if (mr == null)
-						mr = MapRegionManager.getInstance().getMapRegion(146494, 30584);	/*アデン*/
-					Location loc = mr.getSpawnLoc();
-					nx = loc.getX();
-					ny = loc.getY();
-					nz = loc.getZ();
-					if (rs.getInt("pkkills") > 5)
-					{
-						nx = 17817;
-						ny = 170079;
-						nz = -3530; /*赤ネ⇒フォローラン村*/
-					}
-					for (L2ZoneType zone : ZoneManager.getInstance().getAllZones())
-						if (zone instanceof L2JailZone && zone.isInsideZone(x, y, z)) /*説教部屋*/
+						if (rs.getInt("accesslevel") < 0)
 						{
-							nx = x;
-							ny = y;
-							nz = z;
-							break;
+							showMessage(activeChar, "復旧できないキャラクターです。");
+							return;
 						}
+						final int x = rs.getInt("x"), y = rs.getInt("y"), z = rs.getInt("z");
+						L2MapRegion mr = MapRegionManager.getInstance().getClosestTown(x, y);	/*最寄の村*/
+						if (mr == null)
+							mr = MapRegionManager.getInstance().getMapRegion(146494, 30584);	/*アデン*/
+						Location loc = mr.getSpawnLoc();
+						nx = loc.getX();
+						ny = loc.getY();
+						nz = loc.getZ();
+						if (rs.getInt("pkkills") > 5)
+						{
+							nx = 17817;
+							ny = 170079;
+							nz = -3530; /*赤ネ⇒フォローラン村*/
+						}
+						for (L2ZoneType zone : ZoneManager.getInstance().getAllZones())
+							if (zone instanceof L2JailZone && zone.isInsideZone(x, y, z)) /*説教部屋*/
+							{
+								nx = x;
+								ny = y;
+								nz = z;
+								break;
+							}
+					}
+					rs.close();
 				}
-				rs.close();
-				statement.close();
 			}
 
 			// 強制移動処理
-			statement = con.prepareStatement("UPDATE characters SET x=?,y=?,z=? WHERE charId=?");
-			statement.setInt(1, nx);
-			statement.setInt(2, ny);
-			statement.setInt(3, nz);
-			statement.setInt(4, obj_id);
-			statement.execute();
-			statement.close();
+			try (PreparedStatement statement = con.prepareStatement("UPDATE characters SET x=?,y=?,z=? WHERE charId=?"))
+			{
+				statement.setInt(1, nx);
+				statement.setInt(2, ny);
+				statement.setInt(3, nz);
+				statement.setInt(4, obj_id);
+				statement.execute();
+			}
 
 			// 強制スキル削除処理
-			statement = con.prepareStatement("DELETE FROM character_skills_save WHERE charId=?");
-			statement.setInt(1, obj_id);
-			statement.execute();
-			statement.close();
+			try (PreparedStatement statement = con.prepareStatement("DELETE FROM character_skills_save WHERE charId=?"))
+			{
+				statement.setInt(1, obj_id);
+				statement.execute();
+			}
 
 			// 強制装備解除処理
-			statement = con.prepareStatement("UPDATE items SET loc='INVENTORY', loc_data=0 WHERE owner_id=? AND loc='PAPERDOLL'");
-			statement.setInt(1, obj_id);
-			statement.execute();
-			statement.close();
+			try (PreparedStatement statement = con.prepareStatement("UPDATE items SET loc='INVENTORY', loc_data=0 WHERE owner_id=? AND loc='PAPERDOLL'"))
+			{
+				statement.setInt(1, obj_id);
+				statement.execute();
+			}
 
 			showMessage(activeChar, "キャラクター復旧が完了しました。");
 			_log.info(activeChar.getAccountName() + " がキャラクターを復旧しました。");
 //			FavoriteMain.getInstance().showFavorite(activeChar);
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
 			showMessage(activeChar, "キャラクター復旧に失敗しました。");
-			_log.info("Error could not repair char: " + e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "Error could not repair char: ", e);
 		}
 	}
 }

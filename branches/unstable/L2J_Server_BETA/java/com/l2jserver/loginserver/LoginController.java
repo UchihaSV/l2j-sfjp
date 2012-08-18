@@ -801,29 +801,21 @@ public class LoginController
 	{
 		int ret = 0;
 
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("SELECT userLevel FROM accounts WHERE login=?") )
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement("SELECT userLevel FROM accounts WHERE login=?");
 			statement.setString(1, account);
 			ResultSet rset = statement.executeQuery();
 			if (rset.next())
 			{
 				ret = rset.getInt(1);
 			}
-			rset.close();
-			statement.close();
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
 			// digest algo not found ??
 			// out of bounds should not be possible
-			_log.warning("could not check userlevel state:" + e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "could not check userlevel state:", e);
 		}
 
 		return ret;
@@ -834,11 +826,9 @@ public class LoginController
 	{
 		boolean ok = false;
 
-		java.sql.Connection con = null;
-		try
+		try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("SELECT login FROM accounts WHERE lastIP=? and accessLevel = -100") )
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement("SELECT login FROM accounts WHERE lastIP=? and accessLevel = -100");
 			statement.setString(1, address);
 			ResultSet rset = statement.executeQuery();
 			if (rset.next())
@@ -846,18 +836,12 @@ public class LoginController
 				ok = true;
 				_log.warning("connection from IP exists in BAN List (ID:" + user + ", IP:" + address + ")");
 			}
-			rset.close();
-			statement.close();
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
 			// digest algo not found ??
 			// out of bounds should not be possible
-			_log.warning("could not check IP in BanList:" + e);
-		}
-		finally
-		{
-			L2DatabaseFactory.close(con);
+			_log.log(Level.WARNING, "could not check IP in BanList:", e);
 		}
 
 		return ok;
