@@ -23,6 +23,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.l2jserver.Config;
@@ -267,7 +268,7 @@ public class LoginStatusThread extends Thread
 		}
 		catch (IOException e)
 		{
-			_log.warning(getClass().getSimpleName() + ": " + e.getMessage());
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": ", e);
 		}
 	}
 	

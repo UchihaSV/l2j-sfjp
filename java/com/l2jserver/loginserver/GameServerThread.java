@@ -23,6 +23,7 @@ import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastSet;
@@ -216,7 +217,7 @@ public class GameServerThread extends Thread
 		}
 		catch (IOException e)
 		{
-			_log.warning(getClass().getSimpleName() + ": " + e.getMessage());
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": ", e);
 		}
 		KeyPair pair = GameServerTable.getInstance().getKeyPair();
 		_privateKey = (RSAPrivateKey) pair.getPrivate();
