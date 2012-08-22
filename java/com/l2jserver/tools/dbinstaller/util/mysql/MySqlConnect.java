@@ -34,7 +34,7 @@ public class MySqlConnect
 		try (Formatter form = new Formatter())
 		{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			final String formattedText = form.format("jdbc:mysql://%1$s:%2$s", host, port).toString();
+			final String formattedText = form.format("jdbc:mysql://%1$s:%2$s?useUnicode=true&characterEncoding=UTF-8", host, port).toString();	//[JOJO] UTF-8
 			con = DriverManager.getConnection(formattedText, user, password);
 			
 			try (Statement s = con.createStatement())

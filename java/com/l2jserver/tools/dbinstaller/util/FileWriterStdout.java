@@ -23,7 +23,6 @@ import java.io.IOException;
  */
 public class FileWriterStdout extends BufferedWriter
 {
-	
 	public FileWriterStdout(FileWriter fileWriter)
 	{
 		super(fileWriter);
