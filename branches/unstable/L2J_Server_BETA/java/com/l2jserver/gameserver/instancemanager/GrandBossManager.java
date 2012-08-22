@@ -328,10 +328,12 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	private void storeToDb()
 	{
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement delete = con.prepareStatement(DELETE_GRAND_BOSS_LIST))
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			delete.executeUpdate();
+			try (PreparedStatement delete = con.prepareStatement(DELETE_GRAND_BOSS_LIST))
+			{
+				delete.executeUpdate();
+			}
 			
 			try (PreparedStatement insert = con.prepareStatement(INSERT_GRAND_BOSS_LIST))
 			{
@@ -352,36 +354,35 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 					}
 				}
 			}
-			for (Integer bossId : _storedInfo.keys())
+			try (PreparedStatement update_grand_boss_data2 = con.prepareStatement(UPDATE_GRAND_BOSS_DATA2);
+			     PreparedStatement update_grand_boss_data3 = con.prepareStatement(UPDATE_GRAND_BOSS_DATA3);
+			     PreparedStatement update_grand_boss_data1 = con.prepareStatement(UPDATE_GRAND_BOSS_DATA) )
 			{
-				final L2GrandBossInstance boss = _bosses.get(bossId);
-				StatsSet info = _storedInfo.get(bossId);
-				if (boss == null && info == null)
-			//	if (boss == null || info == null)
+				for (Integer bossId : _storedInfo.keys())
 				{
-					try (PreparedStatement update = con.prepareStatement(UPDATE_GRAND_BOSS_DATA2))
+					final L2GrandBossInstance boss = _bosses.get(bossId);
+					StatsSet info = _storedInfo.get(bossId);
+					if (boss == null && info == null)
+				//	if (boss == null || info == null)
 					{
+						PreparedStatement update = update_grand_boss_data2;
 						update.setInt(1, _bossStatus.get(bossId));
 						update.setInt(2, bossId);
 						update.executeUpdate();
 						update.clearParameters();
 					}
-				}
-				else if (boss == null && info != null)
-				{
-					try (PreparedStatement update = con.prepareStatement(UPDATE_GRAND_BOSS_DATA3))
+					else if (boss == null && info != null)
 					{
+						PreparedStatement update = update_grand_boss_data3;
 						update.setLong(1, info.getLong("respawn_time"));
 						update.setInt(2, _bossStatus.get(bossId));
 						update.setInt(3, bossId);
 						update.executeUpdate();
 						update.clearParameters();
 					}
-				}
-				else if (boss != null && info != null)
-				{
-					try (PreparedStatement update = con.prepareStatement(UPDATE_GRAND_BOSS_DATA))
+					else if (boss != null && info != null)
 					{
+						PreparedStatement update = update_grand_boss_data1;
 						update.setInt(1, boss.getX());
 						update.setInt(2, boss.getY());
 						update.setInt(3, boss.getZ());
@@ -401,9 +402,9 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 						update.executeUpdate();
 						update.clearParameters();
 					}
+					else /*if (boss != null && info == null)*/
+						throw new RuntimeException();
 				}
-				else /*if (boss != null && info == null)*/
-					throw new RuntimeException();
 			}
 		}
 		catch (SQLException e)
