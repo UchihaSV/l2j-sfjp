@@ -49,8 +49,9 @@ public class DBDumper
 	
 	public void createDump()
 	{
-		try (Connection con = _frame.getConnection())
+		try
 		{
+			Connection con = _frame.getConnection();
 			String serverVersion = "Unknown";
 			try (Statement s = con.createStatement();
 				ResultSet rset = s.executeQuery("SELECT VERSION()"))
@@ -58,13 +59,13 @@ public class DBDumper
 				if (rset.next())
 					serverVersion = rset.getString(1);
 			}
-			catch (Exception e) {/*ignore error*/}
+			catch (SQLException e) {/*ignore error*/}
 			
 			try (Statement s = con.createStatement();
 				ResultSet rset = s.executeQuery("SHOW TABLES"))
 			{
 				Formatter form = new Formatter();
-				File dump = new File("dumps", form.format("%1$s_dump_%2$tY%2$tm%2$td-%2$tH%2$tM%2$tS.sql", _db, new GregorianCalendar().getTime()).toString());
+				File dump = new File("dumps", form.format("dump_%3$s_%1$s_%2$tY%2$tm%2$td-%2$tH%2$tM%2$tS.sql", _db, new GregorianCalendar().getTime(), _host).toString());
 				form.close();
 				new File("dumps").mkdir();
 				dump.createNewFile();
@@ -146,11 +147,7 @@ public class DBDumper
 				}
 			}
 		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		catch (SQLException e)
+		catch (IOException | SQLException e)
 		{
 			e.printStackTrace();
 		}

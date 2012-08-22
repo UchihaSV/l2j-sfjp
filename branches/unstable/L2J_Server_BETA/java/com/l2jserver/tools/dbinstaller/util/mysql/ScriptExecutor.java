@@ -16,15 +16,14 @@ package com.l2jserver.tools.dbinstaller.util.mysql;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -73,44 +72,47 @@ public class ScriptExecutor
 		execSqlFile(file, false);
 	}
 	
-	public void execSqlFile(File file, boolean skipErrors)
+	private void execSqlFile(File file, boolean skipErrors)
 	{
-		String sql = null;
+		execSqlFile(file, skipErrors, "Installing ");
+	}
+	
+	private void execSqlFile(File file, boolean skipErrors, String header)
+	{
+		int lineNumber = 0;
 		log(file.getPath() + ":");
-		_frame.appendToProgressArea("Installing " + file.getName());
-		try (Connection con = _frame.getConnection();
-			Statement stmt = con.createStatement();
-			BufferedReader scn = new BufferedReader(new InputStreamReader(new FileInputStream(file), UTF_8)))
+		_frame.appendToProgressArea(header + file.getName());
+		Connection con = _frame.getConnection();
+		try (Statement stmt = con.createStatement();
+			LineNumberReader scn = new LineNumberReader(new InputStreamReader(new FileInputStream(file), UTF_8)))
 		{
 			StringBuilder sb = new StringBuilder();
+			Pattern patternComment1 = Pattern.compile("(?<!-)--\\s.*");	// -- comment
+	//TODO:	Pattern patternComment2 = Pattern.compile("#.*");			// #comment
+	//TODO:																// /*comment*/
 			Pattern patternSourceStatement = Pattern.compile("^SOURCE[ \t]+(.+);$", Pattern.CASE_INSENSITIVE);
 			String line;
 			while ((line = scn.readLine()) != null)
 			{
+				line = line + "\n";
 				if (line.startsWith("\uFEFF"))
 					line = line.substring(1);
-				if (line.startsWith("--"))
+				String trimed = patternComment1.matcher(line).replaceFirst("").trim();
+				if (sb.length() == 0)
 				{
-					continue;
+					if (trimed.length() == 0)
+						continue;
+					lineNumber = scn.getLineNumber();
 				}
-				else if (line.contains("--"))
-				{
-					line = line.split("--")[0];
-				}
+				sb.append(line);
 				
-				line = line.trim();
-				if (!line.isEmpty())
+				if (trimed.endsWith(";"))
 				{
-					sb.append(line).append('\n');
-				}
-				
-				if (line.endsWith(";"))
-				{
-					sql = sb.toString();
+					String sql = sb.toString();
 					sb.setLength(0);
 					Matcher m = patternSourceStatement.matcher(sql);
 					if (m.find())
-						execSqlFile(new File(m.group(1)), skipErrors);	//recursive call
+						execSqlFile(new File(m.group(1)), skipErrors, "SOURCE ");	//recursive call
 					else if (skipErrors)
 						try
 						{
@@ -122,40 +124,41 @@ public class ScriptExecutor
 						}
 					else
 						stmt.execute(sql);
-					sql = null;
 				}
 			}
+			if (sb.length() > 0)
+				stmt.execute(sb.toString());	//TODO: SOURCE, skipErrors
 		}
 		catch (FileNotFoundException e)
 		{
-			log(e.getMessage());
+			log(e);
 			JOptionPane.showMessageDialog(null, "File Not Found!: " + e.getMessage(), "Installer Error", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (SQLException e)
 		{
-			log(e.getMessage());
-			if (!skipErrors)
+			log(e);
+			assert !skipErrors;
+			Object[] options =
 			{
-				Object[] options =
-				{
-					"Continue",
-					"Abort"
-				};
-				int n = JOptionPane.showOptionDialog(null, "MySQL Error: " + e.getMessage()
-					+ "\r\n" + file.getPath()
-					+ (sql == null ? "" : "\r\n" + sql)
-					, "Script Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-				
-				if (n == 1)
-				{
-					System.exit(0);
-				}
-			}
+				"Continue",
+				"Abort"
+			};
+			
+			Matcher m = Pattern.compile(" at line (\\d+)"/*, Pattern.CASE_INSENSITIVE*/).matcher(e.getMessage());
+			if (m.find())
+				lineNumber = lineNumber + Integer.parseInt(m.group(1)) - 1;
+			m = null;
+			
+			int n = JOptionPane.showOptionDialog(null, "MySQL Error: " + e.getMessage()
+				+ "\r\n" + file.getPath() + (lineNumber > 0 ? " at line " + lineNumber : "")
+				, "Script Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+			
+			if (n == 1)
+				System.exit(0);
 		}
 		catch (Exception e)
 		{
-			log(e.getMessage());
-			e.printStackTrace();  //console: java -jar dbinst_gs.jar
+			log(e);
 			
 			Object[] options =
 			{
@@ -168,16 +171,44 @@ public class ScriptExecutor
 			System.exit(0);
 		}
 	}
-	private void log(String msg)
+	private PrintWriter openLog()
 	{
-		try (BufferedWriter log = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(_log, true), UTF_8)))
+		try
 		{
-			log.write(msg);
-			log.write("\r\n");
+			return new PrintWriter(new OutputStreamWriter(new FileOutputStream(_log, true), UTF_8));
 		}
-		catch (IOException e)
+		catch (FileNotFoundException e)
 		{
 			e.printStackTrace();
+			return null;
 		}
 	}
+	private void log(String msg)
+	{
+		System.out.println(msg);	// console: java -jar dbinst_gs.jar
+		
+		PrintWriter log = openLog();
+		log.println(msg);
+		log.close();
+	}
+	private void log(Throwable error)
+	{
+		error.printStackTrace();
+		
+		PrintWriter log = openLog();
+		error.printStackTrace(log);
+		log.close();
+	}
+ //	@SuppressWarnings("unused") private void log(String msg, Throwable error)
+ //	{
+ //		System.out.print(msg);	// console: java -jar dbinst_gs.jar
+ //		System.out.print(" - ");
+ //		error.printStackTrace();
+ //		
+ //		PrintWriter log = openLog();
+ //		log.print(msg);
+ //		log.print(" - ");
+ //		error.printStackTrace(log);
+ //		log.close();
+ //	}
 }
