@@ -2340,12 +2340,9 @@ public class Quest extends ManagedScript
 	 */
 	public String showHtmlFile(L2PcInstance player, String fileName)
 	{
-		boolean questwindow = true;
-		if (fileName.endsWith(".html"))
-		{
-			questwindow = false;
-		}
+		boolean questwindow = !fileName.endsWith(".html");
 		int questId = getQuestIntId();
+		
 		// Create handler to file linked to the quest
 		String content = getHtm(player.getHtmlPrefix(), fileName);
 		
@@ -2353,19 +2350,21 @@ public class Quest extends ManagedScript
 		if (content != null)
 		{
 			if (player.getTarget() != null)
-				content = content.replaceAll("%objectId%", String.valueOf(player.getTarget().getObjectId()));
+			{
+				content = content.replaceAll("%objectId%", Integer.toString(player.getTargetId()));
+			}
 			
 			if (questwindow && isQuests() && questId != 999)							//[JOJO]
 		//	if (questwindow && (questId > 0) && (questId < 20000) && (questId != 999))
 			{
-				NpcQuestHtmlMessage npcReply = new NpcQuestHtmlMessage(5, questId);
+				NpcQuestHtmlMessage npcReply = new NpcQuestHtmlMessage(player.getTargetId(), questId);
 				npcReply.setHtml(content);
 				npcReply.replace("%playername%", player.getName());
 				player.sendPacket(npcReply);
 			}
 			else
 			{
-				NpcHtmlMessage npcReply = new NpcHtmlMessage(5);
+				NpcHtmlMessage npcReply = new NpcHtmlMessage(player.getTargetId());
 				npcReply.setHtml(content);
 				npcReply.replace("%playername%", player.getName());
 				player.sendPacket(npcReply);
@@ -2383,7 +2382,7 @@ public class Quest extends ManagedScript
 	 * @return
 	 */
 	public String getHtm(String prefix, String fileName)
-	{
+	{	
 		if (fileName.startsWith("data/"))	//[JOJO]
 		{
 			if (fileName.contains("..") || fileName.contains("/admin/"))
@@ -2394,17 +2393,20 @@ public class Quest extends ManagedScript
 			return HtmCache.getInstance().getHtm(prefix, fileName);
 		}
 		
-		String content = HtmCache.getInstance().getHtm(prefix, "data/scripts/" + getDescr().toLowerCase() + "/" + getName() + "/" + fileName);
-		
+		String content = HtmCache.getInstance().getHtm(prefix, fileName.startsWith("data/") ? fileName : "data/scripts/" + getDescr().toLowerCase() + "/" + getName() + "/" + fileName);
 		if (content == null)
 		{
 			content = HtmCache.getInstance().getHtm(prefix, "data/scripts/quests/Q" + getName() + "/" + fileName);
 			if (content == null)
 			{
-				content = HtmCache.getInstance().getHtmForce(prefix, "data/scripts/quests/" + getName() + "/" + fileName);
+				// UnAfraid: TODO: Temp fix must be removed once all quests are updated.
+				content = HtmCache.getInstance().getHtm(prefix, "data/scripts/" + getClass().getPackage().getName().replace(".", "/") + "/" + fileName);
+				if (content == null)
+				{
+					content = HtmCache.getInstance().getHtmForce(prefix, "data/scripts/quests/" + getName() + "/" + fileName);
+				}
 			}
 		}
-		
 		return content;
 	}
 	
