@@ -38,6 +38,7 @@ public final class L2Properties extends Properties
 	
 	public L2Properties()
 	{
+		
 	}
 	
 	public L2Properties(String name) throws IOException
