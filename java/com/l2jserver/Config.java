@@ -2278,25 +2278,27 @@ public final class Config
 			RAID_MIN_RESPAWN_MULTIPLIER = Float.parseFloat(NPC.getProperty("RaidMinRespawnMultiplier", "1.0"));
 			RAID_MAX_RESPAWN_MULTIPLIER = Float.parseFloat(NPC.getProperty("RaidMaxRespawnMultiplier", "1.0"));
 			RAID_MINION_RESPAWN_TIMER = Integer.parseInt(NPC.getProperty("RaidMinionRespawnTime", "300000"));
-			final String[] propertySplit = NPC.getProperty("CustomMinionsRespawnTime", "").split(";");
-			MINIONS_RESPAWN_TIME = new TIntIntHashMap(propertySplit.length);
-			for (String prop : propertySplit)
 			{
-				String[] propSplit = prop.split(",");
-				if (propSplit.length != 2)
+				final String[] propertySplit = NPC.getProperty("CustomMinionsRespawnTime", "").split(";");
+				MINIONS_RESPAWN_TIME = new TIntIntHashMap(propertySplit.length);
+				for (String prop : propertySplit)
 				{
-					_log.warning(StringUtil.concat("[CustomMinionsRespawnTime]: invalid config property -> CustomMinionsRespawnTime \"", prop, "\""));
-				}
-				
-				try
-				{
-					MINIONS_RESPAWN_TIME.put(Integer.parseInt(propSplit[0]), Integer.parseInt(propSplit[1]));
-				}
-				catch (NumberFormatException nfe)
-				{
-					if (!prop.isEmpty())
+					String[] propSplit = prop.split(",");
+					if (propSplit.length != 2)
 					{
-						_log.warning(StringUtil.concat("[CustomMinionsRespawnTime]: invalid config property -> CustomMinionsRespawnTime \"", propSplit[0], "\"", propSplit[1]));
+						_log.warning(StringUtil.concat("[CustomMinionsRespawnTime]: invalid config property -> CustomMinionsRespawnTime \"", prop, "\""));
+					}
+					
+					try
+					{
+						MINIONS_RESPAWN_TIME.put(Integer.parseInt(propSplit[0]), Integer.parseInt(propSplit[1]));
+					}
+					catch (NumberFormatException nfe)
+					{
+						if (!prop.isEmpty())
+						{
+							_log.warning(StringUtil.concat("[CustomMinionsRespawnTime]: invalid config property -> CustomMinionsRespawnTime \"", propSplit[0], "\"", propSplit[1]));
+						}
 					}
 				}
 			}
