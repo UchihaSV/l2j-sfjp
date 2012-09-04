@@ -308,9 +308,9 @@ public final class SystemMessageId
 	public static final SystemMessageId UNABLE_COMBAT_PLEASE_GO_RESTART;
 	
 	/**
-	 * ID: 32<br>
-	 * Message: 戦闘不能に陥りました。最寄りのリスタート ポイントに移動します。<br>
-	 * Message: &#24744;&#24050;&#28961;&#27861;&#32380;&#32396;&#36914;&#34892;&#25136;&#39717;&#65292;&#35531;&#22238;&#21040;&#35282;&#33394;&#37325;&#29983;&#22320;&#40670;&#12290;<br>
+	 * ID: 33<br>
+	 * Message: 魔法の使用中には移動できません。<br>
+	 * Message: &#26045;&#23637;&#39764;&#27861;&#26178;&#35282;&#33394;&#28961;&#27861;&#31227;&#21205;&#12290;<br>
 	 * Message: You cannot move while casting.
 	 */
 	public static final SystemMessageId CANT_MOVE_CASTING;
@@ -1682,6 +1682,34 @@ public final class SystemMessageId
 	 * Message: $s2 of the clan $s1 requests declaration of war. Do you accept?
 	 */
 	public static final SystemMessageId S2_OF_THE_CLAN_S1_REQUESTS_WAR;
+	
+	/**
+	 * ID: 208<br>
+	 * Message: 登録する画像ファイルの拡張子を含むフルパスを入力してください。<br>
+	 * Message: &#35531;&#36664;&#20837;&#27491;&#30906;&#30340;&#27284;&#26696;&#36335;&#24465;&#65288;&#21253;&#21547;&#21103;&#27284;&#21517;&#65289;&#12290;<br>
+	 * Message: Please include file type when entering file path.
+	 */
+	
+	/**
+	 * ID: 209<br>
+	 * Message: 画像ファイルのサイズが正しくありません。16x12ピクセルに指定してください。<br>
+	 * Message: &#22294;&#20687;&#27284;&#26696;&#19981;&#31526;&#65292;&#35531;&#20351;&#29992;&#49;&#54;&#42;&#49;&#50;&#20687;&#32032;&#65292;&#50;&#53;&#54;&#33394;&#30340;&#98;&#109;&#112;&#27284;&#26696;&#12290;<br>
+	 * Message: The size of the image file is inappropriate. Please adjust to 16x12 pixels.
+	 */
+	
+	/**
+	 * ID: 210<br>
+	 * Message: ファイルが見つかりません。正しいパスを入力してください。<br>
+	 * Message: &#28961;&#27861;&#25214;&#21040;&#27284;&#26696;&#65292;&#35531;&#37325;&#26032;&#36664;&#20837;&#27491;&#30906;&#36335;&#24465;&#12290;<br>
+	 * Message: Cannot find file. Please enter precise path.
+	 */
+	
+	/**
+	 * ID: 211<br>
+	 * Message: 16x12ピクセルの256色のBMPファイルのみ登録できます。<br>
+	 * Message: &#21482;&#33021;&#19978;&#20659;&#49;&#54;&#42;&#49;&#50;&#20687;&#32032;&#65292;&#50;&#53;&#54;&#33394;&#30340;&#98;&#109;&#112;&#27284;&#26696;&#12290;<br>
+	 * Message: You can only register 16x12 pixel 256 color bmp files.
+	 */
 	
 	/**
 	 * ID: 212<br>
@@ -3500,9 +3528,9 @@ public final class SystemMessageId
 	public static final SystemMessageId ACCESS_FAILED;
 	
 	/**
-	 * ID: 461<br>
-	 * Message: ゲーム サーバーの接続に失敗しました。<br>
-	 * Message: &#33287;&#36938;&#25138;&#20282;&#26381;&#22120;&#36899;&#32218;&#22833;&#25943;&#12290;<br>
+	 * ID: 462<br>
+	 * Message: しばらくしてからやり直してください。<br>
+	 * Message: &#35531;&#31245;&#24460;&#20877;&#22039;&#35430;&#12290;<br>
 	 * Message: Please try again later.
 	 */
 	public static final SystemMessageId PLEASE_TRY_AGAIN_LATER;
@@ -4052,6 +4080,13 @@ public final class SystemMessageId
 	public static final SystemMessageId DISABLED_SPIRITSHOT;
 	
 	/**
+	 * ID: 535<br>
+	 * Message: ペットに名前をつけます。<br>
+	 * Message: &#35531;&#21462;&#23541;&#29289;&#21517;&#12290;<br>
+	 * Message: Enter a name for your pet.
+	 */
+	
+	/**
 	 * ID: 536<br>
 	 * Message: アデナをどれくらいインベントリに移しますか。<br>
 	 * Message: &#35201;&#23559;&#31227;&#21205;&#22810;&#23569;&#25976;&#37327;&#33267;&#35282;&#33394;&#36947;&#20855;&#28165;&#21934;&#20839;&#65311;<br>
@@ -4314,6 +4349,20 @@ public final class SystemMessageId
 	 * Message: Cubic Summoning failed.
 	 */
 	public static final SystemMessageId CUBIC_SUMMONING_FAILED;
+	
+	/**
+	 * ID: 569<br>
+	 * Message: アイテムの価格が相場とかなりの差があります。よろしいですか。<br>
+	 * Message: &#35531;&#27880;&#24847;&#65292;&#36947;&#20855;&#30340;&#20729;&#26684;&#33287;&#21830;&#24215;&#30340;&#33853;&#24046;&#24456;&#22823;&#12290;&#26159;&#21542;&#35201;&#32380;&#32396;&#65311;<br>
+	 * Message: Caution -- this item's price greatly differs from non-player run shops. Do you wish to continue? 
+	 */
+	
+	/**
+	 * ID: 570<br>
+	 * Message: $s1をいくつ買いますか。<br>
+	 * Message: &#35201;&#36092;&#36023;&#24190;&#20491;&#12300;&#36;&#115;&#49;&#12301;&#65311;<br>
+	 * Message: How many  $s1(s) do you want to purchase?
+	 */
 	
 	/**
 	 * ID: 572<br>
@@ -5012,9 +5061,9 @@ public final class SystemMessageId
 	public static final SystemMessageId NOT_SIEGE_REGISTRATION_TIME1;
 	
 	/**
-	 * ID: 659<br>
-	 * Message: 攻城の登録期間ではないため、承認も拒否もできません。<br>
-	 * Message: &#38750;&#25915;&#22478;&#30331;&#35352;&#26399;&#38291;&#65292;&#22240;&#27492;&#28961;&#27861;&#20801;&#35377;&#25110;&#25298;&#32085;&#12290;<br>
+	 * ID: 660<br>
+	 * Message: 攻城の登録期間ではないため、登録もキャンセルもできません。<br>
+	 * Message: &#38750;&#25915;&#22478;&#30331;&#35352;&#26399;&#38291;&#65292;&#22240;&#27492;&#28961;&#27861;&#30331;&#35352;&#25110;&#21462;&#28040;&#12290;<br>
 	 * Message: This is not the time for siege registration and so registration and cancellation cannot be done.
 	 */
 	public static final SystemMessageId NOT_SIEGE_REGISTRATION_TIME2;
@@ -11663,7 +11712,7 @@ public final class SystemMessageId
 	 * ID: 1504<br>
 	 * Message: クラス無制限個人競技種目の待機者リストに登録されました。<br>
 	 * Message: &#24050;&#30331;&#35352;&#22312;&#19981;&#38480;&#32887;&#26989;&#39006;&#21029;&#20491;&#20154;&#27604;&#36093;&#38917;&#30446;&#30340;&#31561;&#24453;&#32773;&#21517;&#21934;&#20043;&#20013;&#12290;<br>
-	 * Message: You have registered on the waiting list for the non-class-limited individual match event.
+	 * Message: You are currently registered for a 1v1 class irrelevant match.
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REGISTERED_IN_A_WAITING_LIST_OF_NO_CLASS_GAMES;
 	
@@ -15332,9 +15381,9 @@ public final class SystemMessageId
 	public static final SystemMessageId S1_OWNER;
 	
 	/**
-	 * ID: 1968<br>
-	 * Message: $s1の所有者<br>
-	 * Message: &#12300;&#36;&#115;&#49;&#12301;&#30340;&#20027;&#20154;<br>
+	 * ID: 1969<br>
+	 * Message: $s1の登場地域<br>
+	 * Message: &#12300;&#36;&#115;&#49;&#12301;&#20986;&#29694;&#22320;&#21312;<br>
 	 * Message: Area where $s1 appears.
 	 */
 	public static final SystemMessageId AREA_S1_APPEARS;
@@ -17764,12 +17813,68 @@ public final class SystemMessageId
 	public static final SystemMessageId SKILL_NOT_FOR_SUBCLASS;
 	
 	/**
+	 * ID: 2274<br>
+	 * Message: アイテムを捨てることができないエリアに入りました。<br>
+	 * Message: &#24744;&#24050;&#36914;&#20837;&#28961;&#27861;&#19999;&#26820;&#36947;&#20855;&#30340;&#22320;&#21312;&#12290;<br>
+	 * Message: You entered an area where you cannot throw away items.
+	 */
+	
+	/**
+	 * ID: 2275<br>
+	 * Message: ペットの召喚を解除できないエリア内にいます。<br>
+	 * Message: &#24050;&#36914;&#20837;&#28961;&#27861;&#21484;&#21914;&#47;&#35299;&#38500;&#23541;&#29289;&#30340;&#22320;&#21312;&#12290;<br>
+	 * Message: You are in an area where you cannot cancel pet summoning.
+	 */
+	
+	/**
 	 * ID: 2276<br>
 	 * Message: レジスタンスの要塞を奪還しました。<br>
 	 * Message: &#21467;&#20098;&#36557;&#24050;&#20308;&#38936;&#35201;&#22622;&#12290;<br>
 	 * Message: The rebel army recaptured the fortress.
 	 */
 	public static final SystemMessageId NPCS_RECAPTURED_FORTRESS;
+	
+	/**
+	 * ID: 2277<br>
+	 * Message: $s1のパーティ<br>
+	 * Message: &#12300;&#36;&#115;&#49;&#12301;&#30340;&#38538;&#20237;<br>
+	 * Message: Party of $s1
+	 */
+	
+	/**
+	 * ID: 2278<br>
+	 * Message: 残り時間$s1:$s2<br>
+	 * Message: &#21097;&#39192;&#26178;&#38291;&#12300;&#36;&#115;&#49;&#65306;&#36;&#115;&#50;&#12301;<br>
+	 * Message: Remaining Time $s1:$s2
+	 */
+	
+	/**
+	 * ID: 2279<br>
+	 * Message: もうクエスト アラートにクエストを登録できません。<br>
+	 * Message: &#24050;&#28961;&#27861;&#22312;&#20219;&#21209;&#35338;&#24687;&#30331;&#37636;&#20219;&#21209;&#12290;<br>
+	 * Message: You can no longer add a quest to the Quest Alterts.
+	 */
+	
+	/**
+	 * ID: 2280<br>
+	 * Message: $c1が$c2の魔法に抵抗してダメージが減少しました。<br>
+	 * Message: &#12300;&#36;&#99;&#49;&#12301;&#25269;&#25239;&#12300;&#36;&#99;&#50;&#12301;&#30340;&#39764;&#27861;&#65292;&#22240;&#27492;&#38477;&#20302;&#20102;&#20663;&#23475;&#12290;<br>
+	 * Message: Damage is decreased because $c1 resisted $c2's magic.
+	 */
+	
+	/**
+	 * ID: 2281<br>
+	 * Message: $c1が$c2に$s3のダメージを、ダメージ前の相手に$s4のダメージを与えました。<br>
+	 * Message: &#12300;&#36;&#99;&#49;&#12301;&#21521;&#12300;&#36;&#99;&#50;&#12301;&#21152;&#20197;&#12300;&#36;&#115;&#51;&#12301;&#30340;&#20663;&#23475;&#12289;&#21521;&#36681;&#31227;&#20663;&#23475;&#30340;&#30446;&#27161;&#21152;&#20197;&#12300;&#36;&#115;&#52;&#12301;&#30340;&#20663;&#23475;&#12290;<br>
+	 * Message: $c1 hit you for $s3 damage and hit your servitor for $s4.
+	 */
+	
+	/**
+	 * ID: 2282<br>
+	 * Message: 幻想の島を出ます。<br>
+	 * Message: &#38626;&#38283;&#22818;&#24187;&#23798;&#12290;<br>
+	 * Message: Leave Fantasy Isle.
+	 */
 	
 	/**
 	 * ID: 2283<br>

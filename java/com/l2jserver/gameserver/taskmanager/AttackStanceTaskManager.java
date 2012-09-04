@@ -81,11 +81,10 @@ public class AttackStanceTaskManager
 	
 	/**
 	 * Checks for attack stance task.<br>
-	 * TODO: Rename this method to hasAttackStanceTask.
 	 * @param actor the actor
 	 * @return {@code true} if the character has an attack stance task, {@code false} otherwise
 	 */
-	public boolean getAttackStanceTask(L2Character actor)
+	public boolean hasAttackStanceTask(L2Character actor)
 	{
 		if (actor == null) return false;
 		if (actor.isSummon())
