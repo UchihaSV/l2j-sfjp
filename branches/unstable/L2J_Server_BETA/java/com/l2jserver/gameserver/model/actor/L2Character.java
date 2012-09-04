@@ -604,13 +604,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (currentHp <= 1.0 || maxHp < barPixels)
 			return true;
 		
-		if (currentHp <= _hpUpdateDecCheck || currentHp >= _hpUpdateIncCheck)
+		if ((currentHp < _hpUpdateDecCheck) || (Math.abs(currentHp - _hpUpdateDecCheck) <= 1e-6) ||
+			(currentHp > _hpUpdateIncCheck) || (Math.abs(currentHp - _hpUpdateIncCheck) <= 1e-6))
 		{
-			// TODO: (Zoey76) This is mathematically wrong.
-			// for example 2.2d + 1.1d == 3.3d will return false
-			// Also Double.compare(2.2d + 1.1d, 3.3d) will return 1,
-			// meaning the second parameter is greater than the first.
-			if (currentHp == maxHp)
+			if (Math.abs(currentHp - maxHp) <= 1e-6)
 			{
 				_hpUpdateIncCheck = currentHp + 1;
 				_hpUpdateDecCheck = currentHp - _hpUpdateInterval;
