@@ -17,6 +17,7 @@ package com.l2jserver.gameserver.model.zone.type;
 import java.util.Map;
 
 import javolution.util.FastMap;
+import javolution.util.FastSet;
 
 import com.l2jserver.gameserver.GameServer;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -58,14 +59,14 @@ public class L2BossZone extends L2ZoneType
 		
 		// track the players admitted to the zone who should be allowed back in
 		// after reboot/server downtime (outside of their control), within 30 of server restart
-		private final L2FastList<Integer> _playersAllowed;
+		private final FastSet<Integer> _playersAllowed;		//[JOJO] L2FastList --> FastSet
 		
 		private final L2FastList<L2Character> _raidList;
 		
 		public Settings()
 		{
 			_playerAllowedReEntryTimes = new FastMap<>();
-			_playersAllowed = new L2FastList<>();
+			_playersAllowed = new FastSet<>();
 			_raidList = new L2FastList<>();
 		}
 		
@@ -74,7 +75,7 @@ public class L2BossZone extends L2ZoneType
 			return _playerAllowedReEntryTimes;
 		}
 		
-		public L2FastList<Integer> getPlayersAllowed()
+		public FastSet<Integer> getPlayersAllowed()
 		{
 			return _playersAllowed;
 		}
@@ -197,7 +198,7 @@ public class L2BossZone extends L2ZoneType
 							return;
 						}
 					}
-					getSettings().getPlayersAllowed().remove(getSettings().getPlayersAllowed().indexOf(player.getObjectId()));
+					getSettings().getPlayersAllowed().remove(player.getObjectId());
 				}
 				// teleport out all players who attempt "illegal" (re-)entry
 				if (_oustLoc[0] != 0 && _oustLoc[1] != 0 && _oustLoc[2] != 0)
@@ -255,10 +256,7 @@ public class L2BossZone extends L2ZoneType
 				}
 				else
 				{
-					if (getSettings().getPlayersAllowed().contains(player.getObjectId()))
-					{
-						getSettings().getPlayersAllowed().remove(getSettings().getPlayersAllowed().indexOf(player.getObjectId()));
-					}
+					getSettings().getPlayersAllowed().remove(player.getObjectId());
 					getSettings().getPlayerAllowedReEntryTimes().remove(player.getObjectId());
 				}
 			}
@@ -315,7 +313,7 @@ public class L2BossZone extends L2ZoneType
 		_enabled = flag;
 	}
 	
-	public void setAllowedPlayers(L2FastList<Integer> players)
+	public void setAllowedPlayers(FastSet<Integer> players)
 	{
 		if (players != null)
 		{
@@ -324,7 +322,7 @@ public class L2BossZone extends L2ZoneType
 		}
 	}
 	
-	public L2FastList<Integer> getAllowedPlayers()
+	public FastSet<Integer> getAllowedPlayers()
 	{
 		return getSettings().getPlayersAllowed();
 	}
