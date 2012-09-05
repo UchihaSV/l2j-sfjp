@@ -415,11 +415,9 @@ public class L2BossZone extends L2ZoneType
 	{
 		if (!player.isGM())
 		{
-			if (!getSettings().getPlayersAllowed().contains(player.getObjectId()))
-			{
-				getSettings().getPlayersAllowed().add(player.getObjectId());
-			}
-			getSettings().getPlayerAllowedReEntryTimes().put(player.getObjectId(), System.currentTimeMillis() + durationInSec * 1000);
+			Integer id = player.getObjectId();
+			getSettings().getPlayersAllowed().add(id);
+			getSettings().getPlayerAllowedReEntryTimes().put(id, System.currentTimeMillis() + durationInSec * 1000);
 		}
 	}
 	
@@ -427,8 +425,9 @@ public class L2BossZone extends L2ZoneType
 	{
 		if (!player.isGM())
 		{
-			getSettings().getPlayersAllowed().remove(Integer.valueOf(player.getObjectId()));
-			getSettings().getPlayerAllowedReEntryTimes().remove(player.getObjectId());
+			Integer id = player.getObjectId();
+			getSettings().getPlayersAllowed().remove(id);
+			getSettings().getPlayerAllowedReEntryTimes().remove(id);
 		}
 	}
 	
