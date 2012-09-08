@@ -2621,6 +2621,39 @@ public class Quest extends ManagedScript
 		return unload(true);
 	}
 	
+	//[JOJO]-------------------------------------------------
+	/**
+	 * Cancel all timers.
+	 * @author JOJO
+	 * DataPack_BETA r5293 2012/4/28 09:44 対策.
+	 * 下の public boolean unload(boolean removeFromList) からタイマー部分のみ抜粋.
+	 */
+	protected void cancelAllQuestTimers()
+	{
+		// cancel all pending timers before reloading.
+		// if timers ought to be restarted, the quest can take care of it
+		// with its code (example: save global data indicating what timer must
+		// be restarted).
+		for (List<QuestTimer> timers : _allEventTimers.values())
+		{
+			_readLock.lock();
+			try
+			{
+				for (QuestTimer timer : timers)
+				{
+					timer.cancel();
+				}
+			}
+			finally
+			{
+				_readLock.unlock();
+			}
+			timers.clear();
+		}
+		_allEventTimers.clear();
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * @param removeFromList
 	 * @return
