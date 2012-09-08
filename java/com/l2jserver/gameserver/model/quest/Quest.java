@@ -2382,7 +2382,7 @@ public class Quest extends ManagedScript
 	 * @return
 	 */
 	public String getHtm(String prefix, String fileName)
-	{	
+	{
 		if (fileName.startsWith("data/"))	//[JOJO]
 		{
 			if (fileName.contains("..") || fileName.contains("/admin/"))
@@ -2399,15 +2399,7 @@ public class Quest extends ManagedScript
 			content = HtmCache.getInstance().getHtm(prefix, "data/scripts/quests/Q" + getName() + "/" + fileName);
 			if (content == null)
 			{
-				// UnAfraid: TODO: Temp fix must be removed once all quests are updated.
-				if (getQuestIntId() > 0)
-				{
-					content = HtmCache.getInstance().getHtm(prefix, "data/scripts/quests/Q" + String.format("%05d", getQuestIntId()) + "_" + getName().split("_")[1] + "/" + fileName);
-				}
-				if (content == null)
-				{
-					content = HtmCache.getInstance().getHtmForce(prefix, "data/scripts/quests/" + getName() + "/" + fileName);
-				}
+				content = HtmCache.getInstance().getHtmForce(prefix, "data/scripts/quests/" + getName() + "/" + fileName);
 			}
 		}
 		return content;
