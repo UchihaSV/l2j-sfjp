@@ -1,6 +1,7 @@
 /**
  * [JOJO] This file is copy of:
  *   L2J_DataPack_BETA/dist/game/data/scripts/handlers/admincommandhandlers/AdminShutdown.java
+ *   sync revesion 9040, timestamp 2012/08/01 21:48
  *   sync revesion 7150, timestamp 2010/03/08 21:16
  *   sync revesion 5901, timestamp 2009/04/03 19:05
  **/
@@ -60,8 +61,9 @@ public class AdminShutdown implements IAdminCommandHandler
 				int val = Integer.parseInt(command.substring(22));
 				serverShutdown(activeChar, val, false);
 			}
-			catch (StringIndexOutOfBoundsException e)
+			catch (StringIndexOutOfBoundsException | NumberFormatException e)
 			{
+				activeChar.sendMessage("Usage: //server_shutdown <seconds>");
 				sendHtmlForm(activeChar);
 			}
 		}
@@ -72,8 +74,9 @@ public class AdminShutdown implements IAdminCommandHandler
 				int val = Integer.parseInt(command.substring(21));
 				serverShutdown(activeChar, val, true);
 			}
-			catch (StringIndexOutOfBoundsException e)
+			catch (StringIndexOutOfBoundsException | NumberFormatException e)
 			{
+				activeChar.sendMessage("Usage: //server_restart <seconds>");
 				sendHtmlForm(activeChar);
 			}
 		}
@@ -103,7 +106,7 @@ public class AdminShutdown implements IAdminCommandHandler
 		cal.set(Calendar.MINUTE, m);
 		adminReply.setFile(activeChar.getHtmlPrefix(), "data/html/admin/shutdown.htm");
 		adminReply.replace("%count%", L2World.getInstance().getAllPlayersCount());
-		adminReply.replace("%used%", Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory());
+		adminReply.replace("%used%", String.format("%,3d", Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) );
 		adminReply.replace("%xp%", Config.RATE_XP);
 		adminReply.replace("%sp%", Config.RATE_SP);
 		adminReply.replace("%adena%", Config.RATE_DROP_ITEMS_ID.get(57));
