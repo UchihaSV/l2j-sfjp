@@ -16,6 +16,7 @@ package com.l2jserver.tools.dbinstaller.util.mysql;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,6 +28,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -58,6 +60,7 @@ public class ScriptExecutor
 	public void execSqlBatch(File dir, boolean skipErrors)
 	{
 		File[] file = dir.listFiles(new SQLFilter());
+		Arrays.sort(file);
 		_frame.setProgressIndeterminate(false);
 		_frame.setProgressMaximum(file.length - 1);
 		for (int i = 0; i < file.length; i++)
@@ -138,23 +141,30 @@ public class ScriptExecutor
 		{
 			log(e);
 			assert !skipErrors;
-			Object[] options =
+			try
 			{
-				"Continue",
-				"Abort"
-			};
-			
-			Matcher m = Pattern.compile(" at line (\\d+)"/*, Pattern.CASE_INSENSITIVE*/).matcher(e.getMessage());
-			if (m.find())
-				lineNumber = lineNumber + Integer.parseInt(m.group(1)) - 1;
-			m = null;
-			
-			int n = JOptionPane.showOptionDialog(null, "MySQL Error: " + e.getMessage()
-				+ "\r\n" + file.getPath() + (lineNumber > 0 ? " at line " + lineNumber : "")
-				, "Script Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-			
-			if (n == 1)
-				System.exit(0);
+				Object[] options =
+				{
+					"Continue",
+					"Abort"
+				};
+				
+				Matcher m = Pattern.compile(" at line (\\d+)"/*, Pattern.CASE_INSENSITIVE*/).matcher(e.getMessage());
+				if (m.find())
+					lineNumber = lineNumber + Integer.parseInt(m.group(1)) - 1;
+				m = null;
+				
+				int n = JOptionPane.showOptionDialog(null, "MySQL Error: " + e.getMessage()
+					+ "\r\n" + file.getPath() + (lineNumber > 0 ? " at line " + lineNumber : "")
+					, "Script Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+				
+				if (n == 1)
+					System.exit(0);
+			}
+			catch (HeadlessException h)
+			{
+				e.printStackTrace();
+			}
 		}
 		catch (Exception e)
 		{
