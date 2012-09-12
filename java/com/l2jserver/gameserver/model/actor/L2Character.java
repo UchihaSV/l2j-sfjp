@@ -6402,12 +6402,12 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			{
 				if (target instanceof L2Character)
 				{
-					if (!Util.checkIfInRange(escapeRange, this, target, true))
+					if (!isInsideRadius(target.getX(), target.getY(), target.getZ(), escapeRange + getTemplate().getCollisionRadius(), true, false))
 					{
 						_skiprange++;
 						continue;
 					}
-					if (skill.getSkillRadius() > 0 && skill.isOffensive() && Config.GEODATA > 0 && !GeoData.getInstance().canSeeTarget(this, target))
+					if (escapeRange > 0 && Config.GEODATA > 0 && !GeoData.getInstance().canSeeTarget(this, target))
 					{
 						_skipgeo++;
 						continue;
