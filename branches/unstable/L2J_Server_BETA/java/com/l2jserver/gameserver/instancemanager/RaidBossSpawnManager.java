@@ -168,27 +168,26 @@ public class RaidBossSpawnManager
 		
 		boss.setRaidStatus(StatusEnum.DEAD);
 		
-		long respawnTime;
-		int RespawnMinDelay = boss.getSpawn().getRespawnMinDelay();
-		int RespawnMaxDelay = boss.getSpawn().getRespawnMaxDelay();
-		long respawn_delay = Rnd.get((int) (RespawnMinDelay * 1000 * Config.RAID_MIN_RESPAWN_MULTIPLIER), (int) (RespawnMaxDelay * 1000 * Config.RAID_MAX_RESPAWN_MULTIPLIER));
-		respawnTime = Calendar.getInstance().getTimeInMillis() + respawn_delay;
-			
+		final int respawnMinDelay = boss.getSpawn().getRespawnMinDelay();
+		final int respawnMaxDelay = boss.getSpawn().getRespawnMaxDelay();
+		final long respawnDelay = Rnd.get((int) (respawnMinDelay * 1000 * Config.RAID_MIN_RESPAWN_MULTIPLIER), (int) (respawnMaxDelay * 1000 * Config.RAID_MAX_RESPAWN_MULTIPLIER));
+		final long respawnTime = Calendar.getInstance().getTimeInMillis() + respawnDelay;
+		
 		info.set("currentHP", boss.getMaxHp());
 		info.set("currentMP", boss.getMaxMp());
 		info.set("respawnTime", respawnTime);
-			
-		String time = com.l2jserver.util.Util.dateFormat(respawnTime);	//[JOJO]
-		Broadcast.announceToOnlinePlayers(boss.getName() + " が死亡しました。次の出現は " + time + " ごろです。");	//[JOJO]
-		_log.info("RaidBossSpawnManager: Updated " + boss.getName() + " respawn time to " + /*JOJO*/time);
-	//	Calendar time = Calendar.getInstance();
-	//	time.setTimeInMillis(respawnTime);
-	//	_log.info("RaidBossSpawnManager: Updated " + boss.getName() + " respawn time to " + time.getTime());
-			
-		if (!_schedules.containsKey(boss.getNpcId()))
+		
+		if (!_schedules.containsKey(boss.getNpcId()) && respawnMinDelay > 0 && respawnMaxDelay > 0)
 		{
+			String time = com.l2jserver.util.Util.dateFormat(respawnTime);	//[JOJO]
+			Broadcast.announceToOnlinePlayers(boss.getName() + " が死亡しました。次の出現は " + time + " ごろです。");	//[JOJO]
+			_log.info("RaidBossSpawnManager: Updated " + boss.getName() + " respawn time to " + /*JOJO*/time);
+		//	Calendar time = Calendar.getInstance();
+		//	time.setTimeInMillis(respawnTime);
+		//	_log.info("RaidBossSpawnManager: Updated " + boss.getName() + " respawn time to " + time.getTime());
+			
 			ScheduledFuture<?> futureSpawn;
-			futureSpawn = ThreadPoolManager.getInstance().scheduleGeneral(new SpawnSchedule(boss.getNpcId()), respawn_delay);
+			futureSpawn = ThreadPoolManager.getInstance().scheduleGeneral(new SpawnSchedule(boss.getNpcId()), respawnDelay);
 			
 			_schedules.put(boss.getNpcId(), futureSpawn);
 			//To update immediately Database uncomment on the following line, to post the hour of respawn raid boss on your site for example or to envisage a crash landing of the waiter.
