@@ -643,11 +643,16 @@ public class GeoEngine extends GeoData
 	 */
 	private static void nInitGeodata()
 	{
-		try (FileReader fr = new FileReader("./data/geodata/geo_index.txt");
-			BufferedReader br = new BufferedReader(fr);
-			LineNumberReader lnr = new LineNumberReader(br))
+		final File file = new File(Config.GEODATA_DIR, "geo_index.txt"); // UnAfraid: FIXME: Migrate this TXT to XML and auto port the TXT into XML if it exists but XML doesn't.
+		if (!file.exists())
 		{
-			_log.info("Geo Engine: - Loading Geodata...");
+			_log.log(Level.WARNING, "File not found " + file.getAbsolutePath() + " Geodata is disabled.");
+			Config.GEODATA = 0;
+			return;
+		}
+		try (LineNumberReader lnr = new LineNumberReader(new BufferedReader(new FileReader(file))))
+		{
+			_log.info("Geo Engine: - Loading Geodata from " + file.getAbsolutePath() + " ...");
 			String line;
 			while ((line = lnr.readLine()) != null)
 			{
@@ -667,7 +672,9 @@ public class GeoEngine extends GeoData
 		
 		try
 		{
-			_geoBugsOut = new BufferedOutputStream(new FileOutputStream("./data/geodata/geo_bugs.txt", true));
+			File geo_bugs = new File(Config.GEODATA_DIR, "geo_bugs.txt");
+			
+			_geoBugsOut = new BufferedOutputStream(new FileOutputStream(geo_bugs, true));
 		}
 		catch (Exception e)
 		{
@@ -701,13 +708,14 @@ public class GeoEngine extends GeoData
 			_log.warning("Failed to Load GeoFile: invalid region " + rx +","+ ry + "\n");
 			return false;
 		}
-		File fname = new File("./data/geodata/" + rx + "_" + ry + ".l2j");
+		String fname = rx + "_" + ry + ".l2j";
 		short regionoffset = (short) ((rx << 5) + ry);
 		_log.info("Geo Engine: - Loading: " + fname + " -> region offset: " + regionoffset + "X: " + rx + " Y: " + ry);
 		
 		int index = 0, block = 0, flor = 0;
 		// Create a read-only memory-mapped file
-		try (RandomAccessFile raf = new RandomAccessFile(fname, "r");
+		final File Geo = new File(Config.GEODATA_DIR, fname);
+		try (RandomAccessFile raf = new RandomAccessFile(Geo, "r");
 			FileChannel roChannel = raf.getChannel())
 		{
 			int size = (int) roChannel.size();

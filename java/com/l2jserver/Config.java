@@ -496,6 +496,7 @@ public final class Config
 	public static int WORLD_Y_MIN;
 	public static int WORLD_Y_MAX;
 	public static int GEODATA;
+	public static File GEODATA_DIR;
 	public static boolean GEODATA_CELLFINDING;
 	public static String PATHFIND_BUFFERS;
 	public static float LOW_WEIGHT;
@@ -1243,11 +1244,12 @@ public final class Config
 			
 			try
 			{
-				DATAPACK_ROOT = new File(serverSettings.getProperty("DatapackRoot", ".")).getCanonicalFile();
+				DATAPACK_ROOT = new File(serverSettings.getProperty("DatapackRoot", ".").replaceAll("\\\\", "/")).getCanonicalFile();
 			}
 			catch (IOException e)
 			{
 				_log.log(Level.WARNING, "Error setting datapack root!", e);
+				DATAPACK_ROOT = new File(".");
 			}
 			
 			CNAME_TEMPLATE = serverSettings.getProperty("CnameTemplate", ".*");
@@ -2066,6 +2068,15 @@ public final class Config
 			WORLD_Y_MIN = Integer.parseInt(General.getProperty("WorldYMin", "10"));
 			WORLD_Y_MAX = Integer.parseInt(General.getProperty("WorldYMax", "26"));
 			GEODATA = Integer.parseInt(General.getProperty("GeoData", "0"));
+			try
+			{
+				GEODATA_DIR = new File(General.getProperty("GeodataDirectory", "data/geodata").replaceAll("\\\\", "/")).getCanonicalFile();
+			}
+			catch (IOException e)
+			{
+				_log.log(Level.WARNING, "Error setting geodata directory!", e);
+				GEODATA_DIR= new File("data/geodata");
+			}
 			GEODATA_CELLFINDING = Boolean.parseBoolean(General.getProperty("CellPathFinding", "False"));
 			PATHFIND_BUFFERS = General.getProperty("PathFindBuffers", "100x6;128x6;192x6;256x4;320x4;384x4;500x2");
 			LOW_WEIGHT = Float.parseFloat(General.getProperty("LowWeight", "0.5"));
@@ -3223,11 +3234,12 @@ public final class Config
 			
 			try
 			{
-				DATAPACK_ROOT = new File(ServerSettings.getProperty("DatapackRoot", ".")).getCanonicalFile();
+				DATAPACK_ROOT = new File(ServerSettings.getProperty("DatapackRoot", ".").replaceAll("\\\\", "/")).getCanonicalFile();
 			}
 			catch (IOException e)
 			{
 				_log.log(Level.WARNING, "Error setting datapack root!", e);
+				DATAPACK_ROOT = new File(".");
 			}
 			
 			DEBUG = Boolean.parseBoolean(ServerSettings.getProperty("Debug", "false"));
