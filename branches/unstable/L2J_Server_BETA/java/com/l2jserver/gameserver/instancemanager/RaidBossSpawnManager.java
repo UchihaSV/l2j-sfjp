@@ -177,7 +177,7 @@ public class RaidBossSpawnManager
 		final int respawnMinDelay = boss.getSpawn().getRespawnMinDelay();
 		final int respawnMaxDelay = boss.getSpawn().getRespawnMaxDelay();
 		final long respawnDelay = Rnd.get((int) (respawnMinDelay * 1000 * Config.RAID_MIN_RESPAWN_MULTIPLIER), (int) (respawnMaxDelay * 1000 * Config.RAID_MAX_RESPAWN_MULTIPLIER));
-		final long respawnTime = Calendar.getInstance().getTimeInMillis() + respawnDelay;
+		final long respawnTime = System.currentTimeMillis() + respawnDelay;
 		
 		info.set("currentHP", boss.getMaxHp());
 		info.set("currentMP", boss.getMaxMp());
@@ -197,6 +197,16 @@ public class RaidBossSpawnManager
 			
 			_schedules.put(boss.getNpcId(), futureSpawn);
 			updateDb(boss.getNpcId());
+		}
+		else
+		{
+			Broadcast.announceToOnlinePlayers(boss.getName() + " が死亡しました。");	//[JOJO]
+			// SELECT npc.id, npc.name,raidboss_spawnlist.loc_x,raidboss_spawnlist.loc_y,raidboss_spawnlist.loc_z,raidboss_spawnlist.respawn_min_delay,raidboss_spawnlist.respawn_max_delay FROM raidboss_spawnlist LEFT JOIN npc ON (npc.id=raidboss_spawnlist.boss_id) WHERE respawn_min_delay=0 OR respawn_max_delay=0;
+			// id    name                      loc_x  loc_y  loc_z respawn_min_delay respawn_max_delay
+			// 25680 ジャイアント マルパナック 193902 54135  -4184 0                 21600
+			// 25681 ゴルゴロス                186210 61479  -4000 0                 21600
+			// 25684 最後の下巨人 ユテヌス     186919 56297  -4480 0                 21600
+			// 29054 ベノム                    11882  -49216 -3008 0                 0
 		}
 	}
 	
