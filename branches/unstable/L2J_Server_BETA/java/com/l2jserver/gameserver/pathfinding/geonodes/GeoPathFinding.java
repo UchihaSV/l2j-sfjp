@@ -384,11 +384,12 @@ public class GeoPathFinding extends PathFinding
 	
 	protected GeoPathFinding()
 	{
-		try (FileReader fr = new FileReader("./data/pathnode/pn_index.txt");
+		final File file = new File(Config.PATHNODE_DIR, "pn_index.txt");
+		try (FileReader fr = new FileReader(file);
 			BufferedReader br = new BufferedReader(fr);
 			LineNumberReader lnr = new LineNumberReader(br))
 		{
-			_log.info("PathFinding Engine: - Loading Path Nodes...");
+			_log.info("Path Engine: - Loading Path Nodes...");
 			String line;
 			while ((line = lnr.readLine()) != null)
 			{
@@ -416,13 +417,14 @@ public class GeoPathFinding extends PathFinding
 			_log.warning("Failed to Load PathNode File: invalid region " + rx + "," + ry + "\n");
 			return;
 		}
-		File fname = new File("./data/pathnode/" + rx + "_" + ry + ".pn");
 		short regionoffset = getRegionOffset(rx, ry);
-		_log.info("PathFinding Engine: - Loading: " + fname + " -> region offset: " + regionoffset + "X: " + rx + " Y: " + ry);
+		File file = new File(Config.PATHNODE_DIR, rx + "_" + ry + ".pn");
+		_log.info("Path Engine: - Loading: " + file.getName() + " -> region offset: " + regionoffset + " X: " + rx + " Y: " + ry);
 		int node = 0, size, index = 0;
 		
 		// Create a read-only memory-mapped file
-		try (RandomAccessFile raf = new RandomAccessFile(fname, "r"); FileChannel roChannel = raf.getChannel())
+		try (RandomAccessFile raf = new RandomAccessFile(file, "r");
+			FileChannel roChannel = raf.getChannel())
 		{
 			size = (int) roChannel.size();
 			MappedByteBuffer nodes;
@@ -450,7 +452,7 @@ public class GeoPathFinding extends PathFinding
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Failed to Load PathNode File: " + fname + " : " + e.getMessage(), e);
+			_log.log(Level.WARNING, "Failed to Load PathNode File: " + file.getAbsolutePath() + " : " + e.getMessage(), e);
 		}
 	}
 	
