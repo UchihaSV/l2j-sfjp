@@ -214,14 +214,15 @@ public class L2FortLogisticsInstance extends L2MerchantInstance
 	@Override
 	public String getHtmlPath(int npcId, int val)
 	{
-		String pom = "";
+		return getHtmlPath("data/html/fortress/logistics", 0, val);
+	/*	String pom = "";
 		
 		if (val == 0)
 			pom = "logistics";
 		else
 			pom = "logistics-" + val;
 		
-		return "data/html/fortress/" + pom + ".htm";
+		return "data/html/fortress/" + pom + ".htm";	*/
 	}
 	
 	@Override
