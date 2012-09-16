@@ -282,8 +282,7 @@ public final class SystemMessage extends L2GameServerPacket
 		if (item.getDisplayId() != id) // custom item.
 			return addString(item.getName());
 		
-		append(new SMParam(TYPE_ITEM_NAME, id));
-		return this;
+		return append(new SMParam(TYPE_ITEM_NAME, id));
 	}
 	
 	public final SystemMessage addZoneName(final int x, final int y, final int z)
