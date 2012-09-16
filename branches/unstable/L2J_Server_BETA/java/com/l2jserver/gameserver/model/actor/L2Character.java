@@ -521,7 +521,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public void onSpawn()
 	{
 		super.onSpawn();
-		this.revalidateZone(true);
+		revalidateZone(true);
 	}
 	
 	public void onTeleported()
