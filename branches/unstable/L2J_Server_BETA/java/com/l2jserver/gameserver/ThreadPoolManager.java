@@ -194,6 +194,22 @@ public class ThreadPoolManager
 		}
 	}
 	
+	//[JOJO]-------------------------------------------------
+	public ScheduledFuture<?> scheduleGeneralWithFixedDelay(Runnable r, long initial, long delay)
+	{
+		try
+		{
+			delay = ThreadPoolManager.validateDelay(delay);
+			initial = ThreadPoolManager.validateDelay(initial);
+			return _generalScheduledThreadPool.scheduleWithFixedDelay(new RunnableWrapper(r), initial, delay, TimeUnit.MILLISECONDS);
+		}
+		catch (RejectedExecutionException e)
+		{
+			return null; /* shutdown, ignore */
+		}
+	}
+	//-------------------------------------------------------
+	
 	@Deprecated
 	public boolean removeGeneral(RunnableScheduledFuture<?> r)
 	{

@@ -143,7 +143,7 @@ public class L2XmassTreeInstance extends L2Npc
 		if (getNpcId() == 13007
 				&& !isInsideZone(ZONE_PEACE))
 		{
-			_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new XmassAI(this,SkillTable.getInstance().getInfo(2139, 1)), 3000, 3000);
+			_aiTask = ThreadPoolManager.getInstance().scheduleGeneralWithFixedDelay(new XmassAI(this,SkillTable.getInstance().getInfo(2139, 1)), 3000, 3000);
 			broadcastPacket(new PlaySound(1, XMASS_SONGS[Rnd.get(XMASS_SONGS.length)], 0, 0, 0, 0, 0));
 		}
 	}
