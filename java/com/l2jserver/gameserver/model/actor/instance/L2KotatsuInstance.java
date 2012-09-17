@@ -124,7 +124,7 @@ public class L2KotatsuInstance extends L2Npc implements Runnable
 			if (_skill.getSkillType() == L2SkillType.NOTDONE) throw new RuntimeException();
 		}
 		_lastSocialBroadcast = System.currentTimeMillis();
-		_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(this, 3000, 3000);
+		_aiTask = ThreadPoolManager.getInstance().scheduleGeneralWithFixedDelay(this, 3000, 3000);
 	}
 	
 	@Override
