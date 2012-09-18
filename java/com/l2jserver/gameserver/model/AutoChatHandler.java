@@ -72,6 +72,13 @@ public class AutoChatHandler implements SpawnListener
 			PreparedStatement statement2 = con.prepareStatement("SELECT * FROM auto_chat_text WHERE groupId=?");
 			while (rs.next())
 			{
+if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
+				//TODO: DELETE FROM auto_chat; DELETE FROM auto_chat_text;
+				int npcId = rs.getInt("npcId");
+				if (npcId == SevenSigns.ORATOR_NPC_ID
+				 || npcId == SevenSigns.PREACHER_NPC_ID)
+					continue;
+}}
 				numLoaded++;
 				
 				statement2.setInt(1, rs.getInt("groupId"));
