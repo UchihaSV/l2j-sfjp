@@ -277,9 +277,13 @@ public class SevenSigns
 					if (!AutoSpawnHandler.getInstance().getAutoSpawnInstance(spawnInst.getObjectId(), true).isSpawnActive())
 						AutoSpawnHandler.getInstance().setSpawnActive(spawnInst, true);
 				
+if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
+				AutoChatHandler.getInstance().setAutoChatActive(true);	// 31093 ñ≈ñSÇã©Ç‘é“ÅA31094 å[é¶ÇåæÇ¢ì`Ç¶ÇÈé“ *à»äO*
+}} else {{
 				if (!AutoChatHandler.getInstance().getAutoChatInstance(PREACHER_NPC_ID, false).isActive()
 						&& !AutoChatHandler.getInstance().getAutoChatInstance(ORATOR_NPC_ID, false).isActive())
 					AutoChatHandler.getInstance().setAutoChatActive(true);
+}}
 			}
 			else
 			{
