@@ -2,15 +2,14 @@ package com.l2jserver.gameserver.model.entity;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-
-import javolution.util.FastList;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -25,9 +24,11 @@ import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
+import com.l2jserver.gameserver.model.IL2Procedure;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.L2WorldRegion;
+import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -40,7 +41,10 @@ import com.l2jserver.gameserver.model.quest.QuestTimer;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
+import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+import com.l2jserver.util.L2FastList;
+import com.l2jserver.util.L2FastMap;
 
 /**
  * @author evill33t, GodKratos
@@ -49,13 +53,13 @@ public class Instance
 {
 	private static final Logger _log = Logger.getLogger(Instance.class.getName());
 	
-	private int _id;
+	private final int _id;
 	private String _name;
 	
-	private List<Integer> _players = new FastList<Integer>().shared();
-	private List<L2Npc> _npcs = new FastList<L2Npc>().shared();
-	private List<L2DoorInstance> _doors = null;
-	private int[] _spawnLoc = new int[3]; // TODO: Zoey76: Replace with Location object.
+	private final L2FastList<Integer> _players = new L2FastList<>(true);
+	private final List<L2Npc> _npcs = new L2FastList<>(true);
+	private final Map<Integer, L2DoorInstance> _doors = new L2FastMap<>(true);
+	private Location _spawnLoc = null;
 	private boolean _allowSummon = true;
 	private long _emptyDestroyTime = -1;
 	private long _lastLeft = -1;
@@ -105,7 +109,7 @@ public class Instance
 	
 	/**
 	 * Sets the status for the instance for summon friend type skills
-	 * @param b 
+	 * @param b
 	 */
 	public void setAllowSummon(boolean b)
 	{
@@ -114,7 +118,7 @@ public class Instance
 	
 	/**
 	 * Returns true if entire instance is PvP zone
-	 * @return 
+	 * @return
 	 */
 	public boolean isPvPInstance()
 	{
@@ -123,7 +127,7 @@ public class Instance
 	
 	/**
 	 * Sets PvP zone status of the instance
-	 * @param b 
+	 * @param b
 	 */
 	public void setPvPInstance(boolean b)
 	{
@@ -137,7 +141,9 @@ public class Instance
 	public void setDuration(int duration)
 	{
 		if (_CheckTimeUpTask != null)
+		{
 			_CheckTimeUpTask.cancel(true);
+		}
 		
 		_CheckTimeUpTask = ThreadPoolManager.getInstance().scheduleGeneral(new CheckTimeUp(duration), 500);
 		_instanceEndTime = System.currentTimeMillis() + duration + 500;
@@ -179,7 +185,7 @@ public class Instance
 	{
 		_players.remove(objectId);
 		
-		if (_players.isEmpty() && _emptyDestroyTime >= 0)
+		if (_players.isEmpty() && (_emptyDestroyTime >= 0))
 		{
 			_lastLeft = System.currentTimeMillis();
 			setDuration((int) (_instanceEndTime - System.currentTimeMillis() - 500));
@@ -193,14 +199,18 @@ public class Instance
 	public void ejectPlayer(int objectId)
 	{
 		L2PcInstance player = L2World.getInstance().getPlayer(objectId);
-		if (player != null && player.getInstanceId() == this.getId())
+		if ((player != null) && (player.getInstanceId() == getId()))
 		{
 			player.setInstanceId(0);
 			player.sendMessage("You were removed from the instance");
-			if (getSpawnLoc()[0] != 0 && getSpawnLoc()[1] != 0 && getSpawnLoc()[2] != 0)
-				player.teleToLocation(getSpawnLoc()[0], getSpawnLoc()[1], getSpawnLoc()[2]);
+			if (getSpawnLoc() != null)
+			{
+				player.teleToLocation(getSpawnLoc(), true);
+			}
 			else
+			{
 				player.teleToLocation(MapRegionManager.TeleportWhereType.Town);
+			}
 		}
 	}
 	
@@ -212,8 +222,9 @@ public class Instance
 	public void removeNpc(L2Npc npc)
 	{
 		if (npc.getSpawn() != null)
+		{
 			npc.getSpawn().stopRespawn();
-		//npc.deleteMe();
+		}
 		_npcs.remove(npc);
 	}
 	
@@ -224,16 +235,10 @@ public class Instance
 	 */
 	private void addDoor(int doorId, StatsSet set)
 	{
-		if (_doors == null)
-			_doors = new ArrayList<>(2);
-		
-		for (L2DoorInstance door: _doors)
+		if (_doors.containsKey(doorId))
 		{
-			if (door.getDoorId() == doorId)
-			{
-				_log.warning("Door ID " + doorId + " already exists in instance " + this.getId());
-				return;
-			}
+			_log.warning("Door ID " + doorId + " already exists in instance " + getId());
+			return;
 		}
 		
 		L2DoorTemplate temp = DoorTable.getInstance().getDoorTemplate(doorId);
@@ -241,7 +246,7 @@ public class Instance
 		newdoor.setInstanceId(getId());
 		newdoor.setCurrentHp(newdoor.getMaxHp());
 		newdoor.spawnMe(temp.posX, temp.posY, temp.posZ);
-		_doors.add(newdoor);
+		_doors.put(doorId, newdoor);
 	}
 	
 	public List<Integer> getPlayers()
@@ -254,19 +259,14 @@ public class Instance
 		return _npcs;
 	}
 	
-	public List<L2DoorInstance> getDoors()
+	public Collection<L2DoorInstance> getDoors()
 	{
-		return _doors;
+		return _doors.values();
 	}
 	
 	public L2DoorInstance getDoor(int id)
 	{
-		for (L2DoorInstance temp : _doors)
-		{
-			if (temp.getDoorId() == id)
-				return temp;
-		}
-		return null;
+		return _doors.get(id);
 	}
 	
 	public long getInstanceEndTime()
@@ -295,32 +295,25 @@ public class Instance
 	}
 	
 	/**
-	 * Returns the spawn location for this instance to be used when leaving the instance
-	 * @return int[3]
+	 * @return the spawn location for this instance to be used when leaving the instance
 	 */
-	public int[] getSpawnLoc()
+	public Location getSpawnLoc()
 	{
 		return _spawnLoc;
 	}
 	
 	/**
 	 * Sets the spawn location for this instance to be used when leaving the instance
-	 * @param loc 
+	 * @param loc
 	 */
-	public void setSpawnLoc(int[] loc)
+	public void setSpawnLoc(Location loc)
 	{
-		if (loc == null || loc.length < 3)
-			return;
-		System.arraycopy(loc, 0, _spawnLoc, 0, 3);
+		_spawnLoc = loc;
 	}
 	
 	public void removePlayers()
 	{
-		// TODO: Zoey76: Implement IL2Procedure?
-		for (int objId : _players)
-		{
-			ejectPlayer(objId);
-		}
+		_players.forEach(new EjectProcedure());
 		_players.clear();
 	}
 	
@@ -331,7 +324,9 @@ public class Instance
 			if (mob != null)
 			{
 				if (mob.getSpawn() != null)
+				{
 					mob.getSpawn().stopRespawn();
+				}
 				mob.deleteMe();
 			}
 		}
@@ -340,10 +335,7 @@ public class Instance
 	
 	public void removeDoors()
 	{
-		if (_doors == null)
-			return;
-		
-		for (L2DoorInstance door: _doors)
+		for (L2DoorInstance door : _doors.values())
 		{
 			if (door != null)
 			{
@@ -351,14 +343,15 @@ public class Instance
 				door.decayMe();
 				
 				if (region != null)
+				{
 					region.removeVisibleObject(door);
+				}
 				
 				door.getKnownList().removeAllKnownObjects();
 				L2World.getInstance().removeObject(door);
 			}
 		}
 		_doors.clear();
-		_doors = null;
 	}
 	
 	//[JOJO]-------------------------------------------------
@@ -430,44 +423,60 @@ public class Instance
 				if (a != null)
 				{
 					_CheckTimeUpTask = ThreadPoolManager.getInstance().scheduleGeneral(new CheckTimeUp(Integer.parseInt(a.getNodeValue()) * 60000), 15000);
-					_instanceEndTime = System.currentTimeMillis() + Long.parseLong(a.getNodeValue()) * 60000 + 15000;
+					_instanceEndTime = System.currentTimeMillis() + (Long.parseLong(a.getNodeValue()) * 60000) + 15000;
 				}
 			}
-			/*			else if ("timeDelay".equalsIgnoreCase(n.getNodeName()))
-						{
-							a = n.getAttributes().getNamedItem("val");
-							if (a != null)
-								instance.setTimeDelay(Integer.parseInt(a.getNodeValue()));
-						}*/
+			//@formatter:off
+			/*			
+ 			else if ("timeDelay".equalsIgnoreCase(n.getNodeName()))
+			{
+				a = n.getAttributes().getNamedItem("val");
+				if (a != null)
+					instance.setTimeDelay(Integer.parseInt(a.getNodeValue()));
+			}
+			*/
+			//@formatter:on
 			else if ("allowSummon".equalsIgnoreCase(n.getNodeName()))
 			{
 				a = n.getAttributes().getNamedItem("val");
 				if (a != null)
+				{
 					setAllowSummon(Boolean.parseBoolean(a.getNodeValue()));
+				}
 			}
 			else if ("emptyDestroyTime".equalsIgnoreCase(n.getNodeName()))
 			{
 				a = n.getAttributes().getNamedItem("val");
 				if (a != null)
+				{
 					_emptyDestroyTime = Long.parseLong(a.getNodeValue()) * 1000;
+				}
 			}
 			else if ("showTimer".equalsIgnoreCase(n.getNodeName()))
 			{
 				a = n.getAttributes().getNamedItem("val");
 				if (a != null)
+				{
 					_showTimer = Boolean.parseBoolean(a.getNodeValue());
+				}
 				a = n.getAttributes().getNamedItem("increase");
 				if (a != null)
+				{
 					_isTimerIncrease = Boolean.parseBoolean(a.getNodeValue());
+				}
 				a = n.getAttributes().getNamedItem("text");
 				if (a != null)
+				{
 					_timerText = a.getNodeValue();
+				}
 			}
 			else if ("PvPInstance".equalsIgnoreCase(n.getNodeName()))
 			{
 				a = n.getAttributes().getNamedItem("val");
 				if (a != null)
+				{
 					setPvPInstance(Boolean.parseBoolean(a.getNodeValue()));
+				}
 			}
 			else if ("doorlist".equalsIgnoreCase(n.getNodeName()))
 			{
@@ -508,7 +517,9 @@ public class Instance
 						heading = Integer.parseInt(d.getAttributes().getNamedItem("heading").getNodeValue());
 						respawn = Integer.parseInt(d.getAttributes().getNamedItem("respawn").getNodeValue());
 						if (d.getAttributes().getNamedItem("onKillDelay") != null)
+						{
 							delay = Integer.parseInt(d.getAttributes().getNamedItem("onKillDelay").getNodeValue());
+						}
 						
 						npcTemplate = NpcTable.getInstance().getTemplate(npcId);
 						if (npcTemplate != null)
@@ -521,13 +532,19 @@ public class Instance
 							spawnDat.setHeading(heading);
 							spawnDat.setRespawnDelay(respawn);
 							if (respawn == 0)
+							{
 								spawnDat.stopRespawn();
+							}
 							else
+							{
 								spawnDat.startRespawn();
+							}
 							spawnDat.setInstanceId(getId());
 							L2Npc spawned = spawnDat.doSpawn();
-							if (delay >= 0 && spawned instanceof L2Attackable)
-								((L2Attackable)spawned).setOnKillDelay(delay);
+							if ((delay >= 0) && (spawned instanceof L2Attackable))
+							{
+								((L2Attackable) spawned).setOnKillDelay(delay);
+							}
 						}
 						else
 						{
@@ -540,14 +557,15 @@ public class Instance
 			{
 				try
 				{
-					_spawnLoc[0] = Integer.parseInt(n.getAttributes().getNamedItem("spawnX").getNodeValue());
-					_spawnLoc[1] = Integer.parseInt(n.getAttributes().getNamedItem("spawnY").getNodeValue());
-					_spawnLoc[2] = Integer.parseInt(n.getAttributes().getNamedItem("spawnZ").getNodeValue());
+					int x = Integer.parseInt(n.getAttributes().getNamedItem("spawnX").getNodeValue());
+					int y = Integer.parseInt(n.getAttributes().getNamedItem("spawnY").getNodeValue());
+					int z = Integer.parseInt(n.getAttributes().getNamedItem("spawnZ").getNodeValue());
+					_spawnLoc = new Location(x, y, z);
 				}
 				catch (Exception e)
 				{
 					_log.log(Level.WARNING, "Error parsing instance xml: " + e.getMessage(), e);
-					_spawnLoc = new int[3];
+					_spawnLoc = null;
 				}
 			}
 			//[JOJO]-------------------------------------------------
@@ -568,7 +586,9 @@ public class Instance
 			//-------------------------------------------------------
 		}
 		if (Config.DEBUG)
+		{
 			_log.info(name + " Instance Template for Instance " + getId() + " loaded");
+		}
 	}
 	
 	protected void doCheckTimeUp(int remaining)
@@ -577,31 +597,31 @@ public class Instance
 		int timeLeft;
 		int interval;
 		
-		if (_players.isEmpty() && _emptyDestroyTime == 0)
+		if (_players.isEmpty() && (_emptyDestroyTime == 0))
 		{
 			remaining = 0;
 			interval = 500;
 		}
-		else if (_players.isEmpty() && _emptyDestroyTime > 0)
+		else if (_players.isEmpty() && (_emptyDestroyTime > 0))
 		{
 			
-			Long emptyTimeLeft = _lastLeft + _emptyDestroyTime - System.currentTimeMillis();
+			Long emptyTimeLeft = (_lastLeft + _emptyDestroyTime) - System.currentTimeMillis();
 			if (emptyTimeLeft <= 0)
 			{
 				interval = 0;
 				remaining = 0;
 			}
-			else if (remaining > 300000 && emptyTimeLeft > 300000)
+			else if ((remaining > 300000) && (emptyTimeLeft > 300000))
 			{
 				interval = 300000;
 				remaining = remaining - 300000;
 			}
-			else if (remaining > 60000 && emptyTimeLeft > 60000)
+			else if ((remaining > 60000) && (emptyTimeLeft > 60000))
 			{
 				interval = 60000;
 				remaining = remaining - 60000;
 			}
-			else if (remaining > 30000 && emptyTimeLeft > 30000)
+			else if ((remaining > 30000) && (emptyTimeLeft > 30000))
 			{
 				interval = 30000;
 				remaining = remaining - 30000;
@@ -646,32 +666,30 @@ public class Instance
 		}
 		if (cs != null)
 		{
-			// TODO: Zoey76: Implement IL2Procedure?
-			for (int objId : _players)
-			{
-				L2PcInstance player = L2World.getInstance().getPlayer(objId);
-				if (player.getInstanceId() == getId())
-				{
-					player.sendPacket(cs);
-				}
-			}
+			_players.forEach(new BroadcastPacket(cs));
 		}
 		cancelTimer();
 		if (remaining >= 10000)
+		{
 			_CheckTimeUpTask = ThreadPoolManager.getInstance().scheduleGeneral(new CheckTimeUp(remaining), interval);
+		}
 		else
+		{
 			_CheckTimeUpTask = ThreadPoolManager.getInstance().scheduleGeneral(new TimeUp(), interval);
+		}
 	}
 	
 	public void cancelTimer()
 	{
 		if (_CheckTimeUpTask != null)
+		{
 			_CheckTimeUpTask.cancel(true);
+		}
 	}
 	
 	public class CheckTimeUp implements Runnable
 	{
-		private int	_remaining;
+		private final int _remaining;
 		
 		public CheckTimeUp(int remaining)
 		{
@@ -691,6 +709,37 @@ public class Instance
 		public void run()
 		{
 			InstanceManager.getInstance().destroyInstance(getId());
+		}
+	}
+	
+	public final class EjectProcedure implements IL2Procedure<Integer>
+	{
+		@Override
+		public boolean execute(Integer objectId)
+		{
+			ejectPlayer(objectId);
+			return true;
+		}
+	}
+	
+	public final class BroadcastPacket implements IL2Procedure<Integer>
+	{
+		private final L2GameServerPacket _packet;
+		
+		public BroadcastPacket(L2GameServerPacket packet)
+		{
+			_packet = packet;
+		}
+		
+		@Override
+		public boolean execute(Integer objectId)
+		{
+			L2PcInstance player = L2World.getInstance().getPlayer(objectId);
+			if (player != null && player.getInstanceId() == getId())
+			{
+				player.sendPacket(_packet);
+			}
+			return true;
 		}
 	}
 }

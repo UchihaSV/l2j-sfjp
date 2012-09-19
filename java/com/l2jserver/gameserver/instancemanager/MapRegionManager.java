@@ -473,10 +473,10 @@ public class MapRegionManager extends DocumentParser
 				Instance inst = InstanceManager.getInstance().getInstance(player.getInstanceId());
 				if (inst != null)
 				{
-					int[] coord = inst.getSpawnLoc();
-					if ((coord[0] != 0) && (coord[1] != 0) && (coord[2] != 0))
+					Location loc = inst.getSpawnLoc();
+					if (loc != null)
 					{
-						return new Location(coord[0], coord[1], coord[2]);
+						return loc;
 					}
 				}
 			}
