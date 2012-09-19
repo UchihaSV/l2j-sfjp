@@ -463,8 +463,8 @@ public class GameServer
 		_log.info("Maximum Numbers of Connected Players: " + Config.MAXIMUM_ONLINE_USERS);
 		//[JOJO]-------------------------------------------------
 		StringBuilder sb = new StringBuilder(256).append("AllowedProtocolRevisions: ");
-		for (int i = 0, size = Config.PROTOCOL_LIST.size(); i < size; i++)
-			sb.append(Config.PROTOCOL_LIST.getQuick(i)).append(';');
+		for (int protocol : Config.PROTOCOL_LIST)
+			sb.append(protocol).append(';');
 		sb.setLength(sb.length() - 1);
 		_log.info(sb.toString());
 		sb = null;

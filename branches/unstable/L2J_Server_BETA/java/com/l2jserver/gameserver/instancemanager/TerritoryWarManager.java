@@ -14,8 +14,6 @@
  */
 package com.l2jserver.gameserver.instancemanager;
 
-import gnu.trove.map.hash.TIntIntHashMap;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -90,7 +88,7 @@ public class TerritoryWarManager implements Siegable
 	public static boolean PLAYER_WITH_WARD_CAN_BE_KILLED_IN_PEACEZONE;
 	public static boolean SPAWN_WARDS_WHEN_TW_IS_NOT_IN_PROGRESS;
 	public static boolean RETURN_WARDS_WHEN_TW_STARTS;
-	public final TIntIntHashMap TERRITORY_ITEM_IDS = new TIntIntHashMap();
+	public final Map<Integer,Integer> TERRITORY_ITEM_IDS = new FastMap<>();
 	
 	// Territory War settings
 	private FastMap<Integer, FastList<L2Clan>> _registeredClans = new FastMap<Integer, FastList<L2Clan>>().shared();
@@ -99,7 +97,7 @@ public class TerritoryWarManager implements Siegable
 	protected FastList<Integer> _disguisedPlayers = new FastList<Integer>().shared();
 	private FastList<TerritoryWard> _territoryWards = new FastList<TerritoryWard>().shared();
 	private FastMap<L2Clan, L2SiegeFlagInstance> _clanFlags = new FastMap<L2Clan, L2SiegeFlagInstance>().shared();
-	private Map<Integer,Integer[]> _participantPoints = new FastMap<>();
+	private Map<Integer,int[]> _participantPoints = new FastMap<>();
 	protected Calendar _startTWDate = Calendar.getInstance();
 	protected boolean _isRegistrationOver = true;
 	protected boolean _isTWChannelOpen = false;
@@ -545,7 +543,7 @@ public class TerritoryWarManager implements Siegable
 	public void giveTWQuestPoint(L2PcInstance player)
 	{
 		if (!_participantPoints.containsKey(player.getObjectId()))
-			_participantPoints.put(player.getObjectId(), new Integer[]{player.getSiegeSide(),0,0,0,0,0,0});
+			_participantPoints.put(player.getObjectId(), new int[]{player.getSiegeSide(),0,0,0,0,0,0});
 		_participantPoints.get(player.getObjectId())[2]++;
 	}
 	
@@ -559,7 +557,7 @@ public class TerritoryWarManager implements Siegable
 				if (pl.getSiegeSide() == victimSide || pl.getSiegeSide() == 0 || !Util.checkIfInRange(2000, killer, pl, false))
 					continue;
 				else if (!_participantPoints.containsKey(pl.getObjectId()))
-					_participantPoints.put(pl.getObjectId(), new Integer[]{pl.getSiegeSide(),0,0,0,0,0,0});
+					_participantPoints.put(pl.getObjectId(), new int[]{pl.getSiegeSide(),0,0,0,0,0,0});
 				_participantPoints.get(pl.getObjectId())[type]++;
 			}
 		else
@@ -567,7 +565,7 @@ public class TerritoryWarManager implements Siegable
 			if (killer.getSiegeSide() == victimSide || killer.getSiegeSide() == 0)
 				return;
 			else if (!_participantPoints.containsKey(killer.getObjectId()))
-				_participantPoints.put(killer.getObjectId(), new Integer[]{killer.getSiegeSide(),0,0,0,0,0,0});
+				_participantPoints.put(killer.getObjectId(), new int[]{killer.getSiegeSide(),0,0,0,0,0,0});
 			_participantPoints.get(killer.getObjectId())[type]++;
 		}
 	}
@@ -577,7 +575,7 @@ public class TerritoryWarManager implements Siegable
 		if (_participantPoints.containsKey(player.getObjectId()))
 		{
 			int[] reward = new int[2];
-			Integer[] temp = _participantPoints.get(player.getObjectId());
+			int[] temp = _participantPoints.get(player.getObjectId());
 			reward[0] = temp[0];
 			reward[1] = 0;
 			// badges for being online. if char was not online at least 10 mins
@@ -614,7 +612,7 @@ public class TerritoryWarManager implements Siegable
 		player.sendMessage("Registred TerrId: " + player.getSiegeSide());
 		if (_participantPoints.containsKey(player.getObjectId()))
 		{
-			Integer[] temp = _participantPoints.get(player.getObjectId());
+			int[] temp = _participantPoints.get(player.getObjectId());
 			player.sendMessage("TerrId: " + temp[0]);
 			player.sendMessage("PcKill: " + temp[1]);
 			player.sendMessage("PcQuests: " + temp[2]);
