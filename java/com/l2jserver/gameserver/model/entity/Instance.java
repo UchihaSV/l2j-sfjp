@@ -573,14 +573,15 @@ public class Instance
 			{
 				try
 				{
-					_spawnLoc[0] = Integer.parseInt(n.getAttributes().getNamedItem("x").getNodeValue());
-					_spawnLoc[1] = Integer.parseInt(n.getAttributes().getNamedItem("y").getNodeValue());
-					_spawnLoc[2] = Integer.parseInt(n.getAttributes().getNamedItem("z").getNodeValue());
+					int x = Integer.parseInt(n.getAttributes().getNamedItem("x").getNodeValue());
+					int y = Integer.parseInt(n.getAttributes().getNamedItem("y").getNodeValue());
+					int z = Integer.parseInt(n.getAttributes().getNamedItem("z").getNodeValue());
+					_spawnLoc = new Location(x, y, z);
 				}
 				catch (Exception e)
 				{
 					_log.warning("Error parsing instance xml: " + e);
-					_spawnLoc = new int[3];
+					_spawnLoc = null;
 				}
 			}
 			//-------------------------------------------------------
