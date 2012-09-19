@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javolution.util.FastList;
 import javolution.util.FastMap;
 import javolution.util.FastSet;
 
@@ -37,7 +38,6 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2GrandBossInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.zone.type.L2BossZone;
-import com.l2jserver.util.L2FastList;
 
 /**
  * @author DaRkRaGe
@@ -106,7 +106,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	private TIntIntHashMap _bossStatus;
 	
-	private L2FastList<L2BossZone> _zones;
+	private FastList/*L2FastList*/<L2BossZone> _zones;
 	
 	public static GrandBossManager getInstance()
 	{
@@ -120,7 +120,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	private void init()
 	{
-		_zones = new L2FastList<>();
+		_zones = new FastList/*L2FastList*/<>();
 		
 		_bosses = new FastMap<>();
 		_storedInfo = new TIntObjectHashMap<>();
@@ -488,7 +488,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		_zones.clear();
 	}
 	
-	public L2FastList<L2BossZone> getZones()
+	public FastList/*L2FastList*/<L2BossZone> getZones()
 	{
 		return _zones;
 	}
