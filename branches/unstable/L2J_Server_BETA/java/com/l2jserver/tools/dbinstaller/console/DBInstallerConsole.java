@@ -21,7 +21,6 @@ import java.util.prefs.Preferences;
 import com.l2jserver.tools.dbinstaller.DBOutputInterface;
 import com.l2jserver.tools.dbinstaller.RunTasks;
 import com.l2jserver.tools.dbinstaller.util.mysql.MySqlConnect;
-import com.l2jserver.util.CloseShieldedInputStream;
 
 /**
  * @author mrTJO
@@ -37,7 +36,8 @@ public class DBInstallerConsole implements DBOutputInterface
 		System.out.println("Welcome to L2J DataBase installer");
 		Preferences prop = Preferences.userRoot();
 		RunTasks rt = null;
-		try (Scanner scn = new Scanner(new CloseShieldedInputStream(System.in)))
+		@SuppressWarnings("resource") Scanner scn = new Scanner(System.in);
+	//	try (Scanner scn = new Scanner(new CloseShieldedInputStream(System.in)))
 		{
 			while (_con == null)
 			{
@@ -127,7 +127,8 @@ public class DBInstallerConsole implements DBOutputInterface
 	{
 		System.out.print(message);
 		String res = "";
-		try (Scanner scn = new Scanner(new CloseShieldedInputStream(System.in)))
+		@SuppressWarnings("resource") Scanner scn = new Scanner(System.in);
+	//	try (Scanner scn = new Scanner(new CloseShieldedInputStream(System.in)))
 		{
 			res = scn.next();
 		}
