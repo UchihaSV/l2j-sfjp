@@ -16,6 +16,7 @@ package com.l2jserver.gameserver.model.zone.type;
 
 import java.util.Map;
 
+import javolution.util.FastList;
 import javolution.util.FastMap;
 import javolution.util.FastSet;
 
@@ -31,7 +32,6 @@ import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.zone.AbstractZoneSettings;
 import com.l2jserver.gameserver.model.zone.L2ZoneType;
-import com.l2jserver.util.L2FastList;
 
 /**
  * @author DaRkRaGe
@@ -61,13 +61,13 @@ public class L2BossZone extends L2ZoneType
 		// after reboot/server downtime (outside of their control), within 30 of server restart
 		private final FastSet<Integer> _playersAllowed;		//[JOJO] L2FastList --> FastSet
 		
-		private final L2FastList<L2Character> _raidList;
+		private final FastList/*L2FastList*/<L2Character> _raidList;
 		
 		public Settings()
 		{
 			_playerAllowedReEntryTimes = new FastMap<>();
 			_playersAllowed = new FastSet<>();
-			_raidList = new L2FastList<>();
+			_raidList = new FastList/*L2FastList*/<>();
 		}
 		
 		public FastMap<Integer, Long> getPlayerAllowedReEntryTimes()
@@ -80,7 +80,7 @@ public class L2BossZone extends L2ZoneType
 			return _playersAllowed;
 		}
 		
-		public L2FastList<L2Character> getRaidList()
+		public FastList/*L2FastList*/<L2Character> getRaidList()
 		{
 			return _raidList;
 		}

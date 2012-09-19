@@ -31,6 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
+import javolution.util.FastList;
 import javolution.util.FastMap;
 
 import com.l2jserver.Config;
@@ -44,7 +45,6 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.entity.Hero;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
-import com.l2jserver.util.L2FastList;
 
 /**
  * @author godson
@@ -55,7 +55,7 @@ public class Olympiad
 	protected static final Logger _logResults = Logger.getLogger("olympiad");
 	
 	private static final Map<Integer, StatsSet> _nobles = new FastMap<>();
-	protected static L2FastList<StatsSet> _heroesToBe;
+	protected static FastList/*L2FastList*/<StatsSet> _heroesToBe;
 	private static final TIntIntHashMap _noblesRank = new TIntIntHashMap();
 	
 	public static final String OLYMPIAD_HTML_PATH = "data/html/olympiad/";
@@ -891,14 +891,14 @@ public class Olympiad
 			}
 		}
 		
-		_heroesToBe = new L2FastList<>();
+		_heroesToBe = new FastList/*L2FastList*/<>();
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
 			PreparedStatement statement = con.prepareStatement(OLYMPIAD_GET_HEROS);
 			ResultSet rset;
 			StatsSet hero;
-			L2FastList<StatsSet> soulHounds = new L2FastList<>();
+			FastList/*L2FastList*/<StatsSet> soulHounds = new FastList/*L2FastList*/<>();
 			for (int element : HERO_IDS)
 			{
 				statement.setInt(1, element);
@@ -1024,10 +1024,10 @@ public class Olympiad
 		}
 	}
 	
-	public L2FastList<String> getClassLeaderBoard(int classId)
+	public FastList/*L2FastList*/<String> getClassLeaderBoard(int classId)
 	{
 		// if (_period != 1) return;
-		final L2FastList<String> names = new L2FastList<>();
+		final FastList/*L2FastList*/<String> names = new FastList/*L2FastList*/<>();
 		String query = Config.ALT_OLY_SHOW_MONTHLY_WINNERS ? ((classId == 132) ? GET_EACH_CLASS_LEADER_SOULHOUND : GET_EACH_CLASS_LEADER) : ((classId == 132) ? GET_EACH_CLASS_LEADER_CURRENT_SOULHOUND : GET_EACH_CLASS_LEADER_CURRENT);
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(query))
