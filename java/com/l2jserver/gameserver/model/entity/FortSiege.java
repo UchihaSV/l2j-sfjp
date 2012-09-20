@@ -246,7 +246,7 @@ public class FortSiege implements Siegable
 		{
 			_isInProgress = false; // Flag so that siege instance can be started
 			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.THE_FORTRESS_BATTLE_OF_S1_HAS_FINISHED);
-			sm.addFortName(getFort());	//[JOJO]
+			sm.addCastleId(getFort().getFortId());
 			announceToPlayer(sm);
 			
 			removeFlags(); // Removes all flags. Note: Remove flag before teleporting players
@@ -335,7 +335,7 @@ public class FortSiege implements Siegable
 			_siegeEnd = ThreadPoolManager.getInstance().scheduleGeneral(new ScheduleEndSiegeTask(), FortSiegeManager.getInstance().getSiegeLength() * 60 * 1000L); // Prepare auto end task
 			
 			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.THE_FORTRESS_BATTLE_S1_HAS_BEGUN);
-			sm.addFortName(getFort());	//[JOJO]
+			sm.addCastleId(getFort().getFortId());
 			announceToPlayer(sm);
 			saveFortSiege();
 			

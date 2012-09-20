@@ -323,7 +323,6 @@ public class TerritoryWarManager implements Siegable
 			door.openMe();
 	}
 	
-	@SuppressWarnings("null")
 	public L2Npc addTerritoryWard(int territoryId, int newOwnerId, int oldOwnerId, boolean broadcastMessage)
 	{
 		L2Npc ret = null;
@@ -366,36 +365,11 @@ public class TerritoryWarManager implements Siegable
 				terOld.removeWard(territoryId);
 				updateTerritoryData(terOld);
 				updateTerritoryData(terNew);
-				/**
-				English
-				36572 Gludio Ward
-				36573 Dion Ward
-				36574 Giran Ward
-				36575 Oren Ward
-				36576 Aden Ward
-				36577 Innadril Ward
-				36578 Goddard Ward
-				36579 Rune Ward
-				36580 Schuttgart Ward
-
-				日本語 "$s1血盟が$s2守護物の奪取に成功しました。"
-				    例 "{○○○}血盟が{グルーディオ領地}守護物の奪取に成功しました。"
-				36572 グルーディオの守護物
-				36573 ディオンの守護物
-				36574 ギランの守護物
-				36575 オーレンの守護物
-				36576 アデンの守護物
-				36577 インナドリルの守護物
-				36578 ゴダードの守護物
-				36579 ルウンの守護物
-				36580 シュチュッツガルトの守護物
-				**/
 				if (broadcastMessage)
 				{
 					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.CLAN_S1_HAS_SUCCEDED_IN_CAPTURING_S2_TERRITORY_WARD);
 					sm.addString(terNew.getOwnerClan().getName());
-					// TODO: Unhardcode using territory Id.
-					sm.addString(ward.getNpc().getName().replace(" Ward", "").replace("の守護物", "領地"));
+					sm.addCastleId(terNew.getTerritoryId());
 					announceToParticipants(sm, 135000, 13500);
 				}
 				if (terOld.getOwnerClan() != null)
