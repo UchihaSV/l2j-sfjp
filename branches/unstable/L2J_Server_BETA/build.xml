@@ -67,7 +67,6 @@
 		<defaultexcludes add="**/* &#45;&#45;*" />
 		<defaultexcludes add="**/*&#65533;&#65533;" />
 		<defaultexcludes add="**/libs/*source*.*" />
-		<defaultexcludes add="**/libs/*source*.*" />
 		<defaultexcludes add="**/libs/*-src.*" />
 		<defaultexcludes add="**/libs/*_src.*" />
 
