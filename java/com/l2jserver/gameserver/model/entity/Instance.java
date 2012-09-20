@@ -192,28 +192,6 @@ public class Instance
 		}
 	}
 	
-	/**
-	 * Removes the player from the instance by setting InstanceId to 0 and teleporting to nearest town.
-	 * @param objectId
-	 */
-	public void ejectPlayer(int objectId)
-	{
-		L2PcInstance player = L2World.getInstance().getPlayer(objectId);
-		if ((player != null) && (player.getInstanceId() == getId()))
-		{
-			player.setInstanceId(0);
-			player.sendMessage("You were removed from the instance");
-			if (getSpawnLoc() != null)
-			{
-				player.teleToLocation(getSpawnLoc(), true);
-			}
-			else
-			{
-				player.teleToLocation(MapRegionManager.TeleportWhereType.Town);
-			}
-		}
-	}
-	
 	public void addNpc(L2Npc npc)
 	{
 		_npcs.add(npc);
@@ -231,7 +209,7 @@ public class Instance
 	/**
 	 * Adds a door into the instance
 	 * @param doorId - from doorData.xml
-	 * @param set - statset for initializing door
+	 * @param set - StatsSet for initializing door
 	 */
 	private void addDoor(int doorId, StatsSet set)
 	{
@@ -313,7 +291,7 @@ public class Instance
 	
 	public void removePlayers()
 	{
-		_players.forEach(new EjectProcedure());
+		_players.executeForEach(new EjectProcedure());
 		_players.clear();
 	}
 	
@@ -667,7 +645,7 @@ public class Instance
 		}
 		if (cs != null)
 		{
-			_players.forEach(new BroadcastPacket(cs));
+			_players.executeForEach(new BroadcastPacket(cs));
 		}
 		cancelTimer();
 		if (remaining >= 10000)
@@ -718,7 +696,20 @@ public class Instance
 		@Override
 		public boolean execute(Integer objectId)
 		{
-			ejectPlayer(objectId);
+			final L2PcInstance player = L2World.getInstance().getPlayer(objectId);
+			if ((player != null) && (player.getInstanceId() == getId()))
+			{
+				player.setInstanceId(0);
+				player.sendMessage("You were removed from the instance");
+				if (getSpawnLoc() != null)
+				{
+					player.teleToLocation(getSpawnLoc(), true);
+				}
+				else
+				{
+					player.teleToLocation(MapRegionManager.TeleportWhereType.Town);
+				}
+			}
 			return true;
 		}
 	}
@@ -735,8 +726,8 @@ public class Instance
 		@Override
 		public boolean execute(Integer objectId)
 		{
-			L2PcInstance player = L2World.getInstance().getPlayer(objectId);
-			if (player != null && player.getInstanceId() == getId())
+			final L2PcInstance player = L2World.getInstance().getPlayer(objectId);
+			if ((player != null) && (player.getInstanceId() == getId()))
 			{
 				player.sendPacket(_packet);
 			}
