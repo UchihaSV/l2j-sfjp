@@ -204,19 +204,23 @@ public final class SystemMessage extends L2GameServerPacket
 	}
 	public final SystemMessage addCastleName(final com.l2jserver.gameserver.model.entity.Castle castle)
 	{
-		return addCastleName(castle.getCastleId());
+		return addCastleName(castle.getCastleId());	//1-9 Castle names
 	}
 	public final SystemMessage addClanHallName(final com.l2jserver.gameserver.model.entity.ClanHall clanHall)
 	{
-		return addCastleName(clanHall.getId());
+		return addCastleName(clanHall.getId());	//21-64 Clan Hall names
 	}
 	public final SystemMessage addSiegableHallName(final com.l2jserver.gameserver.model.entity.clanhall.SiegableHall siegableHall)
 	{
-		return addCastleName(siegableHall.getId());
+		return addCastleName(siegableHall.getId());	//21,34,35,62,63,64 Siegable Clanhall names
+	}
+	public final SystemMessage addTerritoryName(final com.l2jserver.gameserver.instancemanager.TerritoryWarManager.Territory territory)
+	{
+		return addCastleName(territory.getTerritoryId());	//81-89 Territory names
 	}
 	public final SystemMessage addFortName(final com.l2jserver.gameserver.model.entity.Fort fort)
 	{
-		return addCastleName(fort.getFortId());
+		return addCastleName(fort.getFortId());	//101-121 Fortress names
 	}
 	private final SystemMessage addCastleName(final int number)
 	{
