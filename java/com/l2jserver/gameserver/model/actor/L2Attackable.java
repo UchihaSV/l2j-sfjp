@@ -1359,7 +1359,7 @@ if (com.l2jserver.Config.FIX_L2AttackableAIScript_super) {{
 			
 			double dropChance = drop.getChance();
 			
-			if (Config.RATE_DROP_ITEMS_ID.get(drop.getItemId()) != 0)
+			if (Config.RATE_DROP_ITEMS_ID.containsKey(drop.getItemId()))
 				dropChance *= Config.RATE_DROP_ITEMS_ID.get(drop.getItemId());
 			else
 				dropChance *= isRaid() && !isRaidMinion() ? Config.RATE_DROP_ITEMS_BY_RAID : Config.RATE_DROP_ITEMS;
