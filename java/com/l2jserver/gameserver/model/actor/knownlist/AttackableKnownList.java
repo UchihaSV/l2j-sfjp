@@ -68,10 +68,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_KNOWN_FORGET) {{
 		
 		return Math.max(Math.min(2200, 2 * distanceToWatchObject), distanceToWatchObject + 100);
 }} else {{
-		if (getActiveChar().getAggroList().get(object) != null)
-			return 3000;
-		
-		return Math.min(2200, 2 * getDistanceToWatchObject(object));
+		return (int) (getDistanceToWatchObject(object) * 1.5);
 }}
 	}
 	
