@@ -191,6 +191,25 @@ public class Instance
 			setDuration((int) (_instanceEndTime - System.currentTimeMillis() - 500));
 		}
 	}
+	public void removePlayer(int objectId)
+	{
+		removePlayer(Integer.valueOf(objectId));
+ 	//	// Note: by JOJO
+	//	Integer x = 1000;
+	//	int y = 2000;
+	//
+	//	java.util.ArrayList<Integer> a = new java.util.ArrayList<>();
+	//	a.add(x);
+	//	a.add(y);
+	//	a.remove(x);
+	//	a.remove(y);  // Å©Ç±ÇÍÇÕä‘à·Ç¢
+	//	
+	//	java.util.HashSet<Integer> s = new java.util.HashSet<>();
+	//	s.add(x);
+	//	s.add(y);
+	//	s.remove(x);
+	//	s.remove(y);  // Å©Ç±ÇÍÇÕOK
+	}
 	
 	public void addNpc(L2Npc npc)
 	{
