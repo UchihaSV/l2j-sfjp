@@ -1143,6 +1143,7 @@ public class Siege implements Siegable
 		if (getIsRegistrationOver())
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.DEADLINE_FOR_SIEGE_S1_PASSED);
+			sm.addCastleName(getCastle());	//[JOJO]
 			player.sendPacket(sm);
 		}
 		else if (getIsInProgress())
