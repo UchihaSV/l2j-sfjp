@@ -76,7 +76,7 @@ public class TvTEvent
 	protected static final Logger _log = Logger.getLogger(TvTEvent.class.getName());
 	/** html path **/
 	private static final String htmlPath = "data/html/mods/TvTEvent/";
-	/**	The teams of the TvTEvent<br> */
+	/** The teams of the TvTEvent<br> */
 	private static TvTEventTeam[] _teams = new TvTEventTeam[2];
 	/** The state of the TvTEvent<br> */
 	private static EventState _state = EventState.INACTIVE;
@@ -109,8 +109,8 @@ public class TvTEvent
 	/**
 	 * Starts the participation of the TvTEvent<br>
 	 * 1. Get L2NpcTemplate by Config.TVT_EVENT_PARTICIPATION_NPC_ID<br>
-	 * 2. Try to spawn a new npc of it<br><br>
-	 *
+	 * 2. Try to spawn a new npc of it<br>
+	 * <br>
 	 * @return boolean: true if success, otherwise false<br>
 	 */
 	public static boolean startParticipation()
@@ -152,7 +152,7 @@ public class TvTEvent
 		return true;
 	}
 	
-	private static int highestLevelPcInstanceOf(Map< Integer, L2PcInstance > players)
+	private static int highestLevelPcInstanceOf(Map<Integer, L2PcInstance> players)
 	{
 		int maxLevel = Integer.MIN_VALUE, maxLevelId = -1;
 		for (L2PcInstance player : players.values())
@@ -172,8 +172,8 @@ public class TvTEvent
 	 * 2. Close doors specified in configs<br>
 	 * 3. Abort if not enought participants(return false)<br>
 	 * 4. Set state EventState.STARTED<br>
-	 * 5. Teleport all participants to team spot<br><br>
-	 *
+	 * 5. Teleport all participants to team spot<br>
+	 * <br>
 	 * @return boolean: true if success, otherwise false<br>
 	 */
 	public static boolean startFight()
@@ -182,12 +182,12 @@ public class TvTEvent
 		setState(EventState.STARTING);
 		
 		// Randomize and balance team distribution
-		Map< Integer, L2PcInstance > allParticipants = new FastMap<>();
+		Map<Integer, L2PcInstance> allParticipants = new FastMap<>();
 		allParticipants.putAll(_teams[0].getParticipatedPlayers());
 		allParticipants.putAll(_teams[1].getParticipatedPlayers());
 		_teams[0].cleanMe();
 		_teams[1].cleanMe();
-
+		
 		L2PcInstance player;
 		Iterator<L2PcInstance> iter;
 		if (needParticipationFee())
@@ -197,11 +197,17 @@ public class TvTEvent
 			{
 				player = iter.next();
 				if (!hasParticipationFee(player))
+				{
 					iter.remove();
+				}
 			}
 		}
 		
-		int balance[] = { 0, 0 }, priority = 0, highestLevelPlayerId;
+		int balance[] =
+		{
+			0,
+			0
+		}, priority = 0, highestLevelPlayerId;
 		L2PcInstance highestLevelPlayer;
 		// XXX: allParticipants should be sorted by level instead of using highestLevelPcInstanceOf for every fetch
 		while (!allParticipants.isEmpty())
@@ -213,10 +219,13 @@ public class TvTEvent
 			_teams[priority].addPlayer(highestLevelPlayer);
 			balance[priority] += highestLevelPlayer.getLevel();
 			// Exiting if no more players
-			if (allParticipants.isEmpty()) break;
+			if (allParticipants.isEmpty())
+			{
+				break;
+			}
 			// The other team gets one player
 			// XXX: Code not dry
-			priority = 1-priority;
+			priority = 1 - priority;
 			highestLevelPlayerId = highestLevelPcInstanceOf(allParticipants);
 			highestLevelPlayer = allParticipants.get(highestLevelPlayerId);
 			allParticipants.remove(highestLevelPlayerId);
@@ -227,7 +236,7 @@ public class TvTEvent
 		}
 		
 		// Check for enought participants
-		if (_teams[0].getParticipatedPlayerCount() < Config.TVT_EVENT_MIN_PLAYERS_IN_TEAMS || _teams[1].getParticipatedPlayerCount() < Config.TVT_EVENT_MIN_PLAYERS_IN_TEAMS)
+		if ((_teams[0].getParticipatedPlayerCount() < Config.TVT_EVENT_MIN_PLAYERS_IN_TEAMS) || (_teams[1].getParticipatedPlayerCount() < Config.TVT_EVENT_MIN_PLAYERS_IN_TEAMS))
 		{
 			// Set state INACTIVE
 			setState(EventState.INACTIVE);
@@ -247,14 +256,18 @@ public class TvTEvent
 			{
 				player = iter.next();
 				if (!payParticipationFee(player))
+				{
 					iter.remove();
+				}
 			}
 			iter = _teams[1].getParticipatedPlayers().values().iterator();
 			while (iter.hasNext())
 			{
 				player = iter.next();
 				if (!payParticipationFee(player))
+				{
 					iter.remove();
+				}
 			}
 		}
 		
@@ -265,7 +278,7 @@ public class TvTEvent
 				_TvTEventInstance = InstanceManager.getInstance().createDynamicInstance(Config.TVT_EVENT_INSTANCE_FILE);
 				InstanceManager.getInstance().getInstance(_TvTEventInstance).setAllowSummon(false);
 				InstanceManager.getInstance().getInstance(_TvTEventInstance).setPvPInstance(true);
-				InstanceManager.getInstance().getInstance(_TvTEventInstance).setEmptyDestroyTime(Config.TVT_EVENT_START_LEAVE_TELEPORT_DELAY * 1000 + 60000L);
+				InstanceManager.getInstance().getInstance(_TvTEventInstance).setEmptyDestroyTime((Config.TVT_EVENT_START_LEAVE_TELEPORT_DELAY * 1000) + 60000L);
 			}
 			catch (Exception e)
 			{
@@ -305,8 +318,8 @@ public class TvTEvent
 	 * 2. Wait till teams are not at a tie anymore<br>
 	 * 3. Set state EvcentState.REWARDING<br>
 	 * 4. Reward team with more points<br>
-	 * 5. Show win html to wining team participants<br><br>
-	 *
+	 * 5. Show win html to wining team participants<br>
+	 * <br>
 	 * @return String: winning team name<br>
 	 */
 	public static String calculateRewards()
@@ -314,7 +327,7 @@ public class TvTEvent
 		if (_teams[0].getPoints() == _teams[1].getPoints())
 		{
 			// Check if one of the teams have no more players left
-			if (_teams[0].getParticipatedPlayerCount() == 0 || _teams[1].getParticipatedPlayerCount() == 0)
+			if ((_teams[0].getParticipatedPlayerCount() == 0) || (_teams[1].getParticipatedPlayerCount() == 0))
 			{
 				// set state to rewarding
 				setState(EventState.REWARDING);
@@ -396,7 +409,7 @@ public class TvTEvent
 			NpcHtmlMessage npcHtmlMessage = new NpcHtmlMessage(0);
 			
 			statusUpdate.addAttribute(StatusUpdate.CUR_LOAD, playerInstance.getCurrentLoad());
-			npcHtmlMessage.setHtml(HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath+"Reward.htm"));
+			npcHtmlMessage.setHtml(HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath + "Reward.htm"));
 			playerInstance.sendPacket(statusUpdate);
 			playerInstance.sendPacket(npcHtmlMessage);
 		}
@@ -415,7 +428,7 @@ public class TvTEvent
 	{
 		// Set state INACTIVATING
 		setState(EventState.INACTIVATING);
-		//Unspawn event npc
+		// Unspawn event npc
 		unSpawnNpc();
 		// Opens all doors specified in configs for tvt
 		openDoors(Config.TVT_DOORS_IDS_TO_CLOSE);
@@ -446,8 +459,8 @@ public class TvTEvent
 	/**
 	 * Adds a player to a TvTEvent team<br>
 	 * 1. Calculate the id of the team in which the player should be added<br>
-	 * 2. Add the player to the calculated team<br><br>
-	 *
+	 * 2. Add the player to the calculated team<br>
+	 * <br>
 	 * @param playerInstance as L2PcInstance<br>
 	 * @return boolean: true if success, otherwise false<br>
 	 */
@@ -477,8 +490,8 @@ public class TvTEvent
 	/**
 	 * Removes a TvTEvent player from it's team<br>
 	 * 1. Get team id of the player<br>
-	 * 2. Remove player from it's team<br><br>
-	 *
+	 * 2. Remove player from it's team<br>
+	 * <br>
 	 * @param playerObjectId
 	 * @return boolean: true if success, otherwise false
 	 */
@@ -500,7 +513,7 @@ public class TvTEvent
 	
 	public static boolean needParticipationFee()
 	{
-		return Config.TVT_EVENT_PARTICIPATION_FEE[0] != 0 && Config.TVT_EVENT_PARTICIPATION_FEE[1] != 0;
+		return (Config.TVT_EVENT_PARTICIPATION_FEE[0] != 0) && (Config.TVT_EVENT_PARTICIPATION_FEE[1] != 0);
 	}
 	
 	public static boolean hasParticipationFee(L2PcInstance playerInstance)
@@ -518,8 +531,10 @@ public class TvTEvent
 		int itemId = Config.TVT_EVENT_PARTICIPATION_FEE[0];
 		int itemNum = Config.TVT_EVENT_PARTICIPATION_FEE[1];
 		
-		if (itemId == 0 || itemNum == 0)
+		if ((itemId == 0) || (itemNum == 0))
+		{
 			return "-";
+		}
 		
 		return StringUtil.concat(String.valueOf(itemNum), " ", ItemTable.getInstance().getTemplate(itemId).getName());
 	}
@@ -527,8 +542,8 @@ public class TvTEvent
 	/**
 	 * Send a SystemMessage to all participated players<br>
 	 * 1. Send the message to all players of team number one<br>
-	 * 2. Send the message to all players of team number two<br><br>
-	 *
+	 * 2. Send the message to all players of team number two<br>
+	 * <br>
 	 * @param message as String<br>
 	 */
 	public static void sysMsgToAllParticipants(String message)
@@ -552,7 +567,7 @@ public class TvTEvent
 	
 	/**
 	 * Close doors specified in configs
-	 * @param doors 
+	 * @param doors
 	 */
 	private static void closeDoors(List<Integer> doors)
 	{
@@ -569,7 +584,7 @@ public class TvTEvent
 	
 	/**
 	 * Open doors specified in configs
-	 * @param doors 
+	 * @param doors
 	 */
 	private static void openDoors(List<Integer> doors)
 	{
@@ -599,13 +614,13 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Called when a player logs in<br><br>
-	 *
+	 * Called when a player logs in<br>
+	 * <br>
 	 * @param playerInstance as L2PcInstance<br>
 	 */
 	public static void onLogin(L2PcInstance playerInstance)
 	{
-		if (playerInstance == null || (!isStarting() && !isStarted()))
+		if ((playerInstance == null) || (!isStarting() && !isStarted()))
 		{
 			return;
 		}
@@ -622,32 +637,34 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Called when a player logs out<br><br>
-	 *
+	 * Called when a player logs out<br>
+	 * <br>
 	 * @param playerInstance as L2PcInstance<br>
 	 */
 	public static void onLogout(L2PcInstance playerInstance)
 	{
-		if (playerInstance != null && (isStarting() || isStarted() || isParticipating()))
+		if ((playerInstance != null) && (isStarting() || isStarted() || isParticipating()))
 		{
 			if (removeParticipant(playerInstance.getObjectId()))
-				playerInstance.setXYZInvisible(Config.TVT_EVENT_PARTICIPATION_NPC_COORDINATES[0] + Rnd.get(101)-50,
-						Config.TVT_EVENT_PARTICIPATION_NPC_COORDINATES[1] + Rnd.get(101)-50,
-						Config.TVT_EVENT_PARTICIPATION_NPC_COORDINATES[2]);
+			{
+				playerInstance.setXYZInvisible((Config.TVT_EVENT_PARTICIPATION_NPC_COORDINATES[0] + Rnd.get(101)) - 50, (Config.TVT_EVENT_PARTICIPATION_NPC_COORDINATES[1] + Rnd.get(101)) - 50, Config.TVT_EVENT_PARTICIPATION_NPC_COORDINATES[2]);
+			}
 		}
 	}
 	
 	/**
 	 * Called on every bypass by npc of type L2TvTEventNpc<br>
-	 * Needs synchronization cause of the max player check<br><br>
-	 *
+	 * Needs synchronization cause of the max player check<br>
+	 * <br>
 	 * @param command as String<br>
 	 * @param playerInstance as L2PcInstance<br>
 	 */
 	public static synchronized void onBypass(String command, L2PcInstance playerInstance)
 	{
-		if (playerInstance == null || !isParticipating())
+		if ((playerInstance == null) || !isParticipating())
+		{
 			return;
+		}
 		
 		final String htmContent;
 		
@@ -658,25 +675,31 @@ public class TvTEvent
 			
 			if (playerInstance.isCursedWeaponEquipped())
 			{
-				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath+"CursedWeaponEquipped.htm");
+				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath + "CursedWeaponEquipped.htm");
 				if (htmContent != null)
+				{
 					npcHtmlMessage.setHtml(htmContent);
+				}
 			}
 			else if (OlympiadManager.getInstance().isRegistered(playerInstance))
 			{
-				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath+"Olympiad.htm");
+				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath + "Olympiad.htm");
 				if (htmContent != null)
+				{
 					npcHtmlMessage.setHtml(htmContent);
+				}
 			}
 			else if (playerInstance.getKarma() > 0)
 			{
-				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath+"Karma.htm");
+				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath + "Karma.htm");
 				if (htmContent != null)
+				{
 					npcHtmlMessage.setHtml(htmContent);
+				}
 			}
-			else if (playerLevel < Config.TVT_EVENT_MIN_LVL || playerLevel > Config.TVT_EVENT_MAX_LVL)
+			else if ((playerLevel < Config.TVT_EVENT_MIN_LVL) || (playerLevel > Config.TVT_EVENT_MAX_LVL))
 			{
-				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath+"Level.htm");
+				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath + "Level.htm");
 				if (htmContent != null)
 				{
 					npcHtmlMessage.setHtml(htmContent);
@@ -684,19 +707,18 @@ public class TvTEvent
 					npcHtmlMessage.replace("%max%", Config.TVT_EVENT_MAX_LVL);
 				}
 			}
-			else if (_teams[0].getParticipatedPlayerCount() == Config.TVT_EVENT_MAX_PLAYERS_IN_TEAMS && _teams[1].getParticipatedPlayerCount() == Config.TVT_EVENT_MAX_PLAYERS_IN_TEAMS)
+			else if ((_teams[0].getParticipatedPlayerCount() == Config.TVT_EVENT_MAX_PLAYERS_IN_TEAMS) && (_teams[1].getParticipatedPlayerCount() == Config.TVT_EVENT_MAX_PLAYERS_IN_TEAMS))
 			{
-				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath+"TeamsFull.htm");
+				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath + "TeamsFull.htm");
 				if (htmContent != null)
 				{
 					npcHtmlMessage.setHtml(htmContent);
 					npcHtmlMessage.replace("%max%", Config.TVT_EVENT_MAX_PLAYERS_IN_TEAMS);
 				}
 			}
-			else if (Config.TVT_EVENT_MAX_PARTICIPANTS_PER_IP > 0
-					&& !AntiFeedManager.getInstance().tryAddPlayer(AntiFeedManager.TVT_ID, playerInstance, Config.TVT_EVENT_MAX_PARTICIPANTS_PER_IP))
+			else if ((Config.TVT_EVENT_MAX_PARTICIPANTS_PER_IP > 0) && !AntiFeedManager.getInstance().tryAddPlayer(AntiFeedManager.TVT_ID, playerInstance, Config.TVT_EVENT_MAX_PARTICIPANTS_PER_IP))
 			{
-				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath+"IPRestriction.htm");
+				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath + "IPRestriction.htm");
 				if (htmContent != null)
 				{
 					npcHtmlMessage.setHtml(htmContent);
@@ -705,7 +727,7 @@ public class TvTEvent
 			}
 			else if (needParticipationFee() && !hasParticipationFee(playerInstance))
 			{
-				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath+"ParticipationFee.htm");
+				htmContent = HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath + "ParticipationFee.htm");
 				if (htmContent != null)
 				{
 					npcHtmlMessage.setHtml(htmContent);
@@ -713,9 +735,13 @@ public class TvTEvent
 				}
 			}
 			else if (addParticipant(playerInstance))
-				npcHtmlMessage.setHtml(HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath+"Registered.htm"));
+			{
+				npcHtmlMessage.setHtml(HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath + "Registered.htm"));
+			}
 			else
+			{
 				return;
+			}
 			
 			playerInstance.sendPacket(npcHtmlMessage);
 		}
@@ -723,25 +749,27 @@ public class TvTEvent
 		{
 			removeParticipant(playerInstance.getObjectId());
 			if (Config.TVT_EVENT_MAX_PARTICIPANTS_PER_IP > 0)
+			{
 				AntiFeedManager.getInstance().removePlayer(AntiFeedManager.TVT_ID, playerInstance);
+			}
 			
 			NpcHtmlMessage npcHtmlMessage = new NpcHtmlMessage(0);
 			
-			npcHtmlMessage.setHtml(HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath+"Unregistered.htm"));
+			npcHtmlMessage.setHtml(HtmCache.getInstance().getHtm(playerInstance.getHtmlPrefix(), htmlPath + "Unregistered.htm"));
 			playerInstance.sendPacket(npcHtmlMessage);
 		}
 	}
 	
 	/**
-	 * Called on every onAction in L2PcIstance<br><br>
-	 *
+	 * Called on every onAction in L2PcIstance<br>
+	 * <br>
 	 * @param playerInstance
 	 * @param targetedPlayerObjectId
 	 * @return boolean: true if player is allowed to target, otherwise false
 	 */
 	public static boolean onAction(L2PcInstance playerInstance, int targetedPlayerObjectId)
 	{
-		if (playerInstance == null || !isStarted())
+		if ((playerInstance == null) || !isStarted())
 		{
 			return true;
 		}
@@ -754,12 +782,12 @@ public class TvTEvent
 		byte playerTeamId = getParticipantTeamId(playerInstance.getObjectId());
 		byte targetedPlayerTeamId = getParticipantTeamId(targetedPlayerObjectId);
 		
-		if ((playerTeamId != -1 && targetedPlayerTeamId == -1) || (playerTeamId == -1 && targetedPlayerTeamId != -1))
+		if (((playerTeamId != -1) && (targetedPlayerTeamId == -1)) || ((playerTeamId == -1) && (targetedPlayerTeamId != -1)))
 		{
 			return false;
 		}
 		
-		if (playerTeamId != -1 && targetedPlayerTeamId != -1 && playerTeamId == targetedPlayerTeamId && playerInstance.getObjectId() != targetedPlayerObjectId && !Config.TVT_EVENT_TARGET_TEAM_MEMBERS_ALLOWED)
+		if ((playerTeamId != -1) && (targetedPlayerTeamId != -1) && (playerTeamId == targetedPlayerTeamId) && (playerInstance.getObjectId() != targetedPlayerObjectId) && !Config.TVT_EVENT_TARGET_TEAM_MEMBERS_ALLOWED)
 		{
 			return false;
 		}
@@ -768,18 +796,22 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Called on every scroll use<br><br>
-	 *
+	 * Called on every scroll use<br>
+	 * <br>
 	 * @param playerObjectId
 	 * @return boolean: true if player is allowed to use scroll, otherwise false
 	 */
 	public static boolean onScrollUse(int playerObjectId)
 	{
 		if (!isStarted())
+		{
 			return true;
+		}
 		
 		if (isPlayerParticipant(playerObjectId) && !Config.TVT_EVENT_SCROLL_ALLOWED)
+		{
 			return false;
+		}
 		
 		return true;
 	}
@@ -792,10 +824,14 @@ public class TvTEvent
 	public static boolean onPotionUse(int playerObjectId)
 	{
 		if (!isStarted())
+		{
 			return true;
+		}
 		
 		if (isPlayerParticipant(playerObjectId) && !Config.TVT_EVENT_POTIONS_ALLOWED)
+		{
 			return false;
+		}
 		
 		return true;
 	}
@@ -841,14 +877,14 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Is called when a player is killed<br><br>
-	 * 
+	 * Is called when a player is killed<br>
+	 * <br>
 	 * @param killerCharacter as L2Character<br>
 	 * @param killedPlayerInstance as L2PcInstance<br>
 	 */
 	public static void onKill(L2Character killerCharacter, L2PcInstance killedPlayerInstance)
 	{
-		if (killedPlayerInstance == null || !isStarted())
+		if ((killedPlayerInstance == null) || !isStarted())
 		{
 			return;
 		}
@@ -869,7 +905,7 @@ public class TvTEvent
 		
 		L2PcInstance killerPlayerInstance = null;
 		
-		if (killerCharacter instanceof L2PetInstance || killerCharacter instanceof L2ServitorInstance)
+		if ((killerCharacter instanceof L2PetInstance) || (killerCharacter instanceof L2ServitorInstance))
 		{
 			killerPlayerInstance = ((L2Summon) killerCharacter).getOwner();
 			
@@ -889,7 +925,7 @@ public class TvTEvent
 		
 		byte killerTeamId = getParticipantTeamId(killerPlayerInstance.getObjectId());
 		
-		if (killerTeamId != -1 && killedTeamId != -1 && killerTeamId != killedTeamId)
+		if ((killerTeamId != -1) && (killedTeamId != -1) && (killerTeamId != killedTeamId))
 		{
 			TvTEventTeam killerTeam = _teams[killerTeamId];
 			
@@ -904,7 +940,7 @@ public class TvTEvent
 					playerInstance.sendPacket(cs);
 				}
 			}
-			fireTvtKillListeners(killerPlayerInstance,killedPlayerInstance,killerTeam);
+			fireTvtKillListeners(killerPlayerInstance, killedPlayerInstance, killerTeam);
 		}
 	}
 	
@@ -914,45 +950,53 @@ public class TvTEvent
 	 */
 	public static void onTeleported(L2PcInstance playerInstance)
 	{
-		if (!isStarted() || playerInstance == null || !isPlayerParticipant(playerInstance.getObjectId()))
+		if (!isStarted() || (playerInstance == null) || !isPlayerParticipant(playerInstance.getObjectId()))
+		{
 			return;
+		}
 		
 		if (playerInstance.isMageClass())
 		{
-			if (Config.TVT_EVENT_MAGE_BUFFS != null && !Config.TVT_EVENT_MAGE_BUFFS.isEmpty())
+			if ((Config.TVT_EVENT_MAGE_BUFFS != null) && !Config.TVT_EVENT_MAGE_BUFFS.isEmpty())
 			{
 				for (int i : Config.TVT_EVENT_MAGE_BUFFS.keySet())
 				{
 					L2Skill skill = SkillTable.getInstance().getInfo(i, Config.TVT_EVENT_MAGE_BUFFS.get(i));
 					if (skill != null)
+					{
 						skill.getEffects(playerInstance, playerInstance);
+					}
 				}
 			}
 		}
 		else
 		{
-			if (Config.TVT_EVENT_FIGHTER_BUFFS != null && !Config.TVT_EVENT_FIGHTER_BUFFS.isEmpty())
+			if ((Config.TVT_EVENT_FIGHTER_BUFFS != null) && !Config.TVT_EVENT_FIGHTER_BUFFS.isEmpty())
 			{
 				for (int i : Config.TVT_EVENT_FIGHTER_BUFFS.keySet())
 				{
 					L2Skill skill = SkillTable.getInstance().getInfo(i, Config.TVT_EVENT_FIGHTER_BUFFS.get(i));
 					if (skill != null)
+					{
 						skill.getEffects(playerInstance, playerInstance);
+					}
 				}
 			}
 		}
 	}
 	
 	/**
-	 * @param source 
-	 * @param target 
-	 * @param skill 
+	 * @param source
+	 * @param target
+	 * @param skill
 	 * @return true if player valid for skill
 	 */
 	public static final boolean checkForTvTSkill(L2PcInstance source, L2PcInstance target, L2Skill skill)
 	{
 		if (!isStarted())
+		{
 			return true;
+		}
 		// TvT is started
 		final int sourcePlayerId = source.getObjectId();
 		final int targetPlayerId = target.getObjectId();
@@ -961,22 +1005,28 @@ public class TvTEvent
 		
 		// both players not participating
 		if (!isSourceParticipant && !isTargetParticipant)
+		{
 			return true;
+		}
 		// one player not participating
 		if (!(isSourceParticipant && isTargetParticipant))
+		{
 			return false;
+		}
 		// players in the different teams ?
 		if (getParticipantTeamId(sourcePlayerId) != getParticipantTeamId(targetPlayerId))
 		{
 			if (!skill.isOffensive())
+			{
 				return false;
+			}
 		}
 		return true;
 	}
 	
 	/**
-	 * Sets the TvTEvent state<br><br>
-	 *
+	 * Sets the TvTEvent state<br>
+	 * <br>
 	 * @param state as EventState<br>
 	 */
 	private static void setState(EventState state)
@@ -988,8 +1038,8 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Is TvTEvent inactive?<br><br>
-	 *
+	 * Is TvTEvent inactive?<br>
+	 * <br>
 	 * @return boolean: true if event is inactive(waiting for next event cycle), otherwise false<br>
 	 */
 	public static boolean isInactive()
@@ -1005,8 +1055,8 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Is TvTEvent in inactivating?<br><br>
-	 *
+	 * Is TvTEvent in inactivating?<br>
+	 * <br>
 	 * @return boolean: true if event is in inactivating progress, otherwise false<br>
 	 */
 	public static boolean isInactivating()
@@ -1022,8 +1072,8 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Is TvTEvent in participation?<br><br>
-	 *
+	 * Is TvTEvent in participation?<br>
+	 * <br>
 	 * @return boolean: true if event is in participation progress, otherwise false<br>
 	 */
 	public static boolean isParticipating()
@@ -1039,8 +1089,8 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Is TvTEvent starting?<br><br>
-	 *
+	 * Is TvTEvent starting?<br>
+	 * <br>
 	 * @return boolean: true if event is starting up(setting up fighting spot, teleport players etc.), otherwise false<br>
 	 */
 	public static boolean isStarting()
@@ -1056,8 +1106,8 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Is TvTEvent started?<br><br>
-	 *
+	 * Is TvTEvent started?<br>
+	 * <br>
 	 * @return boolean: true if event is started, otherwise false<br>
 	 */
 	public static boolean isStarted()
@@ -1073,8 +1123,8 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Is TvTEvent rewarding?<br><br>
-	 *
+	 * Is TvTEvent rewarding?<br>
+	 * <br>
 	 * @return boolean: true if event is currently rewarding, otherwise false<br>
 	 */
 	public static boolean isRewarding()
@@ -1145,8 +1195,8 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Returns participated player count<br><br>
-	 *
+	 * Returns participated player count<br>
+	 * <br>
 	 * @return int: amount of players registered in the event<br>
 	 */
 	public static int getParticipatedPlayersCount()
@@ -1160,8 +1210,8 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Returns teams names<br><br>
-	 *
+	 * Returns teams names<br>
+	 * <br>
 	 * @return String[]: names of teams, 2 elements, index 0 for team 1 and index 1 for team 2<br>
 	 */
 	public static String[] getTeamNames()
@@ -1174,8 +1224,8 @@ public class TvTEvent
 	}
 	
 	/**
-	 * Returns player count of both teams<br><br>
-	 *
+	 * Returns player count of both teams<br>
+	 * <br>
 	 * @return int[]: player count of teams, 2 elements, index 0 for team 1 and index 1 for team 2<br>
 	 */
 	public static int[] getTeamsPlayerCounts()
@@ -1189,14 +1239,13 @@ public class TvTEvent
 	
 	/**
 	 * Returns points count of both teams
-	 *
 	 * @return int[]: points of teams, 2 elements, index 0 for team 1 and index 1 for team 2<br>
 	 */
 	public static int[] getTeamsPoints()
 	{
 		return new int[]
 		{
-			_teams[0].getPoints(), 
+			_teams[0].getPoints(),
 			_teams[1].getPoints()
 		};
 	}
@@ -1215,7 +1264,7 @@ public class TvTEvent
 	 */
 	private static void fireTvtKillListeners(L2PcInstance killer, L2PcInstance victim, TvTEventTeam killerTeam)
 	{
-		if (!tvtListeners.isEmpty() && killer != null && victim != null && killerTeam != null)
+		if (!tvtListeners.isEmpty() && (killer != null) && (victim != null) && (killerTeam != null))
 		{
 			TvtKillEvent event = new TvtKillEvent();
 			event.setKiller(killer);
