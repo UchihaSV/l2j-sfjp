@@ -1227,12 +1227,18 @@ if (com.l2jserver.Config.FIX_L2AttackableAIScript_super) {{
 			dropChance = ((drop.getChance() - ((drop.getChance() * levelModifier) / 100)) / deepBlueDrop);
 		
 		// Applies Drop rates
-		if (Config.RATE_DROP_ITEMS_ID.get(drop.getItemId()) != 0)
+		if (Config.RATE_DROP_ITEMS_ID.containsKey(drop.getItemId()))
+		{
 			dropChance *= Config.RATE_DROP_ITEMS_ID.get(drop.getItemId());
+		}
 		else if (isSweep)
+		{
 			dropChance *= Config.RATE_DROP_SPOIL;
+		}
 		else
+		{
 			dropChance *= isRaid() && !isRaidMinion() ? Config.RATE_DROP_ITEMS_BY_RAID : Config.RATE_DROP_ITEMS;
+		}
 		
 		if (Config.L2JMOD_CHAMPION_ENABLE && isChampion())
 			dropChance *= Config.L2JMOD_CHAMPION_REWARDS;
@@ -1359,14 +1365,19 @@ if (com.l2jserver.Config.FIX_L2AttackableAIScript_super) {{
 			
 			double dropChance = drop.getChance();
 			
-			Float chance;
-			if ((chance = Config.RATE_DROP_ITEMS_ID.get(drop.getItemId())) != null)
-				dropChance *= chance;
+			if (Config.RATE_DROP_ITEMS_ID.containsKey(drop.getItemId()))
+			{
+				dropChance *= Config.RATE_DROP_ITEMS_ID.get(drop.getItemId());
+			}
 			else
+			{
 				dropChance *= isRaid() && !isRaidMinion() ? Config.RATE_DROP_ITEMS_BY_RAID : Config.RATE_DROP_ITEMS;
+			}
 			
 			if (Config.L2JMOD_CHAMPION_ENABLE && isChampion())
+			{
 				dropChance *= Config.L2JMOD_CHAMPION_REWARDS;
+			}
 			
 			dropChance = Math.round(dropChance);
 			
