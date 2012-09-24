@@ -77,7 +77,7 @@ public class L2NpcWalkerInstance extends L2Npc
 		if (getTemplate().isServerSideName())
 			throw new UnsupportedOperationException(); //custom_npc cannot say NpcStringId.
 		else
-			cs = new NpcSay(getObjectId(), Say2.ALL, getTemplate().getIdTemplate(), npcString);
+			cs = new NpcSay(getObjectId(), Say2.NPC_ALL, getTemplate().getIdTemplate(), npcString);
 		broadcastPacket(cs);
 	}
 	/**
@@ -88,9 +88,9 @@ public class L2NpcWalkerInstance extends L2Npc
 	{
 		final L2GameServerPacket cs;
 		if (getTemplate().isServerSideName())
-			cs = new CreatureSay(getObjectId(), Say2.ALL, getName(), chat);
+			cs = new CreatureSay(getObjectId(), Say2.NPC_ALL, getName(), chat);
 		else
-			cs = new NpcSay(getObjectId(), Say2.ALL, getTemplate().getIdTemplate(), chat);
+			cs = new NpcSay(getObjectId(), Say2.NPC_ALL, getTemplate().getIdTemplate(), chat);
 		broadcastPacket(cs);
 	}
 	

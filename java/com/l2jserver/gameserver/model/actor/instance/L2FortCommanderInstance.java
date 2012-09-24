@@ -28,6 +28,7 @@ import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.network.NpcStringId;
+import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 
 public class L2FortCommanderInstance extends L2DefenderInstance
@@ -119,16 +120,16 @@ public class L2FortCommanderInstance extends L2DefenderInstance
 					switch (spawn2.getId())
 					{
 						case 1:
-							cs = new NpcSay(getObjectId(), 1, getNpcId(), NpcStringId.ATTACKING_THE_ENEMYS_REINFORCEMENTS_IS_NECESSARY_TIME_TO_DIE);
+							cs = new NpcSay(getObjectId(), Say2.NPC_SHOUT, getNpcId(), NpcStringId.ATTACKING_THE_ENEMYS_REINFORCEMENTS_IS_NECESSARY_TIME_TO_DIE);
 							break;
 						case 2:
 							if (attacker instanceof L2Summon)
 								attacker = ((L2Summon) attacker).getOwner();
-							cs = new NpcSay(getObjectId(), 1, getNpcId(), NpcStringId.EVERYONE_CONCENTRATE_YOUR_ATTACKS_ON_S1_SHOW_THE_ENEMY_YOUR_RESOLVE)
+							cs = new NpcSay(getObjectId(), Say2.NPC_SHOUT, getNpcId(), NpcStringId.EVERYONE_CONCENTRATE_YOUR_ATTACKS_ON_S1_SHOW_THE_ENEMY_YOUR_RESOLVE)
 									.addString(attacker.getName());
 							break;
 						case 3:
-							cs = new NpcSay(getObjectId(), 1, getNpcId(), NpcStringId.SPIRIT_OF_FIRE_UNLEASH_YOUR_POWER_BURN_THE_ENEMY);
+							cs = new NpcSay(getObjectId(), Say2.NPC_SHOUT, getNpcId(), NpcStringId.SPIRIT_OF_FIRE_UNLEASH_YOUR_POWER_BURN_THE_ENEMY);
 							break;
 					}
 					if (cs != null)
