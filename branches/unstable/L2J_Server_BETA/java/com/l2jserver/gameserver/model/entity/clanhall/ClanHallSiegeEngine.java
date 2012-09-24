@@ -46,6 +46,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.entity.Siegable;
 import com.l2jserver.gameserver.model.quest.Quest;
+import com.l2jserver.gameserver.network.NpcStringId;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
@@ -456,9 +457,9 @@ public abstract class ClanHallSiegeEngine extends Quest implements Siegable
 		return Config.CHS_FAME_FREQUENCY;
 	}
 				
-	public final void broadcastNpcSay(final L2Npc npc, final int type, final int messageId)
+	public final void broadcastNpcSay(final L2Npc npc, final int type, final NpcStringId messageId)
 	{
-		final NpcSay npcSay = new NpcSay(npc.getObjectId(), type, npc.getNpcId(), messageId);	//[JOJO]
+		final NpcSay npcSay = new NpcSay(npc.getObjectId(), type, npc.getNpcId(), messageId);
 		int sourceRegion = MapRegionManager.getInstance().getMapRegionLocId(npc);
 		final L2PcInstance[] charsInside = L2World.getInstance().getAllPlayersArray();
 		
