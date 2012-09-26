@@ -1143,10 +1143,13 @@ public class Quest extends ManagedScript
 	 */
 	public String onAdvEvent(String event, L2Npc npc, L2PcInstance player)
 	{
-		final QuestState qs = player.getQuestState(getName());
-		if (qs != null)
+		if (player != null)
 		{
-			return onEvent(event, qs);
+			final QuestState qs = player.getQuestState(getName());
+			if (qs != null)
+			{
+				return onEvent(event, qs);
+			}
 		}
 		return null;
 	}
