@@ -459,7 +459,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				quests.add(q);
 			}
 		}
-if (com.l2jserver.Config.FIX_L2AttackableAIScript_super) {{
+if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		// L2AttackableAIScript#onXXX ‚ÍÅŒã‚ÉŒÄ‚Î‚ê‚é‚æ‚¤‡”Ô‚ð•Ï‚¦‚é.
 		for (int i = quests.size() - 1; --i >= 0; )
 			if (quests.get(i).getName().equals("L2AttackableAIScript"))
