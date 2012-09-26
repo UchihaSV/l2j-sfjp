@@ -545,7 +545,7 @@ if (com.l2jserver.Config.TEST_GET_AI) {{
 			
 			if (player != null)
 			{
-if (com.l2jserver.Config.FIX_L2AttackableAIScript_super) {{
+if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 				// TODO: L2QuestGuardInstance Ç…Ç‡ON_KILLèàóùÇ™Ç†ÇÈÇ™...
 				ThreadPoolManager.getInstance().scheduleEffect(new OnKillNotifyTask(this, null, player, killer instanceof L2Summon), _onKillDelay);
 }} else {{
@@ -584,7 +584,7 @@ if (com.l2jserver.Config.FIX_L2AttackableAIScript_super) {{
 		@Override
 		public void run()
 		{
-if (com.l2jserver.Config.FIX_L2AttackableAIScript_super) {{
+if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 			for (Quest quest : _attackable.getTemplate().getEventQuests(Quest.QuestEventType.ON_KILL))
 				quest.notifyKill(_attackable, _killer, _isPet);
 }} else {{

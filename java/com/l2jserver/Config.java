@@ -1174,7 +1174,7 @@ public final class Config
 	public static final boolean DEBUG_object_already_exist_in_OID_map = true;		//[JOJO]L2World#storeObjectのデバッグモードON/OFF
 	public static final boolean INITIALIZE_EMPTY_COLLECTION = true;		//[JOJO]遅延初期化する
 	public static final boolean CUSTOM_WALKERROUTES_LOAD = true;		//[JOJO]data/WalkerRoutes_*.xml を読み込む.
-	public static final boolean FIX_L2AttackableAIScript_super = true;	//[JOJO]L2AttackableAIScript の派生クラスでイベントの最後に super.onKill() などをコールすると L2AttackableAIScript#onKill() が複数スレッドで同時にコールされてしまう不具合の修正.
+	public static final boolean FIX_OnKillNotifyTask_THREAD = true;		//[JOJO]槍・範囲魔法攻撃対策.モンスターを倒したときに発生するOnKillNotifyTaskのスレッド数を減らす.
 	public static final boolean FIX_onSpawn_for_SpawnTable = true;		//[JOJO]spawnlist.sqlをロードしたあとにAIスクリプトがロードされるため、onSpawnによるNPCの初期化がなされていない不具合の修正.
 	public static final int NPC_SPAWN_Z_MARGIN = 0;						//[JOJO]l2jserver.com rev.5425 '20' --> '0'
 	public static final boolean CabaleBuffer_AI_Chat = true;			//[JOJO]啓示叫者＆滅亡伝者の叫び AutoChatHandlerは無視してai/npc/NpcBuffers/CabaleBuffer側でやる
