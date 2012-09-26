@@ -1823,7 +1823,7 @@ public class Quest extends ManagedScript
 	{
 		for (int npcId : npcIds)
 		{
-			addEventId(npcId, QuestEventType.QUEST_START);
+			addStartNpc(npcId);
 		}
 	}
 	
@@ -1840,7 +1840,7 @@ public class Quest extends ManagedScript
 	{
 		for (int npcId : npcIds)
 		{
-			addEventId(npcId, QuestEventType.ON_FIRST_TALK);
+			addFirstTalkId(npcId);
 		}
 	}
 	
@@ -1861,7 +1861,7 @@ public class Quest extends ManagedScript
 	{
 		for (int npcId : npcIds)
 		{
-			addEventId(npcId, QuestEventType.ON_SKILL_LEARN);
+			addAcquireSkillId(npcId);
 		}
 	}
 	
@@ -1882,7 +1882,7 @@ public class Quest extends ManagedScript
 	{
 		for (int npcId : npcIds)
 		{
-			addEventId(npcId, QuestEventType.ON_ATTACK);
+			addAttackId(npcId);
 		}
 	}
 	
@@ -1897,29 +1897,26 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * Add this quest to the list of quests that the passed mob will respond to for Kill Events.
-	 * @param killIds
+	 * @param npcIds
 	 */
-	public void addKillId(int... killIds)
+	public void addKillId(int... npcIds)
 	{
-		for (int killId : killIds)
+		for (int npcId : npcIds)
 		{
-			addEventId(killId, QuestEventType.ON_KILL);
+			addKillId(npcId);
 		}
 	}
 	
 	/**
 	 * Add this quest event to the collection of NPC Ids that will respond to for on kill events.
-	 * @param killIds the collection of NPC Ids
-	 * @return the list of NPC templates that has been associated with this event
+	 * @param npcIds the collection of NPC Ids
 	 */
-	public List<L2NpcTemplate> addKillId(Collection<Integer> killIds)
+	public void addKillId(Collection<Integer> npcIds)
 	{
-		final List<L2NpcTemplate> list = new ArrayList<>(killIds.size());
-		for (int killId : killIds)
+		for (int npcId : npcIds)
 		{
-			list.add(addEventId(killId, QuestEventType.ON_KILL));
+			addKillId(npcId);
 		}
-		return list;
 	}
 	
 	/**
@@ -1933,13 +1930,13 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * Add this quest to the list of quests that the passed npc will respond to for Talk Events.
-	 * @param talkIds : ID of the NPC
+	 * @param npcIds : ID of the NPC
 	 */
-	public void addTalkId(int... talkIds)
+	public void addTalkId(int... npcIds)
 	{
-		for (int talkId : talkIds)
+		for (int npcId : npcIds)
 		{
-			addEventId(talkId, QuestEventType.ON_TALK);
+			addTalkId(npcId);
 		}
 	}
 	
@@ -1960,7 +1957,7 @@ public class Quest extends ManagedScript
 	{
 		for (int npcId : npcIds)
 		{
-			addEventId(npcId, QuestEventType.ON_SPAWN);
+			addSpawnId(npcId);
 		}
 	}
 	
@@ -1981,7 +1978,7 @@ public class Quest extends ManagedScript
 	{
 		for (int npcId : npcIds)
 		{
-			addEventId(npcId, QuestEventType.ON_SKILL_SEE);
+			addSkillSeeId(npcId);
 		}
 	}
 	
@@ -2001,7 +1998,7 @@ public class Quest extends ManagedScript
 	{
 		for (int npcId : npcIds)
 		{
-			addEventId(npcId, QuestEventType.ON_SPELL_FINISHED);
+			addSpellFinishedId(npcId);
 		}
 	}
 	
@@ -2021,7 +2018,7 @@ public class Quest extends ManagedScript
 	{
 		for (int npcId : npcIds)
 		{
-			addEventId(npcId, QuestEventType.ON_TRAP_ACTION);
+			addTrapActionId(npcId);
 		}
 	}
 	
@@ -2042,7 +2039,7 @@ public class Quest extends ManagedScript
 	{
 		for (int npcId : npcIds)
 		{
-			addEventId(npcId, QuestEventType.ON_FACTION_CALL);
+			addFactionCallId(npcId);
 		}
 	}
 	
@@ -2063,7 +2060,7 @@ public class Quest extends ManagedScript
 	{
 		for (int npcId : npcIds)
 		{
-			addEventId(npcId, QuestEventType.ON_AGGRO_RANGE_ENTER);
+			addAggroRangeEnterId(npcId);
 		}
 	}
 	
@@ -2078,31 +2075,13 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * @param zoneIds
-	 * @return
 	 */
-	public L2ZoneType[] addEnterZoneId(int... zoneIds)
+	public void addEnterZoneId(int... zoneIds)
 	{
-		L2ZoneType[] value = new L2ZoneType[zoneIds.length];
-		int i = 0;
 		for (int zoneId : zoneIds)
 		{
-			try
-			{
-				L2ZoneType zone = ZoneManager.getInstance().getZoneById(zoneId);
-				if (zone != null)
-				{
-					zone.addQuestEvent(QuestEventType.ON_ENTER_ZONE, this);
-				}
-				value[i++] = zone;
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.WARNING, "Exception on addEnterZoneId(): " + e.getMessage(), e);
-				continue;
-			}
+			addEnterZoneId(zoneId);
 		}
-		
-		return value;
 	}
 	
 	/**
@@ -2129,31 +2108,13 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * @param zoneIds
-	 * @return
 	 */
-	public L2ZoneType[] addExitZoneId(int... zoneIds)
+	public void addExitZoneId(int... zoneIds)
 	{
-		L2ZoneType[] value = new L2ZoneType[zoneIds.length];
-		int i = 0;
 		for (int zoneId : zoneIds)
 		{
-			try
-			{
-				L2ZoneType zone = ZoneManager.getInstance().getZoneById(zoneId);
-				if (zone != null)
-				{
-					zone.addQuestEvent(QuestEventType.ON_EXIT_ZONE, this);
-				}
-				value[i++] = zone;
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.WARNING, "Exception on addEnterZoneId(): " + e.getMessage(), e);
-				continue;
-			}
+			addExitZoneId(zoneId);
 		}
-		
-		return value;
 	}
 	
 	/**
