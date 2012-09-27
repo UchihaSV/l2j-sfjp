@@ -112,56 +112,56 @@ public class Quest extends ManagedScript
 	 */
 	public static enum QuestSound
 	{
-		ITEMSOUND_QUEST_ACCEPT(new PlaySound("ItemSound.quest_accept")),
-		ITEMSOUND_QUEST_MIDDLE(new PlaySound("ItemSound.quest_middle")),
-		ITEMSOUND_QUEST_FINISH(new PlaySound("ItemSound.quest_finish")),
-		ITEMSOUND_QUEST_ITEMGET(new PlaySound("ItemSound.quest_itemget")),
+		ITEMSOUND_QUEST_ACCEPT("ItemSound.quest_accept"),
+		ITEMSOUND_QUEST_MIDDLE("ItemSound.quest_middle"),
+		ITEMSOUND_QUEST_FINISH("ItemSound.quest_finish"),
+		ITEMSOUND_QUEST_ITEMGET("ItemSound.quest_itemget"),
 		// Newbie Guide tutorial (incl. some quests), Mutated Kaneus quests, Quest 192
-		ITEMSOUND_QUEST_TUTORIAL(new PlaySound("ItemSound.quest_tutorial")),
+		ITEMSOUND_QUEST_TUTORIAL("ItemSound.quest_tutorial"),
 		// Quests 107, 363, 364
-		ITEMSOUND_QUEST_GIVEUP(new PlaySound("ItemSound.quest_giveup")),
+		ITEMSOUND_QUEST_GIVEUP("ItemSound.quest_giveup"),
 		// Quests 212, 217, 224, 226, 416
-		ITEMSOUND_QUEST_BEFORE_BATTLE(new PlaySound("ItemSound.quest_before_battle")),
+		ITEMSOUND_QUEST_BEFORE_BATTLE("ItemSound.quest_before_battle"),
 		// Quests 211, 258, 266, 330
-		ITEMSOUND_QUEST_JACKPOT(new PlaySound("ItemSound.quest_jackpot")),
+		ITEMSOUND_QUEST_JACKPOT("ItemSound.quest_jackpot"),
 		// Quests 508, 509 and 510
-		ITEMSOUND_QUEST_FANFARE_1(new PlaySound("ItemSound.quest_fanfare_1")),
+		ITEMSOUND_QUEST_FANFARE_1("ItemSound.quest_fanfare_1"),
 		// played ONLY after class transfer via Test Server Helpers (ID 31756 and 31757)
-		ITEMSOUND_QUEST_FANFARE_2(new PlaySound("ItemSound.quest_fanfare_2")),
+		ITEMSOUND_QUEST_FANFARE_2("ItemSound.quest_fanfare_2"),
 		
 		// Quest 114
-		ITEMSOUND_ARMOR_WOOD(new PlaySound("ItemSound.armor_wood_3")),
+		ITEMSOUND_ARMOR_WOOD("ItemSound.armor_wood_3"),
 		// Quest 21
-		ITEMSOUND_ARMOR_CLOTH(new PlaySound("ItemSound.item_drop_equip_armor_cloth")),
+		ITEMSOUND_ARMOR_CLOTH("ItemSound.item_drop_equip_armor_cloth"),
 		// Quest 23
-		ITEMSOUND_ARMOR_LEATHER(new PlaySound("ItemSound.itemdrop_armor_leather")),
+		ITEMSOUND_ARMOR_LEATHER("ItemSound.itemdrop_armor_leather"),
 		// Quest 23
-		ITEMSOUND_WEAPON_SPEAR(new PlaySound("ItemSound.itemdrop_weapon_spear")),
+		ITEMSOUND_WEAPON_SPEAR("ItemSound.itemdrop_weapon_spear"),
 		
 		// Quest 648 and treasure chests
-		ITEMSOUND_BROKEN_KEY(new PlaySound("ItemSound.broken_key")),
+		ITEMSOUND_BROKEN_KEY("ItemSound.broken_key"),
 		// Quest 184
-		ITEMSOUND_SIREN(new PlaySound("ItemSound.sys_siren")),
+		ITEMSOUND_SIREN("ItemSound.sys_siren"),
 		// Quest 648
-		ITEMSOUND_ENCHANT_SUCCESS(new PlaySound("ItemSound.sys_enchant_success")),
+		ITEMSOUND_ENCHANT_SUCCESS("ItemSound.sys_enchant_success"),
 		// Quest 648
-		ITEMSOUND_ENCHANT_FAILED(new PlaySound("ItemSound.sys_enchant_failed")),
+		ITEMSOUND_ENCHANT_FAILED("ItemSound.sys_enchant_failed"),
 		// Best farm mobs
-		ITEMSOUND_SOW_SUCCESS(new PlaySound("ItemSound.sys_sow_success")),
+		ITEMSOUND_SOW_SUCCESS("ItemSound.sys_sow_success"),
 		
 		// Elroki sounds - Quest 111
-		ETCSOUND_ELROKI_SOUND_FULL(new PlaySound("EtcSound.elcroki_song_full")),
-		ETCSOUND_ELROKI_SOUND_1ST(new PlaySound("EtcSound.elcroki_song_1st")),
-		ETCSOUND_ELROKI_SOUND_2ND(new PlaySound("EtcSound.elcroki_song_2nd")),
-		ETCSOUND_ELROKI_SOUND_3RD(new PlaySound("EtcSound.elcroki_song_3rd"));
+		ETCSOUND_ELROKI_SOUND_FULL("EtcSound.elcroki_song_full"),
+		ETCSOUND_ELROKI_SOUND_1ST("EtcSound.elcroki_song_1st"),
+		ETCSOUND_ELROKI_SOUND_2ND("EtcSound.elcroki_song_2nd"),
+		ETCSOUND_ELROKI_SOUND_3RD("EtcSound.elcroki_song_3rd");
 		
 		private final PlaySound playSound;
 		
 		private static Map<String, PlaySound> soundPackets = new HashMap<>();
 		
-		QuestSound(PlaySound playSound)
+		QuestSound(String soundName)
 		{
-			this.playSound = playSound;
+			this.playSound = new PlaySound(soundName);
 		}
 		
 		/**
@@ -171,14 +171,15 @@ public class Quest extends ManagedScript
 		 */
 		public static PlaySound getSound(String soundName)
 		{
-			if (soundPackets.containsKey(soundName))
+			PlaySound packet = soundPackets.get(soundName);
+			if (packet != null)
 			{
-				return soundPackets.get(soundName);
+				return packet;
 			}
 			
 			for (QuestSound qs : QuestSound.values())
 			{
-				if (qs.playSound.getSoundName().equals(soundName))
+				if (qs.playSound.getSoundName().equalsIgnoreCase(soundName))	//[JOJO] equals --> equalsIgnoreCase
 				{
 					soundPackets.put(soundName, qs.playSound); // cache in map to avoid looping repeatedly
 					return qs.playSound;
