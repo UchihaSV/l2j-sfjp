@@ -126,7 +126,7 @@ public class Quest extends ManagedScript
 		ITEMSOUND_QUEST_JACKPOT("ItemSound.quest_jackpot"),
 		// Quests 508, 509 and 510
 		ITEMSOUND_QUEST_FANFARE_1("ItemSound.quest_fanfare_1"),
-		// played ONLY after class transfer via Test Server Helpers (ID 31756 and 31757)
+		// played ONLY after class transfer via Test Server Helpers (Id 31756 and 31757)
 		ITEMSOUND_QUEST_FANFARE_2("ItemSound.quest_fanfare_2"),
 		
 		// Quest 114
@@ -139,15 +139,15 @@ public class Quest extends ManagedScript
 		ITEMSOUND_WEAPON_SPEAR("ItemSound.itemdrop_weapon_spear"),
 		
 		// Quest 648 and treasure chests
-		ITEMSOUND_BROKEN_KEY("ItemSound.broken_key"),
+		ITEMSOUND_BROKEN_KEY("ItemSound2.broken_key"),
 		// Quest 184
-		ITEMSOUND_SIREN("ItemSound.sys_siren"),
+		ITEMSOUND_SIREN("ItemSound3.sys_siren"),
 		// Quest 648
-		ITEMSOUND_ENCHANT_SUCCESS("ItemSound.sys_enchant_success"),
+		ITEMSOUND_ENCHANT_SUCCESS("ItemSound3.sys_enchant_success"),
 		// Quest 648
-		ITEMSOUND_ENCHANT_FAILED("ItemSound.sys_enchant_failed"),
+		ITEMSOUND_ENCHANT_FAILED("ItemSound3.sys_enchant_failed"),
 		// Best farm mobs
-		ITEMSOUND_SOW_SUCCESS("ItemSound.sys_sow_success"),
+		ITEMSOUND_SOW_SUCCESS("ItemSound3.sys_sow_success"),
 		
 		// Elroki sounds - Quest 111
 		ETCSOUND_ELROKI_SOUND_FULL("EtcSound.elcroki_song_full"),
