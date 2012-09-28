@@ -14,15 +14,15 @@
  */
 package com.l2jserver.util;
 
-import java.util.Arrays;
 
 /**
  * @author Christian
+ * modify JOJO
  */
 public class HexUtils
 {
 	// lookup table for hex characters
-	private static final char[] _NIBBLE_CHAR_LOOKUP =
+	private static final char[] NIBBLE_CHAR_LOOKUP =
 	{
 		'0',
 		'1',
@@ -41,7 +41,6 @@ public class HexUtils
 		'E',
 		'F'
 	};
-	private static final char[] _NEW_LINE_CHARS = System.getProperty("line.separator").toCharArray();
 	
 	/**
 	 * Method to generate the hexadecimal character presentation of a byte<br>
@@ -71,8 +70,8 @@ public class HexUtils
 		
 		// /////////////////////////////
 		// NIBBLE LOOKUP
-		dstHexChars[dstOffset] = _NIBBLE_CHAR_LOOKUP[(data & 0xF0) >> 4];
-		dstHexChars[dstOffset + 1] = _NIBBLE_CHAR_LOOKUP[data & 0x0F];
+		dstHexChars[dstOffset++] = NIBBLE_CHAR_LOOKUP[data >> 4 & 0x0F];
+		dstHexChars[dstOffset++] = NIBBLE_CHAR_LOOKUP[data      & 0x0F];
 		
 		return dstHexChars;
 	}
@@ -102,10 +101,14 @@ public class HexUtils
 			dstOffset = 0;
 		}
 		
-		b2HexChars((byte) ((data & 0xFF000000) >> 24), dstHexChars, dstOffset);
-		b2HexChars((byte) ((data & 0x00FF0000) >> 16), dstHexChars, dstOffset + 2);
-		b2HexChars((byte) ((data & 0x0000FF00) >> 8), dstHexChars, dstOffset + 4);
-		b2HexChars((byte) (data & 0x000000FF), dstHexChars, dstOffset + 6);
+		dstHexChars[dstOffset++] = NIBBLE_CHAR_LOOKUP[data >> 28 & 0x0F];
+		dstHexChars[dstOffset++] = NIBBLE_CHAR_LOOKUP[data >> 24 & 0x0F];
+		dstHexChars[dstOffset++] = NIBBLE_CHAR_LOOKUP[data >> 20 & 0x0F];
+		dstHexChars[dstOffset++] = NIBBLE_CHAR_LOOKUP[data >> 16 & 0x0F];
+		dstHexChars[dstOffset++] = NIBBLE_CHAR_LOOKUP[data >> 12 & 0x0F];
+		dstHexChars[dstOffset++] = NIBBLE_CHAR_LOOKUP[data >>  8 & 0x0F];
+		dstHexChars[dstOffset++] = NIBBLE_CHAR_LOOKUP[data >>  4 & 0x0F];
+		dstHexChars[dstOffset++] = NIBBLE_CHAR_LOOKUP[data       & 0x0F];
 		return dstHexChars;
 	}
 	
@@ -139,12 +142,12 @@ public class HexUtils
 			dstOffset = 0;
 		}
 		
-		for (int dataIdx = offset, charsIdx = dstOffset; dataIdx < (len + offset); ++dataIdx, ++charsIdx)
+		for (int dataIdx = offset, end = len + offset; dataIdx < end; ++dataIdx)
 		{
 			// /////////////////////////////
 			// NIBBLE LOOKUP, we duplicate the code from b2HexChars here, we want to save a few cycles(for charsIdx increment)
-			dstHexChars[charsIdx] = _NIBBLE_CHAR_LOOKUP[(data[dataIdx] & 0xF0) >> 4];
-			dstHexChars[++charsIdx] = _NIBBLE_CHAR_LOOKUP[data[dataIdx] & 0x0F];
+			dstHexChars[dstOffset++] = NIBBLE_CHAR_LOOKUP[data[dataIdx] >> 4 & 0x0F];
+			dstHexChars[dstOffset++] = NIBBLE_CHAR_LOOKUP[data[dataIdx]      & 0x0F];
 		}
 		
 		return dstHexChars;
@@ -163,23 +166,21 @@ public class HexUtils
 			dstOffset = 0;
 		}
 		
-		for (int dataIdx = offset, charsIdx = dstOffset; dataIdx < (len + offset); ++dataIdx, ++charsIdx)
+		for (int dataIdx = offset, end = len + offset; dataIdx < end; ++dataIdx)
 		{
-			if ((data[dataIdx] > 0x1f) && (data[dataIdx] < 0x80))
+			int b = data[dataIdx] & 0xFF;
+			if (b > 0x1f && b < 0x80)
 			{
-				dstAsciiChars[charsIdx] = (char) data[dataIdx];
+				dstAsciiChars[dstOffset++] = (char) b;
 			}
 			else
 			{
-				dstAsciiChars[charsIdx] = '.';
+				dstAsciiChars[dstOffset++] = '.';
 			}
 		}
 		
 		return dstAsciiChars;
 	}
-	
-	private static final int _HEX_ED_BPL = 16;
-	private static final int _HEX_ED_CPB = 2;
 	
 	/**
 	 * Method to generate the hexadecimal character representation of a byte array like in a hex editor<br>
@@ -191,68 +192,55 @@ public class HexUtils
 	 * @param len the number of bytes to generate the hexadecimal character representation from
 	 * @return byte array which contains the hexadecimal character representation of the given byte array
 	 */
-	public static char[] bArr2HexEdChars(byte[] data, int len)
+	public static CharSequence bArr2HexEdChars(byte[] data, int len)	//[JOJO]
+ //	public static char[] bArr2HexEdChars(byte[] data, int len)
 	{
-		// {OFFSET} {HEXADECIMAL} {ASCII}{NEWLINE}
-		final int lineLength = 9 + (_HEX_ED_BPL * _HEX_ED_CPB) + 1 + _HEX_ED_BPL + _NEW_LINE_CHARS.length;
-		final int lenBplMod = len % _HEX_ED_BPL;
-		// create text buffer
-		// 1. don't allocate a full last line if not _HEX_ED_BPL bytes are shown in last line
-		// 2. no new line at end of buffer
-		// BUG: when the length is multiple of _HEX_ED_BPL we erase the whole ascii space with this
-		// char[] textData = new char[lineLength * numLines - (_HEX_ED_BPL - (len % _HEX_ED_BPL)) - _NEW_LINE_CHARS.length];
-		// FIXED HERE
-		int numLines;
-		char[] textData;
-		if (lenBplMod == 0)
+		StringBuilder sb = new StringBuilder(len * 4);
+		int ix = 0;
+		while (ix < len)
 		{
-			numLines = len / _HEX_ED_BPL;
-			textData = new char[(lineLength * numLines) - _NEW_LINE_CHARS.length];
-		}
-		else
-		{
-			numLines = (len / _HEX_ED_BPL) + 1;
-			textData = new char[(lineLength * numLines) - (_HEX_ED_BPL - (lenBplMod)) - _NEW_LINE_CHARS.length];
-		}
-		
-		// performance penalty, only doing space filling in the loop is faster
-		// Arrays.fill(textData, ' ');
-		
-		int dataOffset;
-		int dataLen;
-		int lineStart;
-		int lineHexDataStart;
-		int lineAsciiDataStart;
-		for (int i = 0; i < numLines; ++i)
-		{
-			dataOffset = i * _HEX_ED_BPL;
-			dataLen = Math.min(len - dataOffset, _HEX_ED_BPL);
-			lineStart = i * lineLength;
-			lineHexDataStart = lineStart + 9;
-			lineAsciiDataStart = lineHexDataStart + (_HEX_ED_BPL * _HEX_ED_CPB) + 1;
+			sb.append(NIBBLE_CHAR_LOOKUP[ix >> 20 & 0x0F])
+			  .append(NIBBLE_CHAR_LOOKUP[ix >> 16 & 0x0F])
+			  .append(NIBBLE_CHAR_LOOKUP[ix >> 12 & 0x0F])
+			  .append(NIBBLE_CHAR_LOOKUP[ix >>  8 & 0x0F])
+			  .append(NIBBLE_CHAR_LOOKUP[ix >>  4 & 0x0F])
+			  .append(NIBBLE_CHAR_LOOKUP[ix       & 0x0F])
+			  .append(' ');
 			
-			int2HexChars(dataOffset, textData, lineStart); // the offset of this line
-			textData[lineHexDataStart - 1] = ' '; // separate
-			bArr2HexChars(data, dataOffset, dataLen, textData, lineHexDataStart); // the data in hex
-			bArr2AsciiChars(data, dataOffset, dataLen, textData, lineAsciiDataStart); // the data in ascii
-			
-			if (i < (numLines - 1))
+			int end = ix + 16;
+			for (int col = 0; ix < end; ++ix, ++col)
 			{
-				textData[lineAsciiDataStart - 1] = ' '; // separate
-				System.arraycopy(_NEW_LINE_CHARS, 0, textData, lineAsciiDataStart + _HEX_ED_BPL, _NEW_LINE_CHARS.length); // the new line
+				if (ix < len)
+				{
+					int b = data[ix];
+					sb.append(col == 8 ? '-' : ' ')
+					  .append(NIBBLE_CHAR_LOOKUP[b >> 4 & 0x0F])
+					  .append(NIBBLE_CHAR_LOOKUP[b      & 0x0F]);
+				}
+				else
+				{
+					sb.append(' ')
+					  .append(' ')
+					  .append(' ');
+				}
 			}
-			else if (dataLen < _HEX_ED_BPL)
+			ix -= 16;
+			sb.append(' ')
+			  .append(' ');
+			for (; ix < end; ++ix)
 			{
-				// last line which shows less than _HEX_ED_BPL bytes
-				int lineHexDataEnd = lineHexDataStart + (dataLen * _HEX_ED_CPB);
-				Arrays.fill(textData, lineHexDataEnd, lineHexDataEnd + ((_HEX_ED_BPL - dataLen) * _HEX_ED_CPB) + 1, ' '); // spaces, for the last line if there are not _HEX_ED_BPL bytes
+				if (ix < len)
+				{
+					int b = data[ix];
+					sb.append(b < 0x20 ? '\uFF65' : (char)(b & 0xFF));
+				}
+				else
+				{
+					break;
+				}
 			}
-			else
-			{
-				// last line which shows _HEX_ED_BPL bytes
-				textData[lineAsciiDataStart - 1] = ' '; // seperate
-			}
+			sb.append('\n');
 		}
-		return textData;
+		return sb;
 	}
 }

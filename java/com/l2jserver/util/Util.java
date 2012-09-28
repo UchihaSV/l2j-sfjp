@@ -69,7 +69,8 @@ public class Util
 	 */
 	public static String printData(byte[] data, int len)
 	{
-		return new String(HexUtils.bArr2HexEdChars(data, len));
+		return HexUtils.bArr2HexEdChars(data, len).toString();	//[JOJO]
+	//	return new String(HexUtils.bArr2HexEdChars(data, len));
 	}
 	
 	/**
