@@ -73,7 +73,6 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.scripting.ManagedScript;
 import com.l2jserver.gameserver.scripting.ScriptManager;
 import com.l2jserver.gameserver.util.MinionList;
-import com.l2jserver.util.L2FastMap;
 import com.l2jserver.util.Rnd;
 import com.l2jserver.util.Util;
 
@@ -92,8 +91,8 @@ public class Quest extends ManagedScript
 	/**
 	 * Map containing lists of timers from the name of the timer.
 	 */
-	private final Map<String, List<QuestTimer>> _allEventTimers = new L2FastMap<>(true);
-	private final Set<Integer> _questInvolvedNpcs = new HashSet<>();
+	private final FastMap<String, List<QuestTimer>> _allEventTimers = new FastMap<String, List<QuestTimer>>().shared();
+	private final HashSet<Integer> _questInvolvedNpcs = new HashSet<>();
 	
 	private final ReentrantReadWriteLock _rwLock = new ReentrantReadWriteLock();
 	private final WriteLock _writeLock = _rwLock.writeLock();
