@@ -358,7 +358,7 @@ public class Instance
 		for (Quest quest : QuestManager.getInstance().getAllManagedScripts())
 		{
 			if (quest == null) continue;
-			for (List<QuestTimer> timers : quest.getAllQuestTimers().values())
+			for (List<QuestTimer> timers : quest.getQuestTimers().values())
 			{
 				if (timers == null || timers.isEmpty()) continue;
 				for (QuestTimer timer : timers.toArray(new QuestTimer[timers.size()]))
