@@ -404,11 +404,6 @@ public class Quest extends ManagedScript
 			return _descr;
 	}
 	
-	public FastMap<String, List<QuestTimer>> getAllQuestTimers()
-	{
-		return _allEventTimers;
-	}
-	
 	public boolean isQuests()
 	{
 		final int questId = _questId;
