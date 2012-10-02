@@ -30,6 +30,7 @@ import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.communitybbs.Manager.ForumsBBSManager;
 import com.l2jserver.gameserver.idfactory.IdFactory;
+import com.l2jserver.gameserver.instancemanager.AuctionManager;
 import com.l2jserver.gameserver.instancemanager.CHSiegeManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.FortSiegeManager;
@@ -37,6 +38,7 @@ import com.l2jserver.gameserver.instancemanager.SiegeManager;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2ClanMember;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.entity.Auction;
 import com.l2jserver.gameserver.model.entity.Fort;
 import com.l2jserver.gameserver.model.entity.FortSiege;
 import com.l2jserver.gameserver.model.entity.Siege;
@@ -230,6 +232,7 @@ public class ClanTable
 				siege.removeSiegeClan(clan);
 			}
 		}
+		
 		int fortId = clan.getFortId();
 		if (fortId == 0)
 		{
@@ -238,6 +241,7 @@ public class ClanTable
 				siege.removeSiegeClan(clan);
 			}
 		}
+		
 		int hallId = clan.getHideoutId();
 		if (hallId == 0)
 		{
@@ -245,6 +249,12 @@ public class ClanTable
 			{
 				hall.removeAttacker(clan);
 			}
+		}
+		
+		Auction auction = AuctionManager.getInstance().getAuction(clan.getAuctionBiddedAt());
+		if (auction != null)
+		{
+			auction.cancelBid(clan.getClanId());
 		}
 		
 		L2ClanMember leaderMember = clan.getLeader();
@@ -305,6 +315,7 @@ public class ClanTable
 				statement.execute();
 				statement.close();
 			}
+			
 			if (fortId != 0)
 			{
 				Fort fort = FortManager.getInstance().getFortById(fortId);
@@ -317,6 +328,7 @@ public class ClanTable
 					}
 				}
 			}
+			
 			if (hallId != 0)
 			{
 				SiegableHall hall = CHSiegeManager.getInstance().getSiegableHall(hallId);
@@ -325,6 +337,7 @@ public class ClanTable
 					hall.free();
 				}
 			}
+			
 			if (Config.DEBUG)
 			{
 				_log.fine("clan removed in db: " + clanId);
