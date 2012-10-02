@@ -18,9 +18,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javolution.util.FastList;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -29,7 +30,6 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.items.type.L2EtcItemType;
-import com.l2jserver.util.L2FastList;
 
 /**
  * This class manage all items on ground.
@@ -40,7 +40,7 @@ public class ItemsOnGroundManager
 {
 	static final Logger _log = Logger.getLogger(ItemsOnGroundManager.class.getName());
 	
-	protected List<L2ItemInstance> _items = new L2FastList<>(true);
+	protected FastList<L2ItemInstance> _items = new FastList<L2ItemInstance>().shared();
 	private final StoreInDb _task = new StoreInDb();
 	
 	protected ItemsOnGroundManager()
@@ -162,20 +162,15 @@ public class ItemsOnGroundManager
 		if (item.getInstanceId() != 0)
 			return;
 		//-------------------------------------------------------
-		synchronized (_items) { _items.add(item); }	//[JOJO]‘„E”ÍˆÍë‘Îô
+		_items.add(item);
 	}
 	
 	public void removeObject(L2ItemInstance item)
 	{
 		if (Config.SAVE_DROPPED_ITEM)
 		{
-			synchronized (_items) { _items.remove(item); }	//[JOJO]‘„E”ÍˆÍë‘Îô
+			_items.remove(item);
 		}
-	}
-	
-	L2ItemInstance[] itemstoArray()
-	{
-		synchronized (_items) { return _items.toArray(new L2ItemInstance[_items.size()]); }	//[JOJO]‘„E”ÍˆÍë‘Îô
 	}
 	
 	public void saveInDb()
@@ -227,16 +222,18 @@ public class ItemsOnGroundManager
 			{
 				PreparedStatement statement = con.prepareStatement("INSERT INTO itemsonground(object_id,item_id,count,enchant_level,x,y,z,drop_time,equipable) VALUES(?,?,?,?,?,?,?,?,?)");
 				
-				for (L2ItemInstance item : itemstoArray())
+				for (L2ItemInstance item : _items)
 				{
 					if (item == null)
 					{
 						continue;
 					}
+					//[JOJO]-------------------------------------------------
 					if (!item.isVisible())
 					{
 						continue;
 					}
+					//-------------------------------------------------------
 					
 					if (CursedWeaponsManager.getInstance().isCursed(item.getItemId()))
 					{
