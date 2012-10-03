@@ -16,7 +16,7 @@ package com.l2jserver.util;
 
 
 /**
- * @author Christian
+ * @author FBIagent
  * modify JOJO
  */
 public class HexUtils
