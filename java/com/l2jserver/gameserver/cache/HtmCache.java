@@ -15,11 +15,11 @@
 package com.l2jserver.gameserver.cache;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import gnu.trove.map.hash.TIntObjectHashMap;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +28,7 @@ import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.util.L2TIntObjectHashMap;
 import com.l2jserver.gameserver.util.Util;
+import com.l2jserver.util.L2FastMap;
 import com.l2jserver.util.file.filter.HTMLFilter;
 
 /**
@@ -44,7 +45,7 @@ public class HtmCache
 	private static final int EXPIRE_TIME = 60;	//[min]
 	final L2TIntObjectHashMap<TimedCache> _timedCache;
 
-	private final TIntObjectHashMap<String> _cache;
+	private final Map<String, String> _cache;
 	
 	int _loadedFiles;
 	long _bytesBuffLen;
@@ -62,15 +63,10 @@ public class HtmCache
 			_cache = null;
 			ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new CacheScheduler(), 3600*1000, 3600*1000);
 		}
-		else if (Config.LAZY_CACHE)
-		{
-			_timedCache = null;
-			_cache = new L2TIntObjectHashMap<>();
-		}
 		else
 		{
 			_timedCache = null;
-			_cache = new TIntObjectHashMap<>();
+			_cache = new L2FastMap<>(Config.LAZY_CACHE);
 		}
 		reload();
 	}
@@ -151,7 +147,6 @@ public class HtmCache
 		}
 		
 		final String relpath = Util.getRelativePath(Config.DATAPACK_ROOT, file);
-		final int hashcode = relpath.hashCode();
 		String content = null;
 		try (FileInputStream fis = new FileInputStream(file))
 		{
@@ -162,7 +157,7 @@ public class HtmCache
 		/*	if (! TIMED_CACHE) */
 				content = content.replaceAll("[\uFEFF\r\n]", "");
 			
-			String oldContent = checked ? null : _cache_get(hashcode);
+			String oldContent = checked ? null : _cache_get(relpath);
 			if (oldContent == null)
 			{
 				_bytesBuffLen += content.length() * 2;	// unicode (16 bit) = 2 bytes.
@@ -172,7 +167,7 @@ public class HtmCache
 			{
 				_bytesBuffLen = _bytesBuffLen - oldContent.length() * 2 + content.length() * 2;
 			}
-			_cache_put(hashcode, content);
+			_cache_put(relpath, content);
 		}
 		catch (IOException e)
 		{
@@ -205,7 +200,7 @@ public class HtmCache
 			}
 			content = getHtm( path);
 			if (content != null)
-				_cache_put(newPath.hashCode(), content);
+				_cache_put(newPath, content);
 			return content;
 		}
 		else
@@ -219,10 +214,9 @@ public class HtmCache
 			return ""; // avoid possible NPE
 		}
 		
-		final int hashCode = path.hashCode();
 		if (TIMED_CACHE)
 		{
-			String content = _cache_get(hashCode);
+			String content = _cache_get(path);
 			if (content == null)
 			{
 				content = loadFile(new File(Config.DATAPACK_ROOT, path), true);
@@ -231,7 +225,7 @@ public class HtmCache
 		}
 		else if (Config.LAZY_CACHE)
 		{
-			String content = _cache.get(hashCode);
+			String content = _cache.get(path);
 			if (content == null)
 			{
 				content = loadFile(new File(Config.DATAPACK_ROOT, path), true);
@@ -240,7 +234,7 @@ public class HtmCache
 		}
 		else
 		{
-			return _cache.get(hashCode);
+			return _cache.get(path);
 		}
 	}
 	
@@ -271,33 +265,33 @@ public class HtmCache
 		String content;
 	}
 	
-	private String _cache_get(int hashcode)
+	private String _cache_get(String path)
 	{
 		if (TIMED_CACHE)
 		{
 			TimedCache item;
-			if ((item = _timedCache.get(hashcode)) == null) return null;
+			if ((item = _timedCache.get(path.hashCode())) == null) return null;
 			item.lastAccessTime = GameTimeController.getInstance().getGameTime();
 			return item.content;
 		}
 		else
 		{
-			return _cache.get(hashcode);
+			return _cache.get(path);
 		}
 	}
 	
-	private void _cache_put(int hashcode, String content)
+	private void _cache_put(String path, String content)
 	{
 		if (TIMED_CACHE)
 		{
 			TimedCache item = new TimedCache();
 			item.lastAccessTime = GameTimeController.getInstance().getGameTime();
 			item.content = content;
-			_timedCache.put(hashcode, item);
+			_timedCache.put(path.hashCode(), item);
 		}
 		else
 		{
-			_cache.put(hashcode, content);
+			_cache.put(path, content);
 		}
 	}
 	
