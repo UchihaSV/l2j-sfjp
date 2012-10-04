@@ -287,6 +287,7 @@ import com.l2jserver.gameserver.util.FloodProtectors;
 import com.l2jserver.gameserver.util.PlayerEventStatus;
 import com.l2jserver.gameserver.util.Point3D;
 import com.l2jserver.gameserver.util.Util;
+import com.l2jserver.util.L2FastList;
 import com.l2jserver.util.Rnd;
 
 /**
@@ -798,8 +799,8 @@ public final class L2PcInstance extends L2Playable
 	private ScheduledFuture<?> _taskWater;
 	
 	/** Bypass validations */
-	private final List<String> _validBypass = new FastList<>();
-	private final List<String> _validBypass2 = new FastList<>();
+	private final List<String> _validBypass = new L2FastList<>(true);
+	private final List<String> _validBypass2 = new L2FastList<>(true);
 	
  //	private Forum _forumMail;
  //	private Forum _forumMemo;
@@ -9957,8 +9958,9 @@ public final class L2PcInstance extends L2Playable
 			removeAutoSoulShot(itemId);
 			sendPacket(new ExAutoSoulShot(itemId, 0));
 			
-			sendPacket(SystemMessage.getSystemMessage(SystemMessageId.AUTO_USE_OF_S1_CANCELLED)	//[JOJO]
-					.addItemName(itemId));	//[JOJO]
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.AUTO_USE_OF_S1_CANCELLED);
+			sm.addItemName(itemId);
+			sendPacket(sm);
 			return true;
 		}
 		return false;
@@ -9973,8 +9975,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			sendPacket(new ExAutoSoulShot(itemId, 0));
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.AUTO_USE_OF_S1_CANCELLED);
-			sm.addItemName(itemId);	//[JOJO]
-		//	sm.addString(ItemTable.getInstance().getTemplate(itemId).getName());
+			sm.addItemName(itemId);
 			sendPacket(sm);
 		}
 		_activeSoulShots.clear();
@@ -9987,16 +9988,18 @@ public final class L2PcInstance extends L2Playable
 		@Override
 		public void run()
 		{
-			if (L2PcInstance.this.isOnline())
+			if (isOnline())
 			{
 				SystemMessageId.PLAYING_FOR_LONG_TIME.setParamCount(1);	//[JOJO] en=0, ja,ta=1
 				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.PLAYING_FOR_LONG_TIME);
 				// [L2J_JP_ADD][JOJO] 利用時間の計算・表示
 				msg.addNumber((int)(L2PcInstance.this.getUptime() / 3600000));
-				L2PcInstance.this.sendPacket(msg);
+				sendPacket(msg);
 			}
 			else
+			{
 				stopWarnUserTakeBreak();
+			}
 		}
 	}
 	
@@ -10047,14 +10050,15 @@ public final class L2PcInstance extends L2Playable
 		@Override
 		public void run()
 		{
-			if (System.currentTimeMillis() >= _endTaskTime) {
+			if (System.currentTimeMillis() >= _endTaskTime)
+			{
 				endFishing(false);
 				return;
 			}
 			if (_fishGroup == -1)
 				return;
 			int check = Rnd.get(100);
-			if(_fishGutsCheck > check)
+			if (_fishGutsCheck > check)
 			{
 				stopLookingForFishTask();
 				startFishCombat(_isNoob, _isUpperGrade);
@@ -10514,14 +10518,46 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public boolean canDuel()
 	{
-		if (isInCombat() || getPunishLevel() == PunishLevel.JAIL) { _noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_ENGAGED_IN_BATTLE; return false; }
-		if (isDead() || isAlikeDead() || (getCurrentHp() < getMaxHp()/2 || getCurrentMp() < getMaxMp()/2)) { _noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_HP_OR_MP_IS_BELOW_50_PERCENT; return false; }
-		if (isInDuel()) { _noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_ALREADY_ENGAGED_IN_A_DUEL; return false;}
-		if (isInOlympiadMode()) { _noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_PARTICIPATING_IN_THE_OLYMPIAD; return false; }
-		if (isCursedWeaponEquipped()) { _noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_IN_A_CHAOTIC_STATE; return false; }
-		if (getPrivateStoreType() != STORE_PRIVATE_NONE) { _noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_ENGAGED_IN_A_PRIVATE_STORE_OR_MANUFACTURE; return false; }
-		if (isMounted() || isInBoat()) { _noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_RIDING_A_BOAT_STEED_OR_STRIDER; return false; }
-		if (isFishing()) { _noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_FISHING; return false; }
+		if (isInCombat() || getPunishLevel() == PunishLevel.JAIL)
+		{
+			_noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_ENGAGED_IN_BATTLE;
+			return false;
+		}
+		if (isDead() || isAlikeDead() || (getCurrentHp() < getMaxHp() / 2 || getCurrentMp() < getMaxMp() / 2))
+		{
+			_noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_HP_OR_MP_IS_BELOW_50_PERCENT;
+			return false;
+		}
+		if (isInDuel())
+		{
+			_noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_ALREADY_ENGAGED_IN_A_DUEL;
+			return false;
+		}
+		if (isInOlympiadMode())
+		{
+			_noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_PARTICIPATING_IN_THE_OLYMPIAD;
+			return false;
+		}
+		if (isCursedWeaponEquipped())
+		{
+			_noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_IN_A_CHAOTIC_STATE;
+			return false;
+		}
+		if (getPrivateStoreType() != STORE_PRIVATE_NONE)
+		{
+			_noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_ENGAGED_IN_A_PRIVATE_STORE_OR_MANUFACTURE;
+			return false;
+		}
+		if (isMounted() || isInBoat())
+		{
+			_noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_RIDING_A_BOAT_STEED_OR_STRIDER;
+			return false;
+		}
+		if (isFishing())
+		{
+			_noDuelReason = SystemMessageId.C1_CANNOT_DUEL_BECAUSE_C1_IS_CURRENTLY_FISHING;
+			return false;
+		}
 		if (isInsideZone(ZONE_PVP) || isInsideZone(ZONE_PEACE) || isInsideZone(ZONE_SIEGE))
 		{
 			_noDuelReason = SystemMessageId.C1_CANNOT_MAKE_A_CHALLANGE_TO_A_DUEL_BECAUSE_C1_IS_CURRENTLY_IN_A_DUEL_PROHIBITED_AREA;
@@ -10730,11 +10766,7 @@ public final class L2PcInstance extends L2Playable
 					prevSkillList.put(newSkill.getId(), newSkill);
 					storeSkill(newSkill, prevSkill, classIndex);
 				}
-			}
-			
-			if (Config.DEBUG)
-				_log.info(getName() + " was given " + getAllSkills().size() + " skills for their new sub class.");
-			
+			}			
 			return true;
 		}
 		finally
@@ -10758,12 +10790,7 @@ public final class L2PcInstance extends L2Playable
 			return false;
 		
 		try
-		{
-			int oldClassId = getSubClasses().get(classIndex).getClassId();
-			
-			if (Config.DEBUG)
-				_log.info(getName() + " has requested to modify sub class index " + classIndex + " from class ID " + oldClassId + " to " + newClassId + ".");
-			
+		{						
 			try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 			{
 				// Remove all henna info stored for this sub-class.
@@ -11053,7 +11080,7 @@ public final class L2PcInstance extends L2Playable
 			if (checkLandingState() && getMountType()==2)
 				teleToLocation(MapRegionManager.TeleportWhereType.Town);
 			
-			if (this.dismount())  // this should always be true now, since we teleported already
+			if (dismount())  // this should always be true now, since we teleported already
 			{
 				_taskRentPet.cancel(true);
 				_taskRentPet = null;
@@ -11080,7 +11107,6 @@ public final class L2PcInstance extends L2Playable
 		if (_taskWater != null)
 		{
 			_taskWater.cancel(false);
-			
 			_taskWater = null;
 			sendPacket(new SetupGauge(2, 0));
 		}
@@ -11197,7 +11223,7 @@ public final class L2PcInstance extends L2Playable
 		doRevive();
 	}
 	
-	public void reviveRequest(L2PcInstance Reviver, L2Skill skill, boolean Pet)
+	public void reviveRequest(L2PcInstance reviver, L2Skill skill, boolean Pet)
 	{
 		if (isResurrectionBlocked())
 			return;
@@ -11206,14 +11232,14 @@ public final class L2PcInstance extends L2Playable
 		{
 			if (_revivePet == Pet)
 			{
-				Reviver.sendPacket(SystemMessageId.RES_HAS_ALREADY_BEEN_PROPOSED); // Resurrection is already been proposed.
+				reviver.sendPacket(SystemMessageId.RES_HAS_ALREADY_BEEN_PROPOSED); // Resurrection is already been proposed.
 			}
 			else
 			{
 				if (Pet)
-					Reviver.sendPacket(SystemMessageId.CANNOT_RES_PET2); // A pet cannot be resurrected while it's owner is in the process of resurrecting.
+					reviver.sendPacket(SystemMessageId.CANNOT_RES_PET2); // A pet cannot be resurrected while it's owner is in the process of resurrecting.
 				else
-					Reviver.sendPacket(SystemMessageId.MASTER_CANNOT_RES); // While a pet is attempting to resurrect, it cannot help in resurrecting its master.
+					reviver.sendPacket(SystemMessageId.MASTER_CANNOT_RES); // While a pet is attempting to resurrect, it cannot help in resurrecting its master.
 			}
 			return;
 		}
@@ -11226,7 +11252,7 @@ public final class L2PcInstance extends L2Playable
 			else if (isAffected(CharEffectList.EFFECT_FLAG_CHARM_OF_COURAGE))
 				_revivePower=0;
 			else
-				_revivePower = Formulas.calculateSkillResurrectRestorePercent(skill.getPower(), Reviver);
+				_revivePower = Formulas.calculateSkillResurrectRestorePercent(skill.getPower(), reviver);
 			
 			restoreExp = (int)Math.round((getExpBeforeDeath() - getExp()) * _revivePower / 100);
 			
@@ -11240,8 +11266,8 @@ public final class L2PcInstance extends L2Playable
 				return;
 			}
 			ConfirmDlg dlg = new ConfirmDlg(SystemMessageId.RESSURECTION_REQUEST_BY_C1_FOR_S2_XP.getId());
-			dlg.addPcName(Reviver);
-			dlg.addString(String.valueOf(restoreExp));
+			dlg.addPcName(reviver);
+			dlg.addString(Integer.toString(restoreExp));
 			sendPacket(dlg);
 		}
 	}
@@ -11350,11 +11376,13 @@ public final class L2PcInstance extends L2Playable
 		if ((Config.PLAYER_TELEPORT_PROTECTION > 0) && !isInOlympiadMode())
 			setTeleportProtection(true);
 		
-		// Trained beast is after teleport lost
+		// Trained beast is lost after teleport
 		if (getTrainedBeasts() != null)
 		{
 			for(L2TamedBeastInstance tamedBeast : getTrainedBeasts())
+			{
 				tamedBeast.deleteMe();
+			}
 			getTrainedBeasts().clear();
 		}
 		
@@ -11492,63 +11520,67 @@ public final class L2PcInstance extends L2Playable
 			getStatus().reduceHp(value, attacker, awake, isDOT, false, false);
 
 		// notify the tamed beast of attacks
-		if (getTrainedBeasts() != null )
+		if (getTrainedBeasts() != null)
+		{
 			for(L2TamedBeastInstance tamedBeast : getTrainedBeasts())
+			{
 				tamedBeast.onOwnerGotAttacked(attacker);
+			}
+		}
 	}
 	
 	public void broadcastSnoop(int type, String name, String _text)
 	{
 		if(!_snoopListener.isEmpty())
 		{
-			Snoop sn = new Snoop(getObjectId(),getName(),type,name,_text);
+			Snoop sn = new Snoop(getObjectId(), getName(), type, name, _text);
 			
 			for (L2PcInstance pci : _snoopListener)
+			{
 				if (pci != null)
+				{
 					pci.sendPacket(sn);
+				}
+			}
 		}
 	}
 	
-	public void addSnooper(L2PcInstance pci )
+	public void addSnooper(L2PcInstance pci)
 	{
-		if(!_snoopListener.contains(pci))
+		if (!_snoopListener.contains(pci))
 			_snoopListener.add(pci);
 	}
 	
-	public void removeSnooper(L2PcInstance pci )
+	public void removeSnooper(L2PcInstance pci)
 	{
 		_snoopListener.remove(pci);
 	}
 	
-	public void addSnooped(L2PcInstance pci )
+	public void addSnooped(L2PcInstance pci)
 	{
-		if(!_snoopedPlayer.contains(pci))
+		if (!_snoopedPlayer.contains(pci))
 			_snoopedPlayer.add(pci);
 	}
 	
-	public void removeSnooped(L2PcInstance pci )
+	public void removeSnooped(L2PcInstance pci)
 	{
 		_snoopedPlayer.remove(pci);
 	}
 	
 	public void addBypass(String bypass)
 	{
-		if (bypass == null) return;
-		synchronized(_validBypass)
-		{
-			_validBypass.add(bypass);
-		}
-		//_log.warning("[BypassAdd]"+getName()+" '"+bypass+"'");
+		if (bypass == null)
+			return;
+		
+		_validBypass.add(bypass);
 	}
 	
 	public void addBypass2(String bypass)
 	{
-		if (bypass == null) return;
-		synchronized(_validBypass2)
-		{
-			_validBypass2.add(bypass);
-		}
-		//_log.warning("[BypassAdd]"+getName()+" '"+bypass+"'");
+		if (bypass == null)
+			return;
+		
+		_validBypass2.add(bypass);
 	}
 	
 	public boolean validateBypass(String cmd)
@@ -11556,31 +11588,24 @@ public final class L2PcInstance extends L2Playable
 		if (!Config.BYPASS_VALIDATION)
 			return true;
 		
-		synchronized (_validBypass)
+		for (String bp : _validBypass)
 		{
-			for (String bp : _validBypass)
-			{
-				if (bp == null)
-					continue;
-				
-				//_log.warning("[BypassValidation]"+getName()+" '"+bp+"'");
-				if (bp.equals(cmd))
-					return true;
-			}
+			if (bp == null)
+				continue;
+			
+			if (bp.equals(cmd))
+				return true;
 		}
 		
-		synchronized (_validBypass2)
+		for (String bp : _validBypass2)
 		{
-			for (String bp : _validBypass2)
-			{
-				if (bp == null)
-					continue;
-				
-				//_log.warning("[BypassValidation]"+getName()+" '"+bp+"'");
-				if (cmd.startsWith(bp))
-					return true;
-			}
+			if (bp == null)
+				continue;
+			
+			if (cmd.startsWith(bp))
+				return true;
 		}
+		
 		_log.warning("[L2PcInstance] player ["+getName()+"] sent invalid bypass '"+cmd+"'.");
 		return false;
 	}
@@ -11637,14 +11662,8 @@ public final class L2PcInstance extends L2Playable
 	
 	public void clearBypass()
 	{
-		synchronized (_validBypass)
-		{
-			_validBypass.clear();
-		}
-		synchronized (_validBypass2)
-		{
-			_validBypass2.clear();
-		}
+		_validBypass.clear();
+		_validBypass2.clear();
 	}
 	
 	/**
@@ -13168,7 +13187,6 @@ public final class L2PcInstance extends L2Playable
 		if (_soulTask != null)
 		{
 			_soulTask.cancel(false);
-			//ThreadPoolManager.getInstance().removeGeneral((Runnable)_soulTask);
 			_soulTask = null;
 		}
 	}
@@ -13863,9 +13881,7 @@ public final class L2PcInstance extends L2Playable
 		if (_mountFeedTask != null)
 		{
 			_mountFeedTask.cancel(false);
-			//ThreadPoolManager.getInstance().removeGeneral((Runnable)_mountFeedTask);
 			_mountFeedTask = null;
-			if (Config.DEBUG) _log.fine("Pet [#"+_mountNpcId+"] feed task stop");
 		}
 	}
 	
@@ -14231,37 +14247,37 @@ public final class L2PcInstance extends L2Playable
 	
 	public boolean teleportBookmarkCondition(int type)
 	{
-		if(this.isInCombat())
+		if(isInCombat())
 		{
 			sendPacket(SystemMessageId.YOU_CANNOT_USE_MY_TELEPORTS_DURING_A_BATTLE);
 			return false;
 		}
-		else if (this.isInSiege() || this.getSiegeState() != 0)
+		else if (isInSiege() || getSiegeState() != 0)
 		{
 			sendPacket(SystemMessageId.YOU_CANNOT_USE_MY_TELEPORTS_WHILE_PARTICIPATING);
 			return false;
 		}
-		else if (this.isInDuel())
+		else if (isInDuel())
 		{
 			sendPacket(SystemMessageId.YOU_CANNOT_USE_MY_TELEPORTS_DURING_A_DUEL);
 			return false;
 		}
-		else if (this.isFlying())
+		else if (isFlying())
 		{
 			sendPacket(SystemMessageId.YOU_CANNOT_USE_MY_TELEPORTS_WHILE_FLYING);
 			return false;
 		}
-		else if (this.isInOlympiadMode())
+		else if (isInOlympiadMode())
 		{
 			sendPacket(SystemMessageId.YOU_CANNOT_USE_MY_TELEPORTS_WHILE_PARTICIPATING_IN_AN_OLYMPIAD_MATCH);
 			return false;
 		}
-		else if (this.isParalyzed())
+		else if (isParalyzed())
 		{
 			sendPacket(SystemMessageId.YOU_CANNOT_USE_MY_TELEPORTS_WHILE_YOU_ARE_PARALYZED);
 			return false;
 		}
-		else if (this.isDead())
+		else if (isDead())
 		{
 			sendPacket(SystemMessageId.YOU_CANNOT_USE_MY_TELEPORTS_WHILE_YOU_ARE_DEAD);
 			return false;
@@ -14838,9 +14854,6 @@ public final class L2PcInstance extends L2Playable
 		return System.currentTimeMillis() - _lastItemAuctionInfoRequest < 2000;
 	}
 	
-	/**
-	 * @see com.l2jserver.gameserver.model.actor.L2Character#isMovementDisabled()
-	 */
 	@Override
 	public boolean isMovementDisabled()
 	{
