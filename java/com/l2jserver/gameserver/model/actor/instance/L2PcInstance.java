@@ -287,7 +287,6 @@ import com.l2jserver.gameserver.util.FloodProtectors;
 import com.l2jserver.gameserver.util.PlayerEventStatus;
 import com.l2jserver.gameserver.util.Point3D;
 import com.l2jserver.gameserver.util.Util;
-import com.l2jserver.util.L2FastList;
 import com.l2jserver.util.Rnd;
 
 /**
@@ -799,8 +798,8 @@ public final class L2PcInstance extends L2Playable
 	private ScheduledFuture<?> _taskWater;
 	
 	/** Bypass validations */
-	private final List<String> _validBypass = new L2FastList<>(true);
-	private final List<String> _validBypass2 = new L2FastList<>(true);
+	private final FastList<String> _validBypass = new FastList<String>().shared();
+	private final FastList<String> _validBypass2 = new FastList<String>().shared();
 	
  //	private Forum _forumMail;
  //	private Forum _forumMemo;
