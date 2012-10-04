@@ -14,12 +14,11 @@
  */
 package com.l2jserver.gameserver.cache;
 
-import java.util.Map;
+import javolution.util.FastMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.util.L2FastMap;
 
 /**
  *
@@ -27,7 +26,7 @@ import com.l2jserver.util.L2FastMap;
  */
 public class WarehouseCacheManager
 {
-	protected final Map<L2PcInstance, Long> _cachedWh = new L2FastMap<>(true);
+	protected final FastMap<L2PcInstance, Long> _cachedWh = new FastMap<L2PcInstance, Long>().shared();
 	protected final long _cacheTime = Config.WAREHOUSE_CACHE_TIME * 60000L;
 	
 	protected WarehouseCacheManager()
