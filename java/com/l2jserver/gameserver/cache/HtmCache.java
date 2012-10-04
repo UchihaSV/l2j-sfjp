@@ -19,16 +19,16 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.util.L2TIntObjectHashMap;
 import com.l2jserver.gameserver.util.Util;
-import com.l2jserver.util.L2FastMap;
 import com.l2jserver.util.file.filter.HTMLFilter;
 
 /**
@@ -42,31 +42,35 @@ public class HtmCache
 	private static final HTMLFilter htmlFilter = new HTMLFilter();
 	
 	static final boolean TIMED_CACHE = true;
+	static final boolean CHECK_HASH_COLLISION = true;
 	private static final int EXPIRE_TIME = 60;	//[min]
-	final L2TIntObjectHashMap<TimedCache> _timedCache;
+	final FastIntObjectMap<TimedCache> _timedCache;
 
-	private final Map<String, String> _cache;
+	private final FastMap<String, String> _cache;
 	
 	int _loadedFiles;
 	long _bytesBuffLen;
-	
-	public static HtmCache getInstance()
-	{
-		return SingletonHolder._instance;
-	}
 	
 	protected HtmCache()
 	{
 		if (TIMED_CACHE)
 		{
-			_timedCache = new L2TIntObjectHashMap<>();
+if (CHECK_HASH_COLLISION) {{
+			checkHashCollision();
+}}
+			_timedCache = new FastIntObjectMap<TimedCache>().shared();
 			_cache = null;
 			ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new CacheScheduler(), 3600*1000, 3600*1000);
+		}
+		else if (Config.LAZY_CACHE)
+		{
+			_timedCache = null;
+			_cache = new FastMap<String, String>().shared();
 		}
 		else
 		{
 			_timedCache = null;
-			_cache = new L2FastMap<>(Config.LAZY_CACHE);
+			_cache = new FastMap<>();
 		}
 		reload();
 	}
@@ -318,6 +322,43 @@ public class HtmCache
 				_log.info("Cache[HTML]: "
 						+ String.format("%.3f", getMemoryUsage()) + " megabytes on " + getLoadedFiles() + " files loaded");
 		}
+	}
+	
+	private void checkHashCollision()
+	{
+if (CHECK_HASH_COLLISION) {{
+		FastIntObjectMap<String> map = new FastIntObjectMap<>();
+		checkHashCollision_parseDir(map, Config.DATAPACK_ROOT);
+}}
+	}
+	private void checkHashCollision_parseDir(FastIntObjectMap<String> map, File dir)
+	{
+if (CHECK_HASH_COLLISION) {{
+		for (File file : dir.listFiles())
+		{
+			if (file.isDirectory())
+			{
+				checkHashCollision_parseDir(map, file);
+			}
+			else
+			{
+				final String relpath = Util.getRelativePath(Config.DATAPACK_ROOT, file);
+				final int hashcode = relpath.hashCode();
+				String v = map.putIfAbsent(hashcode, relpath);
+				if (v != null && !v.equals(relpath))
+				{
+					_log.log(Level.WARNING, "HtmCache: Hashcode collision (" + hashcode + ")");
+					_log.log(Level.WARNING, "\t" + v);
+					_log.log(Level.WARNING, "\t" + relpath);
+				}
+			}
+		}
+}}
+	}
+	
+	public static HtmCache getInstance()
+	{
+		return SingletonHolder._instance;
 	}
 	
 	private static class SingletonHolder
