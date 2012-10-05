@@ -466,6 +466,12 @@ public final class L2AuctioneerInstance extends L2Npc
 					player.sendPacket(SystemMessageId.CANNOT_PARTICIPATE_IN_AN_AUCTION);
 					return;
 				}
+				else
+				{
+					// L2AuctioneerInstance: Unknown NPC bypass: "selectedItems" NpcId: 30767
+					player.sendPacket(SystemMessageId.NO_OFFERINGS_OWN_OR_MADE_BID_FOR);	//+[JOJO]
+					return;	//+[JOJO]
+				}
 			}
 			else if (actualCommand.equalsIgnoreCase("cancelBid"))
 			{
