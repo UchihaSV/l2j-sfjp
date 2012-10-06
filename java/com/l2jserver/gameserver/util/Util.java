@@ -390,25 +390,12 @@ public final class Util
 	 */
 	public static String formatAdena(long amount)
 	{
-		String s = "";
-		long rem = amount % 1000;
-		s = Long.toString(rem);
-		amount = (amount - rem) / 1000;
-		while (amount > 0)
-		{
-			if (rem < 99)
-			{
-				s = '0' + s;
-			}
-			if (rem < 9)
-			{
-				s = '0' + s;
-			}
-			rem = amount % 1000;
-			s = Long.toString(rem) + "," + s;
-			amount = (amount - rem) / 1000;
-		}
-		return s;
+		//[JOJO]-------------------------------------------------
+		StringBuilder s = new StringBuilder(26).append(amount);
+		for (int i = s.length() - 3; i > 0; i -= 3)
+			s.insert(i, ',');
+		return s.toString();
+		//-------------------------------------------------------
 	}
 	
 	public static String formatAdenaK(long amount)	//[JOJO]
