@@ -225,9 +225,14 @@ public final class L2AuctioneerInstance extends L2Npc
 				if (val.isEmpty())
 					return;
 				
-				if ((player.getClan().getAuctionBiddedAt() > 0 && player.getClan().getAuctionBiddedAt() != Integer.parseInt(val)) || player.getClan().getHideoutId() > 0)
+				if (player.getClan().getAuctionBiddedAt() > 0 && player.getClan().getAuctionBiddedAt() != Integer.parseInt(val))
 				{
 					player.sendPacket(SystemMessageId.ALREADY_SUBMITTED_BID);
+					return;
+				}
+				if (player.getClan().getHideoutId() > 0 || player.getClan().getCastleId() > 0)	//[JOJO]
+				{
+					player.sendPacket(SystemMessageId.CANNOT_PARTICIPATE_IN_AN_AUCTION);
 					return;
 				}
 				
