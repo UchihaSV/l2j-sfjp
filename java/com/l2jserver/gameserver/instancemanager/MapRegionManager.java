@@ -169,11 +169,6 @@ public class MapRegionManager extends DocumentParser
 		{
 			return region.getLocId();
 		}
-		
-		if (Config.DEBUG)
-		{
-			_log.warning(getClass().getSimpleName() + ": Player outside map regions at X,Y=" + locX + "," + locY);
-		}
 		return 0;
 	}
 	
@@ -495,10 +490,6 @@ public class MapRegionManager extends DocumentParser
 		catch (Exception e)
 		{
 			// Port to the default respawn if no closest town found.
-			if (Config.DEBUG)
-			{
-				_log.warning(getClass().getSimpleName() + ": Not defined respawn point for coords loc X=" + activeChar.getX() + " Y=" + activeChar.getY() + " Z=" + activeChar.getZ());
-			}
 			return _regions.get(defaultRespawn).getSpawnLoc();
 		}
 	}

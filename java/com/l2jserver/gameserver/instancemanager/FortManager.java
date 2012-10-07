@@ -169,7 +169,7 @@ public class FortManager implements InstanceListManager
 		{
 			_log.log(Level.WARNING, "Exception: loadFortData(): " + e.getMessage(), e);
 		}
-		_log.info("Loaded: " + getForts().size() + " fortress");
+		_log.info(getClass().getSimpleName() + ": Loaded: " + getForts().size() + " fortress");
 		
 		for (Fort fort : getForts())
 		{

@@ -789,10 +789,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 					sevenDat.set("blue_stones", rs.getInt("blue_stones"));
 					sevenDat.set("ancient_adena_amount", rs.getDouble("ancient_adena_amount"));
 					sevenDat.set("contribution_score", rs.getDouble("contribution_score"));
-					
-					if (Config.DEBUG)
-						_log.info("SevenSigns: Loaded data from DB for char ID " + charObjId + " (" + sevenDat.getString("cabal") + ")");
-					
 					_signsPlayerData.put(charObjId, sevenDat);
 				}
 			}
@@ -839,10 +835,7 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 	 * Should be called on period change and shutdown only.
 	 */
 	public void saveSevenSignsData()
-	{
-		if (Config.DEBUG)
-			_log.info("SevenSigns: Saving data to disk.");
-		
+	{	
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(UPDATE_PLAYER))
 		{
@@ -858,10 +851,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 				ps.setInt(8, sevenDat.getInteger("charId"));
 				ps.execute();
 				ps.clearParameters();
-				if (Config.DEBUG)
-				{
-					_log.info("SevenSigns: Updated data in database for char ID " + sevenDat.getInteger("charId") + " (" + sevenDat.getString("cabal") + ")");
-				}
 			}
 		}
 		catch (SQLException e)
@@ -925,8 +914,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 			_lastSave = Calendar.getInstance();
 			ps.setLong(18 + SevenSignsFestival.FESTIVAL_COUNT, _lastSave.getTimeInMillis());
 			ps.execute();
-			if (Config.DEBUG)
-				_log.info("SevenSigns: Updated data in database.");
 		}
 		catch (SQLException e)
 		{
@@ -939,10 +926,7 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 	 * Primarily used when beginning a new cycle, and should otherwise never be called.
 	 */
 	protected void resetPlayerData()
-	{
-		if (Config.DEBUG)
-			_log.info("SevenSigns: Resetting player data for new event period.");
-		
+	{	
 		int charObjId;
 		
 		// Reset each player's contribution data as well as seal and cabal.
@@ -1002,9 +986,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 				ps.setString(2, getCabalShortName(chosenCabal));
 				ps.setInt(3, chosenSeal);
 				ps.execute();
-				
-				if (Config.DEBUG)
-					_log.info("SevenSigns: Inserted data in DB for char ID " + currPlayerData.getInteger("charId") + " (" + currPlayerData.getString("cabal") + ")");
 			}
 			catch (SQLException e)
 			{
@@ -1210,17 +1191,7 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 	 * Should only ever called at the beginning of a new cycle.
 	 */
 	protected void calcNewSealOwners()
-	{
-		if (Config.DEBUG)
-		{
-			_log.info("SevenSigns: (Avarice) Dawn = " + _signsDawnSealTotals.get(SEAL_AVARICE) + ", Dusk = "
-					+ _signsDuskSealTotals.get(SEAL_AVARICE));
-			_log.info("SevenSigns: (Gnosis) Dawn = " + _signsDawnSealTotals.get(SEAL_GNOSIS) + ", Dusk = "
-					+ _signsDuskSealTotals.get(SEAL_GNOSIS));
-			_log.info("SevenSigns: (Strife) Dawn = " + _signsDawnSealTotals.get(SEAL_STRIFE) + ", Dusk = "
-					+ _signsDuskSealTotals.get(SEAL_STRIFE));
-		}
-		
+	{	
 		for (Integer currSeal : _signsDawnSealTotals.keySet())
 		{
 			int prevSealOwner = _signsSealOwners.get(currSeal);

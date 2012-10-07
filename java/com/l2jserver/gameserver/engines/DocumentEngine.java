@@ -14,10 +14,9 @@
  */
 package com.l2jserver.gameserver.engines;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
-
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
@@ -73,7 +72,7 @@ public class DocumentEngine
 		return doc.getSkills();
 	}
 	
-	public void loadAllSkills(final TIntObjectHashMap<L2Skill> allSkills)
+	public void loadAllSkills(final Map<Integer, L2Skill> allSkills)
 	{
 		int count = 0;
 		List<File> files = new FastList<>();

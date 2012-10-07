@@ -48,11 +48,6 @@ public class SpawnTable
 	private int _npcSpawnCount;
 	private int _customSpawnCount;
 	
-	public static SpawnTable getInstance()
-	{
-		return SingletonHolder._instance;
-	}
-	
 	protected SpawnTable()
 	{
 		_spawntable.shared();
@@ -124,7 +119,7 @@ public class SpawnTable
 				}
 				else
 				{
-					_log.warning("SpawnTable: Data missing in NPC table for ID: " + rset.getInt("npc_templateid") + ".");
+					_log.warning(getClass().getSimpleName() + ": Data missing in NPC table for ID: " + rset.getInt("npc_templateid") + ".");
 				}
 			}
 			rset.close();
@@ -133,10 +128,10 @@ public class SpawnTable
 		catch (Exception e)
 		{
 			// problem with initializing spawn, go to next one
-			_log.log(Level.WARNING, "SpawnTable: Spawn could not be initialized: " + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Spawn could not be initialized: " + e.getMessage(), e);
 		}
 		
-		_log.info("SpawnTable: Loaded " + _spawntable.size() + " Npc Spawn Locations.");
+		_log.info(getClass().getSimpleName() + ": Loaded " + _spawntable.size() + " npc spawns.");
 		
 		if (Config.CUSTOM_SPAWNLIST_TABLE)
 		{
@@ -198,7 +193,7 @@ public class SpawnTable
 					}
 					else
 					{
-						_log.warning("CustomSpawnTable: Data missing in NPC table for ID: " + rset.getInt("npc_templateid") + ".");
+						_log.warning(getClass().getSimpleName() + ": Data missing in NPC table for ID: " + rset.getInt("npc_templateid") + ".");
 					}
 				}
 				rset.close();
@@ -209,12 +204,12 @@ public class SpawnTable
 				// problem with initializing spawn, go to next one
 				_log.log(Level.WARNING, "CustomSpawnTable: Spawn could not be initialized: " + e.getMessage(), e);
 			}
-			_log.info("CustomSpawnTable: Loaded " + _customSpawnCount + " Npc Spawn Locations.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + _customSpawnCount + " custom npc spawns.");
 			
 		}
 		
 		if (Config.DEBUG)
-			_log.fine("SpawnTable: Spawning completed, total number of NPCs in the world: " + (_npcSpawnCount + _customSpawnCount));
+			_log.fine(getClass().getSimpleName() + ": Spawning completed, total number of NPCs in the world: " + (_npcSpawnCount + _customSpawnCount));
 		
 	}
 	
@@ -246,7 +241,7 @@ public class SpawnTable
 			catch (Exception e)
 			{
 				// problem with storing spawn
-				_log.log(Level.WARNING, "SpawnTable: Could not store spawn in the DB:" + e.getMessage(), e);
+				_log.log(Level.WARNING, getClass().getSimpleName() + ": Could not store spawn in the DB:" + e.getMessage(), e);
 			}
 			
 			//[JOJO]
@@ -286,7 +281,7 @@ public class SpawnTable
 			catch (Exception e)
 			{
 				// problem with deleting spawn
-				_log.log(Level.WARNING, "SpawnTable: Spawn " + spawn + " could not be removed from DB: " + e.getMessage(), e);
+				_log.log(Level.WARNING, getClass().getSimpleName() + ": Spawn " + spawn + " could not be removed from DB: " + e.getMessage(), e);
 			}
 			//[JOJO]
 			String zoneName = MapRegionManager.getInstance().getClosestTownName(spawn.getLocx(),spawn.getLocy());
@@ -352,7 +347,12 @@ public class SpawnTable
 		}
 		
 		if (index == 0)
-			activeChar.sendMessage("No current spawns found.");
+			activeChar.sendMessage(getClass().getSimpleName() + ": No current spawns found.");
+	}
+	
+	public static SpawnTable getInstance()
+	{
+		return SingletonHolder._instance;
 	}
 	
 	private void meet(L2PcInstance activeChar, L2Spawn spawn)	//+[JOJO]

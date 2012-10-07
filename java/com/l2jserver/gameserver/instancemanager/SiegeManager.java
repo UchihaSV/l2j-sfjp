@@ -45,11 +45,6 @@ public class SiegeManager
 {
 	private static final Logger _log = Logger.getLogger(SiegeManager.class.getName());
 	
-	public static final SiegeManager getInstance()
-	{
-		return SingletonHolder._instance;
-	}
-	
 	private int _attackerMaxClans = 500; // Max number of clans
 	private int _attackerRespawnDelay = 0; // Time in ms. Changeable in siege.config
 	private int _defenderMaxClans = 500; // Max number of clans
@@ -136,7 +131,7 @@ public class SiegeManager
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Exception: checkIsRegistered(): " + e.getMessage() ,e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Exception: checkIsRegistered(): " + e.getMessage() ,e);
 		}
 		return register;
 	}
@@ -158,7 +153,7 @@ public class SiegeManager
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Error while loading Territory War Manager settings!", e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Error while loading Territory War Manager settings!", e);
 		}
 		
 		// Siege setting
@@ -200,7 +195,7 @@ public class SiegeManager
 				}
 				catch (Exception e)
 				{
-					_log.warning("Error while loading control tower(s) for " + castle.getName() + " castle.");
+					_log.warning(getClass().getSimpleName() + ": Error while loading control tower(s) for " + castle.getName() + " castle.");
 				}
 			}
 			
@@ -227,7 +222,7 @@ public class SiegeManager
 				}
 				catch (Exception e)
 				{
-					_log.warning("Error while loading artefact(s) for " + castle.getName() + " castle.");
+					_log.warning(getClass().getSimpleName() + ": Error while loading artefact(s) for " + castle.getName() + " castle.");
 				}
 			}
 			
@@ -254,7 +249,7 @@ public class SiegeManager
 				}
 				catch (Exception e)
 				{
-					_log.warning("Error while loading artefact(s) for " + castle.getName() + " castle.");
+					_log.warning(getClass().getSimpleName() + ": Error while loading artefact(s) for " + castle.getName() + " castle.");
 				}
 			}
 			
@@ -387,6 +382,11 @@ public class SiegeManager
 		{
 			return _location;
 		}
+	}
+
+	public static final SiegeManager getInstance()
+	{
+		return SingletonHolder._instance;
 	}
 	
 	private static class SingletonHolder

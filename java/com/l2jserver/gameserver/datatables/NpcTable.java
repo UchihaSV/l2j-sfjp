@@ -14,13 +14,12 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -47,7 +46,7 @@ public class NpcTable
 {
 	private static final Logger _log = Logger.getLogger(NpcTable.class.getName());
 	
-	private static final TIntObjectHashMap<L2NpcTemplate> _npcs = new TIntObjectHashMap<>();
+	private static final Map<Integer, L2NpcTemplate> _npcs = new HashMap<>();
 	
 	// SQL Queries
 	private static final String SELECT_NPC_ALL = "SELECT * FROM npc ORDER BY id";
@@ -359,7 +358,7 @@ public class NpcTable
 	 */
 	public L2NpcTemplate getTemplateByName(String name)
 	{
-		for (L2NpcTemplate npcTemplate : _npcs.values(new L2NpcTemplate[0]))
+		for (L2NpcTemplate npcTemplate : _npcs.values())
 		{
 			if (npcTemplate.getName().equalsIgnoreCase(name))
 			{
@@ -376,7 +375,7 @@ public class NpcTable
 	public List<L2NpcTemplate> getAllOfLevel(int lvl)
 	{
 		final List<L2NpcTemplate> list = new FastList<>();
-		for (L2NpcTemplate t : _npcs.valueCollection())
+		for (L2NpcTemplate t : _npcs.values())
 		{
 			if (t.getLevel() == lvl)
 			{
@@ -396,7 +395,7 @@ public class NpcTable
 		final List<L2NpcTemplate> list = new ArrayList<>();
 		for (int lvl : lvls)
 		{
-			for (L2NpcTemplate t : _npcs.values(new L2NpcTemplate[0]))
+			for (L2NpcTemplate t : _npcs.values())
 			{
 				if (t.getLevel() == lvl)
 				{
@@ -414,7 +413,7 @@ public class NpcTable
 	public List<L2NpcTemplate> getAllMonstersOfLevel(int lvl)
 	{
 		final List<L2NpcTemplate> list = new FastList<>();
-		for (L2NpcTemplate t : _npcs.valueCollection())
+		for (L2NpcTemplate t : _npcs.values())
 		{
 			if ((t.getLevel() == lvl) && t.isType("L2Monster"))
 			{
@@ -434,7 +433,7 @@ public class NpcTable
 		final List<L2NpcTemplate> list = new ArrayList<>();
 		for (int lvl : lvls)
 		{
-			for (L2NpcTemplate t : _npcs.values(new L2NpcTemplate[0]))
+			for (L2NpcTemplate t : _npcs.values())
 			{
 				if ((t.getLevel() == lvl) && t.isType("L2Monster"))
 				{
@@ -452,7 +451,7 @@ public class NpcTable
 	public List<L2NpcTemplate> getAllNpcStartingWith(String letter)
 	{
 		final List<L2NpcTemplate> list = new FastList<>();
-		for (L2NpcTemplate t : _npcs.valueCollection())
+		for (L2NpcTemplate t : _npcs.values())
 		{
 			if (t.getName().startsWith(letter) && t.isType("L2Npc"))
 			{
@@ -472,7 +471,7 @@ public class NpcTable
 		final List<L2NpcTemplate> list = new ArrayList<>();
 		for (String letter : letters)
 		{
-			for (L2NpcTemplate t : _npcs.values(new L2NpcTemplate[0]))
+			for (L2NpcTemplate t : _npcs.values())
 			{
 				if (t.getName().startsWith(letter) && t.isType("L2Npc"))
 				{
@@ -490,7 +489,7 @@ public class NpcTable
 	public List<L2NpcTemplate> getAllNpcOfClassType(String classType)
 	{
 		final List<L2NpcTemplate> list = new FastList<>();
-		for (L2NpcTemplate t : _npcs.valueCollection())
+		for (L2NpcTemplate t : _npcs.values())
 		{
 			if (t.isType(classType))
 			{
@@ -509,7 +508,7 @@ public class NpcTable
 		final List<L2NpcTemplate> list = new ArrayList<>();
 		for (String classType : classTypes)
 		{
-			for (L2NpcTemplate t : _npcs.values(new L2NpcTemplate[0]))
+			for (L2NpcTemplate t : _npcs.values())
 			{
 				if (t.isType(classType))
 				{

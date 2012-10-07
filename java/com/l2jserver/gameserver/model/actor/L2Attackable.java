@@ -35,13 +35,13 @@ import com.l2jserver.gameserver.datatables.EventDroplist;
 import com.l2jserver.gameserver.datatables.EventDroplist.DateDrop;
 import com.l2jserver.gameserver.datatables.HerbDropTable;
 import com.l2jserver.gameserver.datatables.ItemTable;
+import com.l2jserver.gameserver.datatables.ManorData;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.instancemanager.CursedWeaponsManager;
 import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2CommandChannel;
 import com.l2jserver.gameserver.model.L2DropCategory;
 import com.l2jserver.gameserver.model.L2DropData;
-import com.l2jserver.gameserver.model.L2Manor;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Party;
 import com.l2jserver.gameserver.model.actor.instance.L2GrandBossInstance;
@@ -1289,9 +1289,6 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		
 		if (itemCount > 0)
 			return new RewardItem(drop.getItemId(), itemCount);
-		else if (itemCount == 0 && Config.DEBUG)
-			_log.fine("Roll produced no drops.");
-		
 		return null;
 	}
 	
@@ -1432,8 +1429,6 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 			
 			if (itemCount > 0)
 				return new RewardItem(drop.getItemId(), itemCount);
-			else if (itemCount == 0 && Config.DEBUG)
-				_log.fine("Roll produced no drops.");
 		}
 		return null;
 	}
@@ -1585,8 +1580,6 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 			
 			if (itemCount > 0)
 				return new RewardItem(drop.getItemId(), itemCount);
-			else if (itemCount == 0 && Config.DEBUG)
-				_log.fine("Roll produced no drops.");
 		}
 		return null;
 	}
@@ -1647,9 +1640,6 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 						item = calculateRewardItem(player, drop, levelModifier, true);
 						if (item == null)
 							continue;
-						
-						if (Config.DEBUG)
-							_log.fine("Item id to spoil: " + item.getItemId() + " amount: " + item.getCount());
 						sweepList.add(item);
 					}
 					// Set the table _sweepItems of this L2Attackable
@@ -1672,10 +1662,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 					item = calculateCategorizedRewardItem(player, cat, levelModifier);
 				
 				if (item != null)
-				{
-					if (Config.DEBUG)
-						_log.fine("Item id to drop: " + item.getItemId() + " amount: " + item.getCount());
-					
+				{	
 					// Check if the autoLoot mode is active
 					if (isFlying() || (!isRaid() && Config.AUTO_LOOT) || (isRaid() && Config.AUTO_LOOT_RAIDS))
 						player.doAutoLoot(this, item); // Give the item(s) to the L2PcInstance that has killed the L2Attackable
@@ -2284,7 +2271,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 			}
 		}
 		
-		int diff = (getLevel() - (L2Manor.getInstance().getSeedLevel(_seedType) - 5));
+		int diff = (getLevel() - (ManorData.getInstance().getSeedLevel(_seedType) - 5));
 		
 		// hi-lvl mobs bonus
 		if (diff > 0)
@@ -2292,7 +2279,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		
 		FastList<RewardItem> harvested = new FastList<>();
 		
-		harvested.add(new RewardItem(L2Manor.getInstance().getCropType(_seedType), count * Config.RATE_DROP_MANOR));
+		harvested.add(new RewardItem(ManorData.getInstance().getCropType(_seedType), count * Config.RATE_DROP_MANOR));
 		
 		_harvestItems = harvested.toArray(new RewardItem[harvested.size()]);
 	}

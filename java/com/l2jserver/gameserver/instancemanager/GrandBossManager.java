@@ -108,11 +108,6 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	private FastList/*L2FastList*/<L2BossZone> _zones;
 	
-	public static GrandBossManager getInstance()
-	{
-		return SingletonHolder._instance;
-	}
-	
 	protected GrandBossManager()
 	{
 		init();
@@ -149,20 +144,20 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 				int status = rset.getInt("status");
 				_bossStatus.put(bossId, status);
 				_storedInfo.put(bossId, info);
-				_log.info("GrandBossManager: " +NpcTable.getInstance().getTemplate(bossId).getName()+"(" +bossId+ ") status is "+ status+".");
+				_log.info(getClass().getSimpleName() + ": " +NpcTable.getInstance().getTemplate(bossId).getName()+"(" +bossId+ ") status is "+ status+".");
 				if (status > 0)
-					_log.info("GrandBossManager: Next spawn date of " +NpcTable.getInstance().getTemplate(bossId).getName()+" is "+ respawnTimeFormat(info)+".");
+					_log.info(getClass().getSimpleName() + ": Next spawn date of " +NpcTable.getInstance().getTemplate(bossId).getName()+" is "+ respawnTimeFormat(info)+".");
 				
 				info = null;
 			}
-			_log.info("GrandBossManager: Loaded " + _storedInfo.size() + " Instances");
+			_log.info(getClass().getSimpleName() + ": Loaded " + _storedInfo.size() + " Instances");
 			
 			rset.close();
 			statement.close();
 		}
 		catch (SQLException e)
 		{
-			_log.log(Level.WARNING, "GrandBossManager: Could not load grandboss_data table: " + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Could not load grandboss_data table: " + e.getMessage(), e);
 		}
 		catch (Exception e)
 		{
@@ -179,7 +174,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		
 		if (_zones == null)
 		{
-			_log.warning("GrandBossManager: Could not read Grand Boss zone data");
+			_log.warning(getClass().getSimpleName() + ": Could not read Grand Boss zone data");
 			return;
 		}
 		
@@ -205,11 +200,11 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			rset.close();
 			statement.close();
 			
-			_log.info("GrandBossManager: Initialized " + _zones.size() + " Grand Boss Zones");
+			_log.info(getClass().getSimpleName() + ": Initialized " + _zones.size() + " Grand Boss Zones");
 		}
 		catch (SQLException e)
 		{
-			_log.log(Level.WARNING, "GrandBossManager: Could not load grandboss_list table: " + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Could not load grandboss_list table: " + e.getMessage(), e);
 		}
 		catch (Exception e)
 		{
@@ -409,7 +404,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		}
 		catch (SQLException e)
 		{
-			_log.log(Level.WARNING, "GrandBossManager: Couldn't store grandbosses to database:" + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't store grandbosses to database:" + e.getMessage(), e);
 			e.printStackTrace();
 		}
 	}
@@ -469,7 +464,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		}
 		catch (SQLException e)
 		{
-			_log.log(Level.WARNING, "GrandBossManager: Couldn't update grandbosses to database:" + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't update grandbosses to database:" + e.getMessage(), e);
 			e.printStackTrace();
 		}
 	}
@@ -496,6 +491,11 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	public static String respawnTimeFormat(StatsSet info)	//+[JOJO]
 	{
 		return com.l2jserver.util.Util.dateFormat(info.getLong("respawn_time"));
+	}
+	
+	public static GrandBossManager getInstance()
+	{
+		return SingletonHolder._instance;
 	}
 	
 	private static class SingletonHolder

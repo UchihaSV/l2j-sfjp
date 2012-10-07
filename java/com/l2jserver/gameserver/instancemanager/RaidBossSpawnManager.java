@@ -102,20 +102,20 @@ public class RaidBossSpawnManager
 				}
 				else
 				{
-					_log.warning("RaidBossSpawnManager: Could not load raidboss #" + rset.getInt("boss_id") + " from DB");
+					_log.warning(getClass().getSimpleName() + ": Could not load raidboss #" + rset.getInt("boss_id") + " from DB");
 				}
 			}
 			
-			_log.info("RaidBossSpawnManager: Loaded " + _bosses.size() + " Instances");
-			_log.info("RaidBossSpawnManager: Scheduled " + _schedules.size() + " Instances");
+			_log.info(getClass().getSimpleName() + ": Loaded " + _bosses.size() + " Instances");
+			_log.info(getClass().getSimpleName() + ": Scheduled " + _schedules.size() + " Instances");
 		}
 		catch (SQLException e)
 		{
-			_log.warning("RaidBossSpawnManager: Couldnt load raidboss_spawnlist table");
+			_log.warning(getClass().getSimpleName() + ": Couldnt load raidboss_spawnlist table");
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Error while initializing RaidBossSpawnManager: " + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Error while initializing RaidBossSpawnManager: " + e.getMessage(), e);
 		}
 	}
 	
@@ -155,7 +155,7 @@ public class RaidBossSpawnManager
 				
 				_storedInfo.put(bossId, info);
 				
-				_log.info("Spawning Raid Boss " + raidboss.getName());
+				_log.info(getClass().getSimpleName() + ": Spawning Raid Boss " + raidboss.getName());
 				
 				_bosses.put(bossId, raidboss);
 			}
@@ -188,10 +188,10 @@ public class RaidBossSpawnManager
 		{
 			String time = com.l2jserver.util.Util.dateFormat(respawnTime);	//[JOJO]
 			Broadcast.announceToOnlinePlayers(boss.getName() + " Ç™éÄñSÇµÇ‹ÇµÇΩÅBéüÇÃèoåªÇÕ " + time + " Ç≤ÇÎÇ≈Ç∑ÅB");	//[JOJO]
-			_log.info("RaidBossSpawnManager: Updated " + boss.getName() + " respawn time to " + /*JOJO*/time);
+			_log.info(getClass().getSimpleName() + ": Updated " + boss.getName() + " respawn time to " + /*JOJO*/time);
 		//	Calendar time = Calendar.getInstance();
 		//	time.setTimeInMillis(respawnTime);
-		//	_log.info("RaidBossSpawnManager: Updated " + boss.getName() + " respawn time to " + time.getTime());
+		//	_log.info(getClass().getSimpleName() + ": Updated " + boss.getName() + " respawn time to " + time.getTime());
 			
 			ScheduledFuture<?> futureSpawn;
 			futureSpawn = ThreadPoolManager.getInstance().scheduleGeneral(new SpawnSchedule(boss.getNpcId()), respawnDelay);
@@ -287,7 +287,7 @@ public class RaidBossSpawnManager
 			catch (Exception e)
 			{
 				// problem with storing spawn
-				_log.log(Level.WARNING, "RaidBossSpawnManager: Could not store raidboss #" + bossId + " in the DB:" + e.getMessage(), e);
+				_log.log(Level.WARNING, getClass().getSimpleName() + ": Could not store raidboss #" + bossId + " in the DB:" + e.getMessage(), e);
 			}
 		}
 	}
@@ -337,7 +337,7 @@ public class RaidBossSpawnManager
 			catch (Exception e)
 			{
 				// problem with deleting spawn
-				_log.log(Level.WARNING, "RaidBossSpawnManager: Could not remove raidboss #" + bossId + " from DB: " + e.getMessage(), e);
+				_log.log(Level.WARNING, getClass().getSimpleName() + ": Could not remove raidboss #" + bossId + " from DB: " + e.getMessage(), e);
 			}
 		}
 	}
@@ -396,13 +396,13 @@ public class RaidBossSpawnManager
 				}
 				catch (SQLException e)
 				{
-					_log.log(Level.WARNING, "RaidBossSpawnManager: Couldnt update raidboss_spawnlist table " + e.getMessage(), e);
+					_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldnt update raidboss_spawnlist table " + e.getMessage(), e);
 				}
 			}
 		}
 		catch (SQLException e)
 		{
-			_log.log(Level.WARNING, "SQL error while updating RaidBoss spawn to database: " + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": SQL error while updating RaidBoss spawn to database: " + e.getMessage(), e);
 		}
 	}
 	
@@ -489,7 +489,7 @@ public class RaidBossSpawnManager
 		
 		_storedInfo.put(raidboss.getNpcId(), info);
 		
-		_log.info("Spawning Night Raid Boss " + raidboss.getName());
+		_log.info(getClass().getSimpleName() + ": Spawning Night Raid Boss " + raidboss.getName());
 		
 		_bosses.put(raidboss.getNpcId(), raidboss);
 	}
