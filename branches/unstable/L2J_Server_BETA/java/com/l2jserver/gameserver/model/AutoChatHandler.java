@@ -26,7 +26,6 @@ import java.util.logging.Logger;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
-import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.SevenSigns;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -63,7 +62,6 @@ public class AutoChatHandler implements SpawnListener
 	
 	private void restoreChatData()
 	{
-		int numLoaded = 0;
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
 			PreparedStatement statement = con.prepareStatement("SELECT * FROM auto_chat ORDER BY groupId ASC");
@@ -79,8 +77,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 				 || npcId == SevenSigns.PREACHER_NPC_ID)
 					continue;
 }}
-				numLoaded++;
-				
 				statement2.setInt(1, rs.getInt("groupId"));
 				try (ResultSet rs2 = statement2.executeQuery())
 				{
@@ -100,9 +96,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 			statement2.close();
 			rs.close();
 			statement.close();
-			
-			if (Config.DEBUG)
-				_log.info("AutoChatHandler: Loaded " + numLoaded + " chat group(s) from the database.");
 		}
 		catch (Exception e)
 		{
@@ -219,10 +212,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 		
 		_registeredChats.remove(chatInst.getNPCId());
 		chatInst.setActive(false);
-		
-		if (Config.DEBUG)
-			_log.info("AutoChatHandler: Removed auto chat for NPC ID " + chatInst.getNPCId());
-		
 		return true;
 	}
 	
@@ -312,10 +301,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 			_npcId = npcId;
 			_defaultDelay = chatDelay;
 			_globalChat = isGlobal;
-			
-			if (Config.DEBUG)
-				_log.info("AutoChatHandler: Registered auto chat for NPC ID " + _npcId + " (Global Chat = " + _globalChat + ").");
-			
 			setActive(true);
 		}
 		
@@ -599,10 +584,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 				_chatDelay = chatDelay;
 				_chatTexts = chatTexts;
 				
-				if (Config.DEBUG)
-					_log.info("AutoChatHandler: Chat definition added for NPC ID " + _npcInstance.getNpcId() + " (Object ID = "
-							+ _npcInstance.getObjectId() + ").");
-				
 				// If global chat isn't enabled for the parent instance,
 				// then handle the chat task locally.
 				if (!chatInst.isGlobal())
@@ -715,10 +696,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 					chatDefinitions = new AutoChatDefinition[] { chatDef };
 				}
 				
-				if (Config.DEBUG)
-					_log.info("AutoChatHandler: Running auto chat for " + chatDefinitions.length + " instances of NPC ID " + _npcId + "."
-							+ " (Global Chat = " + chatInst.isGlobal() + ")");
-				
 				for (AutoChatDefinition chatDef : chatDefinitions)
 				{
 					try
@@ -813,10 +790,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 							for (L2PcInstance nearbyGM : nearbyGMs)
 								nearbyGM.sendPacket(cs);
 						}
-						
-						if (Config.DEBUG)
-							_log.fine("AutoChatHandler: Chat propogation for object ID " + chatNpc.getObjectId() + " (" + creatureName
-									+ ") with text '" + text + "' sent to " + nearbyPlayers.size() + " nearby players.");
 					}
 					catch (Exception e)
 					{

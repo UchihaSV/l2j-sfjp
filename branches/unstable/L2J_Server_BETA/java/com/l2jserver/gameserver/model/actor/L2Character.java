@@ -648,10 +648,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		
 		if (!needHpUpdate(352))
 			return;
-		
-		if (Config.DEBUG)
-			_log.fine("Broadcast Status Update for " + getObjectId() + "(" + getName() + "). HP: " + getCurrentHp());
-		
+				
 		// Create the Server->Client packet StatusUpdate with current HP
 		StatusUpdate su = new StatusUpdate(this);
 		su.addAttribute(StatusUpdate.CUR_HP, (int) getCurrentHp());
@@ -714,9 +711,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		}
 		
 		z += 5;
-		
-		if (Config.DEBUG)
-			_log.fine("Teleporting to: " + x + ", " + y + ", " + z);
 		
 		// Send a Server->Client packet TeleportToLocationt to the L2Character AND to all L2PcInstance in the _KnownPlayers of the L2Character
 		broadcastPacket(new TeleportToLocation(this, x, y, z, heading));
@@ -826,8 +820,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		{
 			return;
 		}
-		if (Config.DEBUG)
-			_log.fine(getName() + " doAttack: target=" + target);
 		
 		if (!isAlikeDead())
 		{
@@ -1230,7 +1222,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			// Calculate physical damages
 			damage1 = (int) Formulas.calcPhysDam(this, target, null, shld1, crit1, false, attack.soulshot);
 			
-			double range = Math.sqrt(this.getDistanceSq(target));
+			double range = Math.sqrt(getDistanceSq(target));
 			if (range < 1600)
 			{
 				double dmgmod = 1 - (1 - range / 800) * 0.35;
@@ -1465,12 +1457,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		//double angleChar;
 		int maxRadius = getPhysicalAttackRange();
 		int maxAngleDiff = (int) getStat().calcStat(Stats.POWER_ATTACK_ANGLE, 120, null, null);
-		
-		if (Config.DEBUG)
-		{
-			_log.info("doAttackHitByPole: Max radius = " + maxRadius);
-			_log.info("doAttackHitByPole: Max angle = " + maxAngleDiff);
-		}
 		
 		// o1 x: 83420 y: 148158 (Giran)
 		// o2 x: 83379 y: 148081 (Giran)
@@ -4642,7 +4628,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			{
 				dz = m._zDestination - zPrev; // allow diff
 			}
-			else if (this.isInCombat() && Math.abs(dz) > 200 && (dx * dx + dy * dy) < 40000) // allow mob to climb up to pcinstance
+			else if (isInCombat() && Math.abs(dz) > 200 && (dx * dx + dy * dy) < 40000) // allow mob to climb up to pcinstance
 			{
 				dz = m._zDestination - zPrev; // climbing
 			}
@@ -4744,7 +4730,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		}
 		broadcastPacket(new StopMove(this));
 		if (Config.MOVE_BASED_KNOWNLIST && updateKnownObjects)
-			this.getKnownList().findObjects();
+			getKnownList().findObjects();
 	}
 	
 	/**
@@ -4881,10 +4867,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			dz = (z - curZ);
 			distance = Math.sqrt(dx * dx + dy * dy);
 		}
-		
-		if (Config.DEBUG)
-			_log.fine("distance to target:" + distance);
-		
+				
 		// Define movement angles needed
 		// ^
 		// |     X (x,y)
@@ -4909,10 +4892,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			
 			// If no distance to go through, the movement is canceled
 			if (distance < 1 || distance - offset <= 0)
-			{
-				if (Config.DEBUG)
-					_log.fine("already in range, no movement needed.");
-				
+			{	
 				// Notify the AI that the L2Character is arrived at destination
 				getAI().notifyEvent(CtrlEvent.EVT_ARRIVED);
 				
@@ -4960,7 +4940,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			// Movement checks:
 			// when geodata == 2, for all characters except mobs returning home (could be changed later to teleport if pathfinding fails)
 			// when geodata == 1, for l2playableinstance and l2riftinstance only
-			if ((Config.GEODATA == 2 && !(isL2Attackable() && ((L2Attackable) this).isReturningToSpawnPoint())) || (isPlayer() && !(isInVehicle && distance > 1500)) || (isSummon() && !(this.getAI().getIntention() == AI_INTENTION_FOLLOW)) // assuming intention_follow only when following owner
+			if ((Config.GEODATA == 2 && !(isL2Attackable() && ((L2Attackable) this).isReturningToSpawnPoint())) || (isPlayer() && !(isInVehicle && distance > 1500)) || (isSummon() && !(getAI().getIntention() == AI_INTENTION_FOLLOW)) // assuming intention_follow only when following owner
 					|| isAfraid() || this instanceof L2RiftInvaderInstance)
 			{
 				if (isOnGeodataPath())
@@ -4980,14 +4960,14 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				if (curX < L2World.MAP_MIN_X || curX > L2World.MAP_MAX_X || curY < L2World.MAP_MIN_Y || curY > L2World.MAP_MAX_Y)
 				{
 					// Temporary fix for character outside world region errors
-					_log.warning("Character " + this.getName() + " outside world area, in coordinates x:" + curX + " y:" + curY);
+					_log.warning("Character " + getName() + " outside world area, in coordinates x:" + curX + " y:" + curY);
 					getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
 					if (isPlayer())
 						getActingPlayer().logout();
 					else if (isSummon())
 						return; // preventation when summon get out of world coords, player will not loose him, unsummon handled from pcinstance
 					else
-						this.onDecay();
+						onDecay();
 					return;
 				}
 				Location destiny = GeoData.getInstance().moveCheck(curX, curY, curZ, x, y, z, getInstanceId());
@@ -5003,11 +4983,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			// Pathfinding checks. Only when geodata setting is 2, the LoS check gives shorter result
 			// than the original movement was and the LoS gives a shorter distance than 2000
 			// This way of detecting need for pathfinding could be changed.
-			if (Config.GEODATA == 2 && originalDistance - distance > 30 && distance < 2000 && !this.isAfraid())
+			if (Config.GEODATA == 2 && originalDistance - distance > 30 && distance < 2000 && !isAfraid())
 			{
 				// Path calculation
 				// Overrides previous movement check
-				if ((isPlayable() && !isInVehicle) || this.isMinion() || this.isInCombat())
+				if ((isPlayable() && !isInVehicle) || isMinion() || isInCombat())
 				{
 					m.geoPath = PathFinding.getInstance().findPath(curX, curY, curZ, originalX, originalY, originalZ, getInstanceId(), isPlayable());
 					if (m.geoPath == null || m.geoPath.size() < 2) // No path found
@@ -5020,7 +5000,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						// * Summons will follow their masters no matter what.
 						// * Currently minions also must move freely since L2AttackableAI commands
 						// them to move along with their leader
-						if (isPlayer() || (!isPlayable() && !this.isMinion() && Math.abs(z - curZ) > 140) || (isSummon() && !((L2Summon) this).getFollowStatus()))
+						if (isPlayer() || (!isPlayable() && !isMinion() && Math.abs(z - curZ) > 140) || (isSummon() && !((L2Summon) this).getFollowStatus()))
 						{
 							getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
 							return;
@@ -5071,7 +5051,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				}
 			}
 			// If no distance to go through, the movement is canceled
-			if (distance < 1 && (Config.GEODATA == 2 || isPlayable() || this instanceof L2RiftInvaderInstance || this.isAfraid()))
+			if (distance < 1 && (Config.GEODATA == 2 || isPlayable() || this instanceof L2RiftInvaderInstance || isAfraid()))
 			{
 				if (isSummon())
 					((L2Summon) this).setFollowStatus(false);
@@ -5096,10 +5076,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		// Does not broke heading on vertical movements
 		if (!verticalMovementOnly)
 			setHeading(Util.calculateHeadingFrom(cos, sin));
-		
-		if (Config.DEBUG)
-			_log.fine("dist:" + distance + "speed:" + speed + " ttt:" + ticksToMove + " heading:" + getHeading());
-		
+				
 		m._moveStartTime = GameTimeController.getGameTicks();
 		
 		// Set the L2Character _move object to MoveData object
@@ -5119,7 +5096,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	
 	public boolean moveToNextRoutePoint()
 	{
-		if (!this.isOnGeodataPath())
+		if (!isOnGeodataPath())
 		{
 			// Cancel the move action
 			_move = null;
@@ -5176,9 +5153,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		m._heading = 0; // initial value for coordinate sync
 		
 		m._moveStartTime = GameTimeController.getGameTicks();
-		
-		if (Config.DEBUG)
-			_log.fine("time to target:" + ticksToMove);
 		
 		// Set the L2Character _move object to MoveData object
 		_move = m;
@@ -5412,8 +5386,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	//	//       update x,y,z with the current calculated position
 	//	stopMove();
 	//
-	//	if (Config.DEBUG)
-	//	_log.fine(this.getName() +":: target reached at: x "+getX()+" y "+getY()+ " z:" + getZ());
 	//
 	//	if (getPawnTarget() != null)
 	//	{
@@ -5903,7 +5875,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			return false;
 		if (!(target.isPlayable() && attacker.isPlayable()))
 			return false;
-		if (InstanceManager.getInstance().getInstance(this.getInstanceId()).isPvPInstance())
+		if (InstanceManager.getInstance().getInstance(getInstanceId()).isPvPInstance())
 			return false;
 		
 		if (TerritoryWarManager.PLAYER_WITH_WARD_CAN_BE_KILLED_IN_PEACEZONE && TerritoryWarManager.getInstance().isTWInProgress())
@@ -6433,11 +6405,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					}
 					targetList.add((L2Character) target);
 				}
-				//else
-				//{
-				//	if (Config.DEBUG)
-				//        _log.warning("Class cast bad: "+targets[i].getClass().toString());
-				//}
 			}
 			if (targetList.isEmpty())
 			{
@@ -6837,8 +6804,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public void disableAllSkills()
 	{
-		if (Config.DEBUG)
-			_log.fine("all skills disabled");
 		_allSkillsDisabled = true;
 	}
 	
@@ -6847,8 +6812,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public void enableAllSkills()
 	{
-		if (Config.DEBUG)
-			_log.fine("all skills enabled");
 		_allSkillsDisabled = false;
 	}
 	
@@ -7117,8 +7080,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				angleDiff -= 360;
 			if (Math.abs(angleDiff) <= maxAngleDiff)
 			{
-				if (Config.DEBUG)
-					_log.info("Char " + getName() + " is behind " + target.getName());
 				return true;
 			}
 		}
@@ -7168,7 +7129,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			return false;
 		maxAngleDiff = maxAngle / 2.;
 		angleTarget = Util.calculateAngleFrom(this, target);
-		angleChar = Util.convertHeadingToDegree(this.getHeading());
+		angleChar = Util.convertHeadingToDegree(getHeading());
 		angleDiff = angleChar - angleTarget;
 		if (angleDiff <= -360 + maxAngleDiff)
 			angleDiff += 360;

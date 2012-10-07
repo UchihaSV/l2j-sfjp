@@ -44,6 +44,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2SepulcherMonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2SepulcherNpcInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
+import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.quest.QuestState;
 import com.l2jserver.gameserver.model.zone.type.L2BossZone;
 import com.l2jserver.gameserver.network.NpcStringId;
@@ -60,7 +61,7 @@ public class FourSepulchersManager
 {
 	protected static final Logger _log = Logger.getLogger(FourSepulchersManager.class.getName());
 	
-	private static final String QUEST_ID = "620_FourGoblets";
+	private static final int QUEST_ID = 620;
 	
 	private static final int ENTRANCE_PASS = 7075;
 	private static final int USED_PASS = 7261;
@@ -146,11 +147,6 @@ public class FourSepulchersManager
 	private static final int NEW_CYCLE_MINUTE = 55;
 	private static final int OUST_PLAYER_MARGIN_TIME = 60000;
 	
-	public static final FourSepulchersManager getInstance()
-	{
-		return SingletonHolder._instance;
-	}
-	
 	public void init()
 	{
 		if (_changeCoolDownTimeTask != null)
@@ -172,6 +168,7 @@ public class FourSepulchersManager
 		_inAttackTime = false;
 		_inCoolDownTime = false;
 		
+	//	_firstTimeRun = true;
 		initFixedInfo();
 		loadMysteriousBox();
 		initKeyBoxSpawns();
@@ -182,8 +179,9 @@ public class FourSepulchersManager
 		loadDukeMonsters();
 		loadEmperorsGraveMonsters();
 		spawnManagers();
+	//	timeSelector();
 		_changeCoolDownTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeCoolDownTime(), 0);	//+[JOJO]
-		_log.info("FourSepulchersManager: Beginning in Cooldown time");	//+[JOJO]
+		_log.info(getClass().getSimpleName() + ": Beginning in Cooldown time");	//+[JOJO]
 	}
 	
 	public void clean()
@@ -222,12 +220,13 @@ public class FourSepulchersManager
 	protected void spawnManagers() //[modify JOJO]
 	{
 		_managers = new FastList<>();
+		// L2Spawn spawnDat;
 		
 		for (int i = 31921; i <= 31924; i++)
 		{
 			L2Spawn spawnDat = SpawnTable.getInstance().getSpawnOne(i);
 			_managers.add(spawnDat);
-			_log.info("FourSepulchersManager: spawned " + spawnDat.getTemplate().getName());
+			_log.info(getClass().getSimpleName() + ": spawned " + spawnDat.getTemplate().getName());
 		}
 	}
 	
@@ -352,7 +351,7 @@ public class FourSepulchersManager
 			
 			rset.close();
 			statement.close();
-			_log.info("FourSepulchersManager: loaded " + _mysteriousBoxSpawns.size() + " Mysterious-Box spawns.");
+			_log.info(getClass().getSimpleName() + ": loaded " + _mysteriousBoxSpawns.size() + " Mysterious-Box spawns.");
 		}
 		catch (Exception e)
 		{
@@ -435,7 +434,7 @@ public class FourSepulchersManager
 			statement1.close();
 			statement2.close();
 			
-			_log.info("FourSepulchersManager: loaded " + loaded + " Physical type monsters spawns.");
+			_log.info(getClass().getSimpleName() + ": loaded " + loaded + " Physical type monsters spawns.");
 		}
 		catch (Exception e)
 		{
@@ -501,7 +500,7 @@ public class FourSepulchersManager
 			statement1.close();
 			statement2.close();
 			
-			_log.info("FourSepulchersManager: loaded " + loaded + " Magical type monsters spawns.");
+			_log.info(getClass().getSimpleName() + ": loaded " + loaded + " Magical type monsters spawns.");
 		}
 		catch (Exception e)
 		{
@@ -568,7 +567,7 @@ public class FourSepulchersManager
 			statement1.close();
 			statement2.close();
 			
-			_log.info("FourSepulchersManager: loaded " + loaded + " Church of duke monsters spawns.");
+			_log.info(getClass().getSimpleName() + ": loaded " + loaded + " Church of duke monsters spawns.");
 		}
 		catch (Exception e)
 		{
@@ -634,7 +633,7 @@ public class FourSepulchersManager
 			statement1.close();
 			statement2.close();
 			
-			_log.info("FourSepulchersManager: loaded " + loaded + " Emperor's grave NPC spawns.");
+			_log.info(getClass().getSimpleName() + ": loaded " + loaded + " Emperor's grave NPC spawns.");
 		}
 		catch (Exception e)
 		{
@@ -713,6 +712,12 @@ public class FourSepulchersManager
 	// quests/620_FourGoblets/__init__.py --> onAdvEvent(...) --> if event == "Enter" --> here
 	public synchronized void tryEntry(L2Npc npc, L2PcInstance player)
 	{
+		Quest hostQuest = QuestManager.getInstance().getQuest(QUEST_ID);
+		if (hostQuest == null)
+		{
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't find quest: " + QUEST_ID);
+			return;
+		}
 		int npcId = npc.getNpcId();
 		switch (npcId)
 		{
@@ -755,7 +760,7 @@ public class FourSepulchersManager
 			
 			for (L2PcInstance mem : player.getParty().getMembers())
 			{
-				QuestState qs = mem.getQuestState(QUEST_ID);
+				QuestState qs = mem.getQuestState(hostQuest.getName());
 				if (qs == null || (!qs.isStarted() && !qs.isCompleted()))
 				{
 					showHtmlFile(player, npcId + "-NS.htm", npc, mem);
@@ -783,7 +788,7 @@ public class FourSepulchersManager
 			}
 			for (L2PcInstance mem : player.getParty().getMembers())
 			{
-				QuestState qs = mem.getQuestState(QUEST_ID);
+				QuestState qs = mem.getQuestState(hostQuest.getName());
 				if (qs == null || (!qs.isStarted() && !qs.isCompleted()))
 				{
 					showHtmlFile(player, npcId + "-NS.htm", npc, mem);
@@ -804,7 +809,7 @@ public class FourSepulchersManager
 		}
 		else
 		{
-			QuestState qs = player.getQuestState(QUEST_ID);
+			QuestState qs = player.getQuestState(hostQuest.getName());
 			if (qs == null || (!qs.isStarted() && !qs.isCompleted()))
 			{
 				showHtmlFile(player, npcId + "-NS.htm", npc, player);
@@ -1258,7 +1263,7 @@ public class FourSepulchersManager
 			}
 			catch (Exception e)
 			{
-				_log.log(Level.SEVERE, "FourSepulchersManager: Failed deleting mob.", e);
+				_log.log(Level.SEVERE, getClass().getSimpleName() + ": Failed deleting mob.", e);
 			}
 		}
 		_allMobs.clear();
@@ -1277,12 +1282,12 @@ public class FourSepulchersManager
 				}
 				else
 				{
-					_log.warning("FourSepulchersManager: Attempted to close undefined door. doorId: " + doorId);
+					_log.warning(getClass().getSimpleName() + ": Attempted to close undefined door. doorId: " + doorId);
 				}
 			}
 			catch (Exception e)
 			{
-				_log.log(Level.SEVERE, "FourSepulchersManager: Failed closing door", e);
+				_log.log(Level.SEVERE, getClass().getSimpleName() + ": Failed closing door", e);
 			}
 		}
 	}
@@ -1312,12 +1317,12 @@ public class FourSepulchersManager
 			{
 				if (temp == null)
 				{
-					_log.warning("FourSepulchersManager: managerSay(): manager is null");
+					_log.warning(getClass().getSimpleName() + ": managerSay(): manager is null");
 					continue;
 				}
 				if (!(temp.getLastSpawn() instanceof L2SepulcherNpcInstance))
 				{
-					_log.warning("FourSepulchersManager: managerSay(): manager is not Sepulcher instance");
+					_log.warning(getClass().getSimpleName() + ": managerSay(): manager is not Sepulcher instance");
 					continue;
 				}
 				// hall not used right now, so its manager will not tell you
@@ -1338,12 +1343,12 @@ public class FourSepulchersManager
 			{
 				if (temp == null)
 				{
-					_log.warning("FourSepulchersManager: Something goes wrong in managerSay()...");
+					_log.warning(getClass().getSimpleName() + ": Something goes wrong in managerSay()...");
 					continue;
 				}
 				if (!(temp.getLastSpawn() instanceof L2SepulcherNpcInstance))
 				{
-					_log.warning("FourSepulchersManager: Something goes wrong in managerSay()...");
+					_log.warning(getClass().getSimpleName() + ": Something goes wrong in managerSay()...");
 					continue;
 				}
 				((L2SepulcherNpcInstance) temp.getLastSpawn()).sayInShout(msg1);
@@ -1470,8 +1475,8 @@ public class FourSepulchersManager
 			time.set(Calendar.MINUTE, NEW_CYCLE_MINUTE);
 			time.set(Calendar.SECOND, 0);		//+[JOJO] ç≈ëÂÇPï™ÇÃåÎç∑Ç™èoÇƒÇµÇ‹Ç§ÇÃÇ≈
 			time.set(Calendar.MILLISECOND, 0);	//+[JOJO]
-			_log.info("FourSepulchersManager: Entry time: " + com.l2jserver.util.Util.dateFormat(time));
-		//	_log.info("FourSepulchersManager: Entry time: " + time.getTime());
+			_log.info(getClass().getSimpleName() + ": Entry time: " + com.l2jserver.util.Util.dateFormat(time));
+		//	_log.info(getClass().getSimpleName() + ": Entry time: " + time.getTime());
 			
 			long interval = time.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
 			_changeEntryTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeEntryTime(), interval);
@@ -1496,6 +1501,11 @@ public class FourSepulchersManager
 		if (member != null)
 			html.replace("%member%", member.getName());
 		player.sendPacket(html);
+	}
+	
+	public static final FourSepulchersManager getInstance()
+	{
+		return SingletonHolder._instance;
 	}
 	
 	private static class SingletonHolder
