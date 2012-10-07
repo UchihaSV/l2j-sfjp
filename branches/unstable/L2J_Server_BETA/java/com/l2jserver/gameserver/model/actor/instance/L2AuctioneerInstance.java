@@ -155,13 +155,13 @@ public final class L2AuctioneerInstance extends L2Npc
 					if (Config.DEBUG)
 						_log.warning("auction test started");
 					
-					String filename = "data/html/auction/AgitAuctionInfo.htm";
 					Auction a = AuctionManager.getInstance().getAuction(auctionId);
-					
-					NpcHtmlMessage html = new NpcHtmlMessage(1);
-					html.setFile(player.getHtmlPrefix(), filename);
 					if (a != null)
 					{
+						String filename = "data/html/auction/AgitAuctionInfo.htm";
+						
+						NpcHtmlMessage html = new NpcHtmlMessage(1);
+						html.setFile(player.getHtmlPrefix(), filename);
 						html.replace("%AGIT_NAME%", a.getItemName());
 						html.replace("%OWNER_PLEDGE_NAME%", a.getSellerClanName());
 						html.replace("%OWNER_PLEDGE_MASTER%", a.getSellerName());
@@ -179,7 +179,8 @@ public final class L2AuctioneerInstance extends L2Npc
 						player.sendPacket(html);
 					}
 					else
-						_log.warning("Auctioneer Auction null for AuctionId : "+auctionId);
+						player.sendPacket(SystemMessageId.NO_CLAN_HALLS_UP_FOR_AUCTION); //[JOJO]
+					//	_log.warning("Auctioneer Auction null for AuctionId : "+auctionId);
 				}
 				catch (Exception e)
 				{
@@ -386,15 +387,15 @@ public final class L2AuctioneerInstance extends L2Npc
 				}
 				if (player.getClan().getHideoutId() == 0 && player.getClan().getAuctionBiddedAt() > 0)
 				{
-					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-					String filename = "data/html/auction/AgitBidInfo.htm";
-					NpcHtmlMessage html = new NpcHtmlMessage(1);
-					html.setFile(player.getHtmlPrefix(), filename);
 					Auction a = AuctionManager.getInstance().getAuction(player.getClan().getAuctionBiddedAt());
 					if (a != null)
 					{
+						SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+						String filename = "data/html/auction/AgitBidInfo.htm";
 						AuctionableHall item = ClanHallManager.getInstance().getAuctionableHallById(a.getItemId());
 						
+						NpcHtmlMessage html = new NpcHtmlMessage(1);
+						html.setFile(player.getHtmlPrefix(), filename);
 						html.replace("%AGIT_NAME%", a.getItemName());
 						html.replace("%OWNER_PLEDGE_NAME%", a.getSellerClanName());
 						html.replace("%OWNER_PLEDGE_MASTER%", a.getSellerName());
@@ -411,20 +412,21 @@ public final class L2AuctioneerInstance extends L2Npc
 						player.sendPacket(html);
 					}
 					else
-						_log.warning("Auctioneer Auction null for AuctionBiddedAt : "+player.getClan().getAuctionBiddedAt());
+						player.sendPacket(SystemMessageId.NO_CLAN_HALLS_UP_FOR_AUCTION); //[JOJO]
+					//	_log.warning("Auctioneer Auction null for AuctionBiddedAt : "+player.getClan().getAuctionBiddedAt());
 					return;
 				}
 				else if (AuctionManager.getInstance().getAuction(player.getClan().getHideoutId()) != null)
 				{
-					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-					String filename = "data/html/auction/AgitSaleInfo.htm";
-					NpcHtmlMessage html = new NpcHtmlMessage(1);
-					html.setFile(player.getHtmlPrefix(), filename);
 					Auction a = AuctionManager.getInstance().getAuction(player.getClan().getHideoutId());
 					if (a != null)
 					{
+						SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+						String filename = "data/html/auction/AgitSaleInfo.htm";
 						AuctionableHall item = ClanHallManager.getInstance().getAuctionableHallById(a.getItemId());
 						
+						NpcHtmlMessage html = new NpcHtmlMessage(1);
+						html.setFile(player.getHtmlPrefix(), filename);
 						html.replace("%AGIT_NAME%", a.getItemName());
 						html.replace("%AGIT_OWNER_PLEDGE_NAME%", a.getSellerClanName());
 						html.replace("%OWNER_PLEDGE_MASTER%", a.getSellerName());
@@ -442,18 +444,20 @@ public final class L2AuctioneerInstance extends L2Npc
 						player.sendPacket(html);
 					}
 					else
-						_log.warning("Auctioneer Auction null for getHasHideout : "+player.getClan().getHideoutId());
+						player.sendPacket(SystemMessageId.NO_CLAN_HALLS_UP_FOR_AUCTION); //[JOJO]
+					//	_log.warning("Auctioneer Auction null for getHasHideout : "+player.getClan().getHideoutId());
 					return;
 				}
 				else if (player.getClan().getHideoutId() != 0)
 				{
 					int ItemId = player.getClan().getHideoutId();
-					String filename = "data/html/auction/AgitInfo.htm";
-					NpcHtmlMessage html = new NpcHtmlMessage(1);
-					html.setFile(player.getHtmlPrefix(), filename);
 					AuctionableHall item = ClanHallManager.getInstance().getAuctionableHallById(ItemId);
 					if (item != null)
 					{
+						String filename = "data/html/auction/AgitInfo.htm";
+						
+						NpcHtmlMessage html = new NpcHtmlMessage(1);
+						html.setFile(player.getHtmlPrefix(), filename);
 						html.replace("%AGIT_NAME%", item.getNameHtm());
 						html.replace("%AGIT_OWNER_PLEDGE_NAME%", player.getClan().getName());
 						html.replace("%OWNER_PLEDGE_MASTER%", player.getClan().getLeaderName());
@@ -465,7 +469,8 @@ public final class L2AuctioneerInstance extends L2Npc
 						player.sendPacket(html);
 					}
 					else
-						_log.warning("Clan Hall ID NULL : "+ItemId+" Can be caused by concurent write in ClanHallManager");
+						player.sendPacket(SystemMessageId.CLAN_HAS_NO_CLAN_HALL); //[JOJO]
+					//	_log.warning("Clan Hall ID NULL : "+ItemId+" Can be caused by concurent write in ClanHallManager");
 					return;
 				}
 				else if (player.getClan().getHideoutId() == 0)
@@ -577,12 +582,13 @@ public final class L2AuctioneerInstance extends L2Npc
 				}
 				try
 				{
-					String filename = "data/html/auction/AgitBid2.htm";
-					NpcHtmlMessage html = new NpcHtmlMessage(1);
-					html.setFile(player.getHtmlPrefix(), filename);
 					Auction a = AuctionManager.getInstance().getAuction(player.getClan().getAuctionBiddedAt());
 					if (a != null)
 					{
+						String filename = "data/html/auction/AgitBid2.htm";
+						
+						NpcHtmlMessage html = new NpcHtmlMessage(1);
+						html.setFile(player.getHtmlPrefix(), filename);
 						html.replace("%AGIT_AUCTION_BID%", formatAdena(a.getBidders().get(player.getClanId()).getBid()));
 						html.replace("%AGIT_AUCTION_MINBID%", formatAdena(a.getStartingBid()));
 						html.replace("%AGIT_AUCTION_END%",format.format(a.getEndDate()));
@@ -591,7 +597,8 @@ public final class L2AuctioneerInstance extends L2Npc
 						player.sendPacket(html);
 					}
 					else
-						_log.warning("Auctioneer Auction null for AuctionBiddedAt : "+player.getClan().getAuctionBiddedAt());
+						player.sendPacket(SystemMessageId.NO_CLAN_HALLS_UP_FOR_AUCTION); //[JOJO]
+					//	_log.warning("Auctioneer Auction null for AuctionBiddedAt : "+player.getClan().getAuctionBiddedAt());
 				}
 				catch (Exception e)
 				{
