@@ -159,7 +159,7 @@ public class AuctionManager
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			PreparedStatement statement = con.prepareStatement("INSERT INTO `auction` VALUES " + ITEM_INIT_DATA[i]);
+			PreparedStatement statement = con.prepareStatement("REPLACE INTO `auction` VALUES " + ITEM_INIT_DATA[i]);	//[JOJO] INSERT --> REPLACE
 			statement.execute();
 			statement.close();
 			_auctions.add(new Auction(id));
