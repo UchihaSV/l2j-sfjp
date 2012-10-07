@@ -218,28 +218,25 @@ if (CHECK_HASH_COLLISION) {{
 			return ""; // avoid possible NPE
 		}
 		
+		String content = _cache_get(path);
 		if (TIMED_CACHE)
 		{
-			String content = _cache_get(path);
 			if (content == null)
 			{
 				content = loadFile(new File(Config.DATAPACK_ROOT, path), true);
 			}
-			return content;
 		}
 		else if (Config.LAZY_CACHE)
 		{
-			String content = _cache.get(path);
 			if (content == null)
 			{
 				content = loadFile(new File(Config.DATAPACK_ROOT, path), true);
 			}
-			return content;
 		}
-		else
+		else // pass if static cache
 		{
-			return _cache.get(path);
 		}
+		return content;
 	}
 	
  //	public boolean contains(String path)
