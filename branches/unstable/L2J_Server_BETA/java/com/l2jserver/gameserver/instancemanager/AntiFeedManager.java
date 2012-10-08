@@ -23,7 +23,6 @@ import com.l2jserver.gameserver.model.IL2Procedure;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.L2GameClient;
-import com.l2jserver.util.L2FastMap;
 import com.l2jserver.util.L2HashMap;
 
 public class AntiFeedManager
@@ -33,8 +32,8 @@ public class AntiFeedManager
 	public static final int TVT_ID = 2;
 	public static final int L2EVENT_ID = 3;
 	
-	private final Map<Integer, Long> _lastDeathTimes = new L2FastMap<>(true);
-	private final L2HashMap<Integer, Map<Integer, Connections>> _eventIPs = new L2HashMap<>();
+	private final FastMap<Integer, Long> _lastDeathTimes = new FastMap/*L2FastMap*/<Integer, Long>().shared();
+	private final L2HashMap<Integer, FastMap<Integer, Connections>> _eventIPs = new L2HashMap<>();
 	
 	protected AntiFeedManager()
 	{
@@ -269,7 +268,7 @@ public class AntiFeedManager
 		}
 	}
 	
-	private static final class DisconnectProcedure implements IL2Procedure<Map<Integer, Connections>>
+	private static final class DisconnectProcedure implements IL2Procedure<FastMap<Integer, Connections>>
 	{
 		private final Integer _addrHash;
 		
@@ -279,7 +278,7 @@ public class AntiFeedManager
 		}
 		
 		@Override
-		public final boolean execute(Map<Integer, Connections> event)
+		public final boolean execute(FastMap<Integer, Connections> event)
 		{
 			final Connections conns = event.get(_addrHash);
 			if (conns != null)

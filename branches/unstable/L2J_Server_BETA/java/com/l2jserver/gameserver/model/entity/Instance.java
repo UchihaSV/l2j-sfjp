@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import javolution.util.FastList;
+import javolution.util.FastMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -44,7 +46,6 @@ import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.util.L2FastList;
-import com.l2jserver.util.L2FastMap;
 
 /**
  * Main class for game instances.
@@ -58,8 +59,8 @@ public class Instance
 	private String _name;
 	
 	private final L2FastList<Integer> _players = new L2FastList<>(true);
-	private final List<L2Npc> _npcs = new L2FastList<>(true);
-	private final Map<Integer, L2DoorInstance> _doors = new L2FastMap<>(true);
+	private final FastList<L2Npc> _npcs = new FastList/*L2FastList*/<L2Npc>().shared();
+	private final FastMap<Integer, L2DoorInstance> _doors = new FastMap/*L2FastMap*/<Integer, L2DoorInstance>().shared();
 	private Location _spawnLoc = null;
 	private boolean _allowSummon = true;
 	private long _emptyDestroyTime = -1;

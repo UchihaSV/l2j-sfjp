@@ -25,11 +25,12 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javolution.util.FastList;
+import javolution.util.FastMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -45,8 +46,6 @@ import com.l2jserver.gameserver.taskmanager.tasks.TaskRestart;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskScript;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskSevenSignsUpdate;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskShutdown;
-import com.l2jserver.util.L2FastList;
-import com.l2jserver.util.L2FastMap;
 
 /**
  * @author Layane
@@ -55,8 +54,8 @@ public final class TaskManager
 {
 	protected static final Logger _log = Logger.getLogger(TaskManager.class.getName());
 	
-	private final Map<Integer, Task> _tasks = new L2FastMap<>(true);
-	protected final List<ExecutedTask> _currentTasks = new L2FastList<>(true);
+	private final FastMap<Integer, Task> _tasks = new FastMap/*L2FastMap*/<Integer, Task>().shared();
+	protected final FastList<ExecutedTask> _currentTasks = new FastList/*L2FastList*/<ExecutedTask>().shared();
 	
 	protected static final String[] SQL_STATEMENTS =
 	{

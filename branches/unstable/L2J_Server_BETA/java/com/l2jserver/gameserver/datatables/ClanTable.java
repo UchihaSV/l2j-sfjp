@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javolution.util.FastList;
+
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -56,7 +58,6 @@ import com.l2jserver.gameserver.scripting.scriptengine.events.ClanWarEvent;
 import com.l2jserver.gameserver.scripting.scriptengine.impl.L2Script.EventStage;
 import com.l2jserver.gameserver.scripting.scriptengine.listeners.clan.ClanWarListener;
 import com.l2jserver.gameserver.util.Util;
-import com.l2jserver.util.L2FastList;
 
 /**
  * This class loads the clan related data.
@@ -65,7 +66,7 @@ public class ClanTable
 {
 	private static final Logger _log = Logger.getLogger(ClanTable.class.getName());
 	
-	private static List<ClanWarListener> clanWarListeners = new L2FastList<>(true);
+	private static FastList<ClanWarListener> clanWarListeners = new FastList/*L2FastList*/<ClanWarListener>().shared();
 	
 	private final Map<Integer, L2Clan> _clans = new HashMap<>();
 	
