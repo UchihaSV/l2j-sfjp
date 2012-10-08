@@ -17,9 +17,10 @@ package com.l2jserver.gameserver.datatables;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javolution.util.FastMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -28,7 +29,6 @@ import com.l2jserver.gameserver.engines.DocumentParser;
 import com.l2jserver.gameserver.model.L2Seed;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.items.L2Item;
-import com.l2jserver.util.L2FastMap;
 
 /**
  * Service class for manor
@@ -38,11 +38,11 @@ public class ManorData extends DocumentParser
 {
 	private static Logger _log = Logger.getLogger(ManorData.class.getName());
 	
-	private static Map<Integer, L2Seed> _seeds;
+	private static final FastMap<Integer, L2Seed> _seeds = new FastMap/*L2FastMap*/<Integer, L2Seed>().shared();
 	
 	protected ManorData()
 	{
-		_seeds = new L2FastMap<>(true);
+	//	_seeds = new L2FastMap<>(true);
 		load();
 	}
 	

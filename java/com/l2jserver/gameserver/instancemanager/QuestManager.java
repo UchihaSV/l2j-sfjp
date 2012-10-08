@@ -16,21 +16,21 @@ package com.l2jserver.gameserver.instancemanager;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javolution.util.FastMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.scripting.L2ScriptEngineManager;
 import com.l2jserver.gameserver.scripting.ScriptManager;
-import com.l2jserver.util.L2FastMap;
 
 public class QuestManager extends ScriptManager<Quest>
 {
 	protected static final Logger _log = Logger.getLogger(QuestManager.class.getName());
 	
-	private Map<String, Quest> _quests = new L2FastMap<>(true);
+	private FastMap<String, Quest> _quests = new FastMap/*L2FastMap*/<String, Quest>().shared();
 	
 	protected QuestManager()
 	{

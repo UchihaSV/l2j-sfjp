@@ -21,19 +21,19 @@ import java.util.List;
 import java.util.Map;
 
 import javolution.util.FastList;
+import javolution.util.FastMap;
 
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.util.Util;
-import com.l2jserver.util.L2FastMap;
 
 public class CharKnownList extends ObjectKnownList
 {
-	private Map<Integer, L2PcInstance> _knownPlayers;
-	private Map<Integer, L2Summon> _knownSummons;
-	private Map<Integer, Integer> _knownRelations;
+	private FastMap<Integer, L2PcInstance> _knownPlayers;
+	private FastMap<Integer, L2Summon> _knownSummons;
+	private FastMap<Integer, Integer> _knownRelations;
 	
 	public CharKnownList(L2Character activeChar)
 	{
@@ -236,7 +236,7 @@ public class CharKnownList extends ObjectKnownList
 	{
 		if (_knownPlayers == null)
 		{
-			_knownPlayers = new L2FastMap<>(true);
+			_knownPlayers = new FastMap/*L2FastMap*/<Integer, L2PcInstance>().shared();
 		}
 		return _knownPlayers;
 	}
@@ -245,7 +245,7 @@ public class CharKnownList extends ObjectKnownList
 	{
 		if (_knownRelations == null)
 		{
-			_knownRelations = new L2FastMap<>(true);
+			_knownRelations = new FastMap/*L2FastMap*/<Integer, Integer>().shared();
 		}
 		return _knownRelations;
 	}
@@ -254,7 +254,7 @@ public class CharKnownList extends ObjectKnownList
 	{
 		if (_knownSummons == null)
 		{
-			_knownSummons = new L2FastMap<>(true);
+			_knownSummons = new FastMap/*L2FastMap*/<Integer, L2Summon>().shared();
 		}
 		return _knownSummons;
 	}

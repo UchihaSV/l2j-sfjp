@@ -25,10 +25,11 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javolution.util.FastMap;
+
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.util.L2FastMap;
 
 /**
  * This class ...
@@ -39,8 +40,8 @@ public class CharNameTable
 {
 	private static Logger _log = Logger.getLogger(CharNameTable.class.getName());
 	
-	private final Map<Integer, String> _chars = new L2FastMap<>();
-	private final Map<Integer, Integer> _accessLevels = new L2FastMap<>();
+	private final FastMap<Integer, String> _chars = new FastMap/*L2FastMap*/<>();
+	private final FastMap<Integer, Integer> _accessLevels = new FastMap/*L2FastMap*/<>();
 	
 	protected CharNameTable()
 	{
