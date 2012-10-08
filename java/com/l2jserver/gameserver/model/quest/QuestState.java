@@ -529,6 +529,7 @@ public final class QuestState
 	 * @param value the new value of the quest state progress
 	 * @return this {@link QuestState} object
 	 * @see #set(String var, String val)
+	 * @see #setCond(int, boolean)
 	 */
 	public QuestState setCond(int value)
 	{
@@ -569,9 +570,8 @@ public final class QuestState
 	 * @param value the new value of the quest state progress
 	 * @param playQuestMiddle if {@code true}, plays "ItemSound.quest_middle"
 	 * @return this {@link QuestState} object
-	 * @see #set(String var, String val)
-	 * @see #setCond(int, boolean)
 	 * @see #setCond(int value)
+	 * @see #set(String var, String val)
 	 */
 	public QuestState setCond(int value, boolean playQuestMiddle)
 	{
@@ -594,7 +594,7 @@ public final class QuestState
 	 */
 	public void addNotifyOfDeath(L2Character character)
 	{
-		if ((character == null) || !(character instanceof L2PcInstance))
+		if (!(character instanceof L2PcInstance))
 		{
 			return;
 		}
@@ -1082,8 +1082,6 @@ public final class QuestState
 			return this;
 		}
 		
-		setState(State.COMPLETED);
-		
 		// Clean registered quest items
 		int[] itemIdList = getQuest().getRegisteredItemIds();
 		if (itemIdList != null)
@@ -1101,7 +1099,7 @@ public final class QuestState
 		}
 		else
 		{
-			Quest.updateQuestInDb(this);
+			setState(State.COMPLETED);
 		}
 		_vars = null;
 		return this;
