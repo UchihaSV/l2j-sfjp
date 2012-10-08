@@ -1036,14 +1036,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		return _serverSideTitle;
 	}
 	
- //	/**
- //	 * @return {@code true} if the NPC is Christmas Special Tree, {@code false} otherwise.
- //	 */
- //	public boolean isSpecialTree()
- //	{
- //		return _npcId == L2XmassTreeInstance.SPECIAL_TREE_ID;
- //	}
-	
 	/**
 	 * Checks types, ignore case.
 	 * @param t the type to check.
