@@ -9325,8 +9325,8 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		// TODO: Unhardcode skillId 844 which is the outpost construct skill
-		if ((sklTargetType == L2TargetType.TARGET_HOLY && !checkIfOkToCastSealOfRule(CastleManager.getInstance().getCastle(this), false, skill))
-				|| (sklTargetType == L2TargetType.TARGET_FLAGPOLE && !checkIfOkToCastFlagDisplay(FortManager.getInstance().getFort(this), false, skill))
+		if ((sklTargetType == L2TargetType.TARGET_HOLY && !checkIfOkToCastSealOfRule(CastleManager.getInstance().getCastle(this), false, skill, target))
+			|| (sklTargetType == L2TargetType.TARGET_FLAGPOLE && !checkIfOkToCastFlagDisplay(FortManager.getInstance().getFort(this), false, skill, target))
 				|| (sklType == L2SkillType.SIEGEFLAG && !L2SkillSiegeFlag.checkIfOkToPlaceFlag(this, false, skill.getId() == 844))
 				|| (sklType == L2SkillType.STRSIEGEASSAULT && !checkIfOkToUseStriderSiegeAssault())
 				|| (sklType == L2SkillType.SUMMON_FRIEND && !(checkSummonerStatus(this) && checkSummonTargetStatus(target, this))))
@@ -9412,7 +9412,7 @@ public final class L2PcInstance extends L2Playable
 		return false;
 	}
 	
-	public boolean checkIfOkToCastSealOfRule(Castle castle, boolean isCheckOnly, L2Skill skill)
+	public boolean checkIfOkToCastSealOfRule(Castle castle, boolean isCheckOnly, L2Skill skill, L2Object target)
 	{
 		SystemMessage sm;
 		if (castle == null || castle.getCastleId() <= 0)
@@ -9420,7 +9420,7 @@ public final class L2PcInstance extends L2Playable
 			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
 			sm.addSkillName(skill);
 		}
-		else if (!castle.getArtefacts().contains(getTarget()))
+		else if (!castle.getArtefacts().contains(target))
 		{
 			sm = SystemMessage.getSystemMessage(SystemMessageId.INCORRECT_TARGET);
 		}
@@ -9429,7 +9429,7 @@ public final class L2PcInstance extends L2Playable
 			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
 			sm.addSkillName(skill);
 		}
-		else if (!Util.checkIfInRange(200, this, getTarget(), true))
+		else if (!Util.checkIfInRange(200, this, target, true))
 		{
 			sm = SystemMessage.getSystemMessage(SystemMessageId.DIST_TOO_FAR_CASTING_STOPPED);
 		}
@@ -9452,7 +9452,7 @@ public final class L2PcInstance extends L2Playable
 		return false;
 	}
 	
-	public boolean checkIfOkToCastFlagDisplay(Fort fort, boolean isCheckOnly,L2Skill skill)
+	public boolean checkIfOkToCastFlagDisplay(Fort fort, boolean isCheckOnly,L2Skill skill, L2Object target)
 	{
 		SystemMessage sm;
 		
@@ -9461,7 +9461,7 @@ public final class L2PcInstance extends L2Playable
 			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
 			sm.addSkillName(skill);
 		}
-		else if (fort.getFlagPole() != getTarget())
+		else if (fort.getFlagPole() != target)
 		{
 			sm = SystemMessage.getSystemMessage(SystemMessageId.INCORRECT_TARGET);
 		}
@@ -9470,7 +9470,7 @@ public final class L2PcInstance extends L2Playable
 			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
 			sm.addSkillName(skill);
 		}
-		else if (!Util.checkIfInRange(200, this, getTarget(), true))
+		else if (!Util.checkIfInRange(200, this, target, true))
 		{
 			sm = SystemMessage.getSystemMessage(SystemMessageId.DIST_TOO_FAR_CASTING_STOPPED);
 		}
