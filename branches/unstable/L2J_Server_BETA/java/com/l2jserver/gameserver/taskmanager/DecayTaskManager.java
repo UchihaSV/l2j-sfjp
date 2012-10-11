@@ -64,13 +64,8 @@ public class DecayTaskManager
 		_decayTasks.remove(actor);
 	}
 	
-	private class DecayScheduler implements Runnable
+	protected class DecayScheduler implements Runnable
 	{
-		protected DecayScheduler()
-		{
-			// Do nothing
-		}
-		
 		@Override
 		public void run()
 		{
@@ -154,12 +149,14 @@ public class DecayTaskManager
 	@Override
 	public String toString()
 	{
-		StringBuilder ret = new StringBuilder(256);
-		ret.append("============= DecayTask Manager Report ============\r\n"
-		   + "Tasks count: ")
+		StringBuilder ret = new StringBuilder();
+		ret.append("============= DecayTask Manager Report ============")
+		   .append(Config.EOL)
+		   .append("Tasks count: ")
 		   .append(_decayTasks.size())
-		   .append("\r\n"
-		   + "Tasks dump:\r\n");
+		   .append(Config.EOL)
+		   .append("Tasks dump:")
+		   .append(Config.EOL);
 		
 		Long current = System.currentTimeMillis();
 		for (L2Character actor : _decayTasks.keySet())
@@ -170,7 +167,7 @@ public class DecayTaskManager
 			   .append(actor.getName())
 			   .append(" decay timer: ")
 			   .append(current - _decayTasks.get(actor))
-			   .append("\r\n");
+			   .append(Config.EOL);
 		}
 		
 		return ret.toString();

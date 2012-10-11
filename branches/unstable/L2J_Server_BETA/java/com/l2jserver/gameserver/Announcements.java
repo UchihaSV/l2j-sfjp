@@ -210,7 +210,7 @@ public class Announcements
 			for (String announce : list)
 			{
 				save.write(announce);
-				save.write("\r\n");
+				save.write(Config.EOL);
 			}
 		}
 		catch (IOException e)
