@@ -37,7 +37,7 @@ import com.l2jserver.util.file.filter.HTMLFilter;
  */
 public class HtmCache
 {
-	static Logger _log = Logger.getLogger(HtmCache.class.getName());
+	Logger _log = Logger.getLogger(HtmCache.class.getName());
 	
 	private static final HTMLFilter htmlFilter = new HTMLFilter();
 	

@@ -59,7 +59,8 @@ public class DeadLockDetector extends Thread
 					deadlock = true;
 					ThreadInfo[] tis = tmx.getThreadInfo(ids, true, true);
 					StringBuilder info = new StringBuilder()
-						.append("DeadLock Found!\n");
+						.append("DeadLock Found!")
+						.append(Config.EOL);
 					for (ThreadInfo ti : tis)
 					{
 if (Config.FIX_THREADINFO_TO_STRING) {{
@@ -79,14 +80,15 @@ if (Config.FIX_THREADINFO_TO_STRING) {{
 						}
 						
 						ThreadInfo dl = ti;
-						info.append("Java-level deadlock:\n")
+						info.append("Java-level deadlock:")
+						    .append(Config.EOL)
 						    .append('\t')
 						    .append(dl.getThreadName())
 						    .append(" is waiting to lock ")
 						    .append(dl.getLockInfo().toString())
 						    .append(" which is held by ")
 						    .append(dl.getLockOwnerName())
-						    .append('\n');
+						    .append(Config.EOL);
 						while ((dl = tmx.getThreadInfo(new long[]
 						{
 							dl.getLockOwnerId()
@@ -98,7 +100,7 @@ if (Config.FIX_THREADINFO_TO_STRING) {{
 							    .append(dl.getLockInfo().toString())
 							    .append(" which is held by ")
 							    .append(dl.getLockOwnerName())
-							    .append('\n');
+							    .append(Config.EOL);
 						}
 					}
 					_log.warning(info.toString());
@@ -153,26 +155,26 @@ if (Config.FIX_THREADINFO_TO_STRING) {{
         if (ti.isInNative()) {
             sb.append(" (in native)");
         }
-        sb.append('\n');
+        sb.append(Config.EOL);
         int i = 0;
         for (; i < stackTrace.length /*&& i < MAX_FRAMES*/; i++) {
             StackTraceElement ste = stackTrace[i];
             sb.append("\tat ").append(ste.toString())
-              .append('\n');
+              .append(Config.EOL);
             if (i == 0 && ti.getLockInfo() != null) {
                 Thread.State ts = ti.getThreadState();
                 switch (ts) {
                     case BLOCKED:
                         sb.append("\t-  blocked on ").append(ti.getLockInfo())
-                          .append('\n');
+                          .append(Config.EOL);
                         break;
                     case WAITING:
                         sb.append("\t-  waiting on ").append(ti.getLockInfo())
-                          .append('\n');
+                          .append(Config.EOL);
                         break;
                     case TIMED_WAITING:
                         sb.append("\t-  waiting on ").append(ti.getLockInfo())
-                          .append('\n');
+                          .append(Config.EOL);
                         break;
                     default:
                 }
@@ -181,25 +183,25 @@ if (Config.FIX_THREADINFO_TO_STRING) {{
             for (MonitorInfo mi : lockedMonitors) {
                 if (mi.getLockedStackDepth() == i) {
                     sb.append("\t-  locked ").append(mi)
-                      .append('\n');
+                      .append(Config.EOL);
                 }
             }
        }
        if (i < stackTrace.length) {
-           sb.append("\t..."
-                   + '\n');
+           sb.append("\t...")
+             .append(Config.EOL);
        }
 
        LockInfo[] locks = ti.getLockedSynchronizers();
        if (locks.length > 0) {
-           sb.append("\n\tNumber of locked synchronizers = " + locks.length)
-             .append('\n');
+           sb.append(Config.EOL).append("\tNumber of locked synchronizers = " + locks.length)
+             .append(Config.EOL);
            for (LockInfo li : locks) {
                sb.append("\t- ").append(li)
-                 .append('\n');
+                 .append(Config.EOL);
            }
        }
-       sb.append('\n');
+       sb.append(Config.EOL);
        /*return sb.toString();*/
 }}
     }

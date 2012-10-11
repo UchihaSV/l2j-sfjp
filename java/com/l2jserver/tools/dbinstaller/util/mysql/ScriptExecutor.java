@@ -97,7 +97,7 @@ public class ScriptExecutor
 			String line;
 			while ((line = scn.readLine()) != null)
 			{
-				line = line + "\n";
+				line = line + System.getProperty("line.separator");
 				if (line.startsWith("\uFEFF"))
 					line = line.substring(1);
 				String trimed = patternComment1.matcher(line).replaceFirst("").trim();

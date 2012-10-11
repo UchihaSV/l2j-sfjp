@@ -2542,7 +2542,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 	 */
 	public void setTimepass(int TP)
 	{
-		this.timepass = TP;
+		timepass = TP;
 	}
 	
 	/**

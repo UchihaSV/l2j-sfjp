@@ -1297,7 +1297,7 @@ public final class Formulas
 		double chance = 0;
 		if (magiclvl > 0)
 		{
-			int delta = ((magiclvl + activeChar.getLevel()) / 2) - 1 - target.getLevel();
+			float delta = ((magiclvl + activeChar.getLevel()) / 2) - 1 - target.getLevel();
 			
 			// delta [-3,infinite)
 			if (delta >= -3)
@@ -1310,12 +1310,12 @@ public final class Formulas
 				// baseLethal
 				// chance = -1 * -----------
 				// (delta / 3)
-				chance = (-3) * (baseLethal / (delta));
+				chance = (-3) * (baseLethal / delta);
 			}
 			// delta [-infinite,-9[
 			else
 			{
-				chance = baseLethal / 15;
+				chance = baseLethal / 15.0;
 			}
 		}
 		else
@@ -1655,7 +1655,7 @@ public final class Formulas
 		}
 		
 		double shldRate = target.calcStat(Stats.SHIELD_RATE, 0, attacker, null) * BaseStats.DEX.calcBonus(target);
-		if (shldRate == 0.0)
+		if (shldRate <= 1e-6)
 		{
 			return 0;
 		}
@@ -2670,7 +2670,7 @@ public final class Formulas
 		{
 			return 0;
 		}
-		final double damage = cha.calcStat(Stats.FALL, (fallHeight * cha.getMaxHp()) / 1000, null, null);
+		final double damage = cha.calcStat(Stats.FALL, (fallHeight * cha.getMaxHp()) / 1000.0, null, null);
 		return damage;
 	}
 	
