@@ -28,6 +28,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.model.Elementals;
 import com.l2jserver.gameserver.model.L2Object;
+import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Summon;
@@ -961,7 +962,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	
 	public boolean checkCondition(L2Character activeChar, L2Object target, boolean sendMessage)
 	{
-		if (activeChar.isGM() && !Config.GM_ITEM_RESTRICTION)
+		if (activeChar.canOverrideCond(PcCondOverride.ITEM_CONDITIONS) && !Config.GM_ITEM_RESTRICTION)
 		{
 			return true;
 		}

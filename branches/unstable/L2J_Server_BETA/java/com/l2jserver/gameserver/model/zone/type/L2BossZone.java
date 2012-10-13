@@ -25,6 +25,7 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.instancemanager.GrandBossManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
+import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -170,7 +171,7 @@ public class L2BossZone extends L2ZoneType
 			if (character.isPlayer())
 			{
 				final L2PcInstance player = character.getActingPlayer();
-				if (player.isGM())
+				if (player.canOverrideCond(PcCondOverride.ZONE_CONDITIONS))
 					return;
 				// if player has been (previously) cleared by npc/ai for entry and the zone is
 				// set to receive players (aka not waiting for boss to respawn)
@@ -215,7 +216,7 @@ public class L2BossZone extends L2ZoneType
 				final L2PcInstance player = character.getActingPlayer();
 				if (player != null)
 				{
-					if (getSettings().getPlayersAllowed().contains(player.getObjectId()) || player.isGM())
+					if (getSettings().getPlayersAllowed().contains(player.getObjectId()) || player.canOverrideCond(PcCondOverride.ZONE_CONDITIONS))
 						return;
 					
 					// remove summon and teleport out owner
@@ -242,7 +243,7 @@ public class L2BossZone extends L2ZoneType
 			if (character.isPlayer())
 			{
 				final L2PcInstance player = character.getActingPlayer();
-				if (player.isGM())
+				if (player.canOverrideCond(PcCondOverride.ZONE_CONDITIONS))
 					return;
 				
 				// if the player just got disconnected/logged out, store the dc
@@ -329,7 +330,7 @@ public class L2BossZone extends L2ZoneType
 	
 	public boolean isPlayerAllowed(L2PcInstance player)
 	{
-		if (player.isGM())
+		if (player.canOverrideCond(PcCondOverride.ZONE_CONDITIONS))
 		{
 			return true;
 		}
@@ -413,7 +414,7 @@ public class L2BossZone extends L2ZoneType
 	 */
 	public void allowPlayerEntry(L2PcInstance player, int durationInSec)
 	{
-		if (!player.isGM())
+		if (!player.canOverrideCond(PcCondOverride.ZONE_CONDITIONS))
 		{
 			Integer id = player.getObjectId();
 			getSettings().getPlayersAllowed().add(id);
@@ -423,7 +424,7 @@ public class L2BossZone extends L2ZoneType
 	
 	public void removePlayer(L2PcInstance player)
 	{
-		if (!player.isGM())
+		if (!player.canOverrideCond(PcCondOverride.ZONE_CONDITIONS))
 		{
 			Integer id = player.getObjectId();
 			getSettings().getPlayersAllowed().remove(id);
