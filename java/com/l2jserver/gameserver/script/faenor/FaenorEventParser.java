@@ -22,7 +22,6 @@ import javax.script.ScriptContext;
 
 import org.w3c.dom.Node;
 
-import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.script.DateRange;
 import com.l2jserver.gameserver.script.IntList;
@@ -88,7 +87,7 @@ public class FaenorEventParser extends FaenorParser
 		try
 		{
 			String type = attribute(sysMsg, "Type");
-			String[] message = attribute(sysMsg, "Msg").split(Config.EOL);
+			String[] message = attribute(sysMsg, "Msg").split("(?:\r\n|\n|\r|\\\\n)"/* Config.EOL */);	//[JOJO]/*ÉeÉXÉgçœ*/
 			
 			if (type.equalsIgnoreCase("OnJoin"))
 			{

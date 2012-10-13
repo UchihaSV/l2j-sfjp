@@ -28,7 +28,6 @@ import javolution.util.FastList;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
@@ -97,12 +96,8 @@ public class Announcements
 			
 			if (validDateRange.isValid() && validDateRange.isWithinRange(currentDate))	//[JOJO]
 			{
-				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1);
-				for (int j = 0; j < msg.length; j++)
-				{
-					sm.addString(msg[j]);
-				}
-				activeChar.sendPacket(sm);
+				for (String s : msg)
+					activeChar.sendMessage(s);/*ƒeƒXƒgÏ*/
 			}
 			
 		}
