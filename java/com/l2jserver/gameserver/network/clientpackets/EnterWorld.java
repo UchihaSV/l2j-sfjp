@@ -469,8 +469,8 @@ public class EnterWorld extends L2GameClientPacket
 		
 		activeChar.sendPacket(SystemMessageId.WELCOME_TO_LINEAGE);
 		
-		activeChar.sendMessage(getText("VGhpcyBTZXJ2ZXIgdXNlcyBMMkosIGEgUHJvamVjdCBmb3VuZGVkIGJ5IEwyQ2hlZg==" + Config.EOL));
-		activeChar.sendMessage(getText("YW5kIGRldmVsb3BlZCBieSB0aGUgTDJKIERldiBUZWFtIGF0IHd3dy5sMmpzZXJ2ZXIuY29t" + Config.EOL));
+		activeChar.sendMessage(getText("VGhpcyBTZXJ2ZXIgdXNlcyBMMkosIGEgUHJvamVjdCBmb3VuZGVkIGJ5IEwyQ2hlZg=="/* + Config.EOL*/));	//[JOJO]/*テスト済*/
+		activeChar.sendMessage(getText("YW5kIGRldmVsb3BlZCBieSB0aGUgTDJKIERldiBUZWFtIGF0IHd3dy5sMmpzZXJ2ZXIuY29t"/* + Config.EOL*/));	//[JOJO]/*テスト済*/
 		
 		if (Config.DISPLAY_SERVER_VERSION)
 		{
@@ -484,7 +484,7 @@ public class EnterWorld extends L2GameClientPacket
 				activeChar.sendMessage(getText("TDJKIERhdGFQYWNrIFZlcnNpb246") + " " + Config.DATAPACK_VERSION);
 			}
 		}
-		activeChar.sendMessage(getText("Q29weXJpZ2h0IDIwMDQtMjAxMg==" + Config.EOL));
+		activeChar.sendMessage(getText("Q29weXJpZ2h0IDIwMDQtMjAxMg=="/* + Config.EOL*/));	//[JOJO]/*テスト済*/
 		
 		SevenSigns.getInstance().sendCurrentPeriodMsg(activeChar);
 		Announcements.getInstance().showAnnouncements(activeChar);

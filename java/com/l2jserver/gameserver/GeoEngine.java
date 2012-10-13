@@ -705,7 +705,7 @@ public class GeoEngine extends GeoData
 	{
 		if (rx < Config.WORLD_X_MIN || rx > Config.WORLD_X_MAX || ry < Config.WORLD_Y_MIN || ry > Config.WORLD_Y_MAX)
 		{
-			_log.warning("Failed to Load GeoFile: invalid region " + rx +","+ ry + Config.EOL);
+			_log.warning("Failed to Load GeoFile: invalid region " + rx +","+ ry/* + Config.EOL*/);	//[JOJO]/*ÉeÉXÉgçœ*/
 			return false;
 		}
 		String fname = rx + "_" + ry + ".l2j";
