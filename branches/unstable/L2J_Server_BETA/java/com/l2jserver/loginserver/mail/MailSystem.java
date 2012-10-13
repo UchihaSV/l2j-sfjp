@@ -94,7 +94,8 @@ public class MailSystem
 						
 						bis.read(raw);
 						String html = new String(raw, UTF_8);
-						html = html.replaceAll(Config.EOL, "\n");
+						html = html.replaceAll("(?:\r\n|\n|\r)", "\r\n");	//[JOJO]RFC2822 2. Lexical Analysis of Messages
+					//	html = html.replaceAll(Config.EOL, "\n");
 						html = html.replace("%servermail%", Config.EMAIL_SERVERINFO_ADDRESS);
 						html = html.replace("%servername%", Config.EMAIL_SERVERINFO_NAME);
 						
