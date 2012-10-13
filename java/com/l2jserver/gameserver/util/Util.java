@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javolution.text.TextBuilder;
 import javolution.util.FastList;
@@ -557,7 +558,8 @@ public final class Util
 	*/
 	public static void fillMultiEditContent(L2PcInstance activeChar, String text)
 	{
-		text = text.replaceAll("<br>", Config.EOL);
+		text = Pattern.compile("(?:\r\n|\n|\r|<br>)", Pattern.CASE_INSENSITIVE).matcher(text).replaceAll("\n");	//[JOJO]/*ÉeÉXÉgçœ*/
+	//	text = text.replace("<br>", Config.EOL);	//-[JOJO]
 		List<String> arg = new FastList<>();
 		arg.add("0");
 		arg.add("0");
