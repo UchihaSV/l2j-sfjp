@@ -41,8 +41,8 @@ public class HtmCache
 	
 	private static final HTMLFilter htmlFilter = new HTMLFilter();
 	
-	static final boolean TIMED_CACHE = true;
-	static final boolean CHECK_HASH_COLLISION = true;
+	private static final boolean TIMED_CACHE = true;
+	private static final boolean CHECK_HASH_COLLISION = true;
 	private static final int EXPIRE_TIME = 60;	//[min]
 	final FastIntObjectMap<TimedCache> _timedCache;
 
