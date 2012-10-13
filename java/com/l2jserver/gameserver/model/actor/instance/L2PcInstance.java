@@ -87,6 +87,7 @@ import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
 import com.l2jserver.gameserver.instancemanager.DuelManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.FortSiegeManager;
+import com.l2jserver.gameserver.instancemanager.GlobalVariablesManager;
 import com.l2jserver.gameserver.instancemanager.GrandBossManager;
 import com.l2jserver.gameserver.instancemanager.HandysBlockCheckerManager;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
@@ -126,6 +127,7 @@ import com.l2jserver.gameserver.model.MacroList;
 import com.l2jserver.gameserver.model.PartyMatchRoom;
 import com.l2jserver.gameserver.model.PartyMatchRoomList;
 import com.l2jserver.gameserver.model.PartyMatchWaitingList;
+import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.ShortCuts;
 import com.l2jserver.gameserver.model.TerritoryWard;
 import com.l2jserver.gameserver.model.TimeStamp;
@@ -363,8 +365,7 @@ public final class L2PcInstance extends L2Playable
 	public static FastList<EquipmentListener> globalEquipmentListeners = new FastList<EquipmentListener>().shared();
 	public FastList<TransformListener> transformListeners = new FastList<TransformListener>().shared();
 	public FastList<ProfessionChangeListener> professionChangeListeners = new FastList<ProfessionChangeListener>().shared();
-	public static FastList<ProfessionChangeListener> globalProfessionChangeListeners = new FastList<ProfessionChangeListener>().shared();
-
+	public static FastList<ProfessionChangeListener> globalProfessionChangeListeners = new FastList<ProfessionChangeListener>().shared(); 
 	
 	public class AIAccessor extends L2Character.AIAccessor
 	{
@@ -2435,7 +2436,7 @@ public final class L2PcInstance extends L2Playable
 	public void checkIfWeaponIsAllowed()
 	{
 		// Override for Gamemasters
-		if (isGM())
+		if (canOverrideCond(PcCondOverride.ITEM_CONDITIONS))
 			return;
 		
 		// Iterate through all effects currently on the character.
@@ -2664,7 +2665,7 @@ public final class L2PcInstance extends L2Playable
 			//Add AutoGet skills and normal skills and/or learnByFS depending on configurations.
 			rewardSkills();
 			
-			if (!isGM() && Config.DECREASE_SKILL_LEVEL)
+			if (!canOverrideCond(PcCondOverride.SKILL_CONDITIONS) && Config.DECREASE_SKILL_LEVEL)
 				checkPlayerSkills();
 		}
 		finally
@@ -2913,7 +2914,7 @@ public final class L2PcInstance extends L2Playable
 			for (L2SkillLearn s: skills)
 			{
 				L2Skill sk = SkillTable.getInstance().getInfo(s.getSkillId(), s.getSkillLevel());
-				if (sk == null || (sk.getId() == L2Skill.SKILL_DIVINE_INSPIRATION && !Config.AUTO_LEARN_DIVINE_INSPIRATION && !isGM()))
+				if (sk == null || (sk.getId() == L2Skill.SKILL_DIVINE_INSPIRATION && !Config.AUTO_LEARN_DIVINE_INSPIRATION && !canOverrideCond(PcCondOverride.SKILL_CONDITIONS)))
 				{
 					unLearnable++;
 					continue;
@@ -3588,7 +3589,7 @@ public final class L2PcInstance extends L2Playable
 			sendPacket(su);
 			
 			// If over capacity, drop the item
-			if (!isGM() && !_inventory.validateCapacity(0, item.isQuestItem()) && newitem.isDropable() && (!newitem.isStackable() || newitem.getLastChange() != L2ItemInstance.MODIFIED))
+			if (!canOverrideCond(PcCondOverride.ITEM_CONDITIONS) && !_inventory.validateCapacity(0, item.isQuestItem()) && newitem.isDropable() && (!newitem.isStackable() || newitem.getLastChange() != L2ItemInstance.MODIFIED))
 				dropItem("InvDrop", newitem, null, true, true);
 			
 			// Cursed Weapon
@@ -3704,7 +3705,7 @@ public final class L2PcInstance extends L2Playable
 				L2ItemInstance createdItem = _inventory.addItem(process, itemId, count, this, reference);
 				
 				// If over capacity, drop the item
-				if (!isGM() && !_inventory.validateCapacity(0, item.isQuestItem()) && createdItem.isDropable() && (!createdItem.isStackable() || createdItem.getLastChange() != L2ItemInstance.MODIFIED))
+				if (!canOverrideCond(PcCondOverride.ITEM_CONDITIONS) && !_inventory.validateCapacity(0, item.isQuestItem()) && createdItem.isDropable() && (!createdItem.isStackable() || createdItem.getLastChange() != L2ItemInstance.MODIFIED))
 					dropItem("InvDrop", createdItem, null, true);
 				
 				// Cursed Weapon
@@ -4849,7 +4850,7 @@ public final class L2PcInstance extends L2Playable
 				return;
 			}
 			
-			if (isInvul() && !isGM())
+			if (isInvul() && !canOverrideCond(PcCondOverride.ITEM_CONDITIONS))
 			{
 				sendPacket(ActionFailed.STATIC_PACKET);
 				SystemMessage smsg = SystemMessage.getSystemMessage(SystemMessageId.FAILED_TO_PICKUP_S1);
@@ -8229,7 +8230,7 @@ public final class L2PcInstance extends L2Playable
 				// Add the L2Skill object to the L2Character _skills and its Func objects to the calculator set of the L2Character
 				super.addSkill(skill);
 				
-				if (Config.SKILL_CHECK_ENABLE && (!isGM() || Config.SKILL_CHECK_GM))
+				if (Config.SKILL_CHECK_ENABLE && (!canOverrideCond(PcCondOverride.SKILL_CONDITIONS) || Config.SKILL_CHECK_GM))
 				{
 					if (!SkillTreesData.getInstance().isSkillAllowed(this, skill))
 					{
@@ -11144,12 +11145,29 @@ public final class L2PcInstance extends L2Playable
 				sendMessage("Entering world in Invisible mode.");
 			if (isSilenceMode())
 				sendMessage("Entering world in Silence mode.");
+			
+			if (GlobalVariablesManager.getInstance().isVariableStored(COND_EXCEPTIONS))
+			{
+				String exes = GlobalVariablesManager.getInstance().getStoredVariable(COND_EXCEPTIONS);
+				if (Util.isDigit(exes))
+				{
+					_exceptions = Long.valueOf(exes);
+				}
+				else
+				{
+					_exceptions = PcCondOverride.getAllExceptionsMask();
+				}
+			}
+			else
+			{
+				_exceptions = PcCondOverride.getAllExceptionsMask();
+			}
 		}
 		
 		revalidateZone(true);
 		
 		notifyFriends();
-		if (!isGM() && Config.DECREASE_SKILL_LEVEL)
+		if (!canOverrideCond(PcCondOverride.SKILL_CONDITIONS) && Config.DECREASE_SKILL_LEVEL)
 			checkPlayerSkills();
 	}
 	
@@ -13188,12 +13206,12 @@ public final class L2PcInstance extends L2Playable
 	public void calculateDeathPenaltyBuffLevel(L2Character killer)
 	{
 		if((getKarma() > 0 || Rnd.get(1,100) <= Config.DEATH_PENALTY_CHANCE)
-				&& !(killer instanceof L2PcInstance) && !(this.isGM())
-				&& !(this.getCharmOfLuck() && killer.isRaid())
+				&& !(killer instanceof L2PcInstance) && !(canOverrideCond(PcCondOverride.DEATH_PENALTY))
+				&& !(getCharmOfLuck() && killer.isRaid())
 				&& !isPhoenixBlessed()
 				&& !isLucky()
 				&& !(TvTEvent.isStarted() && TvTEvent.isPlayerParticipant(getObjectId()))
-				&& !(this.isInsideZone(L2Character.ZONE_PVP)||this.isInsideZone(L2Character.ZONE_SIEGE)))
+				&& !(isInsideZone(L2Character.ZONE_PVP)||isInsideZone(L2Character.ZONE_SIEGE)))
 			
 			increaseDeathPenaltyBuffLevel();
 	}

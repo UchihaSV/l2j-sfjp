@@ -16,6 +16,7 @@ package com.l2jserver.gameserver.network.clientpackets;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.AdminTable;
+import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
@@ -70,7 +71,7 @@ public final class RequestDropItem extends L2GameClientPacket
 			activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);
 			return;
 		}
-		if (item.isQuestItem() && !(activeChar.isGM() && Config.GM_TRADE_RESTRICTED_ITEMS))
+		if (item.isQuestItem() && !(activeChar.canOverrideCond(PcCondOverride.DROP_ALL_ITEMS) && Config.GM_TRADE_RESTRICTED_ITEMS))
 		{
 			activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_THIS_ITEM);
 			return;
@@ -90,8 +91,8 @@ public final class RequestDropItem extends L2GameClientPacket
 		}
 		if (_count == 0 || _count > item.getCount()
 			|| !activeChar.validateItemManipulation(_objectId, "drop")
-			|| (!Config.ALLOW_DISCARDITEM && !activeChar.isGM())
-			|| (!item.isDropable() && !(activeChar.isGM() && Config.GM_TRADE_RESTRICTED_ITEMS)) )
+			|| (!Config.ALLOW_DISCARDITEM && !activeChar.canOverrideCond(PcCondOverride.DROP_ALL_ITEMS))
+			|| (!item.isDropable() && !(activeChar.canOverrideCond(PcCondOverride.DROP_ALL_ITEMS) && Config.GM_TRADE_RESTRICTED_ITEMS)) )
 		{
 			activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);
 			return;
@@ -164,7 +165,7 @@ public final class RequestDropItem extends L2GameClientPacket
 			}
 		}
 		
-		if (L2Item.TYPE2_QUEST == item.getItem().getType2() && !activeChar.isGM())
+		if (L2Item.TYPE2_QUEST == item.getItem().getType2() && !activeChar.canOverrideCond(PcCondOverride.DROP_ALL_ITEMS))
 		{
 			if (Config.DEBUG)
 				_log.finest(activeChar.getObjectId() + ":player tried to drop quest item");

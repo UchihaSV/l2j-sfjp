@@ -37,6 +37,7 @@ import com.l2jserver.gameserver.model.IChanceSkillTrigger;
 import com.l2jserver.gameserver.model.L2ExtractableProductItem;
 import com.l2jserver.gameserver.model.L2ExtractableSkill;
 import com.l2jserver.gameserver.model.L2Object;
+import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -1284,7 +1285,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	
 	public boolean checkCondition(L2Character activeChar, L2Object target, boolean itemOrWeapon)
 	{
-		if (activeChar.isGM() && !Config.GM_SKILL_RESTRICTION)
+		if (activeChar.canOverrideCond(PcCondOverride.SKILL_CONDITIONS) && !Config.GM_SKILL_RESTRICTION)
 			return true;
 		if ((getCondition() & L2Skill.COND_SHIELD) != 0)
 		{
