@@ -300,6 +300,20 @@ public abstract class BaseGameServerRegister
 		Server.serverMode = Server.MODE_LOGINSERVER;
 		
 		Config.load();
+		
+		//[JOJO]-------------------------------------------------
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		{
+			con.createStatement().executeQuery("SELECT * FROM gameservers");
+		}
+		catch (Exception e)
+		{
+			showError("DATABASE ERROR", e);
+			e.printStackTrace();
+			System.exit(1);
+		}
+		//-------------------------------------------------------
+		
 		GameServerTable.getInstance();
 		
 		_loaded = true;
