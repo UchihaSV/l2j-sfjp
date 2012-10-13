@@ -115,8 +115,7 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 	{
 		setBundle(bundle);
 		
-		/////////////////////////////////////////////////////
-		// [JOJO]
+		//[JOJO]-------------------------------------------------
 		try {
 			String fontName = bundle.getString("fontName");
 			String fontSize = bundle.getString("fontSize");
@@ -127,7 +126,7 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 					UIManager.put(o, font);
 		}
 		catch (Exception e) {}
-		/////////////////////////////////////////////////////
+		//-------------------------------------------------------
 		
 		setTitle(bundle.getString("toolName"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -223,7 +222,7 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 				
 				JLabel keyLabel = new JLabel(cp.getDisplayName() + ':', ImagesTable.getImage("help.png"), SwingConstants.LEFT);
 				String comments = "<b>" + cp.getName() + ":</b><br>" + cp.getComments();
-				comments = comments.replace(EOL, "<br>");
+				comments = comments.replaceAll("(?:\r\n|\n|\r)", "<br>");	//[JOJO]/*テスト済*/
 				comments = "<html>" + comments + "</html>";
 				keyLabel.setToolTipText(comments);
 				cons.weightx = 0;
@@ -304,7 +303,7 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 				{
 					if (commentBuffer.length() > 0)
 					{
-						commentBuffer.append(EOL);
+						commentBuffer.append(cf.FILE_EOL);
 					}
 					commentBuffer.append(line.substring(1));
 				}
@@ -322,7 +321,7 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 					{
 						if ((line = lnr.readLine()) == null)
 							break;
-						value.append(EOL).append(line);
+						value.append(cf.FILE_EOL).append(line);
 					}
 					
 					String comments = commentBuffer.toString();
@@ -396,15 +395,45 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 	static class ConfigFile
 	{
 		private final File _file;
-		private String _name;
+		private final String _name;
+		public final String FILE_EOL;	//[JOJO]
 		private final List<ConfigComment> _configs = new FastList<>();
 		
 		public ConfigFile(File file)
 		{
 			_file = file;
 			int lastIndex = file.getName().lastIndexOf('.');
-			setName(file.getName().substring(0, lastIndex));
+			_name = file.getName().substring(0, lastIndex);
+			FILE_EOL = detectEOL(file);	//[JOJO]
 		}
+		
+		//[JOJO]-------------------------------------------------
+		private String detectEOL(File file)
+		{
+			try (FileInputStream in = new FileInputStream(file))
+			{
+				int ch1, ch2;
+				while ((ch1 = in.read()) != -1)
+				{
+					if (ch1 == '\r')
+					{
+						ch2 = in.read();
+						if (ch2 == '\n') return "\r\n";
+						else return "\r";
+					}
+					else if (ch1 == '\n')
+					{
+						return "\n";
+					}
+				}
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			return System.getProperty("line.separator");
+		}
+		//-------------------------------------------------------
 		
 		public void addConfigProperty(String name, Object value, ValueType type, String comments)
 		{
@@ -427,14 +456,6 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 		}
 		
 		/**
-		 * @param name The name to set.
-		 */
-		public void setName(String name)
-		{
-			_name = name;
-		}
-		
-		/**
 		 * @return Returns the name.
 		 */
 		public String getName()
@@ -444,20 +465,11 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 		
 		public void save() throws IOException
 		{
-			BufferedWriter bufWriter = null;
-			try
+			try (BufferedWriter bufWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(_file), UTF_8)))	//[JOJO] UTF-8 /*テスト済*/
 			{
-				bufWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(_file), UTF_8));	//[JOJO] UTF-8
 				for (ConfigComment cc : _configs)
 				{
 					cc.save(bufWriter);
-				}
-			}
-			finally
-			{
-				if (bufWriter != null)
-				{
-					bufWriter.close();
 				}
 			}
 		}
@@ -494,9 +506,9 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 			public void save(Writer writer) throws IOException
 			{
 				StringBuilder sb = new StringBuilder();
-				sb.append('#');
-				sb.append(getComments().replace(EOL, EOL + "#"));
-				sb.append(EOL + EOL);
+				sb.append(Pattern.compile("^", Pattern.MULTILINE).matcher(getComments()).replaceAll("#"));	//[JOJO]/*テスト済*/
+				sb.append(FILE_EOL);
+				sb.append(FILE_EOL);
 				writer.write(sb.toString());
 			}
 		}
@@ -646,14 +658,13 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 				}
 				
 				StringBuilder sb = new StringBuilder();
-				sb.append('#');
-				sb.append(getComments().replace(EOL, EOL + "#"));
-				sb.append(EOL);
+				sb.append(Pattern.compile("^", Pattern.MULTILINE).matcher(getComments()).replaceAll("#"));	//[JOJO]/*テスト済*/
+				sb.append(FILE_EOL);
 				sb.append(getName());
 				sb.append(" = ");
 				sb.append(value);
-				sb.append(EOL);
-				sb.append(EOL);
+				sb.append(FILE_EOL);
+				sb.append(FILE_EOL);
 				writer.write(sb.toString());
 			}
 		}
