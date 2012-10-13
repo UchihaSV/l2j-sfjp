@@ -17,6 +17,7 @@ package com.l2jserver.gameserver;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -200,12 +201,13 @@ public class Announcements
 			list = _announcements;
 		}
 		
+		final String FILE_EOL = detectEOL(path);	//[JOJO]
 		try (BufferedWriter save = com.l2jserver.util.Util.utf8BufferedWriter(path))	//[JOJO] UTF-8
 		{
 			for (String announce : list)
 			{
 				save.write(announce);
-				save.write(Config.EOL);
+				save.write(FILE_EOL);
 			}
 		}
 		catch (IOException e)
@@ -213,6 +215,34 @@ public class Announcements
 			_log.log(Level.SEVERE, "Saving to the announcements file has failed: ", e);
 		}
 	}
+	
+	//[JOJO]-------------------------------------------------
+	private String detectEOL(String file)
+	{
+		try (FileInputStream in = new FileInputStream(file))
+		{
+			int ch1, ch2;
+			while ((ch1 = in.read()) != -1)
+			{
+				if (ch1 == '\r')
+				{
+					ch2 = in.read();
+					if (ch2 == '\n') return "\r\n";
+					else return "\r";
+				}
+				else if (ch1 == '\n')
+				{
+					return "\n";
+				}
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return System.getProperty("line.separator");
+	}
+	//-------------------------------------------------------
 	
 	public void announceToAll(String text)
 	{
