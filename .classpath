@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="dist/libs/troja-1.0.0.jar" />
 	<classpathentry kind="lib" path="dist/libs/trove-3.0.3.jar" sourcepath="dist/libs/trove-3.0.3-src.jar" />
 	<classpathentry kind="lib" path="dist/libs/mysql-connector-java-5.1.21-bin.jar" />
+	<classpathentry kind="lib" path="dist/libs/Subnet.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>
