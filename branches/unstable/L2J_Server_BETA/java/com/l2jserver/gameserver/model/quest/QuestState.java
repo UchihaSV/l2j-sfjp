@@ -1090,6 +1090,7 @@ public final class QuestState
 		if (repeatable)
 		{
 			_player.delQuestState(getQuestName());
+			_player.sendPacket(new QuestList());
 		}
 		else
 		{
