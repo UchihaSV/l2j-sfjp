@@ -20,7 +20,6 @@ import com.l2jserver.gameserver.geoeditorcon.GeoEditorListener;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.model.L2Clan;
-import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.serverpackets.GetOnVehicle;
@@ -204,7 +203,7 @@ public class ValidatePosition extends L2GameClientPacket
 		// he cannot flying.
 		// castle owner is the leader of the clan that owns the castle where the pc is
 		if (!Config.ALT_FLYING_WYVERN_IN_SIEGE && activeChar.getMountType() == 2
-				&& activeChar.isInsideZone(L2Character.ZONE_SIEGE))
+				&& activeChar.isInsideZone(ZoneId.SIEGE))
 		{
 			L2Clan clan;
 			if (!  ((clan = activeChar.getClan()) != null
