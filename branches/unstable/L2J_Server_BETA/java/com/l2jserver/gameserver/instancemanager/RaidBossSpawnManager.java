@@ -197,7 +197,7 @@ public class RaidBossSpawnManager
 		info.set("currentMP", boss.getMaxMp());
 		info.set("respawnTime", respawnTime);
 		
-		if (!_schedules.containsKey(boss.getNpcId()) && respawnMinDelay < respawnMaxDelay)					//+[JOJO]
+		if (!_schedules.containsKey(boss.getNpcId()) && respawnDelay > 0)					//+[JOJO]
 	//	if (!_schedules.containsKey(boss.getNpcId()) && ((respawnMinDelay > 0) || (respawnMaxDelay > 0)))	//-[JOJO]
 		{
 			String time = com.l2jserver.util.Util.dateFormat(respawnTime);	//[JOJO]
