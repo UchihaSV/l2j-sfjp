@@ -1,5 +1,8 @@
 use utf8;
 
+s{\Q<!-- Note: If file is named "ipconfig.xml" this data will be used as network configuration, otherwise server will configure it automatically! -->}
+   {<!-- Note: このファイルの名前を "ipconfig.xml" に変更して手動で設定を行う事が出来ます。"ipconfig.xml" が無いときは自動的に設定されます。 -->};
+
 s{\Q<!-- Externalhost here (Internet IP) or Localhost IP for local test -->}
    {<!-- ここにグローバル・アドレス(インターネット)を設定してください。非公開サーバならローカル・アドレスで構いません。 -->};
 
