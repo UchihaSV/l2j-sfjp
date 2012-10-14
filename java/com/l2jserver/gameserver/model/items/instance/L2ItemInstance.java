@@ -2175,7 +2175,8 @@ public final class L2ItemInstance extends L2Object
 	@Override
 	public boolean isChargedShot(ShotType type)
 	{
-		return (_shotsMask & type.getMask()) == type.getMask();
+		return (_shotsMask & type.getMask()) != 0;	//[JOJO]
+	//	return (_shotsMask & type.getMask()) == type.getMask();
 	}
 	
 	@Override

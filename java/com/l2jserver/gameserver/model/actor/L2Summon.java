@@ -931,7 +931,8 @@ public abstract class L2Summon extends L2Playable
 	@Override
 	public boolean isChargedShot(ShotType type)
 	{
-		return (_shotsMask & type.getMask()) == type.getMask();
+		return (_shotsMask & type.getMask()) != 0;	//[JOJO]
+	//	return (_shotsMask & type.getMask()) == type.getMask();
 	}
 	
 	@Override
