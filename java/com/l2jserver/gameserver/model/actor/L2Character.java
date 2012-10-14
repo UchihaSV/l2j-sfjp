@@ -98,6 +98,7 @@ import com.l2jserver.gameserver.model.stats.BaseStats;
 import com.l2jserver.gameserver.model.stats.Calculator;
 import com.l2jserver.gameserver.model.stats.Formulas;
 import com.l2jserver.gameserver.model.stats.Stats;
+import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
@@ -217,32 +218,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	/** Current force buff this caster is casting to a target */
 	protected FusionSkill _fusionSkill;
 	
-	/** Zone system */
-	public static final byte ZONE_PVP = 0;
-	public static final byte ZONE_PEACE = 1;
-	public static final byte ZONE_SIEGE = 2;
-	public static final byte ZONE_MOTHERTREE = 3;
-	public static final byte ZONE_CLANHALL = 4;
-	public static final byte ZONE_LANDING = 5;
-	public static final byte ZONE_NOLANDING = 6;
-	public static final byte ZONE_WATER = 7;
-	public static final byte ZONE_JAIL = 8;
-	public static final byte ZONE_MONSTERTRACK = 9;
-	public static final byte ZONE_CASTLE = 10;
-	public static final byte ZONE_SWAMP = 11;
-	public static final byte ZONE_NOSUMMONFRIEND = 12;
-	public static final byte ZONE_FORT = 13;
-	public static final byte ZONE_NOSTORE = 14;
-	public static final byte ZONE_TOWN = 15;
-	public static final byte ZONE_SCRIPT = 16;
-	public static final byte ZONE_HQ = 17;
-	public static final byte ZONE_DANGERAREA = 18;
-	public static final byte ZONE_ALTERED = 19;
-	public static final byte ZONE_NOBOOKMARK = 20;
-	public static final byte ZONE_NOITEMDROP = 21;
-	public static final byte ZONE_NORESTART = 22;
-	
-	private final byte[] _zones = new byte[23];
+	private final byte[] _zones = new byte[ZoneId.getZoneCount()];
 	protected byte _zoneValidateCounter = 4;
 	
 	private L2Character _debugger = null;
@@ -315,24 +291,25 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	}
 	
 	/**
-	 * 
-	 * @param zone
-	 * @return
+	 * Check if the character is in the given zone Id.
+	 * @param zone the zone Id to check
+	 * @return {code true} if the character is in that zone
 	 */
-	public final boolean isInsideZone(final byte zone)
+	@Override
+	public final boolean isInsideZone(ZoneId zone)
 	{
 		Instance instance = InstanceManager.getInstance().getInstance(getInstanceId());
 		switch (zone)
 		{
-			case ZONE_PVP:
+			case PVP:
 				if (instance != null && instance.isPvPInstance())
 					return true;
-				return _zones[ZONE_PVP] > 0 && _zones[ZONE_PEACE] == 0;
-			case ZONE_PEACE:
+				return _zones[ZoneId.PVP.getId()] > 0 && _zones[ZoneId.PEACE.getId()] == 0;
+			case PEACE:
 				if (instance != null && instance.isPvPInstance())
 					return false;
 		}
-		return _zones[zone] > 0;
+		return _zones[zone.getId()] > 0;
 	}
 	
 	/**
@@ -340,15 +317,15 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 * @param zone
 	 * @param state
 	 */
-	public final void setInsideZone(final byte zone, final boolean state)
+	public final void setInsideZone(ZoneId zone, final boolean state)
 	{
 		if (state)
-			_zones[zone]++;
+			_zones[zone.getId()]++;
 		else
 		{
-			_zones[zone]--;
-			if (_zones[zone] < 0)
-				_zones[zone] = 0;
+			_zones[zone.getId()]--;
+			if (_zones[zone.getId()] < 0)
+				_zones[zone.getId()] = 0;
 		}
 	}
 	
@@ -882,7 +859,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				return;
 			}
 			
-			else if (target.getActingPlayer() != null && getActingPlayer().getSiegeState() > 0 && isInsideZone(L2Character.ZONE_SIEGE) && target.getActingPlayer().getSiegeState() == getActingPlayer().getSiegeState() && target.getActingPlayer() != this && target.getActingPlayer().getSiegeSide() == getActingPlayer().getSiegeSide())
+			else if (target.getActingPlayer() != null && getActingPlayer().getSiegeState() > 0 && isInsideZone(ZoneId.SIEGE) && target.getActingPlayer().getSiegeState() == getActingPlayer().getSiegeState() && target.getActingPlayer() != this && target.getActingPlayer().getSiegeSide() == getActingPlayer().getSiegeSide())
 			{
 				if (TerritoryWarManager.getInstance().isTWInProgress())
 					sendPacket(SystemMessageId.YOU_CANNOT_ATTACK_A_MEMBER_OF_THE_SAME_TERRITORY);
@@ -4622,7 +4599,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			dy = m._yDestination - m._yAccurate;
 		}
 		
-		final boolean isFloating = isFlying() || isInsideZone(L2Character.ZONE_WATER);
+		final boolean isFloating = isFlying() || isInsideZone(ZoneId.WATER);
 		
 		// Z coordinate will follow geodata or client values
 		if (Config.GEODATA > 0 && Config.COORD_SYNCHRONIZE == 2 && !isFloating && !m.disregardingGeodata && GameTimeController.getGameTicks() % 10 == 0 // once a second to reduce possible cpu load
@@ -4863,7 +4840,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		
 		// make water move short and use no geodata checks for swimming chars
 		// distance in a click can easily be over 3000
-		if (Config.GEODATA > 0 && isInsideZone(ZONE_WATER) && distance > 700)
+		if (Config.GEODATA > 0 && isInsideZone(ZoneId.WATER) && distance > 700)
 		{
 			double divider = 700 / distance;
 			x = curX + (int) (divider * dx);
@@ -4930,7 +4907,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		m.disregardingGeodata = false;
 		
 		if (Config.GEODATA > 0 && !isFlying() // flying chars not checked - even canSeeTarget doesn't work yet
-				&& (!isInsideZone(ZONE_WATER) || isInsideZone(ZONE_SIEGE)) // swimming also not checked unless in siege zone - but distance is limited
+				&& (!isInsideZone(ZoneId.WATER) || isInsideZone(ZoneId.SIEGE)) // swimming also not checked unless in siege zone - but distance is limited
 				&& !(this instanceof L2NpcWalkerInstance)) // npc walkers not checked
 		{
 			final boolean isInVehicle = isPlayer() && getActingPlayer().getVehicle() != null;
@@ -5068,7 +5045,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		}
 		
 		// Apply Z distance for flying or swimming for correct timing calculations
-		if ((isFlying() || isInsideZone(ZONE_WATER)) && !verticalMovementOnly)
+		if ((isFlying() || isInsideZone(ZoneId.WATER)) && !verticalMovementOnly)
 			distance = Math.sqrt(distance * distance + dz * dz);
 		
 		// Caclulate the Nb of ticks between the current position and the destination
@@ -5901,21 +5878,21 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			
 			if (attacker instanceof L2Character && target instanceof L2Character)
 			{
-				return (((L2Character) target).isInsideZone(ZONE_PEACE) || ((L2Character) attacker).isInsideZone(ZONE_PEACE));
+				return (target.isInsideZone(ZoneId.PEACE) || attacker.isInsideZone(ZoneId.PEACE));
 			}
 			if (attacker instanceof L2Character)
 			{
-				return (TownManager.getTown(target.getX(), target.getY(), target.getZ()) != null || ((L2Character) attacker).isInsideZone(ZONE_PEACE));
+				return (TownManager.getTown(target.getX(), target.getY(), target.getZ()) != null || attacker.isInsideZone(ZoneId.PEACE));
 			}
 		}
 		
 		if (attacker instanceof L2Character && target instanceof L2Character)
 		{
-			return (((L2Character) target).isInsideZone(ZONE_PEACE) || ((L2Character) attacker).isInsideZone(ZONE_PEACE));
+			return (target.isInsideZone(ZoneId.PEACE) || attacker.isInsideZone(ZoneId.PEACE));
 		}
 		if (attacker instanceof L2Character)
 		{
-			return (TownManager.getTown(target.getX(), target.getY(), target.getZ()) != null || ((L2Character) attacker).isInsideZone(ZONE_PEACE));
+			return (TownManager.getTown(target.getX(), target.getY(), target.getZ()) != null || attacker.isInsideZone(ZoneId.PEACE));
 		}
 		return (TownManager.getTown(target.getX(), target.getY(), target.getZ()) != null || TownManager.getTown(attacker.getX(), attacker.getY(), attacker.getZ()) != null);
 	}

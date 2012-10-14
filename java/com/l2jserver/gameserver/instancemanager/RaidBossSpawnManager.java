@@ -136,9 +136,6 @@ public class RaidBossSpawnManager
 			bossId = npcId;
 		}
 		
-		/* (non-Javadoc)
-		 * @see java.lang.Runnable#run()
-		 */
 		@Override
 		public void run()
 		{
@@ -361,7 +358,7 @@ public class RaidBossSpawnManager
 	}
 	
 	/**
-	 * Update db.
+	 * Update database.
 	 */
 	//[JOJO]-------------------------------------------------
 	private void updateDb(int bossId)
