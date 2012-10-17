@@ -17,13 +17,12 @@ package com.l2jserver.gameserver.model;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.RadarControl;
 
-
 /**
  * @author dalrond
  */
 public final class L2Radar
 {
-	private L2PcInstance        _player;
+	private final L2PcInstance _player;
 	
 	public L2Radar(L2PcInstance player)
 	{

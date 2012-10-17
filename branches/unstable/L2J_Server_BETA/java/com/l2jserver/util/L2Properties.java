@@ -76,7 +76,8 @@ public final class L2Properties extends Properties
 	}
 	
 	public void load(File file) throws IOException
-	{try (FileInputStream fis = new FileInputStream(file))
+	{
+		try (FileInputStream fis = new FileInputStream(file))
 		{
 			load(fis);
 		}
@@ -109,9 +110,6 @@ public final class L2Properties extends Properties
 		}
 	}
 	
-	/**
-	 * @see Properties#getProperty(String)
-	 */
 	@Override
 	public String getProperty(String key)
 	{
@@ -127,9 +125,6 @@ public final class L2Properties extends Properties
 		return property.trim();
 	}
 	
-	/**
-	 * @see Properties#getProperty(String,String)
-	 */
 	@Override
 	public String getProperty(String key, String defaultValue)
 	{

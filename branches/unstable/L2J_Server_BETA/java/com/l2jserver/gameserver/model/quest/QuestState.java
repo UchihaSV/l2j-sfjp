@@ -118,7 +118,6 @@ public final class QuestState
 	
 	/**
 	 * @return the current State of this QuestState
-	 * @see com.l2jserver.gameserver.model.quest.State
 	 */
 	public byte getState()
 	{
@@ -127,7 +126,6 @@ public final class QuestState
 	
 	/**
 	 * @return {@code true} if the State of this QuestState is CREATED, {@code false} otherwise
-	 * @see com.l2jserver.gameserver.model.quest.State
 	 */
 	public boolean isCreated()
 	{
@@ -136,7 +134,6 @@ public final class QuestState
 	
 	/**
 	 * @return {@code true} if the State of this QuestState is STARTED, {@code false} otherwise
-	 * @see com.l2jserver.gameserver.model.quest.State
 	 */
 	public boolean isStarted()
 	{
@@ -145,7 +142,6 @@ public final class QuestState
 	
 	/**
 	 * @return {@code true} if the State of this QuestState is COMPLETED, {@code false} otherwise
-	 * @see com.l2jserver.gameserver.model.quest.State
 	 */
 	public boolean isCompleted()
 	{
@@ -156,7 +152,6 @@ public final class QuestState
 	 * @param state the new state of the quest to set
 	 * @return {@code true} if state was changed, {@code false} otherwise
 	 * @see #setState(byte state, boolean saveInDb)
-	 * @see com.l2jserver.gameserver.model.quest.State
 	 */
 	public boolean setState(byte state)
 	{
@@ -168,7 +163,6 @@ public final class QuestState
 	 * @param state the new state of the quest to set
 	 * @param saveInDb if {@code true}, will save the state change in the database
 	 * @return {@code true} if state was changed, {@code false} otherwise
-	 * @see com.l2jserver.gameserver.model.quest.State
 	 */
 	public boolean setState(byte state, boolean saveInDb)
 	{

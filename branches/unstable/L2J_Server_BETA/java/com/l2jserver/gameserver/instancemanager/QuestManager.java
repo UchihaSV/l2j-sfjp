@@ -30,7 +30,7 @@ public class QuestManager extends ScriptManager<Quest>
 {
 	protected static final Logger _log = Logger.getLogger(QuestManager.class.getName());
 	
-	private FastMap<String, Quest> _quests = new FastMap/*L2FastMap*/<String, Quest>().shared();
+	private final FastMap<String, Quest> _quests = new FastMap/*L2FastMap*/<String, Quest>().shared();
 	
 	protected QuestManager()
 	{
@@ -110,7 +110,9 @@ public class QuestManager extends ScriptManager<Quest>
 		for (Quest q : _quests.values())
 		{
 			if (q.getQuestIntId() == questId)
+			{
 				return q;
+			}
 		}
 		return null;
 	}

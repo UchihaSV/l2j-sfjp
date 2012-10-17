@@ -196,7 +196,6 @@ public class ItemsOnGroundManager implements Runnable
 		}
 	}
 	
-
 	@Override
 	public synchronized void run()
 	{

@@ -58,7 +58,7 @@ import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
 
 /**
- * Represents a client connected on Game Server
+ * Represents a client connected on Game Server.
  * @author KenM
  */
 public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> implements Runnable
@@ -67,14 +67,16 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 	protected static final Logger _logAccounting = Logger.getLogger("accounting");
 	
 	/**
-	 * CONNECTED	- client has just connected
-	 * AUTHED		- client has authed but doesn't has character attached to it yet
-	 * IN_GAME		- client has selected a char and is in game
 	 * @author KenM
 	 */
 	public static enum GameClientState
 	{
-		CONNECTED, AUTHED, IN_GAME
+		/** Client has just connected . */
+		CONNECTED,
+		/** Client has authed but doesn't has character attached to it yet. */
+		AUTHED,
+		/** Client has selected a char and is in game. */
+		IN_GAME
 	}
 	
 	private GameClientState _state;
@@ -207,11 +209,10 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 	public void setActiveChar(L2PcInstance pActiveChar)
 	{
 		_activeChar = pActiveChar;
-		//JIV remove - done on spawn
-		/*if (_activeChar != null)
-		{
-			L2World.getInstance().storeObject(getActiveChar());
-		}*/
+		// JIV remove - done on spawn
+		/*
+		 * if (_activeChar != null) { L2World.getInstance().storeObject(getActiveChar()); }
+		 */
 	}
 	
 	public ReentrantLock getActiveCharLock()
@@ -288,12 +289,8 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 	
 	/**
 	 * Method to handle character deletion
-	 * @param charslot 
-	 * @return a byte:
-	 * <li>-1: Error: No char was found for such charslot, caught exception, etc...
-	 * <li> 0: character is not member of any clan, proceed with deletion
-	 * <li> 1: character is member of a clan, but not clan leader
-	 * <li> 2: character is clan leader
+	 * @param charslot
+	 * @return a byte: <li>-1: Error: No char was found for such charslot, caught exception, etc... <li>0: character is not member of any clan, proceed with deletion <li>1: character is member of a clan, but not clan leader <li>2: character is clan leader
 	 */
 	public byte markToDeleteChar(int charslot)
 	{
@@ -348,7 +345,11 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 					}
 					
 					LogRecord record = new LogRecord(Level.WARNING, "Delete");
-					record.setParameters(new Object[] { objid, this });
+					record.setParameters(new Object[]
+					{
+						objid,
+						this
+					});
 					_logAccounting.log(record);
 				}
 			}
@@ -405,7 +406,11 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 		}
 		
 		final LogRecord record = new LogRecord(Level.WARNING, "Restore");
-		record.setParameters(new Object[] { objid, this });
+		record.setParameters(new Object[]
+		{
+			objid,
+			this
+		});
 		_logAccounting.log(record);
 	}
 	
@@ -588,7 +593,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 			_log.severe("could not restore in slot: " + charslot);
 		}
 		
-		//setCharacter(character);
+		// setCharacter(character);
 		return character;
 	}
 	
@@ -622,7 +627,11 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 		}
 		if (_aditionalClosePacket != null)
 		{
-			getConnection().close(new L2GameServerPacket[] { _aditionalClosePacket, gsp });
+			getConnection().close(new L2GameServerPacket[]
+			{
+				_aditionalClosePacket,
+				gsp
+			});
 		}
 		else
 		{
@@ -658,7 +667,10 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 	protected void onForcedDisconnection()
 	{
 		LogRecord record = new LogRecord(Level.WARNING, "Disconnected abnormally");
-		record.setParameters(new Object[] { this });
+		record.setParameters(new Object[]
+		{
+			this
+		});
 		_logAccounting.log(record);
 	}
 	
@@ -689,7 +701,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 			{
 				cancelCleanup();
 			}
-			_cleanupTask = ThreadPoolManager.getInstance().scheduleGeneral(new CleanupTask(), 0); //instant
+			_cleanupTask = ThreadPoolManager.getInstance().scheduleGeneral(new CleanupTask(), 0); // instant
 		}
 	}
 	
@@ -761,7 +773,10 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 						}
 						
 						final LogRecord record = new LogRecord(Level.INFO, "Entering offline mode");
-						record.setParameters(new Object[] { L2GameClient.this });
+						record.setParameters(new Object[]
+						{
+							L2GameClient.this
+						});
 						_logAccounting.log(record);
 						return;
 					}
@@ -833,7 +848,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 				if (_autoSaveInDB != null)
 				{
 					_autoSaveInDB.cancel(true);
-					//ThreadPoolManager.getInstance().removeGeneral((Runnable) _autoSaveInDB);
+					// ThreadPoolManager.getInstance().removeGeneral((Runnable) _autoSaveInDB);
 				}
 				
 				if (getActiveChar() != null) // this should only happen on connection loss
@@ -984,7 +999,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 	
 	/**
 	 * Add packet to the queue and start worker thread if needed
-	 * @param packet 
+	 * @param packet
 	 */
 	public void execute(ReceivablePacket<L2GameClient> packet)
 	{

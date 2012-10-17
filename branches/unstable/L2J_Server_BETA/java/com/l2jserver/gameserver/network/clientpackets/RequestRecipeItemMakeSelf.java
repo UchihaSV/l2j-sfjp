@@ -38,10 +38,14 @@ public final class RequestRecipeItemMakeSelf extends L2GameClientPacket
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		if (!getClient().getFloodProtectors().getManufacture().tryPerformAction("RecipeMakeSelf"))
+		{
 			return;
+		}
 		
 		//[JOJO]-------------------------------------------------
 		if (activeChar.getPrivateStoreType() != L2PcInstance.STORE_PRIVATE_NONE)

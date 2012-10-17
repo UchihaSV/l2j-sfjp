@@ -496,7 +496,7 @@ if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 		}
 }}
 	}
-
+	
 	public void removeQuest(Quest q)
 	{
 		for (Entry<QuestEventType, List<Quest>> entry : _questEvents.entrySet())
@@ -508,7 +508,9 @@ if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 				{
 					Quest q1 = it.next();
 					if (q1 == q)
+					{
 						it.remove();
+					}
 				}
 				
 				if (entry.getValue().isEmpty())

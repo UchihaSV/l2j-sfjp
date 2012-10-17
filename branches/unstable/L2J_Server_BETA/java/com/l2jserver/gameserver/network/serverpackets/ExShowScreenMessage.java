@@ -140,7 +140,9 @@ public class ExShowScreenMessage extends L2GameServerPacket
 			if (_parameters != null)
 			{
 				for (String s : _parameters)
+				{
 					writeS(s);
+				}
 			}
 		}
 	}

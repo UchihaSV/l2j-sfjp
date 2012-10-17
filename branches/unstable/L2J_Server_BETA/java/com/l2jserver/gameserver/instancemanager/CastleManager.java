@@ -44,12 +44,25 @@ public class CastleManager implements InstanceListManager
 	
 	private List<Castle> _castles;
 	
-	private static final int _castleCirclets[] = { 0, 6838, 6835, 6839, 6837, 6840, 6834, 6836, 8182, 8183 };
+	private static final int _castleCirclets[] =
+	{
+		0,
+		6838,
+		6835,
+		6839,
+		6837,
+		6840,
+		6834,
+		6836,
+		8182,
+		8183
+	};
 	
 	public final int findNearestCastleIndex(L2Object obj)
 	{
 		return findNearestCastleIndex(obj, Long.MAX_VALUE);
 	}
+	
 	public final int findNearestCastleIndex(L2Object obj, long maxDistance)
 	{
 		int index = getCastleIndex(obj);
@@ -61,7 +74,9 @@ public class CastleManager implements InstanceListManager
 			{
 				castle = getCastles().get(i);
 				if (castle == null)
+				{
 					continue;
+				}
 				distance = castle.getDistance(obj);
 				if (maxDistance > distance)
 				{
@@ -78,7 +93,9 @@ public class CastleManager implements InstanceListManager
 		for (Castle temp : getCastles())
 		{
 			if (temp.getCastleId() == castleId)
+			{
 				return temp;
+			}
 		}
 		return null;
 	}
@@ -88,7 +105,9 @@ public class CastleManager implements InstanceListManager
 		for (Castle temp : getCastles())
 		{
 			if (temp.getOwnerId() == clan.getClanId())
+			{
 				return temp;
+			}
 		}
 		return null;
 	}
@@ -99,7 +118,9 @@ public class CastleManager implements InstanceListManager
 		for (Castle temp : getCastles())
 		{
 			if (temp.getName().equalsIgnoreCase(name))
+			{
 				return temp;
+			}
 		}
 		return null;
 	}
@@ -109,7 +130,9 @@ public class CastleManager implements InstanceListManager
 		for (Castle temp : getCastles())
 		{
 			if (temp.checkIfInZone(x, y, z))
+			{
 				return temp;
+			}
 		}
 		return null;
 	}
@@ -125,8 +148,10 @@ public class CastleManager implements InstanceListManager
 		for (int i = 0; i < getCastles().size(); i++)
 		{
 			castle = getCastles().get(i);
-			if (castle != null && castle.getCastleId() == castleId)
+			if ((castle != null) && (castle.getCastleId() == castleId))
+			{
 				return i;
+			}
 		}
 		return -1;
 	}
@@ -142,8 +167,10 @@ public class CastleManager implements InstanceListManager
 		for (int i = 0; i < getCastles().size(); i++)
 		{
 			castle = getCastles().get(i);
-			if (castle != null && castle.checkIfInZone(x, y, z))
+			if ((castle != null) && castle.checkIfInZone(x, y, z))
+			{
 				return i;
+			}
 		}
 		return -1;
 	}
@@ -151,7 +178,9 @@ public class CastleManager implements InstanceListManager
 	public final List<Castle> getCastles()
 	{
 		if (_castles == null)
+		{
 			_castles = new FastList<>();
+		}
 		return _castles;
 	}
 	
@@ -171,8 +200,12 @@ public class CastleManager implements InstanceListManager
 				break;
 		}
 		for (Castle castle : _castles)
+		{
 			if (castle.getTaxPercent() > maxTax)
+			{
 				castle.setTaxPercent(maxTax);
+			}
+		}
 	}
 	
 	int _castleId = 1; // from this castle
@@ -184,8 +217,10 @@ public class CastleManager implements InstanceListManager
 	
 	public int getCircletByCastleId(int castleId)
 	{
-		if (castleId > 0 && castleId < 10)
+		if ((castleId > 0) && (castleId < 10))
+		{
 			return _castleCirclets[castleId];
+		}
 		
 		return 0;
 	}
@@ -194,13 +229,17 @@ public class CastleManager implements InstanceListManager
 	public void removeCirclet(L2Clan clan, int castleId)
 	{
 		for (L2ClanMember member : clan.getMembers())
+		{
 			removeCirclet(member, castleId);
+		}
 	}
 	
 	public void removeCirclet(L2ClanMember member, int castleId)
 	{
 		if (member == null)
+		{
 			return;
+		}
 		L2PcInstance player = member.getPlayerInstance();
 		int circletId = getCircletByCastleId(castleId);
 		
@@ -215,7 +254,9 @@ public class CastleManager implements InstanceListManager
 					if (circlet != null)
 					{
 						if (circlet.isEquipped())
+						{
 							player.getInventory().unEquipItemInSlot(circlet.getLocationSlot());
+						}
 						player.destroyItemByItemId("CastleCircletRemoval", circletId, 1, player, true);
 					}
 					return;

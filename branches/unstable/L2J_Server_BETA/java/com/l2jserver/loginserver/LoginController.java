@@ -702,7 +702,9 @@ public class LoginController
 				if (!ipWhiteList.isEmpty() && !ipWhiteList.contains(address))
 				{
 					if (Config.LOG_LOGIN_CONTROLLER)
+					{
 						Log.add("'" + user + "' " + address.getHostAddress() + " - ERR : INCORRECT IP", "loginlog");
+					}
 					loginFailReason[0] = LoginFailReason.REASON_RESTRICTED_IP;
 					return false;
 				}
@@ -710,12 +712,14 @@ public class LoginController
 				if (!ipBlackList.isEmpty() && ipBlackList.contains(address))
 				{
 					if (Config.LOG_LOGIN_CONTROLLER)
+					{
 						Log.add("'" + user + "' " + address.getHostAddress() + " - ERR : BLACKLISTED IP", "loginlog");
+					}
 					loginFailReason[0] = LoginFailReason.REASON_RESTRICTED_IP;
 					return false;
 				}
 			}
-
+			
 			// check password hash
 			ok = Arrays.equals(hash, expected);
 			if (ok)

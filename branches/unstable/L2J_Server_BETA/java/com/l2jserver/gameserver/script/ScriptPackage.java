@@ -14,7 +14,6 @@
  */
 package com.l2jserver.gameserver.script;
 
-
 /**
  * @author Luis Arias
  */

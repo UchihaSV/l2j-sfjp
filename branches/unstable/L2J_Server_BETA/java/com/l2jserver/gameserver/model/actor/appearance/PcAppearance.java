@@ -53,8 +53,7 @@ public class PcAppearance
 	}
 	
 	/**
-	 * @param visibleName
-	 * The visibleName to set.
+	 * @param visibleName The visibleName to set.
 	 */
 	public final void setVisibleName(String visibleName)
 	{
@@ -74,8 +73,7 @@ public class PcAppearance
 	}
 	
 	/**
-	 * @param visibleTitle
-	 * The visibleTitle to set.
+	 * @param visibleTitle The visibleTitle to set.
 	 */
 	public final void setVisibleTitle(String visibleTitle)
 	{
@@ -134,7 +132,6 @@ public class PcAppearance
 	}
 	
 	/**
-	 * 
 	 * @return true if char is female
 	 */
 	public final boolean getSex()
@@ -183,7 +180,9 @@ public class PcAppearance
 	public void setNameColor(int nameColor)
 	{
 		if (nameColor < 0)
+		{
 			return;
+		}
 		
 		_nameColor = nameColor;
 	}
@@ -201,7 +200,9 @@ public class PcAppearance
 	public void setTitleColor(int titleColor)
 	{
 		if (titleColor < 0)
+		{
 			return;
+		}
 		
 		_titleColor = titleColor;
 	}
@@ -212,8 +213,7 @@ public class PcAppearance
 	}
 	
 	/**
-	 * @param owner
-	 *            The owner to set.
+	 * @param owner The owner to set.
 	 */
 	public void setOwner(L2PcInstance owner)
 	{

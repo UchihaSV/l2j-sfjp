@@ -36,7 +36,6 @@ import com.l2jserver.util.Util;
 
 /**
  * This class ...
- *
  * @author Nightmare
  * @version $Revision: 1.5.2.6.2.7 $ $Date: 2005/03/27 15:29:18 $
  */
@@ -44,7 +43,7 @@ public class SpawnTable
 {
 	private static Logger _log = Logger.getLogger(SpawnTable.class.getName());
 	
-	private FastSet<L2Spawn> _spawntable = new FastSet<>();
+	private final FastSet<L2Spawn> _spawntable = new FastSet<>();
 	private int _npcSpawnCount;
 	private int _customSpawnCount;
 	
@@ -52,7 +51,9 @@ public class SpawnTable
 	{
 		_spawntable.shared();
 		if (!Config.ALT_DEV_NO_SPAWNS)
+		{
 			fillSpawnTable();
+		}
 	}
 	
 	public FastSet<L2Spawn> getSpawnTable()
@@ -209,7 +210,9 @@ public class SpawnTable
 		}
 		
 		if (Config.DEBUG)
+		{
 			_log.fine(getClass().getSimpleName() + ": Spawning completed, total number of NPCs in the world: " + (_npcSpawnCount + _customSpawnCount));
+		}
 		
 	}
 	
@@ -221,9 +224,13 @@ public class SpawnTable
 		{
 			String spawnTable;
 			if (spawn.isCustom() && Config.CUSTOM_SPAWNLIST_TABLE)
+			{
 				spawnTable = "custom_spawnlist";
+			}
 			else
+			{
 				spawnTable = "spawnlist";
+			}
 			
 			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 				PreparedStatement statement = con.prepareStatement("INSERT INTO " + spawnTable + "(count,npc_templateid,locx,locy,locz,heading,respawn_delay,loc_id) values(?,?,?,?,?,?,?,?)"))
@@ -264,7 +271,9 @@ public class SpawnTable
 	public void deleteSpawn(L2Spawn spawn, boolean updateDb)
 	{
 		if (!_spawntable.remove(spawn))
+		{
 			return;
+		}
 		
 		if (updateDb)
 		{
@@ -298,14 +307,14 @@ public class SpawnTable
 		}
 	}
 	
-	//just wrapper
+	// just wrapper
 	public void reloadAll()
 	{
 		fillSpawnTable();
 	}
 	
 	/**
-	 * Get all the spawn of a NPC<BR><BR>
+	 * Get all the spawn of a NPC.
 	 * @param activeChar
 	 * @param npcId
 	 * @param teleportIndex
@@ -325,29 +334,41 @@ public class SpawnTable
 				{
 					if (teleportIndex == index)
 					{
-						if(showposition && _npc != null)
+						if (showposition && (_npc != null))
+						{
 							meet(activeChar, spawn);
 				//			activeChar.teleToLocation(_npc.getX(), _npc.getY(), _npc.getZ(), true);
+						}
 						else
+						{
 							activeChar.teleToLocation(spawn.getLocx(), spawn.getLocy(), spawn.getLocz(), true);
+						}
 					}
 				}
 				else
 				{
 					if (index == 1)
+					{
 						activeChar.sendMessage(spawn.getNpcid() + " " + spawn.getTemplate().getName());
-					if(showposition && _npc != null)
-						activeChar.sendMessage("- " + index + ". " + _npc.getX() + " "+ _npc.getY() + " " + _npc.getZ());
-				//		activeChar.sendMessage(index + " - " + spawn.getTemplate().getName() + " (" + spawn + "): " + _npc.getX() + " "+ _npc.getY() + " " + _npc.getZ());
+					}
+					if (showposition && (_npc != null))
+					{
+						activeChar.sendMessage("- " + index + ". " + _npc.getX() + " " + _npc.getY() + " " + _npc.getZ());
+				//		activeChar.sendMessage(index + " - " + spawn.getTemplate().getName() + " (" + spawn + "): " + _npc.getX() + " " + _npc.getY() + " " + _npc.getZ());
+					}
 					else
-						activeChar.sendMessage("- " + index + ". " + spawn.getLocx() + " "+ spawn.getLocy() + " " + spawn.getLocz());
-				//		activeChar.sendMessage(index + " - " + spawn.getTemplate().getName() + " (" + spawn + "): " + spawn.getLocx() + " "+ spawn.getLocy() + " " + spawn.getLocz());
+					{
+						activeChar.sendMessage("- " + index + ". " + spawn.getLocx() + " " + spawn.getLocy() + " " + spawn.getLocz());
+				//		activeChar.sendMessage(index + " - " + spawn.getTemplate().getName() + " (" + spawn + "): " + spawn.getLocx() + " " + spawn.getLocy() + " " + spawn.getLocz());
+					}
 				}
 			}
 		}
 		
 		if (index == 0)
+		{
 			activeChar.sendMessage(getClass().getSimpleName() + ": No current spawns found.");
+		}
 	}
 	
 	public static SpawnTable getInstance()

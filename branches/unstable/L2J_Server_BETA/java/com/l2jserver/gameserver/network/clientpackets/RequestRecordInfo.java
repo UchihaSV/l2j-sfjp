@@ -29,10 +29,13 @@ public class RequestRecordInfo extends L2GameClientPacket
 	private static final String _C__6E_REQUEST_RECORD_INFO = "[C] 6E RequestRecordInfo";
 	
 	/**
-	 * urgent messages, execute immediately 
+	 * urgent messages, execute immediately
 	 * @return
 	 */
-	public TaskPriority getPriority() { return TaskPriority.PR_NORMAL; }
+	public TaskPriority getPriority()
+	{
+		return TaskPriority.PR_NORMAL;
+	}
 	
 	@Override
 	protected void readImpl()
@@ -46,7 +49,9 @@ public class RequestRecordInfo extends L2GameClientPacket
 		L2PcInstance _activeChar = getClient().getActiveChar();
 		
 		if (_activeChar == null)
+		{
 			return;
+		}
 		
 		_activeChar.sendPacket(new UserInfo(_activeChar));
 		_activeChar.sendPacket(new ExBrExtraUserInfo(_activeChar));
@@ -55,9 +60,10 @@ public class RequestRecordInfo extends L2GameClientPacket
 		for (L2Object object : objs)
 		{
 //@			if (object.isMorphed()
-			if (object.getPoly().isMorphed()
-					&& object.getPoly().getPolyType().equals("item"))
+			if (object.getPoly().isMorphed() && object.getPoly().getPolyType().equals("item"))
+			{
 				_activeChar.sendPacket(new SpawnItem(object));
+			}
 			else
 			{
 				object.sendInfo(_activeChar);
@@ -70,7 +76,9 @@ public class RequestRecordInfo extends L2GameClientPacket
 					// the L2PcInstance
 					L2Character obj = (L2Character) object;
 					if (obj.getAI() != null)
+					{
 						obj.getAI().describeStateToPlayer(_activeChar);
+					}
 				}
 			}
 		}

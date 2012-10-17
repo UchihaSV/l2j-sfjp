@@ -30,7 +30,6 @@ import com.l2jserver.gameserver.taskmanager.AttackStanceTaskManager;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.9.4.3 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class Logout extends L2GameClientPacket
@@ -51,7 +50,9 @@ public final class Logout extends L2GameClientPacket
 		final L2PcInstance player = getClient().getActiveChar();
 		
 		if (player == null)
+		{
 			return;
+		}
 		
 		// [L2J_JP ADD START][JOJO] TODO:[JOJO]要オーラバード対策
 		if (player.isFlying())
@@ -62,8 +63,8 @@ public final class Logout extends L2GameClientPacket
 			return;
 		}
 		// [L2J_JP ADD END]
-
-		if(player.getActiveEnchantItem() != null || player.getActiveEnchantAttrItem() != null)
+		
+		if ((player.getActiveEnchantItem() != null) || (player.getActiveEnchantAttrItem() != null))
 		{
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
@@ -76,19 +77,24 @@ public final class Logout extends L2GameClientPacket
 			return;
 		}
 		
-		if(AttackStanceTaskManager.getInstance().hasAttackStanceTask(player))
+		if (AttackStanceTaskManager.getInstance().hasAttackStanceTask(player))
 		{
 			if (player.isGM() && Config.GM_RESTART_FIGHTING)
+			{
 				return;
+			}
 			
-			if (Config.DEBUG) _log.fine("Player " + player.getName() + " tried to logout while fighting");
+			if (Config.DEBUG)
+			{
+				_log.fine("Player " + player.getName() + " tried to logout while fighting");
+			}
 			
 			player.sendPacket(SystemMessageId.CANT_LOGOUT_WHILE_FIGHTING);
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}
 		
-		if(L2Event.isParticipant(player))
+		if (L2Event.isParticipant(player))
 		{
 			player.sendMessage("A superior power doesn't allow you to leave the event.");
 			player.sendPacket(ActionFailed.STATIC_PACKET);
@@ -109,14 +115,19 @@ public final class Logout extends L2GameClientPacket
 			final L2Party playerParty = player.getParty();
 			
 			if (playerParty != null)
+			{
 				player.getParty().broadcastPacket(SystemMessage.sendString(player.getName() + " has been removed from the upcoming Festival."));
+			}
 		}
 		
 		// Remove player from Boss Zone
 		player.removeFromBossZone();
 		
 		LogRecord record = new LogRecord(Level.INFO, "Disconnected");
-		record.setParameters(new Object[]{this.getClient()});
+		record.setParameters(new Object[]
+		{
+			getClient()
+		});
 		_logAccounting.log(record);
 		
 		player.logout();

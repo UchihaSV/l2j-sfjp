@@ -37,18 +37,13 @@ import com.l2jserver.gameserver.script.DateRange;
 import com.l2jserver.gameserver.util.Broadcast;
 import com.l2jserver.util.StringUtil;
 
-/**
- * This class ...
- * 
- * @version $Revision: 1.5.2.1.2.7 $ $Date: 2005/03/29 23:15:14 $
- */
 public class Announcements
 {
 	private static Logger _log = Logger.getLogger(Announcements.class.getName());
 	
-	private List<String> _announcements = new FastList<>();
-	private List<String> _critAnnouncements = new FastList<>();
-	private List<List<Object>> _eventAnnouncements = new FastList<>();
+	private final List<String> _announcements = new FastList<>();
+	private final List<String> _critAnnouncements = new FastList<>();
+	private final List<List<Object>> _eventAnnouncements = new FastList<>();
 	
 	protected Announcements()
 	{
@@ -68,7 +63,9 @@ public class Announcements
 		readFromDisk("data/critannouncements.txt", _critAnnouncements);
 		
 		if (Config.DEBUG)
-			_log.info("Announcements: Loaded " + (_announcements.size() + _critAnnouncements.size())  + " announcements.");
+		{
+			_log.info("Announcements: Loaded " + (_announcements.size() + _critAnnouncements.size()) + " announcements.");
+		}
 	}
 	
 	public void showAnnouncements(L2PcInstance activeChar)
@@ -76,7 +73,9 @@ public class Announcements
 		for (String announce : _announcements)
 		{
 			if (announce.indexOf('%') >= 0)
-				announce = announce.replaceFirst("%server_name%", LoginServerThread.getInstance().getServerName());			//[JOJO]
+			{
+				announce = announce.replaceFirst("%server_name%", LoginServerThread.getInstance().getServerName()); // [JOJO]
+			}
 			CreatureSay cs = new CreatureSay(0, Say2.ANNOUNCEMENT, activeChar.getName(), announce);
 			activeChar.sendPacket(cs);
 		}
@@ -95,10 +94,12 @@ public class Announcements
 			String[] msg = (String[]) entry.get(1);
 			Date currentDate = new Date();
 			
-			if (validDateRange.isValid() && validDateRange.isWithinRange(currentDate))	//[JOJO]
+			if (validDateRange.isValid() && validDateRange.isWithinRange(currentDate)) // [JOJO]
 			{
 				for (String s : msg)
-					activeChar.sendMessage(s);/*テスト済*/
+				{
+					activeChar.sendMessage(s);/* テスト済 */
+				}
 			}
 			
 		}
@@ -120,8 +121,7 @@ public class Announcements
 		final StringBuilder replyMSG = StringUtil.startAppend(500, "<br>");
 		for (int i = 0; i < _announcements.size(); i++)
 		{
-			StringUtil.append(replyMSG, "<table width=260><tr><td width=220>", _announcements.get(i), "</td><td width=40>"
-					+ "<button value=\"Delete\" action=\"bypass -h admin_del_announcement ", String.valueOf(i), "\" width=60 height=20 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\"></td></tr></table>");
+			StringUtil.append(replyMSG, "<table width=260><tr><td width=220>", _announcements.get(i), "</td><td width=40>" + "<button value=\"Delete\" action=\"bypass -h admin_del_announcement ", String.valueOf(i), "\" width=60 height=20 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\"></td></tr></table>");
 		}
 		adminReply.replace("%announces%", replyMSG.toString());
 		activeChar.sendPacket(adminReply);
@@ -135,8 +135,7 @@ public class Announcements
 		final StringBuilder replyMSG = StringUtil.startAppend(500, "<br>");
 		for (int i = 0; i < _critAnnouncements.size(); i++)
 		{
-			StringUtil.append(replyMSG, "<table width=260><tr><td width=220>", _critAnnouncements.get(i), "</td><td width=40>"
-					+ "<button value=\"Delete\" action=\"bypass -h admin_del_critannouncement ", String.valueOf(i), "\" width=60 height=20 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\"></td></tr></table>");
+			StringUtil.append(replyMSG, "<table width=260><tr><td width=220>", _critAnnouncements.get(i), "</td><td width=40>" + "<button value=\"Delete\" action=\"bypass -h admin_del_critannouncement ", String.valueOf(i), "\" width=60 height=20 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\"></td></tr></table>");
 		}
 		adminReply.replace("%critannounces%", replyMSG.toString());
 		activeChar.sendPacket(adminReply);

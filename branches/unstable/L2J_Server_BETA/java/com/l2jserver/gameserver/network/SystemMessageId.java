@@ -4354,14 +4354,14 @@ public final class SystemMessageId
 	 * ID: 569<br>
 	 * Message: アイテムの価格が相場とかなりの差があります。よろしいですか。<br>
 	 * Message: &#35531;&#27880;&#24847;&#65292;&#36947;&#20855;&#30340;&#20729;&#26684;&#33287;&#21830;&#24215;&#30340;&#33853;&#24046;&#24456;&#22823;&#12290;&#26159;&#21542;&#35201;&#32380;&#32396;&#65311;<br>
-	 * Message: Caution -- this item's price greatly differs from non-player run shops. Do you wish to continue? 
+	 * Message: Caution -- this item's price greatly differs from non-player run shops. Do you wish to continue?
 	 */
 	
 	/**
 	 * ID: 570<br>
 	 * Message: $s1をいくつ買いますか。<br>
 	 * Message: &#35201;&#36092;&#36023;&#24190;&#20491;&#12300;&#36;&#115;&#49;&#12301;&#65311;<br>
-	 * Message: How many  $s1(s) do you want to purchase?
+	 * Message: How many $s1(s) do you want to purchase?
 	 */
 	
 	/**

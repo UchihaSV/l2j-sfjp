@@ -35,9 +35,9 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 public final class AuctionableHall extends ClanHall
 {
 	protected long _paidUntil;
-	private int _grade;
+	private final int _grade;
 	protected boolean _paid;
-	private int _lease;
+	private final int _lease;
 	
 	protected final int _chRate = 604800000;
 	
@@ -49,14 +49,14 @@ public final class AuctionableHall extends ClanHall
 		_paid = set.getBool("paid");
 		_lease = set.getInteger("lease");
 		
-		if(getOwnerId() != 0)
+		if (getOwnerId() != 0)
 		{
 			_isFree = false;
 			initialyzeTask(false);
 			loadFunctions();
 		}
 	}
-
+	
 	/**
 	 * @return if clanHall is paid or not
 	 */
@@ -65,7 +65,7 @@ public final class AuctionableHall extends ClanHall
 		return _paid;
 	}
 	
-	/** Return lease*/
+	/** Return lease */
 	@Override
 	public final int getLease()
 	{
@@ -111,23 +111,31 @@ public final class AuctionableHall extends ClanHall
 	}
 	
 	/**
-	 * Initialize Fee Task 
+	 * Initialize Fee Task
 	 * @param forced
 	 */
 	private final void initialyzeTask(boolean forced)
 	{
 		long currentTime = System.currentTimeMillis();
 		if (_paidUntil > currentTime)
+		{
 			ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), _paidUntil - currentTime);
+		}
 		else if (!_paid && !forced)
 		{
-			if (System.currentTimeMillis() + (1000 * 60 * 60 * 24) <= _paidUntil + _chRate)
+			if ((System.currentTimeMillis() + (1000 * 60 * 60 * 24)) <= (_paidUntil + _chRate))
+			{
 				ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), System.currentTimeMillis() + (1000 * 60 * 60 * 24));
+			}
 			else
+			{
 				ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), (_paidUntil + _chRate) - System.currentTimeMillis());
+			}
 		}
 		else
+		{
 			ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), 0);
+		}
 	}
 	
 	/** Fee Task */
@@ -143,9 +151,11 @@ public final class AuctionableHall extends ClanHall
 				long _time = System.currentTimeMillis();
 				
 				if (isFree())
+				{
 					return;
+				}
 				
-				if(_paidUntil > _time)
+				if (_paidUntil > _time)
 				{
 					ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), _paidUntil - _time);
 					return;
@@ -157,10 +167,14 @@ public final class AuctionableHall extends ClanHall
 					if (_paidUntil != 0)
 					{
 						while (_paidUntil <= _time)
+						{
 							_paidUntil += _chRate;
+						}
 					}
 					else
+					{
 						_paidUntil = _time + _chRate;
+					}
 					ClanTable.getInstance().getClan(getOwnerId()).getWarehouse().destroyItemByItemId("CH_rental_fee", PcInventory.ADENA_ID, getLease(), null, null);
 					ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), _paidUntil - _time);
 					_paid = true;
@@ -169,7 +183,7 @@ public final class AuctionableHall extends ClanHall
 				else
 				{
 					_paid = false;
-					if (_time > _paidUntil + _chRate)
+					if (_time > (_paidUntil + _chRate))
 					{
 						if (ClanHallManager.getInstance().loaded())
 						{
@@ -178,7 +192,9 @@ public final class AuctionableHall extends ClanHall
 							Clan.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.THE_CLAN_HALL_FEE_IS_ONE_WEEK_OVERDUE_THEREFORE_THE_CLAN_HALL_OWNERSHIP_HAS_BEEN_REVOKED));
 						}
 						else
+						{
 							ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), 3000);
+						}
 					}
 					else
 					{
@@ -191,10 +207,14 @@ public final class AuctionableHall extends ClanHall
 					//	sm.addNumber(getLease());
 						//-------------------------------------------------------
 						Clan.broadcastToOnlineMembers(sm);
-						if (_time + (1000 * 60 * 60 * 24) <= _paidUntil + _chRate)
+						if ((_time + (1000 * 60 * 60 * 24)) <= (_paidUntil + _chRate))
+						{
 							ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), _time + (1000 * 60 * 60 * 24));
+						}
 						else
+						{
 							ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), (_paidUntil + _chRate) - _time);
+						}
 						
 					}
 				}
