@@ -46,7 +46,6 @@ import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.handler.ISkillHandler;
 import com.l2jserver.gameserver.handler.SkillHandler;
 import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
-import com.l2jserver.gameserver.instancemanager.GlobalVariablesManager;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager.TeleportWhereType;
@@ -228,11 +227,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	
 	private int _team;
 	
-	protected long _exceptions = 0L;
-	
 	private boolean _lethalable;
-	
-	protected final String COND_EXCEPTIONS = "COND_EX_" + getObjectId();
 	
 	/**
 	 * @return True if debugging is enabled for this L2Character
@@ -7977,27 +7972,9 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		}
 	}
 	
-	public void addOverrideCond(PcCondOverride... excs)
-	{
-		for (PcCondOverride exc : excs)
-		{
-			_exceptions |= exc.getMask();
-		}
-		GlobalVariablesManager.getInstance().storeVariable(COND_EXCEPTIONS, Long.toString(_exceptions));
-	}
-	
-	public void removeOverridedCond(PcCondOverride... excs)
-	{
-		for (PcCondOverride exc : excs)
-		{
-			_exceptions &= ~exc.getMask();
-		}
-		GlobalVariablesManager.getInstance().storeVariable(COND_EXCEPTIONS, Long.toString(_exceptions));
-	}
-	
 	public boolean canOverrideCond(PcCondOverride excs)
 	{
-		return (_exceptions & excs.getMask()) == excs.getMask();
+		return false;	//[JOJO] L2Chracter ‚©‚ç l2pcInstance ‚Öˆø‰z‚µ.
 	}
 	
 	public void setLethalable(boolean val)
