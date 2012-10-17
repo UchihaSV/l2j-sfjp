@@ -39,13 +39,15 @@ public class CommunityBoard
 	{
 		L2PcInstance activeChar = client.getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 //		activeChar.TRACE("__BASENAME__:__LINE__", "handleCommands(" + command + ")");
 		
 		switch (Config.COMMUNITY_TYPE)
 		{
 			default:
-			case 0: //disabled
+			case 0: // disabled
 				activeChar.sendPacket(SystemMessageId.CB_OFFLINE);
 				break;
 			case 1: // old
@@ -108,8 +110,7 @@ public class CommunityBoard
 				}
 				else
 				{
-					ShowBoard sb = new ShowBoard("<html><body><br><br><center>the command: " + command
-							+ " is not implemented yet</center><br><br></body></html>", "101");
+					ShowBoard sb = new ShowBoard("<html><body><br><br><center>the command: " + command + " is not implemented yet</center><br><br></body></html>", "101");
 					activeChar.sendPacket(sb);
 					activeChar.sendPacket(new ShowBoard(null, "102"));
 					activeChar.sendPacket(new ShowBoard(null, "103"));
@@ -131,7 +132,9 @@ public class CommunityBoard
 	{
 		L2PcInstance activeChar = client.getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		switch (Config.COMMUNITY_TYPE)
 		{
@@ -170,8 +173,7 @@ public class CommunityBoard
 				}
 				else
 				{
-					ShowBoard sb = new ShowBoard("<html><body><br><br><center>the command: " + url
-							+ " is not implemented yet</center><br><br></body></html>", "101");
+					ShowBoard sb = new ShowBoard("<html><body><br><br><center>the command: " + url + " is not implemented yet</center><br><br></body></html>", "101");
 					activeChar.sendPacket(sb);
 					activeChar.sendPacket(new ShowBoard(null, "102"));
 					activeChar.sendPacket(new ShowBoard(null, "103"));

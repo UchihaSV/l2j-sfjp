@@ -14,9 +14,6 @@
  */
 package com.l2jserver.gameserver.instancemanager;
 
-import gnu.trove.map.hash.TIntIntHashMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,9 +36,11 @@ import com.l2jserver.gameserver.model.actor.instance.L2GrandBossInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.zone.type.L2BossZone;
 
+import gnu.trove.map.hash.TIntIntHashMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
+
 /**
- * @author DaRkRaGe
- * Revised by Emperorc
+ * @author DaRkRaGe Revised by Emperorc
  */
 public class GrandBossManager
 {
@@ -79,25 +78,13 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
  FROM grandboss_data LEFT JOIN npc ON (grandboss_data.boss_id = npc.id);
 	 */
 	
-	/**
-	 * DELETE FROM grandboss_list
-	 */
+	// SQL queries
 	private static final String DELETE_GRAND_BOSS_LIST = "DELETE FROM grandboss_list";
-	
-	/**
-	 * INSERT INTO grandboss_list (player_id,zone) VALUES (?,?)
-	 */
 	private static final String INSERT_GRAND_BOSS_LIST = "INSERT INTO grandboss_list (player_id,zone) VALUES (?,?)";
-	
-	/**
-	 * UPDATE grandboss_data set loc_x = ?, loc_y = ?, loc_z = ?, heading = ?, respawn_time = ?, currentHP = ?, currentMP = ?, status = ? where boss_id = ?
-	 */
 	private static final String UPDATE_GRAND_BOSS_DATA = "UPDATE grandboss_data set loc_x = ?, loc_y = ?, loc_z = ?, heading = ?, respawn_time = ?, currentHP = ?, currentMP = ?, status = ? where boss_id = ?";
-	
 	private static final String UPDATE_GRAND_BOSS_DATA2 = "UPDATE grandboss_data set status = ? where boss_id = ?";
-	
 	private static final String UPDATE_GRAND_BOSS_DATA3 = "UPDATE grandboss_data set respawn_time = ?, status = ? where boss_id = ?";	//+[JOJO]
-
+	
 	protected static Logger _log = Logger.getLogger(GrandBossManager.class.getName());
 	
 	protected static Map<Integer, L2GrandBossInstance> _bosses;
@@ -126,8 +113,8 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			ResultSet rset = statement.executeQuery();
 			while (rset.next())
 			{
-				//Read all info from DB, and store it for AI to read and decide what to do
-				//faster than accessing DB in real time
+				// Read all info from DB, and store it for AI to read and decide what to do
+				// faster than accessing DB in real time
 				StatsSet info = new StatsSet();
 				int bossId = rset.getInt("boss_id");
 				info.set("loc_x", rset.getInt("loc_x"));
@@ -135,18 +122,20 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 				info.set("loc_z", rset.getInt("loc_z"));
 				info.set("heading", rset.getInt("heading"));
 				info.set("respawn_time", rset.getLong("respawn_time"));
-				double HP = rset.getDouble("currentHP"); //jython doesn't recognize doubles
-				int true_HP = (int) HP; //so use java's ability to type cast
-				info.set("currentHP", true_HP); //to convert double to int
+				double HP = rset.getDouble("currentHP"); // jython doesn't recognize doubles
+				int true_HP = (int) HP; // so use java's ability to type cast
+				info.set("currentHP", true_HP); // to convert double to int
 				double MP = rset.getDouble("currentMP");
 				int true_MP = (int) MP;
 				info.set("currentMP", true_MP);
 				int status = rset.getInt("status");
 				_bossStatus.put(bossId, status);
 				_storedInfo.put(bossId, info);
-				_log.info(getClass().getSimpleName() + ": " +NpcTable.getInstance().getTemplate(bossId).getName()+"(" +bossId+ ") status is "+ status+".");
+				_log.info(getClass().getSimpleName() + ": " + NpcTable.getInstance().getTemplate(bossId).getName() + "(" + bossId + ") status is " + status + ".");
 				if (status > 0)
-					_log.info(getClass().getSimpleName() + ": Next spawn date of " +NpcTable.getInstance().getTemplate(bossId).getName()+" is "+ respawnTimeFormat(info)+".");
+				{
+					_log.info(getClass().getSimpleName() + ": Next spawn date of " + NpcTable.getInstance().getTemplate(bossId).getName() + " is " + respawnTimeFormat(info) + ".");
+				}
 				
 				info = null;
 			}
@@ -181,7 +170,9 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		for (L2BossZone zone : _zones)
 		{
 			if (zone == null)
+			{
 				continue;
+			}
 			zones.put(zone.getId(), new FastSet/*L2FastList*/<Integer>());
 		}
 		
@@ -214,7 +205,9 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		for (L2BossZone zone : _zones)
 		{
 			if (zone == null)
+			{
 				continue;
+			}
 			zone.setAllowedPlayers(zones.get(zone.getId()));
 		}
 		
@@ -236,7 +229,9 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			for (L2BossZone temp : _zones)
 			{
 				if (temp.isCharacterInZone(character))
+				{
 					return temp;
+				}
 			}
 		}
 		return null;
@@ -254,7 +249,9 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			for (L2BossZone temp : _zones)
 			{
 				if (temp.isInsideZone(x, y, z))
+				{
 					return temp;
+				}
 			}
 		}
 		return null;
@@ -265,7 +262,9 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	{
 		L2BossZone temp = getZone(obj.getX(), obj.getY(), obj.getZ());
 		if (temp == null)
+		{
 			return false;
+		}
 		
 		return temp.getName().equalsIgnoreCase(zoneType);
 	}
@@ -273,10 +272,14 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	public boolean checkIfInZone(L2PcInstance player)
 	{
 		if (player == null)
+		{
 			return false;
+		}
 		L2BossZone temp = getZone(player.getX(), player.getY(), player.getZ());
 		if (temp == null)
+		{
 			return false;
+		}
 		
 		return true;
 	}
@@ -289,13 +292,13 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	public void setBossStatus(int bossId, int status)
 	{
 		_bossStatus.put(bossId, status);
-		_log.info(getClass().getSimpleName()+": Updated "+NpcTable.getInstance().getTemplate(bossId).getName()+"(" +bossId+ ") status to " +status);
+		_log.info(getClass().getSimpleName() + ": Updated " + NpcTable.getInstance().getTemplate(bossId).getName() + "(" + bossId + ") status to " + status);
 		updateDb(bossId, true);
 	}
 	
 	/**
 	 * Adds a L2GrandBossInstance to the list of bosses.
-	 * @param boss 
+	 * @param boss
 	 */
 	public void addBoss(L2GrandBossInstance boss) //Note: AI script.
 	{
@@ -335,11 +338,15 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 				for (L2BossZone zone : _zones)
 				{
 					if (zone == null)
+					{
 						continue;
+					}
 					int/*Integer*/ id = zone.getId();
 					FastSet/*L2FastList*/<Integer> list = zone.getAllowedPlayers();
-					if (list == null || list.isEmpty())
+					if ((list == null) || list.isEmpty())
+					{
 						continue;
+					}
 					for (Integer player : list)
 					{
 						insert.setInt(1, player);
@@ -357,8 +364,8 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 				{
 					final L2GrandBossInstance boss = _bosses.get(bossId);
 					StatsSet info = _storedInfo.get(bossId);
-					if (boss == null && info == null)
-				//	if (boss == null || info == null)
+					if ( boss == null  &&  info == null )
+				//	if ((boss == null) || (info == null))
 					{
 						PreparedStatement update = update_grand_boss_data2;
 						update.setInt(1, _bossStatus.get(bossId));
@@ -398,7 +405,9 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 						update.clearParameters();
 					}
 					else /*if (boss != null && info == null)*/
+					{
 						throw new RuntimeException();
+					}
 				}
 			}
 		}
@@ -417,7 +426,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			StatsSet info = _storedInfo.get(bossId);
 			
 			if (statusOnly || (boss == null && info == null))
-		//	if (statusOnly || boss == null || info == null)
+		//	if (statusOnly || (boss == null) || (info == null))
 			{
 				try (PreparedStatement statement = con.prepareStatement(UPDATE_GRAND_BOSS_DATA2))
 				{
@@ -460,7 +469,9 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 				}
 			}
 			else /*if (boss != null && info == null)*/
+			{
 				throw new RuntimeException();
+			}
 		}
 		catch (SQLException e)
 		{
@@ -470,8 +481,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	}
 	
 	/**
-	 * Saves all Grand Boss info and then clears all info from memory,
-	 * including all schedules.
+	 * Saves all Grand Boss info and then clears all info from memory, including all schedules.
 	 */
 	public void cleanUp()
 	{

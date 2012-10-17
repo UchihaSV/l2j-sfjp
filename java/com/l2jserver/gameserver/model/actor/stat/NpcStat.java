@@ -31,10 +31,16 @@ public class NpcStat extends CharStat
 	}
 	
 	@Override
-	public L2Npc getActiveChar() { return (L2Npc)super.getActiveChar(); }
+	public L2Npc getActiveChar()
+	{
+		return (L2Npc) super.getActiveChar();
+	}
 	
 	@Override
-	public int getWalkSpeed(){ return (int) calcStat(Stats.WALK_SPEED, getActiveChar().getTemplate().getBaseWalkSpd(), null, null);}
+	public int getWalkSpeed()
+	{
+		return (int) calcStat(Stats.WALK_SPEED, getActiveChar().getTemplate().getBaseWalkSpd(), null, null);
+	}
 	
 	@Override
 	public float getMovementSpeedMultiplier()
@@ -42,21 +48,32 @@ public class NpcStat extends CharStat
     	//[JOJO]-------------------------------------------------
     	L2Npc ac = getActiveChar();
 		if (ac == null)
+		{
 			return 1f;
-		if (ac.isRunning()) {
+		}
+		if (ac.isRunning())
+		{
 			int baseRunSpd = ac.getTemplate().getBaseRunSpd();
 			if (baseRunSpd == 0)
 				return 1f;
 			return (float)getRunSpeed() / baseRunSpd;
-		} else {
+		}
+		else
+		{
 			int baseWalkSpd = ac.getTemplate().getBaseWalkSpd();
 			if (baseWalkSpd == 0)
 				return 1f;
 			return (float)getWalkSpeed() / baseWalkSpd;
 		}
+	//	if (getActiveChar() == null)
+	//	{
+	//		return 1;
+	//	}
 	//	if (getActiveChar().isRunning())
-	//		return getRunSpeed() * 1f / getActiveChar().getTemplate().getBaseRunSpd();
-	//	return getWalkSpeed() * 1f / getActiveChar().getTemplate().getBaseWalkSpd();
+	//	{
+	//		return (getRunSpeed() * 1f) / getActiveChar().getTemplate().getBaseRunSpd();
+	//	}
+	//	return (getWalkSpeed() * 1f) / getActiveChar().getTemplate().getBaseWalkSpd();
 		//-------------------------------------------------------
 	}
 }

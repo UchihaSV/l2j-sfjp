@@ -15,8 +15,7 @@
 package com.l2jserver.gameserver.network;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class GameCrypt
 {
@@ -33,13 +32,15 @@ public class GameCrypt
 	public void decrypt(byte[] raw, final int offset, final int size)
 	{
 		if (!_isEnabled)
+		{
 			return;
+		}
 		
 		int temp = 0;
 		for (int i = 0; i < size; i++)
 		{
-			int temp2 = raw[offset+i] & 0xFF;
-			raw[offset+i] = (byte) (temp2 ^ _inKey[i&15] ^ temp);
+			int temp2 = raw[offset + i] & 0xFF;
+			raw[offset + i] = (byte) (temp2 ^ _inKey[i & 15] ^ temp);
 			temp = temp2;
 		}
 		
@@ -50,10 +51,10 @@ public class GameCrypt
 		
 		old += size;
 		
-		_inKey[8] = (byte)(old);
-		_inKey[9] = (byte)(old >>> 8);
-		_inKey[10] = (byte)(old >>> 16);
-		_inKey[11] = (byte)(old >>> 24);
+		_inKey[8] = (byte) (old);
+		_inKey[9] = (byte) (old >>> 8);
+		_inKey[10] = (byte) (old >>> 16);
+		_inKey[11] = (byte) (old >>> 24);
 	}
 	
 	public void encrypt(byte[] raw, final int offset, final int size)
@@ -67,9 +68,9 @@ public class GameCrypt
 		int temp = 0;
 		for (int i = 0; i < size; i++)
 		{
-			int temp2 = raw[offset+i] & 0xFF;
-			temp = temp2 ^ _outKey[i&15] ^ temp;
-			raw[offset+i] = (byte) temp;
+			int temp2 = raw[offset + i] & 0xFF;
+			temp = temp2 ^ _outKey[i & 15] ^ temp;
+			raw[offset + i] = (byte) temp;
 		}
 		
 		int old = (_outKey[8] & 0xFF)
@@ -79,9 +80,9 @@ public class GameCrypt
 		
 		old += size;
 		
-		_outKey[8] = (byte)(old);
-		_outKey[9] = (byte)(old >> 8);
-		_outKey[10] = (byte)(old >>> 16);
-		_outKey[11] = (byte)(old >>> 24);
+		_outKey[8] = (byte) (old);
+		_outKey[9] = (byte) (old >> 8);
+		_outKey[10] = (byte) (old >>> 16);
+		_outKey[11] = (byte) (old >>> 24);
 	}
 }

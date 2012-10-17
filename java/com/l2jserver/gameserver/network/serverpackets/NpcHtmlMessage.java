@@ -166,7 +166,9 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 	public void runImpl()
 	{
 		if (Config.BYPASS_VALIDATION && _validate)
+		{
 			buildBypassCache(getClient().getActiveChar());
+		}
 	}
 	
 	public void setHtml(String text)
@@ -177,7 +179,9 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 			_html = text.substring(0, 17200);
 		}
 		if (!text.contains("<html>"))
+		{
 			text = "<html><body>" + text + "</body></html>";
+		}
 		
 		_html = text;
 	}
@@ -283,7 +287,9 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 	private final void buildBypassCache(L2PcInstance activeChar)
 	{
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		if (_ca != null) { _html = new String(_ca, 0, _count); _ca = null; }	//[JOJO]
 		
@@ -293,20 +299,30 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 		{
 			int start = _html.indexOf("\"bypass ", i);
 			int finish = _html.indexOf("\"", start + 1);
-			if (start < 0 || finish < 0)
+			if ((start < 0) || (finish < 0))
+			{
 				break;
+			}
 			
 			if (_html.substring(start + 8, start + 10).equals("-h"))
+			{
 				start += 11;
+			}
 			else
+			{
 				start += 8;
+			}
 			
 			i = finish;
 			int finish2 = _html.indexOf("$", start);
-			if (finish2 < finish && finish2 > 0)
+			if ((finish2 < finish) && (finish2 > 0))
+			{
 				activeChar.addBypass2(_html.substring(start, finish2).trim());
+			}
 			else
+			{
 				activeChar.addBypass(_html.substring(start, finish).trim());
+			}
 		}
 	}
 	
@@ -322,6 +338,8 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 		} else
 			writeS(_html);
 		if (_npcObjId != 0)
+		{
 			writeD(_itemId);
+		}
 	}
 }

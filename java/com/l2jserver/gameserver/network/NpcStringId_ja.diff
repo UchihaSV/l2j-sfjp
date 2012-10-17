@@ -2,7 +2,7 @@
 #P L2J_Server_BETA
 Index: java/com/l2jserver/gameserver/network/NpcStringId.java
 ===================================================================
---- java/com/l2jserver/gameserver/network/NpcStringId.java	(revision 5458)
+--- java/com/l2jserver/gameserver/network/NpcStringId.java	(revision 5640)
 +++ java/com/l2jserver/gameserver/network/NpcStringId.java	(working copy)
 @@ -14,10 +14,11 @@
   */
@@ -17,7 +17,7 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
  import java.util.Arrays;
  import java.util.List;
  import java.util.logging.Level;
-@@ -21607,7 +21608,7 @@
+@@ -21605,7 +21606,7 @@
  	 * Array containing all NpcStringId<br>
  	 * Important: Always initialize with a length of the highest NpcStringId + 1!!!
  	 */
@@ -26,7 +26,7 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
  	
  	static
  	{
-@@ -25210,23 +25211,20 @@
+@@ -25208,23 +25209,20 @@
  	
  	private static final void buildFastLookupTable()
  	{
@@ -54,7 +54,7 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
  				}
  				catch (final Exception e)
  				{
-@@ -25234,13 +25232,6 @@
+@@ -25232,13 +25230,6 @@
  				}
  			}
  		}
@@ -68,19 +68,21 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
  	}
  	
  	private static final int parseMessageParameters(final String name)
-@@ -25271,10 +25262,7 @@
- 
+@@ -25269,12 +25260,7 @@
+ 	
  	private static final NpcStringId getNpcStringIdInternal(final int id)
  	{
--		if (id < 0 || id >= VALUES.length)
+-		if ((id < 0) || (id >= VALUES.length))
+-		{
 -			return null;
+-		}
 -		
 -		return VALUES[id];
 +		return VALUES.get(id);
  	}
  	
  	public static final NpcStringId getNpcStringId(final String name)
-@@ -25291,7 +25279,7 @@
+@@ -25291,7 +25277,7 @@
  	
  	public static final void reloadLocalisations()
  	{
@@ -88,4 +90,4 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
 +		for (final NpcStringId nsId : VALUES.valueCollection())
  		{
  			if (nsId != null)
- 				nsId.removeAllLocalisations();
+ 			{

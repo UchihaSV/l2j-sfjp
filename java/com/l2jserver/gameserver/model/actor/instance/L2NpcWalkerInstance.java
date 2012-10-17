@@ -26,18 +26,15 @@ import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 
-
 /**
- * This class manages some npcs can walk in the city. <br>
- * It inherits all methods from L2NpcInstance. <br><br>
- *
- * @original author Rayan RPG for L2Emu Project
- * @since 819
+ * This class manages some npcs can walk in the city.<br>
+ * It inherits all methods from L2NpcInstance.
+ * @author Rayan
  */
 public class L2NpcWalkerInstance extends L2Npc
 {
 	/**
-	 * Constructor of L2NpcWalkerInstance (use L2Character and L2NpcInstance constructor).<BR><BR>
+	 * Constructor of L2NpcWalkerInstance (use L2Character and L2NpcInstance constructor).
 	 * @param objectId given object id
 	 * @param template L2NpcTemplateForThisAi
 	 */
@@ -49,14 +46,16 @@ public class L2NpcWalkerInstance extends L2Npc
 	}
 	
 	/**
-	 * AI can't be deattached, npc must move always with the same AI instance.
+	 * AI can't be detached, npc must move always with the same AI instance.
 	 * @param newAI AI to set for this L2NpcWalkerInstance
 	 */
 	@Override
 	public void setAI(L2CharacterAI newAI)
 	{
-		if(!(_ai instanceof L2NpcWalkerAI))
+		if (!(_ai instanceof L2NpcWalkerAI))
+		{
 			_ai = newAI;
+		}
 	}
 	
  //	@Override
@@ -69,15 +68,19 @@ public class L2NpcWalkerInstance extends L2Npc
 	
 	/**
 	 * Sends a chat to all _knowObjects
-	 * @param npcString 
+	 * @param npcString
 	 */
 	public void broadcastChat(NpcStringId npcString)
 	{
 		final L2GameServerPacket cs;
 		if (getTemplate().isServerSideName())
+		{
 			throw new UnsupportedOperationException(); //custom_npc cannot say NpcStringId.
+		}
 		else
+		{
 			cs = new NpcSay(getObjectId(), Say2.NPC_ALL, getTemplate().getIdTemplate(), npcString);
+		}
 		broadcastPacket(cs);
 	}
 	/**
@@ -88,21 +91,26 @@ public class L2NpcWalkerInstance extends L2Npc
 	{
 		final L2GameServerPacket cs;
 		if (getTemplate().isServerSideName())
+		{
 			cs = new CreatureSay(getObjectId(), Say2.NPC_ALL, getName(), chat);
+		}
 		else
+		{
 			cs = new NpcSay(getObjectId(), Say2.NPC_ALL, getTemplate().getIdTemplate(), chat);
+		}
 		broadcastPacket(cs);
 	}
 	
 	/**
 	 * NPCs are immortal
 	 * @param i ignore it
-	 * @param attacker  ignore it
-	 * @param awake  ignore it
+	 * @param attacker ignore it
+	 * @param awake ignore it
 	 */
 	@Override
 	public void reduceCurrentHp(double i, L2Character attacker, boolean awake, boolean isDOT, L2Skill skill)
-	{}
+	{
+	}
 	
 	/**
 	 * NPCs are immortal
@@ -118,17 +126,18 @@ public class L2NpcWalkerInstance extends L2Npc
 	@Override
 	public L2NpcWalkerAI getAI()
 	{
-		return (L2NpcWalkerAI)_ai;
+		return (L2NpcWalkerAI) _ai;
 	}
 	
 	protected class L2NpcWalkerAIAccessor extends L2Character.AIAccessor
 	{
 		/**
-		 * AI can't be deattached.
+		 * AI can't be detached.
 		 */
 		@Override
 		public void detachAI()
-		{}
+		{
+		}
 	}
 	
 	@Override

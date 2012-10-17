@@ -238,7 +238,7 @@ public class L2PcTemplate extends L2CharTemplate
 	{
 		return _initialEquipment;
 	}
-
+	
 	/**
 	 * @return {@code true} if this Pc template has an initial equipment associated, {@code false} otherwise.
 	 */

@@ -38,7 +38,6 @@ import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.util.Rnd;
 
-
 public class Lottery
 {
 	public static final long SECOND = 1000;
@@ -68,7 +67,9 @@ public class Lottery
 		_enddate = System.currentTimeMillis();
 		
 		if (Config.ALLOW_LOTTERY)
+		{
 			(new startLottery()).run();
+		}
 	}
 	
 	public static Lottery getInstance()
@@ -166,7 +167,9 @@ public class Lottery
 			}
 			
 			if (Config.DEBUG)
+			{
 				_log.info("Lottery: Starting ticket sell for lottery #" + getId() + ".");
+			}
 			_isSellingTickets = true;
 			_isStarted = true;
 			
@@ -214,7 +217,9 @@ public class Lottery
 		{
 			_isSellingTickets = false;
 			if (Config.DEBUG)
+			{
 				_log.info("Lottery: Stopping ticket sell for lottery #" + getId() + ".");
+			}
 			
 			Announcements.getInstance().announceToAll(SystemMessage.getSystemMessage(SystemMessageId.LOTTERY_TICKET_SALES_TEMP_SUSPENDED));
 		}
@@ -232,7 +237,9 @@ public class Lottery
 		{
 			_isStarted = false;
 			if (Config.DEBUG)
+			{
 				_log.info("Lottery: Ending lottery #" + getId() + ".");
+			}
 			shout(1000283/*çKâ^ÇÃïÛÇ≠Ç∂ÇÃíäëIÇçsÇ¢Ç‹Ç∑ÅI*/);
 			
 			int[] luckynums = new int[5];
@@ -248,7 +255,9 @@ public class Lottery
 			Arrays.sort(luckynums);
 			
 			if (Config.DEBUG)
+			{
 				_log.info("Lottery: The lucky numbers are " + luckynums[0] + ", " + luckynums[1] + ", " + luckynums[2] + ", " + luckynums[3] + ", " + luckynums[4] + ".");
+			}
 			
 			int enchant = 0;
 			int type2 = 0;
@@ -257,13 +266,19 @@ public class Lottery
 			{
 				int num = luckynums[i];
 				if (num <= 16)
+				{
 					enchant |= 1 << (num - 1);
+				}
 				else
+				{
 					type2 |= 1 << (num - 16 - 1);
+				}
 			}
 			
 			if (Config.DEBUG)
+			{
 				_log.info("Lottery: Encoded lucky numbers are " + enchant + ", " + type2);
+			}
 			
 			int count1 = 0;
 			int count2 = 0;
@@ -281,21 +296,31 @@ public class Lottery
 						int curenchant = rset.getInt("enchant_level") & enchant;
 						int curtype2 = rset.getInt("custom_type2") & type2;
 						
-						if (curenchant == 0 && curtype2 == 0)
+						if ((curenchant == 0) && (curtype2 == 0))
+						{
 							continue;
+						}
 						
 						int count = 0;
 						
 						count = Integer.bitCount(curtype2 << 16 | curenchant);
 						
 						if (count == 5)
+						{
 							count1++;
+						}
 						else if (count == 4)
+						{
 							count2++;
+						}
 						else if (count == 3)
+						{
 							count3++;
+						}
 						else if (count > 0)
+						{
 							count4++;
+						}
 					}
 				}
 			}
@@ -310,13 +335,19 @@ public class Lottery
 			long prize3 = 0;
 			
 			if (count1 > 0)
-				prize1 = (long) ((getPrize() - prize4) * Config.ALT_LOTTERY_5_NUMBER_RATE / count1);
+			{
+				prize1 = (long) (((getPrize() - prize4) * Config.ALT_LOTTERY_5_NUMBER_RATE) / count1);
+			}
 			
 			if (count2 > 0)
-				prize2 = (long) ((getPrize() - prize4) * Config.ALT_LOTTERY_4_NUMBER_RATE / count2);
+			{
+				prize2 = (long) (((getPrize() - prize4) * Config.ALT_LOTTERY_4_NUMBER_RATE) / count2);
+			}
 			
 			if (count3 > 0)
-				prize3 = (long) ((getPrize() - prize4) * Config.ALT_LOTTERY_3_NUMBER_RATE / count3);
+			{
+				prize3 = (long) (((getPrize() - prize4) * Config.ALT_LOTTERY_3_NUMBER_RATE) / count3);
+			}
 			
 			if (Config.DEBUG)
 			{
@@ -328,7 +359,9 @@ public class Lottery
 			
 			long newprize = getPrize() - (prize1 + prize2 + prize3 + prize4);
 			if (Config.DEBUG)
+			{
 				_log.info("Lottery: Jackpot for next lottery is " + newprize + ".");
+			}
 			
 			SystemMessage sm;
 			if (count1 > 0)
@@ -405,7 +438,9 @@ public class Lottery
 		while (num != 0)
 		{
 			if ((num & 1) != 0)
+			{
 				res[id++] = nr;
+			}
 			num >>>= 1;
 			++nr;
 		}
@@ -419,7 +454,11 @@ public class Lottery
 	
 	public long[] checkTicket(int id, int enchant, int type2)
 	{
-		long res[] = { 0, 0 };
+		long res[] =
+		{
+			0,
+			0
+		};
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement(SELECT_LOTTERY_TICKET))
 		{
@@ -431,7 +470,7 @@ public class Lottery
 					int curenchant = rset.getInt("number1") & enchant;
 					int curtype2 = rset.getInt("number2") & type2;
 					
-					if (curenchant == 0 && curtype2 == 0)
+					if ((curenchant == 0) && (curtype2 == 0))
 					{
 						return res;
 					}
@@ -460,7 +499,9 @@ public class Lottery
 					}
 					
 					if (Config.DEBUG)
+					{
 						_log.warning("count: " + count + ", id: " + id + ", enchant: " + enchant + ", type2: " + type2);
+					}
 				}
 			}
 		}

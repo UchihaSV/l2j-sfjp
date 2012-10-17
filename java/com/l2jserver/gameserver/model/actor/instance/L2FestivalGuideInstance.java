@@ -23,10 +23,8 @@ import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.util.StringUtil;
 
-
 /**
  * Festival of Darkness Guide (Seven Signs)
- *
  * @author Tempy
  */
 public final class L2FestivalGuideInstance extends L2Npc
@@ -38,7 +36,7 @@ public final class L2FestivalGuideInstance extends L2Npc
 	private final int _redStonesNeeded;
 	
 	/**
-	 * @param objectId 
+	 * @param objectId
 	 * @param template
 	 */
 	public L2FestivalGuideInstance(int objectId, L2NpcTemplate template)
@@ -88,7 +86,7 @@ public final class L2FestivalGuideInstance extends L2Npc
 				_greenStonesNeeded = 3600;
 				_redStonesNeeded = 1800;
 				break;
-				
+			
 			case 31137:
 			case 31142:
 				_festivalType = SevenSignsFestival.FESTIVAL_LEVEL_MAX_31;
@@ -150,7 +148,7 @@ public final class L2FestivalGuideInstance extends L2Npc
 	
 	public int getStoneCount(int stoneType)
 	{
-		switch(stoneType)
+		switch (stoneType)
 		{
 			case SevenSigns.SEAL_STONE_BLUE_ID:
 				return _blueStonesNeeded;
@@ -176,13 +174,21 @@ public final class L2FestivalGuideInstance extends L2Npc
 		html.replace("%festivalType%", SevenSignsFestival.getFestivalName(_festivalType));
 		html.replace("%cycleMins%", SevenSignsFestival.getInstance().getMinsToNextCycle());
 		if (!isDescription && "2b".equals(val + suffix))
+		{
 			html.replace("%minFestivalPartyMembers%", Config.ALT_FESTIVAL_MIN_PLAYER);
+		}
 		
 		// If the stats or bonus table is required, construct them.
-		if (val == 5) html.replace("%statsTable%", getStatsTable());
-		if (val == 6) html.replace("%bonusTable%", getBonusTable());
+		if (val == 5)
+		{
+			html.replace("%statsTable%", getStatsTable());
+		}
+		if (val == 6)
+		{
+			html.replace("%bonusTable%", getBonusTable());
+		}
 		
-		//festival's fee
+		// festival's fee
 		if (val == 1)
 		{
 			html.replace("%blueStoneNeeded%", _blueStonesNeeded);
@@ -193,7 +199,7 @@ public final class L2FestivalGuideInstance extends L2Npc
 		player.sendPacket(html);
 		
 		// Send a Server->Client ActionFailed to the L2PcInstance in order to avoid that the client wait another packet
-		player.sendPacket( ActionFailed.STATIC_PACKET );
+		player.sendPacket(ActionFailed.STATIC_PACKET);
 	}
 	
 	private static final String getStatsTable()
@@ -209,21 +215,15 @@ public final class L2FestivalGuideInstance extends L2Npc
 			String winningCabal = "Children of Dusk";
 			
 			if (dawnScore > duskScore)
+			{
 				winningCabal = "Children of Dawn";
+			}
 			else if (dawnScore == duskScore)
+			{
 				winningCabal = "None";
+			}
 			
-			StringUtil.append(tableHtml,
-					"<tr><td width=\"100\" align=\"center\">",
-					festivalName,
-					"</td><td align=\"center\" width=\"35\">",
-					String.valueOf(duskScore),
-					"</td><td align=\"center\" width=\"35\">",
-					String.valueOf(dawnScore),
-					"</td><td align=\"center\" width=\"130\">",
-					winningCabal,
-					"</td></tr>"
-			);
+			StringUtil.append(tableHtml, "<tr><td width=\"100\" align=\"center\">", festivalName, "</td><td align=\"center\" width=\"35\">", String.valueOf(duskScore), "</td><td align=\"center\" width=\"35\">", String.valueOf(dawnScore), "</td><td align=\"center\" width=\"130\">", winningCabal, "</td></tr>");
 		}
 		
 		return tableHtml.toString();
@@ -239,13 +239,7 @@ public final class L2FestivalGuideInstance extends L2Npc
 			int accumScore = SevenSignsFestival.getInstance().getAccumulatedBonus(i);
 			String festivalName = SevenSignsFestival.getFestivalName(i);
 			
-			StringUtil.append(tableHtml,
-					"<tr><td align=\"center\" width=\"150\">",
-					festivalName,
-					"</td><td align=\"center\" width=\"150\">",
-					String.valueOf(accumScore),
-					"</td></tr>"
-			);
+			StringUtil.append(tableHtml, "<tr><td align=\"center\" width=\"150\">", festivalName, "</td><td align=\"center\" width=\"150\">", String.valueOf(accumScore), "</td></tr>");
 		}
 		
 		return tableHtml.toString();

@@ -14,9 +14,6 @@
  */
 package com.l2jserver.gameserver;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
-import gnu.trove.procedure.TObjectProcedure;
-
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +22,9 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.ai.CtrlEvent;
 import com.l2jserver.gameserver.instancemanager.DayNightSpawnManager;
 import com.l2jserver.gameserver.model.actor.L2Character;
+
+import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.procedure.TObjectProcedure;
 
 /**
  * Removed TimerThread watcher [DrHouse]<br>
@@ -108,7 +108,9 @@ public class GameTimeController
 	public void registerMovingObject(L2Character cha)
 	{
 		if (cha == null)
+		{
 			return;
+		}
 		
 		_lock.lock();
 		try
@@ -125,9 +127,8 @@ public class GameTimeController
 	 * Move all characters contained in movingObjects of GameTimeController.<br>
 	 * All characters in movement are identified in <b>movingObjects</b> of GameTimeController.<br>
 	 * <b><u> Actions</u> :</b><br>
-	 * <li>Update the position of each L2Character </li>
-	 * <li>If movement is finished, the L2Character is removed from movingObjects </li>
-	 * <li>Create a task to update the _knownObject and _knowPlayers of each L2Character that finished its movement and of their already known L2Object then notify AI with EVT_ARRIVED </li>
+	 * <li>Update the position of each L2Character</li> <li>If movement is finished, the L2Character is removed from movingObjects</li> <li>Create a task to update the _knownObject and _knowPlayers of each L2Character that finished its movement and of their already known L2Object then notify AI with
+	 * EVT_ARRIVED</li>
 	 */
 	protected void moveObjects()
 	{
@@ -186,7 +187,7 @@ public class GameTimeController
 			long runtime;
 			int sleepTime;
 			
-			for(;;)
+			for (;;)
 			{
 				try
 				{
@@ -196,22 +197,28 @@ public class GameTimeController
 					_gameTicks = (int) (runtime / MILLIS_IN_TICK); // new ticks value (ticks now)
 					
 					if (oldTicks != _gameTicks)
+					{
 						moveObjects(); // Runs possibly too often
+					}
 					
 					runtime = (System.currentTimeMillis() - _gameStartTime) - runtime;
 					
 					// calculate sleep time... time needed to next tick minus time it takes to call moveObjects()
-					sleepTime = 1 + MILLIS_IN_TICK - ((int) runtime) % MILLIS_IN_TICK;
+					sleepTime = (1 + MILLIS_IN_TICK) - (((int) runtime) % MILLIS_IN_TICK);
 					
-					//_log.finest("TICK: "+_gameTicks);
+					// _log.finest("TICK: "+_gameTicks);
 					
 					if (sleepTime > 0)
+					{
 						Thread.sleep(sleepTime);
+					}
 				}
 				catch (InterruptedException ie)
 				{
 					if (_interruptRequest)
+					{
 						return;
+					}
 					
 					_log.log(Level.WARNING, "", ie);
 				}
@@ -247,7 +254,9 @@ public class GameTimeController
 				if (_ended.hasAI()) // AI could be just disabled due to region turn off
 				{
 					if (Config.MOVE_BASED_KNOWNLIST)
+					{
 						_ended.getKnownList().findObjects();
+					}
 					_ended.getAI().notifyEvent(CtrlEvent.EVT_ARRIVED);
 				}
 			}

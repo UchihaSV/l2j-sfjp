@@ -212,7 +212,9 @@ public final class L2LoginServer
 		{
 			String line;
 			String[] parts;
-			try (FileInputStream fis = new FileInputStream(bannedFile); InputStreamReader is = new InputStreamReader(fis); LineNumberReader reader = new LineNumberReader(is))
+			try (FileInputStream fis = new FileInputStream(bannedFile);
+				InputStreamReader is = new InputStreamReader(fis);
+				LineNumberReader reader = new LineNumberReader(is))
 			{
 				while ((line = reader.readLine()) != null)
 				{

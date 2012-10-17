@@ -42,8 +42,7 @@ public class L2NpcWalkerAI extends L2CharacterAI implements Runnable
 	private int _currentPos;
 	
 	/**
-	 * Constructor of L2CharacterAI.<BR><BR>
-	 *
+	 * Constructor of L2CharacterAI.
 	 * @param accessor The AI accessor of the L2Character
 	 */
 	public L2NpcWalkerAI(L2Character.AIAccessor accessor)
@@ -51,13 +50,22 @@ public class L2NpcWalkerAI extends L2CharacterAI implements Runnable
 		super(accessor);
 		
 		if (!Config.ALLOW_NPC_WALKERS)
+		{
 			return;
+		}
 		
 		_route = NpcWalkerRoutesData.getInstance().getRouteForNpc(getActor().getNpcId());
+		
+		// Here we need 1 second initial delay cause getActor().hasAI() will return null...
+		// Constructor of L2NpcWalkerAI is called faster then ai object is attached in L2NpcWalkerInstance
 		if (_route != null)
+		{
 			ThreadPoolManager.getInstance().scheduleAi(this, com.l2jserver.util.Rnd.get(300000, 36000));
+		}
 		else
-			_log.warning(getClass().getSimpleName()+": Missing route data! Npc: "+_actor);
+		{
+			_log.warning(getClass().getSimpleName() + ": Missing route data! Npc: " + _actor);
+		}
 	}
 	
 	@Override
@@ -72,15 +80,18 @@ public class L2NpcWalkerAI extends L2CharacterAI implements Runnable
 		final L2NpcWalkerNode pos = _route.get(_currentPos);
 		
 		/**
-		 * false - walking
-		 * true - Running
+		 * false - walking true - Running
 		 */
 		if (pos.getRunning())
+		{
 			getActor().setRunning();
+		}
 		else
+		{
 			getActor().setWalking();
+		}
 		
-		//notify AI of MOVE_TO
+		// notify AI of MOVE_TO
 		setWalkingToNextPoint(true);
 		
 		setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, new L2CharPosition(pos.getMoveX(), pos.getMoveY(), pos.getMoveZ(), 0));
@@ -92,7 +103,9 @@ public class L2NpcWalkerAI extends L2CharacterAI implements Runnable
 		super.onEvtArrived();
 		
 		if (!Config.ALLOW_NPC_WALKERS)
+		{
 			return;
+		}
 		
 		if (isWalkingToNextPoint())
 		{
@@ -104,19 +117,25 @@ public class L2NpcWalkerAI extends L2CharacterAI implements Runnable
 			String chat;
 			
 			if ((npcString = pos.getNpcString()) != null)
+			{
 				getActor().broadcastChat(npcString);
+			}
 			else if ((chat = pos.getChatText()) != null && chat.length() > 0)
+			{
 				getActor().broadcastChat(chat);
+			}
 			
-			//time in millis
+			// time in millis
 			long delay = pos.getDelay();
 			
-			//sleeps between each move
+			// sleeps between each move
 			if (delay < 0)
 			{
 				delay = DEFAULT_MOVE_DELAY;
 				if (Config.DEVELOPER)
+				{
 					_log.warning(getClass().getSimpleName() + ": Wrong Delay Set in Npc Walker Functions = " + delay + " secs, using default delay: " + DEFAULT_MOVE_DELAY + " secs instead.");
+				}
 			}
 			
 			setWalkingToNextPoint(false);

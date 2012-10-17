@@ -78,9 +78,7 @@ public class LoginServerThread extends Thread
 	protected static final Logger _log = Logger.getLogger(LoginServerThread.class.getName());
 	protected static final Logger _logAccounting = Logger.getLogger("accounting");
 	
-	/**
-	 * @see com.l2jserver.loginserver.L2LoginServer#PROTOCOL_REV
-	 */
+	/** @see com.l2jserver.loginserver.L2LoginServer#PROTOCOL_REV */
 	private static final int REVISION = 0x0106;
 	private RSAPublicKey _publicKey;
 	private final String _hostname;
@@ -366,7 +364,7 @@ public class LoginServerThread extends Thread
 			}
 			catch (UnknownHostException e)
 			{
-				_log.log(Level.WARNING, "", e);	
+				_log.log(Level.WARNING, "", e);
 			}
 			//[JOJO]-------------------------------------------------
 			catch (java.net.ConnectException e)	//+[JOJO]
@@ -582,7 +580,10 @@ public class LoginServerThread extends Thread
 		if (client != null)
 		{
 			LogRecord record = new LogRecord(Level.WARNING, "Kicked by login");
-			record.setParameters(new Object[]{client});
+			record.setParameters(new Object[]
+			{
+				client
+			});
 			_logAccounting.log(record);
 			client.setAditionalClosePacket(SystemMessage.getSystemMessage(SystemMessageId.ANOTHER_LOGIN_WITH_ACCOUNT));
 			client.closeNow();
@@ -609,7 +610,9 @@ public class LoginServerThread extends Thread
 					chars++;
 					long delTime = rs.getLong("deletetime");
 					if (delTime != 0)
+					{
 						charToDel.add(delTime);
+					}
 				}
 			}
 		}

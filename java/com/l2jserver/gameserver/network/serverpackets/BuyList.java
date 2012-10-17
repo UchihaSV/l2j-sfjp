@@ -49,7 +49,7 @@ public final class BuyList extends L2GameServerPacket
 		for (L2TradeItem item : _list)
 		{
 			final long item_getCurrentCount = item.getCurrentCount();	//[JOJO]
-			if (item_getCurrentCount > 0 || !item.hasLimitedStock())
+			if ((item_getCurrentCount > 0) || !item.hasLimitedStock())
 			{
 				writeD(item.getItemId());
 				writeD(item.getItemId());
@@ -83,9 +83,13 @@ public final class BuyList extends L2GameServerPacket
 				 || item_getItemId >= 6779 && item_getItemId <= 6833
 				 || item_getItemId >= 7918 && item_getItemId <= 8029)
 				//[L2J-JP EDIT END]
+				{
 					writeQ((long) (item.getPrice() * Config.RATE_SIEGE_GUARDS_PRICE * (1 + _taxRate)));
+				}
 				else
+				{
 					writeQ((long) (item.getPrice() * (1 + _taxRate)));
+				}
 			}
 		}
 	}

@@ -121,7 +121,6 @@ public abstract class DocumentParser
 		return _currentDocument;
 	}
 	
-	
 	/**
 	 * Wrapper for {@link #parseDirectory(File, boolean)}.
 	 * @param file the path to the directory where the XML files are.
@@ -275,7 +274,7 @@ public abstract class DocumentParser
 	
 	/**
 	 * @param n the named node map
-	 * @param name  the attribute name
+	 * @param name the attribute name
 	 * @return the node string value for the given node name and named node map if exist, otherwise an empty string
 	 */
 	protected static String parseString(NamedNodeMap n, String name)

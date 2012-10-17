@@ -26,7 +26,6 @@ import com.l2jserver.util.Rnd;
 
 /**
  * This class manages all Grand Bosses.
- *
  * @version $Revision: 1.0.0.0 $ $Date: 2006/06/16 $
  */
 public final class L2GrandBossInstance extends L2MonsterInstance
@@ -36,7 +35,6 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 	
 	/**
 	 * Constructor for L2GrandBossInstance. This represent all grandbosses.
-	 * 
 	 * @param objectId ID of the instance
 	 * @param template L2NpcTemplate of the instance
 	 */
@@ -48,7 +46,10 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 	}
 	
 	@Override
-	protected int getMaintenanceInterval() { return BOSS_MAINTENANCE_INTERVAL; }
+	protected int getMaintenanceInterval()
+	{
+		return BOSS_MAINTENANCE_INTERVAL;
+	}
 	
 	@Override
 	public void onSpawn()
@@ -86,7 +87,9 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 	public boolean doDie(L2Character killer)
 	{
 		if (!super.doDie(killer))
+		{
 			return false;
+		}
 		//[JOJO] ex. 'Frintezza' != null, 'Scarlet Van Halisha' == null
 		if (GrandBossManager.getInstance().getStatsSet(getNpcId()) == null)
 			return true;
@@ -94,9 +97,13 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 		L2PcInstance player = null;
 		
 		if (killer instanceof L2PcInstance)
+		{
 			player = (L2PcInstance) killer;
+		}
 		else if (killer instanceof L2Summon)
+		{
 			player = ((L2Summon) killer).getOwner();
+		}
 		
 		if (player != null)
 		{
@@ -106,15 +113,19 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 				for (L2PcInstance member : player.getParty().getMembers())
 				{
 					RaidBossPointsManager.getInstance().addPoints(member, getNpcId(), (getLevel() / 2) + Rnd.get(-5, 5));
-					if(member.isNoble())
+					if (member.isNoble())
+					{
 						Hero.getInstance().setRBkilled(member.getObjectId(), getNpcId());
+					}
 				}
 			}
 			else
 			{
 				RaidBossPointsManager.getInstance().addPoints(player, getNpcId(), (getLevel() / 2) + Rnd.get(-5, 5));
-				if(player.isNoble())
+				if (player.isNoble())
+				{
 					Hero.getInstance().setRBkilled(player.getObjectId(), getNpcId());
+				}
 			}
 		}
 		return true;
@@ -123,7 +134,7 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 	@Override
 	public float getVitalityPoints(int damage)
 	{
-		return - super.getVitalityPoints(damage) / 100;
+		return -super.getVitalityPoints(damage) / 100;
 	}
 	
 	@Override
