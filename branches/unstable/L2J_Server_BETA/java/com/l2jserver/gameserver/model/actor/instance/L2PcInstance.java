@@ -7599,6 +7599,29 @@ public final class L2PcInstance extends L2Playable
 		return _accessLevel;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	// L2Chracter ‚©‚ç l2pcInstance ‚Öˆø‰z‚µ.
+	private long _exceptions = 0L;
+	private final String COND_EXCEPTIONS = "COND_EX_" + getObjectId();
+	
+	public void addOverrideCond(PcCondOverride exc)
+	{
+		_exceptions |= exc.getMask();
+		GlobalVariablesManager.getInstance().storeVariable(COND_EXCEPTIONS, Long.toString(_exceptions));
+	}
+	
+	public void removeOverridedCond(PcCondOverride exc)
+	{
+		_exceptions &= ~exc.getMask();
+		GlobalVariablesManager.getInstance().storeVariable(COND_EXCEPTIONS, Long.toString(_exceptions));
+	}
+	
+	@Override public boolean canOverrideCond(PcCondOverride excs)
+	{
+		return (_exceptions & excs.getMask()) != 0;
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * Update Stats of the L2PcInstance client side by sending Server->Client packet UserInfo/StatusUpdate to this L2PcInstance and CharInfo/StatusUpdate to all L2PcInstance in its _KnownPlayers (broadcast).
 	 * @param broadcastType
