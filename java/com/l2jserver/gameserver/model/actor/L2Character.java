@@ -230,7 +230,9 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	
 	protected long _exceptions = 0L;
 	
-	public final String COND_EXCEPTIONS = "COND_EX_" + getObjectId();
+	private boolean _lethalable;
+	
+	protected final String COND_EXCEPTIONS = "COND_EX_" + getObjectId();
 	
 	/**
 	 * @return True if debugging is enabled for this L2Character
@@ -7996,6 +7998,16 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public boolean canOverrideCond(PcCondOverride excs)
 	{
 		return (_exceptions & excs.getMask()) == excs.getMask();
+	}
+	
+	public void setLethalable(boolean val)
+	{
+		_lethalable = val;
+	}
+	
+	public boolean isLethalable()
+	{
+		return _lethalable;
 	}
 	
 	// LISTENERS
