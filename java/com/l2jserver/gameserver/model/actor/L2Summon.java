@@ -1036,7 +1036,7 @@ public abstract class L2Summon extends L2Playable
 		
 		for (int itemId : getOwner().getAutoSoulShot())
 		{
-			item = getInventory().getItemByItemId(itemId);
+			item = getOwner().getInventory().getItemByItemId(itemId);
 			
 			if (item != null)
 			{
