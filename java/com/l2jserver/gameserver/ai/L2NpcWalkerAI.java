@@ -80,7 +80,8 @@ public class L2NpcWalkerAI extends L2CharacterAI implements Runnable
 		final L2NpcWalkerNode pos = _route.get(_currentPos);
 		
 		/**
-		 * false - walking true - Running
+		 * false - walking<br>
+		 * true - Running
 		 */
 		if (pos.getRunning())
 		{
