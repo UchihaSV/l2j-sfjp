@@ -76,7 +76,7 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 2609592249095305857L;
 	
-	public static final String EOL = System.getProperty("line.separator");
+	public static final String EOL = System.lineSeparator();
 	
 	private final JTabbedPane _tabPane = new JTabbedPane();
 	
@@ -431,7 +431,7 @@ public class ConfigUserInterface extends JFrame implements ActionListener
 			{
 				e.printStackTrace();
 			}
-			return System.getProperty("line.separator");
+			return System.lineSeparator();
 		}
 		//-------------------------------------------------------
 		

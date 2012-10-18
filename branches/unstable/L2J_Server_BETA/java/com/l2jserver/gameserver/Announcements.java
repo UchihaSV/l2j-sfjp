@@ -239,7 +239,7 @@ public class Announcements
 		{
 			e.printStackTrace();
 		}
-		return System.getProperty("line.separator");
+		return System.lineSeparator();
 	}
 	//-------------------------------------------------------
 	

@@ -31,7 +31,7 @@ import com.sun.jna.ptr.IntByReference;
  */
 public class ConsoleLocalizator extends LocalizationParser
 {
-	public static final String EOL = System.getProperty("line.separator");
+	public static final String EOL = System.lineSeparator();
 	
 	private WinConsole _wcon;
 	private Pointer _stdout;
