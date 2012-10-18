@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
@@ -53,14 +54,14 @@ public class MailManager
 	private void load()
 	{
 		int count = 0;
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			Statement ps = con.createStatement();
+			ResultSet rs = ps.executeQuery("SELECT * FROM messages ORDER BY expiration"))
 		{
-			PreparedStatement statement = con.prepareStatement("SELECT * FROM messages ORDER BY expiration");
-			ResultSet rset1 = statement.executeQuery();
-			while (rset1.next())
+			while (rs.next())
 			{
 				
-				Message msg = new Message(rset1);
+				Message msg = new Message(rs);
 				
 				int msgId = msg.getId();
 				_messages.put(msgId, msg);
@@ -78,8 +79,6 @@ public class MailManager
 					ThreadPoolManager.getInstance().scheduleGeneral(new MessageDeletionTask(msgId), expiration - System.currentTimeMillis());
 				}
 			}
-			rset1.close();
-			statement.close();
 		}
 		catch (SQLException e)
 		{
@@ -166,11 +165,10 @@ public class MailManager
 	public void sendMessage(Message msg)
 	{
 		_messages.put(msg.getId(), msg);
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement ps = Message.getStatement(msg, con))
 		{
-			PreparedStatement stmt = Message.getStatement(msg, con);
-			stmt.execute();
-			stmt.close();
+			ps.execute();
 		}
 		catch (SQLException e)
 		{
@@ -243,12 +241,11 @@ public class MailManager
 	
 	public final void markAsReadInDb(int msgId)
 	{
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement("UPDATE messages SET isUnread = 'false' WHERE messageId = ?"))
 		{
-			PreparedStatement stmt = con.prepareStatement("UPDATE messages SET isUnread = 'false' WHERE messageId = ?");
-			stmt.setInt(1, msgId);
-			stmt.execute();
-			stmt.close();
+			ps.setInt(1, msgId);
+			ps.execute();
 		}
 		catch (SQLException e)
 		{
@@ -259,10 +256,10 @@ public class MailManager
 	public final void markAsDeletedBySenderInDb(int msgId)
 	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement stmt = con.prepareStatement("UPDATE messages SET isDeletedBySender = 'true' WHERE messageId = ?"))
+			PreparedStatement ps = con.prepareStatement("UPDATE messages SET isDeletedBySender = 'true' WHERE messageId = ?"))
 		{
-			stmt.setInt(1, msgId);
-			stmt.execute();
+			ps.setInt(1, msgId);
+			ps.execute();
 		}
 		catch (SQLException e)
 		{
@@ -273,10 +270,10 @@ public class MailManager
 	public final void markAsDeletedByReceiverInDb(int msgId)
 	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement stmt = con.prepareStatement("UPDATE messages SET isDeletedByReceiver = 'true' WHERE messageId = ?"))
+			PreparedStatement ps = con.prepareStatement("UPDATE messages SET isDeletedByReceiver = 'true' WHERE messageId = ?"))
 		{
-			stmt.setInt(1, msgId);
-			stmt.execute();
+			ps.setInt(1, msgId);
+			ps.execute();
 		}
 		catch (SQLException e)
 		{
@@ -287,10 +284,10 @@ public class MailManager
 	public final void removeAttachmentsInDb(int msgId)
 	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement stmt = con.prepareStatement("UPDATE messages SET hasAttachments = 'false' WHERE messageId = ?"))
+			PreparedStatement ps = con.prepareStatement("UPDATE messages SET hasAttachments = 'false' WHERE messageId = ?"))
 		{
-			stmt.setInt(1, msgId);
-			stmt.execute();
+			ps.setInt(1, msgId);
+			ps.execute();
 		}
 		catch (SQLException e)
 		{
@@ -301,10 +298,10 @@ public class MailManager
 	public final void deleteMessageInDb(int msgId)
 	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement stmt = con.prepareStatement("DELETE FROM messages WHERE messageId = ?"))
+			PreparedStatement ps = con.prepareStatement("DELETE FROM messages WHERE messageId = ?"))
 		{
-			stmt.setInt(1, msgId);
-			stmt.execute();
+			ps.setInt(1, msgId);
+			ps.execute();
 		}
 		catch (SQLException e)
 		{
