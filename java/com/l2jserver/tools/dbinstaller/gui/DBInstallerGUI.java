@@ -90,7 +90,7 @@ public class DBInstallerGUI extends JFrame implements DBOutputInterface
 	@Override
 	public void appendToProgressArea(String text)
 	{
-		_progArea.append(text + System.getProperty("line.separator"));
+		_progArea.append(text + System.lineSeparator());
 		_progArea.setCaretPosition(_progArea.getDocument().getLength());
 	}
 	
