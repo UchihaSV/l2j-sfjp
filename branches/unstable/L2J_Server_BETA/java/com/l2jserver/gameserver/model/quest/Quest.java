@@ -20,11 +20,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
@@ -76,6 +74,9 @@ import com.l2jserver.gameserver.util.MinionList;
 import com.l2jserver.util.Rnd;
 import com.l2jserver.util.Util;
 
+import gnu.trove.iterator.TIntIterator;
+import gnu.trove.set.hash.TIntHashSet;
+
 /**
  * Quest main class.
  * @author Luis Arias
@@ -93,7 +94,7 @@ public class Quest extends ManagedScript
 	 * Map containing lists of timers from the name of the timer.
 	 */
 	private final FastMap<String, List<QuestTimer>> _allEventTimers = new FastMap<String, List<QuestTimer>>().shared();
-	private final HashSet<Integer> _questInvolvedNpcs = new HashSet<>();
+	private final TIntHashSet _questInvolvedNpcs = new TIntHashSet();	//[JOJO] HashSet --> TIntHashSet
 	
 	private final ReentrantReadWriteLock _rwLock = new ReentrantReadWriteLock();
 	private final WriteLock _writeLock = _rwLock.writeLock();
@@ -2756,9 +2757,9 @@ public class Quest extends ManagedScript
 		}
 		_allEventTimers.clear();
 		
-		for (Integer npcId : _questInvolvedNpcs)
+		for (TIntIterator npcId = _questInvolvedNpcs.iterator(); npcId.hasNext();)	//[JOJO] HashSet --> TIntHashSet
 		{
-			L2NpcTemplate template = NpcTable.getInstance().getTemplate(npcId.intValue());
+			L2NpcTemplate template = NpcTable.getInstance().getTemplate(npcId.next());
 			if (template != null)
 			{
 				template.removeQuest(this);
@@ -2773,9 +2774,9 @@ public class Quest extends ManagedScript
 		return true;
 	}
 	
-	public Set<Integer> getQuestInvolvedNpcs()
+	public int[] getQuestInvolvedNpcs()	//[JOJO] Map --> int[]
 	{
-		return _questInvolvedNpcs;
+		return _questInvolvedNpcs.toArray();
 	}
 	
 	@Override
