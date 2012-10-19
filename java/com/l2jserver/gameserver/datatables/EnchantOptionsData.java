@@ -15,7 +15,6 @@
 package com.l2jserver.gameserver.datatables;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 
 import org.w3c.dom.Node;
@@ -30,7 +29,7 @@ import com.l2jserver.gameserver.util.Util;
  */
 public class EnchantOptionsData extends DocumentParser
 {
-	private final Map<Integer, Map<Integer, EnchantOptions>> _data = new HashMap<>();
+	private final HashMap<Integer, HashMap<Integer, EnchantOptions>> _data = new HashMap<>();
 	
 	protected EnchantOptionsData()
 	{
@@ -48,7 +47,6 @@ public class EnchantOptionsData extends DocumentParser
 	{
 		Node att = null;
 		int counter = 0;
-		EnchantOptions op = null;
 		for (Node n = getCurrentDocument().getFirstChild(); n != null; n = n.getNextSibling())
 		{
 			if ("list".equalsIgnoreCase(n.getNodeName()))
@@ -66,7 +64,7 @@ public class EnchantOptionsData extends DocumentParser
 						{
 							if ("options".equalsIgnoreCase(cd.getNodeName()))
 							{
-								op = new EnchantOptions(parseInt(cd.getAttributes(), "level"));
+								EnchantOptions op = new EnchantOptions(parseInt(cd.getAttributes(), "level"));
 								_data.get(itemId).put(op.getLevel(), op);
 								
 								for (byte i = 0; i < 3; i++)
