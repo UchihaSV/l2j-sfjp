@@ -377,7 +377,7 @@ public final class RequestActionUse extends L2GameClientPacket
 					getClient().sendPacket(ActionFailed.STATIC_PACKET);
 					return;
 				}
-				if (activeChar.getPrivateStoreType() != 0)
+				if (activeChar.getPrivateStoreType() != L2PcInstance.STORE_PRIVATE_NONE)
 				{
 					activeChar.setPrivateStoreType(L2PcInstance.STORE_PRIVATE_NONE);
 					activeChar.broadcastUserInfo();
