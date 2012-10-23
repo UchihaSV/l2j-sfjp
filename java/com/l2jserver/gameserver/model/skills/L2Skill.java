@@ -198,7 +198,6 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	private final int _triggeredLevel;
 	private final String _chanceType;
 	private final int _soulMaxConsume;
-	private final int _soulConsume;
 	private final int _numSouls;
 	private final int _expNeeded;
 	private final int _critChance;
@@ -487,7 +486,6 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		_numSouls = set.getInteger("num_souls", 0);
 		_soulMaxConsume = set.getInteger("soulMaxConsumeCount", 0);
 		_blowChance = set.getInteger("blowChance", 0);
-		_soulConsume = set.getInteger("soulConsumeCount", 0);
 		_expNeeded = set.getInteger("expNeeded", 0);
 		_critChance = set.getInteger("critChance", 0);
 		
@@ -1124,11 +1122,6 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	public final int getMaxSoulConsumeCount()
 	{
 		return _soulMaxConsume;
-	}
-	
-	public final int getSoulConsumeCount()
-	{
-		return _soulConsume;
 	}
 	
 	public final int getExpNeeded()
