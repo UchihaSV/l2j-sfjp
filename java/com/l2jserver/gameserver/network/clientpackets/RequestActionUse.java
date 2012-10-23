@@ -319,7 +319,7 @@ public final class RequestActionUse extends L2GameClientPacket
 					activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 					return;
 				}
-				if (activeChar.getPrivateStoreType() != 0)
+				if (activeChar.getPrivateStoreType() != L2PcInstance.STORE_PRIVATE_NONE)
 				{
 					activeChar.setPrivateStoreType(L2PcInstance.STORE_PRIVATE_NONE);
 					activeChar.broadcastUserInfo();
@@ -883,7 +883,7 @@ public final class RequestActionUse extends L2GameClientPacket
 			return;
 		}
 		
-		if (activeChar.getPrivateStoreType() != 0)
+		if (activeChar.getPrivateStoreType() != L2PcInstance.STORE_PRIVATE_NONE)
 		{
 			activeChar.sendPacket(SystemMessageId.PRIVATE_STORE_UNDER_WAY);	// [L2J_JP EDIT]
 		//	activeChar.sendMessage("You cannot use a skill while operating a private store.");

@@ -824,7 +824,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		{
 			return false;
 		}
-		if (player.getPrivateStoreType() != 0)
+		if (player.getPrivateStoreType() != L2PcInstance.STORE_PRIVATE_NONE)
 		{
 			return false;
 		}
