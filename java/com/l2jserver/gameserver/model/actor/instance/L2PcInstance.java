@@ -488,7 +488,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private int _bookmarkslot = 0; // The Teleport Bookmark Slot
 	
-	private List<TeleportBookmark> tpbookmark = new FastList<>();
+	private FastList<TeleportBookmark> tpbookmark = new FastList<>();
 	
 	private PunishLevel _punishLevel = PunishLevel.NONE;
 	private long _punishTimer = 0;
@@ -562,11 +562,11 @@ public final class L2PcInstance extends L2Playable
 	private int _transformationId = 0;
 	
 	/** The table containing all L2RecipeList of the L2PcInstance */
-	private final Map<Integer, L2RecipeList> _dwarvenRecipeBook = new FastMap<>();
-	private final Map<Integer, L2RecipeList> _commonRecipeBook = new FastMap<>();
+	private final FastMap<Integer, L2RecipeList> _dwarvenRecipeBook = new FastMap<>();
+	private final FastMap<Integer, L2RecipeList> _commonRecipeBook = new FastMap<>();
 	
 	/** Premium Items */
-	private final Map<Integer, L2PremiumItem> _premiumItems = new FastMap<>();
+	private final FastMap<Integer, L2PremiumItem> _premiumItems = new FastMap<>();
 	
 	/** True if the L2PcInstance is sitting */
 	private boolean _waitTypeSitting;
@@ -623,7 +623,7 @@ public final class L2PcInstance extends L2Playable
 	private int _questNpcObject = 0;
 	
 	/** The table containing all Quests began by the L2PcInstance */
-	private final Map<String, QuestState> _quests = new FastMap<>();
+	private final FastMap<String, QuestState> _quests = new FastMap<>();
 	
 	/** The list containing all shortCuts of this L2PcInstance */
 	private final ShortCuts _shortCuts = new ShortCuts(this);
@@ -633,8 +633,8 @@ public final class L2PcInstance extends L2Playable
 	 */
 	private final MacroList _macros = new MacroList(this);
 	
-	private final List<L2PcInstance> _snoopListener = new FastList<>();
-	private final List<L2PcInstance> _snoopedPlayer = new FastList<>();
+	private final FastList<L2PcInstance> _snoopListener = new FastList<>();
+	private final FastList<L2PcInstance> _snoopedPlayer = new FastList<>();
 	
 	// hennas
 	private final L2Henna[] _henna = new L2Henna[3];
@@ -750,7 +750,7 @@ public final class L2PcInstance extends L2Playable
 	/** The fists L2Weapon of the L2PcInstance (used when no weapon is equiped) */
 	private L2Weapon _fistsWeaponItem;
 	
-	private final Map<Integer, String> _chars = new FastMap<>();
+	private final FastMap<Integer, String> _chars = new FastMap<>();
 	
 	// private byte _updateKnownCounter = 0;
 	
@@ -8457,7 +8457,7 @@ public final class L2PcInstance extends L2Playable
 			
 			int buff_index = 0;
 			
-			final List<Integer> storedSkills = new FastList<>();
+			final FastList<Integer> storedSkills = new FastList<>();
 			
 			// Store all effect data along with calulated remaining
 			// reuse delays for matching skills. 'restore_type'= 0.
@@ -11349,7 +11349,7 @@ public final class L2PcInstance extends L2Playable
 			
 			final ClassId subTemplate = ClassId.getClassId(classId);
 			final Map<Integer, L2SkillLearn> skillTree = SkillTreesData.getInstance().getCompleteClassSkillTree(subTemplate);
-			final Map<Integer, L2Skill> prevSkillList = new HashMap<>();
+			final HashMap<Integer, L2Skill> prevSkillList = new HashMap<>();
 			for (L2SkillLearn skillInfo : skillTree.values())
 			{
 				if (skillInfo.getGetLevel() <= 40)
@@ -14211,7 +14211,7 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	private final Map<Integer, TimeStamp> _reuseTimeStampsItems = new FastMap<>();
+	private final FastMap<Integer, TimeStamp> _reuseTimeStampsItems = new FastMap<>();
 	
 	@Override
 	public void addTimeStampItem(L2ItemInstance item, long reuse)
@@ -14249,9 +14249,9 @@ public final class L2PcInstance extends L2Playable
 		return 0;
 	}
 	
-	private final Map<Integer, TimeStamp> _reuseTimeStampsSkills = new FastMap<>();
+	private final FastMap<Integer, TimeStamp> _reuseTimeStampsSkills = new FastMap<>();
 	
-	public Map<Integer, TimeStamp> getSkillReuseTimeStamps()
+	public FastMap<Integer, TimeStamp> getSkillReuseTimeStamps()
 	{
 		return _reuseTimeStampsSkills;
 	}
@@ -15567,7 +15567,7 @@ public final class L2PcInstance extends L2Playable
 	/**
 	 * list of character friends
 	 */
-	private final List<Integer> _friendList = new FastList<>();
+	private final FastList<Integer> _friendList = new FastList<>();
 	
 	public List<Integer> getFriendList()
 	{
