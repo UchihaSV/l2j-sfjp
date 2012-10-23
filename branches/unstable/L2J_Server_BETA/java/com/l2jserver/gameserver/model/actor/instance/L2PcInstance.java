@@ -78,6 +78,7 @@ import com.l2jserver.gameserver.datatables.SkillTable.FrequentSkill;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.handler.IItemHandler;
 import com.l2jserver.gameserver.handler.ItemHandler;
+import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.AntiFeedManager;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.CoupleManager;
@@ -444,6 +445,7 @@ public final class L2PcInstance extends L2Playable
 	private PcAppearance _appearance;
 	
 	/** The Identifier of the L2PcInstance */
+	@Deprecated
 	private int _charId = 0x00030b7a;
 	
 	/** The Experience of the L2PcInstance before the last Death Penalty */
@@ -1473,7 +1475,7 @@ public final class L2PcInstance extends L2Playable
 	
 	public boolean isInStoreMode()
 	{
-		return (getPrivateStoreType() > 0);
+		return (getPrivateStoreType() > L2PcInstance.STORE_PRIVATE_NONE);
 	}
 	
 	// public boolean isInCraftMode() { return (getPrivateStoreType() == STORE_PRIVATE_MANUFACTURE); }
@@ -3578,6 +3580,7 @@ public final class L2PcInstance extends L2Playable
 	 * Set the Identifier of the L2PcInstance.
 	 * @param charId
 	 */
+	@Deprecated
 	public void setCharId(int charId)
 	{
 		_charId = charId;
@@ -3928,7 +3931,7 @@ public final class L2PcInstance extends L2Playable
 			{
 				if (!isCastingNow())
 				{
-					L2ItemInstance herb = new L2ItemInstance(_charId, itemId);
+					L2ItemInstance herb = new L2ItemInstance(IdFactory.getInstance().getNextId(), itemId);
 					IItemHandler handler = ItemHandler.getInstance().getHandler(herb.getEtcItem());
 					if (handler == null)
 					{
@@ -13482,7 +13485,7 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	private L2ItemInstance _lure = null;
-	public int _shortBuffTaskSkillId = 0;
+	private int _shortBuffTaskSkillId = 0;
 	
 	/**
 	 * @return the current skill in use or return null.
@@ -14115,6 +14118,11 @@ public final class L2PcInstance extends L2Playable
 		sendPacket(new ShortBuffStatusUpdate(magicId, level, time));
 	}
 	
+	public int getShortBuffTaskSkillId()
+	{
+		return _shortBuffTaskSkillId;
+	}
+	
 	public void setShortBuffTaskSkillId(int id)
 	{
 		_shortBuffTaskSkillId = id;
@@ -14203,8 +14211,9 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	private final FastMap<Integer, TimeStamp> _reuseTimeStampsItems = new FastMap<>();
+	private final Map<Integer, TimeStamp> _reuseTimeStampsItems = new FastMap<>();
 	
+	@Override
 	public void addTimeStampItem(L2ItemInstance item, long reuse)
 	{
 		_reuseTimeStampsItems.put(item.getObjectId(), new TimeStamp(item, reuse));
@@ -14215,9 +14224,10 @@ public final class L2PcInstance extends L2Playable
 		_reuseTimeStampsItems.put(item.getObjectId(), new TimeStamp(item, reuse, systime));
 	}
 	
+	@Override
 	public long getItemRemainingReuseTime(int itemObjId)
 	{
-		if (_reuseTimeStampsItems.isEmpty() || !_reuseTimeStampsItems.containsKey(itemObjId))
+		if (!_reuseTimeStampsItems.containsKey(itemObjId))
 		{
 			return -1;
 		}
@@ -14239,16 +14249,17 @@ public final class L2PcInstance extends L2Playable
 		return 0;
 	}
 	
-	private final FastMap<Integer, TimeStamp> _reuseTimeStampsSkills = new FastMap<>();
+	private final Map<Integer, TimeStamp> _reuseTimeStampsSkills = new FastMap<>();
 	
-	public FastMap<Integer, TimeStamp> getSkillReuseTimeStamps()
+	public Map<Integer, TimeStamp> getSkillReuseTimeStamps()
 	{
 		return _reuseTimeStampsSkills;
 	}
 	
+	@Override
 	public long getSkillRemainingReuseTime(int skillReuseHashId)
 	{
-		if (_reuseTimeStampsSkills.isEmpty() || !_reuseTimeStampsSkills.containsKey(skillReuseHashId))
+		if (!_reuseTimeStampsSkills.containsKey(skillReuseHashId))
 		{
 			return -1;
 		}
@@ -14257,7 +14268,7 @@ public final class L2PcInstance extends L2Playable
 	
 	public boolean hasSkillReuse(int skillReuseHashId)
 	{
-		if (_reuseTimeStampsSkills.isEmpty() || !_reuseTimeStampsSkills.containsKey(skillReuseHashId))
+		if (!_reuseTimeStampsSkills.containsKey(skillReuseHashId))
 		{
 			return false;
 		}
@@ -15981,7 +15992,7 @@ public final class L2PcInstance extends L2Playable
 	
 	public boolean canMakeSocialAction()
 	{
-		if ((getPrivateStoreType() == 0) && (getActiveRequester() == null) && !isAlikeDead() && (!isAllSkillsDisabled() || isInDuel()) && !isCastingNow() && !isCastingSimultaneouslyNow() && (getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE) && !AttackStanceTaskManager.getInstance().hasAttackStanceTask(this) && !isInOlympiadMode())
+		if ((getPrivateStoreType() == L2PcInstance.STORE_PRIVATE_NONE) && (getActiveRequester() == null) && !isAlikeDead() && (!isAllSkillsDisabled() || isInDuel()) && !isCastingNow() && !isCastingSimultaneouslyNow() && (getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE) && !AttackStanceTaskManager.getInstance().hasAttackStanceTask(this) && !isInOlympiadMode())
 		{
 			return true;
 		}
