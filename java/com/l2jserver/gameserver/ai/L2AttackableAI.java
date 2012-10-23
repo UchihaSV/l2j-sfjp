@@ -450,7 +450,13 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 		L2Attackable npc = getActiveChar();
 		
 		// Update every 1s the _globalAggro counter to come close to 0
-		if (_globalAggro != 0)
+		if (Config.FIX_FleeNpc && npc.getTemplate().getBasePAtk() == 0 && npc.getTemplate().getBaseMAtk() == 0)
+		{
+			// pass
+			/*	assert _globalAggro == -10;	*/
+			/*	assert npc.getAttackByList().size() == 0;	*/
+		}
+		else if (_globalAggro != 0)
 		{
 			if (_globalAggro < 0)
 			{
