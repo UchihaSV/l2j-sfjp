@@ -108,7 +108,7 @@ public class Quest extends ManagedScript
 	private boolean _isOlympiadUse = false;
 	
 	/**
-	 * This enum contains most, if not all, known sound effects used by quests.<br>
+	 * This enum contains known sound effects used by quests.<br>
 	 * The idea is to have only a single object of each quest sound instead of constructing a new one every time a script calls the playSound method.<br>
 	 * This is pretty much just a memory and CPU cycle optimization; avoids constructing/deconstructing objects all the time if they're all the same.<br>
 	 * For datapack scripts written in Java and extending the Quest class, this does not need an extra import.
@@ -150,6 +150,18 @@ public class Quest extends ManagedScript
 		ITEMSOUND_ENCHANT_FAILED("ItemSound3.sys_enchant_failed"),
 		// Best farm mobs
 		ITEMSOUND_SOW_SUCCESS("ItemSound3.sys_sow_success"),
+		// Quest 25
+		SKILLSOUND_HORROR_1("SkillSound5.horror_01"),
+		// Quests 21 and 23
+		SKILLSOUND_HORROR_2("SkillSound5.horror_02"),
+		// Quest 22
+		SKILLSOUND_ANTARAS_FEAR("SkillSound3.antaras_fear"),
+		// Quest 505
+		SKILLSOUND_JEWEL_CELEBRATE("SkillSound2.jewel.celebrate"),
+		// Quest 373
+		SKILLSOUND_LIQUID_MIX("SkillSound5.liquid_mix_01"),
+		SKILLSOUND_LIQUID_SUCCESS("SkillSound5.liquid_success_01"),
+		SKILLSOUND_LIQUID_FAIL("SkillSound5.liquid_fail_01"),
 		// Elroki sounds - Quest 111
 		ETCSOUND_ELROKI_SOUND_FULL("EtcSound.elcroki_song_full"),
 		ETCSOUND_ELROKI_SOUND_1ST("EtcSound.elcroki_song_1st"),
