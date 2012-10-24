@@ -5,6 +5,7 @@ import java.util.List;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.L2World;
+import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.network.serverpackets.ValidateLocation;
 import com.l2jserver.util.Rnd;
@@ -18,31 +19,31 @@ import com.l2jserver.util.Rnd;
  */
 public class EventNpcAligner
 {
-	private/*public*/ static final int[][][] SPAWN_DATA =
+	private/*public*/ static final Location[][] SPAWN_DATA =
 	{
-		{{  82789,  149377, -3464, 49224 }                                  },	//ギラン城の村
-		{{ 147049,   25939, -2008, 49151 }                                  },	//アデン城の村
-		{{ 148077,  -55417, -2728, 32768 },{ 148046,  -55328, -2728, 40960 }},	//ゴダード城の村
-		{{  43566,  -47657,  -792, 30616 },{  43546,  -47556,  -792, 36864 }},	//ルウン城の村
-		{{  17119,  144848, -3008, 26624 },{  17175,  144927, -3008, 21845 }},	//ディオン城の村
-		{{  82335,   53283, -1488, 16384 }                                  },	//オーレン城の村
-		{{ -13946,  121932, -2984, 21849 },{ -13880,  122006, -2984, 22248 }},	//グルーディオ城の村
-		{{ -83123,  150918, -3120,     0 },{ -83123,  150818, -3120,     0 }},	//グルーディン村
-		{{  87102, -141328, -1336, 49296 }                                  },	//シュチュッツガルト城の村
-		{{ 111168,  221058, -3544,     0 },{ 111168,  220958, -3544,     0 }},	//水上都市ハイネス
-		{{ 116970,   77223, -2688, 40960 },{ 116900,   77293, -2688, 40960 }},	//猟師の村
-		{{ -84121,  243256, -3728,  9000 },{ -84043,  243195, -3728,  9000 }},	//話せる島の村
-		{{ 115642, -178046,  -896, 32768 },{ 115622, -177946,  -896, 32768 }},	//ドワーフ村
-		{{ -45042, -113648,  -192, 32768 },{ -45042, -113548,  -192, 32768 }},	//オーク村
-		{{  12099,   16633, -4584, 63240 },{  12123,   16739, -4584, 63240 }},	//ダークエルフ村
-		{{  45525,   48363, -3056, 49152 },{  45425,   48355, -3056, 49152 }},	//エルフ村
-		{{-119692,   44454,   360, 33324 },{-119692,   44554,   360, 33324 }},	//カマエル村
+		{new Location(  82789,  149377, -3464, 49224 )                                              },	//ギラン城の村
+		{new Location( 147049,   25939, -2008, 49151 )                                              },	//アデン城の村
+		{new Location( 148077,  -55417, -2728, 32768 ),new Location( 148046,  -55328, -2728, 40960 )},	//ゴダード城の村
+		{new Location(  43566,  -47657,  -792, 30616 ),new Location(  43546,  -47556,  -792, 36864 )},	//ルウン城の村
+		{new Location(  17119,  144848, -3008, 26624 ),new Location(  17175,  144927, -3008, 21845 )},	//ディオン城の村
+		{new Location(  82335,   53283, -1488, 16384 )                                              },	//オーレン城の村
+		{new Location( -13946,  121932, -2984, 21849 ),new Location( -13880,  122006, -2984, 22248 )},	//グルーディオ城の村
+		{new Location( -83123,  150918, -3120,     0 ),new Location( -83123,  150818, -3120,     0 )},	//グルーディン村
+		{new Location(  87102, -141328, -1336, 49296 )                                              },	//シュチュッツガルト城の村
+		{new Location( 111168,  221058, -3544,     0 ),new Location( 111168,  220958, -3544,     0 )},	//水上都市ハイネス
+		{new Location( 116970,   77223, -2688, 40960 ),new Location( 116900,   77293, -2688, 40960 )},	//猟師の村
+		{new Location( -84121,  243256, -3728,  9000 ),new Location( -84043,  243195, -3728,  9000 )},	//話せる島の村
+		{new Location( 115642, -178046,  -896, 32768 ),new Location( 115622, -177946,  -896, 32768 )},	//ドワーフ村
+		{new Location( -45042, -113648,  -192, 32768 ),new Location( -45042, -113548,  -192, 32768 )},	//オーク村
+		{new Location(  12099,   16633, -4584, 63240 ),new Location(  12123,   16739, -4584, 63240 )},	//ダークエルフ村
+		{new Location(  45525,   48363, -3056, 49152 ),new Location(  45425,   48355, -3056, 49152 )},	//エルフ村
+		{new Location(-119692,   44454,   360, 33324 ),new Location(-119692,   44554,   360, 33324 )},	//カマエル村
 	};
 	
-	public static int[][] getSpawns()
+	public static Location[] getSpawns()
 	{
-		int[][] spawns = new int[SPAWN_DATA.length][];
-		for (int i = 0; i < SPAWN_DATA.length; ++i)
+		Location[] spawns = new Location[SPAWN_DATA.length];
+		for (int i = SPAWN_DATA.length; --i >= 0;)
 			spawns[i] = SPAWN_DATA[i][Rnd.get(SPAWN_DATA[i].length)];
 		return spawns;
 	}
