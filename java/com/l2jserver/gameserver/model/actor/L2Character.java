@@ -227,7 +227,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	
 	private int _team;
 	
-	private boolean _lethalable;
+	private boolean _lethalable = true;
 	
 	/**
 	 * @return True if debugging is enabled for this L2Character
