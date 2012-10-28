@@ -446,6 +446,22 @@ public final class Util
 		return false;
 	}
 	
+	public static <T> int indexOf(T[] array, T obj)	//[JOJO]
+	{
+		for (int i = 0, len = array.length; i < len; ++i)
+			if (array[i] == obj)
+				return i;
+		return -1;
+	}
+	
+	public static <T> int lastIndexOf(T[] array, T obj)	//[JOJO]
+	{
+		for (int i = array.length; --i >= 0;)
+			if (array[i] == obj)
+				return i;
+		return -1;
+	}
+	
 	/**
 	 * @param array - the array to look into
 	 * @param obj - the integer to search for
@@ -461,6 +477,22 @@ public final class Util
 			}
 		}
 		return false;
+	}
+	
+	public static int indexOf(int[] array, int obj)	//[JOJO]
+	{
+		for (int i = 0, len = array.length; i < len; ++i)
+			if (array[i] == obj)
+				return i;
+		return -1;
+	}
+	
+	public static int lastIndexOf(int[] array, int obj)	//[JOJO]
+	{
+		for (int i = array.length; --i >= 0;)
+			if (array[i] == obj)
+				return i;
+		return -1;
 	}
 	
 	public static File[] getDatapackFiles(String dirname, String extention)
