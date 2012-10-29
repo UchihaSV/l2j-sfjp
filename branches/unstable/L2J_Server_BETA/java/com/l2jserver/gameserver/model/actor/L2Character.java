@@ -4382,9 +4382,13 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		StatusUpdate su = null;
 		for (Stats stat : stats)
 		{
-			if (isSummon() && (((L2Summon) this).getOwner() != null))
+			if (isSummon())
 			{
-				((L2Summon) this).updateAndBroadcastStatus(1);
+				L2Summon summon = (L2Summon) this;
+				if (summon.getOwner() != null)
+				{
+					summon.updateAndBroadcastStatus(1);
+				}
 				break;
 				
 			}
@@ -4404,26 +4408,34 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				}
 				su.addAttribute(StatusUpdate.CAST_SPD, getMAtkSpd());
 			}
-			else if ((stat == Stats.MAX_HP) && isL2Attackable())
+			else if ((stat == Stats.MAX_HP))
 			{
 				if (su == null)
 				{
 					su = new StatusUpdate(this);
 				}
-				su.addAttribute(StatusUpdate.MAX_HP, getMaxVisibleHp());
+				su.addAttribute(StatusUpdate.MAX_HP, isL2Attackable() ? getMaxVisibleHp() : getMaxHp());
 			}
 			else if (stat == Stats.LIMIT_HP)
 			{
 				getStatus().setCurrentHp(getCurrentHp()); // start regeneration if needed
 			}
-			/*
-			 * else if (stat == Stats.MAX_CP) { if (isPlayer()) { if (su == null) su = new StatusUpdate(getObjectId()); su.addAttribute(StatusUpdate.MAX_CP, getMaxCp()); } }
-			 */
-			// else if (stat==Stats.MAX_MP)
-			// {
-			// if (su == null) su = new StatusUpdate(getObjectId());
-			// su.addAttribute(StatusUpdate.MAX_MP, getMaxMp());
-			// }
+			else if ((stat == Stats.MAX_MP))
+			{
+				if (su == null)
+				{
+					su = new StatusUpdate(this);
+				}
+				su.addAttribute(StatusUpdate.MAX_MP, getMaxMp());
+			}
+			else if ((stat == Stats.MAX_CP))
+			{
+				if (su == null)
+				{
+					su = new StatusUpdate(this);
+				}
+				su.addAttribute(StatusUpdate.MAX_CP, getMaxCp());
+			}
 			else if (stat == Stats.RUN_SPEED)
 			{
 				broadcastFull = true;
