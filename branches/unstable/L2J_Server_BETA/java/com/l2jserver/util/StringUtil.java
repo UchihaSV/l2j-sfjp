@@ -270,7 +270,7 @@ public final class StringUtil
 		final TextBuilder sbString = TextBuilder.newInstance();
 		for (final StackTraceElement element : trace)
 		{
-			sbString.append(element.toString()).append(Config.EOL);
+			sbString.append("\tat ").append(element.toString()).append(Config.EOL);	//[JOJO] "at" for eclipse
 		}
 		
 		String result = sbString.toString();
