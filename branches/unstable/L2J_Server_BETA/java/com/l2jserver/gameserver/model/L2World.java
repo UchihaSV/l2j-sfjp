@@ -116,11 +116,13 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 	{
 		if (_allObjects.containsKey(object.getObjectId()))
 		{
-			_log.log(Level.WARNING, getClass().getSimpleName() + ": Current object: " + object + " already exist in OID map!");
-			_log.log(Level.WARNING, StringUtil.getTraceString(Thread.currentThread().getStackTrace()));
-			_log.log(Level.WARNING, getClass().getSimpleName() + ": Previous object: " + _allObjects.get(object.getObjectId()) + " already exist in OID map!");
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Current object: " + object + " already exist in OID map!\n"
+				+ StringUtil.getTraceString(Thread.currentThread().getStackTrace()));
 if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
-			_log.log(Level.WARNING, _allObjectsDebug.get(object.getObjectId()));
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Previous object: " + _allObjects.get(object.getObjectId()) + " already exist in OID map!\n"
+				+ _allObjectsDebug.get(object.getObjectId()));
+}} else {{
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Previous object: " + _allObjects.get(object.getObjectId()) + " already exist in OID map!");
 }}
 			_log.log(Level.WARNING, "---------------------- End ---------------------");
 			return;
