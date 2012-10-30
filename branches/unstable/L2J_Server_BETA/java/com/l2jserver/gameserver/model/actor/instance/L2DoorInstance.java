@@ -232,7 +232,7 @@ public class L2DoorInstance extends L2Character
 	 */
 	public final boolean isOpenableBySkill()
 	{
-		return (getTemplate().getOpenType() & OPEN_BY_SKILL) == OPEN_BY_SKILL;
+		return (getTemplate().getOpenType() & OPEN_BY_SKILL) != 0;
 	}
 	
 	/**
@@ -240,7 +240,7 @@ public class L2DoorInstance extends L2Character
 	 */
 	public final boolean isOpenableByItem()
 	{
-		return (getTemplate().getOpenType() & OPEN_BY_ITEM) == OPEN_BY_ITEM;
+		return (getTemplate().getOpenType() & OPEN_BY_ITEM) != 0;
 	}
 	
 	/**
@@ -248,7 +248,7 @@ public class L2DoorInstance extends L2Character
 	 */
 	public final boolean isOpenableByClick()
 	{
-		return (getTemplate().getOpenType() & OPEN_BY_CLICK) == OPEN_BY_CLICK;
+		return (getTemplate().getOpenType() & OPEN_BY_CLICK) != 0;
 	}
 	
 	/**
@@ -256,7 +256,7 @@ public class L2DoorInstance extends L2Character
 	 */
 	public final boolean isOpenableByTime()
 	{
-		return (getTemplate().getOpenType() & OPEN_BY_TIME) == OPEN_BY_TIME;
+		return (getTemplate().getOpenType() & OPEN_BY_TIME) != 0;
 	}
 	
 	/**
@@ -264,7 +264,7 @@ public class L2DoorInstance extends L2Character
 	 */
 	public final boolean isOpenableByCycle()
 	{
-		return (getTemplate().getOpenType() & OPEN_BY_CYCLE) == OPEN_BY_CYCLE;
+		return (getTemplate().getOpenType() & OPEN_BY_CYCLE) != 0;
 	}
 	
 	@Override
