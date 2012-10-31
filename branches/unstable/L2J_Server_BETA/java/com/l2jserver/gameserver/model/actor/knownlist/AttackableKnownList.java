@@ -64,7 +64,7 @@ public class AttackableKnownList extends NpcKnownList
 	@Override
 	public int getDistanceToForgetObject(L2Object object)
 	{
-		return (int) (getDistanceToWatchObject(object) * 1.5);
+		return getDistanceToWatchObject(object) * 3 / 2;	// (int)( * 1.5)
 	}
 	
 	@Override

@@ -4518,7 +4518,7 @@ public final class Config
 			if (f.exists())
 			{
 				_log.log(Level.INFO, "Network Config: ipconfig.xml exists using manual configuration...");
-				parseFile(new File(IP_CONFIG_FILE));
+				parseFile(f);
 			}
 			else
 			// Auto configuration...
