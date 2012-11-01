@@ -138,15 +138,16 @@ public class Quest extends ManagedScript
 		ITEMSOUND_ARMOR_CLOTH("ItemSound.item_drop_equip_armor_cloth"),
 		// Quest 23
 		ITEMSOUND_ARMOR_LEATHER("ItemSound.itemdrop_armor_leather"),
-		// Quest 23
 		ITEMSOUND_WEAPON_SPEAR("ItemSound.itemdrop_weapon_spear"),
+		// Quest 24
+		AMDSOUND_D_WIND_LOOT_02("AmdSound.d_wind_loot_02"),
+		INTERFACESOUND_CHARSTAT_OPEN_01("InterfaceSound.charstat_open_01"),
 		// Quest 648 and treasure chests
 		ITEMSOUND_BROKEN_KEY("ItemSound2.broken_key"),
 		// Quest 184
 		ITEMSOUND_SIREN("ItemSound3.sys_siren"),
 		// Quest 648
 		ITEMSOUND_ENCHANT_SUCCESS("ItemSound3.sys_enchant_success"),
-		// Quest 648
 		ITEMSOUND_ENCHANT_FAILED("ItemSound3.sys_enchant_failed"),
 		// Best farm mobs
 		ITEMSOUND_SOW_SUCCESS("ItemSound3.sys_sow_success"),
