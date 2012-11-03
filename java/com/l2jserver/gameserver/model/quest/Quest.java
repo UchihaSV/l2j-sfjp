@@ -1927,7 +1927,7 @@ public class Quest extends ManagedScript
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Exception on addEventId(): " + e.getMessage(), e);
+			_log.log(Level.WARNING, "Exception on addEventId(" + npcId + "," + eventType.name() + "): " + e.getMessage(), e);
 			return null;
 		}
 	}
