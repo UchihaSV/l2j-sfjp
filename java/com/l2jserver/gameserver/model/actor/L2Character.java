@@ -1873,11 +1873,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		{
 			setIsCastingNow(true);
 		}
-		// Set the _castEndTime. +10 ticks for lag situations, will be reseted in onMagicFinalizer
-		_castEndTime = 10 + GameTimeController.getGameTicks() + (coolTime + hitTime) / GameTimeController.MILLIS_IN_TICK; //[JOJO]
 		
 		if (!simultaneously)
 		{
+			// Set the _castEndTime. +10 ticks for lag situations, will be reseted in onMagicFinalizer
+			_castEndTime       = 10 + GameTimeController.getGameTicks() + ((hitTime + coolTime) / GameTimeController.MILLIS_IN_TICK); //[JOJO]
 			_castInterruptTime = -2 + GameTimeController.getGameTicks() + ((hitTime + coolTime) / GameTimeController.MILLIS_IN_TICK);
 			setLastSkillCast(skill);
 		}
