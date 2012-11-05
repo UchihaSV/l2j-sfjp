@@ -1291,7 +1291,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			{
 				targetReconsider();
 			}
-			else
+			else if (getAttackTarget() != null)
 			{
 				if (getAttackTarget().isMoving())
 				{
@@ -1302,7 +1302,6 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					range = 5;
 				}
 				moveToPawn(getAttackTarget(), range);
-				
 			}
 			return;
 		}
