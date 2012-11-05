@@ -1856,11 +1856,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			hitTime = skill.getHitTime();
 			coolTime = skill.getCoolTime();
 		}
-		// if basic hitTime is higher than 500 than the min hitTime is 500
-		else if ((skill.getHitTime() >= 500) && (hitTime < 500))
-		{
-			hitTime = 500;
-		}
 		
 		// queue herbs and potions
 		if (isCastingSimultaneouslyNow() && simultaneously)
@@ -1880,10 +1875,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		}
 		// Set the _castEndTime. +10 ticks for lag situations, will be reseted in onMagicFinalizer
 		_castEndTime = 10 + GameTimeController.getGameTicks() + (coolTime + hitTime) / GameTimeController.MILLIS_IN_TICK; //[JOJO]
-		// Note: _castEndTime = GameTimeController.getGameTicks() + (coolTime + hitTime) / GameTimeController.MILLIS_IN_TICK;
+		
 		if (!simultaneously)
 		{
-			_castInterruptTime = -2 + GameTimeController.getGameTicks() + (hitTime / GameTimeController.MILLIS_IN_TICK);
+			_castInterruptTime = -2 + GameTimeController.getGameTicks() + ((hitTime + coolTime) / GameTimeController.MILLIS_IN_TICK);
 			setLastSkillCast(skill);
 		}
 		else
@@ -2050,7 +2045,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		MagicUseTask mut = new MagicUseTask(targets, skill, hitTime, coolTime, simultaneously);
 		
 		// launch the magic in hitTime milliseconds
-		if (hitTime > 410)
+		if (hitTime > 0)
 		{
 			// Send a Server->Client packet SetupGauge with the color of the gauge and the casting time
 			if (isPlayer() && !effectWhileCasting)
@@ -2061,11 +2056,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			if (skill.getHitCounts() > 0)
 			{
 				hitTime = (hitTime * skill.getHitTimings()[0]) / 100;
-				
-				if (hitTime < 410)
-				{
-					hitTime = 410;
-				}
 			}
 			
 			if (effectWhileCasting)
