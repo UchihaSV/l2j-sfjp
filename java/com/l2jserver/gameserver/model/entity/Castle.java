@@ -370,25 +370,17 @@ public class Castle
 			return false;
 		}
 		
-		if (amount < 0)
+		if (_treasury + amount < 0)
 		{
-			amount *= -1;
-			if (_treasury < amount)
-			{
-				return false;
-			}
-			_treasury -= amount;
+			return false;
+		}
+		else if (_treasury + amount > PcInventory.MAX_ADENA)
+		{
+			_treasury = PcInventory.MAX_ADENA;
 		}
 		else
 		{
-			if ((_treasury + amount) > PcInventory.MAX_ADENA)
-			{
-				_treasury = PcInventory.MAX_ADENA;
-			}
-			else
-			{
-				_treasury += amount;
-			}
+			_treasury += amount;
 		}
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();

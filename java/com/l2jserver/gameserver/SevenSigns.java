@@ -481,7 +481,7 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 		switch (cabal)
 		{
 			case CABAL_DAWN:
-				return "êt–¾‚ÌŒNå’B"/*"Lords of Dawn"*/;
+				return "êt–¾‚ÌŒNå‚½‚¿"/*"Lords of Dawn"*/;
 			case CABAL_DUSK:
 				return "‰©¨‚ÌŠv–½ŒR"/*"Revolutionaries of Dusk"*/;
 		}

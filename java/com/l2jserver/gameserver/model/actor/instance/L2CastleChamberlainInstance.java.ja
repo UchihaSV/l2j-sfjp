@@ -1,0 +1,5 @@
+use utf8;
+
+#data/html/chamberlain/functions-apply.htm
+s{\Qhtml.replace("%cost%", cost + "</font>Adena /" + (\E(\S+)\Q / 1000 / 60 / 60 / 24) + " Day</font>)")\E}
+   {html.replace("%cost%", formatAdena(cost) + "</font>アデナ/" + $1 / 86400000 + "日</font>")}g;
