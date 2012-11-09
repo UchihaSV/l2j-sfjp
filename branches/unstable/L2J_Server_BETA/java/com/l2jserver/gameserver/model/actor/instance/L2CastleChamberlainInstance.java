@@ -321,18 +321,15 @@ public class L2CastleChamberlainInstance extends L2MerchantInstance
 						catch (NoSuchElementException e)
 						{
 						}
-						if (amount > 0)
+						if (amount > 0 && player.getAdena() + amount < PcInventory.MAX_ADENA)
 						{
-							if (getCastle().getTreasury() < amount)
+							if (getCastle().addToTreasuryNoTax(-amount))
 							{
-								filename = "data/html/chamberlain/chamberlain-vault-no.htm";
+								player.addAdena("Castle", amount, this, true);
 							}
 							else
 							{
-								if (getCastle().addToTreasuryNoTax((-1) * amount))
-								{
-									player.addAdena("Castle", amount, this, true);
-								}
+								filename = "data/html/chamberlain/chamberlain-vault-no.htm";
 							}
 						}
 					}
@@ -400,8 +397,14 @@ public class L2CastleChamberlainInstance extends L2MerchantInstance
 						getCastle().setTaxPercent(player, Integer.parseInt(val));
 					}
 					
-					final String msg = StringUtil.concat("<html><body>", getName(), ":<br>" + "Current tax rate: ", String.valueOf(getCastle().getTaxPercent()), "%<br>" + "<table>" + "<tr>" + "<td>Change tax rate to:</td>" + "<td><edit var=\"value\" width=40><br>" + "<button value=\"Adjust\" action=\"bypass -h npc_%objectId%_tax_set $value\" width=80 height=15 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\"></td>" + "</tr>" + "</table>" + "</center>" + "</body></html>");
-					sendHtmlMessage(player, msg);
+					NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+					html.setFile(player.getHtmlPrefix(), "data/html/chamberlain/chamberlain-tax_set.htm");
+					html.replace("%objectId%", getObjectId());
+					html.replace("%tax%", getCastle().getTaxPercent());
+					html.replace("%npcname%", getName());
+					player.sendPacket(html);
+				//	final String msg = StringUtil.concat("<html><body>", getName(), ":<br>" + "Current tax rate: ", String.valueOf(getCastle().getTaxPercent()), "%<br>" + "<table>" + "<tr>" + "<td>Change tax rate to:</td>" + "<td><edit var=\"value\" width=40><br>" + "<button value=\"Adjust\" action=\"bypass -h npc_%objectId%_tax_set $value\" width=80 height=15 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\"></td>" + "</tr>" + "</table>" + "</center>" + "</body></html>");
+				//	sendHtmlMessage(player, msg);
 				}
 				else
 				{
@@ -1264,7 +1267,7 @@ public class L2CastleChamberlainInstance extends L2MerchantInstance
 					if (getCastle().getSiege().getIsInProgress())
 					{
 						html.setFile(player.getHtmlPrefix(), "data/html/chamberlain/chamberlain-busy.htm");
-						html.replace("%npcname%", String.valueOf(getName()));
+						html.replace("%npcname%", getName());
 					}
 					else
 					{
@@ -1275,9 +1278,9 @@ public class L2CastleChamberlainInstance extends L2MerchantInstance
 							if (ticketCount < (Config.SSQ_DAWN_TICKET_QUANTITY / Config.SSQ_DAWN_TICKET_BUNDLE))
 							{
 								html.setFile(player.getHtmlPrefix(), "data/html/chamberlain/ssq_selldawnticket.htm");
-								html.replace("%DawnTicketLeft%", String.valueOf(Config.SSQ_DAWN_TICKET_QUANTITY - (ticketCount * Config.SSQ_DAWN_TICKET_BUNDLE)));
-								html.replace("%DawnTicketBundle%", String.valueOf(Config.SSQ_DAWN_TICKET_BUNDLE));
-								html.replace("%DawnTicketPrice%", String.valueOf(Config.SSQ_DAWN_TICKET_PRICE * Config.SSQ_DAWN_TICKET_BUNDLE));
+								html.replace("%DawnTicketLeft%", Config.SSQ_DAWN_TICKET_QUANTITY - (ticketCount * Config.SSQ_DAWN_TICKET_BUNDLE));
+								html.replace("%DawnTicketBundle%", Config.SSQ_DAWN_TICKET_BUNDLE);
+								html.replace("%DawnTicketPrice%", formatAdena(Config.SSQ_DAWN_TICKET_PRICE * Config.SSQ_DAWN_TICKET_BUNDLE));
 							}
 							else
 							{
@@ -1294,7 +1297,7 @@ public class L2CastleChamberlainInstance extends L2MerchantInstance
 				{
 					html.setFile(player.getHtmlPrefix(), "data/html/chamberlain/chamberlain-noprivs.htm");
 				}
-				html.replace("%objectId%", String.valueOf(getObjectId()));
+				html.replace("%objectId%", getObjectId());
 				player.sendPacket(html);
 			}
 			else if (actualCommand.equalsIgnoreCase("manors_cert_confirm"))
@@ -1306,7 +1309,7 @@ public class L2CastleChamberlainInstance extends L2MerchantInstance
 					if (getCastle().getSiege().getIsInProgress())
 					{
 						html.setFile(player.getHtmlPrefix(), "data/html/chamberlain/chamberlain-busy.htm");
-						html.replace("%npcname%", String.valueOf(getName()));
+						html.replace("%npcname%", getName());
 					}
 					else
 					{
@@ -1344,7 +1347,7 @@ public class L2CastleChamberlainInstance extends L2MerchantInstance
 				{
 					html.setFile(player.getHtmlPrefix(), "data/html/chamberlain/chamberlain-noprivs.htm");
 				}
-				html.replace("%objectId%", String.valueOf(getObjectId()));
+				html.replace("%objectId%", getObjectId());
 				player.sendPacket(html);
 			}
 			else
@@ -1420,15 +1423,6 @@ public class L2CastleChamberlainInstance extends L2MerchantInstance
 		}
 		
 		return null;
-	}
-	
-	private void sendHtmlMessage(L2PcInstance player, String htmlMessage)
-	{
-		NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
-		html.setHtml(htmlMessage);
-		html.replace("%objectId%", getObjectId());
-		html.replace("%npcname%", getName());
-		player.sendPacket(html);
 	}
 	
 	@Override public String getHtmlPath(int npcId, int val)	//+[JOJO]

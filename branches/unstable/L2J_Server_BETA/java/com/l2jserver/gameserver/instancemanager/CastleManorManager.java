@@ -537,7 +537,7 @@ public class CastleManorManager
 				}
 			}
 			c.setNextPeriodApproved(true);
-			c.addToTreasuryNoTax((-1) * c.getManorCost(PERIOD_NEXT));
+			c.addToTreasuryNoTax(-c.getManorCost(PERIOD_NEXT));
 			
 			if (notFunc)
 			{
