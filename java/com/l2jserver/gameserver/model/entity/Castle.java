@@ -93,7 +93,6 @@ public class Castle
 	private final TIntIntHashMap _engrave = new TIntIntHashMap(1);
 	private final Map<Integer, CastleFunction> _function;
 	private final List<L2Skill> _residentialSkills = new ArrayList<>();
-	private int _bloodAlliance = 0;
 	private int _ticketBuyCount = 0;
 	
 	private List<CropProcure> _procure = new ArrayList<>();
@@ -749,8 +748,6 @@ public class Castle
 					_treasury = rs.getLong("treasury");
 					
 					_showNpcCrest = rs.getBoolean("showNpcCrest");
-					
-					_bloodAlliance = rs.getInt("bloodAlliance");
 					
 					_ticketBuyCount = rs.getInt("ticketBuyCount");
 				}
@@ -1585,28 +1582,6 @@ public class Castle
 		{
 			saveCropData();
 			saveSeedData();
-		}
-	}
-	
-	public int getBloodAlliance()
-	{
-		return _bloodAlliance;
-	}
-	
-	public void setBloodAlliance(int count)
-	{
-		_bloodAlliance = count;
-		
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement("UPDATE castle SET bloodAlliance = ? WHERE id = ?"))
-		{
-			statement.setInt(1, _bloodAlliance);
-			statement.setInt(2, _castleId);
-			statement.execute();
-		}
-		catch (Exception e)
-		{
-			_log.log(Level.WARNING, e.getMessage(), e);
 		}
 	}
 	
