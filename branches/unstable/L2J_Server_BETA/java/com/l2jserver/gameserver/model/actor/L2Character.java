@@ -4446,6 +4446,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					broadcastPacket(su);
 				}
 			}
+			if ((getPet() != null) && isAffected(CharEffectList.EFFECT_FLAG_SERVITOR_SHARE))
+			{
+				getPet().broadcastStatusUpdate();
+			}
 		}
 		else if (isNpc())
 		{
