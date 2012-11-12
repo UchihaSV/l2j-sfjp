@@ -125,7 +125,7 @@ public class L2SkillSummon extends L2Skill
 				{
 					return false;
 				}
-				if (player.getPet() != null)
+				if (player.hasSummon())
 				{
 					activeChar.sendPacket(SystemMessageId.YOU_ALREADY_HAVE_A_PET);
 					return false;
@@ -241,7 +241,7 @@ public class L2SkillSummon extends L2Skill
 			return;
 		}
 		
-		if ((activeChar.getPet() != null) || activeChar.isMounted())
+		if (activeChar.hasSummon() || activeChar.isMounted())
 		{
 			if (Config.DEBUG)
 			{
