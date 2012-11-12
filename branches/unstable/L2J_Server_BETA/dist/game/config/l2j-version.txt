@@ -1,1 +1,1 @@
-version=5692M
+version=5693M
