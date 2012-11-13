@@ -1128,12 +1128,21 @@ public final class RequestActionUse extends L2GameClientPacket
 			sendPacket(SystemMessageId.COUPLE_ACTION_CANCELED);
 			return;
 		}
+if (com.l2jserver.Config.FIX_CoupleSocial_AI_INTENTION) {{
+		
+		if (!checkCoupleAI(requester) || !checkCoupleAI(partner))	//[JOJO]
+		{
+			sendPacket(SystemMessageId.TARGET_DO_NOT_MEET_LOC_REQUIREMENTS);
+			return;
+		}
+}}
 		
 		requester.setMultiSocialAction(id, partner.getObjectId());
 		sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_REQUESTED_COUPLE_ACTION_C1);
 		sm.addPcName(partner);
 		sendPacket(sm);
 		
+if (!com.l2jserver.Config.FIX_CoupleSocial_AI_INTENTION) {{
 		if ((requester.getAI().getIntention() != CtrlIntention.AI_INTENTION_IDLE) || (partner.getAI().getIntention() != CtrlIntention.AI_INTENTION_IDLE))
 		{
 			final NextAction nextAction = new NextAction(CtrlEvent.EVT_ARRIVED, CtrlIntention.AI_INTENTION_MOVE_TO, new NextActionCallback()
@@ -1147,6 +1156,7 @@ public final class RequestActionUse extends L2GameClientPacket
 			requester.getAI().setNextAction(nextAction);
 			return;
 		}
+}}
 		
 		if (requester.isCastingNow() || requester.isCastingSimultaneouslyNow())
 		{
@@ -1164,6 +1174,22 @@ public final class RequestActionUse extends L2GameClientPacket
 		
 		partner.sendPacket(new ExAskCoupleAction(requester.getObjectId(), id));
 	}
+	
+	//[JOJO]-------------------------------------------------
+	private boolean checkCoupleAI(L2PcInstance a)
+	{
+		switch (a.getAI().getIntention())
+		{
+			case AI_INTENTION_IDLE:
+				return true;
+			case AI_INTENTION_FOLLOW:
+				if (!a.isMoving())
+					return true;
+				break;
+		}
+		return false;
+	}
+	//-------------------------------------------------------
 	
 	@Override
 	public String getType()
