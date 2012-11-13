@@ -61,7 +61,7 @@ public class AnswerCoupleAction extends L2GameClientPacket
 		else if (_answer == 1) // approve
 		{
 			double distance = activeChar.getPlanDistanceSq(target);
-			if ((distance > 2000) || (distance < 70))
+			if (distance > 2000 || distance < 70)
 			{
 				activeChar.sendPacket(SystemMessageId.TARGET_DO_NOT_MEET_LOC_REQUIREMENTS);
 				target.sendPacket(SystemMessageId.TARGET_DO_NOT_MEET_LOC_REQUIREMENTS);
