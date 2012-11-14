@@ -678,7 +678,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 * <ul>
 	 * <li>object is a L2FolkInstance : 0 (don't remember it)</li>
 	 * <li>object is a L2Character : 0 (don't remember it)</li>
-	 * <li>object is a L2PlayableInstance : 1500</li>
+	 * <li>object is a L2Playable : 1500</li>
 	 * <li>others : 500</li>
 	 * <ul>
 	 * @param object The Object to add to _knownObject
@@ -709,7 +709,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 * <ul>
 	 * <li>object is not a L2Character : 0 (don't remember it)</li>
 	 * <li>object is a L2FolkInstance : 0 (don't remember it)</li>
-	 * <li>object is a L2PlayableInstance : 3000</li>
+	 * <li>object is a L2Playable : 3000</li>
 	 * <li>others : 1000</li>
 	 * </ul>
 	 * @param object The Object to remove from _knownObject
