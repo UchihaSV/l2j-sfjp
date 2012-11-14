@@ -17958,12 +17958,16 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2311<br>
+	 * Message: 召喚獣がいません。<br>
+	 * Message: &#27794;&#26377;&#20351;&#39764;&#12290;<br>
 	 * Message: You do not have a servitor.
 	 */
 	public static final SystemMessageId DONT_HAVE_SERVITOR;
 	
 	/**
 	 * ID: 2312<br>
+	 * Message: ペットがいません。<br>
+	 * Message: &#27794;&#26377;&#23541;&#29289;&#12290;<br>
 	 * Message: You do not have a pet.
 	 */
 	public static final SystemMessageId DONT_HAVE_PET;
@@ -18490,6 +18494,8 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2466<br>
+	 * Message: 補助モード状態のペットはスキルを使えません。<br>
+	 * Message: &#22312;&#36628;&#21161;&#27169;&#24335;&#29376;&#24907;&#19979;&#30340;&#23541;&#29289;&#28961;&#27861;&#20351;&#29992;&#25216;&#33021;&#12290;<br>
 	 * Message: A pet on auxiliary mode cannot use skills.
 	 */
 	public static final SystemMessageId PET_AUXILIARY_MODE_CANNOT_USE_SKILLS;
@@ -19869,6 +19875,8 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3260<br>
+	 * Message: 召喚獣が召喚されていないため、スキルを使うことはできません。<br>
+	 * Message: &#26410;&#33021;&#21484;&#21914;&#20351;&#39764;&#65292;&#22240;&#27492;&#28961;&#27861;&#20351;&#29992;&#25216;&#33021;&#12290;<br>
 	 * Message: You cannot use the skill because the servitor has not been summoned.
 	 */
 	public static final SystemMessageId CANNOT_USE_SKILL_WITHOUT_SERVITOR;
