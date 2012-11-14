@@ -2237,15 +2237,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			// Check if the caster owns enough consumed Item to cast
 			if ((requiredItems == null) || (requiredItems.getCount() < skill.getItemConsume()))
 			{
-				// Checked: when a summon skill failed, server show required consume item count
-				if (skill.getSkillType() == L2SkillType.SUMMON)
-				{
-					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.SUMMONING_SERVITOR_COSTS_S2_S1);
-					sm.addItemName(skill.getItemConsumeId());
-					sm.addNumber(skill.getItemConsume());
-					sendPacket(sm);
-				}
-				else
 				{
 					// Send a System Message to the caster
 					sendPacket(SystemMessageId.THERE_ARE_NOT_ENOUGH_NECESSARY_ITEMS_TO_USE_THE_SKILL);
