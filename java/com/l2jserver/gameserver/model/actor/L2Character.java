@@ -1806,39 +1806,30 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			level = 1;
 		}
 		
-		// Get the casting time of the skill (base)
-		int hitTime = skill.getHitTime();
-		int coolTime = skill.getCoolTime();
+		// Get the Base Casting Time of the Skills.
+		int skillTime = (skill.getHitTime() + skill.getCoolTime());
 		
 		boolean effectWhileCasting = (skill.getSkillType() == L2SkillType.FUSION) || (skill.getSkillType() == L2SkillType.SIGNET_CASTTIME);
-		
-		// Calculate the casting time of the skill (base + modifier of MAtkSpd)
 		// Don't modify the skill time for FORCE_BUFF skills. The skill time for those skills represent the buff time.
 		if (!effectWhileCasting)
 		{
-			hitTime = Formulas.calcAtkSpd(this, skill, hitTime);
-			if (coolTime > 0)
+			// Calculate the Casting Time of the "Non-Static" Skills (with caster PAtk/MAtkSpd).
+			if (!skill.isStatic())
 			{
-				coolTime = Formulas.calcAtkSpd(this, skill, coolTime);
+				skillTime = Formulas.calcAtkSpd(this, skill, skillTime);
+			}
+			// Calculate the Casting Time of Magic Skills (reduced in 40% if using SPS/BSPS)
+			if ((skill.isMagic() && isChargedShot(ShotType.SPIRITSHOTS)) || isChargedShot(ShotType.BLESSED_SPIRITSHOTS))
+			{
+				skillTime = (int) (0.6 * skillTime);
 			}
 		}
 		
-		// Calculate altered Cast Speed due to BSpS/SpS
-		if (skill.isMagic() && !effectWhileCasting)
+		// Avoid broken Casting Animation.
+		// Client can't handle less than 550ms Casting Animation in skills with more than 550ms base.
+		if (((skill.getHitTime() + skill.getCoolTime()) > 550) && (skillTime < 550))
 		{
-			if (isChargedShot(ShotType.SPIRITSHOTS) || isChargedShot(ShotType.BLESSED_SPIRITSHOTS))
-			{
-				// Using SPS/BSPS Casting Time of Magic Skills is reduced in 40%
-				hitTime = (int) (0.60 * hitTime);
-				coolTime = (int) (0.60 * coolTime);
-			}
-		}
-		
-		// if skill is static
-		if (skill.isStatic())
-		{
-			hitTime = skill.getHitTime();
-			coolTime = skill.getCoolTime();
+			skillTime = 550;
 		}
 		
 		// queue herbs and potions
@@ -1861,8 +1852,8 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (!simultaneously)
 		{
 			// Set the _castEndTime. +10 ticks for lag situations, will be reseted in onMagicFinalizer
-			_castEndTime       = 10 + GameTimeController.getGameTicks() + ((hitTime + coolTime) / GameTimeController.MILLIS_IN_TICK); //[JOJO]
-			_castInterruptTime = -2 + GameTimeController.getGameTicks() + ((hitTime + coolTime) / GameTimeController.MILLIS_IN_TICK);
+			_castEndTime       = 10 + GameTimeController.getGameTicks() + (skillTime / GameTimeController.MILLIS_IN_TICK); //[JOJO]
+			_castInterruptTime = -2 + GameTimeController.getGameTicks() + (skillTime / GameTimeController.MILLIS_IN_TICK);
 			setLastSkillCast(skill);
 		}
 		else
@@ -1983,7 +1974,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		
 		// Send a Server->Client packet MagicSkillUser with target, displayId, level, skillTime, reuseDelay
 		// to the L2Character AND to all L2PcInstance in the _KnownPlayers of the L2Character
-		broadcastPacket(new MagicSkillUse(this, target, displayId, level, hitTime, reuseDelay));
+		broadcastPacket(new MagicSkillUse(this, target, displayId, level, skillTime, reuseDelay));
 		
 		// Send a system message USE_S1 to the L2Character
 	//	if (!skill.isPotion() && isPlayer() && magicId != 1312) //[L2J_JP EDIT - TSL]	//[JOJO]r5394”pŽ~
@@ -2026,20 +2017,20 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			ThreadPoolManager.getInstance().scheduleEffect(new FlyToLocationTask(this, target, skill), 50);
 		}
 		
-		MagicUseTask mut = new MagicUseTask(targets, skill, hitTime, coolTime, simultaneously);
+		MagicUseTask mut = new MagicUseTask(targets, skill, skillTime, simultaneously);
 		
-		// launch the magic in hitTime milliseconds
-		if (hitTime > 0)
+		// launch the magic in skillTime milliseconds
+		if (skillTime > 0)
 		{
 			// Send a Server->Client packet SetupGauge with the color of the gauge and the casting time
 			if (isPlayer() && !effectWhileCasting)
 			{
-				sendPacket(new SetupGauge(SetupGauge.BLUE, hitTime));
+				sendPacket(new SetupGauge(SetupGauge.BLUE, skillTime));
 			}
 			
 			if (skill.getHitCounts() > 0)
 			{
-				hitTime = (hitTime * skill.getHitTimings()[0]) / 100;
+				skillTime = (skillTime * skill.getHitTimings()[0]) / 100;
 			}
 			
 			if (effectWhileCasting)
@@ -2056,9 +2047,9 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					_skillCast2 = null;
 				}
 				
-				// Create a task MagicUseTask to launch the MagicSkill at the end of the casting time (hitTime)
+				// Create a task MagicUseTask to launch the MagicSkill at the end of the casting time (skillTime)
 				// For client animation reasons (party buffs especially) 400 ms before!
-				_skillCast2 = ThreadPoolManager.getInstance().scheduleEffect(mut, hitTime - 400);
+				_skillCast2 = ThreadPoolManager.getInstance().scheduleEffect(mut, skillTime - 400);
 			}
 			else
 			{
@@ -2069,14 +2060,14 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					_skillCast = null;
 				}
 				
-				// Create a task MagicUseTask to launch the MagicSkill at the end of the casting time (hitTime)
+				// Create a task MagicUseTask to launch the MagicSkill at the end of the casting time (skillTime)
 				// For client animation reasons (party buffs especially) 400 ms before!
-				_skillCast = ThreadPoolManager.getInstance().scheduleEffect(mut, hitTime - 400);
+				_skillCast = ThreadPoolManager.getInstance().scheduleEffect(mut, skillTime - 400);
 			}
 		}
 		else
 		{
-			mut.hitTime = 0;
+			mut.skillTime = 0;
 			onMagicLaunchedTimer(mut);
 		}
 	}
@@ -3039,19 +3030,17 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		L2Object[] targets;
 		L2Skill skill;
 		int count;
-		int hitTime;
-		int coolTime;
+		int skillTime;
 		int phase;
 		boolean simultaneously;
 		
-		public MagicUseTask(L2Object[] tgts, L2Skill s, int hit, int coolT, boolean simultaneous)
+		public MagicUseTask(L2Object[] tgts, L2Skill s, int hit, boolean simultaneous)
 		{
 			targets = tgts;
 			skill = s;
 			count = 0;
 			phase = 1;
-			hitTime = hit;
-			coolTime = coolT;
+			skillTime = hit;
 			simultaneously = simultaneous;
 		}
 		
@@ -6627,7 +6616,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		}
 		
 		mut.phase = 2;
-		if (mut.hitTime == 0)
+		if (mut.skillTime == 0)
 		{
 			onMagicHitTimer(mut);
 		}
@@ -6809,26 +6798,26 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			_log.log(Level.WARNING, "", e);
 		}
 		
-		if (mut.hitTime > 0)
+		if (mut.skillTime > 0)
 		{
 			mut.count++;
 			if (mut.count < skill.getHitCounts())
 			{
-				int hitTime = (mut.hitTime * skill.getHitTimings()[mut.count]) / 100;
+				int skillTime = (mut.skillTime * skill.getHitTimings()[mut.count]) / 100;
 				if (mut.simultaneously)
 				{
-					_skillCast2 = ThreadPoolManager.getInstance().scheduleEffect(mut, hitTime);
+					_skillCast2 = ThreadPoolManager.getInstance().scheduleEffect(mut, skillTime);
 				}
 				else
 				{
-					_skillCast = ThreadPoolManager.getInstance().scheduleEffect(mut, hitTime);
+					_skillCast = ThreadPoolManager.getInstance().scheduleEffect(mut, skillTime);
 				}
 				return;
 			}
 		}
 		
 		mut.phase = 3;
-		if ((mut.hitTime == 0) || (mut.coolTime == 0))
+		if (mut.skillTime == 0)
 		{
 			onMagicFinalizer(mut);
 		}
@@ -6836,16 +6825,16 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		{
 			if (mut.simultaneously)
 			{
-				_skillCast2 = ThreadPoolManager.getInstance().scheduleEffect(mut, mut.coolTime);
+				_skillCast2 = ThreadPoolManager.getInstance().scheduleEffect(mut, 0);
 			}
 			else
 			{
-				_skillCast = ThreadPoolManager.getInstance().scheduleEffect(mut, mut.coolTime);
+				_skillCast = ThreadPoolManager.getInstance().scheduleEffect(mut, 0);
 			}
 		}
 	}
 	
-	// Runs after skill hitTime+coolTime
+	// Runs after skillTime
 	public void onMagicFinalizer(MagicUseTask mut)
 	{
 		if (mut.simultaneously)
