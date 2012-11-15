@@ -30,7 +30,6 @@ import com.l2jserver.util.Rnd;
 
 public class L2SkillSpawn extends L2Skill
 {
-	private final int _npcId;
 	private final int _despawnDelay;
 	private final boolean _summonSpawn;
 	private final boolean _randomOffset;
@@ -39,7 +38,6 @@ public class L2SkillSpawn extends L2Skill
 	public L2SkillSpawn(StatsSet set)
 	{
 		super(set);
-		_npcId = set.getInteger("npcId", 0);
 		_despawnDelay = set.getInteger("despawnDelay", 0);
 		_summonSpawn = set.getBool("isSummonSpawn", false);
 		_randomOffset = set.getBool("randomOffset", true);
@@ -54,16 +52,16 @@ public class L2SkillSpawn extends L2Skill
 			return;
 		}
 		
-		if (_npcId == 0)
+		if (getNpcId() == 0)
 		{
 			_log.warning("NPC ID not defined for skill ID:" + getId());
 			return;
 		}
 		
-		final L2NpcTemplate template = NpcTable.getInstance().getTemplate(_npcId);
+		final L2NpcTemplate template = NpcTable.getInstance().getTemplate(getNpcId());
 		if (template == null)
 		{
-			_log.warning("Spawn of the nonexisting NPC ID:" + _npcId + ", skill ID:" + getId());
+			_log.warning("Spawn of the nonexisting NPC ID:" + getNpcId() + ", skill ID:" + getId());
 			return;
 		}
 		
@@ -74,7 +72,7 @@ public class L2SkillSpawn extends L2Skill
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Exception in L2SkillSpawn. NPC ID: " + _npcId + ", skill ID: " + getId() + ", exception: " + e.getMessage(), e);
+			_log.log(Level.WARNING, "Exception in L2SkillSpawn. NPC ID: " + getNpcId() + ", skill ID: " + getId() + ", exception: " + e.getMessage(), e);
 			return;
 		}
 		
