@@ -15,17 +15,24 @@
 package com.l2jserver.gameserver.ai;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Class for AI action after some event.<br>
  * Has 2 array list for "work" and "break".
  * @author Yaroslav
+ * mod: JOJO
  */
 public class NextAction
 {
 	public interface NextActionCallback
 	{
 		public void doWork();
+	}
+	
+	protected void doWork()	//+[JOJO] You can override.
+	{
 	}
 	
 	private ArrayList<CtrlEvent> _events;
@@ -45,6 +52,12 @@ public class NextAction
 		setCallback(callback);
 	}
 	
+	public NextAction(ArrayList<CtrlEvent> events, ArrayList<CtrlIntention> intentions)	//+[JOJO]
+	{
+		_events = events;
+		_intentions = intentions;
+	}
+	
 	/**
 	 * Single constructor.
 	 * @param event
@@ -53,25 +66,18 @@ public class NextAction
 	 */
 	public NextAction(CtrlEvent event, CtrlIntention intention, NextActionCallback callback)
 	{
-		if (_events == null)
-		{
-			_events = new ArrayList<>();
-		}
-		
-		if (_intentions == null)
-		{
-			_intentions = new ArrayList<>();
-		}
-		
 		if (event != null)
 		{
+			_events = new ArrayList<>(1);
 			_events.add(event);
 		}
 		
 		if (intention != null)
 		{
+			_intentions = new ArrayList<>(1);
 			_intentions.add(intention);
 		}
+		
 		setCallback(callback);
 	}
 	
@@ -84,19 +90,25 @@ public class NextAction
 		{
 			_callback.doWork();
 		}
+		else
+		{
+			/*this.*/doWork();	//+[JOJO]
+		}
 	}
 	
 	/**
 	 * @return the _event
 	 */
-	public ArrayList<CtrlEvent> getEvents()
+	public List<CtrlEvent> getEvents()	//[JOJO] ArrayList --> List
 	{
-		// If null return empty list.
 		if (_events == null)
 		{
-			_events = new ArrayList<>();
+			return Collections.emptyList();
 		}
-		return _events;
+		else
+		{
+			return _events;
+		}
 	}
 	
 	/**
@@ -112,13 +124,12 @@ public class NextAction
 	 */
 	public void addEvent(CtrlEvent event)
 	{
-		if (_events == null)
-		{
-			_events = new ArrayList<>();
-		}
-		
 		if (event != null)
 		{
+			if (_events == null)
+			{
+				_events = new ArrayList<>();
+			}
 			_events.add(event);
 		}
 	}
@@ -154,14 +165,17 @@ public class NextAction
 	/**
 	 * @return the _intentions
 	 */
-	public ArrayList<CtrlIntention> getIntentions()
+	public List<CtrlIntention> getIntentions()	//[JOJO] ArrayList --> List
 	{
 		// If null return empty list.
 		if (_intentions == null)
 		{
-			_intentions = new ArrayList<>();
+			return Collections.emptyList();
 		}
-		return _intentions;
+		else
+		{
+			return _intentions;
+		}
 	}
 	
 	/**
@@ -177,13 +191,12 @@ public class NextAction
 	 */
 	public void addIntention(CtrlIntention intention)
 	{
-		if (_intentions == null)
-		{
-			_intentions = new ArrayList<>();
-		}
-		
 		if (intention != null)
 		{
+			if (_intentions == null)
+			{
+				_intentions = new ArrayList<>();
+			}
 			_intentions.add(intention);
 		}
 	}
