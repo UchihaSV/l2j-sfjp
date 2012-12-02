@@ -51,7 +51,6 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
-import static com.l2jserver.gameserver.debug.*;
 
 /**
  * Zoey76: TODO: Use Location DTO instead of array of int.
@@ -81,7 +80,7 @@ public class FourSepulchersManager
 	protected ScheduledFuture<?> _onPartyAnnihilatedTask = null;
 	
 	// @formatter:off
-	L2CharPosition[] _startHallSpawn =
+	private L2CharPosition[] START_HALL_SPAWN =
 	{
 		new L2CharPosition(181632, -85587, -7218, 0),
 		new L2CharPosition(179963, -88978, -7218, 0),
@@ -89,7 +88,7 @@ public class FourSepulchersManager
 		new L2CharPosition(175608, -82296, -7218, 0),
 	};
 	
-	private final int[] _dukesHallGatekeeper =
+	private final int[] DUKES_HALL_GATEKEEPER =
 	{
 		31929,
 		31934,
@@ -97,32 +96,20 @@ public class FourSepulchersManager
 		31944
 	};
 	
-	private final int[][][] _shadowSpawnLoc =
+	private final int[] SHADOW_OF_HALISHA =
 	{
-		{
-			{ 25339, 191231, -85574, -7216, 33380 },
-			{ 25349, 189534, -88969, -7216, 32768 },
-			{ 25346, 173195, -76560, -7215, 49277 },
-			{ 25342, 175591, -72744, -7215, 49317 }
-		},
-		{
-			{ 25342, 191231, -85574, -7216, 33380 },
-			{ 25339, 189534, -88969, -7216, 32768 },
-			{ 25349, 173195, -76560, -7215, 49277 },
-			{ 25346, 175591, -72744, -7215, 49317 }
-		},
-		{
-			{ 25346, 191231, -85574, -7216, 33380 },
-			{ 25342, 189534, -88969, -7216, 32768 },
-			{ 25339, 173195, -76560, -7215, 49277 },
-			{ 25349, 175591, -72744, -7215, 49317 }
-		},
-		{
-			{ 25349, 191231, -85574, -7216, 33380 },
-			{ 25346, 189534, -88969, -7216, 32768 },
-			{ 25342, 173195, -76560, -7215, 49277 },
-			{ 25339, 175591, -72744, -7215, 49317 }
-		},
+		25339,
+		25349,
+		25346,
+		25342,
+	};
+	
+	private final L2CharPosition[] SHADOW_SPAWN =
+	{
+		new L2CharPosition(191231, -85574, -7216, 33380),
+		new L2CharPosition(189534, -88969, -7216, 32768),
+		new L2CharPosition(173195, -76560, -7215, 49277),
+		new L2CharPosition(175591, -72744, -7215, 49317),
 	};
 	// @formatter:on
 	
@@ -250,10 +237,10 @@ public class FourSepulchersManager
 	
 	protected void initFixedInfo()
 	{
-		_startHallSpawns.put(31921, _startHallSpawn[0]);
-		_startHallSpawns.put(31922, _startHallSpawn[1]);
-		_startHallSpawns.put(31923, _startHallSpawn[2]);
-		_startHallSpawns.put(31924, _startHallSpawn[3]);
+		_startHallSpawns.put(31921, START_HALL_SPAWN[0]);
+		_startHallSpawns.put(31922, START_HALL_SPAWN[1]);
+		_startHallSpawns.put(31923, START_HALL_SPAWN[2]);
+		_startHallSpawns.put(31924, START_HALL_SPAWN[3]);
 		
 		_hallInUse.put(31921, false);
 		_hallInUse.put(31922, false);
@@ -614,36 +601,49 @@ public class FourSepulchersManager
 		}
 	}
 	
+	private static void shuffle(int[] array)
+	{
+		for (int i = array.length; --i > 0;)
+		{
+			int j = Rnd.get(i);
+			int swap = array[i];
+			array[i] = array[j];
+			array[j] = swap;
+		}
+	}
+	
 	protected void initLocationShadowSpawns()
 	{
-		int locNo = Rnd.get(4);
-		
 		_shadowSpawns.clear();
+		
+		shuffle(SHADOW_OF_HALISHA);
 		
 		for (int i = 0; i < 4; i++)
 		{
-			int[] loc = _shadowSpawnLoc[locNo][i];
-			L2NpcTemplate template = NpcTable.getInstance().getTemplate(loc[0]);
+			int keyNpcId = DUKES_HALL_GATEKEEPER[i];
+			int spawnNpcId = SHADOW_OF_HALISHA[i];
+			L2CharPosition loc = SHADOW_SPAWN[i];
+			L2NpcTemplate template = NpcTable.getInstance().getTemplate(spawnNpcId);
 			if (template != null)
 			{
 				try
 				{
-					L2Spawn spawnDat = new L2Spawn(template);
+					L2Spawn spawnDat;
+					spawnDat = new L2Spawn(template);
 					spawnDat.setAmount(1);
-					spawnDat.setXYZ(loc[1],loc[2],loc[3]);
-					spawnDat.setHeading(loc[4]);
+					spawnDat.setXYZ(loc.x, loc.y, loc.z);
+					spawnDat.setHeading(loc.heading);
 				//	SpawnTable.getInstance().addNewSpawn(spawnDat, false);	//[JOJO] ’n—‹“P‹Ž
-					int keyNpcId = _dukesHallGatekeeper[i];
 					_shadowSpawns.put(keyNpcId, spawnDat);
 				}
-				catch (Exception e)
+				catch (SecurityException | ClassNotFoundException | NoSuchMethodException e)
 				{
 					_log.log(Level.SEVERE, "Error on InitLocationShadowSpawns", e);
 				}
 			}
 			else
 			{
-				_log.warning("FourSepulchersManager.InitLocationShadowSpawns: Data missing in NPC table for ID: " + loc[0] + ".");
+				_log.warning("FourSepulchersManager.InitLocationShadowSpawns: Data missing in NPC table for ID: " + spawnNpcId + ".");
 			}
 		}
 	}
@@ -1195,19 +1195,7 @@ public class FourSepulchersManager
 	
 	protected void locationShadowSpawns()
 	{
-		int locNo = Rnd.get(4);
-		// _log.info("FourSepulchersManager.LocationShadowSpawns: Location index
-		// is " + locNo + ".");
-		
-		for (int i = 0; i < 4; i++)
-		{
-			int keyNpcId = _dukesHallGatekeeper[i];
-			int[] loc = _shadowSpawnLoc[locNo][i];
-			L2Spawn spawnDat = _shadowSpawns.get(keyNpcId);
-			spawnDat.setXYZ(loc[1],loc[2],loc[3]);
-			spawnDat.setHeading(loc[4]);
-			_shadowSpawns.put(keyNpcId, spawnDat);
-		}
+		initLocationShadowSpawns();
 	}
 	
 	public void spawnShadow(int npcId)
@@ -1361,7 +1349,7 @@ public class FourSepulchersManager
 				managerSay(min);
 				if (min + 5 <= Config.FS_TIME_ATTACK)
 				{
-					ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), 5 * 60000);
+					ThreadPoolManager.getInstance().scheduleGeneral(this/*new ManagerSay()*/, 5 * 60000);
 				}
 			}
 			else if (_inEntryTime)

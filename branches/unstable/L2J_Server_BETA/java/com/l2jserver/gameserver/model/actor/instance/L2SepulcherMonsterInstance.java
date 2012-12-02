@@ -21,7 +21,9 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlIntention;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
+import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Spawn;
+import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.quest.QuestState;
@@ -407,7 +409,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			if (timeLeft <= 0)
 				return;
 			
-			if (_activeChar.getCurrentHp() - _activeChar.getMaxHp() * 0.0625 > (double)_activeChar.getMaxHp() * timeLeft / TIME_VICTIM_SPAWN_KEYBOX)
+			if (_activeChar.getCurrentHp() - 777 > (double) _activeChar.getMaxHp() * timeLeft / TIME_VICTIM_SPAWN_KEYBOX)
 			{
 				L2SepulcherMonsterInstance attacker;
 				if ((attacker = getClosestMonster()) != null)
@@ -422,6 +424,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				{
 					broadcastPacket(new NpcSay(getObjectId(), 0, getNpcId(), 1010483/*"$s1! Help me!!"*/).addPcName(player));
 					_activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_INTERACT, player);
+					_activeChar.setIsNoRndWalk(true);
 					ThreadPoolManager.getInstance().scheduleEffect(new Runnable() {
 						@Override
 						public void run()
@@ -455,7 +458,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 		{
 			if (player == null || player.isDead())
 				continue;
-			if (player.isAttackingNow() == isBusy)
+			if (player.isInCombat() == isBusy)
 				knownPlayers[count++] = player;
 		}
 		if (count > 0)
@@ -468,11 +471,11 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 	{
 		L2SepulcherMonsterInstance attacker = null;
 		long distanceSq = Long.MAX_VALUE;
-		for (Object o : getKnownList().getKnownObjects().values())
+		for (L2Object o : getKnownList().getKnownObjects().values())
 		{
 			if (o instanceof L2SepulcherMonsterInstance)
 			{
-				L2SepulcherMonsterInstance a = (L2SepulcherMonsterInstance)o;
+				L2SepulcherMonsterInstance a = (L2SepulcherMonsterInstance) o;
 				if (a.isAttackingDisabled()) continue;
 				long d;
 				if ((d = (long)getPlanDistanceSq(a)) < distanceSq)
@@ -483,6 +486,16 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			}
 		}
 		return attacker;
+	}
+	
+	@Override
+	public void addDamageHate(L2Character attacker, int damage, int aggro)	//[JOJO]
+	{
+if (com.l2jserver.Config.FIX_FOURSEPULCHER_VICTIM_AI) {{
+		if ("victim".equals(getFactionId()) && attacker instanceof L2Attackable)
+			return;
+}}
+		super.addDamageHate(attacker, damage, aggro);
 	}
 	
 	private class VictimSpawnKeyBox implements Runnable
