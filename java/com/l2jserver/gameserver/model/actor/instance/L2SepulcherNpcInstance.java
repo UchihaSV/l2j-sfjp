@@ -25,6 +25,7 @@ import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
+import com.l2jserver.gameserver.model.effects.AbnormalEffect;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.network.NpcStringId;
@@ -233,12 +234,14 @@ public class L2SepulcherNpcInstance extends L2Npc
 			case 31486:
 			case 31487:
 				setIsInvul(false);
-				reduceCurrentHp(getMaxHp() + 1, player, null);
+				startAbnormalEffect(AbnormalEffect.STUN);	//+[JOJO]
+				ThreadPoolManager.getInstance().scheduleEffect(new Runnable() { @Override public void run() { stopAbnormalEffect(AbnormalEffect.STUN); } }, 2500);	//+[JOJO]
 				if (_spawnMonsterTask != null)
 				{
 					_spawnMonsterTask.cancel(true);
 				}
 				_spawnMonsterTask = ThreadPoolManager.getInstance().scheduleEffect(new SpawnMonster(getNpcId()), 3500);
+				doDie(null);
 				break;
 			
 			case 31455:
@@ -255,12 +258,14 @@ public class L2SepulcherNpcInstance extends L2Npc
 			case 31466:
 			case 31467:
 				setIsInvul(false);
-				reduceCurrentHp(getMaxHp() + 1, player, null);
+				startAbnormalEffect(AbnormalEffect.STUN);	//+[JOJO]
+				ThreadPoolManager.getInstance().scheduleEffect(new Runnable() { @Override public void run() { stopAbnormalEffect(AbnormalEffect.STUN); } }, 2500);	//+[JOJO]
 				if ((player.getParty() != null) && !player.getParty().isLeader(player))
 				{
 					player = player.getParty().getLeader();
 				}
 				player.addItem("Quest", HALLS_KEY, 1, player, true);
+				doDie(null);
 				break;
 			
 			default:
