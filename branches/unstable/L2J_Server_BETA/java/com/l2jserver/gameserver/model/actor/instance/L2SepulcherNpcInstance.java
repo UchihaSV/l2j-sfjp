@@ -234,8 +234,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 			case 31486:
 			case 31487:
 				setIsInvul(false);
-				startAbnormalEffect(AbnormalEffect.STUN);	//+[JOJO]
-				ThreadPoolManager.getInstance().scheduleEffect(new Runnable() { @Override public void run() { stopAbnormalEffect(AbnormalEffect.STUN); } }, 2500);	//+[JOJO]
+				new BoxAction();	//+[JOJO]
 				if (_spawnMonsterTask != null)
 				{
 					_spawnMonsterTask.cancel(true);
@@ -258,8 +257,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 			case 31466:
 			case 31467:
 				setIsInvul(false);
-				startAbnormalEffect(AbnormalEffect.STUN);	//+[JOJO]
-				ThreadPoolManager.getInstance().scheduleEffect(new Runnable() { @Override public void run() { stopAbnormalEffect(AbnormalEffect.STUN); } }, 2500);	//+[JOJO]
+				new BoxAction();	//+[JOJO]
 				if ((player.getParty() != null) && !player.getParty().isLeader(player))
 				{
 					player = player.getParty().getLeader();
@@ -289,6 +287,20 @@ public class L2SepulcherNpcInstance extends L2Npc
 			}
 		}
 		player.sendPacket(ActionFailed.STATIC_PACKET);
+	}
+	
+	class BoxAction implements Runnable	//+[JOJO]
+	{
+		BoxAction()
+		{
+			startAbnormalEffect(AbnormalEffect.STUN);
+			ThreadPoolManager.getInstance().scheduleEffect(this, 3000);
+		}
+		@Override
+		public void run()
+		{
+			stopAbnormalEffect(AbnormalEffect.STUN);
+		}
 	}
 	
 	@Override

@@ -24,7 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
+import jp.sf.l2j.arrayMaps.SortedIntBooleanArrayMap;
 import jp.sf.l2j.arrayMaps.SortedIntIntArrayMap;
 import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
@@ -113,9 +113,9 @@ public class FourSepulchersManager
 	};
 	// @formatter:on
 	
-	protected SortedIntObjectArrayMap<Boolean> _archonSpawned = new SortedIntObjectArrayMap<>();
-	protected SortedIntObjectArrayMap<Boolean> _hallInUse = new SortedIntObjectArrayMap<>();
-	protected FastMap<Integer, L2PcInstance> _challengers = new FastMap<>();
+	protected SortedIntBooleanArrayMap _archonSpawned = new SortedIntBooleanArrayMap();
+	protected SortedIntBooleanArrayMap _hallInUse = new SortedIntBooleanArrayMap();
+//	protected FastMap<Integer, L2PcInstance> _challengers = new FastMap<>();
 	protected SortedIntObjectArrayMap<L2CharPosition> _startHallSpawns = new SortedIntObjectArrayMap<>();
 	protected SortedIntIntArrayMap _hallGateKeepers = new SortedIntIntArrayMap();
 	protected SortedIntIntArrayMap _keyBoxNpc = new SortedIntIntArrayMap();
@@ -207,20 +207,9 @@ public class FourSepulchersManager
 		
 		closeAllDoors();
 		
-		_hallInUse.clear();
-		_hallInUse.put(31921, false);
-		_hallInUse.put(31922, false);
-		_hallInUse.put(31923, false);
-		_hallInUse.put(31924, false);
+		_hallInUse.fill(false);
 		
-		if (_archonSpawned.size() != 0)
-		{
-			int[] npcIdSet = _archonSpawned.keySet();
-			for (int npcId : npcIdSet)
-			{
-				_archonSpawned.put(npcId, false);
-			}
-		}
+		_archonSpawned.fill(false);
 	}
 	
 	protected void spawnManagers() //[modify JOJO]
@@ -703,7 +692,7 @@ public class FourSepulchersManager
 				return;
 		}
 		
-		if (_hallInUse.get(npcId).booleanValue())
+		if (_hallInUse.get(npcId))
 		{
 			showHtmlFile(player, npcId + "-FULL.htm", npc, null);
 			return;
@@ -838,10 +827,10 @@ public class FourSepulchersManager
 				}
 			}
 			
-			_challengers.remove(npcId);
-			_challengers.put(npcId, player);
+		//	_challengers.remove(npcId);
+		//	_challengers.put(npcId, player);
 			
-			_hallInUse.remove(npcId);
+		//	_hallInUse.remove(npcId);
 			_hallInUse.put(npcId, true);
 		}
 		if ((Config.FS_PARTY_MEMBER_COUNT <= 1) && player.isInParty())
@@ -874,10 +863,10 @@ public class FourSepulchersManager
 				}
 			}
 			
-			_challengers.remove(npcId);
-			_challengers.put(npcId, player);
+		//	_challengers.remove(npcId);
+		//	_challengers.put(npcId, player);
 			
-			_hallInUse.remove(npcId);
+		//	_hallInUse.remove(npcId);
 			_hallInUse.put(npcId, true);
 		}
 		else
@@ -898,10 +887,10 @@ public class FourSepulchersManager
 				player.destroyItemByItemId("Quest", CHAPEL_KEY, hallsKey.getCount(), player, true);
 			}
 			
-			_challengers.remove(npcId);
-			_challengers.put(npcId, player);
+		//	_challengers.remove(npcId);
+		//	_challengers.put(npcId, player);
 			
-			_hallInUse.remove(npcId);
+		//	_hallInUse.remove(npcId);
 			_hallInUse.put(npcId, true);
 		}
 	}
@@ -1305,7 +1294,7 @@ public class FourSepulchersManager
 				// hall not used right now, so its manager will not tell you
 				// anything :)
 				// if you don't need this - delete next two lines.
-				if (!_hallInUse.get(temp.getNpcid()).booleanValue())
+				if (!_hallInUse.get(temp.getNpcid()))
 				{
 					continue;
 				}
