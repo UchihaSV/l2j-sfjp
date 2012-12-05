@@ -18,7 +18,9 @@ import java.util.Collection;
 import java.util.concurrent.Future;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
+import com.l2jserver.gameserver.ai.CtrlEvent;
 import com.l2jserver.gameserver.ai.CtrlIntention;
+import com.l2jserver.gameserver.ai.NextAction;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
 import com.l2jserver.gameserver.model.L2Object;
@@ -41,7 +43,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 	@Deprecated static final boolean DEBUG = false;
 	static final long TIME_VICTIM_SPAWN_KEYBOX = 300000;
 	public int mysteriousBoxId = 0;
-	static boolean _keyBoxSpawned;
+	boolean victimKeyBoxSpawned;
 	L2Spawn _spawn2;
 	
 	protected Future<?> _victimSpawnKeyBoxTask = null;
@@ -118,12 +120,12 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				{
 					_victimSpawnKeyBoxTask.cancel(true);
 				}
-				_victimSpawnKeyBoxTask = ThreadPoolManager.getInstance().scheduleEffect(new VictimSpawnKeyBox(this), TIME_VICTIM_SPAWN_KEYBOX);
+				_victimSpawnKeyBoxTask = ThreadPoolManager.getInstance().scheduleEffect(new VictimSpawnKeyBox(), TIME_VICTIM_SPAWN_KEYBOX);
 				if (_victimShout != null)
 				{
 					_victimShout.cancel(true);
 				}
-				_victimShout = ThreadPoolManager.getInstance().scheduleEffect(new VictimShout(this, System.currentTimeMillis() + TIME_VICTIM_SPAWN_KEYBOX), 5000);
+				_victimShout = ThreadPoolManager.getInstance().scheduleEffect(new VictimShout(System.currentTimeMillis() + TIME_VICTIM_SPAWN_KEYBOX), 5000);
 				break;
 			case 18196:
 			case 18197:
@@ -381,13 +383,12 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 	
 	private class VictimShout implements Runnable
 	{
-		/*private*/ final L2SepulcherMonsterInstance _activeChar;	// = L2SepulcherMonsterInstance.this
 		long _victimSpawnKeyBoxTime;
 		long _nextShoutTime;
 		
-		public VictimShout(L2SepulcherMonsterInstance activeChar, long victimSpawnKeyBoxTime)
+		public VictimShout(long victimSpawnKeyBoxTime)
 		{
-			_activeChar = activeChar;
+			//assert "victim".equals(getFactionId());
 			_victimSpawnKeyBoxTime = victimSpawnKeyBoxTime;
 		}
 		
@@ -395,12 +396,12 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 		public void run()
 		{
 		 try {
-			if (_activeChar.isDead())
+			if (isDead())
 			{
 				return;
 			}
 			
-			if (!_activeChar.isVisible())
+			if (!isVisible())
 			{
 				return;
 			}
@@ -409,11 +410,11 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			if (timeLeft <= 0)
 				return;
 			
-			if (_activeChar.getCurrentHp() - 777 > (double) _activeChar.getMaxHp() * timeLeft / TIME_VICTIM_SPAWN_KEYBOX)
+			if (getCurrentHp() - 777 > (double) getMaxHp() * timeLeft / TIME_VICTIM_SPAWN_KEYBOX)
 			{
 				L2SepulcherMonsterInstance attacker;
 				if ((attacker = getClosestMonster()) != null)
-					attacker.doAttack(_activeChar);	//@SuppressWarnings("synthetic-access")
+					attacker.doAttack(L2SepulcherMonsterInstance.this);
 			}
 			
 			if (_nextShoutTime < System.currentTimeMillis())
@@ -423,14 +424,15 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				if ((player = getRandomPlayer(false)) != null)
 				{
 					broadcastPacket(new NpcSay(getObjectId(), 0, getNpcId(), 1010483/*"$s1! Help me!!"*/).addPcName(player));
-					_activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_INTERACT, player);
-					_activeChar.setIsNoRndWalk(true);
+					getAI().setIntention(CtrlIntention.AI_INTENTION_INTERACT, player);
+					setCanReturnToSpawnPoint(false);
+					setIsNoRndWalk(true);
 					ThreadPoolManager.getInstance().scheduleEffect(new Runnable() {
 						@Override
 						public void run()
 						{
-							if (_activeChar.getAI().getIntention() == CtrlIntention.AI_INTENTION_INTERACT)
-								_activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
+							if (getAI().getIntention() == CtrlIntention.AI_INTENTION_INTERACT)
+								getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
 						}
 					}, 5000);
 				}
@@ -488,49 +490,62 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 		return attacker;
 	}
 	
+	@Override protected void doAttack(L2Character target)	//[JOJO]
+	{
+		super.doAttack(target);
+	}
+	
 	@Override
 	public void addDamageHate(L2Character attacker, int damage, int aggro)	//[JOJO]
 	{
-if (com.l2jserver.Config.FIX_FOURSEPULCHER_VICTIM_AI) {{
-		if ("victim".equals(getFactionId()) && attacker instanceof L2Attackable)
-			return;
-}}
+		switch (getNpcId())
+		{
+		case 18150:
+		case 18151:
+		case 18152:
+		case 18153:
+		case 18154:
+		case 18155:
+		case 18156:
+		case 18157:
+			// Don't add hate.
+//¬		if (attacker instanceof L2Attackable)
+				return;
+		}
 		super.addDamageHate(attacker, damage, aggro);
 	}
 	
 	private class VictimSpawnKeyBox implements Runnable
 	{
-		private final L2SepulcherMonsterInstance _activeChar;
 		private long _effectPeriod;
-		private int _x, _y;
 		
-		public VictimSpawnKeyBox(L2SepulcherMonsterInstance activeChar)
+		public VictimSpawnKeyBox()
 		{
-			_activeChar = activeChar;
 		}
 		
 		@Override
 		public void run()
 		{
+			final L2SepulcherMonsterInstance activeChar = L2SepulcherMonsterInstance.this;
 			if (_victimShout != null)
 			{
 				_victimShout.cancel(true);
 				_victimShout = null;
 			}
-			if (_activeChar.isDead())
+			if (isDead())
 			{
 				return;
 			}
 			
-			if (!_activeChar.isVisible())
+			if (!isVisible())
 			{
 				return;
 			}
 			
-			if (! _keyBoxSpawned)
+			if (! victimKeyBoxSpawned)
 			{
-				_keyBoxSpawned = true;
-				FourSepulchersManager.getInstance().spawnKeyBox(_activeChar);
+				victimKeyBoxSpawned = true;
+				FourSepulchersManager.getInstance().spawnKeyBox(activeChar);
 				broadcastPacket(new NpcSay(getObjectId(), 0, getNpcId(), 1000503/*"Many thanks for rescue me."*/));
 				setWalking();
 			}
@@ -545,44 +560,36 @@ if (com.l2jserver.Config.FIX_FOURSEPULCHER_VICTIM_AI) {{
 					L2Skill skill = SkillTable.getInstance().getInfo(skillId, skillLevel);
 					setTarget(player);
 					doCast(skill);
-					broadcastPacket(new MagicSkillUse(_activeChar, player, skillId, skillLevel, 0, 0));
+					broadcastPacket(new MagicSkillUse(activeChar, player, skillId, skillLevel, 0, 0));
 				}
 			}
 			
-			long delay = 30000;
+			long delay = isMoving() ? 10000 : 30000;
 			L2PcInstance player;
-			switch (_activeChar.getAI().getIntention())
+			switch (getAI().getIntention())
 			{
 				case AI_INTENTION_ACTIVE:
 					if ((player = getRandomPlayer(false)) != null) {
-						_activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_INTERACT, player);
+						setRunning();
+						getAI().setIntention(CtrlIntention.AI_INTENTION_INTERACT, player);
 						delay = 10000;
 					}
 					break;
 				case AI_INTENTION_INTERACT:
 					if ((player = getRandomPlayer(false)) != null) {
-						_activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_FOLLOW, player);
+						setRunning();
+						getAI().setIntention(CtrlIntention.AI_INTENTION_FOLLOW, player);
 						delay = 10000;
 					}
 					break;
 				case AI_INTENTION_FOLLOW:
-					if (_x == _activeChar.getX() && _y == _activeChar.getY()) {
-						if (_spawn2 == null) {
-							// clone spawnData. it use L2AttackableAI#thinkActive()
-							try { _spawn2 = new L2Spawn(getTemplate()); } catch (Exception e) {e.printStackTrace();}
-							_spawn2.stopRespawn();
-							setSpawn(_spawn2);
-						}
-						_spawn2.setLocx(_activeChar.getX());
-						_spawn2.setLocy(_activeChar.getY());
-						_spawn2.setLocz(_activeChar.getZ());
-						_activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
+					if (!isMoving() || getTarget() instanceof L2PcInstance && ((L2PcInstance) getTarget()).isInCombat())
+					{
+						getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
 						delay = 60000;
 					}
 					break;
 			}
-			_x = _activeChar.getX();
-			_y = _activeChar.getY();
 			_victimSpawnKeyBoxTask = ThreadPoolManager.getInstance().scheduleEffect(this, delay);
 		}
 	}
@@ -643,7 +650,7 @@ if (com.l2jserver.Config.FIX_FOURSEPULCHER_VICTIM_AI) {{
 				case 18155:
 				case 18156:
 				case 18157:
-					if (! _keyBoxSpawned)
+					if (! _activeChar.victimKeyBoxSpawned)
 					FourSepulchersManager.getInstance().spawnExecutionerOfHalisha(_activeChar);
 					break;
 				

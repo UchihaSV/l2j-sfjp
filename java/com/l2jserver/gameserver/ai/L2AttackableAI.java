@@ -750,11 +750,6 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 		// Handle all L2Object of its Faction inside the Faction Range
 		
 		String faction_id = getActiveChar().getFactionId();
-if (com.l2jserver.Config.FIX_FOURSEPULCHER_VICTIM_AI) {{
-		// UPDATE npcaidata SET clan='victim',clan_range=0 WHERE npc_id IN (18150,18151,18152,18153,18154,18155,18156,18157);
-		if (originalAttackTarget instanceof L2Npc && "victim".equals(((L2Npc)originalAttackTarget).getFactionId()))
-			faction_id = null;
-}}
 		if ((faction_id != null) && !faction_id.isEmpty())
 		{
 			int factionRange = npc.getClanRange() + collision;
