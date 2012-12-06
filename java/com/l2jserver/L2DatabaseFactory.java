@@ -253,32 +253,43 @@ public class L2DatabaseFactory
 	}
 	
 	/**
-	 * Gets the connection.
+	 * Gets the connection with ConnectionCloser.
 	 * @return the connection
 	 */
 	public Connection getConnection()
 	{
-		Connection con = null;
-		while (con == null)
+		Connection con = getConnectionFast();	//[JOJO]
+		ConnectionCloser cc = new ConnectionCloser(con, new RuntimeException());
+		if (Server.serverMode == Server.MODE_GAMESERVER)
+		{
+			ThreadPoolManager.getInstance().scheduleGeneral(cc, Config.CONNECTION_CLOSE_TIME);
+		}
+		else
+		{
+			getExecutor().schedule(cc, 60, TimeUnit.SECONDS);
+		}
+		return con;
+	}
+	
+	/**
+	 * Gets the connection.
+	 * @return the connection
+	 */
+	public Connection getConnectionFast()	//[JOJO]
+	{
+		for (;;)
 		{
 			try
 			{
-				con = _source.getConnection();
-				if (Server.serverMode == Server.MODE_GAMESERVER)
-				{
-					ThreadPoolManager.getInstance().scheduleGeneral(new ConnectionCloser(con, new RuntimeException()), Config.CONNECTION_CLOSE_TIME);
-				}
-				else
-				{
-					getExecutor().schedule(new ConnectionCloser(con, new RuntimeException()), 60, TimeUnit.SECONDS);
-				}
+				Connection con;
+				if ((con = _source.getConnection()) != null)
+					return con;
 			}
 			catch (SQLException e)
 			{
 				_log.log(Level.WARNING, "L2DatabaseFactory: getConnection() failed, trying again " + e.getMessage(), e);
 			}
 		}
-		return con;
 	}
 	
 	/**
