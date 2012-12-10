@@ -36,23 +36,29 @@ public class DateRange
 		_endDate = to;
 	}
 	
-	private static SimpleDateFormat format_JP = new SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN); //[JOJO]
+	private static SimpleDateFormat format_date_short_JP = new SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN);
+	private static SimpleDateFormat format_date_long_JP = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.JAPAN);
 	
 	public static DateRange parse(String dateRange, DateFormat format)
 	{
 		String[] date = dateRange.split("-");
 		if (date.length == 2)
 		{
-			if (date[0].matches("\\d{4}/\\d{1,2}/\\d{1,2}")) format = format_JP; //[JOJO]
+			final DateFormat format0 =
+				  date[0].matches("\\d{4}/\\d{1,2}/\\d{1,2}") ? format_date_short_JP
+				: date[0].matches("\\d{4}/\\d{1,2}/\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}") ? format_date_long_JP
+				: format;
+			final DateFormat format1 =
+				  date[1].matches("\\d{4}/\\d{1,2}/\\d{1,2}") ? format_date_short_JP
+				: date[1].matches("\\d{4}/\\d{1,2}/\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}") ? format_date_long_JP
+				: format;
 			
 			try
 			{
-				synchronized (format) {	//+[JOJO]
-					Date start = format.parse(date[0]);
-					Date end = format.parse(date[1]);
-					
-					return new DateRange(start, end);
-				}
+				Date start, end;
+				synchronized (format0) { start = format0.parse(date[0]); }
+				synchronized (format1) { end = format1.parse(date[1]); }
+				return new DateRange(start, end);
 			}
 			catch (ParseException e)
 			{
