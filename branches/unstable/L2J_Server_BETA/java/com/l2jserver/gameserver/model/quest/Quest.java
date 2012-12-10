@@ -83,7 +83,7 @@ import gnu.trove.set.hash.TIntHashSet;
  */
 public class Quest extends ManagedScript
 {
-	protected static final Logger _log = Logger.getLogger(Quest.class.getName());
+	public static final Logger _log = Logger.getLogger(Quest.class.getName());
 	
 	/**
 	 * Map containing events from String value of the event.
