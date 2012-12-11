@@ -45,9 +45,9 @@ import com.l2jserver.gameserver.script.EventDrop;
 import com.l2jserver.gameserver.util.Broadcast;
 import com.l2jserver.gameserver.util.EventNpcAligner;
 /**
- ** @author GKR
- **
- ** Parent class for long time events. Maintains config reading, spawn of NPC's, adding of event's drop;
+ * Parent class for long time events.<br>
+ * Maintains config reading, spawn of NPC's, adding of event's drop.
+ * @author GKR
  */
 public class LongTimeEvent extends Quest
 {
@@ -294,7 +294,7 @@ public class LongTimeEvent extends Quest
 	}
 	
 	/**
-	 * Maintenance event start - adds global drop, spawns event NPC's, shows start announcement
+	 * Maintenance event start - adds global drop, spawns event NPC's, shows start announcement.
 	 */
 	protected void startEvent()
 	{
