@@ -2326,15 +2326,12 @@ public class Quest extends ManagedScript
 	 * @param npcIds
 	 * @return
 	 */
-	public L2NpcTemplate[] addEventReceivedId(int... npcIds)
+	public void addEventReceivedId(int... npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
 		{
-			value[i++] = addEventId(npcId, QuestEventType.ON_EVENT_RECEIVED);
+			addEventReceivedId(npcId);
 		}
-		return value;
 	}
 
 	/**
@@ -2352,15 +2349,12 @@ public class Quest extends ManagedScript
 	 * @param npcIds
 	 * @return
 	 */
-	public L2NpcTemplate[] addMoveFinishedId(int... npcIds)
+	public void addMoveFinishedId(int... npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
 		{
-			value[i++] = addEventId(npcId, QuestEventType.ON_MOVE_FINISHED);
+			addMoveFinishedId(npcId);
 		}
-		return value;
 	}
 
 	/**
