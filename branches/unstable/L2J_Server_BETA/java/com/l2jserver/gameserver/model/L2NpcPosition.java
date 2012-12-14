@@ -15,26 +15,25 @@
 package com.l2jserver.gameserver.model;
 
 /**
- * This class permit to pass (x, y, z, heading) position data to method.
+ * This class permit to pass (npcId, x, y, z, heading) position data to method.
+ * @author JOJO
  */
-public /*final*/ class L2CharPosition
+public class L2NpcPosition extends L2CharPosition
 {
 	
-	public final int x, y, z, heading;
+	public final int npcId;
 	
 	/**
-	 * Constructor of L2CharPosition.
+	 * Constructor of L2NpcPosition.
+	 * @param npcId
 	 * @param pX
 	 * @param pY
 	 * @param pZ
 	 * @param pHeading
 	 */
-	public L2CharPosition(int pX, int pY, int pZ, int pHeading)
+	public L2NpcPosition(int npcId, int pX, int pY, int pZ, int pHeading)
 	{
-		x = pX;
-		y = pY;
-		z = pZ;
-		heading = pHeading;
+		super(pX, pY, pZ, pHeading);
+		this.npcId = npcId;
 	}
-	
 }
