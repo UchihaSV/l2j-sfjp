@@ -15,6 +15,7 @@
 package com.l2jserver.gameserver.model.actor;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -315,9 +316,10 @@ public class L2Trap extends L2Character
 		broadcastPacket(new AbstractNpcInfo.TrapInfo(this, null));
 		setTarget(target);
 		
-		if (getTemplate().getEventQuests(Quest.QuestEventType.ON_TRAP_ACTION) != null)
+		List<Quest> eventQuests;
+		if ((eventQuests = getTemplate().getEventQuests(Quest.QuestEventType.ON_TRAP_ACTION)) != null)
 		{
-			for (Quest quest : getTemplate().getEventQuests(Quest.QuestEventType.ON_TRAP_ACTION))
+			for (Quest quest : eventQuests)
 			{
 				quest.notifyTrapAction(this, target, TrapAction.TRAP_TRIGGERED);
 			}

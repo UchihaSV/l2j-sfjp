@@ -579,13 +579,14 @@ if (com.l2jserver.Config.TEST_GET_AI) {{
 			
 			if (player != null)
 			{
-				if (getTemplate().getEventQuests(Quest.QuestEventType.ON_KILL) != null)
+				List<Quest> eventQuests;
+				if ((eventQuests = getTemplate().getEventQuests(Quest.QuestEventType.ON_KILL)) != null)
 				{
 if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 					// TODO: L2QuestGuardInstance Ç…Ç‡ON_KILLèàóùÇ™Ç†ÇÈÇ™...
 					ThreadPoolManager.getInstance().scheduleEffect(new OnKillNotifyTask(this, null, player, killer instanceof L2Summon), _onKillDelay);
 }} else {{
-					for (Quest quest : getTemplate().getEventQuests(Quest.QuestEventType.ON_KILL))
+					for (Quest quest : eventQuests)
 					{
 						ThreadPoolManager.getInstance().scheduleEffect(new OnKillNotifyTask(this, quest, player, killer instanceof L2Summon), _onKillDelay);
 					}
@@ -1020,9 +1021,10 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 				L2PcInstance player = attacker.getActingPlayer();
 				if (player != null)
 				{
-					if (getTemplate().getEventQuests(Quest.QuestEventType.ON_ATTACK) != null)
+					List<Quest> eventQuests;
+					if ((eventQuests = getTemplate().getEventQuests(Quest.QuestEventType.ON_ATTACK)) != null)
 					{
-						for (Quest quest : getTemplate().getEventQuests(Quest.QuestEventType.ON_ATTACK))
+						for (Quest quest : eventQuests)
 						{
 							quest.notifyAttack(this, player, damage, attacker instanceof L2Summon, skill);
 						}
@@ -1075,9 +1077,10 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		
 		if ((targetPlayer != null) && (aggro == 0))
 		{
-			if (getTemplate().getEventQuests(Quest.QuestEventType.ON_AGGRO_RANGE_ENTER) != null)
+			List<Quest> eventQuests;
+			if ((eventQuests = getTemplate().getEventQuests(Quest.QuestEventType.ON_AGGRO_RANGE_ENTER)) != null)
 			{
-				for (Quest quest : getTemplate().getEventQuests(Quest.QuestEventType.ON_AGGRO_RANGE_ENTER))
+				for (Quest quest : eventQuests)
 				{
 					quest.notifyAggroRangeEnter(this, targetPlayer, (attacker instanceof L2Summon));
 				}
