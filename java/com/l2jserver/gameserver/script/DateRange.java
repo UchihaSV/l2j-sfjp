@@ -17,7 +17,9 @@ package com.l2jserver.gameserver.script;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +42,37 @@ public class DateRange
 	private static SimpleDateFormat format_date_long_JP = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.JAPAN);
 	
 	public static DateRange parse(String dateRange, DateFormat format)
+	{
+		String[] date = dateRange.split("-");
+		if (date.length == 2 && date[0].contains("****") && date[1].contains("****"))
+		{
+			Calendar now = Calendar.getInstance();
+			String year = String.valueOf(now.get(Calendar.YEAR));
+			date[0] = date[0].replace("****", year);
+			date[1] = date[1].replace("****", year);
+			DateRange range = _parse(date[0] + "-" + date[1], format);
+			if (range.getStartDate() == null || range.getEndDate() == null)
+				return range; // Invalid
+			
+			GregorianCalendar startDate = new GregorianCalendar();
+			GregorianCalendar endDate = new GregorianCalendar();
+			startDate.setTime(range.getStartDate());
+			endDate.setTime(range.getEndDate());
+			if (startDate.after(endDate))
+			{
+				startDate.add(Calendar.YEAR, -1);
+			}
+			if (now.after(endDate))
+			{
+				startDate.add(Calendar.YEAR, 1);
+				endDate.add(Calendar.YEAR, 1);
+			}
+			return new DateRange(startDate.getTime(), endDate.getTime());
+		}
+		return _parse(dateRange, format);
+	}
+	
+	private static DateRange _parse(String dateRange, DateFormat format)
 	{
 		String[] date = dateRange.split("-");
 		if (date.length == 2)
