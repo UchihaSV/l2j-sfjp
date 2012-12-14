@@ -1112,12 +1112,12 @@ public class Quest extends ManagedScript
 		ThreadPoolManager.getInstance().executeAi(new TmpOnAggroEnter(npc, player, isPet));
 		return true;
 	}
-
+	
 	/**
 	 * @param eventName - name of event
 	 * @param sender - NPC, who sent event
-	 * @param receiver - NPC, who received event	 
-	 * @param reference - L2Object to pass, if needed	 
+	 * @param receiver - NPC, who received event
+	 * @param reference - L2Object to pass, if needed
 	 */
 	public final void notifyEventReceived(String eventName, L2Npc sender, L2Npc receiver, L2Object reference)
 	{
@@ -1130,7 +1130,7 @@ public class Quest extends ManagedScript
 			_log.log(Level.WARNING, "Exception on onEventReceived() in notifyEventReceived(): " + e.getMessage(), e);
 		}
 	}
-
+	
 	/**
 	 * @param character
 	 * @param zone
@@ -1216,7 +1216,7 @@ public class Quest extends ManagedScript
 			showError(loser, e);
 		}
 	}
-
+	
 	/**
 	 * @param npc
 	 */
@@ -1231,7 +1231,7 @@ public class Quest extends ManagedScript
 			_log.log(Level.WARNING, "Exception on onMoveFinished() in notifyMoveFinished(): " + e.getMessage(), e);
 		}
 	}
-
+	
 	// These are methods that java calls to invoke scripts.
 	
 	/**
@@ -1537,18 +1537,19 @@ public class Quest extends ManagedScript
 	{
 		return null;
 	}
-
- 	/**
+	
+	/**
 	 * @param eventName - name of event
 	 * @param sender - NPC, who sent event
-	 * @param receiver - NPC, who received event	 
-	 * @param reference - L2Object to pass, if needed	 
+	 * @param receiver - NPC, who received event
+	 * @param reference - L2Object to pass, if needed
+	 * @return
 	 */
 	public String onEventReceived(String eventName, L2Npc sender, L2Npc receiver, L2Object reference)
 	{
 		return null;
 	}
-
+	
 	/**
 	 * This function is called whenever a player wins an Olympiad Game.
 	 * @param winner this parameter contains a reference to the exact instance of the player who won the competition.
@@ -1568,16 +1569,17 @@ public class Quest extends ManagedScript
 	{
 		
 	}
-
+	
 	/**
 	 * This function is called whenever a NPC finishes moving
 	 * @param npc registered NPC
+	 * @return
 	 */
 	public String onMoveFinished(L2Npc npc)
 	{
 		return null;
 	}
-
+	
 	/**
 	 * Show an error message to the specified player.
 	 * @param player the player to whom to send the error (must be a GM)
@@ -2310,7 +2312,7 @@ public class Quest extends ManagedScript
 			return null;
 		}
 	}
-
+	
 	/**
 	 * Register onEventReceived trigger for NPC
 	 * @param npcId id of NPC to register
@@ -2320,9 +2322,9 @@ public class Quest extends ManagedScript
 	{
 		return addEventId(npcId, QuestEventType.ON_EVENT_RECEIVED);
 	}
-
+	
 	/**
-	 * Register onEventReceived trigger for NPC	
+	 * Register onEventReceived trigger for NPC
 	 * @param npcIds
 	 * @return
 	 */
@@ -2333,7 +2335,7 @@ public class Quest extends ManagedScript
 			addEventReceivedId(npcId);
 		}
 	}
-
+	
 	/**
 	 * Register onMoveFinished trigger for NPC
 	 * @param npcId id of NPC to register
@@ -2343,9 +2345,9 @@ public class Quest extends ManagedScript
 	{
 		return addEventId(npcId, QuestEventType.ON_MOVE_FINISHED);
 	}
-
+	
 	/**
-	 * Register onMoveFinished trigger for NPC	
+	 * Register onMoveFinished trigger for NPC
 	 * @param npcIds
 	 * @return
 	 */
@@ -2356,7 +2358,7 @@ public class Quest extends ManagedScript
 			addMoveFinishedId(npcId);
 		}
 	}
-
+	
 	/**
 	 * Use this method to get a random party member from a player's party.<br>
 	 * Useful when distributing rewards after killing an NPC.
