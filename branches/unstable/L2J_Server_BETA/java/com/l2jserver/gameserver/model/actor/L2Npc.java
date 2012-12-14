@@ -1514,9 +1514,10 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	{
 		super.onSpawn();
 		
-		if (getTemplate().getEventQuests(QuestEventType.ON_SPAWN) != null)
+		List<Quest> eventQuests;
+		if ((eventQuests = getTemplate().getEventQuests(QuestEventType.ON_SPAWN)) != null)
 		{
-			for (Quest quest : getTemplate().getEventQuests(QuestEventType.ON_SPAWN))
+			for (Quest quest : eventQuests)
 			{
 				quest.notifySpawn(this);
 			}
@@ -1791,14 +1792,15 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	{
 		try
 		{
-			if (getTemplate().getEventQuests(QuestEventType.ON_SPELL_FINISHED) != null)
+			List<Quest> eventQuests;
+			if ((eventQuests = getTemplate().getEventQuests(QuestEventType.ON_SPELL_FINISHED)) != null)
 			{
 				L2PcInstance player = null;
 				if (target != null)
 				{
 					player = target.getActingPlayer();
 				}
-				for (Quest quest : getTemplate().getEventQuests(QuestEventType.ON_SPELL_FINISHED))
+				for (Quest quest : eventQuests)
 				{
 					quest.notifySpellFinished(this, player, skill);
 				}
@@ -1959,9 +1961,10 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	{
 		for (L2Object obj : L2World.getInstance().getVisibleObjects(this, radius))
 		{
-			if (obj.isNpc() && (((L2Npc)obj).getTemplate().getEventQuests(QuestEventType.ON_EVENT_RECEIVED) != null))
+			List<Quest> eventQuests;
+			if (obj.isNpc() && (eventQuests = ((L2Npc)obj).getTemplate().getEventQuests(QuestEventType.ON_EVENT_RECEIVED)) != null)
 			{
-				for (Quest quest : ((L2Npc)obj).getTemplate().getEventQuests(QuestEventType.ON_EVENT_RECEIVED))
+				for (Quest quest : eventQuests)
 				{
 					quest.notifyEventReceived(eventName, this, (L2Npc) obj, reference);
 				}

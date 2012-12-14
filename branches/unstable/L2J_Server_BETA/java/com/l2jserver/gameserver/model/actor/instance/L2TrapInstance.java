@@ -222,9 +222,10 @@ public class L2TrapInstance extends L2Trap
 		}
 		
 		_playersWhoDetectedMe.add(detector.getObjectId());
-		if (getTemplate().getEventQuests(Quest.QuestEventType.ON_TRAP_ACTION) != null)
+		List<Quest> eventQuests;
+		if ((eventQuests = getTemplate().getEventQuests(Quest.QuestEventType.ON_TRAP_ACTION)) != null)
 		{
-			for (Quest quest : getTemplate().getEventQuests(Quest.QuestEventType.ON_TRAP_ACTION))
+			for (Quest quest : eventQuests)
 			{
 				quest.notifyTrapAction(this, detector, TrapAction.TRAP_DETECTED);
 			}

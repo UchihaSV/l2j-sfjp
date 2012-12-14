@@ -7233,9 +7233,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					{
 						L2Npc npcMob = (L2Npc) spMob;
 						
-						if ((npcMob.isInsideRadius(player, 1000, true, true)) && (npcMob.getTemplate().getEventQuests(Quest.QuestEventType.ON_SKILL_SEE) != null))
+						List<Quest> eventQuests;
+						if (npcMob.isInsideRadius(player, 1000, true, true) && (eventQuests = npcMob.getTemplate().getEventQuests(Quest.QuestEventType.ON_SKILL_SEE)) != null)
 						{
-							for (Quest quest : npcMob.getTemplate().getEventQuests(Quest.QuestEventType.ON_SKILL_SEE))
+							for (Quest quest : eventQuests)
 							{
 								quest.notifySkillSee(npcMob, player, skill, targets, isSummon());
 							}

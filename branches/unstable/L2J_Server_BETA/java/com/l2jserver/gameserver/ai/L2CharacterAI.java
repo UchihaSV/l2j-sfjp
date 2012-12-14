@@ -715,9 +715,10 @@ public class L2CharacterAI extends AbstractAI
 			WalkingManager.getInstance().onArrived(npc); // Walking Manager support
 
 			// Notify quest
-			if (npc.getTemplate().getEventQuests(Quest.QuestEventType.ON_MOVE_FINISHED) != null)
+			List<Quest> eventQuests;
+			if ((eventQuests = npc.getTemplate().getEventQuests(Quest.QuestEventType.ON_MOVE_FINISHED)) != null)
 			{
-				for (Quest quest : npc.getTemplate().getEventQuests(Quest.QuestEventType.ON_MOVE_FINISHED))
+				for (Quest quest : eventQuests)
 				{
 					quest.notifyMoveFinished(npc);
 				}

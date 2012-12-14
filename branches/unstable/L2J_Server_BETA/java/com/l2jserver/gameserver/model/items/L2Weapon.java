@@ -482,9 +482,10 @@ public final class L2Weapon extends L2Item
 				if (spMob instanceof L2Npc)
 				{
 					L2Npc npcMob = (L2Npc) spMob;
-					if (npcMob.getTemplate().getEventQuests(QuestEventType.ON_SKILL_SEE) != null)
+					List<Quest> events;
+					if ((events = npcMob.getTemplate().getEventQuests(QuestEventType.ON_SKILL_SEE)) != null)
 					{
-						for (Quest quest : npcMob.getTemplate().getEventQuests(QuestEventType.ON_SKILL_SEE))
+						for (Quest quest : events)
 						{
 							quest.notifySkillSee(npcMob, caster.getActingPlayer(), onMagicSkill, targets, false);
 						}
