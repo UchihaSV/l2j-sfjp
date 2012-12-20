@@ -14,14 +14,11 @@
  */
 package com.l2jserver.gameserver.model.actor.knownlist;
 
-import java.util.Collection;
-
 import com.l2jserver.gameserver.ai.CtrlIntention;
 import com.l2jserver.gameserver.instancemanager.WalkingManager;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
-import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 public class AttackableKnownList extends NpcKnownList
 {
@@ -44,10 +41,8 @@ public class AttackableKnownList extends NpcKnownList
 			getActiveChar().getAggroList().remove(object);
 		}
 		// Set the L2Attackable Intention to AI_INTENTION_IDLE
-		final Collection<L2PcInstance> known = getKnownPlayers().values();
-		
 		// FIXME: This is a temporary solution && support for Walking Manager
-		if (getActiveChar().hasAI() && ((known == null) || known.isEmpty()) && !WalkingManager.getInstance().isRegistered(getActiveChar()))
+		if (getActiveChar().hasAI() && getKnownPlayers().isEmpty() && !WalkingManager.getInstance().isRegistered(getActiveChar()))
 		{
 			getActiveChar().getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE, null);
 		}
