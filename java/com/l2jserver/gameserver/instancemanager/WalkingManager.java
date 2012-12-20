@@ -15,10 +15,11 @@
 package com.l2jserver.gameserver.instancemanager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap.Entry;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -29,6 +30,7 @@ import com.l2jserver.gameserver.engines.DocumentParser;
 import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2NpcWalkerNode;
 import com.l2jserver.gameserver.model.L2WalkRoute;
+import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.network.NpcStringId;
 import com.l2jserver.util.Rnd;
@@ -45,8 +47,8 @@ public class WalkingManager extends DocumentParser
 	private static final byte REPEAT_TELE_FIRST = 2;
 	private static final byte REPEAT_RANDOM = 3;
 	
-	protected Map<Integer, L2WalkRoute> _routes = new HashMap<>(); // all available routes
-	private final Map<Integer, WalkInfo> _activeRoutes = new HashMap<>(); // each record represents NPC, moving by predefined route from _routes, and moving progress
+	protected final FastIntObjectMap<L2WalkRoute> _routes = new FastIntObjectMap<>(); //all available routes
+	private final FastIntObjectMap<WalkInfo> _activeRoutes = new FastIntObjectMap<>(); //each record represents NPC, moving by predefined route from _routes, and moving progress
 	
 	private class WalkInfo
 	{
@@ -176,6 +178,17 @@ public class WalkingManager extends DocumentParser
 	{
 		return _activeRoutes.containsKey(npc.getObjectId());
 	}
+	
+	//[JOJO]-------------------------------------------------
+	// L2Npc#isWalkerÅAAttackableKnownList#removeKnownObject ëŒçÙóp.
+	public void setWalker(L2Npc npc, boolean set)
+	{
+		if (set)
+			_activeRoutes.put(npc.getObjectId(), null);
+		else
+			_activeRoutes.remove(npc.getObjectId());
+	}
+	//-------------------------------------------------------
 	
 	public void startMoving(final L2Npc npc, final int routeId)
 	{
