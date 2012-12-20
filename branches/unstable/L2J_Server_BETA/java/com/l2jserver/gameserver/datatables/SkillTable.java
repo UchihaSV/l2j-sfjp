@@ -102,6 +102,13 @@ public class SkillTable
 		return (skillId * 1021) + skillLevel;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	public final L2Skill getInfo(final int skillHashCode)
+	{
+		return _skills.get(skillHashCode);
+	}
+	//-------------------------------------------------------
+	
 	public final L2Skill getInfo(final int skillId, final int level)
 	{
 		final L2Skill result = _skills.get(getSkillHashCode(skillId, level));
