@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 
 import jp.sf.l2j.troja.FastIntObjectMap;
-import jp.sf.l2j.troja.IntObjectMap.Entry;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -30,7 +29,6 @@ import com.l2jserver.gameserver.engines.DocumentParser;
 import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2NpcWalkerNode;
 import com.l2jserver.gameserver.model.L2WalkRoute;
-import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.network.NpcStringId;
 import com.l2jserver.util.Rnd;
