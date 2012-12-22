@@ -85,14 +85,10 @@ public class Quest extends ManagedScript
 {
 	public static final Logger _log = Logger.getLogger(Quest.class.getName());
 	
-	/**
-	 * Map containing events from String value of the event.
-	 */
+	/** Map containing events from String value of the event. */
 	private static Map<String, Quest> _allEventsS = new HashMap<>();
 	
-	/**
-	 * Map containing lists of timers from the name of the timer.
-	 */
+	/** Map containing lists of timers from the name of the timer. */
 	private final FastMap<String, List<QuestTimer>> _allEventTimers = new FastMap<String, List<QuestTimer>>().shared();
 	private final TIntHashSet _questInvolvedNpcs = new TIntHashSet();	//[JOJO] HashSet --> TIntHashSet
 	

@@ -13104,7 +13104,7 @@ public final class SystemMessageId
 	 * ID: 1683<br>
 	 * Message: チャンネル脱退はパーティ リーダーのみ実行できます。<br>
 	 * Message: &#21482;&#26377;&#38538;&#20237;&#38538;&#38263;&#25165;&#33021;&#33067;&#38626;&#38971;&#36947;&#12290;<br>
-	 * Message: Only a party leader can choose the option to leave a channel.
+	 * Message: Only a party leader can leave a command channel.
 	 */
 	public static final SystemMessageId ONLY_PARTY_LEADER_CAN_LEAVE_CHANNEL;
 	

@@ -1082,7 +1082,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 			{
 				for (Quest quest : eventQuests)
 				{
-					quest.notifyAggroRangeEnter(this, targetPlayer, (attacker instanceof L2Summon));
+					quest.notifyAggroRangeEnter(this, targetPlayer, attacker.isSummon());
 				}
 			}
 		}
