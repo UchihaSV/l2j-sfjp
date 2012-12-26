@@ -20,6 +20,8 @@ package com.l2jserver.gameserver.model.instancezone;
 
 import java.util.List;
 
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+
 import javolution.util.FastList;
 
 /**
@@ -28,63 +30,78 @@ import javolution.util.FastList;
  */
 public class InstanceWorld
 {
-	private int _instanceId;
-	private int _templateId = -1;
-	private final List<Integer> _allowed = new FastList<>();
-	private volatile int _status;
+	public int instanceId;
+	public int templateId = -1;
+	public final List<Integer> allowed = new FastList<>();
+	public volatile int status;
 	
 	public List<Integer> getAllowed()
 	{
-		return _allowed;
+		return allowed;
 	}
 	
-	public void removeAllowed(int id)
+	public Integer removeAllowed(int id)
 	{
-		_allowed.remove(_allowed.indexOf(Integer.valueOf(id)));
+		return allowed.remove(allowed.indexOf(Integer.valueOf(id)));
 	}
 	
-	public void addAllowed(int id)
+	public Integer removeAllowed(L2PcInstance player)
 	{
-		_allowed.add(id);
+		return removeAllowed(player.getObjectId());
+	}
+	
+	public boolean addAllowed(int id)
+	{
+		return allowed.add(id);
+	}
+	
+	public boolean addAllowed(L2PcInstance player)
+	{
+		return addAllowed(player.getObjectId());
 	}
 	
 	public boolean isAllowed(int id)
 	{
-		return _allowed.contains(id);
+		return allowed.contains(id);
+	}
+	
+	public boolean isAllowed(L2PcInstance player)
+	{
+		return isAllowed(player.getObjectId());
 	}
 	
 	public int getInstanceId()
 	{
-		return _instanceId;
+		return instanceId;
 	}
 	
 	public void setInstanceId(int instanceId)
 	{
-		_instanceId = instanceId;
+		this.instanceId = instanceId;
 	}
 	
 	public int getTemplateId()
 	{
-		return _templateId;
+		return templateId;
 	}
 	
 	public void setTemplateId(int templateId)
 	{
-		_templateId = templateId;
+		this.templateId = templateId;
 	}
 	
 	public int getStatus()
 	{
-		return _status;
+		return status;
 	}
 	
 	public void setStatus(int status)
 	{
-		_status = status;
+		this.status = status;
 	}
 	
-	public void incStatus()
+	public int incStatus()
 	{
-		_status++;
+		return ++status;
 	}
 }
