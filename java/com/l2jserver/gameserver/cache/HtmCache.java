@@ -139,6 +139,20 @@ if (CHECK_HASH_COLLISION) {{
 		}
 	}
 	
+	private String removeBlank(String content)
+	{
+		char[] ca = null;
+		int count = 0;
+		for (int index = 0, len = content.length(); index < len; ++index)
+		{
+			char ch;
+			if ((ch = content.charAt(index)) == '\t' || ch == '\r' || ch == '\n' || ch == '\uFEFF')
+				continue;
+			(ca == null ? (ca = new char[len]) : ca)[count++] = ch;
+		}
+		return ca == null ? content : new String(ca, 0, count);
+	}
+	
 	public String loadFile(File file)
 	{
 		return loadFile(file, false);
@@ -159,7 +173,7 @@ if (CHECK_HASH_COLLISION) {{
 			fis.read(raw);
 			content = new String(raw, UTF_8);
 		/*	if (! TIMED_CACHE) */
-				content = content.replaceAll("[\uFEFF\r\n]", "");
+				content = removeBlank(content);
 			
 			String oldContent = checked ? null : _cache_get(relpath);
 			if (oldContent == null)
