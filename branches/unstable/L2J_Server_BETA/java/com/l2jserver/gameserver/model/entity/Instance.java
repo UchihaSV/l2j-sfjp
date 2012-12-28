@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -26,7 +26,6 @@ import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
-import com.l2jserver.gameserver.model.IL2Procedure;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.L2WorldRegion;
@@ -45,7 +44,6 @@ import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
-import com.l2jserver.util.L2FastList;
 
 /**
  * Main class for game instances.
@@ -58,9 +56,9 @@ public class Instance
 	private final int _id;
 	private String _name;
 	
-	private final L2FastList<Integer> _players = new L2FastList<>(true);
+	private final FastList<Integer> _players = new FastList/*L2FastList*/<Integer>().shared();
 	private final FastList<L2Npc> _npcs = new FastList/*L2FastList*/<L2Npc>().shared();
-	private final FastMap<Integer, L2DoorInstance> _doors = new FastMap/*L2FastMap*/<Integer, L2DoorInstance>().shared();
+	private final FastIntObjectMap<L2DoorInstance> _doors = new FastIntObjectMap/*L2FastMap*/<L2DoorInstance>().shared();
 	private Location _spawnLoc = null;
 	private boolean _allowSummon = true;
 	private long _emptyDestroyTime = -1;
@@ -318,7 +316,7 @@ public class Instance
 	
 	public void removePlayers()
 	{
-		_players.executeForEach(new EjectProcedure());
+		for (Integer objectId : _players) ejectProcedure(objectId);
 		_players.clear();
 	}
 	
@@ -669,7 +667,7 @@ public class Instance
 		}
 		if (cs != null)
 		{
-			_players.executeForEach(new BroadcastPacket(cs));
+			for (Integer objectId : _players) broadcastPacket(objectId, cs);
 		}
 		cancelTimer();
 		if (remaining >= 10000)
@@ -715,11 +713,8 @@ public class Instance
 		}
 	}
 	
-	public final class EjectProcedure implements IL2Procedure<Integer>
+	private void ejectProcedure(int objectId)
 	{
-		@Override
-		public boolean execute(Integer objectId)
-		{
 			final L2PcInstance player = L2World.getInstance().getPlayer(objectId);
 			if ((player != null) && (player.getInstanceId() == getId()))
 			{
@@ -734,28 +729,14 @@ public class Instance
 					player.teleToLocation(MapRegionManager.TeleportWhereType.Town);
 				}
 			}
-			return true;
-		}
 	}
 	
-	public final class BroadcastPacket implements IL2Procedure<Integer>
+	private void broadcastPacket(int objectId, L2GameServerPacket _packet)
 	{
-		private final L2GameServerPacket _packet;
-		
-		public BroadcastPacket(L2GameServerPacket packet)
-		{
-			_packet = packet;
-		}
-		
-		@Override
-		public boolean execute(Integer objectId)
-		{
 			final L2PcInstance player = L2World.getInstance().getPlayer(objectId);
 			if ((player != null) && (player.getInstanceId() == getId()))
 			{
 				player.sendPacket(_packet);
 			}
-			return true;
-		}
 	}
 }
