@@ -17,10 +17,8 @@ package com.l2jserver.gameserver.instancemanager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.Map;
 
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -36,12 +34,12 @@ import com.l2jserver.gameserver.model.instancezone.InstanceWorld;
  */
 public class InstanceManager extends DocumentParser
 {
-	private static final Map<Integer, Instance> _instanceList = new FastMap<>();
-	private final Map<Integer, InstanceWorld> _instanceWorlds = new FastMap<>();
+	private static final FastIntObjectMap<Instance> _instanceList = new FastIntObjectMap<>();
+	private final FastIntObjectMap<InstanceWorld> _instanceWorlds = new FastIntObjectMap<>();
 	private int _dynamic = 300000;
 	// InstanceId Names
-	private static final Map<Integer, String> _instanceIdNames = new HashMap<>();
-	private final Map<Integer, Map<Integer, Long>> _playerInstanceTimes = new FastMap<>();
+	private static final FastIntObjectMap<String> _instanceIdNames = new FastIntObjectMap<>();
+	private final FastIntObjectMap<FastIntObjectMap<Long>> _playerInstanceTimes = new FastIntObjectMap<>();
 	// SQL Queries
 	private static final String ADD_INSTANCE_TIME = "INSERT INTO character_instance_time (charId,instanceId,time) values (?,?,?) ON DUPLICATE KEY UPDATE time=?";
 	private static final String RESTORE_INSTANCE_TIMES = "SELECT instanceId,time FROM character_instance_time WHERE charId=?";
@@ -73,27 +71,21 @@ public class InstanceManager extends DocumentParser
 	 */
 	public long getInstanceTime(int playerObjId, int id)
 	{
-		if (!_playerInstanceTimes.containsKey(playerObjId))
-		{
-			restoreInstanceTimes(playerObjId);
-		}
-		if (_playerInstanceTimes.get(playerObjId).containsKey(id))
-		{
-			return _playerInstanceTimes.get(playerObjId).get(id);
-		}
-		return -1;
+		restoreInstanceTimes(playerObjId);
+		Long time = _playerInstanceTimes.get(playerObjId).get(id);
+		if (time != null)
+			return time;
+		else
+			return -1;
 	}
 	
 	/**
 	 * @param playerObjId
 	 * @return
 	 */
-	public Map<Integer, Long> getAllInstanceTimes(int playerObjId)
+	public FastIntObjectMap<Long> getAllInstanceTimes(int playerObjId)
 	{
-		if (!_playerInstanceTimes.containsKey(playerObjId))
-		{
-			restoreInstanceTimes(playerObjId);
-		}
+		restoreInstanceTimes(playerObjId);
 		return _playerInstanceTimes.get(playerObjId);
 	}
 	
@@ -104,10 +96,7 @@ public class InstanceManager extends DocumentParser
 	 */
 	public void setInstanceTime(int playerObjId, int id, long time)
 	{
-		if (!_playerInstanceTimes.containsKey(playerObjId))
-		{
-			restoreInstanceTimes(playerObjId);
-		}
+		restoreInstanceTimes(playerObjId);
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(ADD_INSTANCE_TIME))
@@ -154,7 +143,8 @@ public class InstanceManager extends DocumentParser
 		{
 			return; // already restored
 		}
-		_playerInstanceTimes.put(playerObjId, new FastMap<Integer, Long>());
+		final FastIntObjectMap<Long> times = new FastIntObjectMap<>();
+		_playerInstanceTimes.put(playerObjId, times);
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(RESTORE_INSTANCE_TIMES))
 		{
@@ -171,7 +161,7 @@ public class InstanceManager extends DocumentParser
 					}
 					else
 					{
-						_playerInstanceTimes.get(playerObjId).put(id, time);
+						times.put(id, time);
 					}
 				}
 			}
@@ -188,11 +178,11 @@ public class InstanceManager extends DocumentParser
 	 */
 	public String getInstanceIdName(int id)
 	{
-		if (_instanceIdNames.containsKey(id))
-		{
-			return _instanceIdNames.get(id);
-		}
-		return ("UnknownInstance");
+		String name = _instanceIdNames.get(id);
+		if (name != null)
+			return name;
+		else
+			return "UnknownInstance";
 	}
 	
 	@Override
@@ -258,7 +248,8 @@ public class InstanceManager extends DocumentParser
 		{
 			return;
 		}
-		Instance temp = _instanceList.get(instanceid);
+		_instanceWorlds.remove(instanceid);
+		Instance temp = _instanceList.remove(instanceid);
 		if (temp != null)
 		{
 			temp.cancelQuestTimers();
@@ -266,11 +257,6 @@ public class InstanceManager extends DocumentParser
 			temp.removePlayers();
 			temp.removeDoors();
 			temp.cancelTimer();
-			_instanceList.remove(instanceid);
-			if (_instanceWorlds.containsKey(instanceid))
-			{
-				_instanceWorlds.remove(instanceid);
-			}
 		}
 	}
 	
@@ -286,7 +272,7 @@ public class InstanceManager extends DocumentParser
 	/**
 	 * @return
 	 */
-	public Map<Integer, Instance> getInstances()
+	public FastIntObjectMap<Instance> getInstances()
 	{
 		return _instanceList;
 	}

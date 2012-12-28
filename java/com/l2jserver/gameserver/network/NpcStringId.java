@@ -14,8 +14,6 @@
  */
 package com.l2jserver.gameserver.network;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
-
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -33,6 +31,8 @@ import org.w3c.dom.Node;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.clientstrings.Builder;
 import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
+
+import gnu.trove.map.hash.TIntObjectHashMap;
 
 /**
  * NpcStringId implementation, based on SystemMessageId class
