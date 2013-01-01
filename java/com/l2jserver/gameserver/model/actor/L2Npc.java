@@ -505,10 +505,6 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		_currentCollisionHeight = getTemplate().getfCollisionHeight();
 		_currentCollisionRadius = getTemplate().getfCollisionRadius();
 		
-		// initialize the "current" shots
-		_soulshotamount = getTemplate().getAIDataStatic().getSoulShot();
-		_spiritshotamount = getTemplate().getAIDataStatic().getSpiritShot();
-		
 		if (template == null)
 		{
 			_log.severe("No template for Npc. Please check your datapack is setup correctly.");
@@ -1507,6 +1503,10 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	public void onSpawn()
 	{
 		super.onSpawn();
+		
+		// Recharge shots
+		_soulshotamount = getTemplate().getAIDataStatic().getSoulShot();
+		_spiritshotamount = getTemplate().getAIDataStatic().getSpiritShot();
 		
 		List<Quest> eventQuests;
 		if ((eventQuests = getTemplate().getEventQuests(QuestEventType.ON_SPAWN)) != null)
