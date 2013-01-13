@@ -353,7 +353,7 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 			return;
 		}
 		
-		float HPRatio = ((float) _owner.getCurrentHp()) / _owner.getMaxHp();
+		double HPRatio = _owner.getCurrentHp() / _owner.getMaxHp();
 		
 		// if the owner has a lot of HP, then debuff the enemy with a random debuff among the available skills
 		// use of more than one debuff at this moment is acceptable
