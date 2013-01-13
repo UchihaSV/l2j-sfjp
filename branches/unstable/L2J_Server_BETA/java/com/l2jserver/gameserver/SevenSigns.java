@@ -35,7 +35,6 @@ import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
-import com.l2jserver.gameserver.model.AutoChatHandler;
 import com.l2jserver.gameserver.model.AutoSpawnHandler;
 import com.l2jserver.gameserver.model.AutoSpawnHandler.AutoSpawnInstance;
 import com.l2jserver.gameserver.model.L2World;
@@ -293,15 +292,6 @@ public class SevenSigns
 						AutoSpawnHandler.getInstance().setSpawnActive(spawnInst, true);
 					}
 				}
-				
-if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
-				AutoChatHandler.getInstance().setAutoChatActive(true);	// 31093 ñ≈ñSÇã©Ç‘é“ÅA31094 å[é¶ÇåæÇ¢ì`Ç¶ÇÈé“ *à»äO*
-}} else {{
-				if (!AutoChatHandler.getInstance().getAutoChatInstance(PREACHER_NPC_ID, false).isActive() && !AutoChatHandler.getInstance().getAutoChatInstance(ORATOR_NPC_ID, false).isActive())
-				{
-					AutoChatHandler.getInstance().setAutoChatActive(true);
-}}
-				}
 			}
 			else
 			{
@@ -316,8 +306,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 				{
 					AutoSpawnHandler.getInstance().setSpawnActive(spawnInst, false);
 				}
-				
-				AutoChatHandler.getInstance().setAutoChatActive(false);
 			}
 			
 			if ((getSealOwner(SEAL_AVARICE) == getCabalHighestScore()) && (getSealOwner(SEAL_AVARICE) != CABAL_NULL))
@@ -422,8 +410,6 @@ if (com.l2jserver.Config.CabaleBuffer_AI_Chat) {{
 			{
 				AutoSpawnHandler.getInstance().setSpawnActive(spawnInst, false);
 			}
-			
-			AutoChatHandler.getInstance().setAutoChatActive(false);
 		}
 	}
 	
