@@ -141,16 +141,18 @@ if (CHECK_HASH_COLLISION) {{
 	
 	private String removeBlank(String content)
 	{
-		char[] ca = null;
+		char[] ca = new char[content.length()];
 		int count = 0;
+		boolean modify = false;
 		for (int index = 0, len = content.length(); index < len; ++index)
 		{
 			char ch;
 			if ((ch = content.charAt(index)) == '\t' || ch == '\r' || ch == '\n' || ch == '\uFEFF')
 				continue;
-			(ca == null ? (ca = new char[len]) : ca)[count++] = ch;
+			ca[count++] = ch;
 		}
-		return ca == null ? content : new String(ca, 0, count);
+		if (modify || count != content.length()) content = new String(ca, 0, count);
+		return content;
 	}
 	
 	public String loadFile(File file)
