@@ -1180,7 +1180,6 @@ public final class Config
 	public static final boolean FIX_OnKillNotifyTask_THREAD = true;		//[JOJO]槍・範囲魔法攻撃対策.モンスターを倒したときに発生するOnKillNotifyTaskのスレッド数を減らす.
 	public static final boolean FIX_onSpawn_for_SpawnTable = true;		//[JOJO]spawnlist.sqlをロードしたあとにAIスクリプトがロードされるため、onSpawnによるNPCの初期化がなされていない不具合の修正.
 	public static final int NPC_SPAWN_Z_MARGIN = 0;						//[JOJO]l2jserver.com rev.5425 '20' --> '0'
-	public static final boolean CabaleBuffer_AI_Chat = true;			//[JOJO]啓示叫者＆滅亡伝者の叫び AutoChatHandlerは無視してai/npc/NpcBuffers/CabaleBuffer側でやる
 	public static final boolean FIX_FleeNpc = true;						//[JOJO]反撃しないモンスター(エルピー、生贄など) TODO: UPDATE npc SET patk=0,matk=0
 	public static final boolean FIX_CoupleSocial_AI_INTENTION = true;	//[JOJO]相手が追従モードのときカップル アクションが行えない.
 	
