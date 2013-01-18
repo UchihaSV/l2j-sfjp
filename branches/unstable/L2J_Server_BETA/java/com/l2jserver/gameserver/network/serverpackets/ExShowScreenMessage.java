@@ -51,6 +51,8 @@ public class ExShowScreenMessage extends L2GameServerPacket
 	public static final byte MIDDLE_RIGHT = 0x06;
 	public static final byte BOTTOM_CENTER = 0x07;
 	public static final byte BOTTOM_RIGHT = 0x08;
+	// Size
+	public static final int SIZE_LARGE = 0, SIZE_SMALL = 1;
 	
 	/**
 	 * Display a String on the screen for a given time.
@@ -71,18 +73,18 @@ public class ExShowScreenMessage extends L2GameServerPacket
 	 */
 	public ExShowScreenMessage(NpcStringId npcString, int position, int time, String... params)
 	{
-		this(2, -1, position, 0, 0, 0, 0, false, time, false, null, npcString.getId());
+		this(2, -1, position, 0, SIZE_LARGE, 0, 0, false, time, false, null, npcString.getId());
 		_parameters = Arrays.asList(params);
 	}
 	
 	public ExShowScreenMessage(int npcString, int position, int time) // For npcstring
 	{
-		this(2, -1, position, 0, 0, 0, 0, false, time, false, null, npcString);
+		this(2, -1, position, 0, SIZE_LARGE, 0, 0, false, time, false, null, npcString);
 	}
 	
 	public ExShowScreenMessage(NpcStringId npcString, int position, int time) // For npcstring
 	{
-		this(2, -1, position, 0, 0, 0, 0, false, time, false, null, npcString.getId());
+		this(2, -1, position, 0, SIZE_LARGE, 0, 0, false, time, false, null, npcString.getId());
 	}
 	
 	/**
@@ -94,18 +96,18 @@ public class ExShowScreenMessage extends L2GameServerPacket
 	 */
 	public ExShowScreenMessage(SystemMessageId systemMsg, int position, int time, String... params)
 	{
-		this(2, systemMsg.getId(), position, 0, 0, 0, 0, false, time, false, null, -1);
+		this(2, systemMsg.getId(), position, 0, SIZE_LARGE, 0, 0, false, time, false, null, -1);
 		_parameters = Arrays.asList(params);
 	}
 	
 	public ExShowScreenMessage(SystemMessageId systemMsg, int position, int time) // For SystemMessage
 	{
-		this(2, systemMsg.getId(), position, 0, 0, 0, 0, false, time, false, null, -1);
+		this(2, systemMsg.getId(), position, 0, SIZE_LARGE, 0, 0, false, time, false, null, -1);
 	}
 	
 	public ExShowScreenMessage(String text, int position, int time)
 	{
-		this(1, -1, position, 0, 0, 0, 0, false, time, false, text, -1);
+		this(1, -1, position, 0, SIZE_LARGE, 0, 0, false, time, false, text, -1);
 	}
 	
 	/**
