@@ -22,11 +22,6 @@ package com.l2jserver.gameserver.network.serverpackets;
  */
 public class ExShowScreenMessageNPCString extends ExShowScreenMessage
 {
-	public static final int	// jurchiks
-		TOP_LEFT = 1, TOP_CENTER = 2, TOP_RIGHT = 3, MIDDLE_LEFT = 4, MIDDLE_CENTER = 5, MIDDLE_RIGHT = 6, BOTTOM_CENTER = 7, BOTTOM_RIGHT = 8;
-	public static final int
-		SIZE_LARGE = 0, SIZE_SMALL = 1;
-	
 	public ExShowScreenMessageNPCString(int npcStringId, int time)
 	{
 		super(1, 0, TOP_CENTER, 0, SIZE_LARGE, 0, 0, false, time, false, null, npcStringId);
