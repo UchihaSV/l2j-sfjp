@@ -18,7 +18,7 @@ package com.l2jserver.gameserver.util;
  * @author JOJO
  *
  */
-public class NumberStringSortComparator implements java.util.Comparator<CharSequence>
+public class QuestNameSortComparator implements java.util.Comparator<CharSequence>
 {
 	@Override
 	public int compare(CharSequence s1, CharSequence s2)
@@ -26,6 +26,8 @@ public class NumberStringSortComparator implements java.util.Comparator<CharSequ
 		int result;
 		final int len1 = s1.length(), len2 = s2.length();
 		int a1 = 0, a2 = 0;
+		if (len1 > 2 && s1.charAt(0) == 'Q' && Character.isDigit(s1.charAt(1))) ++a1;
+		if (len2 > 2 && s2.charAt(0) == 'Q' && Character.isDigit(s2.charAt(1))) ++a2;
 		
 		while (a1 < len1 && a2 < len2)
 		{
