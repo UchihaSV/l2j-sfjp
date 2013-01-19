@@ -81,7 +81,7 @@ public class L2FortLogisticsInstance extends L2MerchantInstance
 			{
 				html.setFile(player.getHtmlPrefix(), "data/html/fortress/logistics-noprivs.htm");
 			}
-			html.replace("%objectId%", String.valueOf(getObjectId()));
+			html.replace("%objectId%", (getObjectId()));
 			player.sendPacket(html);
 		}
 		else if (actualCommand.equalsIgnoreCase("blood"))
@@ -104,7 +104,7 @@ public class L2FortLogisticsInstance extends L2MerchantInstance
 			{
 				html.setFile(player.getHtmlPrefix(), "data/html/fortress/logistics-noprivs.htm");
 			}
-			html.replace("%objectId%", String.valueOf(getObjectId()));
+			html.replace("%objectId%", (getObjectId()));
 			player.sendPacket(html);
 		}
 		else if (actualCommand.equalsIgnoreCase("supplylvl"))
@@ -125,7 +125,7 @@ public class L2FortLogisticsInstance extends L2MerchantInstance
 			{
 				html.setFile(player.getHtmlPrefix(), "data/html/fortress/logistics-1.htm"); // TODO: Missing HTML?
 			}
-			html.replace("%objectId%", String.valueOf(getObjectId()));
+			html.replace("%objectId%", (getObjectId()));
 			player.sendPacket(html);
 		}
 		else if (actualCommand.equalsIgnoreCase("supply"))
