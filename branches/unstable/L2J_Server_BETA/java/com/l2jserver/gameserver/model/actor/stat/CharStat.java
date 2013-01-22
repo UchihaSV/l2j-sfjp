@@ -43,6 +43,11 @@ public class CharStat
 		_activeChar = activeChar;
 	}
 	
+	public final double calcStat(Stats stat, double init)
+	{
+		return calcStat(stat, init, null, null);
+	}
+	
 	/**
 	 * Calculate the new value of the state with modifiers that will be applied on the targeted L2Character.<BR>
 	 * <B><U> Concept</U> :</B><BR
@@ -150,7 +155,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return (int) calcStat(Stats.STAT_CON, _activeChar.getTemplate().getBaseCON(), null, null);
+		return (int) calcStat(Stats.STAT_CON, _activeChar.getTemplate().getBaseCON());
 	}
 	
 	/**
@@ -195,7 +200,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return (int) calcStat(Stats.STAT_DEX, _activeChar.getTemplate().getBaseDEX(), null, null);
+		return (int) calcStat(Stats.STAT_DEX, _activeChar.getTemplate().getBaseDEX());
 	}
 	
 	/**
@@ -237,7 +242,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return (int) calcStat(Stats.STAT_INT, _activeChar.getTemplate().getBaseINT(), null, null);
+		return (int) calcStat(Stats.STAT_INT, _activeChar.getTemplate().getBaseINT());
 	}
 	
 	public byte getLevel()
@@ -276,7 +281,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return (int) calcStat(Stats.MAX_CP, _activeChar.getTemplate().getBaseCpMax(), null, null);
+		return (int) calcStat(Stats.MAX_CP, _activeChar.getTemplate().getBaseCpMax());
 	}
 	
 	public int getMaxRecoverableCp()
@@ -286,7 +291,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return (int) calcStat(Stats.MAX_RECOVERABLE_CP, getMaxCp(), null, null);
+		return (int) calcStat(Stats.MAX_RECOVERABLE_CP, getMaxCp());
 	}
 	
 	public int getMaxHp()
@@ -296,17 +301,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return (int) calcStat(Stats.LIMIT_HP, getMaxVisibleHp(), null, null);
-	}
-	
-	public int getMaxVisibleHp()
-	{
-		if (_activeChar == null)
-		{
-			return 1;
-		}
-		
-		return (int) calcStat(Stats.MAX_HP, _activeChar.getTemplate().getBaseHpMax(), null, null);
+		return (int) calcStat(Stats.MAX_HP, _activeChar.getTemplate().getBaseHpMax());
 	}
 	
 	public int getMaxRecoverableHp()
@@ -316,7 +311,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return (int) calcStat(Stats.MAX_RECOVERABLE_HP, getMaxVisibleHp(), null, null);
+		return (int) calcStat(Stats.MAX_RECOVERABLE_HP, getMaxHp());
 	}
 	
 	public int getMaxMp()
@@ -326,7 +321,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return (int) calcStat(Stats.MAX_MP, _activeChar.getTemplate().getBaseMpMax(), null, null);
+		return (int) calcStat(Stats.MAX_MP, _activeChar.getTemplate().getBaseMpMax());
 	}
 	
 	public int getMaxRecoverableMp()
@@ -336,7 +331,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return (int) calcStat(Stats.MAX_RECOVERABLE_MP, getMaxMp(), null, null);
+		return (int) calcStat(Stats.MAX_RECOVERABLE_MP, getMaxMp());
 	}
 	
 	/**
@@ -421,7 +416,7 @@ public class CharStat
 		{
 			bonusSpdAtk = Config.L2JMOD_CHAMPION_SPD_ATK;
 		}
-		double val = calcStat(Stats.MAGIC_ATTACK_SPEED, _activeChar.getTemplate().getBaseMAtkSpd() * bonusSpdAtk, null, null);
+		double val = calcStat(Stats.MAGIC_ATTACK_SPEED, _activeChar.getTemplate().getBaseMAtkSpd() * bonusSpdAtk);
 		if ((val > Config.MAX_MATK_SPEED) && !_activeChar.canOverrideCond(PcCondOverride.MAX_STATS_VALUE))
 		{
 			val = Config.MAX_MATK_SPEED;
@@ -490,7 +485,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return (int) calcStat(Stats.STAT_MEN, _activeChar.getTemplate().getBaseMEN(), null, null);
+		return (int) calcStat(Stats.STAT_MEN, _activeChar.getTemplate().getBaseMEN());
 	}
 	
 	public float getMovementSpeedMultiplier()
@@ -743,10 +738,10 @@ public class CharStat
 		L2Weapon weaponItem = _activeChar.getActiveWeaponItem();
 		if ((weaponItem != null) && (weaponItem.getItemType() == L2WeaponType.POLE))
 		{
-			return (int) calcStat(Stats.POWER_ATTACK_RANGE, 66, null, null);
+			return (int) calcStat(Stats.POWER_ATTACK_RANGE, 66);
 		}
 		
-		return (int) calcStat(Stats.POWER_ATTACK_RANGE, _activeChar.getTemplate().getBaseAtkRange(), null, null);
+		return (int) calcStat(Stats.POWER_ATTACK_RANGE, _activeChar.getTemplate().getBaseAtkRange());
 	}
 	
 	/**
@@ -785,7 +780,7 @@ public class CharStat
 	 */
 	public final int getShldDef()
 	{
-		return (int) calcStat(Stats.SHIELD_DEFENCE, 0, null, null);
+		return (int) calcStat(Stats.SHIELD_DEFENCE, 0);
 	}
 	
 	public int getSp()
@@ -808,7 +803,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return (int) calcStat(Stats.STAT_STR, _activeChar.getTemplate().getBaseSTR(), null, null);
+		return (int) calcStat(Stats.STAT_STR, _activeChar.getTemplate().getBaseSTR());
 	}
 	
 	/**
@@ -828,7 +823,7 @@ public class CharStat
 			return 0;
 		}
 		
-		return (int) calcStat(Stats.WALK_SPEED, baseWalkSpd, null, null);
+		return (int) calcStat(Stats.WALK_SPEED, baseWalkSpd);
 	}
 	
 	/**
@@ -841,7 +836,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return (int) calcStat(Stats.STAT_WIT, _activeChar.getTemplate().getBaseWIT(), null, null);
+		return (int) calcStat(Stats.STAT_WIT, _activeChar.getTemplate().getBaseWIT());
 	}
 	
 	/**
@@ -868,15 +863,15 @@ public class CharStat
 		
 		if (skill.isDance())
 		{
-			return (int) calcStat(Stats.DANCE_MP_CONSUME_RATE, mpConsume, null, null);
+			return (int) calcStat(Stats.DANCE_MP_CONSUME_RATE, mpConsume);
 		}
 		else if (skill.isMagic())
 		{
-			return (int) calcStat(Stats.MAGICAL_MP_CONSUME_RATE, mpConsume, null, null);
+			return (int) calcStat(Stats.MAGICAL_MP_CONSUME_RATE, mpConsume);
 		}
 		else
 		{
-			return (int) calcStat(Stats.PHYSICAL_MP_CONSUME_RATE, mpConsume, null, null);
+			return (int) calcStat(Stats.PHYSICAL_MP_CONSUME_RATE, mpConsume);
 		}
 	}
 	
@@ -895,15 +890,15 @@ public class CharStat
 		
 		if (skill.isDance())
 		{
-			return (int) calcStat(Stats.DANCE_MP_CONSUME_RATE, mpConsume, null, null);
+			return (int) calcStat(Stats.DANCE_MP_CONSUME_RATE, mpConsume);
 		}
 		else if (skill.isMagic())
 		{
-			return (int) calcStat(Stats.MAGICAL_MP_CONSUME_RATE, mpConsume, null, null);
+			return (int) calcStat(Stats.MAGICAL_MP_CONSUME_RATE, mpConsume);
 		}
 		else
 		{
-			return (int) calcStat(Stats.PHYSICAL_MP_CONSUME_RATE, mpConsume, null, null);
+			return (int) calcStat(Stats.PHYSICAL_MP_CONSUME_RATE, mpConsume);
 		}
 	}
 	
@@ -928,12 +923,12 @@ public class CharStat
 		};
 		
 		byte returnVal = -2;
-		stats[0] = (int) calcStat(Stats.FIRE_POWER, _activeChar.getTemplate().getBaseFire(), null, null);
-		stats[1] = (int) calcStat(Stats.WATER_POWER, _activeChar.getTemplate().getBaseWater(), null, null);
-		stats[2] = (int) calcStat(Stats.WIND_POWER, _activeChar.getTemplate().getBaseWind(), null, null);
-		stats[3] = (int) calcStat(Stats.EARTH_POWER, _activeChar.getTemplate().getBaseEarth(), null, null);
-		stats[4] = (int) calcStat(Stats.HOLY_POWER, _activeChar.getTemplate().getBaseHoly(), null, null);
-		stats[5] = (int) calcStat(Stats.DARK_POWER, _activeChar.getTemplate().getBaseDark(), null, null);
+		stats[0] = (int) calcStat(Stats.FIRE_POWER, _activeChar.getTemplate().getBaseFire());
+		stats[1] = (int) calcStat(Stats.WATER_POWER, _activeChar.getTemplate().getBaseWater());
+		stats[2] = (int) calcStat(Stats.WIND_POWER, _activeChar.getTemplate().getBaseWind());
+		stats[3] = (int) calcStat(Stats.EARTH_POWER, _activeChar.getTemplate().getBaseEarth());
+		stats[4] = (int) calcStat(Stats.HOLY_POWER, _activeChar.getTemplate().getBaseHoly());
+		stats[5] = (int) calcStat(Stats.DARK_POWER, _activeChar.getTemplate().getBaseDark());
 		
 		for (byte x = 0; x < 6; x++)
 		{
@@ -957,17 +952,17 @@ public class CharStat
 		switch (attackAttribute)
 		{
 			case Elementals.FIRE:
-				return (int) calcStat(Stats.FIRE_POWER, _activeChar.getTemplate().getBaseFire(), null, null);
+				return (int) calcStat(Stats.FIRE_POWER, _activeChar.getTemplate().getBaseFire());
 			case Elementals.WATER:
-				return (int) calcStat(Stats.WATER_POWER, _activeChar.getTemplate().getBaseWater(), null, null);
+				return (int) calcStat(Stats.WATER_POWER, _activeChar.getTemplate().getBaseWater());
 			case Elementals.WIND:
-				return (int) calcStat(Stats.WIND_POWER, _activeChar.getTemplate().getBaseWind(), null, null);
+				return (int) calcStat(Stats.WIND_POWER, _activeChar.getTemplate().getBaseWind());
 			case Elementals.EARTH:
-				return (int) calcStat(Stats.EARTH_POWER, _activeChar.getTemplate().getBaseEarth(), null, null);
+				return (int) calcStat(Stats.EARTH_POWER, _activeChar.getTemplate().getBaseEarth());
 			case Elementals.HOLY:
-				return (int) calcStat(Stats.HOLY_POWER, _activeChar.getTemplate().getBaseHoly(), null, null);
+				return (int) calcStat(Stats.HOLY_POWER, _activeChar.getTemplate().getBaseHoly());
 			case Elementals.DARK:
-				return (int) calcStat(Stats.DARK_POWER, _activeChar.getTemplate().getBaseDark(), null, null);
+				return (int) calcStat(Stats.DARK_POWER, _activeChar.getTemplate().getBaseDark());
 			default:
 				return 0;
 		}
@@ -978,17 +973,17 @@ public class CharStat
 		switch (defenseAttribute)
 		{
 			case Elementals.FIRE:
-				return (int) calcStat(Stats.FIRE_RES, _activeChar.getTemplate().getBaseFireRes(), null, null);
+				return (int) calcStat(Stats.FIRE_RES, _activeChar.getTemplate().getBaseFireRes());
 			case Elementals.WATER:
-				return (int) calcStat(Stats.WATER_RES, _activeChar.getTemplate().getBaseWaterRes(), null, null);
+				return (int) calcStat(Stats.WATER_RES, _activeChar.getTemplate().getBaseWaterRes());
 			case Elementals.WIND:
-				return (int) calcStat(Stats.WIND_RES, _activeChar.getTemplate().getBaseWindRes(), null, null);
+				return (int) calcStat(Stats.WIND_RES, _activeChar.getTemplate().getBaseWindRes());
 			case Elementals.EARTH:
-				return (int) calcStat(Stats.EARTH_RES, _activeChar.getTemplate().getBaseEarthRes(), null, null);
+				return (int) calcStat(Stats.EARTH_RES, _activeChar.getTemplate().getBaseEarthRes());
 			case Elementals.HOLY:
-				return (int) calcStat(Stats.HOLY_RES, _activeChar.getTemplate().getBaseHolyRes(), null, null);
+				return (int) calcStat(Stats.HOLY_RES, _activeChar.getTemplate().getBaseHolyRes());
 			case Elementals.DARK:
-				return (int) calcStat(Stats.DARK_RES, _activeChar.getTemplate().getBaseDarkRes(), null, null);
+				return (int) calcStat(Stats.DARK_RES, _activeChar.getTemplate().getBaseDarkRes());
 			default:
 				return 0;
 		}
