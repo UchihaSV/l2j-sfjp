@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.network;
 
+import gnu.trove.map.hash.TIntObjectHashMap;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -35,8 +37,6 @@ import org.w3c.dom.Node;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.clientstrings.Builder;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
-
-import gnu.trove.map.hash.TIntObjectHashMap;
 
 /**
  * @author Noctarius, Nille02, crion, Forsaiken
@@ -19366,6 +19366,30 @@ public final class SystemMessageId
 	public static final SystemMessageId YOU_CANT_CANCEL_RECEIVED_MAIL;
 	
 	/**
+	 * ID: 3033<br>
+	 * Message: 警備隊員の身を隠すスキルを用いて、黎明の書庫まで潜入せよ！<br>
+	 * Message: &#20351;&#29992;&#35686;&#34907;&#38538;&#21729;&#30340;&#38577;&#36523;&#25216;&#33021;&#24460;&#65292;&#28507;&#20837;&#21040;&#40654;&#26126;&#30340;&#25991;&#20214;&#20786;&#34255;&#23460;&#20839;&#65281;<br>
+	 * Message: By using the invisible skill, sneak into the Dawn's document storage!
+	 */
+	public static final SystemMessageId SNEAK_INTO_DAWNS_DOCUMENT_STORAGE;
+	
+	/**
+	 * ID: 3037<br>
+	 * Message: 男性警備隊員は身を隠していることに気づきますが、女性警備隊員は気づきません。<br>
+	 * Message: &#30007;&#24615;&#35686;&#34907;&#38538;&#21729;&#21487;&#20197;&#23519;&#35258;&#38577;&#36523;&#65292;&#32780;&#22899;&#24615;&#35686;&#34907;&#38538;&#21729;&#28961;&#27861;&#23519;&#35258;&#38577;&#36523;&#12290;<br>
+	 * Message: Male guards can detect the concealment but the female guards cannot.
+	 */
+	public static final SystemMessageId MALE_GUARDS_CAN_DETECT_FEMALES_DONT;
+	
+	/**
+	 * ID: 3038<br>
+	 * Message: 女性警備隊員は男性警備隊員よりはるかに遠くからでも変身術を見破れるので、気をつけてください。<br>
+	 * Message: &#22899;&#24615;&#35686;&#34907;&#38538;&#21729;&#27604;&#30007;&#24615;&#35686;&#34907;&#38538;&#21729;&#21487;&#20197;&#22312;&#26356;&#36960;&#30340;&#22320;&#26041;&#23601;&#33021;&#23519;&#35258;&#21040;&#35722;&#36523;&#34899;&#65292;&#25152;&#20197;&#35201;&#38750;&#24120;&#23567;&#24515;&#12290;<br>
+	 * Message: Female guards notice the disguises from far away better than the male guards do, so beware.
+	 */
+	public static final SystemMessageId FEMALE_GUARDS_NOTICE_BETTER_THAN_MALE;
+	
+	/**
 	 * ID: 3059<br>
 	 * Message: $s1 が受取待機期間中に受け取らなかったため、自動的に返送されました。<br>
 	 * Message: &#12300;&#36;&#115;&#49;&#12301;&#22312;&#25910;&#20214;&#31561;&#24453;&#26178;&#38291;&#20839;&#23578;&#26410;&#25910;&#21462;&#65292;&#22240;&#27492;&#24050;&#33258;&#21205;&#36864;&#36996;&#12290;<br>
@@ -22344,6 +22368,9 @@ public final class SystemMessageId
 		YOU_CANNOT_USE_SKILL_ENCHANT_ATTACKING_TRANSFORMED_BOAT = new SystemMessageId(3028);
 		S1_RETURNED_MAIL = new SystemMessageId(3029);
 		YOU_CANT_CANCEL_RECEIVED_MAIL = new SystemMessageId(3030);
+		SNEAK_INTO_DAWNS_DOCUMENT_STORAGE = new SystemMessageId(3033);
+		MALE_GUARDS_CAN_DETECT_FEMALES_DONT = new SystemMessageId(3037);
+		FEMALE_GUARDS_NOTICE_BETTER_THAN_MALE = new SystemMessageId(3038);
 		S1_NOT_RECEIVE_DURING_WAITING_TIME_MAIL_RETURNED = new SystemMessageId(3059);
 		DO_YOU_WANT_TO_PAY_S1_ADENA = new SystemMessageId(3062);
 		DO_YOU_WANT_TO_FORWARD = new SystemMessageId(3063);
