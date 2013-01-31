@@ -742,11 +742,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public void teleToLocation(Location loc, int randomOffset)
 	{
-		setInstanceId(loc.getInstanceId());
-		
-		int x = loc.getX();
-		int y = loc.getY();
-		int z = loc.getZ();
+		teleToInstance(loc.getInstanceId(), loc.getX(), loc.getY(), loc.getZ(), getHeading(), randomOffset);	//[JOJO]
+	}
+	public void teleToInstance(int instanceId, int x, int y, int z, int heading, int randomOffset)	//[JOJO]
+	{
+		setInstanceId(instanceId);
 		
 		if (isPlayer() && DimensionalRiftManager.getInstance().checkIfInRiftZone(getX(), getY(), getZ(), true)) // true -> ignore waiting room :)
 		{
@@ -761,7 +761,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			y = newCoords[1];
 			z = newCoords[2];
 		}
-		teleToLocation(x, y, z, getHeading(), randomOffset);
+		teleToLocation(x, y, z, heading, randomOffset);
+	}
+	public void teleToInstance(int instanceId, int x, int y, int z, boolean allowRandomOffset)	//[JOJO]
+	{
+		teleToInstance(instanceId, x, y, z, getHeading(), (allowRandomOffset ? Config.MAX_OFFSET_ON_TELEPORT : 0));
 	}
 	
 	public void teleToLocation(TeleportWhereType teleportWhere)
@@ -771,31 +775,17 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	
 	public void teleToLocation(Location loc, boolean allowRandomOffset)
 	{
-		teleToLocation(loc, (allowRandomOffset ? Config.MAX_OFFSET_ON_TELEPORT : 0));
+		teleToInstance(loc.getInstanceId(), loc.getX(), loc.getY(), loc.getZ(), getHeading(), (allowRandomOffset ? Config.MAX_OFFSET_ON_TELEPORT : 0));	//[JOJO]
 	}
 	
 	public void teleToLocation(int x, int y, int z, boolean allowRandomOffset)
 	{
-		if (allowRandomOffset)
-		{
-			teleToLocation(x, y, z, Config.MAX_OFFSET_ON_TELEPORT);
-		}
-		else
-		{
-			teleToLocation(x, y, z, 0);
-		}
+		teleToLocation(x, y, z, (allowRandomOffset ? Config.MAX_OFFSET_ON_TELEPORT : 0));
 	}
 	
 	public void teleToLocation(int x, int y, int z, int heading, boolean allowRandomOffset)
 	{
-		if (allowRandomOffset)
-		{
-			teleToLocation(x, y, z, heading, Config.MAX_OFFSET_ON_TELEPORT);
-		}
-		else
-		{
-			teleToLocation(x, y, z, heading, 0);
-		}
+		teleToLocation(x, y, z, heading, (allowRandomOffset ? Config.MAX_OFFSET_ON_TELEPORT : 0));
 	}
 	
 	/**
