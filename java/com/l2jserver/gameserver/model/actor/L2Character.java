@@ -6402,12 +6402,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public int getSkillLevel(int skillId)
 	{
 		final L2Skill skill = getKnownSkill(skillId);
-		if (skill == null)
-		{
-			return -1;
-		}
-		
-		return skill.getLevel();
+		return (skill == null) ? -1 : skill.getLevel();
 	}
 	
 	/**
