@@ -3149,7 +3149,7 @@ public final class L2PcInstance extends L2Playable
 		
 		if (Config.AUTO_LEARN_SKILLS && (skillCounter > 0))
 		{
-			sendMessage(skillCounter + "のスキルを習得しました。");
+			sendMessage(skillCounter + "個のスキルを習得しました。");
 		//	sendMessage("You have earned " + skillCounter + " new skills.");
 		}
 		return skillCounter;
