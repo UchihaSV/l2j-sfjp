@@ -770,7 +770,8 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	
 	public void teleToLocation(TeleportWhereType teleportWhere)
 	{
-		teleToLocation(MapRegionManager.getInstance().getTeleToLocation(this, teleportWhere), true);
+		Location loc = MapRegionManager.getInstance().getTeleToLocation(this, teleportWhere);
+		teleToInstance(loc.getInstanceId(), loc.getX(), loc.getY(), loc.getZ(), getHeading(), Config.MAX_OFFSET_ON_TELEPORT);	//[JOJO]
 	}
 	
 	public void teleToLocation(Location loc, boolean allowRandomOffset)
@@ -780,7 +781,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	
 	public void teleToLocation(int x, int y, int z, boolean allowRandomOffset)
 	{
-		teleToLocation(x, y, z, (allowRandomOffset ? Config.MAX_OFFSET_ON_TELEPORT : 0));
+		teleToLocation(x, y, z, getHeading(), (allowRandomOffset ? Config.MAX_OFFSET_ON_TELEPORT : 0));
 	}
 	
 	public void teleToLocation(int x, int y, int z, int heading, boolean allowRandomOffset)
