@@ -19,7 +19,6 @@
 package com.l2jserver.gameserver.model.actor.knownlist;
 
 import com.l2jserver.gameserver.ai.CtrlIntention;
-import com.l2jserver.gameserver.instancemanager.WalkingManager;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -30,7 +29,7 @@ public class AttackableKnownList extends NpcKnownList
 	{
 		super(activeChar);
 	}
-	
+
 	@Override
 	protected boolean removeKnownObject(L2Object object, boolean forget)
 	{
@@ -38,7 +37,7 @@ public class AttackableKnownList extends NpcKnownList
 		{
 			return false;
 		}
-		
+
 		// Remove the L2Object from the _aggrolist of the L2Attackable
 		if (object instanceof L2Character)
 		{
@@ -46,26 +45,26 @@ public class AttackableKnownList extends NpcKnownList
 		}
 		// Set the L2Attackable Intention to AI_INTENTION_IDLE
 		// FIXME: This is a temporary solution && support for Walking Manager
-		if (getActiveChar().hasAI() && getKnownPlayers().isEmpty() && !WalkingManager.getInstance().isRegistered(getActiveChar()))
+		if (getActiveChar().hasAI() && getKnownPlayers().isEmpty() && !getActiveChar().isWalker())
 		{
 			getActiveChar().getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE, null);
 		}
 		
 		return true;
 	}
-	
+
 	@Override
 	public L2Attackable getActiveChar()
 	{
 		return (L2Attackable) super.getActiveChar();
 	}
-	
+
 	@Override
 	public int getDistanceToForgetObject(L2Object object)
 	{
 		return getDistanceToWatchObject(object) * 3 / 2;	// (int)( * 1.5)
 	}
-	
+
 	@Override
 	public int getDistanceToWatchObject(L2Object object)
 	{
@@ -73,14 +72,14 @@ public class AttackableKnownList extends NpcKnownList
 		{
 			return 0;
 		}
-		
+
 		if (object.isPlayable())
 		{
 			return object.getKnownList().getDistanceToWatchObject(getActiveObject());
 		}
-		
+
 		int max = Math.max(300, Math.max(getActiveChar().getAggroRange(), Math.max(getActiveChar().getFactionRange(), getActiveChar().getEnemyRange())));
-		
+
 		return max;
 	}
 }

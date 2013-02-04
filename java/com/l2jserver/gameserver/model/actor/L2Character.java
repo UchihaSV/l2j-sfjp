@@ -4002,6 +4002,12 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		 */
 		public void detachAI()
 		{
+			// Skip character, if it is controlled by Walking Manager
+			if (L2Character.this.isWalker())
+			{
+				return;
+			}
+
 			_ai = null;
 		}
 	}
