@@ -57,7 +57,7 @@ public class WalkingManager extends DocumentParser
 
 	protected final FastIntObjectMap<L2WalkRoute> _routes = new FastIntObjectMap<>(); //all available routes
 	private final FastIntObjectMap<WalkInfo> _activeRoutes = new FastIntObjectMap<>(); //each record represents NPC, moving by predefined route from _routes, and moving progress
-	private final Map<Integer, NpcRoutesHolder> _routesToAttach = new HashMap<>(); // each record represents NPC and all available routes for it
+	private final FastIntObjectMap<NpcRoutesHolder> _routesToAttach = new FastIntObjectMap<>(); // each record represents NPC and all available routes for it
 
 	/**
 	 * Holds depending between NPC's spawn point and route
@@ -90,7 +90,8 @@ public class WalkingManager extends DocumentParser
 			if (npc.getSpawn() != null)
 			{
 				String key = getUniqueKey(npc.getSpawn().getSpawnLocation());
-				return _correspondences.containsKey(key) ? _correspondences.get(key) : -1;
+				Integer result;
+				return (result = _correspondences.get(key)) != null ? result.intValue() : -1;
 			}
 			
 			return -1;
@@ -311,7 +312,7 @@ public class WalkingManager extends DocumentParser
 							y = Integer.parseInt(attrs.getNamedItem("spawnY").getNodeValue());
 							z = Integer.parseInt(attrs.getNamedItem("spawnZ").getNodeValue());
 
-							NpcRoutesHolder holder = _routesToAttach.containsKey(npcId) ? _routesToAttach.get(npcId) : new NpcRoutesHolder();
+							NpcRoutesHolder holder = _routesToAttach.get(npcId); if (holder == null) holder = new NpcRoutesHolder();
 							holder.addRoute(routeId, new Location(x, y, z));
 							_routesToAttach.put(npcId, holder);
 						}
@@ -485,9 +486,9 @@ public class WalkingManager extends DocumentParser
 	 */
 	public synchronized void cancelMoving(L2Npc npc)
 	{
-		if (_activeRoutes.containsKey(npc.getObjectId()))
+		final WalkInfo walk;
+		if ((walk = _activeRoutes.remove(npc.getObjectId())) != null)
 		{
-			final WalkInfo walk = _activeRoutes.remove(npc.getObjectId());
 			walk._walkCheckTask.cancel(true);
 			npc.getKnownList().stopTrackingTask();
 		}
@@ -499,12 +500,12 @@ public class WalkingManager extends DocumentParser
 	 */
 	public void resumeMoving(final L2Npc npc)
 	{
-		if (!_activeRoutes.containsKey(npc.getObjectId()))
+		final WalkInfo walk;
+		if ((walk = _activeRoutes.get(npc.getObjectId())) == null)
 		{
 			return;
 		}
 		
-		WalkInfo walk = _activeRoutes.get(npc.getObjectId());
 		walk._suspended = false;
 		walk._stoppedByAttack = false;
 		startMoving(npc, walk.getRoute().getId());
@@ -560,18 +561,18 @@ public class WalkingManager extends DocumentParser
 	 */
 	public void onArrived(final L2Npc npc)
 	{
-		if (_activeRoutes.containsKey(npc.getObjectId()))
+		final WalkInfo walk;
+		if ((walk = _activeRoutes.get(npc.getObjectId())) != null)
 		{
 			// Notify quest
-			if (npc.getTemplate().getEventQuests(Quest.QuestEventType.ON_NODE_ARRIVED) != null)
+			List<Quest> eventQuests;
+			if ((eventQuests = npc.getTemplate().getEventQuests(Quest.QuestEventType.ON_NODE_ARRIVED)) != null)
 			{
-				for (Quest quest : npc.getTemplate().getEventQuests(Quest.QuestEventType.ON_NODE_ARRIVED))
+				for (Quest quest : eventQuests)
 				{
 					quest.notifyNodeArrived(npc);
 				}
 			}
-
-			WalkInfo walk = _activeRoutes.get(npc.getObjectId());
 
 			// Opposite should not happen... but happens sometime
 			if ((walk._currentNode >= 0) && (walk._currentNode < walk.getRoute().getNodesCount()))
@@ -610,9 +611,10 @@ public class WalkingManager extends DocumentParser
 	 */
 	public void onSpawn(L2Npc npc)
 	{
-		if (_routesToAttach.containsKey(npc.getNpcId()))
+		final NpcRoutesHolder root;
+		if ((root = _routesToAttach.get(npc.getNpcId())) != null)
 		{
-			int routeId = _routesToAttach.get(npc.getNpcId()).getRouteId(npc);
+			int routeId = root.getRouteId(npc);
 
 			if (routeId > 0)
 			{
