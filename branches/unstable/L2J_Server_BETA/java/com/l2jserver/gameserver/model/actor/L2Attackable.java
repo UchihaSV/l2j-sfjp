@@ -2588,7 +2588,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 	@Override
 	public boolean hasRandomAnimation()
 	{
-		return ((Config.MAX_MONSTER_ANIMATION > 0) && !(this instanceof L2GrandBossInstance));
+		return ((Config.MAX_MONSTER_ANIMATION > 0) && isRandomAnimationEnabled() && !(this instanceof L2GrandBossInstance));
 	}
 	
 	@Override
