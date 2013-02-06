@@ -1028,7 +1028,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 				{
 					WalkingManager.getInstance().stopMoving(this, false, true);
 				}
-
+				
 				L2PcInstance player = attacker.getActingPlayer();
 				if (player != null)
 				{

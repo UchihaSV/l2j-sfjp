@@ -582,7 +582,7 @@ public class Instance
 								{
 									respawnRandom = Integer.parseInt(d.getAttributes().getNamedItem("respawnRandom").getNodeValue());
 								}
-
+								
 								npcTemplate = NpcTable.getInstance().getTemplate(npcId);
 								if (npcTemplate != null)
 								{
