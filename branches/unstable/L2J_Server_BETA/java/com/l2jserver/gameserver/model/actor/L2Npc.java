@@ -1517,7 +1517,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 				quest.notifySpawn(this);
 			}
 		}
-
+		
 		if (!isTeleporting())
 		{
 			WalkingManager.getInstance().onSpawn(this);
@@ -1873,7 +1873,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 			player.sendPacket(new AbstractNpcInfo.NpcInfo(this, player));
 		}
 	}
-
+	
 	/**
 	 * @return {@code true} if this L2Npc is registered in WalkingManager
 	 */
@@ -1882,7 +1882,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	{
 		return WalkingManager.getInstance().isRegistered(this);
 	}
-
+	
 	@Override
 	public boolean isChargedShot(ShotType type)
 	{

@@ -2187,7 +2187,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	{
 		return _npcId;
 	}
-
+	
 	/**
 	 * @return the _faceId
 	 */
@@ -2195,7 +2195,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	{
 		return _faceId;
 	}
-
+	
 	/**
 	 * @return the _hairColorId
 	 */
@@ -2203,7 +2203,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	{
 		return _hairColorId;
 	}
-
+	
 	/**
 	 * @return the _hairStyleId
 	 */
