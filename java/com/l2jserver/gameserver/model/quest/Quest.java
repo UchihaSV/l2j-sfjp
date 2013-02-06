@@ -2369,7 +2369,6 @@ public class Quest extends ManagedScript
 	/**
 	 * Register onEventReceived trigger for NPC
 	 * @param npcIds
-	 * @return
 	 */
 	public void addEventReceivedId(int... npcIds)
 	{
@@ -2392,7 +2391,6 @@ public class Quest extends ManagedScript
 	/**
 	 * Register onMoveFinished trigger for NPC
 	 * @param npcIds
-	 * @return
 	 */
 	public void addMoveFinishedId(int... npcIds)
 	{
@@ -2415,17 +2413,13 @@ public class Quest extends ManagedScript
 	/**
 	 * Register addNodeArrived trigger for NPC
 	 * @param npcIds id of NPC to register
-	 * @return
 	 */
-	public L2NpcTemplate[] addNodeArrivedId(int... npcIds)
+	public void addNodeArrivedId(int... npcIds)
 	{
-		L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		int i = 0;
 		for (int npcId : npcIds)
 		{
-			value[i++] = addEventId(npcId, QuestEventType.ON_NODE_ARRIVED);
+			addNodeArrivedId(npcId);
 		}
-		return value;
 	}
 
 	/**
