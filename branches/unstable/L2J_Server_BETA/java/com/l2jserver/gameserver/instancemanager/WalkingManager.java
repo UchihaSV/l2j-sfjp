@@ -353,6 +353,7 @@ public class WalkingManager extends DocumentParser
 		}
 
 		WalkInfo walk = monster != null ? _activeRoutes.get(monster.getObjectId()) : _activeRoutes.get(npc.getObjectId());
+		if (walk == null) return false;	//[JOJO] setWalker()
 
 		if (walk._stoppedByAttack || walk._suspended)
 		{

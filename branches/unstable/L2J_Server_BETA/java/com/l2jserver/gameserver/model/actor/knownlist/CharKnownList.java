@@ -82,14 +82,23 @@ public class CharKnownList extends ObjectKnownList
 		getKnownRelations().clear();
 		getKnownSummons().clear();
 		
+		final L2Character activeChar = getActiveChar();
+		
 		// Set _target of the L2Character to null
 		// Cancel Attack or Cast
-		getActiveChar().setTarget(null);
+		activeChar.setTarget(null);
 		
 		// Cancel AI Task
-		if (getActiveChar().hasAI())
+		if (activeChar.hasAI())
 		{
-			getActiveChar().setAI(null);
+			//[JOJO]-------------------------------------------------
+			// for ai.individual.Benom
+			if (!activeChar.isDead() && activeChar.isVisible() && activeChar.getAI().getNextAction() != null)
+			{
+				return;
+			}
+			//-------------------------------------------------------
+			activeChar.setAI(null);
 		}
 	}
 	
