@@ -1717,7 +1717,7 @@ public class SevenSignsFestival implements SpawnListener
 	 */
 	private void sendMessageToAll(int senderName, NpcStringId npcString, L2Npc npc)
 	{
-		NpcSay cs = new NpcSay(npc.getObjectId(), Say2.SHOUT, senderName, npcString);
+		NpcSay cs = new NpcSay(npc.getObjectId(), Say2.NPC_SHOUT, senderName, npcString);
 		if (npcString.getParamCount() == 1)
 		{
 			cs.addStringParameter(String.valueOf(getMinsToNextFestival()));
@@ -2330,7 +2330,7 @@ public class SevenSignsFestival implements SpawnListener
 		{
 			if ((_participants != null) && !_participants.isEmpty())
 			{
-				_witchInst.broadcastPacket(new NpcSay(_witchInst.getObjectId(), Say2.ALL, _witchInst.getNpcId()/*"Festival Witch"*/, npcStringId));
+				_witchInst.broadcastPacket(new NpcSay(_witchInst.getObjectId(), Say2.NPC_ALL, _witchInst.getNpcId()/*"Festival Witch"*/, npcStringId));
 			}
 		}
 		
@@ -2338,7 +2338,7 @@ public class SevenSignsFestival implements SpawnListener
 		{
 			if ((_participants != null) && !_participants.isEmpty())
 			{
-				_witchInst.broadcastPacket(new NpcSay(_witchInst.getObjectId(), Say2.ALL, _witchInst.getNpcId()/*"Festival Witch"*/, npcString));
+				_witchInst.broadcastPacket(new NpcSay(_witchInst.getObjectId(), Say2.NPC_ALL, _witchInst.getNpcId()/*"Festival Witch"*/, npcString));
 			}
 		}
 		
