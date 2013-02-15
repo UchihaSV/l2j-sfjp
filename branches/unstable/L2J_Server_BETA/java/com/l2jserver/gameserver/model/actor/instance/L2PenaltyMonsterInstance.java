@@ -174,7 +174,7 @@ public class L2PenaltyMonsterInstance extends L2MonsterInstance
 			{
 				if (isVisible() && !isDead())
 				{
-					broadcastPacket(new NpcSay(getObjectId(), Say2.ALL, getNpcId(), _randomNpcStrings[Rnd.get(3, 5)]));
+					broadcastPacket(new NpcSay(getObjectId(), Say2.NPC_ALL, getNpcId(), _randomNpcStrings[Rnd.get(3, 5)]));
 					ThreadPoolManager.getInstance().scheduleGeneral(this, Rnd.get(5555, 9999));
 				}
 			}
@@ -195,7 +195,7 @@ public class L2PenaltyMonsterInstance extends L2MonsterInstance
 	public void setPlayerToKill(L2PcInstance ptk)
 	{
 		//[JOJO]-------------------------------------------------
-		broadcastPacket(new NpcSay(getObjectId(), Say2.ALL, getNpcId(), _randomNpcStrings[Rnd.get(0, 2)]).addPcName(ptk));
+		broadcastPacket(new NpcSay(getObjectId(), Say2.NPC_ALL, getNpcId(), _randomNpcStrings[Rnd.get(0, 2)]).addPcName(ptk));
 		//-------------------------------------------------------
 		_ptk = ptk;
 		addDamageHate(ptk, 0, 10);
@@ -212,7 +212,7 @@ public class L2PenaltyMonsterInstance extends L2MonsterInstance
 		}
 		
 		//[JOJO]-------------------------------------------------
-		broadcastPacket(new NpcSay(getObjectId(), Say2.ALL, getNpcId(), _randomNpcStrings[Rnd.get(6, 8)]));
+		broadcastPacket(new NpcSay(getObjectId(), Say2.NPC_ALL, getNpcId(), _randomNpcStrings[Rnd.get(6, 8)]));
 		//-------------------------------------------------------
 		return true;
 	}
