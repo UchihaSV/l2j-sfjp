@@ -2449,6 +2449,10 @@ public class Quest extends ManagedScript
 	 * @param cond the value of the "cond" variable that must be matched
 	 * @return a random party member that matches the specified condition, or {@code null} if no match was found
 	 */
+	public L2PcInstance getRandomPartyMember(L2PcInstance player, String value)
+	{
+		return getRandomPartyMember(player, "cond", value);
+	}
 	public L2PcInstance getRandomPartyMember(L2PcInstance player, int cond)
 	{
 		return getRandomPartyMember(player, "cond", String.valueOf(cond));
