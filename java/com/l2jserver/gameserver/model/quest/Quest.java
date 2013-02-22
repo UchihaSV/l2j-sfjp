@@ -2455,8 +2455,9 @@ public class Quest extends ManagedScript
 	}
 	public L2PcInstance getRandomPartyMember(L2PcInstance player, int cond)
 	{
-		return getRandomPartyMember(player, "cond", String.valueOf(cond));
+		return getRandomPartyMember(player, cond >= 0 && cond <= 20 ? COND_CHACHE[cond] : String.valueOf(cond));
 	}
+	private static String[] COND_CHACHE = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" };
 	
 	/**
 	 * Auxiliary function for party quests.<br>
