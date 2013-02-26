@@ -46,8 +46,13 @@ public enum EffectFlag
 	BLOCK_RESURRECTION,
 	SERVITOR_SHARE;
 	
+	private final int mask;	//[JOJO]
 	public int getMask()
 	{
-		return 1 << ordinal();
+		return mask;
+	}
+	private EffectFlag()
+	{
+		mask = 1 << ordinal() >>> 1;
 	}
 }
