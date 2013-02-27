@@ -321,7 +321,7 @@ public final class ItemAuction
 			
 			player.sendPacket(SystemMessageId.BID_ON_ITEM_AUCTION);	//+[JOJO]
 			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SUBMITTED_A_BID_OF_S1).addItemName(getItemInfo().getItem()));	//+[JOJO]
-		//	player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SUBMITTED_A_BID).addItemNumber(newBid));	//-[JOJO]
+		//	player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SUBMITTED_A_BID_OF_S1).addItemNumber(newBid));	//-[JOJO]
 			return;
 		}
 	}
