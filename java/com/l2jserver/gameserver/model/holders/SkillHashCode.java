@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.model.holders;
 
+import static com.l2jserver.gameserver.datatables.SkillTable.PRIME;
+
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 
@@ -26,8 +28,6 @@ import com.l2jserver.gameserver.model.skills.L2Skill;
  */
 public class SkillHashCode
 {
-	private static final int PRIME = 1021;
-	
 	public static int valueOf(int skillId, int skillLevel)
 	{
 		//assert skillId * PRIME + skillLevel == SkillTable.getSkillHashCode(skillId, skillLevel);
