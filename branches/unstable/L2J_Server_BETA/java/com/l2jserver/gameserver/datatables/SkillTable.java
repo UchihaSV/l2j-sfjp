@@ -103,8 +103,9 @@ public class SkillTable
 	 */
 	public static int getSkillHashCode(int skillId, int skillLevel)
 	{
-		return (skillId * 1021) + skillLevel;
+		return (skillId * PRIME) + skillLevel;
 	}
+	public static final int PRIME = 1021;	//[JOJO]
 	
 	//[JOJO]-------------------------------------------------
 	public final L2Skill getInfo(final int skillHashCode)
