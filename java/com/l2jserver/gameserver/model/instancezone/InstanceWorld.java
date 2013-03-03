@@ -24,6 +24,12 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 import javolution.util.FastList;
 
+import com.l2jserver.gameserver.instancemanager.InstanceManager;
+import com.l2jserver.gameserver.model.actor.L2Character;
+import com.l2jserver.gameserver.model.entity.Instance;
+import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+
 /**
  * Basic instance zone data transfer object.
  * @author Zoey76
@@ -103,5 +109,24 @@ public class InstanceWorld
 	public int incStatus()
 	{
 		return ++status;
+	}
+	
+	/**
+	 * @param killer
+	 * @param victim
+	 */
+	public void onDeath(L2Character killer, L2Character victim)
+	{
+		if ((victim != null) && victim.isPlayer())
+		{
+			final Instance instance = InstanceManager.getInstance().getInstance(getInstanceId());
+			if (instance != null)
+			{
+				final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_WILL_BE_EXPELLED_IN_S1);
+				sm.addNumber(instance.getEjectTime());
+				victim.getActingPlayer().sendPacket(sm);
+				instance.addEjectDeadTask(victim.getActingPlayer());
+			}
+		}
 	}
 }
