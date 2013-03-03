@@ -32,7 +32,6 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
 import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.Document;
@@ -95,7 +94,7 @@ public final class Instance
 	private String _timerText = "";
 	
 	protected ScheduledFuture<?> _checkTimeUpTask = null;
-	protected final Map<Integer, ScheduledFuture<?>> _ejectDeadTasks = new FastMap<>();
+	protected final FastIntObjectMap<ScheduledFuture<?>> _ejectDeadTasks = new FastIntObjectMap<>();
 	
 	public Instance(int id)
 	{
