@@ -2,14 +2,9 @@
 #P L2J_Server_BETA
 Index: java/com/l2jserver/gameserver/network/NpcStringId.java
 ===================================================================
---- java/com/l2jserver/gameserver/network/NpcStringId.java	(revision 5640)
+--- java/com/l2jserver/gameserver/network/NpcStringId.java	(revision 5778)
 +++ java/com/l2jserver/gameserver/network/NpcStringId.java	(working copy)
-@@ -14,10 +14,11 @@
-  */
- package com.l2jserver.gameserver.network;
- 
-+import gnu.trove.map.hash.TIntObjectHashMap;
-+
+@@ -21,7 +21,6 @@
  import java.io.File;
  import java.lang.reflect.Field;
  import java.lang.reflect.Modifier;
@@ -17,7 +12,16 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
  import java.util.Arrays;
  import java.util.List;
  import java.util.logging.Level;
-@@ -21605,7 +21606,7 @@
+@@ -37,6 +36,8 @@
+ import com.l2jserver.gameserver.model.clientstrings.Builder;
+ import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
+ 
++import gnu.trove.map.hash.TIntObjectHashMap;
++
+ /**
+  * NpcStringId implementation, based on SystemMessageId class
+  * @author mrTJO
+@@ -21609,7 +21610,7 @@
  	 * Array containing all NpcStringId<br>
  	 * Important: Always initialize with a length of the highest NpcStringId + 1!!!
  	 */
@@ -26,7 +30,7 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
  	
  	static
  	{
-@@ -25208,23 +25209,20 @@
+@@ -25212,23 +25213,20 @@
  	
  	private static final void buildFastLookupTable()
  	{
@@ -54,7 +58,7 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
  				}
  				catch (final Exception e)
  				{
-@@ -25232,13 +25230,6 @@
+@@ -25236,13 +25234,6 @@
  				}
  			}
  		}
@@ -68,7 +72,7 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
  	}
  	
  	private static final int parseMessageParameters(final String name)
-@@ -25269,12 +25260,7 @@
+@@ -25273,12 +25264,7 @@
  	
  	private static final NpcStringId getNpcStringIdInternal(final int id)
  	{
@@ -82,7 +86,7 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
  	}
  	
  	public static final NpcStringId getNpcStringId(final String name)
-@@ -25291,7 +25277,7 @@
+@@ -25295,7 +25281,7 @@
  	
  	public static final void reloadLocalisations()
  	{

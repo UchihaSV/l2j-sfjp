@@ -2,14 +2,9 @@
 #P L2J_Server_BETA
 Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
 ===================================================================
---- java/com/l2jserver/gameserver/network/SystemMessageId.java	(revision 5458)
+--- java/com/l2jserver/gameserver/network/SystemMessageId.java	(revision 5778)
 +++ java/com/l2jserver/gameserver/network/SystemMessageId.java	(working copy)
-@@ -14,10 +14,11 @@
-  */
- package com.l2jserver.gameserver.network;
- 
-+import gnu.trove.map.hash.TIntObjectHashMap;
-+
+@@ -21,7 +21,6 @@
  import java.io.File;
  import java.lang.reflect.Field;
  import java.lang.reflect.Modifier;
@@ -17,7 +12,16 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
  import java.util.Arrays;
  import java.util.List;
  import java.util.logging.Level;
-@@ -14867,7 +14868,7 @@
+@@ -37,6 +36,8 @@
+ import com.l2jserver.gameserver.model.clientstrings.Builder;
+ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+ 
++import gnu.trove.map.hash.TIntObjectHashMap;
++
+ /**
+  * @author Noctarius, Nille02, crion, Forsaiken
+  */
+@@ -14992,7 +14993,7 @@
  	 * Array containing all SystemMessageIds<br>
  	 * Important: Always initialize with a length of the highest SystemMessageId + 1!!!
  	 */
@@ -26,7 +30,7 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
  	
  	static
  	{
-@@ -17347,23 +17348,20 @@
+@@ -17480,23 +17481,20 @@
  	
  	private static final void buildFastLookupTable()
  	{
@@ -54,7 +58,7 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
  				}
  				catch (final Exception e)
  				{
-@@ -17371,13 +17369,6 @@
+@@ -17504,13 +17502,6 @@
  				}
  			}
  		}
@@ -68,7 +72,7 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
  	}
  	
  	private static final int parseMessageParameters(final String name)
-@@ -17408,12 +17399,7 @@
+@@ -17541,12 +17532,7 @@
  	
  	private static final SystemMessageId getSystemMessageIdInternal(final int id)
  	{
@@ -82,7 +86,7 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
  	}
  	
  	public static final SystemMessageId getSystemMessageId(final String name)
-@@ -17430,7 +17416,7 @@
+@@ -17563,7 +17549,7 @@
  	
  	public static final void reloadLocalisations()
  	{
