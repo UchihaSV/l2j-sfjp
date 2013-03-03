@@ -486,7 +486,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	
 	/**
 	 * Switches random Animation state into val.
-	 * @param val needed state of random animation	 
+	 * @param val needed state of random animation
 	 */
 	public void setRandomAnimationEnabled(boolean val)
 	{

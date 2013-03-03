@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import javolution.util.FastList;
+import javolution.util.FastMap;
 import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.Document;
@@ -53,6 +54,7 @@ import com.l2jserver.gameserver.model.L2WorldRegion;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
+import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2DoorInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -70,13 +72,13 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
  * Main class for game instances.
  * @author evill33t, GodKratos
  */
-public class Instance
+public final class Instance
 {
 	private static final Logger _log = Logger.getLogger(Instance.class.getName());
 	
 	private final int _id;
 	private String _name;
-	
+	private int _ejectTime = Config.EJECT_DEAD_PLAYER_TIME;
 	private final FastList<Integer> _players = new FastList/*L2FastList*/<Integer>().shared();
 	private final FastList<L2Npc> _npcs = new FastList/*L2FastList*/<L2Npc>().shared();
 	private final FastIntObjectMap<L2DoorInstance> _doors = new FastIntObjectMap/*L2FastMap*/<L2DoorInstance>().shared();
@@ -93,6 +95,7 @@ public class Instance
 	private String _timerText = "";
 	
 	protected ScheduledFuture<?> _checkTimeUpTask = null;
+	protected final Map<Integer, ScheduledFuture<?>> _ejectDeadTasks = new FastMap<>();
 	
 	public Instance(int id)
 	{
@@ -126,6 +129,22 @@ public class Instance
 	public void setName(String name)
 	{
 		_name = name;
+	}
+	
+	/**
+	 * @return the eject time
+	 */
+	public int getEjectTime()
+	{
+		return _ejectTime;
+	}
+	
+	/**
+	 * @param ejectTime the player eject time upon death
+	 */
+	public void setEjectTime(int ejectTime)
+	{
+		_ejectTime = ejectTime;
 	}
 	
 	/**
@@ -460,11 +479,13 @@ public class Instance
 	{
 		L2Spawn spawnDat;
 		L2NpcTemplate npcTemplate;
-		String name = null;
-		name = n.getAttributes().getNamedItem("name").getNodeValue();
-		setName(name);
+		_name = n.getAttributes().getNamedItem("name").getNodeValue();
+		Node a = n.getAttributes().getNamedItem("ejectTime");
+		if (a != null)
+		{
+			_ejectTime = 1000 * Integer.parseInt(a.getNodeValue());
+		}
 		
-		Node a;
 		Node first = n.getFirstChild();
 		for (n = first; n != null; n = n.getNextSibling())
 		{
@@ -477,16 +498,18 @@ public class Instance
 					_instanceEndTime = System.currentTimeMillis() + (Long.parseLong(a.getNodeValue()) * 60000) + 15000;
 				}
 			}
-			//@formatter:off
-			/*			
- 			else if ("timeDelay".equalsIgnoreCase(n.getNodeName()))
+			// @formatter:off
+			/*
+			else if ("timeDelay".equalsIgnoreCase(n.getNodeName()))
 			{
 				a = n.getAttributes().getNamedItem("val");
 				if (a != null)
+				{
 					instance.setTimeDelay(Integer.parseInt(a.getNodeValue()));
+				}
 			}
 			*/
-			//@formatter:on
+			// @formatter:on
 			else if ("allowSummon".equalsIgnoreCase(n.getNodeName()))
 			{
 				a = n.getAttributes().getNamedItem("val");
@@ -759,6 +782,39 @@ public class Instance
 		}
 	}
 	
+	public void cancelEjectDeadPlayer(L2PcInstance player)
+	{
+		if (_ejectDeadTasks.containsKey(player.getObjectId()))
+		{
+			final ScheduledFuture<?> task = _ejectDeadTasks.remove(player.getObjectId());
+			if (task != null)
+			{
+				task.cancel(true);
+			}
+		}
+	}
+	
+	/**
+	 * @param killer the character that killed the {@code victim}
+	 * @param victim the character that was killed by the {@code killer}
+	 */
+	public final void notifyDeath(L2Character killer, L2Character victim)
+	{
+		onDeath(killer, victim);
+	}
+	
+	/**
+	 * @param killer
+	 * @param victim
+	 */
+	protected void onDeath(L2Character killer, L2Character victim)
+	{
+		if ((victim != null) && victim.isPlayer())
+		{
+			_ejectDeadTasks.put(victim.getObjectId(), ThreadPoolManager.getInstance().scheduleGeneral(new EjectPlayer(victim.getActingPlayer()), _ejectTime));
+		}
+	}
+	
 	public class CheckTimeUp implements Runnable
 	{
 		private final int _remaining;
@@ -784,13 +840,39 @@ public class Instance
 		}
 	}
 	
+	protected class EjectPlayer implements Runnable
+	{
+		private final L2PcInstance _player;
+		
+		public EjectPlayer(L2PcInstance player)
+		{
+			_player = player;
+		}
+		
+		@Override
+		public void run()
+		{
+			if ((_player != null) && _player.isDead() && (_player.getInstanceId() == getId()))
+			{
+				_player.setInstanceId(0);
+				if (getSpawnLoc() != null)
+				{
+					_player.teleToLocation(getSpawnLoc(), true);
+				}
+				else
+				{
+					_player.teleToLocation(MapRegionManager.TeleportWhereType.Town);
+				}
+			}
+		}
+	}
+	
 	private void ejectProcedure(int objectId)
 	{
 			final L2PcInstance player = L2World.getInstance().getPlayer(objectId);
 			if ((player != null) && (player.getInstanceId() == getId()))
 			{
 				player.setInstanceId(0);
-				player.sendMessage("You were removed from the instance");
 				if (getSpawnLoc() != null)
 				{
 					player.teleToLocation(getSpawnLoc(), true);
