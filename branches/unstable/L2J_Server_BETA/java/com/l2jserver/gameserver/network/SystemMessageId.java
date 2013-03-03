@@ -19719,6 +19719,8 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3147<br>
+	 * Message: $s1分以内に復活してもらわなければ、インスタント ゾーンから追放されます。<br>
+	 * Message: &#22312;&#12300;&#36;&#115;&#49;&#12301;&#20998;&#37912;&#20839;&#33509;&#28961;&#27861;&#24489;&#27963;&#30340;&#35441;&#65292;&#23601;&#26371;&#34987;&#39493;&#36880;&#26044;&#21363;&#26178;&#22320;&#21312;&#20043;&#22806;&#12290;<br>
 	 * Message: If you are not resurrected within $s1 minutes, you will be expelled from the instant zone.
 	 */
 	public static final SystemMessageId YOU_WILL_BE_EXPELLED_IN_S1;
