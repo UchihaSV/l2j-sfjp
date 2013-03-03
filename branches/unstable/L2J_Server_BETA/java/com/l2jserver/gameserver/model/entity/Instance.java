@@ -783,13 +783,10 @@ public final class Instance
 	
 	public void cancelEjectDeadPlayer(L2PcInstance player)
 	{
-		if (_ejectDeadTasks.containsKey(player.getObjectId()))
+		final ScheduledFuture<?> task = _ejectDeadTasks.remove(player.getObjectId());
+		if (task != null)
 		{
-			final ScheduledFuture<?> task = _ejectDeadTasks.remove(player.getObjectId());
-			if (task != null)
-			{
-				task.cancel(true);
-			}
+			task.cancel(true);
 		}
 	}
 	
@@ -851,6 +848,7 @@ public final class Instance
 		@Override
 		public void run()
 		{
+//TODO:[JOJO] _ejectDeadTasks.remove(_player.getObjectId());
 			if ((_player != null) && _player.isDead() && (_player.getInstanceId() == getId()))
 			{
 				_player.setInstanceId(0);
