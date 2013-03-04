@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.l2jserver.gameserver.instancemanager;
 
 import java.util.ArrayList;
@@ -49,7 +48,11 @@ import com.l2jserver.util.Rnd;
  */
 public class WalkingManager extends DocumentParser
 {
-	// Repeat style: 0 - go back, 1 - go to first point (circle style), 2 - teleport to first point (conveyor style), 3 - random walking between points.
+	// Repeat style:
+	// 0 - go back
+	// 1 - go to first point (circle style)
+	// 2 - teleport to first point (conveyor style)
+	// 3 - random walking between points.
 	private static final byte REPEAT_GO_BACK = 0;
 	private static final byte REPEAT_GO_FIRST = 1;
 	private static final byte REPEAT_TELE_FIRST = 2;
@@ -322,8 +325,7 @@ public class WalkingManager extends DocumentParser
 						}
 					}
 				}
-				L2WalkRoute newRoute = new L2WalkRoute(routeId, list, repeat, false, repeatType);
-				_routes.put(routeId, newRoute);
+				_routes.put(routeId, new L2WalkRoute(routeId, list, repeat, false, repeatType));
 			}
 		}
 	}
