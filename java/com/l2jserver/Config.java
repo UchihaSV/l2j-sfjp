@@ -1280,6 +1280,7 @@ public final class Config
 			IPConfigData ipcd = new IPConfigData();
 			GAME_SERVER_SUBNETS = ipcd.getSubnets();
 			GAME_SERVER_HOSTS = ipcd.getHosts();
+			ipcd = null;	//[JOJO]
 			
 			// Load Community Properties file (if exists)
 			L2Properties communityServerSettings = new L2Properties();
