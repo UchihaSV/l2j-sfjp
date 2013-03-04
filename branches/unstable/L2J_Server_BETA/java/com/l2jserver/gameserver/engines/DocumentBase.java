@@ -135,7 +135,7 @@ public abstract class DocumentBase
 {
 	protected final Logger _log = Logger.getLogger(getClass().getName());
 	
-	private final File _file;
+	private File _file;
 	protected Map<String, String[]> _tables;
 	
 	protected DocumentBase(File pFile)
@@ -146,6 +146,7 @@ public abstract class DocumentBase
 	
 	public Document parse()
 	{
+	  try {
 		Document doc;
 		try
 		{
@@ -169,6 +170,11 @@ public abstract class DocumentBase
 			return null;
 		}
 		return doc;
+	  }
+	  finally {	//[JOJO]
+		_file = null;
+		_tables = null;
+	  }
 	}
 	
 	protected abstract void parseDocument(Document doc);
