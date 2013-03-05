@@ -593,7 +593,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 }} else {{
 					for (Quest quest : eventQuests)
 					{
-						ThreadPoolManager.getInstance().scheduleEffect(new OnKillNotifyTask(this, quest, player, killer instanceof L2Summon), _onKillDelay);
+						ThreadPoolManager.getInstance().scheduleEffect(new OnKillNotifyTask(this, quest, player, (killer != null) && killer.isSummon()), _onKillDelay);
 					}
 }}
 				}
@@ -611,14 +611,14 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		private final L2Attackable _attackable;
 		private final Quest _quest;
 		private final L2PcInstance _killer;
-		private final boolean _isPet;
+		private final boolean _isSummon;
 		
-		public OnKillNotifyTask(L2Attackable attackable, Quest quest, L2PcInstance killer, boolean isPet)
+		public OnKillNotifyTask(L2Attackable attackable, Quest quest, L2PcInstance killer, boolean isSummon)
 		{
 			_attackable = attackable;
 			_quest = quest;
 			_killer = killer;
-			_isPet = isPet;
+			_isSummon = isSummon;
 		}
 		
 		@Override
@@ -627,10 +627,10 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 			for (Quest quest : _attackable.getTemplate().getEventQuests(Quest.QuestEventType.ON_KILL))
 			{
-				quest.notifyKill(_attackable, _killer, _isPet);
+				quest.notifyKill(_attackable, _killer, _isSummon);
 			}
 }} else {{
-			_quest.notifyKill(_attackable, _killer, _isPet);
+			_quest.notifyKill(_attackable, _killer, _isSummon);
 }}
 		}
 	}
@@ -1037,7 +1037,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 					{
 						for (Quest quest : eventQuests)
 						{
-							quest.notifyAttack(this, player, damage, attacker instanceof L2Summon, skill);
+							quest.notifyAttack(this, player, damage, attacker.isSummon(), skill);
 						}
 					}
 				}
