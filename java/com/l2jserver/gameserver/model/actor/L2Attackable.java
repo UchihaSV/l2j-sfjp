@@ -2238,7 +2238,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 	{
 		// Calculate the over-hit damage
 		// Ex: mob had 10 HP left, over-hit skill did 50 damage total, over-hit damage is 40
-		double overhitDmg = ((getCurrentHp() - damage) * (-1));
+		double overhitDmg = -(getCurrentHp() - damage);
 		if (overhitDmg < 0)
 		{
 			// we didn't killed the mob with the over-hit strike. (it wasn't really an over-hit strike)
