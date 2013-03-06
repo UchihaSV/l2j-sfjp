@@ -57,12 +57,12 @@ public final class SeeCreature implements Runnable
 		}
 		catch (Exception e)
 		{
-			if (player != null)
+	//		if (player != null)	//-[JOJO]
 			{
 				_quest.showError(player, e);
 			}
 		}
-		if (player != null)
+	//	if (player != null)	//-[JOJO]
 		{
 			_quest.showResult(player, res);
 		}
