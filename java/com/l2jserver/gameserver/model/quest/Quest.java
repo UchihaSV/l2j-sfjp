@@ -718,14 +718,14 @@ public class Quest extends ManagedScript
 		}
 		catch (Exception e)
 		{
-			if (trigger.getActingPlayer() != null)
+	//		if (trigger.getActingPlayer() != null)	//-[JOJO]
 			{
 				showError(trigger.getActingPlayer(), e);
 			}
 			_log.log(Level.WARNING, "Exception on onTrapAction() in notifyTrapAction(): " + e.getMessage(), e);
 			return;
 		}
-		if (trigger.getActingPlayer() != null)
+	//	if (trigger.getActingPlayer() != null)	//-[JOJO]
 		{
 			showResult(trigger.getActingPlayer(), res);
 		}
@@ -1053,12 +1053,12 @@ public class Quest extends ManagedScript
 		}
 		catch (Exception e)
 		{
-			if (player != null)
+	//		if (player != null)	//-[JOJO]
 			{
 				showError(player, e);
 			}
 		}
-		if (player != null)
+	//	if (player != null)	//-[JOJO]
 		{
 			showResult(player, res);
 		}
@@ -1078,12 +1078,12 @@ public class Quest extends ManagedScript
 		}
 		catch (Exception e)
 		{
-			if (player != null)
+	//		if (player != null)	//-[JOJO]
 			{
 				showError(player, e);
 			}
 		}
-		if (player != null)
+	//	if (player != null)	//-[JOJO]
 		{
 			showResult(player, res);
 		}
