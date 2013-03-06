@@ -2201,16 +2201,22 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * @param npcIds NPCs to register to on see creature event
-	 * @return the templates of the registered NPCs
 	 */
-	public L2NpcTemplate[] addSeeCreatureId(int... npcIds)
+	public void addSeeCreatureId(int... npcIds)
 	{
-		final L2NpcTemplate[] value = new L2NpcTemplate[npcIds.length];
-		for (int i = 0; i < npcIds.length; i++)
+		for (int npcId : npcIds)
 		{
-			value[i] = addEventId(npcIds[i], QuestEventType.ON_SEE_CREATURE);
+			addSeeCreatureId(npcId);
 		}
-		return value;
+	}
+	
+	/**
+	 * @param npcId NPs to register to on see creature event
+	 * @return the templates of the registered NPC
+	 */
+	public L2NpcTemplate addSeeCreatureId(int npcId)
+	{
+		return addEventId(npcId, QuestEventType.ON_SEE_CREATURE);
 	}
 	
 	/**
