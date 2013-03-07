@@ -50,7 +50,7 @@ public class SkillSee implements Runnable
 	@Override
 	public void run()
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = _quest.onSkillSee(_npc, _caster, _skill, _targets, _isSummon);
@@ -58,6 +58,7 @@ public class SkillSee implements Runnable
 		catch (Exception e)
 		{
 			_quest.showError(_caster, e);
+			return;	//+[JOJO]
 		}
 		_quest.showResult(_caster, res);
 	}

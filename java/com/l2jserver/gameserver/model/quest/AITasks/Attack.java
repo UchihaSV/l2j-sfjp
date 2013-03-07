@@ -49,7 +49,7 @@ public final class Attack implements Runnable
 	@Override
 	public void run()
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = _quest.onAttack(_npc, _pc, _damage, _isSummon, _skill);
@@ -57,6 +57,7 @@ public final class Attack implements Runnable
 		catch (Exception e)
 		{
 			_quest.showError(_pc, e);
+			return;	//+[JOJO]
 		}
 		_quest.showResult(_pc, res);
 	}

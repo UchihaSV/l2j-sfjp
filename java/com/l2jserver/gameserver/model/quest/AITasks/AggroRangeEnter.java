@@ -44,7 +44,7 @@ public final class AggroRangeEnter implements Runnable
 	@Override
 	public void run()
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = _quest.onAggroRangeEnter(_npc, _pc, _isSummon);
@@ -52,6 +52,7 @@ public final class AggroRangeEnter implements Runnable
 		catch (Exception e)
 		{
 			_quest.showError(_pc, e);
+			return;	//+[JOJO]
 		}
 		_quest.showResult(_pc, res);
 	}
