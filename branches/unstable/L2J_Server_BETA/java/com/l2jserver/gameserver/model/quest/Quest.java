@@ -3479,6 +3479,17 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
+	 * Take an amount of a specified item from player's inventory.
+	 * @param player
+	 * @param itemId Id of the item to take
+	 * @return {@code true} if any items were taken, {@code false} otherwise
+	 */
+	public boolean takeItems(L2PcInstance player, int amount, int itemId)	//+[JOJO]
+	{
+		return takeItems(player, itemId, amount);
+	}
+	
+	/**
 	 * Take an amount of all specified items from player's inventory.
 	 * @param player the player whose items to take
 	 * @param amount the amount to take of each item
