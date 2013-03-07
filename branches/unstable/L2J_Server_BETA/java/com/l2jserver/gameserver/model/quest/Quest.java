@@ -654,7 +654,7 @@ public class Quest extends ManagedScript
 	 */
 	public final void notifyDeath(L2Character killer, L2Character victim, QuestState qs)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onDeath(killer, victim, qs);
@@ -662,6 +662,7 @@ public class Quest extends ManagedScript
 		catch (Exception e)
 		{
 			showError(qs.getPlayer(), e);
+			return;	//[JOJO]
 		}
 		showResult(qs.getPlayer(), res);
 	}
@@ -672,7 +673,7 @@ public class Quest extends ManagedScript
 	 */
 	public final void notifyItemUse(L2Item item, L2PcInstance player)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onItemUse(item, player);
@@ -680,6 +681,7 @@ public class Quest extends ManagedScript
 		catch (Exception e)
 		{
 			showError(player, e);
+			return;	//[JOJO]
 		}
 		showResult(player, res);
 	}
@@ -691,7 +693,7 @@ public class Quest extends ManagedScript
 	 */
 	public final void notifySpellFinished(L2Npc instance, L2PcInstance player, L2Skill skill)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onSpellFinished(instance, player, skill);
@@ -699,6 +701,7 @@ public class Quest extends ManagedScript
 		catch (Exception e)
 		{
 			showError(player, e);
+			return;	//[JOJO]
 		}
 		showResult(player, res);
 	}
@@ -711,7 +714,7 @@ public class Quest extends ManagedScript
 	 */
 	public final void notifyTrapAction(L2Trap trap, L2Character trigger, TrapAction action)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onTrapAction(trap, trigger, action);
@@ -754,7 +757,7 @@ public class Quest extends ManagedScript
 	 */
 	public final boolean notifyEvent(String event, L2Npc npc, L2PcInstance player)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onAdvEvent(event, npc, player);
@@ -771,7 +774,7 @@ public class Quest extends ManagedScript
 	 */
 	public final void notifyEnterWorld(L2PcInstance player)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onEnterWorld(player);
@@ -779,6 +782,7 @@ public class Quest extends ManagedScript
 		catch (Exception e)
 		{
 			showError(player, e);
+			return;	//[JOJO]
 		}
 		showResult(player, res);
 	}
@@ -790,7 +794,7 @@ public class Quest extends ManagedScript
 	 */
 	public final void notifyKill(L2Npc npc, L2PcInstance killer, boolean isSummon)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onKill(npc, killer, isSummon);
@@ -798,6 +802,7 @@ public class Quest extends ManagedScript
 		catch (Exception e)
 		{
 			showError(killer, e);
+			return;	//[JOJO]
 		}
 		showResult(killer, res);
 	}
@@ -809,7 +814,7 @@ public class Quest extends ManagedScript
 	 */
 	public final boolean notifyTalk(L2Npc npc, QuestState qs)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onTalk(npc, qs.getPlayer());
@@ -830,7 +835,7 @@ public class Quest extends ManagedScript
 	 */
 	public final void notifyFirstTalk(L2Npc npc, L2PcInstance player)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onFirstTalk(npc, player);
@@ -838,6 +843,7 @@ public class Quest extends ManagedScript
 		catch (Exception e)
 		{
 			showError(player, e);
+			return;	//[JOJO]
 		}
 		showResult(player, res);
 	}
@@ -848,7 +854,7 @@ public class Quest extends ManagedScript
 	 */
 	public final void notifyAcquireSkillList(L2Npc npc, L2PcInstance player)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onAcquireSkillList(npc, player);
@@ -856,6 +862,7 @@ public class Quest extends ManagedScript
 		catch (Exception e)
 		{
 			showError(player, e);
+			return;	//[JOJO]
 		}
 		showResult(player, res);
 	}
@@ -867,7 +874,7 @@ public class Quest extends ManagedScript
 	 */
 	public final void notifyAcquireSkillInfo(L2Npc npc, L2PcInstance player, L2Skill skill)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onAcquireSkillInfo(npc, player, skill);
@@ -875,6 +882,7 @@ public class Quest extends ManagedScript
 		catch (Exception e)
 		{
 			showError(player, e);
+			return;	//[JOJO]
 		}
 		showResult(player, res);
 	}
@@ -886,7 +894,7 @@ public class Quest extends ManagedScript
 	 */
 	public final void notifyAcquireSkill(L2Npc npc, L2PcInstance player, L2Skill skill)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onAcquireSkill(npc, player, skill);
@@ -894,6 +902,7 @@ public class Quest extends ManagedScript
 		catch (Exception e)
 		{
 			showError(player, e);
+			return;	//[JOJO]
 		}
 		showResult(player, res);
 	}
@@ -905,7 +914,7 @@ public class Quest extends ManagedScript
 	 */
 	public final boolean notifyItemTalk(L2ItemInstance item, L2PcInstance player)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onItemTalk(item, player);
@@ -946,7 +955,7 @@ public class Quest extends ManagedScript
 	 */
 	public final boolean notifyItemEvent(L2ItemInstance item, L2PcInstance player, String event)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onItemEvent(item, player, event);
@@ -989,7 +998,7 @@ public class Quest extends ManagedScript
 	 */
 	public final void notifyFactionCall(L2Npc npc, L2Npc caller, L2PcInstance attacker, boolean isSummon)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onFactionCall(npc, caller, attacker, isSummon);
@@ -997,6 +1006,7 @@ public class Quest extends ManagedScript
 		catch (Exception e)
 		{
 			showError(attacker, e);
+			return;	//[JOJO]
 		}
 		showResult(attacker, res);
 	}
@@ -1046,7 +1056,7 @@ public class Quest extends ManagedScript
 	public final void notifyEnterZone(L2Character character, L2ZoneType zone)
 	{
 		L2PcInstance player = character.getActingPlayer();
-		String res = null;
+		String res;
 		try
 		{
 			res = onEnterZone(character, zone);
@@ -1056,6 +1066,7 @@ public class Quest extends ManagedScript
 	//		if (player != null)	//-[JOJO]
 			{
 				showError(player, e);
+				return;	//[JOJO]
 			}
 		}
 	//	if (player != null)	//-[JOJO]
@@ -1071,7 +1082,7 @@ public class Quest extends ManagedScript
 	public final void notifyExitZone(L2Character character, L2ZoneType zone)
 	{
 		L2PcInstance player = character.getActingPlayer();
-		String res = null;
+		String res;
 		try
 		{
 			res = onExitZone(character, zone);
@@ -1081,12 +1092,10 @@ public class Quest extends ManagedScript
 	//		if (player != null)	//-[JOJO]
 			{
 				showError(player, e);
+				return;	//[JOJO]
 			}
 		}
-	//	if (player != null)	//-[JOJO]
-		{
-			showResult(player, res);
-		}
+		showResult(player, res);
 	}
 	
 	/**
@@ -1102,6 +1111,7 @@ public class Quest extends ManagedScript
 		catch (Exception e)
 		{
 			showError(winner, e);
+			return;	//[JOJO]
 		}
 	}
 	
@@ -1118,6 +1128,7 @@ public class Quest extends ManagedScript
 		catch (Exception e)
 		{
 			showError(loser, e);
+			return;	//[JOJO]
 		}
 	}
 	

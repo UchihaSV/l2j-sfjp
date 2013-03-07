@@ -50,7 +50,7 @@ public final class SeeCreature implements Runnable
 		{
 			player = _creature.getActingPlayer();
 		}
-		String res = null;
+		String res;
 		try
 		{
 			res = _quest.onSeeCreature(_npc, _creature, _isSummon);
@@ -60,6 +60,7 @@ public final class SeeCreature implements Runnable
 	//		if (player != null)	//-[JOJO]
 			{
 				_quest.showError(player, e);
+				return;	//+[JOJO]
 			}
 		}
 	//	if (player != null)	//-[JOJO]
