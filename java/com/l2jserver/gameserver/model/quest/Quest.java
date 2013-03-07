@@ -1954,9 +1954,8 @@ public class Quest extends ManagedScript
 				t.addQuestEvent(eventType, this);
 				_questInvolvedNpcs.add(npcId);
 			}
-/*#IF DEBUG#*/
-//TODO:		else throw new UnsupportedOperationException();
-/*#END IF#*/
+			else
+				throw new UnsupportedOperationException();	//+[JOJO]
 		}
 		catch (Exception e)
 		{
