@@ -142,8 +142,6 @@ public final class L2ScriptEngineManager
 	
 	private void preConfigure()
 	{
-		// java class path
-		
 		// Jython sys.path
 		String dataPackDirForwardSlashes = SCRIPT_FOLDER.getPath().replace('\\', '/');
 		String configScript = "import sys;sys.path.insert(0,'" + dataPackDirForwardSlashes + "');";
@@ -298,7 +296,6 @@ public final class L2ScriptEngineManager
 					catch (ScriptException e)
 					{
 						reportScriptFileError(file, e);
-						// _log.log(Level.WARNING, "", e);
 					}
 				}
 			}
@@ -343,8 +340,6 @@ public final class L2ScriptEngineManager
 	
 	public void executeScript(ScriptEngine engine, File file) throws ScriptException
 	{
-		String relativeName = file.getAbsolutePath().substring(SCRIPT_FOLDER.getAbsolutePath().length() + 1).replace('\\', '/');	//[JOJO]
-		
 		if (VERBOSE_LOADING)
 		{
 			_log.info("Loading Script: " + file.getAbsolutePath());
@@ -360,6 +355,7 @@ public final class L2ScriptEngineManager
 			}
 		}
 		
+		final String relativeName = file.getAbsolutePath().substring(SCRIPT_FOLDER.getAbsolutePath().length() + 1).replace('\\', '/');
 		try(FileInputStream fis = new FileInputStream(file);
 			InputStreamReader isr = new InputStreamReader(fis);
 			BufferedReader reader = new BufferedReader(isr))
