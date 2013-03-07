@@ -296,19 +296,31 @@ public abstract class DocumentParser
 		@Override
 		public void warning(SAXParseException e) throws SAXParseException
 		{
+			log(e, "WARNING");	//+[JOJO]
 			throw e;
 		}
 		
 		@Override
 		public void error(SAXParseException e) throws SAXParseException
 		{
+			log(e, "ERROR");	//+[JOJO]
 			throw e;
 		}
 		
 		@Override
 		public void fatalError(SAXParseException e) throws SAXParseException
 		{
+			log(e, "FATAL ERROR");	//+[JOJO]
 			throw e;
 		}
+		
+		//[JOJO]-------------------------------------------------
+		private void log(SAXParseException e, String kind)
+		{
+			_log.warning(DocumentParser.this.getClass().getSimpleName() + ": "
+				+ kind + " in " + getCurrentFile().getPath() + " (at line " + e.getLineNumber() + " column " + e.getColumnNumber() +")"
+				+ " - " + e.getMessage());
+		}
+		//-------------------------------------------------------
 	}
 }
