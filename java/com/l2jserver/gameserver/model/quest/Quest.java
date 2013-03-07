@@ -1928,11 +1928,23 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * Add this quest to the list of quests that the passed mob will respond to for the specified Event type.
-	 * @param npcId id of the NPC to register
 	 * @param eventType type of event being registered
-	 * @return L2NpcTemplate Npc Template corresponding to the npcId, or null if the id is invalid
+	 * @param npcIds NPC Ids to register
 	 */
-	public L2NpcTemplate addEventId(int npcId, QuestEventType eventType)
+	public void addEventId(QuestEventType eventType, int... npcIds)
+	{
+		for (int npcId : npcIds)
+		{
+			addEventId(eventType, npcId);
+		}
+	}
+	
+	/**
+	 * Add this quest to the list of quests that the passed mob will respond to for the specified Event type.
+	 * @param eventType type of event being registered
+	 * @param npcId NPC Id to register
+	 */
+	public void addEventId(QuestEventType eventType, int npcId)
 	{
 		try
 		{
@@ -1940,16 +1952,27 @@ public class Quest extends ManagedScript
 			if (t != null)
 			{
 				t.addQuestEvent(eventType, this);
+				_questInvolvedNpcs.add(npcId);
 			}
-			
-			_questInvolvedNpcs.add(npcId);
-			return t;
+/*#IF DEBUG#*/
+//TODO:		else throw new UnsupportedOperationException();
+/*#END IF#*/
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Exception on addEventId(" + npcId + "," + eventType.name() + "): " + e.getMessage(), e);
-			return null;
 		}
+	}
+	
+	/**
+	 * Add this quest to the list of quests that the passed mob will respond to for the specified Event type.
+	 * @param npcId NPC Id to register
+	 * @param eventType type of event being registered
+	 */
+	//@Deprecated
+	public void addEventId(int npcId, QuestEventType eventType)
+	{
+		addEventId(eventType, npcId);
 	}
 	
 	/**
@@ -1964,9 +1987,13 @@ public class Quest extends ManagedScript
 		}
 	}
 	
-	public L2NpcTemplate addStartNpc(int npcId)
+	/**
+	 * Add the quest to the NPC's startQuest
+	 * @param npcId
+	 */
+	public void addStartNpc(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.QUEST_START);
+		addEventId(QuestEventType.QUEST_START, npcId);
 	}
 	
 	/**
@@ -1982,12 +2009,12 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
+	 * Add the quest to the NPC's first-talk (default action dialog)
 	 * @param npcId
-	 * @return
 	 */
-	public L2NpcTemplate addFirstTalkId(int npcId)
+	public void addFirstTalkId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_FIRST_TALK);
+		addEventId(QuestEventType.ON_FIRST_TALK, npcId);
 	}
 	
 	/**
@@ -2003,12 +2030,12 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
+	 * Add the NPC to the AcquireSkill dialog
 	 * @param npcId
-	 * @return
 	 */
-	public L2NpcTemplate addAcquireSkillId(int npcId)
+	public void addAcquireSkillId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_SKILL_LEARN);
+		addEventId(QuestEventType.ON_SKILL_LEARN, npcId);
 	}
 	
 	/**
@@ -2024,21 +2051,21 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
+	 * Add this quest to the list of quests that the passed mob will respond to for Attack Events.
 	 * @param npcId
-	 * @return
 	 */
-	public L2NpcTemplate addAttackId(int npcId)
+	public void addAttackId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_ATTACK);
+		addEventId(QuestEventType.ON_ATTACK, npcId);
 	}
 	
 	/**
 	 * Add this quest to the list of quests that the passed mob will respond to for Kill Events.
-	 * @param npcIds
+	 * @param killIds
 	 */
-	public void addKillId(int... npcIds)
+	public void addKillId(int... killIds)
 	{
-		for (int npcId : npcIds)
+		for (int npcId : killIds)
 		{
 			addKillId(npcId);
 		}
@@ -2046,23 +2073,23 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * Add this quest event to the collection of NPC Ids that will respond to for on kill events.
-	 * @param npcIds the collection of NPC Ids
+	 * @param killIds the collection of NPC Ids
 	 */
-	public void addKillId(Collection<Integer> npcIds)
+	public void addKillId(Collection<Integer> killIds)
 	{
-		for (int npcId : npcIds)
+		for (int npcId : killIds)
 		{
 			addKillId(npcId);
 		}
 	}
 	
 	/**
+	 * Add this quest event to the collection of NPC Ids that will respond to for on kill events.
 	 * @param npcId
-	 * @return
 	 */
-	public L2NpcTemplate addKillId(int npcId)
+	public void addKillId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_KILL);
+		addEventId(QuestEventType.ON_KILL, npcId);
 	}
 	
 	/**
@@ -2078,12 +2105,12 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * @param npcId
-	 * @return
+	 * Add this quest to the list of quests that the passed npc will respond to for Talk Events.
+	 * @param npcId Id of the NPC
 	 */
-	public L2NpcTemplate addTalkId(int npcId)
+	public void addTalkId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_TALK);
+		addEventId(QuestEventType.ON_TALK, npcId);
 	}
 	
 	/**
@@ -2099,12 +2126,12 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * @param npcId
-	 * @return
+	 * Add this quest to the list of quests that the passed npc will respond to for Spawn Events.
+	 * @param npcId Id of the NPC
 	 */
-	public L2NpcTemplate addSpawnId(int npcId)
+	public void addSpawnId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_SPAWN);
+		addEventId(QuestEventType.ON_SPAWN, npcId);
 	}
 	
 	/**
@@ -2120,12 +2147,12 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * @param npcId
-	 * @return
+	 * Add this quest to the list of quests that the passed npc will respond to for Skill-See Events.
+	 * @param npcId Id of the NPC
 	 */
-	public L2NpcTemplate addSkillSeeId(int npcId)
+	public void addSkillSeeId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_SKILL_SEE);
+		addEventId(QuestEventType.ON_SKILL_SEE, npcId);
 	}
 	
 	/**
@@ -2141,11 +2168,10 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * @param npcId
-	 * @return
 	 */
-	public L2NpcTemplate addSpellFinishedId(int npcId)
+	public void addSpellFinishedId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_SPELL_FINISHED);
+		addEventId(QuestEventType.ON_SPELL_FINISHED, npcId);
 	}
 	
 	/**
@@ -2161,11 +2187,10 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * @param npcId
-	 * @return
 	 */
-	public L2NpcTemplate addTrapActionId(int npcId)
+	public void addTrapActionId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_TRAP_ACTION);
+		addEventId(QuestEventType.ON_TRAP_ACTION, npcId);
 	}
 	
 	/**
@@ -2181,12 +2206,12 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * @param npcId
-	 * @return
+	 * Add this quest to the list of quests that the passed npc will respond to for Faction Call Events.
+	 * @param npcId Id of the NPC
 	 */
-	public L2NpcTemplate addFactionCallId(int npcId)
+	public void addFactionCallId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_FACTION_CALL);
+		addEventId(QuestEventType.ON_FACTION_CALL, npcId);
 	}
 	
 	/**
@@ -2202,16 +2227,16 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * @param npcId
-	 * @return
+	 * Add this quest to the list of quests that the passed npc will respond to for Character See Events.
+	 * @param npcId Id of the NPC
 	 */
-	public L2NpcTemplate addAggroRangeEnterId(int npcId)
+	public void addAggroRangeEnterId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_AGGRO_RANGE_ENTER);
+		addEventId(QuestEventType.ON_AGGRO_RANGE_ENTER, npcId);
 	}
 	
 	/**
-	 * @param npcIds NPCs to register to on see creature event
+	 * @param npcIds NPC Ids to register to on see creature event
 	 */
 	public void addSeeCreatureId(int... npcIds)
 	{
@@ -2222,12 +2247,11 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * @param npcId NPs to register to on see creature event
-	 * @return the templates of the registered NPC
+	 * @param npcId NPC Id to register to on see creature event
 	 */
-	public L2NpcTemplate addSeeCreatureId(int npcId)
+	public void addSeeCreatureId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_SEE_CREATURE);
+		addEventId(QuestEventType.ON_SEE_CREATURE, npcId);
 	}
 	
 	/**
@@ -2243,9 +2267,8 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * @param zoneId
-	 * @return
 	 */
-	public L2ZoneType addEnterZoneId(int zoneId)
+	public void addEnterZoneId(int zoneId)
 	{
 		try
 		{
@@ -2254,12 +2277,10 @@ public class Quest extends ManagedScript
 			{
 				zone.addQuestEvent(QuestEventType.ON_ENTER_ZONE, this);
 			}
-			return zone;
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Exception on addEnterZoneId(): " + e.getMessage(), e);
-			return null;
 		}
 	}
 	
@@ -2276,9 +2297,8 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * @param zoneId
-	 * @return
 	 */
-	public L2ZoneType addExitZoneId(int zoneId)
+	public void addExitZoneId(int zoneId)
 	{
 		try
 		{
@@ -2287,23 +2307,11 @@ public class Quest extends ManagedScript
 			{
 				zone.addQuestEvent(QuestEventType.ON_EXIT_ZONE, this);
 			}
-			return zone;
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Exception on addExitZoneId(): " + e.getMessage(), e);
-			return null;
 		}
-	}
-	
-	/**
-	 * Register onEventReceived trigger for NPC
-	 * @param npcId id of NPC to register
-	 * @return
-	 */
-	public L2NpcTemplate addEventReceivedId(int npcId)
-	{
-		return addEventId(npcId, QuestEventType.ON_EVENT_RECEIVED);
 	}
 	
 	/**
@@ -2319,13 +2327,12 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * Register onMoveFinished trigger for NPC
-	 * @param npcId id of NPC to register
-	 * @return
+	 * Register onEventReceived trigger for NPC
+	 * @param npcId
 	 */
-	public L2NpcTemplate addMoveFinishedId(int npcId)
+	public void addEventReceivedId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_MOVE_FINISHED);
+		addEventId(QuestEventType.ON_EVENT_RECEIVED, npcId);
 	}
 	
 	/**
@@ -2341,13 +2348,12 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * Register addNodeArrived trigger for NPC
-	 * @param npcId id of NPC to register
-	 * @return
+	 * Register onMoveFinished trigger for NPC
+	 * @param npcId
 	 */
-	public L2NpcTemplate addNodeArrivedId(int npcId)
+	public void addMoveFinishedId(int npcId)
 	{
-		return addEventId(npcId, QuestEventType.ON_NODE_ARRIVED);
+		addEventId(QuestEventType.ON_MOVE_FINISHED, npcId);
 	}
 	
 	/**
@@ -2360,6 +2366,15 @@ public class Quest extends ManagedScript
 		{
 			addNodeArrivedId(npcId);
 		}
+	}
+	
+	/**
+	 * Register addNodeArrived trigger for NPC
+	 * @param npcId id of NPC to register
+	 */
+	public void addNodeArrivedId(int npcId)
+	{
+		addEventId(QuestEventType.ON_NODE_ARRIVED, npcId);
 	}
 	
 	/**
