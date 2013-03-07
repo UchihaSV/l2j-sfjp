@@ -356,7 +356,7 @@ public final class L2ScriptEngineManager
 		}
 		
 		final String relativeName = file.getAbsolutePath().substring(SCRIPT_FOLDER.getAbsolutePath().length() + 1).replace('\\', '/');
-		try(FileInputStream fis = new FileInputStream(file);
+		try (FileInputStream fis = new FileInputStream(file);
 			InputStreamReader isr = new InputStreamReader(fis);
 			BufferedReader reader = new BufferedReader(isr))
 		{
