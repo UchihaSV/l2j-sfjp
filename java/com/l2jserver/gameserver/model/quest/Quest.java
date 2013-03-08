@@ -1946,6 +1946,7 @@ public class Quest extends ManagedScript
 	 */
 	public void addEventId(QuestEventType eventType, int npcId)
 	{
+		if (npcId == -1) return;	//+[JOJO]
 		try
 		{
 			L2NpcTemplate t = NpcTable.getInstance().getTemplate(npcId);
@@ -1955,7 +1956,7 @@ public class Quest extends ManagedScript
 				_questInvolvedNpcs.add(npcId);
 			}
 			else
-				throw new UnsupportedOperationException();	//+[JOJO]
+				throw new UnsupportedOperationException("Unknown NPC");	//+[JOJO]
 		}
 		catch (Exception e)
 		{
