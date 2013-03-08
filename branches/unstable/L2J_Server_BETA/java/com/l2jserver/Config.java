@@ -1809,10 +1809,11 @@ public final class Config
 			PARTY_XP_CUTOFF_GAPS = new int[gaps.length][2];
 			for (int i = 0; i < gaps.length; i++)
 			{
+				String[] g = gaps[i].split(",");
 				PARTY_XP_CUTOFF_GAPS[i] = new int[]
 				{
-					Integer.parseInt(gaps[i].split(",")[0]),
-					Integer.parseInt(gaps[i].split(",")[1])
+					Integer.parseInt(g[0]),
+					Integer.parseInt(g[1])
 				};
 			}
 			final String[] percents = Character.getProperty("PartyXpCutoffGapPercent", "100;30;0").split(";");
