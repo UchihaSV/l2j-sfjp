@@ -643,7 +643,7 @@ public class Quest extends ManagedScript
 	 */
 	public final void notifyAttack(L2Npc npc, L2PcInstance attacker, int damage, boolean isSummon, L2Skill skill)
 	{
-		String res = null;
+		String res;
 		try
 		{
 			res = onAttack(npc, attacker, damage, isSummon, skill);
