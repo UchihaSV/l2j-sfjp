@@ -513,7 +513,7 @@ if (com.l2jserver.Config.TEST_GET_AI) {{
 			}
 		}
 		
-		if (isEventMob)
+		if (isEventMob())
 		{
 			return;
 		}

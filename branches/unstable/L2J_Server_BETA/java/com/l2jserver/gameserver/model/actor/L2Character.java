@@ -5640,7 +5640,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	{
 		// If the attacker/target is dead or use fake death, notify the AI with EVT_CANCEL
 		// and send a Server->Client packet ActionFailed (if attacker is a L2PcInstance)
-		if ((target == null) || isAlikeDead() || (isNpc() && ((L2Npc) this).isEventMob))
+		if ((target == null) || isAlikeDead() || (isNpc() && ((L2Npc) this).isEventMob()))
 		{
 			getAI().notifyEvent(CtrlEvent.EVT_CANCEL);
 			return;
