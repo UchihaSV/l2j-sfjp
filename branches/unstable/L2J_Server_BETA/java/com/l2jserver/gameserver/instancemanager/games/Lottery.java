@@ -517,9 +517,9 @@ public class Lottery
 	
 	void shout(int npcString, String ... param)
 	{
-		for (L2Spawn s : SpawnTable.getInstance().getSpawnTable())
+		for (int npcId = 30990; npcId <= 30994; ++npcId)
 		{
-			if (s != null && s.getNpcid() >= 30990 && s.getNpcid() <= 30994)
+			for (L2Spawn s : SpawnTable.getInstance().getSpawns(npcId))
 			{
 				L2Npc npc = s.getLastSpawn();
 				NpcSay packet = new NpcSay(npc.getObjectId(), Say2.SHOUT, npc.getNpcId(), npcString);

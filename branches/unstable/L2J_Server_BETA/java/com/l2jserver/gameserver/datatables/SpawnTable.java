@@ -23,12 +23,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javolution.util.FastMap;
 import javolution.util.FastSet;
 import jp.sf.l2j.troja.FastIntObjectMap;
 
@@ -53,7 +51,7 @@ public final class SpawnTable
 	private static final String SELECT_SPAWNS = "SELECT count, npc_templateid, locx, locy, locz, heading, respawn_delay, respawn_random, loc_id, periodOfDay FROM spawnlist";
 	private static final String SELECT_CUSTOM_SPAWNS = "SELECT count, npc_templateid, locx, locy, locz, heading, respawn_delay, respawn_random, loc_id, periodOfDay FROM custom_spawnlist";
 	
-	private static final Map<Integer, Set<L2Spawn>> _spawnTable = new FastMap<Integer, Set<L2Spawn>>().shared();
+	private static final FastIntObjectMap< FastSet<L2Spawn>> _spawnTable = new FastIntObjectMap<FastSet<L2Spawn>>().shared();
 	
 	protected SpawnTable()
 	{
@@ -139,7 +137,7 @@ public final class SpawnTable
 		return npcSpawnCount;
 	}
 	
-	public Map<Integer, Set<L2Spawn>> getSpawnTable()
+	public FastIntObjectMap<FastSet<L2Spawn>> getSpawnTable()
 	{
 		return _spawnTable;
 	}
@@ -304,11 +302,6 @@ public final class SpawnTable
 		return true;
 	}
 	
-	public static SpawnTable getInstance()
-	{
-		return SingletonHolder._instance;
-	}
-	
 	public void addNewSpawnOne(L2Npc npc)	//+[JOJO] Orfen, Zaken
 	{
 		Set<L2Spawn> t;
@@ -343,6 +336,11 @@ public final class SpawnTable
 	    } catch (java.io.IOException e) {
 	    }
     }
+	
+	public static SpawnTable getInstance()
+	{
+		return SingletonHolder._instance;
+	}
 	
 	private static class SingletonHolder
 	{
