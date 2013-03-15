@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javolution.util.FastMap;
@@ -480,18 +481,17 @@ if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 				hasOnSpawn = false;
 			}
 			if (hasOnSpawn)
-				for (L2Spawn spawn : SpawnTable.getInstance().getSpawnTable()) {
+			  for (Set<L2Spawn> t : SpawnTable.getInstance().getSpawnTable().values())
+				for (L2Spawn spawn : t) {
 					L2Npc npc;
 					if (spawn != null && (npc = spawn.getLastSpawn()) != null) {
 						if (npc.getNpcId() == _npcId && npc.isVisible()) {
-						//	System.out.println("__BASENAME__:__LINE__: " + q.getClass().getSimpleName() + ".onSpawn(" + npc.getNpcId() + npc.getName() + ")");
 							q.onSpawn(npc);
 						}
 						L2MonsterInstance leader;
-						if (npc instanceof L2MonsterInstance && (leader = (L2MonsterInstance)npc).hasMinions()) {
+						if (npc.isMonster() && (leader = (L2MonsterInstance)npc).hasMinions()) {
 							for (L2MonsterInstance minion : leader.getMinionList().getSpawnedMinions())
 								if (minion.getNpcId() == _npcId && minion.isVisible()) {
-								//	System.out.println("__BASENAME__:__LINE__: " + q.getClass().getSimpleName() + ".onSpawn(+" + minion.getNpcId() + minion.getName() + ")");
 									q.onSpawn(minion);
 								}
 						}
