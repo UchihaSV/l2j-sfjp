@@ -20,6 +20,7 @@ package com.l2jserver.gameserver.model.actor.knownlist;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -213,22 +214,23 @@ public class CharKnownList extends ObjectKnownList
 	
 	public Collection<L2Character> getKnownCharacters()
 	{
-		FastList<L2Character> result = new FastList<>();
+		FastList<L2Character> result = null;
 		
 		final Collection<L2Object> objs = getKnownObjects().values();
 		for (L2Object obj : objs)
 		{
 			if (obj instanceof L2Character)
 			{
+				if (result == null) result = new FastList<>();
 				result.add((L2Character) obj);
 			}
 		}
-		return result;
+		return result != null ? result : Collections.<L2Character>emptyList();
 	}
 	
 	public Collection<L2Character> getKnownCharactersInRadius(long radius)
 	{
-		List<L2Character> result = new ArrayList<>();
+		List<L2Character> result = null;
 		
 		final Collection<L2Object> objs = getKnownObjects().values();
 		for (L2Object obj : objs)
@@ -237,12 +239,13 @@ public class CharKnownList extends ObjectKnownList
 			{
 				if (Util.checkIfInRange((int) radius, getActiveChar(), obj, true))
 				{
+					if (result == null) result = new ArrayList<>();
 					result.add((L2Character) obj);
 				}
 			}
 		}
 		
-		return result;
+		return result != null ? result : Collections.<L2Character>emptyList();
 	}
 	
 	public final Map<Integer, L2PcInstance> getKnownPlayers()
@@ -274,16 +277,17 @@ public class CharKnownList extends ObjectKnownList
 	
 	public final Collection<L2PcInstance> getKnownPlayersInRadius(long radius)
 	{
-		List<L2PcInstance> result = new ArrayList<>();
+		List<L2PcInstance> result = null;
 		
 		final Collection<L2PcInstance> plrs = getKnownPlayers().values();
 		for (L2PcInstance player : plrs)
 		{
 			if (Util.checkIfInRange((int) radius, getActiveChar(), player, true))
 			{
+				if (result == null) result = new ArrayList<>();
 				result.add(player);
 			}
 		}
-		return result;
+		return result != null ? result : Collections.<L2PcInstance>emptyList();
 	}
 }
