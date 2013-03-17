@@ -156,7 +156,8 @@ public final class SpawnTable
 	 */
 	public Set<L2Spawn> getSpawns(int npcId)
 	{
-		return _spawnTable.containsKey(npcId) ? _spawnTable.get(npcId) : Collections.<L2Spawn> emptySet();
+		final FastSet<L2Spawn> t;
+		return (t = _spawnTable.get(npcId)) != null ? t : Collections.<L2Spawn> emptySet();
 	}
 	
 	/**
@@ -277,11 +278,16 @@ public final class SpawnTable
 	 */
 	private void addSpawn(L2Spawn spawn)
 	{
-		if (!_spawnTable.containsKey(spawn.getNpcid()))
-		{
-			_spawnTable.put(spawn.getNpcid(), new FastSet<L2Spawn>().shared());
-		}
-		_spawnTable.get(spawn.getNpcid()).add(spawn);
+		FastSet<L2Spawn> test;
+//TODO:	synchronized (_spawnTable)
+//TODO:	{
+			if ((test = _spawnTable.get(spawn.getNpcid())) == null)
+			{
+				test = new FastSet<L2Spawn>().shared();
+				_spawnTable.put(spawn.getNpcid(), test);
+			}
+//TODO:	}
+		test.add(spawn);
 	}
 	
 	/**
