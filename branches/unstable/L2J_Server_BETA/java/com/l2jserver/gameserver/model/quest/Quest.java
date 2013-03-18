@@ -47,6 +47,7 @@ import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
+import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2DropData;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Party;
@@ -2712,6 +2713,11 @@ public class Quest extends ManagedScript
 		return addSpawn(npcId, loc.getX(), loc.getY(), loc.getZ(), loc.getHeading(), randomOffSet, despawnDelay, false, 0);
 	}
 	
+	public L2Npc addSpawn(int npcId, L2CharPosition pos, boolean randomOffSet, long despawnDelay)	//+[JOJO]
+	{
+		return addSpawn(npcId, pos.x, pos.y, pos.z, pos.heading, randomOffSet, despawnDelay, false, 0);
+	}
+	
 	/**
 	 * @param npcId
 	 * @param x
@@ -2741,6 +2747,11 @@ public class Quest extends ManagedScript
 		return addSpawn(npcId, loc.getX(), loc.getY(), loc.getZ(), loc.getHeading(), randomOffset, despawnDelay, isSummonSpawn, 0);
 	}
 	
+	public L2Npc addSpawn(int npcId, L2CharPosition pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn)	//+[JOJO]
+	{
+		return addSpawn(npcId, pos.x, pos.y, pos.z, pos.heading, randomOffset, despawnDelay, isSummonSpawn, 0);
+	}
+	
 	/**
 	 * @param npcId
 	 * @param loc
@@ -2753,6 +2764,11 @@ public class Quest extends ManagedScript
 	public L2Npc addSpawn(int npcId, Location loc, boolean randomOffset, long despawnDelay, boolean isSummonSpawn, int instanceId)
 	{
 		return addSpawn(npcId, loc.getX(), loc.getY(), loc.getZ(), loc.getHeading(), randomOffset, despawnDelay, isSummonSpawn, instanceId);
+	}
+	
+	public L2Npc addSpawn(int npcId, L2CharPosition pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn, int instanceId)	//+[JOJO]
+	{
+		return addSpawn(npcId, pos.x, pos.y, pos.z, pos.heading, randomOffset, despawnDelay, isSummonSpawn, instanceId);
 	}
 	
 	/**

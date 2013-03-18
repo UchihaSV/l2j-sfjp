@@ -306,15 +306,18 @@ public class L2Spawn
 		_locZ = locz;
 	}
 	
+	/**
+	 * Set the XYZ position of the spawn point.
+	 */
 	public void setXYZ(int locx, int locy, int locz)	//[JOJO]
 	{
 		_locX = locx;
 		_locY = locy;
 		_locZ = locz;
 	}
-
+	
 	/**
-	 * Set the XYZ position of the spawn point.
+	 * Set the XYZ position and heading of the spawn point.
 	 * @param loc
 	 */
 	public void setLocation(Location loc)
@@ -323,6 +326,17 @@ public class L2Spawn
 		_locY = loc.getY();
 		_locZ = loc.getZ();
 		_heading = loc.getHeading();
+	}
+	
+	/**
+	 * Set the XYZ position and heading of the spawn point.
+	 */
+	public void setLocation(L2CharPosition loc)	//[JOJO]
+	{
+		_locX = loc.x;
+		_locY = loc.y;
+		_locZ = loc.z;
+		_heading = loc.heading;
 	}
 	
 	/**
