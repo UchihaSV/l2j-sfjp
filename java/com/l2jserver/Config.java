@@ -4633,7 +4633,7 @@ public final class Config
 						continue;
 					}
 					
-					if (!ni.isLoopback() && (ni.getHardwareAddress().length != 6))
+					if (!ni.isLoopback() && ((ni.getHardwareAddress() == null) || (ni.getHardwareAddress().length != 6)))
 					{
 						continue;
 					}
