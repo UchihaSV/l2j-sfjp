@@ -1397,7 +1397,6 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 		
 		switch (sk.getSkillType())
 		{
-		
 			case BUFF:
 			{
 				if (caster.getFirstEffect(sk) == null)
@@ -1443,7 +1442,6 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			case HOT:
 			case HEAL_PERCENT:
 			case HEAL_STATIC:
-			case BALANCE_LIFE:
 			{
 				double percentage = (caster.getCurrentHp() / caster.getMaxHp()) * 100;
 				if (caster.isMinion() && (sk.getTargetType() != L2TargetType.TARGET_SELF))
