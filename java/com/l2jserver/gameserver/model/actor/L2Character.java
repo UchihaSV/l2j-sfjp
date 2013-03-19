@@ -2711,7 +2711,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	}
 	
 	/**
-	 * @return {@code true} if the player has a pet, {@code false} otherwise
+	 * @return {@code true} if the character has a summon, {@code false} otherwise
 	 */
 	public boolean hasSummon()
 	{
@@ -6252,7 +6252,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				}
 				
 				// TODO: Unhardcode it!
-				if ((oldSkill instanceof L2SkillSummon) && (oldSkill.getId() == 710) && getActingPlayer().hasSummon() && (getActingPlayer().getSummon().getNpcId() == 14870))
+				if ((oldSkill instanceof L2SkillSummon) && (oldSkill.getId() == 710) && hasSummon() && (getSummon().getNpcId() == 14870))
 				{
 					getActingPlayer().getSummon().unSummon(getActingPlayer());
 				}
