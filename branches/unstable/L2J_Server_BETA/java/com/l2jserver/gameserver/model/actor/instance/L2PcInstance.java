@@ -6580,14 +6580,6 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	/**
-	 * @return {@code true} if the player has a pet, {@code false} otherwise
-	 */
-	public boolean hasSummon()
-	{
-		return _summon != null;
-	}
-	
-	/**
 	 * @return the L2Decoy of the L2PcInstance or null.
 	 */
 	public L2Decoy getDecoy()
