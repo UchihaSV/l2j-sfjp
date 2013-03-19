@@ -2942,7 +2942,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		}
 		else
 		{
-			_title = value.length() > 16 ? value.substring(0, 15) : value;
+			_title = value.length() > 21 ? value.substring(0, 20) : value;
 		}
 	}
 	
