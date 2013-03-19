@@ -2710,6 +2710,14 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		return null;
 	}
 	
+	/**
+	 * @return {@code true} if the player has a pet, {@code false} otherwise
+	 */
+	public boolean hasSummon()
+	{
+		return getSummon() != null;
+	}
+	
 	public final boolean isRooted()
 	{
 		return isAffected(EffectFlag.ROOTED);
