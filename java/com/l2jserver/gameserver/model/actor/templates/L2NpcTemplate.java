@@ -587,7 +587,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					case HOT:
 					case HEAL_PERCENT:
 					case HEAL_STATIC:
-					case BALANCE_LIFE:
 						addHealSkill(skill);
 						break;
 					case RESURRECT:
