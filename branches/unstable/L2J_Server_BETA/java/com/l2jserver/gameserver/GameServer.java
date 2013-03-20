@@ -316,6 +316,10 @@ public class GameServer
 		AirShipManager.getInstance();
 		GraciaSeedsManager.getInstance();
 		
+		CastleManager.getInstance().activateInstances();
+		FortManager.getInstance().activateInstances();
+		MerchantPriceConfigTable.getInstance().updateReferences();
+		
 		if (Config.SCRIPT_ENCODING != null)	//[JOJO]
 		{
 			Charset scriptEncoding = Charset.forName(Config.SCRIPT_ENCODING);
@@ -384,9 +388,6 @@ public class GameServer
 		TaskManager.getInstance();
 		
 		AntiFeedManager.getInstance().registerEvent(AntiFeedManager.GAME_ID);
-		MerchantPriceConfigTable.getInstance().updateReferences();
-		CastleManager.getInstance().activateInstances();
-		FortManager.getInstance().activateInstances();
 		
 		if (Config.ALLOW_MAIL)
 		{
