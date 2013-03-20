@@ -1235,7 +1235,7 @@ public class CharEffectList
 					
 					if (ps != null)
 					{
-						if (isSummon || (!e.getSkill().isToggle() && !(e.getSkill().isStatic() && (e.getEffectType() != L2EffectType.BUFF))))
+						if (isSummon || (!e.getSkill().isToggle() && !(e.getSkill().isStatic() && ((e.getEffectType() == L2EffectType.HEAL_OVER_TIME) || (e.getEffectType() == L2EffectType.CPHEAL_OVER_TIME) || (e.getEffectType() == L2EffectType.MANA_HEAL_OVER_TIME)))))
 						{
 							e.addPartySpelledIcon(ps);
 						}
@@ -1243,7 +1243,7 @@ public class CharEffectList
 					
 					if (psSummon != null)
 					{
-						if (!e.getSkill().isToggle() && !(e.getSkill().isStatic() && (e.getEffectType() != L2EffectType.BUFF)))
+						if (!e.getSkill().isToggle() && !(e.getSkill().isStatic() && ((e.getEffectType() == L2EffectType.HEAL_OVER_TIME) || (e.getEffectType() == L2EffectType.CPHEAL_OVER_TIME) || (e.getEffectType() == L2EffectType.MANA_HEAL_OVER_TIME))))
 						{
 							e.addPartySpelledIcon(psSummon);
 						}
