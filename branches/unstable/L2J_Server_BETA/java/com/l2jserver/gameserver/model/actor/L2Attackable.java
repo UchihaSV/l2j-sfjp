@@ -1131,10 +1131,8 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 				return;
 			}
 			
-			for (L2Character aggroed : getAggroList().keySet())
+			for (AggroInfo ai : getAggroList().values())
 			{
-				AggroInfo ai = getAggroList().get(aggroed);
-				
 				if (ai == null)
 				{
 					return;
@@ -1143,7 +1141,6 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 			}
 			
 			amount = getHating(mostHated);
-			
 			if (amount <= 0)
 			{
 				((L2AttackableAI) getAI()).setGlobalAggro(-25);
@@ -1153,14 +1150,14 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 			}
 			return;
 		}
-		AggroInfo ai = getAggroList().get(target);
 		
+		AggroInfo ai = getAggroList().get(target);
 		if (ai == null)
 		{
 			return;
 		}
-		ai.addHate(-amount);
 		
+		ai.addHate(-amount);
 		if (ai.getHate() <= 0)
 		{
 			if (getMostHated() == null)
