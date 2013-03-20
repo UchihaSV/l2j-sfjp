@@ -2576,7 +2576,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public boolean isAttackingDisabled()
 	{
-		return isFlying() || isStunned() || isSleeping() || isAttackingNow() || isAlikeDead() || isParalyzed() || isPhysicalAttackMuted() || isCoreAIDisabled() /*[L2J_JP]*/|| isFallsdown()/**/;
+		return isFlying() || isStunned() || isSleeping() || (_attackEndTime > GameTimeController.getGameTicks()) || isAlikeDead() || isParalyzed() || isPhysicalAttackMuted() || isCoreAIDisabled() /*[L2J_JP]*/|| isFallsdown()/**/;
 	}
 	
 	public final Calculator[] getCalculators()
