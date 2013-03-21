@@ -1078,9 +1078,10 @@ public final class Config
 	public static int ZAKEN_SPAWN_INTERVAL;
 	public static int ZAKEN_SPAWN_RANDOM;
 	
-	// Beleth
 	public static final int Interval_Of_Frintezza_Spawn = 48 * 3600000;
 	public static final int Random_Of_Frintezza_Spawn = 8 * 3600000;
+	
+	// Beleth
 	public static int BELETH_MIN_PLAYERS;
 	public static int BELETH_SPAWN_INTERVAL;
 	public static int BELETH_SPAWN_RANDOM;
@@ -2973,14 +2974,14 @@ public final class Config
 				_log.log(Level.SEVERE, "Error while loading " + BOSS_FILE + " settings!", e);
 			}
 			
-			//sailren
+			// sailren -- 注意：単位は分
 			FWS_ENABLESINGLEPLAYER = Boolean.parseBoolean(bossSettings.getProperty("EnableSinglePlayer", "False"));
 			FWS_FIXINTERVALOFSAILRENSPAWN = parseIntMinMax(bossSettings.getProperty("FixIntervalOfSailrenSpawn", "1440"), 5, 2880) * 60000;
 			FWS_RANDOMINTERVALOFSAILRENSPAWN = parseIntMinMax(bossSettings.getProperty("RandomIntervalOfSailrenSpawn", "1440"), 5, 2880) * 60000;
 			FWS_INTERVALOFNEXTMONSTER = parseIntMinMax(bossSettings.getProperty("IntervalOfNextMonster", "1"), 1, 10) * 60000;
 			FWS_ACTIVITYTIMEOFMOBS = parseIntMinMax(bossSettings.getProperty("ActivityTimeOfMobs", "120"), 1, 120) * 60000;
 			
-			// High Priestess van Halter -- 注意：単位は秒（他のボスは分単位）
+			// High Priestess van Halter -- 注意：単位は秒
 			HPH_FIXINTERVALOFHALTER = parseIntMinMax(bossSettings.getProperty("FixIntervalOfHalter", "172800"), 1200/*300*/, 864000) * 1000;
 			HPH_RANDOMINTERVALOFHALTER = parseIntMinMax(bossSettings.getProperty("RandomIntervalOfHalter", "86400"), 300, 864000) * 1000;
 			HPH_APPTIMEOFHALTER = parseIntMinMax(bossSettings.getProperty("AppTimeOfHalter", "20"), 5, 60) * 1000;
