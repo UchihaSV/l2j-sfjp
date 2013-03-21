@@ -18665,6 +18665,12 @@ public final class SystemMessageId
 	public static final SystemMessageId YOU_CANNOT_BOARD_NOT_MEET_REQUEIREMENTS;
 	
 	/**
+	 * ID: 2728<br>
+	 * Message: This action is prohibited while mounted or on an airship.
+	 */
+	public static final SystemMessageId ACTION_PROHIBITED_WHILE_MOUNTED_OR_ON_AN_AIRSHIP;
+	
+	/**
 	 * ID: 2729<br>
 	 * Message: ïœêgíÜÇ…ÇÕëŒè€ÇëÄècÇ≈Ç´Ç‹ÇπÇÒÅB<br>
 	 * Message: &#22312;&#35722;&#36523;&#29376;&#24907;&#19979;&#28961;&#27861;&#25805;&#25511;&#30446;&#27161;&#12290;<br>
@@ -22288,6 +22294,7 @@ public final class SystemMessageId
 		BOARD_OR_CANCEL_NOT_POSSIBLE_HERE = new SystemMessageId(2721);
 		ANOTHER_AIRSHIP_ALREADY_SUMMONED = new SystemMessageId(2722);
 		YOU_CANNOT_BOARD_NOT_MEET_REQUEIREMENTS = new SystemMessageId(2727);
+		ACTION_PROHIBITED_WHILE_MOUNTED_OR_ON_AN_AIRSHIP = new SystemMessageId(2728);
 		YOU_CANNOT_CONTROL_THE_HELM_WHILE_TRANSFORMED = new SystemMessageId(2729);
 		YOU_CANNOT_CONTROL_THE_HELM_WHILE_YOU_ARE_PETRIFIED = new SystemMessageId(2730);
 		YOU_CANNOT_CONTROL_THE_HELM_WHEN_YOU_ARE_DEAD = new SystemMessageId(2731);
