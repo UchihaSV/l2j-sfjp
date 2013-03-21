@@ -221,6 +221,7 @@ public abstract class L2Item
 	private final boolean _questItem;
 	private final boolean _freightable;
 	private final boolean _is_oly_restricted;
+	private final boolean _for_npc;
 	private final boolean _common;
 	private final boolean _heroItem;
 	private final boolean _pvpItem;
@@ -283,6 +284,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		_questItem = set.getBool("is_questitem", false);
 		_freightable = set.getBool("is_freightable", false);
 		_is_oly_restricted = set.getBool("is_oly_restricted", false);
+		_for_npc = set.getBool("for_npc", false);
 		
 		// _immediate_effect - herb
 		_ex_immediate_effect = set.getBool("ex_immediate_effect", false);
@@ -1089,6 +1091,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public boolean isOlyRestrictedItem()
 	{
 		return _is_oly_restricted || Config.LIST_OLY_RESTRICTED_ITEMS.contains(_itemId);
+	}
+	
+	public boolean isForNpc()
+	{
+		return _for_npc;
 	}
 	
 	/**
