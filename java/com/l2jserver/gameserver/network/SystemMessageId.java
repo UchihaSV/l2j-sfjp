@@ -18666,6 +18666,8 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2728<br>
+	 * Message: 乗っている最中にはできないアクションです。<br>
+	 * Message: &#22312;&#25645;&#20056;&#29376;&#24907;&#19979;&#28961;&#27861;&#36914;&#34892;&#27492;&#21205;&#20316;&#12290;<br>
 	 * Message: This action is prohibited while mounted or on an airship.
 	 */
 	public static final SystemMessageId ACTION_PROHIBITED_WHILE_MOUNTED_OR_ON_AN_AIRSHIP;
