@@ -2233,7 +2233,7 @@ public final class SystemMessageId
 	 * Message: &#23416;&#32722;&#25216;&#33021;&#24517;&#35201;&#30340;&#36947;&#20855;&#19981;&#36275;&#12290;<br>
 	 * Message: You do not have the necessary materials or prerequisites to learn this skill.
 	 */
-	public static final SystemMessageId ITEM_MISSING_TO_LEARN_SKILL;
+	public static final SystemMessageId ITEM_OR_PREREQUISITES_MISSING_TO_LEARN_SKILL;
 	
 	/**
 	 * ID: 277<br>
@@ -20250,7 +20250,7 @@ public final class SystemMessageId
 		CLAN_LVL_3_NEEDED_TO_DECLARE_WAR = new SystemMessageId(273);
 		CLAN_LEVEL_INCREASED = new SystemMessageId(274);
 		CLAN_LEVEL_INCREASE_FAILED = new SystemMessageId(275);
-		ITEM_MISSING_TO_LEARN_SKILL = new SystemMessageId(276);
+		ITEM_OR_PREREQUISITES_MISSING_TO_LEARN_SKILL = new SystemMessageId(276);
 		LEARNED_SKILL_S1 = new SystemMessageId(277);
 		NOT_ENOUGH_SP_TO_LEARN_SKILL = new SystemMessageId(278);
 		YOU_NOT_ENOUGH_ADENA = new SystemMessageId(279);
