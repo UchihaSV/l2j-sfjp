@@ -6476,9 +6476,9 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		{
 			escapeRange = skill.getEffectRange();
 		}
-		else if ((skill.getCastRange() < 0) && (skill.getSkillRadius() > 80))
+		else if ((skill.getCastRange() < 0) && (skill.getAffectRange() > 80))
 		{
-			escapeRange = skill.getSkillRadius();
+			escapeRange = skill.getAffectRange();
 		}
 		
 		if ((targets.length > 0) && (escapeRange > 0))
