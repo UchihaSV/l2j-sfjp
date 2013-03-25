@@ -75,7 +75,6 @@ import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.datatables.StaticObjects;
-import com.l2jserver.gameserver.datatables.SummonItemsData;
 import com.l2jserver.gameserver.datatables.SummonSkillsTable;
 import com.l2jserver.gameserver.datatables.TeleportLocationTable;
 import com.l2jserver.gameserver.datatables.UITable;
@@ -227,7 +226,6 @@ public class GameServer
 		ItemTable.getInstance();
 		EnchantItemData.getInstance();
 		EnchantOptionsData.getInstance();
-		SummonItemsData.getInstance();
 		EnchantHPBonusData.getInstance();
 		MerchantPriceConfigTable.getInstance().loadInstances();
 		TradeController.getInstance();

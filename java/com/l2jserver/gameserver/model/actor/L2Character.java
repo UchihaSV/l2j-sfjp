@@ -1951,10 +1951,28 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		
 		// Send a system message USE_S1 to the L2Character
 	//	if (!skill.isPotion() && isPlayer() && magicId != 1312) //[L2J_JP EDIT - TSL]	//[JOJO]r5394îpé~
-		if (isPlayer() && (magicId != 1312))
+		if (isPlayer())
 		{
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.USE_S1);
-			sm.addSkillName(skill);
+			SystemMessage sm = null;
+			switch (magicId)
+			{
+				case 1312: // Fishing
+				{
+					// Done in L2PcInstance.startFishing()
+					break;
+				}
+				case 2046: // Wolf Collar
+				{
+					sm = SystemMessage.getSystemMessage(SystemMessageId.SUMMON_A_PET);
+					break;
+				}
+				default:
+				{
+					sm = SystemMessage.getSystemMessage(SystemMessageId.USE_S1);
+					sm.addSkillName(skill);
+				}
+			}
+			
 			sendPacket(sm);
 		}
 		
