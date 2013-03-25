@@ -288,7 +288,7 @@ public class L2Trap extends L2Character
 						}
 					}
 					
-					for (L2Character target : getKnownList().getKnownCharactersInRadius(_skill.getSkillRadius()))
+					for (L2Character target : getKnownList().getKnownCharactersInRadius(_skill.getAffectRange()))
 					{
 						if (!checkTarget(target))
 						{

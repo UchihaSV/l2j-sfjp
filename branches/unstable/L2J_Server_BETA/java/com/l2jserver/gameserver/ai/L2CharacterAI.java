@@ -1206,7 +1206,7 @@ public class L2CharacterAI extends AbstractAI
 			setIntention(AI_INTENTION_ACTIVE);
 			return true;
 		}
-		if ((_actor != null) && (_skill != null) && _skill.isOffensive() && (_skill.getSkillRadius() > 0) && (Config.GEODATA > 0) && !GeoData.getInstance().canSeeTarget(_actor, target))
+		if ((_actor != null) && (_skill != null) && _skill.isOffensive() && (_skill.getAffectRange() > 0) && (Config.GEODATA > 0) && !GeoData.getInstance().canSeeTarget(_actor, target))
 		{
 			setIntention(AI_INTENTION_ACTIVE);
 			return true;
@@ -1470,7 +1470,7 @@ public class L2CharacterAI extends AbstractAI
 	{
 		if ((sk.getTargetType() == L2TargetType.TARGET_AURA) || (sk.getTargetType() == L2TargetType.TARGET_BEHIND_AURA) || (sk.getTargetType() == L2TargetType.TARGET_FRONT_AURA) || (sk.getTargetType() == L2TargetType.TARGET_AURA_CORPSE_MOB))
 		{
-			for (L2Object target : _actor.getKnownList().getKnownCharactersInRadius(sk.getSkillRadius()))
+			for (L2Object target : _actor.getKnownList().getKnownCharactersInRadius(sk.getAffectRange()))
 			{
 				if (target == getAttackTarget())
 				{
@@ -1488,7 +1488,7 @@ public class L2CharacterAI extends AbstractAI
 			if ((sk.getTargetType() == L2TargetType.TARGET_AURA) || (sk.getTargetType() == L2TargetType.TARGET_BEHIND_AURA) || (sk.getTargetType() == L2TargetType.TARGET_FRONT_AURA) || (sk.getTargetType() == L2TargetType.TARGET_AURA_CORPSE_MOB))
 			{
 				boolean cancast = true;
-				for (L2Character target : _actor.getKnownList().getKnownCharactersInRadius(sk.getSkillRadius()))
+				for (L2Character target : _actor.getKnownList().getKnownCharactersInRadius(sk.getAffectRange()))
 				{
 					if (!GeoData.getInstance().canSeeTarget(_actor, target))
 					{
@@ -1523,7 +1523,7 @@ public class L2CharacterAI extends AbstractAI
 			else if ((sk.getTargetType() == L2TargetType.TARGET_AREA) || (sk.getTargetType() == L2TargetType.TARGET_BEHIND_AREA) || (sk.getTargetType() == L2TargetType.TARGET_FRONT_AREA))
 			{
 				boolean cancast = true;
-				for (L2Character target : getAttackTarget().getKnownList().getKnownCharactersInRadius(sk.getSkillRadius()))
+				for (L2Character target : getAttackTarget().getKnownList().getKnownCharactersInRadius(sk.getAffectRange()))
 				{
 					if (!GeoData.getInstance().canSeeTarget(_actor, target) || (target == null))
 					{
@@ -1555,7 +1555,7 @@ public class L2CharacterAI extends AbstractAI
 			if ((sk.getTargetType() == L2TargetType.TARGET_AURA) || (sk.getTargetType() == L2TargetType.TARGET_BEHIND_AURA) || (sk.getTargetType() == L2TargetType.TARGET_FRONT_AURA) || (sk.getTargetType() == L2TargetType.TARGET_AURA_CORPSE_MOB))
 			{
 				boolean cancast = false;
-				for (L2Character target : _actor.getKnownList().getKnownCharactersInRadius(sk.getSkillRadius()))
+				for (L2Character target : _actor.getKnownList().getKnownCharactersInRadius(sk.getAffectRange()))
 				{
 					if (!GeoData.getInstance().canSeeTarget(_actor, target))
 					{
@@ -1584,7 +1584,7 @@ public class L2CharacterAI extends AbstractAI
 			else if ((sk.getTargetType() == L2TargetType.TARGET_AREA) || (sk.getTargetType() == L2TargetType.TARGET_BEHIND_AREA) || (sk.getTargetType() == L2TargetType.TARGET_FRONT_AREA))
 			{
 				boolean cancast = true;
-				for (L2Character target : getAttackTarget().getKnownList().getKnownCharactersInRadius(sk.getSkillRadius()))
+				for (L2Character target : getAttackTarget().getKnownList().getKnownCharactersInRadius(sk.getAffectRange()))
 				{
 					if (!GeoData.getInstance().canSeeTarget(_actor, target))
 					{
@@ -1625,7 +1625,7 @@ public class L2CharacterAI extends AbstractAI
 		{
 			int count = 0;
 			int ccount = 0;
-			for (L2Character target : _actor.getKnownList().getKnownCharactersInRadius(sk.getSkillRadius()))
+			for (L2Character target : _actor.getKnownList().getKnownCharactersInRadius(sk.getAffectRange()))
 			{
 				if (!(target instanceof L2Attackable) || !GeoData.getInstance().canSeeTarget(_actor, target))
 				{
