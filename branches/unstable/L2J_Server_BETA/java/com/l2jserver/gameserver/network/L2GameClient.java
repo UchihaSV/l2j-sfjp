@@ -266,7 +266,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 	
 	public void sendPacket(L2GameServerPacket gsp)
 	{
-		if (_isDetached)
+		if (_isDetached || (gsp == null))
 		{
 			return;
 		}
