@@ -229,7 +229,8 @@ public class L2VillageMasterInstance extends L2NpcInstance
 			
 			if (!member.isOnline())
 			{
-				player.sendPacket(SystemMessageId.INVITED_USER_NOT_ONLINE);
+				player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_IS_NOT_ONLINE).addPcName(member.getPlayerInstance()));	//+[JOJO]
+			//	player.sendPacket(SystemMessageId.INVITED_USER_NOT_ONLINE);	//-[JOJO]
 				return;
 			}
 			
