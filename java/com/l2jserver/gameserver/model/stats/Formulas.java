@@ -1813,32 +1813,29 @@ public final class Formulas
 		double statMod = calcSkillStatMod(skill, target);
 		double rate = (baseRate / statMod);
 		
-		// Resists
-		double vulnModifier = calcSkillTraitVulnerability(0, target, skill);
-		double profModifier = calcSkillTraitProficiency(0, attacker, target, skill);
-		double res = vulnModifier + profModifier;
-		double resMod = 1;
-		if (res != 0)
-		{
-			if (res < 0)
-			{
-				resMod = 1 - (0.075 * res);
-				resMod = 1 / resMod;
-			}
-			else
-			{
-				resMod = 1 + (0.02 * res);
-			}
-			
-			rate *= resMod;
-		}
+		// Resists.
+		double vuln = calcSkillTraitVulnerability(0, target, skill);
+		double prof = calcSkillTraitProficiency(0, attacker, target, skill);
+		double resMod = 1 + ((vuln + prof) / 100);
 		
-		int elementModifier = calcElementModifier(attacker, target, skill);
-		rate += elementModifier;
+		// Check ResMod Limits.
+		if (resMod > 1.9)
+		{
+			resMod = 1.9;
+		}
+		else if (resMod < 0.1)
+		{
+			resMod = 0.1;
+		}
+		rate *= resMod;
 		
 		// Lvl Bonus Modifier.
 		double lvlBonusMod = calcLvlBonusMod(attacker, target, skill);
 		rate *= lvlBonusMod;
+		
+		// Element Bonus.
+		int elementModifier = calcElementModifier(attacker, target, skill);
+		rate += elementModifier;
 		
 		// Add Matk/Mdef Bonus
 		double mAtkModifier = 0;
@@ -1870,7 +1867,7 @@ public final class Formulas
 			rate = (int) (rate * mAtkModifier);
 		}
 		
-		// Check the rate limits.
+		// Check the Rate Limits.
 		if (rate > skill.getMaxChance())
 		{
 			rate = skill.getMaxChance();
@@ -1883,7 +1880,7 @@ public final class Formulas
 		if (attacker.isDebug() || Config.DEVELOPER)
 		{
 			final StringBuilder stat = new StringBuilder(100);
-			StringUtil.append(stat, skill.getName(), " eff.type:", effectType.toString(), " power:", String.valueOf(baseRate), " stat:", String.format("%1.2f", statMod), " res:", String.format("%1.2f", resMod), "(", String.format("%1.2f", profModifier), "/", String.format("%1.2f", vulnModifier), ") elem:", String.valueOf(elementModifier), " mAtk:", String.format("%1.2f", mAtkModifier), " ss:", String.valueOf(ssModifier), " lvl:", String.format("%1.2f", lvlBonusMod), " total:", String.valueOf(rate));
+			StringUtil.append(stat, skill.getName(), " eff.type:", effectType.toString(), " power:", String.valueOf(baseRate), " stat:", String.format("%1.2f", statMod), " res:", String.format("%1.2f", resMod), "(", String.format("%1.2f", prof), "/", String.format("%1.2f", vuln), ") elem:", String.valueOf(elementModifier), " mAtk:", String.format("%1.2f", mAtkModifier), " ss:", String.valueOf(ssModifier), " lvl:", String.format("%1.2f", lvlBonusMod), " total:", String.valueOf(rate));
 			final String result = stat.toString();
 			if (attacker.isDebug())
 			{
@@ -1931,32 +1928,29 @@ public final class Formulas
 		double statMod = calcSkillStatMod(skill, target);
 		double rate = (baseRate / statMod);
 		
-		// Resists
-		double vulnModifier = calcSkillVulnerability(attacker, target, skill);
-		double profModifier = calcSkillProficiency(skill, attacker, target);
-		double res = vulnModifier + profModifier;
-		double resMod = 1;
-		if (res != 0)
-		{
-			if (res < 0)
-			{
-				resMod = 1 - (0.075 * res);
-				resMod = 1 / resMod;
-			}
-			else
-			{
-				resMod = 1 + (0.02 * res);
-			}
-			
-			rate *= resMod;
-		}
+		// Resists.
+		double vuln = calcSkillVulnerability(attacker, target, skill);
+		double prof = calcSkillProficiency(skill, attacker, target);
+		double resMod = 1 + ((vuln + prof) / 100);
 		
-		int elementModifier = calcElementModifier(attacker, target, skill);
-		rate += elementModifier;
+		// Check ResMod Limits.
+		if (resMod > 1.9)
+		{
+			resMod = 1.9;
+		}
+		else if (resMod < 0.1)
+		{
+			resMod = 0.1;
+		}
+		rate *= resMod;
 		
 		// Lvl Bonus Modifier.
 		double lvlBonusMod = calcLvlBonusMod(attacker, target, skill);
 		rate *= lvlBonusMod;
+		
+		// Element Bonus.
+		int elementModifier = calcElementModifier(attacker, target, skill);
+		rate += elementModifier;
 		
 		// Add Matk/Mdef Bonus
 		double mAtkModifier = 0;
@@ -1988,7 +1982,7 @@ public final class Formulas
 			rate = (int) (rate * mAtkModifier);
 		}
 		
-		// Check the rate limits.
+		// Check the Rate Limits.
 		if (rate > skill.getMaxChance())
 		{
 			rate = skill.getMaxChance();
@@ -2001,7 +1995,7 @@ public final class Formulas
 		if (attacker.isDebug() || Config.DEVELOPER)
 		{
 			final StringBuilder stat = new StringBuilder(100);
-			StringUtil.append(stat, skill.getName(), " type:", skill.getSkillType().toString(), " power:", String.valueOf(baseRate), " stat:", String.format("%1.2f", statMod), " res:", String.format("%1.2f", resMod), "(", String.format("%1.2f", profModifier), "/", String.format("%1.2f", vulnModifier), ") elem:", String.valueOf(elementModifier), " mAtk:", String.format("%1.2f", mAtkModifier), " ss:", String.valueOf(ssModifier), " lvl:", String.format("%1.2f", lvlBonusMod), " total:", String.valueOf(rate));
+			StringUtil.append(stat, skill.getName(), " type:", skill.getSkillType().toString(), " power:", String.valueOf(baseRate), " stat:", String.format("%1.2f", statMod), " res:", String.format("%1.2f", resMod), "(", String.format("%1.2f", prof), "/", String.format("%1.2f", vuln), ") elem:", String.valueOf(elementModifier), " mAtk:", String.format("%1.2f", mAtkModifier), " ss:", String.valueOf(ssModifier), " lvl:", String.format("%1.2f", lvlBonusMod), " total:", String.valueOf(rate));
 			final String result = stat.toString();
 			if (attacker.isDebug())
 			{
@@ -2046,32 +2040,29 @@ public final class Formulas
 		double statMod = calcSkillStatMod(skill, target);
 		double rate = (baseRate / statMod);
 		
-		// Resists
-		double vulnModifier = calcSkillVulnerability(attacker.getOwner(), target, skill);
-		double profModifier = calcSkillProficiency(skill, attacker.getOwner(), target);
-		double res = vulnModifier + profModifier;
-		double resMod = 1;
-		if (res != 0)
-		{
-			if (res < 0)
-			{
-				resMod = 1 - (0.075 * res);
-				resMod = 1 / resMod;
-			}
-			else
-			{
-				resMod = 1 + (0.02 * res);
-			}
-			
-			rate *= resMod;
-		}
+		// Resists.
+		double vuln = calcSkillVulnerability(attacker.getOwner(), target, skill);
+		double prof = calcSkillProficiency(skill, attacker.getOwner(), target);
+		double resMod = 1 + ((vuln + prof) / 100);
 		
-		int elementModifier = calcElementModifier(attacker.getOwner(), target, skill);
-		rate += elementModifier;
+		// Check ResMod Limits.
+		if (resMod > 1.9)
+		{
+			resMod = 1.9;
+		}
+		else if (resMod < 0.1)
+		{
+			resMod = 0.1;
+		}
+		rate *= resMod;
 		
 		// Lvl Bonus Modifier.
 		double lvlBonusMod = calcLvlBonusMod(attacker.getOwner(), target, skill);
 		rate *= lvlBonusMod;
+		
+		// Element Bonus.
+		int elementModifier = calcElementModifier(attacker.getOwner(), target, skill);
+		rate += elementModifier;
 		
 		// Add Matk/Mdef Bonus
 		double mAtkModifier = 0;
@@ -2088,7 +2079,7 @@ public final class Formulas
 			rate += (int) (mAtkModifier * 100) - 100;
 		}
 		
-		// Check the rate limits.
+		// Check the Rate Limits.
 		if (rate > skill.getMaxChance())
 		{
 			rate = skill.getMaxChance();
@@ -2101,7 +2092,7 @@ public final class Formulas
 		if (attacker.getOwner().isDebug() || Config.DEVELOPER)
 		{
 			final StringBuilder stat = new StringBuilder(100);
-			StringUtil.append(stat, skill.getName(), " type:", skill.getSkillType().toString(), " power:", String.valueOf(baseRate), " stat:", String.format("%1.2f", statMod), " res:", String.format("%1.2f", resMod), "(", String.format("%1.2f", profModifier), "/", String.format("%1.2f", vulnModifier), ") elem:", String.valueOf(elementModifier), " mAtk:", String.format("%1.2f", mAtkModifier), " lvl:", String.format("%1.2f", lvlBonusMod), " total:", String.valueOf(rate));
+			StringUtil.append(stat, skill.getName(), " type:", skill.getSkillType().toString(), " power:", String.valueOf(baseRate), " stat:", String.format("%1.2f", statMod), " res:", String.format("%1.2f", resMod), "(", String.format("%1.2f", prof), "/", String.format("%1.2f", vuln), ") elem:", String.valueOf(elementModifier), " mAtk:", String.format("%1.2f", mAtkModifier), " lvl:", String.format("%1.2f", lvlBonusMod), " total:", String.valueOf(rate));
 			final String result = stat.toString();
 			if (attacker.getOwner().isDebug())
 			{
@@ -2563,15 +2554,15 @@ public final class Formulas
 	{
 		int cancelMagicLvl = skill.getMagicLevel();
 		int count = skill.getMaxNegatedEffects();
-		final double vulnMod = target.calcStat(Stats.CANCEL_VULN, 0, target, null);
-		final double profMod = activeChar.calcStat(Stats.CANCEL_PROF, 0, target, null);
-		double resMod = 1 + (((vulnMod + profMod) * -1) / 100);
+		final double vuln = target.calcStat(Stats.CANCEL_VULN, 0, target, null);
+		final double prof = activeChar.calcStat(Stats.CANCEL_PROF, 0, target, null);
+		double resMod = 1 + (((vuln + prof) * -1) / 100);
 		double rate = power / resMod;
 		
 		if (activeChar.isDebug() || Config.DEVELOPER)
 		{
 			final StringBuilder stat = new StringBuilder(100);
-			StringUtil.append(stat, skill.getName(), " Base Rate:", String.valueOf((int) power), " Magiclvl:", String.valueOf(cancelMagicLvl), " resMod:", String.format("%1.2f", resMod), "(", String.format("%1.2f", profMod), "/", String.format("%1.2f", vulnMod), ") Rate:", String.valueOf(rate));
+			StringUtil.append(stat, skill.getName(), " Base Rate:", String.valueOf((int) power), " Magiclvl:", String.valueOf(cancelMagicLvl), " resMod:", String.format("%1.2f", resMod), "(", String.format("%1.2f", prof), "/", String.format("%1.2f", vuln), ") Rate:", String.valueOf(rate));
 			final String result = stat.toString();
 			if (activeChar.isDebug())
 			{
@@ -2677,6 +2668,7 @@ public final class Formulas
 	{
 		rate *= (eff.getSkill().getMagicLevel() > 0) ? (cancelMagicLvl / eff.getSkill().getMagicLevel()) : 1;
 		
+		// Check the Rate Limits.
 		if (rate > skill.getMaxChance())
 		{
 			rate = skill.getMaxChance();
@@ -2685,7 +2677,6 @@ public final class Formulas
 		{
 			rate = skill.getMinChance();
 		}
-		
 		return Rnd.get(100) < rate;
 	}
 }
