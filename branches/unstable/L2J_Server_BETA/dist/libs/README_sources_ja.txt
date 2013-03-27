@@ -1,30 +1,29 @@
-ソースコード入手先
-	※ eclipse からF3キーでソースコードを参照できるように圧縮形式を変換しています.
+サードパーティー製ライブラリのソースコード入手先
 
 c3p0
 	http://downloads.sourceforge.net/project/c3p0/c3p0-src/
-	※ c3p0-0.9.2-pre*.src.zip からソースコードのみ抜き出して再圧縮
+	  c3p0-0.9.2.src.zip
 
 javolution
 	http://download.java.net/maven/2/javolution/javolution/
-	※ l2jserver.com 本家のリポジトリに入っていたものは "javolution-5.5.1-src.zip" なのですが、
-	ソースコードジェネレータで生成される前のテプレートらしきものが表示されてしまいます.
-	どこから持って来たファイルなのか不明なので上記URLからダウンロードしたものに差し替えました.
+	  javolution-5.5.1-sources.jar - 上記からダウンロードしたもの
+	https://svn.l2jserver.com/branches/unstable/L2J_Server_BETA/dist/libs/
+	  javolution-5.5.1-src.zip - L2Jのリポジトリで配布されているもの
 
 jna
-	http://java.net/projects/jna/sources/svn/content/trunk/jnalib/dist/
-	※ src.zip を jna_src.zip にリネーム
+	https://raw.github.com/twall/jna/master/dist/src.zip
+	  src.zip を jna-3.5.1_source.zip にリネーム
 
 jython
 	http://sourceforge.net/projects/jython/files/jython/2.2/
-	※ jython_installer-2.2.jar からソースコードのみ抜き出して再圧縮
+	  jython_installer-2.2.jar からソースコードのみ抜き出して jython_source-2.2.zip として再圧縮
 
 mchange-commons-java
 	http://repo1.maven.org/maven2/com/mchange/mchange-commons-java/
+	  mchange-commons-java-0.2.3.3-sources.jar
 
 trove
 	http://downloads.sourceforge.net/project/trove4j/trove/
-	※ trove-3.0.*.tar.gz から trove-3.0.*-src.jar のみ解凍
-
+	  trove-3.0.3.tar.gz から trove-3.0.3-src.jar のみ解凍
 
 [JOJO]
