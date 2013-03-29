@@ -550,7 +550,6 @@ public final class Config
 	public static int BOAT_BROADCAST_RADIUS;
 	public static boolean ALLOW_CURSED_WEAPONS;
 	public static boolean ALLOW_MANOR;
-	public static boolean ALLOW_NPC_WALKERS;
 	public static boolean ALLOW_PET_WALKERS;
 	public static boolean SERVER_NEWS;
 	public static int COMMUNITY_TYPE;
@@ -2112,7 +2111,6 @@ public final class Config
 			ALLOW_BOAT = Boolean.parseBoolean(General.getProperty("AllowBoat", "True"));
 			BOAT_BROADCAST_RADIUS = Integer.parseInt(General.getProperty("BoatBroadcastRadius", "20000"));
 			ALLOW_CURSED_WEAPONS = Boolean.parseBoolean(General.getProperty("AllowCursedWeapons", "True"));
-			ALLOW_NPC_WALKERS = Boolean.parseBoolean(General.getProperty("AllowNpcWalkers", "true"));
 			ALLOW_PET_WALKERS = Boolean.parseBoolean(General.getProperty("AllowPetWalkers", "True"));
 			SERVER_NEWS = Boolean.parseBoolean(General.getProperty("ShowServerNews", "False"));
 			COMMUNITY_TYPE = Integer.parseInt(General.getProperty("CommunityType", "1"));
@@ -3511,9 +3509,6 @@ public final class Config
 				break;
 			case "allowmanor":
 				ALLOW_MANOR = Boolean.parseBoolean(pValue);
-				break;
-			case "allownpcwalkers":
-				ALLOW_NPC_WALKERS = Boolean.parseBoolean(pValue);
 				break;
 			case "allowpetwalkers":
 				ALLOW_PET_WALKERS = Boolean.parseBoolean(pValue);
