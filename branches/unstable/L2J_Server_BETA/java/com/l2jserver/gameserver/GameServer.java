@@ -67,7 +67,6 @@ import com.l2jserver.gameserver.datatables.MerchantPriceConfigTable;
 import com.l2jserver.gameserver.datatables.MultiSell;
 import com.l2jserver.gameserver.datatables.NpcBufferTable;
 import com.l2jserver.gameserver.datatables.NpcTable;
-import com.l2jserver.gameserver.datatables.NpcWalkerRoutesData;
 import com.l2jserver.gameserver.datatables.OfflineTradersTable;
 import com.l2jserver.gameserver.datatables.PetDataTable;
 import com.l2jserver.gameserver.datatables.RecipeData;
@@ -265,7 +264,6 @@ public class GameServer
 		printSection("NPCs");
 		HerbDropTable.getInstance();
 		NpcTable.getInstance();
-		NpcWalkerRoutesData.getInstance();
 		WalkingManager.getInstance();
 		StaticObjects.getInstance();
 		ZoneManager.getInstance();
