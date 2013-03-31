@@ -1201,7 +1201,7 @@ public final class Config
 	public static final boolean TEST_GET_AI = false;
 	public static final boolean DEBUG_object_already_exist_in_OID_map = true;		//[JOJO]L2World#storeObjectのデバッグモードON/OFF
 	public static final boolean INITIALIZE_EMPTY_COLLECTION = true;		//[JOJO]遅延初期化する
-	public static final boolean CUSTOM_WALKERROUTES_LOAD = true;		//[JOJO]data/WalkerRoutes_*.xml を読み込む.
+	public static final boolean CUSTOM_ROUTES_LOAD = true;				//[JOJO]data/Routes*.xml を読み込む.
 	public static final boolean FIX_OnKillNotifyTask_THREAD = true;		//[JOJO]槍・範囲魔法攻撃対策.モンスターを倒したときに発生するOnKillNotifyTaskのスレッド数を減らす.
 	public static final boolean FIX_onSpawn_for_SpawnTable = true;		//[JOJO]spawnlist.sqlをロードしたあとにAIスクリプトがロードされるため、onSpawnによるNPCの初期化がなされていない不具合の修正.
 	public static final int NPC_SPAWN_Z_MARGIN = 0;						//[JOJO]l2jserver.com rev.5425 '20' --> '0'

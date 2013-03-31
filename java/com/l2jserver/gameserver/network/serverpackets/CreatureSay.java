@@ -17,6 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.l2jserver.gameserver.network.serverpackets;
+import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
 
@@ -37,6 +38,17 @@ public final class CreatureSay extends L2GameServerPacket
 		_objectId = objectId;
 		_textType = messageType;
 		_charName = charName;
+		_text = text;
+	}
+	
+	/**
+	 * カスタムNPC用
+	 */
+	public CreatureSay(L2Npc npc, int messageType, String text)
+	{
+		_objectId = npc.getObjectId();
+		_textType = messageType;
+		_charName = npc.getName();
 		_text = text;
 	}
 	

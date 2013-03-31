@@ -61,6 +61,15 @@ public final class NpcSay extends L2GameServerPacket
 		_text = text;
 	}
 	
+	public NpcSay(int objectId, int messageType, int npcId, NpcStringId npcString)
+	{
+		_objectId = objectId;
+		_textType = messageType;
+		_npcId = 1000000 + npcId;
+		_npcString = npcString.getId();
+	}
+	
+	//[JOJO]-------------------------------------------------
 	public NpcSay(int objectId, int messageType, int npcId, int npcString)
 	{
 		_objectId = objectId;
@@ -68,6 +77,7 @@ public final class NpcSay extends L2GameServerPacket
 		_npcId = 1000000 + npcId;
 		_npcString = npcString;	//client side npcstring-*.dat
 	}
+	//-------------------------------------------------------
 	
 	public NpcSay(L2Npc npc, int messageType, NpcStringId npcString)
 	{
@@ -76,13 +86,6 @@ public final class NpcSay extends L2GameServerPacket
 		_npcId = 1000000 + npc.getNpcId();
 		_npcString = npcString.getId();
 	}
-	
-	//[JOJO]-------------------------------------------------
-	public NpcSay(int objectId, int messageType, int npcId, NpcStringId npcString)
-	{
-		this(objectId, messageType, npcId, npcString.getId());
-	}
-	//-------------------------------------------------------
 	
 	/**
 	 * @param text the text to add as a parameter for this packet's message (replaces S1, S2 etc.)

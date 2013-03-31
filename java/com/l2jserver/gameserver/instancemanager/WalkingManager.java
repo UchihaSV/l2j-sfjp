@@ -18,29 +18,37 @@
  */
 package com.l2jserver.gameserver.instancemanager;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
+import java.util.logging.Level;
+import java.util.regex.Pattern;
 
 import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
+import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlIntention;
+import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.engines.DocumentParser;
 import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2NpcWalkerNode;
 import com.l2jserver.gameserver.model.L2WalkRoute;
 import com.l2jserver.gameserver.model.Location;
+import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.network.NpcStringId;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
+import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.util.Broadcast;
 import com.l2jserver.util.Rnd;
@@ -221,7 +229,19 @@ public class WalkingManager extends DocumentParser
 	@Override
 	public final void load()
 	{
+if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
+		final Pattern pattern = Pattern.compile("Routes.*\\.xml");	// Routes*.xml
+		File[] walkerRoutesFiles = new File(Config.DATAPACK_ROOT, "data").listFiles(new FileFilter(){
+			@Override public boolean accept(File file) { return file.isFile() && pattern.matcher(file.getName()).matches(); }
+		});
+		for (File file : walkerRoutesFiles)
+		{
+			_log.info(getClass().getSimpleName() + ": Loading " + file.getName());
+			parseFile(file);
+		}
+}} else {{
 		parseDatapackFile("data/Routes.xml");
+}}
 		_log.info(getClass().getSimpleName() + ": Loaded " + _routes.size() + " walking routes.");
 	}
 	
@@ -320,6 +340,8 @@ public class WalkingManager extends DocumentParser
 							NpcRoutesHolder holder = _routesToAttach.get(npcId); if (holder == null) holder = new NpcRoutesHolder();
 							holder.addRoute(routeName, new Location(x, y, z));
 							_routesToAttach.put(npcId, holder);
+							if (NpcTable.getInstance().getTemplate(npcId).getAIDataStatic().getCanMove() == 0)
+								_log.log(Level.WARNING, "WARNING: __BASENAME__:__LINE__: " + npcId + NpcTable.getInstance().getTemplate(npcId).getName() + " canMove is 0");	//+[JOJO]
 						}
 						catch (Exception e)
 						{
@@ -382,7 +404,8 @@ public class WalkingManager extends DocumentParser
 	 */
 	public String getRouteName(L2Npc npc)
 	{
-		return _activeRoutes.containsKey(npc.getObjectId()) ? _activeRoutes.get(npc.getObjectId()).getRoute().getName() : "";
+		final WalkInfo walk;
+		return (walk = _activeRoutes.get(npc.getObjectId())) != null ? walk.getRoute().getName() : "";
 	}
 	
 	//[JOJO]-------------------------------------------------
@@ -484,6 +507,27 @@ public class WalkingManager extends DocumentParser
 					walk._blocked = false;
 					walk._stoppedByAttack = false;
 				}
+				//[JOJO]-------------------------------------------------
+				else if (npc.isInCombat() && npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_MOVE_TO) // Deadlock
+				{
+					L2Character target;
+					if (npc.isAllSkillsDisabled() || npc.isCastingNow() || npc.isAfraid())
+					{
+					}
+					else if ((target = npc.getAI().getAttackTarget()) != null)
+					{
+						npc.getAI().setIntention(CtrlIntention.AI_INTENTION_ATTACK, target);
+						if (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_MOVE_TO) // If can't ATTACK
+						{
+							npc.getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
+						}
+					}
+					else
+					{
+						npc.getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
+					}
+				}
+				//-------------------------------------------------------
 				else
 				{
 					npc.sendDebugMessage("Trying continue to move at route " + routeName + ", but cannot now (wrong AI state)");
@@ -607,7 +651,9 @@ public class WalkingManager extends DocumentParser
 						final String text = node.getChatText();
 						if ((text != null) && !text.isEmpty())
 						{
-							Broadcast.toKnownPlayers(npc, new NpcSay(npc, Say2.NPC_ALL, text));
+							Broadcast.toKnownPlayers(npc, npc.getTemplate().isServerSideName()
+								? new CreatureSay(npc, Say2.NPC_ALL, text)
+								: new NpcSay(npc, Say2.NPC_ALL, text));
 						}
 					}
 					
