@@ -42,7 +42,6 @@ import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2NpcWalkerNode;
 import com.l2jserver.gameserver.model.L2WalkRoute;
 import com.l2jserver.gameserver.model.Location;
-import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
@@ -488,6 +487,9 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 			else
 			// walk was stopped due to some reason (arrived to node, script action, fight or something else), resume it
 			{
+if (com.l2jserver.Config.FIX_WALKER_COMBAT) {{
+				if (npc.isInCombat()) return;	//[JOJO] --> L2AttackableAI#onEvtThink()
+}}
 				if ((npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE) || (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE))
 				{
 					WalkInfo walk = _activeRoutes.get(npc.getObjectId());
@@ -507,27 +509,6 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 					walk._blocked = false;
 					walk._stoppedByAttack = false;
 				}
-				//[JOJO]-------------------------------------------------
-				else if (npc.isInCombat() && npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_MOVE_TO) // Deadlock
-				{
-					L2Character target;
-					if (npc.isAllSkillsDisabled() || npc.isCastingNow() || npc.isAfraid())
-					{
-					}
-					else if ((target = npc.getAI().getAttackTarget()) != null)
-					{
-						npc.getAI().setIntention(CtrlIntention.AI_INTENTION_ATTACK, target);
-						if (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_MOVE_TO) // If can't ATTACK
-						{
-							npc.getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
-						}
-					}
-					else
-					{
-						npc.getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
-					}
-				}
-				//-------------------------------------------------------
 				else
 				{
 					npc.sendDebugMessage("Trying continue to move at route " + routeName + ", but cannot now (wrong AI state)");
