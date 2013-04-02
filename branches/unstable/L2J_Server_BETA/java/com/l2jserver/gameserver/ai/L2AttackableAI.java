@@ -1308,6 +1308,31 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 		melee(npc.getPrimarySkillId());
 	}
 	
+	//[JOJO]-------------------------------------------------
+	private void thinkMoveTo()
+	{
+if (com.l2jserver.Config.FIX_WALKER_COMBAT) {{
+		final L2Attackable actor = getActiveChar();
+		if (actor.isInCombat())
+		{
+			if (actor.isAllSkillsDisabled() || actor.isCastingNow() || actor.isAfraid())
+				return;
+			final L2Character target = getAttackTarget();
+			if (target != null)
+			{
+				setIntention(CtrlIntention.AI_INTENTION_ATTACK, target);
+				if (getIntention() == CtrlIntention.AI_INTENTION_MOVE_TO) // If can't ATTACK then ACTIVE
+					setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
+			}
+			else
+			{
+				setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
+			}
+		}
+}}
+	}
+	//-------------------------------------------------------
+	
 	private void melee(int type)
 	{
 		if (type != 0)
@@ -2715,6 +2740,13 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				case AI_INTENTION_CAST:
 					thinkCast();
 					break;
+				//[JOJO]-------------------------------------------------
+				case AI_INTENTION_MOVE_TO:
+if (com.l2jserver.Config.FIX_WALKER_COMBAT) {{
+					thinkMoveTo();
+}}
+					break;
+				//-------------------------------------------------------
 			}
 		}
 		catch (Exception e)
