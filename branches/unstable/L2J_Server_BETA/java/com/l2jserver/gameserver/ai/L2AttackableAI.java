@@ -33,6 +33,7 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.datatables.TerritoryTable;
 import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
+import com.l2jserver.gameserver.instancemanager.WalkingManager;
 import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
@@ -414,6 +415,13 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 			{
 				if (cast(sk))
 				{
+if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
+					final L2Attackable npc = getActiveChar();
+					if (!npc.isMoving() && npc.isWalker() && WalkingManager.getInstance().isOnWalk(npc))
+					{
+						WalkingManager.getInstance().stopMoving(npc, false, true);
+					}
+}}
 					break;
 				}
 			}
@@ -1307,31 +1315,6 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 		
 		melee(npc.getPrimarySkillId());
 	}
-	
-	//[JOJO]-------------------------------------------------
-	private void thinkMoveTo()
-	{
-if (com.l2jserver.Config.FIX_WALKER_COMBAT) {{
-		final L2Attackable actor = getActiveChar();
-		if (actor.isInCombat())
-		{
-			if (actor.isAllSkillsDisabled() || actor.isCastingNow() || actor.isAfraid())
-				return;
-			final L2Character target = getAttackTarget();
-			if (target != null)
-			{
-				setIntention(CtrlIntention.AI_INTENTION_ATTACK, target);
-				if (getIntention() == CtrlIntention.AI_INTENTION_MOVE_TO) // If can't ATTACK then ACTIVE
-					setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
-			}
-			else
-			{
-				setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
-			}
-		}
-}}
-	}
-	//-------------------------------------------------------
 	
 	private void melee(int type)
 	{
@@ -2740,13 +2723,6 @@ if (com.l2jserver.Config.FIX_WALKER_COMBAT) {{
 				case AI_INTENTION_CAST:
 					thinkCast();
 					break;
-				//[JOJO]-------------------------------------------------
-				case AI_INTENTION_MOVE_TO:
-if (com.l2jserver.Config.FIX_WALKER_COMBAT) {{
-					thinkMoveTo();
-}}
-					break;
-				//-------------------------------------------------------
 			}
 		}
 		catch (Exception e)

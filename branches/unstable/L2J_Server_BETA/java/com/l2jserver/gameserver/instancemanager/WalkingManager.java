@@ -487,9 +487,6 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 			else
 			// walk was stopped due to some reason (arrived to node, script action, fight or something else), resume it
 			{
-if (com.l2jserver.Config.FIX_WALKER_COMBAT) {{
-				if (npc.isInCombat()) return;	//[JOJO] --> L2AttackableAI#onEvtThink()
-}}
 				if ((npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE) || (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE))
 				{
 					WalkInfo walk = _activeRoutes.get(npc.getObjectId());
@@ -582,11 +579,19 @@ if (com.l2jserver.Config.FIX_WALKER_COMBAT) {{
 		
 		if (monster != null)
 		{
+if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
+			if (monster.getAI().getIntention() != CtrlIntention.AI_INTENTION_MOVE_TO)
+				return;
+}}
 			monster.stopMove(null);
 			monster.getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
 		}
 		else
 		{
+if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
+			if (npc.getAI().getIntention() != CtrlIntention.AI_INTENTION_MOVE_TO)
+				return;
+}}
 			npc.stopMove(null);
 			npc.getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
 		}
