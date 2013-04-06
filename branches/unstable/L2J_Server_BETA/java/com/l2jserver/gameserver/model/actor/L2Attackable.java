@@ -1886,7 +1886,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 					// Broadcast message if RaidBoss was defeated
 					if (isRaid() && !isRaidMinion())
 					{
-					 if (item.getItemId() == 57)	//[JOJO]
+					 if (item.getId() == 57)	//[JOJO]
 					 {
 						SystemMessage sm;
 						sm = SystemMessage.getSystemMessage(SystemMessageId.C1_DIED_DROPPED_S2_ADENA);
