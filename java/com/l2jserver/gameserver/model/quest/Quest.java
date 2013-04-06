@@ -3607,7 +3607,7 @@ public class Quest extends ManagedScript
 	 */
 	public int getGameTicks()
 	{
-		return GameTimeController.getGameTicks();
+		return GameTimeController.getInstance().getGameTicks();
 	}
 	
 	/**
