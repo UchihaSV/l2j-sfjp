@@ -7769,11 +7769,12 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public int getMaxBuffCount()
 	{
-		return Config.BUFFS_MAX_AMOUNT + Math.max(0, getSkillLevel(L2Skill.SKILL_DIVINE_INSPIRATION));
+		final L2Effect effect = getFirstEffect(L2Skill.SKILL_DIVINE_INSPIRATION);
+		return Config.BUFFS_MAX_AMOUNT + (effect == null ? 0 : (int) effect.calc());
 	}
 	
 	/**
-	 * Send system message about damage. <B><U> Overridden in </U> :</B> <li>L2PcInstance <li>L2ServitorInstance <li>L2PetInstance</li>
+	 * Send system message about damage.
 	 * @param target
 	 * @param damage
 	 * @param mcrit
@@ -7782,6 +7783,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public void sendDamageMessage(L2Character target, int damage, boolean mcrit, boolean pcrit, boolean miss)
 	{
+		
 	}
 	
 	public FusionSkill getFusionSkill()
