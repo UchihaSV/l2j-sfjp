@@ -584,9 +584,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						addBuffSkill(skill);
 						break;
 					case HEAL:
-					case HOT:
 					case HEAL_PERCENT:
-					case HEAL_STATIC:
 						addHealSkill(skill);
 						break;
 					case RESURRECT:

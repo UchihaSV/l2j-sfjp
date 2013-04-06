@@ -256,7 +256,6 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	private L2ExtractableSkill _extractableItems = null;
 	
 	private final int _maxTargets;
-	private final boolean _isStaticHeal;
 	
 	private int _npcId = 0;
 	
@@ -539,7 +538,6 @@ public abstract class L2Skill implements IChanceSkillTrigger
 			_extractableItems = parseExtractableSkill(_id, _level, capsuled_items);
 		}
 		_maxTargets = set.getInteger("maxTargets", -1);
-		_isStaticHeal = set.getBool("isStaticHeal", false);
 		_npcId = set.getInteger("npcId", 0);
 		_faceId = set.getInteger("faceId", -1);
 		_hairColorId = set.getInteger("hairColorId", -1);
@@ -1242,7 +1240,6 @@ public abstract class L2Skill implements IChanceSkillTrigger
 			case CHARGEDAM:
 			case CONFUSE_MOB_ONLY:
 			case DEATHLINK:
-			case DETECT_WEAKNESS:
 			case MANADAM:
 			case MDOT:
 			case MUTE:
@@ -1251,7 +1248,6 @@ public abstract class L2Skill implements IChanceSkillTrigger
 			case SPOIL:
 			case SWEEP:
 			case PARALYZE:
-			case DRAIN_SOUL:
 			case AGGREDUCE:
 			case CANCEL:
 			case AGGREMOVE:
@@ -2164,11 +2160,6 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	public int getMaxTargets()
 	{
 		return _maxTargets;
-	}
-	
-	public boolean isStaticHeal()
-	{
-		return _isStaticHeal;
 	}
 	
 	/**

@@ -1694,7 +1694,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					case BUFF:
 					case HEAL:
 					case COMBATPOINTHEAL:
-					case MANAHEAL:
 						doit = true;
 						break;
 				}

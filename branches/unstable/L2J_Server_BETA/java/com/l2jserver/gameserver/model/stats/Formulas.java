@@ -2401,10 +2401,6 @@ public final class Formulas
 			case BUFF:
 			case HEAL_PERCENT:
 			case MANAHEAL_PERCENT:
-			case HOT:
-			case CPHOT:
-			case MPHOT:
-			case UNDEAD_DEFENSE:
 			case AGGDEBUFF:
 			case CONT:
 				return SKILL_REFLECT_FAILED;
