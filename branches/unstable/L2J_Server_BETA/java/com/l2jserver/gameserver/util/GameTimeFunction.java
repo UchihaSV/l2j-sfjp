@@ -35,7 +35,7 @@ public class GameTimeFunction
 	 */
 	public static long timeLeftMili(int hh, int mm, int ss)
 	{
-		int now = GameTimeController.getGameTicks() * 60 / 100;	//ƒQ[ƒ€“àŠÔ[•b]
+		int now = GameTimeController.getInstance().getGameTicks() * 60 / 100;	//ƒQ[ƒ€“àŠÔ[•b]
 		int dd = (hh * 3600 + mm * 60 + ss) - (now % 86400);
 		if (dd < 0) dd += 86400;
 
