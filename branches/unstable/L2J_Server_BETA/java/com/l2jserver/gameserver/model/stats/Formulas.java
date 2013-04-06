@@ -43,6 +43,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 import com.l2jserver.gameserver.model.effects.EffectTemplate;
 import com.l2jserver.gameserver.model.effects.L2Effect;
+import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.entity.Castle;
 import com.l2jserver.gameserver.model.entity.ClanHall;
 import com.l2jserver.gameserver.model.entity.Fort;
@@ -1816,7 +1817,7 @@ public final class Formulas
 			}
 			return Rnd.get(100) < baseRate;
 		}
-		else if (effectType.equals(L2SkillType.CANCEL))
+		else if (skill.hasEffectType(L2EffectType.CANCEL))
 		{
 			return true;
 		}
@@ -2373,7 +2374,7 @@ public final class Formulas
 	 * Calculate skill reflection according these three possibilities:<br>
 	 * <ul>
 	 * <li>Reflect failed</li>
-	 * <li>Mormal reflect (just effects). <U>Only possible for skilltypes: BUFF, REFLECT, HEAL_PERCENT, MANAHEAL_PERCENT, HOT, CPHOT, MPHOT</U></li>
+	 * <li>Normal reflect (just effects). <U>Only possible for skilltypes: BUFF, REFLECT, HEAL_PERCENT, MANAHEAL_PERCENT, HOT, CPHOT, MPHOT</U></li>
 	 * <li>vengEance reflect (100% damage reflected but damage is also dealt to actor). <U>This is only possible for skills with skilltype PDAM, BLOW, CHARGEDAM, MDAM or DEATHLINK</U></li>
 	 * </ul>
 	 * @param target
