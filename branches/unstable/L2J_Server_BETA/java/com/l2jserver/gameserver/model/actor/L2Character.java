@@ -936,7 +936,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					}
 					
 					// Verify if the bow can be use
-					if (_disableBowAttackEndTime <= GameTimeController.getGameTicks())
+					if (_disableBowAttackEndTime <= GameTimeController.getInstance().getGameTicks())
 					{
 						// Verify if L2PcInstance owns enough MP
 						int mpConsume = weaponItem.getMpConsume();
@@ -962,7 +962,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						}
 						
 						// Set the period of bow no re-use
-						_disableBowAttackEndTime = (5 * GameTimeController.TICKS_PER_SECOND) + GameTimeController.getGameTicks();
+						_disableBowAttackEndTime = (5 * GameTimeController.TICKS_PER_SECOND) + GameTimeController.getInstance().getGameTicks();
 					}
 					else
 					{
@@ -998,7 +998,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					}
 					
 					// Verify if the crossbow can be use
-					if (_disableCrossBowAttackEndTime <= GameTimeController.getGameTicks())
+					if (_disableCrossBowAttackEndTime <= GameTimeController.getInstance().getGameTicks())
 					{
 						// Verify if L2PcInstance owns enough MP
 						int mpConsume = weaponItem.getMpConsume();
@@ -1024,7 +1024,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						}
 						
 						// Set the period of crossbow no re-use
-						_disableCrossBowAttackEndTime = (5 * GameTimeController.TICKS_PER_SECOND) + GameTimeController.getGameTicks();
+						_disableCrossBowAttackEndTime = (5 * GameTimeController.TICKS_PER_SECOND) + GameTimeController.getInstance().getGameTicks();
 					}
 					else
 					{
@@ -1036,7 +1036,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				}
 				else if (isNpc())
 				{
-					if (_disableCrossBowAttackEndTime > GameTimeController.getGameTicks())
+					if (_disableCrossBowAttackEndTime > GameTimeController.getInstance().getGameTicks())
 					{
 						return;
 					}
@@ -1062,7 +1062,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		final int timeAtk = calculateTimeBetweenAttacks(target, weaponItem);
 		// the hit is calculated to happen halfway to the animation - might need further tuning e.g. in bow case
 		final int timeToHit = timeAtk / 2;
-		_attackEndTime = (GameTimeController.getGameTicks() + (timeAtk / GameTimeController.MILLIS_IN_TICK)) - 1;
+		_attackEndTime = (GameTimeController.getInstance().getGameTicks() + (timeAtk / GameTimeController.MILLIS_IN_TICK)) - 1;
 		final int ssGrade = (weaponItem != null) ? weaponItem.getItemGradeSPlus() : 0;
 		// Create a Server->Client packet Attack
 		Attack attack = new Attack(this, target, wasSSCharged, ssGrade);
@@ -1220,7 +1220,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		ThreadPoolManager.getInstance().scheduleAi(new HitTask(target, damage1, crit1, miss1, attack.soulshot, shld1), sAtk);
 		
 		// Calculate and set the disable delay of the bow in function of the Attack Speed
-		_disableBowAttackEndTime = ((sAtk + reuse) / GameTimeController.MILLIS_IN_TICK) + GameTimeController.getGameTicks();
+		_disableBowAttackEndTime = ((sAtk + reuse) / GameTimeController.MILLIS_IN_TICK) + GameTimeController.getInstance().getGameTicks();
 		
 		// Add this hit to the Server-Client packet Attack
 		attack.hit(attack.createHit(target, damage1, miss1, crit1, shld1));
@@ -1290,7 +1290,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		ThreadPoolManager.getInstance().scheduleAi(new HitTask(target, damage1, crit1, miss1, attack.soulshot, shld1), sAtk);
 		
 		// Calculate and set the disable delay of the bow in function of the Attack Speed
-		_disableCrossBowAttackEndTime = ((sAtk + reuse) / GameTimeController.MILLIS_IN_TICK) + GameTimeController.getGameTicks();
+		_disableCrossBowAttackEndTime = ((sAtk + reuse) / GameTimeController.MILLIS_IN_TICK) + GameTimeController.getInstance().getGameTicks();
 		
 		// Add this hit to the Server-Client packet Attack
 		attack.hit(attack.createHit(target, damage1, miss1, crit1, shld1));
@@ -1822,8 +1822,8 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (!simultaneously)
 		{
 			// Set the _castEndTime. +10 ticks for lag situations, will be reseted in onMagicFinalizer
-			_castEndTime       = 10 + GameTimeController.getGameTicks() + (skillTime / GameTimeController.MILLIS_IN_TICK); //[JOJO]
-			_castInterruptTime = -2 + GameTimeController.getGameTicks() + (skillTime / GameTimeController.MILLIS_IN_TICK);
+			_castEndTime       = 10 + GameTimeController.getInstance().getGameTicks() + (skillTime / GameTimeController.MILLIS_IN_TICK); //[JOJO]
+			_castInterruptTime = -2 + GameTimeController.getInstance().getGameTicks() + (skillTime / GameTimeController.MILLIS_IN_TICK);
 			setLastSkillCast(skill);
 		}
 		else
@@ -2591,7 +2591,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public boolean isAttackingDisabled()
 	{
-		return isFlying() || isStunned() || isSleeping() || (_attackEndTime > GameTimeController.getGameTicks()) || isAlikeDead() || isParalyzed() || isPhysicalAttackMuted() || isCoreAIDisabled() /*[L2J_JP]*/|| isFallsdown()/**/;
+		return isFlying() || isStunned() || isSleeping() || (_attackEndTime > GameTimeController.getInstance().getGameTicks()) || isAlikeDead() || isParalyzed() || isPhysicalAttackMuted() || isCoreAIDisabled() /*[L2J_JP]*/|| isFallsdown()/**/;
 	}
 	
 	public final Calculator[] getCalculators()
@@ -4539,7 +4539,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public final boolean canAbortCast()
 	{
-		return _castInterruptTime > GameTimeController.getGameTicks();
+		return _castInterruptTime > GameTimeController.getInstance().getGameTicks();
 	}
 	
 	public int getCastInterruptTime()
@@ -4552,7 +4552,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public boolean isAttackingNow()
 	{
-		return _attackEndTime > GameTimeController.getGameTicks();
+		return _attackEndTime > GameTimeController.getInstance().getGameTicks();
 	}
 	
 	/**
@@ -4698,7 +4698,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		final boolean isFloating = isFlying() || isInsideZone(ZoneId.WATER);
 		
 		// Z coordinate will follow geodata or client values
-		if ((Config.GEODATA > 0) && (Config.COORD_SYNCHRONIZE == 2) && !isFloating && !m.disregardingGeodata && ((GameTimeController.getGameTicks() % 10) == 0 // once a second to reduce possible cpu load
+		if ((Config.GEODATA > 0) && (Config.COORD_SYNCHRONIZE == 2) && !isFloating && !m.disregardingGeodata && ((GameTimeController.getInstance().getGameTicks() % 10) == 0 // once a second to reduce possible cpu load
 		) && GeoData.getInstance().hasGeo(xPrev, yPrev))
 		{
 			short geoHeight = GeoData.getInstance().getSpawnHeight(xPrev, yPrev, zPrev - 30, zPrev + 30, null);
@@ -5190,7 +5190,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			setHeading(Util.calculateHeadingFrom(cos, sin));
 		}
 		
-		m._moveStartTime = GameTimeController.getGameTicks();
+		m._moveStartTime = GameTimeController.getInstance().getGameTicks();
 		
 		// Set the L2Character _move object to MoveData object
 		_move = m;
@@ -5271,7 +5271,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		
 		m._heading = 0; // initial value for coordinate sync
 		
-		m._moveStartTime = GameTimeController.getGameTicks();
+		m._moveStartTime = GameTimeController.getInstance().getGameTicks();
 		
 		// Set the L2Character _move object to MoveData object
 		_move = m;
@@ -7390,7 +7390,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	{
 		if (isCastingNow())
 		{
-			int t = _castEndTime - GameTimeController.getGameTicks();
+			int t = _castEndTime - GameTimeController.getInstance().getGameTicks();
 			if (t > 0)
 				return (long) t * GameTimeController.MILLIS_IN_TICK;
 		}
