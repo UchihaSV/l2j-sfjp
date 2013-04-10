@@ -41,7 +41,9 @@ public final class GameTimeController extends Thread
 	public static final int TICKS_PER_SECOND = 10; // not able to change this without checking through code
 	public static final int MILLIS_IN_TICK = 1000 / TICKS_PER_SECOND;
 	public static final int IG_DAYS_PER_DAY = 6;
-	public static final int MILLIS_PER_IG_DAY = (1000 * 60 * 60 * 24) / IG_DAYS_PER_DAY;
+	public static final int MILLIS_PER_IG_MINUTES = 60_000 / IG_DAYS_PER_DAY;	//[JOJO]
+	public static final int MILLIS_PER_IG_HOUR = 3600_000 / IG_DAYS_PER_DAY;	//[JOJO]
+	public static final int MILLIS_PER_IG_DAY = 86400_000 / IG_DAYS_PER_DAY;
 	public static final int SECONDS_PER_IG_DAY = MILLIS_PER_IG_DAY / 1000;
 	public static final int MINUTES_PER_IG_DAY = SECONDS_PER_IG_DAY / 60;
 	public static final int TICKS_PER_IG_DAY = SECONDS_PER_IG_DAY * TICKS_PER_SECOND;
@@ -77,17 +79,20 @@ public final class GameTimeController extends Thread
 	
 	public final int getGameTime()
 	{
-		return (getGameTicks() % TICKS_PER_IG_DAY) / MILLIS_IN_TICK;
+		return (int) (getGameTickMillis() / MILLIS_PER_IG_MINUTES % 1440);	//[JOJO]
+	//	return (getGameTicks() % TICKS_PER_IG_DAY) / MILLIS_IN_TICK;
 	}
 	
 	public final int getGameHour()
 	{
-		return getGameTime() / 60;
+		return (int) (getGameTickMillis() / MILLIS_PER_IG_HOUR % 24);	//[JOJO]
+	//	return getGameTime() / 60;
 	}
 	
 	public final int getGameMinute()
 	{
-		return getGameTime() % 60;
+		return (int) (getGameTickMillis() / MILLIS_PER_IG_MINUTES % 60);	//[JOJO]
+	//	return getGameTime() % 60;
 	}
 	
 	public final boolean isNight()
@@ -103,6 +108,24 @@ public final class GameTimeController extends Thread
 	{
 		return (int) ((System.currentTimeMillis() - _referenceTime) / MILLIS_IN_TICK);
 	}
+	
+	//[JOJO]-------------------------------------------------
+	/**
+	 * @return System.currentTimeMillis() - _referenceTime [Œ»ŽÀŽžŠÔ‡_•b]
+	 */
+	public final long getGameTickMillis()
+	{
+		return System.currentTimeMillis() - _referenceTime;
+	}
+	
+	/**
+	 * @return 6 * (System.currentTimeMillis() - _referenceTime) [ƒŠƒlŽžŠÔ‡_•b]
+	 */
+	public final long getGameTimeMillis()
+	{
+		return 6 * (System.currentTimeMillis() - _referenceTime);
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * Add a L2Character to movingObjects of GameTimeController.

@@ -25,20 +25,40 @@ import com.l2jserver.gameserver.GameTimeController;
  */
 public class GameTimeFunction
 {
-	public static final long DAYMILI = 14400*1000;	// ƒQ[ƒ€“àŠÔ‚Ì‚P“ú‚Ì’·‚³‚ğÀŠÔ‚Å‚ ‚ç‚í‚µ‚½[ƒ~ƒŠ•b]
-	public static final long TIMEMILI = 600*1000;	// ƒQ[ƒ€“àŠÔ‚Ì‚PŠÔ‚Ì’·‚³‚ğÀŠÔ‚Å‚ ‚ç‚í‚µ‚½[ƒ~ƒŠ•b]
-	public static final long MINUTEMILI = 10*1000;	// ƒQ[ƒ€“àŠÔ‚Ì‚P•ª‚Ì’·‚³‚ğÀŠÔ‚Å‚ ‚ç‚í‚µ‚½[ƒ~ƒŠ•b]
-
 	/**
 	 * @param hh,mm,ss ƒQ[ƒ€“àŠÔ‚Ì•ª•b
 	 * @return ‚±‚ÌŸ‚Ì•ª•b‚Ü‚ÅA‚ ‚Æ‰½ƒ~ƒŠ•b‚©BÀŠÔ‚Å‚Ìƒ~ƒŠ•b‚Å•Ô‚·B
 	 */
-	public static long timeLeftMili(int hh, int mm, int ss)
+	public static long timeLeftMilli(int hh, int mm, int ss)
 	{
-		int now = GameTimeController.getInstance().getGameTicks() * 60 / 100;	//ƒQ[ƒ€“àŠÔ[•b]
-		int dd = (hh * 3600 + mm * 60 + ss) - (now % 86400);
-		if (dd < 0) dd += 86400;
-
-		return (long)dd * 1000 / 6;	//ƒŠƒAƒ‹ŠÔ‚É•ÏŠ·
+		return timeLeftMilli(hh, mm, ss, 0);
+	}
+	
+	public static long timeLeftMilli(int hh, int mm, int ss, int cycle)
+	{
+		// ƒQ[ƒ€“àŠÔ‚ÅŒvZ
+		final long gameTimeMillis = GameTimeController.getInstance().getGameTimeMillis() % 86400_000;
+		if (cycle != 0)
+		{
+			int gameHour = (int) (gameTimeMillis / 3600_000L % 24);
+		//	int gameMinute = (int) (gameTimeMillis / 60_000L % 60);
+			int n = hh % cycle;
+			hh = ((gameHour - n + cycle) / cycle * cycle + n) % 24;
+		}
+		long dd = ((long)hh * 3600_000 + mm * 60_000 + ss * 1_000) - gameTimeMillis;
+		while (dd < 0)
+			dd += 86400_000;
+		
+		// ƒŠƒAƒ‹ŠÔ‚É•ÏŠ·
+		return (dd + 3) / 6;
+	}
+	
+	/**
+	 * @param hh ƒQ[ƒ€“àŠÔ‚Ìuv
+	 * @return ÀŠÔ‚Å‚Ìƒ~ƒŠ•b —á:ƒQ[ƒ€“à‚Ì1ŠÔËÀŠÔ‚Ì600ƒ~ƒŠ•b(10•ª)
+	 */
+	public static long gameTimeHourToRealMilli(int hh)
+	{
+		 return (long) hh * GameTimeController.MILLIS_PER_IG_HOUR;
 	}
 }
