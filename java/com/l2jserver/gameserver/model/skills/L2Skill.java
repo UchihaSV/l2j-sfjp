@@ -147,6 +147,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	// all times in milliseconds
 	private final int _hitTime;
 	private final int[] _hitTimings;
+	private static final int[] EMPTY_HIT_TIMINGS = new int[0];	//[JOJO]
 	// private final int _skillInterruptTime;
 	private final int _coolTime;
 	private final int _reuseHashCode;
@@ -345,7 +346,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		}
 		else
 		{
-			_hitTimings = new int[0];
+			_hitTimings = EMPTY_HIT_TIMINGS;
 		}
 		
 		_coolTime = set.getInteger("coolTime", 0);
