@@ -38,15 +38,22 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlIntention;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.engines.DocumentParser;
+import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2NpcWalkerNode;
+import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.L2WalkRoute;
+import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
+import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.network.NpcStringId;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
+import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.util.Broadcast;
@@ -707,4 +714,69 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 	{
 		protected static final WalkingManager _instance = new WalkingManager();
 	}
+	
+	//[JOJO]-------------------------------------------------
+	private static final int MARKER_NPC = 1032467;
+	private static final int MARKER_ITEM = 57;
+	
+	public void visualize(String routeName, L2PcInstance player)
+	{
+		visualize(_routes.get(routeName), player);
+	}
+	
+	public void visualize(L2Npc walker, L2PcInstance player)
+	{
+		visualize(_activeRoutes.get(walker.getObjectId()).getRoute(), player);
+	}
+	
+	public void visualize(L2WalkRoute route, L2PcInstance player)
+	{
+		try {
+			final String name = route.getName();
+			final List<L2NpcWalkerNode> WALKS = route.getNodeList();
+			assert WALKS instanceof ArrayList;
+			final L2NpcTemplate markerNpcTemplate = NpcTable.getInstance().getTemplate(MARKER_NPC);
+			for (int index = 0, length = WALKS.size(); index < length; ++index) {
+				L2NpcWalkerNode node = WALKS.get(index);
+				L2NpcWalkerNode next = WALKS.get((index + 1) % length);
+				
+				final int x1 = node.getMoveX(), y1 = node.getMoveY(), z1 = node.getMoveZ();
+				final int x2 = next.getMoveX(), y2 = next.getMoveY(), z2 = next.getMoveZ();
+				final double dx = x2 - x1, dy = y2 - y1, dz = z2 - z1;
+				final double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+				final double pitch = 50;
+				
+				// npc marker
+				if (markerNpcTemplate != null) {
+					L2Spawn spawn = new L2Spawn(markerNpcTemplate);
+					spawn.setLocx(x1);
+					spawn.setLocy(y1);
+					spawn.setLocz(z1 + com.l2jserver.Config.NPC_SPAWN_Z_MARGIN);
+					spawn.setHeading(com.l2jserver.gameserver.util.Util.calculateHeadingFrom(x1, y1, x2, y2));
+					spawn.stopRespawn();
+					L2Npc n = spawn.spawnOne(false);
+					n.setTitle("#" + index);
+					n.setName(name);
+					n.broadcastPacket(new AbstractNpcInfo.NpcInfo(n, null));
+				}
+				
+				// adena line
+				for (double p = pitch; p < distance; p += pitch) {
+					double a = p / distance;
+					int x = x1 + (int)Math.round(dx * a);
+					int y = y1 + (int)Math.round(dy * a);
+					int z = z1 + (int)Math.round(dz * a) + 20;
+					L2ItemInstance i = new L2ItemInstance(IdFactory.getInstance().getNextId(), MARKER_ITEM);
+					if (player != null) i.setOwnerId(player.getObjectId());
+					i.new ItemDropTask(i, null, x, y, z).run();
+					i.setProtected(false);
+					L2World.getInstance().storeObject(i);
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//-------------------------------------------------------
 }
