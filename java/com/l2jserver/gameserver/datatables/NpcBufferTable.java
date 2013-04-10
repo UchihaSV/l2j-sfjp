@@ -22,10 +22,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -36,7 +36,7 @@ public class NpcBufferTable
 {
 	private static Logger _log = Logger.getLogger(NpcBufferTable.class.getName());
 	
-	private final Map<Integer, NpcBufferSkills> _buffers = new HashMap<>();
+	private final FastIntObjectMap<NpcBufferSkills> _buffers = new FastIntObjectMap<>();
 	
 	public static class NpcBufferData
 	{
@@ -63,7 +63,7 @@ public class NpcBufferTable
 	private static class NpcBufferSkills
 	{
 		private final int _npcId;
-		private final Map<Integer, NpcBufferData> _skills = new HashMap<>();
+		private final FastIntObjectMap<NpcBufferData> _skills = new FastIntObjectMap<>();
 		
 		protected NpcBufferSkills(int npcId)
 		{
@@ -185,13 +185,10 @@ public class NpcBufferTable
 	
 	public NpcBufferData getSkillInfo(int npcId, int buffGroup)
 	{
-		if (_buffers.containsKey(npcId))
+		final NpcBufferSkills skills = _buffers.get(npcId);
+		if (skills != null)
 		{
-			final NpcBufferSkills skills = _buffers.get(npcId);
-			if (skills != null)
-			{
-				return skills.getSkillGroupInfo(buffGroup);
-			}
+			return skills.getSkillGroupInfo(buffGroup);
 		}
 		return null;
 	}
