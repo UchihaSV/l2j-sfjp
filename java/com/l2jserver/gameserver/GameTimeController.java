@@ -22,7 +22,7 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ai.CtrlEvent;
@@ -49,7 +49,8 @@ public final class GameTimeController extends Thread
 	
 	private static GameTimeController _instance;
 	
-	private final FastMap<Integer, L2Character> _movingObjects = new FastMap<Integer, L2Character>().shared();
+	private final FastIntObjectMap<L2Character> _movingObjects = new FastIntObjectMap<L2Character>().shared();	//[JOJO]
+ //	private final FastMap<Integer, L2Character> _movingObjects = new FastMap<Integer, L2Character>().shared();
 	private final long _referenceTime;
 	
 	private GameTimeController()
@@ -131,7 +132,7 @@ public final class GameTimeController extends Thread
 	private final void moveObjects()
 	{
 		L2Character character;
-		for (FastMap.Entry<Integer, L2Character> e = _movingObjects.head(), tail = _movingObjects.tail(); (e = e.getNext()) != tail;)
+		for (FastIntObjectMap.Entry<L2Character> e = _movingObjects.head(), tail = _movingObjects.tail(); (e = e.getNext()) != tail;)
 		{
 			character = e.getValue();
 			
