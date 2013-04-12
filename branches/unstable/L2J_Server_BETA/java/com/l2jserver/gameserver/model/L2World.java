@@ -118,21 +118,21 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 	 */
 	public void storeObject(L2Object object)
 	{
-		if (_allObjects.containsKey(object.getObjectId()))
+		final L2Object previous = _allObjects.put(object.getObjectId(), object);
+		if (previous != null)
 		{
 			_log.log(Level.WARNING, getClass().getSimpleName() + ": Current object: " + object + " already exist in OID map!\n"
 				+ StringUtil.getTraceString(Thread.currentThread().getStackTrace()));
 if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
-			_log.log(Level.WARNING, getClass().getSimpleName() + ": Previous object: " + _allObjects.get(object.getObjectId()) + " already exist in OID map!\n"
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Previous object: " + previous + " already exist in OID map!\n"
 				+ _allObjectsDebug.get(object.getObjectId()));
 }} else {{
-			_log.log(Level.WARNING, getClass().getSimpleName() + ": Previous object: " + _allObjects.get(object.getObjectId()) + " already exist in OID map!");
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Previous object: " + previous + " already exist in OID map!");
 }}
 			_log.log(Level.WARNING, "---------------------- End ---------------------");
 			return;
 		}
 		
-		_allObjects.put(object.getObjectId(), object);
 if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 		_allObjectsDebug.put(object.getObjectId(), StringUtil.getTraceString(Thread.currentThread().getStackTrace()));
 }}
