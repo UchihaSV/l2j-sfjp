@@ -212,21 +212,9 @@ public final class GameTimeController extends Thread
 		long nextTickTime, sleepTime;
 		boolean isNight = isNight();
 		
-		if (isNight)
-		{
-			ThreadPoolManager.getInstance().executeTask(new Runnable()
-			{
-				@Override
-				public final void run()
-				{
-					DayNightSpawnManager.getInstance().notifyChangeMode();
-				}
-			});
-		}
-		
 		while (true)
 		{
-			nextTickTime = ((System.currentTimeMillis() / MILLIS_IN_TICK) * MILLIS_IN_TICK) + 100;
+			nextTickTime = System.currentTimeMillis() / MILLIS_IN_TICK * MILLIS_IN_TICK + MILLIS_IN_TICK;
 			
 			try
 			{
@@ -235,19 +223,6 @@ public final class GameTimeController extends Thread
 			catch (final Throwable e)
 			{
 				StackTrace.displayStackTraceInformation(e);
-			}
-			
-			sleepTime = nextTickTime - System.currentTimeMillis();
-			if (sleepTime > 0)
-			{
-				try
-				{
-					Thread.sleep(sleepTime);
-				}
-				catch (final InterruptedException e)
-				{
-					
-				}
 			}
 			
 			if (isNight() != isNight)
@@ -262,6 +237,19 @@ public final class GameTimeController extends Thread
 						DayNightSpawnManager.getInstance().notifyChangeMode();
 					}
 				});
+			}
+			
+			sleepTime = nextTickTime - System.currentTimeMillis();
+			if (sleepTime > 0)
+			{
+				try
+				{
+					Thread.sleep(sleepTime);
+				}
+				catch (final InterruptedException e)
+				{
+					
+				}
 			}
 		}
 	}
