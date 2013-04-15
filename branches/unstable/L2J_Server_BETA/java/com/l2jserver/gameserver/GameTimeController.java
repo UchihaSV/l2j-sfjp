@@ -153,14 +153,14 @@ public final class GameTimeController extends Thread
 	 * <li>Create a task to update the _knownObject and _knowPlayers of each L2Character that finished its movement and of their already known L2Object then notify AI with EVT_ARRIVED</li>
 	 * </ul>
 	 */
-	private final void moveObjects()
+	private final void moveObjects(int gameTicks)
 	{
 		L2Character character;
 		for (FastIntObjectMap.Entry<L2Character> e = _movingObjects.head(), tail = _movingObjects.tail(); (e = e.getNext()) != tail;)
 		{
 			character = e.getValue();
 			
-			if (character.updatePosition(getGameTicks()))
+			if (character.updatePosition(gameTicks))
 			{
 				// Destination reached. Remove from map and execute arrive event.
 				_movingObjects.remove(e.getKey());
@@ -210,47 +210,47 @@ public final class GameTimeController extends Thread
 	{
 		_log.log(Level.CONFIG, getClass().getSimpleName() + ": Started.");
 		
-		long nextTickTime, sleepTime;
 		boolean isNight = isNight();
 		
 		while (true)
 		{
-			nextTickTime = System.currentTimeMillis() / MILLIS_IN_TICK * MILLIS_IN_TICK + MILLIS_IN_TICK;
-			
+			final long now = System.currentTimeMillis();
+			final int gameTicks = (int) ((now - _referenceTime) / MILLIS_IN_TICK);	// == getGameTicks()
+			final long nextTickTime = now / MILLIS_IN_TICK * MILLIS_IN_TICK + MILLIS_IN_TICK;
 			try
 			{
-				moveObjects();
+				
+				moveObjects(gameTicks);
+				
+				if (isNight() != isNight)
+				{
+					isNight = !isNight;
+					
+					ThreadPoolManager.getInstance().executeTask(new Runnable()
+					{
+						@Override
+						public final void run()
+						{
+							DayNightSpawnManager.getInstance().notifyChangeMode();
+						}
+					});
+				}
+				
+				long sleepTime = nextTickTime - System.currentTimeMillis();
+				if (sleepTime > 0)
+				{
+					if (sleepTime > MILLIS_IN_TICK) sleepTime = MILLIS_IN_TICK;
+					Thread.sleep(sleepTime);
+				}
+			}
+			catch (final InterruptedException e)
+			{
+				// from stopTimer()
+				return;
 			}
 			catch (final Throwable e)
 			{
 				StackTrace.displayStackTraceInformation(e);
-			}
-			
-			if (isNight() != isNight)
-			{
-				isNight = !isNight;
-				
-				ThreadPoolManager.getInstance().executeTask(new Runnable()
-				{
-					@Override
-					public final void run()
-					{
-						DayNightSpawnManager.getInstance().notifyChangeMode();
-					}
-				});
-			}
-			
-			sleepTime = nextTickTime - System.currentTimeMillis();
-			if (sleepTime > 0)
-			{
-				try
-				{
-					Thread.sleep(sleepTime);
-				}
-				catch (final InterruptedException e)
-				{
-					
-				}
 			}
 		}
 	}
