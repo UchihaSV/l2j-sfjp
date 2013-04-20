@@ -215,7 +215,7 @@ public class DayNightSpawnManager
 				
 				if ((boss != null) && (boss.getNpcId() == 25328) && boss.getRaidStatus().equals(RaidBossSpawnManager.StatusEnum.ALIVE))
 				{
-					handleHellmans(boss, mode);
+					handleHellmans(spawn, mode);
 				}
 				return;
 			}
@@ -226,16 +226,20 @@ public class DayNightSpawnManager
 		}
 	}
 	
-	private void handleHellmans(L2RaidBossInstance boss, int mode)
+	private void handleHellmans(L2Spawn spawn, int mode)
 	{
+		L2Npc boss;
 		switch (mode)
 		{
 			case 0:
+				boss = spawn.getLastSpawn();
 				boss.deleteMe();
 				_log.info("DayNightSpawnManager: Deleting Hellman raidboss");
 				break;
 			case 1:
-				boss.spawnMe();
+				boss = spawn.getLastSpawn();
+				if (!boss.isVisible())
+					spawn.doSpawn();
 				_log.info("DayNightSpawnManager: Spawning Hellman raidboss");
 				break;
 		}
