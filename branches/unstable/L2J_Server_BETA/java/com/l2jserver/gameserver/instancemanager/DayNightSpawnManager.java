@@ -20,7 +20,6 @@ package com.l2jserver.gameserver.instancemanager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,9 +38,9 @@ public class DayNightSpawnManager
 	
 	private static Logger _log = Logger.getLogger(DayNightSpawnManager.class.getName());
 	
-	private final List<L2Spawn> _dayCreatures;
-	private final List<L2Spawn> _nightCreatures;
-	private final Set<L2Spawn> _bosses;
+	private final ArrayList<L2Spawn> _dayCreatures;
+	private final ArrayList<L2Spawn> _nightCreatures;
+	private final FastSet<L2Spawn> _bosses;
 	
 	// private static int _currentState; // 0 = Day, 1 = Night
 	
@@ -150,8 +149,8 @@ public class DayNightSpawnManager
 	
 	public DayNightSpawnManager trim()
 	{
-		((ArrayList<?>) _nightCreatures).trimToSize();
-		((ArrayList<?>) _dayCreatures).trimToSize();
+		_nightCreatures.trimToSize();
+		_dayCreatures.trimToSize();
 		return this;
 	}
 	
