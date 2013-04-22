@@ -55,6 +55,7 @@ public final class GameTimeController extends Thread
 	private final FastIntObjectMap<L2Character> _movingObjects = new FastIntObjectMap<L2Character>().shared();	//[JOJO]
  //	private final FastMap<Integer, L2Character> _movingObjects = new FastMap<Integer, L2Character>().shared();
 	private final long _referenceTime;
+	private boolean _isNight;	//[JOJO]
 	
 	private GameTimeController()
 	{
@@ -69,6 +70,7 @@ public final class GameTimeController extends Thread
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
 		_referenceTime = c.getTimeInMillis();
+		_isNight = isNight(System.currentTimeMillis());
 		
 		super.start();
 	}
@@ -98,7 +100,13 @@ public final class GameTimeController extends Thread
 	
 	public final boolean isNight()
 	{
-		return getGameHour() < 6;
+		return _isNight;
+	}
+	
+	private final boolean isNight(long currentTimeMillis)	//[JOJO]
+	{
+		int gameHour = (int) ((currentTimeMillis - _referenceTime) / MILLIS_PER_IG_HOUR % 24);
+		return gameHour < 6;	// 00:00~06:00 Night time in game.
 	}
 	
 	/**
@@ -210,21 +218,24 @@ public final class GameTimeController extends Thread
 	{
 		_log.log(Level.CONFIG, getClass().getSimpleName() + ": Started.");
 		
-		boolean isNight = isNight();
+		long now = System.currentTimeMillis();
 		
 		while (true)
 		{
-			final long now = System.currentTimeMillis();
-			final int gameTicks = (int) ((now - _referenceTime) / MILLIS_IN_TICK);	// == getGameTicks()
+			final long previousTime = now;
+			now = System.currentTimeMillis();
+			final long gameTickMillis = now - _referenceTime;	// == getGameTickMillis()
+			final int gameTicks = (int) (gameTickMillis / MILLIS_IN_TICK);	// == getGameTicks()
 			final long nextTickTime = now / MILLIS_IN_TICK * MILLIS_IN_TICK + MILLIS_IN_TICK;
 			try
 			{
 				
 				moveObjects(gameTicks);
 				
-				if (isNight() != isNight)
+				final boolean isNight = isNight(now);
+				if (_isNight != isNight && previousTime < now)
 				{
-					isNight = !isNight;
+					_isNight = isNight;
 					
 					ThreadPoolManager.getInstance().executeTask(new Runnable()
 					{
