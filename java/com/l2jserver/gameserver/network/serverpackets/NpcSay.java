@@ -87,6 +87,16 @@ public final class NpcSay extends L2GameServerPacket
 		_npcString = npcString.getId();
 	}
 	
+	//[JOJO]-------------------------------------------------
+	public NpcSay(L2Npc npc, int messageType, int npcString)
+	{
+		_objectId = npc.getObjectId();
+		_textType = messageType;
+		_npcId = 1000000 + npc.getNpcId();
+		_npcString = npcString;	//client side npcstring-*.dat
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * @param text the text to add as a parameter for this packet's message (replaces S1, S2 etc.)
 	 * @return this NpcSay packet object
