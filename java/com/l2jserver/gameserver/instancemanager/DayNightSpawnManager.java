@@ -40,9 +40,7 @@ public class DayNightSpawnManager
 	
 	private final ArrayList<L2Spawn> _dayCreatures;
 	private final ArrayList<L2Spawn> _nightCreatures;
-	private final FastSet<L2Spawn> _bosses;
-	
-	// private static int _currentState; // 0 = Day, 1 = Night
+	private final FastSet<L2Spawn> _nightBosses;
 	
 	public static DayNightSpawnManager getInstance()
 	{
@@ -53,7 +51,7 @@ public class DayNightSpawnManager
 	{
 		_dayCreatures = new ArrayList<>();
 		_nightCreatures = new ArrayList<>();
-		_bosses = new FastSet<>();
+		_nightBosses = new FastSet<>();
 	}
 	
 	public void addDayCreature(L2Spawn spawnDat)
@@ -160,7 +158,7 @@ public class DayNightSpawnManager
 		{
 			boolean isNight = GameTimeController.getInstance().isNight();
 			changeMode(isNight);
-			changeNightBoss(isNight);
+			changeBoss(isNight);
 		}
 		catch (Exception e)
 		{
@@ -172,31 +170,31 @@ public class DayNightSpawnManager
 	{
 		_nightCreatures.clear();
 		_dayCreatures.clear();
-		_bosses.clear();
+		_nightBosses.clear();
 	}
 	
-	private void changeNightBoss(boolean isNight)
+	private void changeBoss(boolean isNight)
 	{
 		try
 		{
-			for (L2Spawn spawn : _bosses)
+			for (L2Spawn spawn : _nightBosses)
 			{
-				L2RaidBossInstance boss = (L2RaidBossInstance) spawn.getLastSpawn();
+				L2RaidBossInstance raidboss = (L2RaidBossInstance) spawn.getLastSpawn();
 				
 				if (isNight)
 				{
-					if (boss != null && boss.isVisible())
+					if (raidboss != null && raidboss.isVisible())
 						continue;
 					if (RaidBossSpawnManager.getInstance().getRaidBossStatusId(spawn.getNpcid()) == RaidBossSpawnManager.StatusEnum.DEAD)
 						continue;
-					boss = (L2RaidBossInstance) spawn.doSpawn();
-					RaidBossSpawnManager.getInstance().notifySpawnNightBoss(boss);
+					raidboss = (L2RaidBossInstance) spawn.doSpawn();
+					RaidBossSpawnManager.getInstance().notifySpawnNightBoss(raidboss);
 				}
 				else
 				{
-					if (boss == null)
+					if (raidboss == null)
 						continue;
-					boss.deleteMe();
+					raidboss.deleteMe();
 				}
 			}
 		}
@@ -208,17 +206,17 @@ public class DayNightSpawnManager
 	
 	public L2RaidBossInstance handleBoss(L2Spawn spawnDat)
 	{
-		_bosses.add(spawnDat);
+		_nightBosses.add(spawnDat);
 		
-		L2RaidBossInstance boss = (L2RaidBossInstance) spawnDat.getLastSpawn();
-		if (boss != null && boss.isVisible())
-			return boss;
+		L2RaidBossInstance raidboss = (L2RaidBossInstance) spawnDat.getLastSpawn();
+		if (raidboss != null && raidboss.isVisible())
+			return raidboss;
 		
 		if (GameTimeController.getInstance().isNight())
-			boss = (L2RaidBossInstance) spawnDat.doSpawn();
+			raidboss = (L2RaidBossInstance) spawnDat.doSpawn();
 		else
-			boss = null;
-		return boss;
+			raidboss = null;
+		return raidboss;
 	}
 	
 	private static class SingletonHolder
