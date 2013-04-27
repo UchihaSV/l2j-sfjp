@@ -109,7 +109,7 @@ public class DayNightSpawnManager
 						i++;
 					}
 				}
-				_log.info("DayNightSpawnManager: Removed " + i + " " + UnspawnLogInfo + " creatures");
+				_log.info(getClass().getSimpleName() + ": Removed " + i + " " + UnspawnLogInfo + " creatures");
 			}
 			
 			int i = 0;
@@ -124,7 +124,7 @@ public class DayNightSpawnManager
 				i++;
 			}
 			
-			_log.info("DayNightSpawnManager: Spawned " + i + " " + SpawnLogInfo + " creatures");
+			_log.info(getClass().getSimpleName() + ": Spawned " + i + " " + SpawnLogInfo + " creatures");
 		}
 		catch (Exception e)
 		{
