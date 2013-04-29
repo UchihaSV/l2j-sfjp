@@ -18,15 +18,18 @@
  */
 package com.l2jserver.gameserver.model.fishing;
 
+import java.util.ArrayList;
 import java.util.concurrent.Future;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.FishingMonstersData;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.model.L2Spawn;
+import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
+import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo.NpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExFishingHpRegen;
 import com.l2jserver.gameserver.network.serverpackets.ExFishingStartCombat;
 import com.l2jserver.gameserver.network.serverpackets.PlaySound;
@@ -152,14 +155,12 @@ public class L2Fishing implements Runnable
 		if (win)
 		{
 			int lvl = _fisher.getLevel();
-			L2NpcTemplate monster;
 			L2FishingMonster fishingMonster = FishingMonstersData.getInstance().getFishingMonster(lvl);
 			
 			if (Rnd.get(100) <= fishingMonster.getProbability())
 			{
-				monster = NpcTable.getInstance().getTemplate(fishingMonster.getFishingMonsterId());
 				_fisher.sendPacket(SystemMessageId.YOU_CAUGHT_SOMETHING_SMELLY_THROW_IT_BACK);
-				spawnMonster(monster);
+				spawnMonster(fishingMonster.getFishingMonsterId(), _fisher);
 			}
 			else
 			{
@@ -373,26 +374,40 @@ public class L2Fishing implements Runnable
 		}
 	}
 	
-	private void spawnMonster(L2NpcTemplate monster)
+	//[JOJO]-------------------------------------------------
+	private static final ArrayList<Quest> spawnListeners = new ArrayList<>();
+	
+	public static void addSpawnListener(Quest quest)
 	{
-		if (monster != null)
-		{
-			try
-			{
-				L2Spawn spawn = new L2Spawn(monster);
-				spawn.setLocx(_fisher.getX());
-				spawn.setLocy(_fisher.getY());
-				spawn.setLocz(_fisher.getZ());
-				spawn.setAmount(1);
-				spawn.setHeading(_fisher.getHeading());
-				spawn.stopRespawn();
-				spawn.doSpawn().scheduleDespawn(3 * 60 * 1000);
-				spawn.getLastSpawn().setTarget(_fisher);
-			}
-			catch (Exception e)
-			{
-				// Nothing
-			}
-		}
+		spawnListeners.add(quest);
+		spawnListeners.trimToSize();
 	}
+	
+	public static void spawnMonster(int npcId, L2PcInstance player)
+	{
+		L2Spawn spawn;
+		try
+		{
+			spawn = new L2Spawn(NpcTable.getInstance().getTemplate(npcId));
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return;
+		}
+		spawn.setLocx(player.getX());
+		spawn.setLocy(player.getY());
+		spawn.setLocz(player.getZ());
+		spawn.setAmount(1);
+		spawn.setHeading(player.getHeading());
+		spawn.stopRespawn();
+		L2MonsterInstance mob = (L2MonsterInstance) spawn.doSpawn(true);
+		mob.setTitle(player.getName());
+		mob.broadcastPacket(new NpcInfo(mob, null));
+		
+		mob.setTarget(player);
+		for (Quest quest : spawnListeners)
+			quest.onSpawn(mob);	// --> WarriorFishingBlock#onSpawn
+	}
+	//-------------------------------------------------------
 }
