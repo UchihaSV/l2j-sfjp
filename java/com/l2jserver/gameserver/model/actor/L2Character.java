@@ -6493,7 +6493,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						_skipgeo++;
 						continue;
 					}
-					if (skill.isOffensive() && !skill.isNeutral())
+					if (skill.isOffensive())
 					{
 						if (isPlayer())
 						{
@@ -6809,7 +6809,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				getAI().setIntention(CtrlIntention.AI_INTENTION_ATTACK, target);
 			}
 		}
-		if (skill.isOffensive() && !skill.isNeutral() && !(skill.getSkillType() == L2SkillType.UNLOCK) && !(skill.getSkillType() == L2SkillType.DELUXE_KEY_UNLOCK))
+		if (skill.isOffensive() && !(skill.getSkillType() == L2SkillType.UNLOCK) && !(skill.getSkillType() == L2SkillType.DELUXE_KEY_UNLOCK))
 		{
 			getAI().clientStartAutoAttack();
 		}
@@ -7086,11 +7086,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					// EVT_ATTACKED and PvPStatus
 					if (target instanceof L2Character)
 					{
-						if (skill.isNeutral())
-						{
-							// no flags
-						}
-						else if (skill.isOffensive())
+						if (skill.isOffensive())
 						{
 							if (target.isPlayer() || target.isSummon() || target.isTrap())
 							{
@@ -7143,7 +7139,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 								}
 							}
 						}
-						else
+						else if (skill.isPVP())
 						{
 							if (target.isPlayer())
 							{
