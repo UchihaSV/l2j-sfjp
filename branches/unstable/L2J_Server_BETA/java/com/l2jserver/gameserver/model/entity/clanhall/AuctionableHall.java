@@ -127,9 +127,9 @@ public final class AuctionableHall extends ClanHall
 		}
 		else if (!_paid && !forced)
 		{
-			if ((System.currentTimeMillis() + (1000 * 60 * 60 * 24)) <= (_paidUntil + _chRate))
+			if ((System.currentTimeMillis() + (3600000 * 24)) <= (_paidUntil + _chRate))
 			{
-				ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), System.currentTimeMillis() + (1000 * 60 * 60 * 24));
+				ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), System.currentTimeMillis() + (3600000 * 24));
 			}
 			else
 			{
@@ -211,9 +211,9 @@ public final class AuctionableHall extends ClanHall
 					//	sm.addNumber(getLease());
 						//-------------------------------------------------------
 						Clan.broadcastToOnlineMembers(sm);
-						if ((_time + (1000 * 60 * 60 * 24)) <= (_paidUntil + _chRate))
+						if ((_time + (3600000 * 24)) <= (_paidUntil + _chRate))
 						{
-							ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), _time + (1000 * 60 * 60 * 24));
+							ThreadPoolManager.getInstance().scheduleGeneral(new FeeTask(), _time + (3600000 * 24));
 						}
 						else
 						{
