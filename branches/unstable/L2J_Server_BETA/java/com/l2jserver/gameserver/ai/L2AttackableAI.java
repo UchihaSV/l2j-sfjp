@@ -1764,7 +1764,6 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			case CHARGEDAM:
 			case FATAL:
 			case DEATHLINK:
-			case CPDAM:
 			case MANADAM:
 			case CPDAMPERCENT:
 			{

@@ -622,7 +622,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					case CHARGEDAM:
 					case FATAL:
 					case DEATHLINK:
-					case CPDAM:
 					case MANADAM:
 					case CPDAMPERCENT:
 						addAtkSkill(skill);
