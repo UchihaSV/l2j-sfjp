@@ -1819,15 +1819,7 @@ public final class Formulas
 		double resMod = 1 + ((vuln + prof) / 100);
 		
 		// Check ResMod Limits.
-		if (resMod > 1.9)
-		{
-			resMod = 1.9;
-		}
-		else if (resMod < 0.1)
-		{
-			resMod = 0.1;
-		}
-		rate *= resMod;
+		rate *= Math.min(Math.max(resMod, 0.1), 1.9);
 		
 		// Lvl Bonus Modifier.
 		double lvlBonusMod = calcLvlBonusMod(attacker, target, skill);
@@ -1868,14 +1860,7 @@ public final class Formulas
 		}
 		
 		// Check the Rate Limits.
-		if (rate > skill.getMaxChance())
-		{
-			rate = skill.getMaxChance();
-		}
-		else if (rate < skill.getMinChance())
-		{
-			rate = skill.getMinChance();
-		}
+		rate = Math.min(Math.max(rate, skill.getMinChance()), skill.getMaxChance());
 		
 		if (attacker.isDebug() || Config.DEVELOPER)
 		{
@@ -1934,15 +1919,7 @@ public final class Formulas
 		double resMod = 1 + ((vuln + prof) / 100);
 		
 		// Check ResMod Limits.
-		if (resMod > 1.9)
-		{
-			resMod = 1.9;
-		}
-		else if (resMod < 0.1)
-		{
-			resMod = 0.1;
-		}
-		rate *= resMod;
+		rate *= Math.min(Math.max(resMod, 0.1), 1.9);
 		
 		// Lvl Bonus Modifier.
 		double lvlBonusMod = calcLvlBonusMod(attacker, target, skill);
@@ -1983,14 +1960,7 @@ public final class Formulas
 		}
 		
 		// Check the Rate Limits.
-		if (rate > skill.getMaxChance())
-		{
-			rate = skill.getMaxChance();
-		}
-		else if (rate < skill.getMinChance())
-		{
-			rate = skill.getMinChance();
-		}
+		rate = Math.min(Math.max(rate, skill.getMinChance()), skill.getMaxChance());
 		
 		if (attacker.isDebug() || Config.DEVELOPER)
 		{
@@ -2046,15 +2016,7 @@ public final class Formulas
 		double resMod = 1 + ((vuln + prof) / 100);
 		
 		// Check ResMod Limits.
-		if (resMod > 1.9)
-		{
-			resMod = 1.9;
-		}
-		else if (resMod < 0.1)
-		{
-			resMod = 0.1;
-		}
-		rate *= resMod;
+		rate *= Math.min(Math.max(resMod, 0.1), 1.9);
 		
 		// Lvl Bonus Modifier.
 		double lvlBonusMod = calcLvlBonusMod(attacker.getOwner(), target, skill);
@@ -2080,14 +2042,7 @@ public final class Formulas
 		}
 		
 		// Check the Rate Limits.
-		if (rate > skill.getMaxChance())
-		{
-			rate = skill.getMaxChance();
-		}
-		else if (rate < skill.getMinChance())
-		{
-			rate = skill.getMinChance();
-		}
+		rate = Math.min(Math.max(rate, skill.getMinChance()), skill.getMaxChance());
 		
 		if (attacker.getOwner().isDebug() || Config.DEVELOPER)
 		{
@@ -2113,6 +2068,7 @@ public final class Formulas
 			return true;
 		}
 		
+		// FIXME: Fix this LevelMod Formula.
 		int lvlDifference = (target.getLevel() - (skill.getMagicLevel() > 0 ? skill.getMagicLevel() : attacker.getLevel()));
 		double lvlModifier = Math.pow(1.3, lvlDifference);
 		float targetModifier = 1;
@@ -2133,6 +2089,7 @@ public final class Formulas
 		final double failureModifier = attacker.calcStat(Stats.MAGIC_FAILURE_RATE, 1, target, skill);
 		int rate = 100 - Math.round((float) (lvlModifier * targetModifier * resModifier * failureModifier));
 		
+		// FIXME: This have nothing to do with Magic Nukes.
 		if (rate > skill.getMaxChance())
 		{
 			rate = skill.getMaxChance();
@@ -2545,6 +2502,7 @@ public final class Formulas
 	
 	public static List<L2Effect> calcCancelStealEffects(L2Character activeChar, L2Character target, L2Skill skill, double power)
 	{
+		// Resists.
 		int cancelMagicLvl = skill.getMagicLevel();
 		int count = skill.getMaxNegatedEffects();
 		final double vuln = target.calcStat(Stats.CANCEL_VULN, 0, target, null);
@@ -2685,8 +2643,12 @@ public final class Formulas
 	
 	public static boolean calcCancelSuccess(L2Effect eff, int cancelMagicLvl, int rate, L2Skill skill)
 	{
+		// Lvl Bonus Modifier.
 		rate *= (eff.getSkill().getMagicLevel() > 0) ? (cancelMagicLvl / eff.getSkill().getMagicLevel()) : 1;
 		
-		return Rnd.get(100) < Math.min(Math.max(rate, skill.getMinChance()), skill.getMaxChance());
+		// Check the Rate Limits.
+		rate = Math.min(Math.max(rate, skill.getMinChance()), skill.getMaxChance());
+		
+		return Rnd.get(100) < rate;
 	}
 }
