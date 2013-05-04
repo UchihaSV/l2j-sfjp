@@ -1028,7 +1028,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	
 	public final boolean isOffensive()
 	{
-		return _isOffensive;
+		return _isOffensive || isPVP();
 	}
 	
 	public final boolean isPVP()

@@ -7144,7 +7144,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 								}
 							}
 						}
-						else if (skill.isPVP())
+						else
 						{
 							if (target.isPlayer())
 							{
