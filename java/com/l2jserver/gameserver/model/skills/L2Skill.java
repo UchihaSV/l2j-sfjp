@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.model.skills;
 import static com.l2jserver.gameserver.datatables.StringIntern.intern;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -256,6 +257,8 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	private final int _maxTargets;
 	
 	private int _npcId = 0;
+	
+	private byte[] _effectTypes;
 	
 	protected L2Skill(StatsSet set)
 	{
@@ -1997,24 +2000,33 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	 */
 	public boolean hasEffectType(L2EffectType... types)
 	{
-		if (hasEffects())
+		if (hasEffects() && (types != null) && (types.length > 0))
 		{
-			final Env env = new Env();
-			env.setSkill(this);
-			for (EffectTemplate et : _effectTemplates)
+			if (_effectTypes == null)
 			{
-				final L2Effect e = et.getEffect(env, true);
-				if (e == null)
-				{
-					continue;
-				}
+				_effectTypes = new byte[_effectTemplates.length];
 				
-				for (L2EffectType type : types)
+				final Env env = new Env();
+				env.setSkill(this);
+				
+				int i = 0;
+				for (EffectTemplate et : _effectTemplates)
 				{
-					if (e.getEffectType() == type)
+					final L2Effect e = et.getEffect(env, true);
+					if (e == null)
 					{
-						return true;
+						continue;
 					}
+					_effectTypes[i++] = (byte) e.getEffectType().ordinal();
+				}
+				Arrays.sort(_effectTypes);
+			}
+			
+			for (L2EffectType type : types)
+			{
+				if (Arrays.binarySearch(_effectTypes, (byte) type.ordinal()) >= 0)
+				{
+					return true;
 				}
 			}
 		}
