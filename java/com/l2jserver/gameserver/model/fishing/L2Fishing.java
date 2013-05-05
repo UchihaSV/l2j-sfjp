@@ -154,9 +154,7 @@ public class L2Fishing implements Runnable
 		
 		if (win)
 		{
-			int lvl = _fisher.getLevel();
-			L2FishingMonster fishingMonster = FishingMonstersData.getInstance().getFishingMonster(lvl);
-			
+			L2FishingMonster fishingMonster = FishingMonstersData.getInstance().getFishingMonster(_fisher.getLevel());
 			if (Rnd.get(100) <= fishingMonster.getProbability())
 			{
 				_fisher.sendPacket(SystemMessageId.YOU_CAUGHT_SOMETHING_SMELLY_THROW_IT_BACK);
