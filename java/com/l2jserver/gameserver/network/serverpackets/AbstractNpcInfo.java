@@ -166,8 +166,16 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeC(_npc.isInCombat() ? 1 : 0);
 			writeC(_npc.isAlikeDead() ? 1 : 0);
 			writeC(_isSummoned ? 2 : 0); // invisible ?? 0=false 1=true 2=summoned (only works if model has a summon animation)
-			writeD(-1); // High Five NPCString ID
-			writeS(_name);
+			//[JOJO]-------------------------------------------------
+			if (_name.startsWith("\f")) {	// BeastFarm.java
+				String[] a = _name.split("\f");
+				writeD(Integer.parseInt(a[1])); // High Five NPCString ID
+				for (int i = 2, length = a.length; i < length; ++i) writeS(a[i]);
+			} else {
+			//-------------------------------------------------------
+				writeD(-1); // High Five NPCString ID
+				writeS(_name);
+			}
 			writeD(-1); // High Five NPCString ID
 			writeS(_title);
 			writeD(0x00); // Title color 0=client default
