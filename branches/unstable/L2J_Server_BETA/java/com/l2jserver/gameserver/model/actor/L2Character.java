@@ -1693,8 +1693,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				{
 					case BUFF:
 					case HEAL:
-					case COMBATPOINTHEAL:
 						doit = true;
+						break;
+					case DUMMY:
+						doit = skill.hasEffectType(L2EffectType.CPHEAL);
 						break;
 				}
 				

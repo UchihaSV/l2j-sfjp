@@ -1877,7 +1877,6 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					// _actor.setTarget(targets);
 					return true;
 				}
-				
 			}
 				break;
 		}

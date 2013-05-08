@@ -170,6 +170,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	// The radius center varies according to the _targetType:
 	// "caster" if targetType = AURA/PARTY/CLAN or "target" if targetType = AREA
 	private final int _affectRange;
+	private final int[] _affectLimit = new int[2];
 	
 	private final L2SkillType _skillType;
 	private final L2SkillType _effectType; // additional effect has a type
@@ -370,6 +371,21 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		}
 		
 		_affectRange = set.getInteger("affectRange", 0);
+		
+		final String affectLimit = set.getString("affectLimit", null);
+		if (affectLimit != null)
+		{
+			try
+			{
+				String[] valuesSplit = affectLimit.split("-");
+				_affectLimit[0] = Integer.parseInt(valuesSplit[0]);
+				_affectLimit[1] = Integer.parseInt(valuesSplit[1]);
+			}
+			catch (Exception e)
+			{
+				throw new IllegalArgumentException("SkillId: " + _id + " invalid affectLimit value: " + affectLimit + ", \"percent-percent\" required");
+			}
+		}
 		
 		_targetType = set.getEnum("target", L2TargetType.class);
 		_power = set.getFloat("power", 0.f);
@@ -959,6 +975,11 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	public final int getAffectRange()
 	{
 		return _affectRange;
+	}
+	
+	public final int[] getAffectLimit()
+	{
+		return _affectLimit;
 	}
 	
 	public final boolean isActive()
