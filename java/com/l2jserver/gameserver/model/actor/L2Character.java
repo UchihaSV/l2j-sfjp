@@ -1696,7 +1696,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						doit = true;
 						break;
 					case DUMMY:
-						doit = skill.hasEffectType(L2EffectType.CPHEAL);
+						if (skill.hasEffectType(L2EffectType.CPHEAL))
+						{
+							doit = true;
+						}
 						break;
 				}
 				
