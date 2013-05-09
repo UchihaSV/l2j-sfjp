@@ -274,7 +274,7 @@ public class L2Npc extends L2Character
 				{
 					for (L2Skill sk : skills)
 					{
-						if ((sk == null) || sk.isPassive() || (sk.getTargetType() == L2TargetType.TARGET_SELF))
+						if ((sk == null) || sk.isPassive() || (sk.getTargetType() == L2TargetType.SELF))
 						{
 							continue;
 						}
@@ -332,7 +332,7 @@ public class L2Npc extends L2Character
 				{
 					for (L2Skill sk : skills)
 					{
-						if ((sk == null) || sk.isPassive() || (sk.getTargetType() == L2TargetType.TARGET_SELF))
+						if ((sk == null) || sk.isPassive() || (sk.getTargetType() == L2TargetType.SELF))
 						{
 							continue;
 						}
