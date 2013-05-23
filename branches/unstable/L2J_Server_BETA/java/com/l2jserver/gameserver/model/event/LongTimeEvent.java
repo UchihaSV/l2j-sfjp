@@ -40,6 +40,8 @@ import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.model.L2DropData;
 import com.l2jserver.gameserver.model.Location;
+import com.l2jserver.gameserver.model.actor.L2Attackable;
+import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
@@ -319,7 +321,9 @@ public class LongTimeEvent extends Quest
 				}
 				else
 				{
-					addSpawn(spawn.npc, spawn.x, spawn.y, spawn.z, spawn.heading, false, millisToEventEnd, false, 0);
+					L2Npc npc = addSpawn(spawn.npc, spawn.x, spawn.y, spawn.z, spawn.heading, false, millisToEventEnd, false, 0);
+					if (!(npc instanceof L2Attackable))
+						EventNpcAligner.alignRight(npc);
 				}
 			}
 		}
