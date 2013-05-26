@@ -100,6 +100,7 @@ import gnu.trove.set.hash.TIntHashSet;
 public class Quest extends ManagedScript
 {
 	public static final Logger _log = Logger.getLogger(Quest.class.getName());
+	private static final boolean CHECK_TAKEITEMS = true;	//[JOJO]
 	
 	/** Map containing events from String value of the event. */
 	private static Map<String, Quest> _allEventsS = new HashMap<>();
@@ -3462,6 +3463,10 @@ public class Quest extends ManagedScript
 		L2ItemInstance item = player.getInventory().getItemByItemId(itemId);
 		if (item == null)
 		{
+if (CHECK_TAKEITEMS) {{
+			if (itemId == -1)
+				_log.log(Level.WARNING, "takeItems(player," + itemId + "," + amount + ")");
+}}
 			return false;
 		}
 		
@@ -3498,17 +3503,6 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * Take an amount of a specified item from player's inventory.
-	 * @param player
-	 * @param itemId Id of the item to take
-	 * @return {@code true} if any items were taken, {@code false} otherwise
-	 */
-	public boolean takeItems(L2PcInstance player, int amount, int itemId)	//+[JOJO]
-	{
-		return takeItems(player, itemId, amount);
-	}
-	
-	/**
 	 * Take an amount of all specified items from player's inventory.
 	 * @param player the player whose items to take
 	 * @param amount the amount to take of each item
@@ -3517,6 +3511,18 @@ public class Quest extends ManagedScript
 	 */
 	public boolean takeItems(L2PcInstance player, int amount, int... itemIds)
 	{
+if (CHECK_TAKEITEMS) {{
+		if (amount != -1)
+		{
+			StringBuilder sb = new StringBuilder("takeItems(player,").append(amount);
+			if (itemIds == null)
+				sb.append("NULL");
+			else
+				for (int item : itemIds) sb.append(',').append(item);
+			sb.append(')');
+			_log.log(Level.WARNING, sb.toString());
+		}
+}}
 		boolean check = true;
 		if (itemIds != null)
 		{
