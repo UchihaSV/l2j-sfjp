@@ -2421,6 +2421,15 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
+	 * Register onRouteFinished trigger for NPC
+	 * @param npcId id of NPC to register
+	 */
+	public void addRouteFinishedId(int npcId)
+	{
+		addEventId(QuestEventType.ON_ROUTE_FINISHED, npcId);
+	}
+	
+	/**
 	 * Use this method to get a random party member from a player's party.<br>
 	 * Useful when distributing rewards after killing an NPC.
 	 * @param player this parameter represents the player whom the party will taken.
