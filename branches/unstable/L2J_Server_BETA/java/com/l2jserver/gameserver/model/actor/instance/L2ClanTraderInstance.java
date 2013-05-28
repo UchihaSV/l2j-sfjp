@@ -51,7 +51,13 @@ public final class L2ClanTraderInstance extends L2Npc
 			{
 				html.setFile(player.getHtmlPrefix(), "data/html/clantrader/" + getNpcId() + "-1.htm");
 			}
-			
+			//[JOJO]-------------------------------------------------
+			html.replace("%clanname%", player.getClan().getName());
+			html.replace("%reputation%", player.getClan().getReputationScore());
+			html.replace("%9911%", Config.BLOODALLIANCE_POINTS);
+			html.replace("%9910%", Config.BLOODOATH_POINTS);
+			html.replace("%9912%", Config.KNIGHTSEPAULETTE_POINTS);
+			//-------------------------------------------------------
 			sendHtmlMessage(player, html);
 			return;
 		}
