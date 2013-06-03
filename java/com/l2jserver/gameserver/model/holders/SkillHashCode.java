@@ -18,39 +18,37 @@
  */
 package com.l2jserver.gameserver.model.holders;
 
-import static com.l2jserver.gameserver.datatables.SkillTable.PRIME;
-
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 
 /**
  * @author JOJO
  */
+@Deprecated
 public class SkillHashCode
 {
 	public static int valueOf(int skillId, int skillLevel)
 	{
-		//assert skillId * PRIME + skillLevel == SkillTable.getSkillHashCode(skillId, skillLevel);
-		return skillId * PRIME + skillLevel;
+		return SkillTable.getSkillHashCode(skillId, skillLevel);
 	}
 	
 	public static int valueOf(L2Skill skill)
 	{
-		return valueOf(skill.getId(), skill.getLevel());
+		return skill.getReuseHashCode();
 	}
 	
 	public static final int getId(int skillHashCode)
 	{
-		return skillHashCode / PRIME;
+		return SkillTable.getSkillId(skillHashCode);
 	}
 	
 	public static final int getLevel(int skillHashCode)
 	{
-		return skillHashCode % PRIME;
+		return SkillTable.getSkillLevel(skillHashCode);
 	}
 	
 	public static final L2Skill getSkill(int skillHashCode)
 	{
-		return SkillTable.getInstance().getInfo(skillHashCode);
+		return SkillTable.getSkill(skillHashCode);
 	}
 }
