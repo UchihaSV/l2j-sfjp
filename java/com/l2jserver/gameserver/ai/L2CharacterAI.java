@@ -744,8 +744,9 @@ public class L2CharacterAI extends AbstractAI
 		
 		if (_actor instanceof L2Npc)
 		{
+			boolean override = false;	//+[JOJO]
 			L2Npc npc = (L2Npc) _actor;
-			WalkingManager.getInstance().onArrived(npc); // Walking Manager support
+			override |= WalkingManager.getInstance().onArrived(npc); // Walking Manager support
 			
 			// Notify quest
 			List<Quest> eventQuests;
@@ -753,9 +754,11 @@ public class L2CharacterAI extends AbstractAI
 			{
 				for (Quest quest : eventQuests)
 				{
-					quest.notifyMoveFinished(npc);
+					override |= quest.notifyMoveFinished(npc);
 				}
 			}
+			if (override)
+				return;
 		}
 		
 		// If the Intention was AI_INTENTION_MOVE_TO, set the Intention to AI_INTENTION_ACTIVE

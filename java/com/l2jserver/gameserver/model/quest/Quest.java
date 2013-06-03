@@ -1147,16 +1147,17 @@ public class Quest extends ManagedScript
 	/**
 	 * @param npc
 	 */
-	public final void notifyMoveFinished(L2Npc npc)
+	public final /*[JOJO]*/boolean notifyMoveFinished(L2Npc npc)
 	{
 		try
 		{
-			onMoveFinished(npc);
+			return onMoveFinished(npc);
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Exception on onMoveFinished() in notifyMoveFinished(): " + e.getMessage(), e);
 		}
+		return false;
 	}
 	
 	/**
@@ -1554,9 +1555,9 @@ public class Quest extends ManagedScript
 	 * This function is called whenever a NPC finishes moving
 	 * @param npc registered NPC
 	 */
-	public void onMoveFinished(L2Npc npc)
+	public /*[JOJO]*/boolean onMoveFinished(L2Npc npc)
 	{
-		
+		return false;
 	}
 	
 	/**
