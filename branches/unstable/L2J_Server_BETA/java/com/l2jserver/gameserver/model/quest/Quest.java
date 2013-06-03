@@ -1146,6 +1146,7 @@ public class Quest extends ManagedScript
 	
 	/**
 	 * @param npc
+	 * @return the true if overridden AI_INTENTION //[JOJO] --> L2CharacterAI#onEvtArrived()
 	 */
 	public final /*[JOJO]*/boolean notifyMoveFinished(L2Npc npc)
 	{
@@ -1554,6 +1555,7 @@ public class Quest extends ManagedScript
 	/**
 	 * This function is called whenever a NPC finishes moving
 	 * @param npc registered NPC
+	 * @return the true if overridden AI_INTENTION //[JOJO] --> L2CharacterAI#onEvtArrived()
 	 */
 	public /*[JOJO]*/boolean onMoveFinished(L2Npc npc)
 	{

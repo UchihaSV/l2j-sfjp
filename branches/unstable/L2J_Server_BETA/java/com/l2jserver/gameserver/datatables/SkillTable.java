@@ -105,9 +105,38 @@ public class SkillTable
 	{
 		return (skillId * PRIME) + skillLevel;
 	}
-	public static final int PRIME = 1021;	//[JOJO]
 	
 	//[JOJO]-------------------------------------------------
+	/**
+	 * @param skillHashCode The Skill hash number
+	 * @return The Skill Id
+	 */
+	public static int getSkillId(int skillHashCode)
+	{
+		return skillHashCode / PRIME;
+	}
+	
+	/**
+	 * @param skillHashCode The Skill hash number
+	 * @return The Skill Level
+	 */
+	public static int getSkillLevel(int skillHashCode)
+	{
+		return skillHashCode % PRIME;
+	}
+	
+	public static final int PRIME = 1021;
+	
+	/**
+	 * @param skillHashCode The Skill hash number
+	 * @return The Skill
+	 */
+	public static L2Skill getSkill(int skillHashCode)
+	{
+		return SkillTable.getInstance()._skills.get(skillHashCode);
+	}
+	
+	@Deprecated
 	public final L2Skill getInfo(final int skillHashCode)
 	{
 		return _skills.get(skillHashCode);

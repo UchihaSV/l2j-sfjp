@@ -616,7 +616,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 	/**
 	 * Manage "node arriving"-related tasks: schedule move to next node; send ON_NODE_ARRIVED event to Quest script
 	 * @param npc NPC to manage
-	 * @return the true if overridden AI_INTENTION [JOJO] --> L2CharacterAI#onEvtArrived()
+	 * @return the true if overridden AI_INTENTION //[JOJO] --> L2CharacterAI#onEvtArrived()
 	 */
 	public /*[JOJO]*/boolean onArrived(final L2Npc npc)
 	{
