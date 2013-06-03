@@ -133,6 +133,9 @@ public class NpcKnownList extends CharKnownList
 					{
 						for (L2PcInstance pl : players)
 						{
+if (com.l2jserver.Config.PC_PROTECT) {{
+							if (pl.isSpawnProtected() || pl.isTeleportProtected()) continue;
+}}
 							if (!pl.isDead() && !pl.isInvul() && pl.isInsideRadius(monster, monster.getAggroRange(), true, false))
 							{
 								// Send aggroRangeEnter
