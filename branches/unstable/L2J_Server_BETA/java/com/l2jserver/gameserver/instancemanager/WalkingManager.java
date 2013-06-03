@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.instancemanager;
 
+import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ACTIVE;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
@@ -614,8 +616,9 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 	/**
 	 * Manage "node arriving"-related tasks: schedule move to next node; send ON_NODE_ARRIVED event to Quest script
 	 * @param npc NPC to manage
+	 * @return the true if overridden AI_INTENTION [JOJO] --> L2CharacterAI#onEvtArrived()
 	 */
-	public void onArrived(final L2Npc npc)
+	public /*[JOJO]*/boolean onArrived(final L2Npc npc)
 	{
 		final WalkInfo walk;
 		if ((walk = _activeRoutes.get(npc.getObjectId())) != null)
@@ -642,29 +645,31 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 					int delay = node.getDelay();
 					walk._blocked = true; // prevents to be ran from walk check task, if there is delay in this node.
 					
-					if (node.getNpcString() != null)
+					NpcStringId npcString;
+					String chatText;
+					if ((npcString = node.getNpcString()) != null)
 					{
-						Broadcast.toKnownPlayers(npc, new NpcSay(npc, Say2.NPC_ALL, node.getNpcString()));
+						Broadcast.toKnownPlayers(npc, new NpcSay(npc, Say2.NPC_ALL, npcString));
 					}
-					else
+					else if ((chatText = node.getChatText()) != null && !chatText.isEmpty())
 					{
-						final String text = node.getChatText();
-						if ((text != null) && !text.isEmpty())
-						{
-							Broadcast.toKnownPlayers(npc, npc.getTemplate().isServerSideName()
-								? new CreatureSay(npc, Say2.NPC_ALL, text)
-								: new NpcSay(npc, Say2.NPC_ALL, text));
-						}
+						Broadcast.toKnownPlayers(npc, npc.getTemplate().isServerSideName()
+							? new CreatureSay(npc, Say2.NPC_ALL, chatText)
+							: new NpcSay(npc, Say2.NPC_ALL, chatText));
 					}
 					
 					if (npc.isDebug())
 					{
 						walk._lastActionTime = System.currentTimeMillis();
 					}
-					ThreadPoolManager.getInstance().scheduleGeneral(new ArrivedTask(npc, walk), 100 + (delay * 1000L));
+					
+					npc.getAI().setIntention(AI_INTENTION_ACTIVE);
+					ThreadPoolManager.getInstance().scheduleGeneral(new ArrivedTask(npc, walk), delay * 1000L);
+					return true;
 				}
 			}
 		}
+		return false;
 	}
 	
 	/**
