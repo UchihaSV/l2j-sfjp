@@ -408,10 +408,17 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 					}
 				}
 				
+if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
+				if (!(getKnownList().getKnownPlayers().isEmpty() || isStunned() || isSleeping() || isParalyzed()))
+				{
+					onRandomAnimation(Rnd.get(2, 3));
+				}
+} else {
 				if (!(isDead() || isStunned() || isSleeping() || isParalyzed()))
 				{
 					onRandomAnimation(Rnd.get(2, 3));
 				}
+}
 				
 if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 				startRandomAnimationTimer(this);
