@@ -3048,14 +3048,6 @@ public class Quest extends ManagedScript
 	{
 		return _onEnterWorld;
 	}
-
-	public void TRACE(String message) {TRACE("", message);}
-	public void TRACE(String title, String message) { com.l2jserver.gameserver.debug.TRACE(title, message); }
-	public String STR(com.l2jserver.gameserver.model.actor.L2Npc npc) { return com.l2jserver.gameserver.debug.STR(npc); }
-	public String STR(com.l2jserver.gameserver.model.L2Object obj) { return com.l2jserver.gameserver.debug.STR(obj); }
-	public String STR(com.l2jserver.gameserver.model.skills.L2Skill skill) { return com.l2jserver.gameserver.debug.STR(skill); }
-	public String STR(com.l2jserver.gameserver.model.L2Object[] targets) { return com.l2jserver.gameserver.debug.STR(targets); }
-	public String STR(java.util.concurrent.ScheduledFuture<?> task) { return com.l2jserver.gameserver.debug.STR(task); }
 	
 	/**
 	 * @param val
