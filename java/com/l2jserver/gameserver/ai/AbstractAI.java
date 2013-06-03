@@ -841,13 +841,6 @@ public abstract class AbstractAI implements Ctrl
 		stopFollow();
 	}
 	
-	@Deprecated protected void TRACE(String message) {TRACE("", message);}
-	@Deprecated protected void TRACE(String title, String message) { com.l2jserver.gameserver.debug.TRACE(title, message); }
-	@Deprecated protected String STR(com.l2jserver.gameserver.model.actor.L2Npc npc) { return com.l2jserver.gameserver.debug.STR(npc); }
-	@Deprecated protected String STR(com.l2jserver.gameserver.model.L2Object obj) { return com.l2jserver.gameserver.debug.STR(obj); }
-	@Deprecated protected String STR(com.l2jserver.gameserver.model.skills.L2Skill skill) { return com.l2jserver.gameserver.debug.STR(skill); }
-	@Deprecated protected String STR(java.util.concurrent.ScheduledFuture<?> task) { return com.l2jserver.gameserver.debug.STR(task); }
-	
 	@Override
 	public String toString()
 	{

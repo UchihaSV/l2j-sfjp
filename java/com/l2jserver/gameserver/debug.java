@@ -40,4 +40,8 @@ public class debug
 		if (task.isDone()) s.append("[DONE]");
 		return s.toString();
 	}
+	public static String AI_INTENTION(com.l2jserver.gameserver.model.actor.L2Npc npc)
+	{
+		return npc.hasAI() ? npc.getAI().getIntention().name() : "NOAI";
+	}
 }
