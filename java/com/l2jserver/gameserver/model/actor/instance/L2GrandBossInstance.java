@@ -158,24 +158,4 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 	{
 		return _useRaidCurse;
 	}
-
-	//[JOJO]-------------------------------------------------
-	/**
-	 * TODO: ’²®’†
-	 * L2Npc ‚© L2AttackableAIScript ‚ÉˆÚ“®‚µ‚½‚Ù‚¤‚ª‚¢‚¢‚©‚àB
-	 */
-	private IEvtArrived _evtArrivedCallback;
-	public void registerEvtArrived(IEvtArrived callback)
-	{
-		_evtArrivedCallback = callback;
-	}
-	public void evtArrived()	// <<== L2CharacterAI#evtArrived()
-	{
-		if (_evtArrivedCallback != null /*&& isCoreAIDisabled()*/) _evtArrivedCallback.onEvtArrived(this);
-	}
-	public interface IEvtArrived
-	{
-		public void onEvtArrived(com.l2jserver.gameserver.model.actor.L2Npc npc);
-	}
-	//-------------------------------------------------------
 }
