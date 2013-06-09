@@ -769,11 +769,6 @@ public class L2CharacterAI extends AbstractAI
 		
 		// Launch actions corresponding to the Event Think
 		onEvtThink();
-		
-		//[JOJO]-------------------------------------------------
-		if (_actor instanceof com.l2jserver.gameserver.model.actor.instance.L2GrandBossInstance)
-			((com.l2jserver.gameserver.model.actor.instance.L2GrandBossInstance) _actor).evtArrived();
-		//-------------------------------------------------------
 	}
 	
 	/**
