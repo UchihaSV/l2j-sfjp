@@ -75,24 +75,33 @@ public final class Util
 		double angleTarget = Math.toDegrees(Math.atan2(obj2Y - obj1Y, obj2X - obj1X));
 		if (angleTarget < 0)
 		{
-			angleTarget = 360 + angleTarget;
+			angleTarget += 360;
 		}
 		return angleTarget;
 	}
 	
 	static final double HEADING_PER_DEGREE = 65536D / 360D;	//182.044444444
+	static final double HEADING_PER_RADIAN = 65536D / 2 / Math.PI;	//10430.378350470453
+	
+
 	public static final double convertHeadingToDegree(int clientHeading)
 	{
 		return clientHeading / HEADING_PER_DEGREE;
 	}
 	
+	public static final double convertHeadingToRadian(int clientHeading)
+	{
+		return clientHeading / HEADING_PER_RADIAN;
+	}
+	
 	public static final int convertDegreeToClientHeading(double degree)
 	{
-		if (degree < 0)
-		{
-			degree = 360 + degree;
-		}
-		return (int) (degree * HEADING_PER_DEGREE);
+		return (int) (degree * HEADING_PER_DEGREE) & 0x0000FFFF;
+	}
+	
+	public static final int convertRadianToClientHeading(double radian)
+	{
+		return (int) (radian * HEADING_PER_RADIAN) & 0x0000FFFF;
 	}
 	
 	public static final int calculateHeadingFrom(L2Object obj1, L2Object obj2)
@@ -102,22 +111,12 @@ public final class Util
 	
 	public static final int calculateHeadingFrom(int obj1X, int obj1Y, int obj2X, int obj2Y)
 	{
-		double angleTarget = Math.toDegrees(Math.atan2(obj2Y - obj1Y, obj2X - obj1X));
-		if (angleTarget < 0)
-		{
-			angleTarget = 360 + angleTarget;
-		}
-		return (int) (angleTarget * HEADING_PER_DEGREE);
+		return (int) (Math.atan2(obj2Y - obj1Y, obj2X - obj1X) * HEADING_PER_RADIAN) & 0x0000FFFF;
 	}
 	
 	public static final int calculateHeadingFrom(double dx, double dy)
 	{
-		double angleTarget = Math.toDegrees(Math.atan2(dy, dx));
-		if (angleTarget < 0)
-		{
-			angleTarget = 360 + angleTarget;
-		}
-		return (int) (angleTarget * HEADING_PER_DEGREE);
+		return (int) (Math.atan2(dy, dx) * HEADING_PER_RADIAN) & 0x0000FFFF;
 	}
 	
 	/**

@@ -19,6 +19,8 @@
 package com.l2jserver.gameserver.model.actor.instance;
 
 import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_IDLE;
+import static com.l2jserver.gameserver.util.Util.calculateDistance;
+import static com.l2jserver.gameserver.util.Util.convertHeadingToRadian;
 
 import java.util.List;
 import java.util.concurrent.Future;
@@ -27,6 +29,8 @@ import javolution.util.FastList;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlIntention;
+import com.l2jserver.gameserver.ai.L2AttackableAI;
+import com.l2jserver.gameserver.ai.L2CharacterAI;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -74,6 +78,9 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 		super(objectId, template);
 		setInstanceType(InstanceType.L2TamedBeastInstance);
 		setHome(this);
+if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
+		setAI(new L2TamedBeastAI(new AIAccessor()));
+}}
 	}
 	
 	public L2TamedBeastInstance(int objectId, L2NpcTemplate template, L2PcInstance owner, int foodSkillId, int x, int y, int z)
@@ -86,6 +93,9 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 		setOwner(owner);
 		setFoodType(foodSkillId);
 		setHome(x, y, z);
+if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
+		setAI(new L2TamedBeastAI(new AIAccessor()));
+}}
 		this.spawnMe(x, y, z);
 	}
 	
@@ -100,6 +110,9 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 		setHome(x, y, z);
 		spawnMe(x, y, z);
 		setOwner(owner);
+if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
+		setAI(new L2TamedBeastAI(new AIAccessor()));
+}}
 		if (isFreyaBeast)
 		{
 			getAI().setIntention(CtrlIntention.AI_INTENTION_FOLLOW, _owner);
@@ -634,4 +647,69 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 			}
 		}
 	}
+	
+	//[JOJO]-------------------------------------------------
+	@Override
+	public L2CharacterAI getAI()
+	{
+if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
+		L2CharacterAI ai = _ai; // copy handle
+		if (ai == null)
+		{
+			synchronized (this)
+			{
+				if (_ai == null)
+				{
+					_ai = new L2TamedBeastAI(new AIAccessor());
+				}
+				return _ai;
+			}
+		}
+		return ai;
+}} else {{
+		return super.getAI();
+}}
+	}
+	
+	protected class L2TamedBeastAI extends L2AttackableAI/*L2CharacterAI*/
+	{
+		public L2TamedBeastAI(L2Character.AIAccessor accessor)
+		{
+			super(accessor);
+		}
+		
+		@Override
+		protected void onEvtArrived()
+		{
+			super.onEvtArrived();
+if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
+			final L2PcInstance owner;
+			if (getIntention() == CtrlIntention.AI_INTENTION_FOLLOW  && (owner = getOwner()) == getFollowTarget() /*&& !owner.isMoving()*/)
+			{
+				/*private static*/final double AVOID_ANGLE = Math.PI / 6;
+				final List<L2TamedBeastInstance> trainedBeasts = owner.getTrainedBeasts();
+				final int size = trainedBeasts.size();
+				if (size >= 2)
+				{
+					final L2TamedBeastInstance beast = (L2TamedBeastInstance) getActor();
+					final double distance = Math.max(64.0, calculateDistance(owner, beast, false));
+					final int index = trainedBeasts.indexOf(beast);
+					final double angle = convertHeadingToRadian(owner.getHeading())
+						+ Math.PI
+						- AVOID_ANGLE * size / 2
+						+ AVOID_ANGLE * index;
+					int x = owner.getX() + (int)(distance * Math.cos(angle));
+					int y = owner.getY() + (int)(distance * Math.sin(angle));
+					int z = owner.getZ();
+					if (x != beast.getX() && y != beast.getY() /*&& z != beast.getZ()*/)
+					{
+						beast.setXYZ(x, y, z);
+						owner.sendPacket(new ValidateLocation(beast));	//TODO:ñ¢äÆê¨
+					}
+				}
+			}
+}}
+		}
+	}
+	//-------------------------------------------------------
 }
