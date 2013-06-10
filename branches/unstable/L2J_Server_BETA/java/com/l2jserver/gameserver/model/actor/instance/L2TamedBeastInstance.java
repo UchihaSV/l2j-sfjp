@@ -35,9 +35,11 @@ import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.skills.L2SkillType;
+import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.MyTargetSelected;
+import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.network.serverpackets.SocialAction;
 import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.StopMove;
@@ -418,6 +420,24 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 	{
 		private final L2TamedBeastInstance _tamedBeast;
 		
+		//[JOJO]-------------------------------------------------
+		private long _chatTime;
+		private int _chatIndex;
+		private static int[] AUTO_CHAT_TEXT =
+		{
+			2029,	// がんばれ！よいしょ！
+			2030,	// 食いしん坊でごめんね。もぐもぐ。
+			2031,	// あなたと息を合わせるのが楽になってきたよ。
+			2032,	// 手伝ってやろう！
+			2033,	// 天気がいいな。ピクニックでも行こうか。
+			2034,	// これといってあなたが気に入ったわけじゃなく．．．あの、その．．．
+			2035,	// ここから離れるな。力を貸してやれなくなるぞ。
+			2036,	// 役に立ってるのかなぁ、私。
+			2037,	// 食べること以外にもできるんだってば！
+			2038,	// えいっ、えいっ、えいっ、えーいっ！
+		};
+		//-------------------------------------------------------
+		
 		CheckDuration(L2TamedBeastInstance tamedBeast)
 		{
 			_tamedBeast = tamedBeast;
@@ -491,6 +511,17 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 					_tamedBeast.deleteMe();
 				}
 			}
+			//[JOJO]-------------------------------------------------
+			long now;
+			if ((now = System.currentTimeMillis()) > _chatTime)
+			{
+				_chatTime = now + Rnd.get(30_000, 120_000) * _tamedBeast.getOwner().getTrainedBeasts().size();
+				int chatIndex;
+				while ((chatIndex = Rnd.get(AUTO_CHAT_TEXT.length)) == _chatIndex) {}
+				_chatIndex = chatIndex;
+				_tamedBeast.broadcastPacket(new NpcSay(_tamedBeast, Say2.ALL, AUTO_CHAT_TEXT[chatIndex]));
+			}
+			//-------------------------------------------------------
 		}
 	}
 	
