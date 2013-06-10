@@ -1203,6 +1203,7 @@ public final class Config
 	public static final boolean FIX_WALKER_ATTACK = true;				//[JOJO]WalkerManager 歩行中のモンスターを攻撃すると無反応のまま停止する不具合の修正.
 	public static final boolean PC_PROTECT = true;						//[JOJO]「今後、アクティブ モンスターを刺激するおそれがあります。」
 	public static final boolean NEVER_TARGET_TAMED = true;				//[JOJO]槍・範囲攻撃をするとテイミングモンスターが巻き添えになる不具合の修正.
+	public static final boolean SORT_TAMED_BEAST = true;				//[JOJO]テイミングモンスターの位置をソート(未完成)
 	
 
 	//
