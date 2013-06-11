@@ -32,6 +32,7 @@ import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.AutoAttackStart;
@@ -42,6 +43,7 @@ import com.l2jserver.gameserver.network.serverpackets.MoveToPawn;
 import com.l2jserver.gameserver.network.serverpackets.StopMove;
 import com.l2jserver.gameserver.network.serverpackets.StopRotation;
 import com.l2jserver.gameserver.taskmanager.AttackStanceTaskManager;
+import com.l2jserver.util.Rnd;
 
 /**
  * Mother class of all objects AI in the world.<br>
@@ -548,7 +550,18 @@ public abstract class AbstractAI implements Ctrl
 			}
 			
 			// Calculate movement data for a move to location action and add the actor to movingObjects of GameTimeController
+if (com.l2jserver.Config.TAMED_BEAST_FOLLOW_RANDOM) {{
+			if (_intention == AI_INTENTION_FOLLOW && _actor instanceof L2TamedBeastInstance && ((L2TamedBeastInstance) _actor).getOwner() == pawn && ((L2PcInstance) pawn).getTrainedBeasts().size() >= 2) {
+				final double angle = Rnd.get() * Math.PI * 2;
+				final int dx = (int)(offset * Math.cos(angle));
+				final int dy = (int)(offset * Math.sin(angle));
+				_accessor.moveTo(pawn.getX() + dx, pawn.getY() + dy, pawn.getZ());
+			} else {
+				_accessor.moveTo(pawn.getX(), pawn.getY(), pawn.getZ(), offset);
+			}
+}} else {{
 			_accessor.moveTo(pawn.getX(), pawn.getY(), pawn.getZ(), offset);
+}}
 			
 			if (!_actor.isMoving())
 			{
