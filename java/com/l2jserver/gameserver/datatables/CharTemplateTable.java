@@ -44,7 +44,6 @@ public final class CharTemplateTable
 	
 	protected CharTemplateTable()
 	{
-		StringIntern.begin();
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			Statement s = con.createStatement();
 			ResultSet rset = s.executeQuery("SELECT * FROM char_templates, lvlupgain WHERE char_templates.classId = lvlupgain.classId ORDER BY char_templates.ClassId"))
@@ -100,10 +99,6 @@ public final class CharTemplateTable
 		catch (SQLException e)
 		{
 			_log.log(Level.SEVERE, getClass().getSimpleName() + ": Failed loading char templates", e);
-		}
-		finally
-		{
-			StringIntern.end();
 		}
 	}
 	
