@@ -201,24 +201,10 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	/** Table of Calculators containing all used calculator */
 	private Calculator[] _calculators;
 	
-	/**
-	 * Map containing all skills of this character.
-	 */
+	/** Map containing all skills of this character. */
 	private final Map<Integer, L2Skill> _skills;// = new FastMap<Integer, L2Skill>().shared();
 	
-	/**
-	 * Map containing all custom skills of this character.
-	 */
-	private Map<Integer, SkillHolder> _customSkills;// = new FastMap<Integer, SkillHolder>().shared();
-	private void _customSkills_put(Integer key, SkillHolder value)	//[JOJO]
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_customSkills == Collections.EMPTY_MAP) _customSkills = new FastMap<Integer, SkillHolder>().shared();
-}}
-		_customSkills.put(key, value);
-	}
-	
-	/** FastMap containing the active chance skills on this character */
+	/** Map containing the active chance skills on this character */
 	private volatile ChanceSkillList _chanceSkills;
 	
 	/** Current force buff this caster is casting to a target */
@@ -406,14 +392,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		attackListeners = Collections.emptyList();		// = Collections.EMPTY_LIST
 		deathListeners = Collections.emptyList();		// = Collections.EMPTY_LIST
 		skillUseListeners = Collections.emptyList();	// = Collections.EMPTY_LIST
-		
-		_customSkills = Collections.emptyMap(); // = Collections.EMPTY_MAP
 }} else {{
 		attackListeners = new FastList<AttackListener>().shared();
 		deathListeners = new FastList<DeathListener>().shared();
 		skillUseListeners = new FastList<SkillUseListener>().shared();
-		
-		_customSkills = new FastMap<Integer, SkillHolder>().shared();
 }}
 		setInstanceType(InstanceType.L2Character);
 		initCharStat();
@@ -441,16 +423,9 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				_skills.putAll(template.getSkills());
 			}
 			
-			if (!_skills.isEmpty())
+			for (L2Skill skill : _skills.values())
 			{
-				for (L2Skill skill : _skills.values())
-				{
-					if (skill.getDisplayId() != skill.getId())
-					{
-						_customSkills_put(skill.getDisplayId(), new SkillHolder(skill));
-					}
-					addStatFuncs(skill.getStatFuncs(null, this));
-				}
+				addStatFuncs(skill.getStatFuncs(null, this));
 			}
 		}
 		else
@@ -469,16 +444,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				{
 					_skills.putAll(((L2NpcTemplate) template).getSkills());
 				}
-				if (!_skills.isEmpty())
+				
+				for (L2Skill skill : _skills.values())
 				{
-					for (L2Skill skill : _skills.values())
-					{
-						if (skill.getDisplayId() != skill.getId())
-						{
-							_customSkills_put(skill.getDisplayId(), new SkillHolder(skill));
-						}
-						addStatFuncs(skill.getStatFuncs(null, this));
-					}
+					addStatFuncs(skill.getStatFuncs(null, this));
 				}
 			}
 			
@@ -1766,17 +1735,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		// Get the Identifier of the skill
 		int magicId = skill.getId();
 		
-		// Get the Display Identifier for a skill that client can't display
-		int displayId = skill.getDisplayId();
-		
-		// Get the level of the skill
-		int level = skill.getLevel();
-		
-		if (level < 1)
-		{
-			level = 1;
-		}
-		
 		// Get the Base Casting Time of the Skills.
 		int skillTime = (skill.getHitTime() + skill.getCoolTime());
 		
@@ -1950,7 +1908,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		
 		// Send a Server->Client packet MagicSkillUser with target, displayId, level, skillTime, reuseDelay
 		// to the L2Character AND to all L2PcInstance in the _KnownPlayers of the L2Character
-		broadcastPacket(new MagicSkillUse(this, target, displayId, level, skillTime, reuseDelay));
+		broadcastPacket(new MagicSkillUse(this, target, skill.getDisplayId(), skill.getDisplayLevel(), skillTime, reuseDelay));
 		
 		// Send a system message USE_S1 to the L2Character
 	//	if (!skill.isPotion() && isPlayer() && magicId != 1312) //[L2J_JP EDIT - TSL]	//[JOJO]r5394îpé~
@@ -6137,15 +6095,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public L2Skill addSkill(L2Skill newSkill)
 	{
 		L2Skill oldSkill = null;
-		
 		if (newSkill != null)
 		{
 			// Replace oldSkill by newSkill or Add the newSkill
 			oldSkill = _skills.put(newSkill.getId(), newSkill);
-			if (newSkill.getDisplayId() != newSkill.getId())
-			{
-				_customSkills_put(newSkill.getDisplayId(), new SkillHolder(newSkill));
-			}
 			// If an old skill has been replaced, remove all its Func objects
 			if (oldSkill != null)
 			{
@@ -6170,47 +6123,13 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			
 			// Add passive effects if there are any.
 			newSkill.getEffectsPassive(this);
-			
-			/*
-			 * if (!newSkill.isChance() && newSkill.triggerAnotherSkill() ) { L2Skill bestowed = SkillTable.getInstance().getInfo(newSkill.getTriggeredId(), newSkill.getTriggeredLevel()); addSkill(bestowed); //bestowed skills are invisible for player. Visible for gm's looking thru gm window. //those
-			 * skills should always be chance or passive, to prevent hlapex. } if(newSkill.isChance() && newSkill.triggerAnotherSkill()) { L2Skill triggeredSkill = SkillTable.getInstance().getInfo(newSkill.getTriggeredId(),newSkill.getTriggeredLevel()); addSkill(triggeredSkill); }
-			 */
 		}
-		
 		return oldSkill;
-	}
-	
-	/**
-	 * Remove a skill from the L2Character and its Func objects from calculator set of the L2Character.<br>
-	 * <B><U>Concept</U>:</B><br>
-	 * All skills own by a L2Character are identified in <B>_skills</B><br>
-	 * <B><U>Actions</U>:</B>
-	 * <ul>
-	 * <li>Remove the skill from the L2Character _skills</li>
-	 * <li>Remove all its Func objects from the L2Character calculator set</li>
-	 * </ul>
-	 * @param skill The L2Skill to remove from the L2Character
-	 * @return The L2Skill removed
-	 */
-	public L2Skill removeSkill(L2Skill skill)
-	{
-		if (skill == null)
-		{
-			return null;
-		}
-		
-		return removeSkill(skill.getId(), true);
 	}
 	
 	public L2Skill removeSkill(L2Skill skill, boolean cancelEffect)
 	{
-		if (skill == null)
-		{
-			return null;
-		}
-		
-		// Remove the skill from the L2Character _skills
-		return removeSkill(skill.getId(), cancelEffect);
+		return (skill != null) ? removeSkill(skill.getId(), cancelEffect) : null;
 	}
 	
 	public L2Skill removeSkill(int skillId)
@@ -6225,10 +6144,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		// Remove all its Func objects from the L2Character calculator set
 		if (oldSkill != null)
 		{
-			if (oldSkill.getDisplayId() != oldSkill.getId())
-			{
-				_customSkills.remove(oldSkill.getDisplayId());
-			}
 			// this is just a fail-safe againts buggers and gm dummies...
 			if ((oldSkill.triggerAnotherSkill()) && (oldSkill.getTriggeredId() > 0))
 			{
@@ -6380,14 +6295,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public Map<Integer, L2Skill> getSkills()
 	{
 		return _skills;
-	}
-	
-	/**
-	 * @return all the custom skills (skills with different display Id than skill Id).
-	 */
-	public final Map<Integer, SkillHolder> getCustomSkills()
-	{
-		return _customSkills;
 	}
 	
 	public ChanceSkillList getChanceSkills()
@@ -6558,21 +6465,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			return;
 		}
 		
-		// Get the display identifier of the skill
-		int magicId = skill.getDisplayId();
-		
-		// Get the level of the skill
-		int level = getSkillLevel(skill.getId());
-		
-		if (level < 1)
-		{
-			level = 1;
-		}
-		
 		// Send a Server->Client packet MagicSkillLaunched to the L2Character AND to all L2PcInstance in the _KnownPlayers of the L2Character
 		if (!skill.isStatic())
 		{
-			broadcastPacket(new MagicSkillLaunched(this, magicId, level, targets));
+			broadcastPacket(new MagicSkillLaunched(this, skill.getDisplayId(), skill.getDisplayLevel(), targets));
 		}
 		
 		mut.phase = 2;

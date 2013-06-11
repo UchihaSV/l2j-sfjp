@@ -826,11 +826,6 @@ public final class L2PcInstance extends L2Playable
 	private double _mpUpdateDecCheck = .0;
 	private double _mpUpdateInterval = .0;
 	
-	// not used any more
-	// private boolean _isRidingFenrirWolf = false;
-	// private boolean _isRidingWFenrirWolf = false;
-	// private boolean _isRidingGreatSnowWolf = false;
-	
 	private boolean _isRidingStrider = false;
 	private boolean _isFlyingMounted = false;
 	
@@ -858,6 +853,9 @@ public final class L2PcInstance extends L2Playable
 	private long _pvpFlagLasts;
 	
 	private long _notMoveUntil = 0;
+	
+	/** Map containing all custom skills of this player. */
+	private Map<Integer, L2Skill> _customSkills = null;
 	
 	public void setPvpFlagLasts(long time)
 	{
@@ -2446,12 +2444,12 @@ public final class L2PcInstance extends L2Playable
 				_curWeightPenalty = newWeightPenalty;
 				if ((newWeightPenalty > 0) && !_dietMode)
 				{
-					super.addSkill(SkillTable.getInstance().getInfo(4270, newWeightPenalty));
+					addSkill(SkillTable.getInstance().getInfo(4270, newWeightPenalty));
 					setIsOverloaded(getCurrentLoad() > maxLoad);
 				}
 				else
 				{
-					super.removeSkill(getKnownSkill(4270));
+					removeSkill(getKnownSkill(4270), false, true);
 					setIsOverloaded(false);
 				}
 				sendPacket(new UserInfo(this));
@@ -2513,11 +2511,11 @@ public final class L2PcInstance extends L2Playable
 			_expertiseWeaponPenalty = weaponPenalty;
 			if (_expertiseWeaponPenalty > 0)
 			{
-				super.addSkill(SkillTable.getInstance().getInfo(FrequentSkill.WEAPON_GRADE_PENALTY.getId(), _expertiseWeaponPenalty));
+				addSkill(SkillTable.getInstance().getInfo(FrequentSkill.WEAPON_GRADE_PENALTY.getId(), _expertiseWeaponPenalty));
 			}
 			else
 			{
-				super.removeSkill(getKnownSkill(FrequentSkill.WEAPON_GRADE_PENALTY.getId()));
+				removeSkill(getKnownSkill(FrequentSkill.WEAPON_GRADE_PENALTY.getId()), false, true);
 			}
 			changed = true;
 		}
@@ -2538,11 +2536,11 @@ public final class L2PcInstance extends L2Playable
 			_expertiseArmorPenalty = armorPenalty;
 			if (_expertiseArmorPenalty > 0)
 			{
-				super.addSkill(SkillTable.getInstance().getInfo(FrequentSkill.ARMOR_GRADE_PENALTY.getId(), _expertiseArmorPenalty));
+				addSkill(SkillTable.getInstance().getInfo(FrequentSkill.ARMOR_GRADE_PENALTY.getId(), _expertiseArmorPenalty));
 			}
 			else
 			{
-				super.removeSkill(getKnownSkill(FrequentSkill.ARMOR_GRADE_PENALTY.getId()));
+				removeSkill(getKnownSkill(FrequentSkill.ARMOR_GRADE_PENALTY.getId()), false, true);
 			}
 			changed = true;
 		}
@@ -8521,6 +8519,13 @@ public final class L2PcInstance extends L2Playable
 		return _isIn7sDungeon;
 	}
 	
+	@Override
+	public L2Skill addSkill(L2Skill newSkill)
+	{
+		addCustomSkill(newSkill);
+		return super.addSkill(newSkill);
+	}
+	
 	/**
 	 * Add a skill to the L2PcInstance _skills and its Func objects to the calculator set of the L2PcInstance and save update in the character_skills table of the database. <B><U> Concept</U> :</B> All skills own by a L2PcInstance are identified in <B>_skills</B> <B><U> Actions</U> :</B> <li>Replace
 	 * oldSkill by newSkill or Add the newSkill</li> <li>If an old skill has been replaced, remove all its Func objects of L2Character calculator set</li> <li>Add Func objects of newSkill to the calculator set of the L2Character</li>
@@ -8531,8 +8536,7 @@ public final class L2PcInstance extends L2Playable
 	public L2Skill addSkill(L2Skill newSkill, boolean store)
 	{
 		// Add a skill to the L2PcInstance _skills and its Func objects to the calculator set of the L2PcInstance
-		L2Skill oldSkill = super.addSkill(newSkill);
-		
+		final L2Skill oldSkill = addSkill(newSkill);
 		// Add or update a L2PcInstance skill in the character_skills table of the database
 		if (store)
 		{
@@ -8544,20 +8548,14 @@ public final class L2PcInstance extends L2Playable
 	@Override
 	public L2Skill removeSkill(L2Skill skill, boolean store)
 	{
-		if (store)
-		{
-			return removeSkill(skill);
-		}
-		return super.removeSkill(skill, true);
+		removeCustomSkill(skill);
+		return store ? removeSkill(skill) : super.removeSkill(skill, true);
 	}
 	
 	public L2Skill removeSkill(L2Skill skill, boolean store, boolean cancelEffect)
 	{
-		if (store)
-		{
-			return removeSkill(skill);
-		}
-		return super.removeSkill(skill, cancelEffect);
+		removeCustomSkill(skill);
+		return store ? removeSkill(skill) : super.removeSkill(skill, cancelEffect);
 	}
 	
 	/**
@@ -8566,11 +8564,11 @@ public final class L2PcInstance extends L2Playable
 	 * @param skill The L2Skill to remove from the L2Character
 	 * @return The L2Skill removed
 	 */
-	@Override
 	public L2Skill removeSkill(L2Skill skill)
 	{
+		removeCustomSkill(skill);
 		// Remove a skill from the L2Character and its Func objects from calculator set of the L2Character
-		final L2Skill oldSkill = super.removeSkill(skill);
+		final L2Skill oldSkill = super.removeSkill(skill, true);
 		if (oldSkill != null)
 		{
 			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
@@ -8684,7 +8682,7 @@ public final class L2PcInstance extends L2Playable
 				}
 				
 				// Add the L2Skill object to the L2Character _skills and its Func objects to the calculator set of the L2Character
-				super.addSkill(skill);
+				addSkill(skill);
 				
 				if (Config.SKILL_CHECK_ENABLE && (!canOverrideCond(PcCondOverride.SKILL_CONDITIONS) || Config.SKILL_CHECK_GM))
 				{
@@ -10857,14 +10855,14 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		{
 			for (L2Skill skill : SkillTreesData.getInstance().getHeroSkillTree().values())
 			{
-				addSkill(skill, false); // Dont Save Hero skills to database
+				addSkill(skill, false); // Don't persist hero skills into database
 			}
 		}
 		else
 		{
 			for (L2Skill skill : SkillTreesData.getInstance().getHeroSkillTree().values())
 			{
-				super.removeSkill(skill); // Just Remove skills from nonHero characters
+				removeSkill(skill, false, true); // Just remove skills from non-hero players
 			}
 		}
 		_hero = hero;
@@ -11061,7 +11059,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		{
 			for (L2Skill skill : nobleSkillTree)
 			{
-				super.removeSkill(skill);
+				removeSkill(skill, false, true);
 			}
 		}
 		
@@ -11156,7 +11154,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 				}
 			}
 			
-			sl.addSkill(s.getDisplayId(), s.getLevel(), s.isPassive(), isDisabled, isEnchantable);
+			sl.addSkill(s.getDisplayId(), s.getDisplayLevel(), s.isPassive(), isDisabled, isEnchantable);
 		}
 		
 		sendPacket(sl);
@@ -11461,7 +11459,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			// 9. Resend a class change animation effect to broadcast to all nearby players.
 			for (L2Skill oldSkill : getAllSkills())
 			{
-				super.removeSkill(oldSkill);
+				removeSkill(oldSkill, false, true);
 			}
 			
 			stopAllEffectsExceptThoseThatLastThroughDeath();
@@ -16239,6 +16237,43 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		if (weapon != null)
 		{
 			weapon.setChargedShot(type, charged);
+		}
+	}
+	
+	/**
+	 * @param skillId the display skill Id
+	 * @return the custom skill
+	 */
+	public final L2Skill getCustomSkill(int skillId)
+	{
+		return (_customSkills != null) ? _customSkills.get(skillId) : null;
+	}
+	
+	/**
+	 * Add a skill level to the custom skills map.
+	 * @param skill the skill to add
+	 */
+	private final void addCustomSkill(L2Skill skill)
+	{
+		if ((skill != null) && (skill.getDisplayId() != skill.getId()))
+		{
+			if (_customSkills == null)
+			{
+				_customSkills = new FastMap<Integer, L2Skill>().shared();
+			}
+			_customSkills.put(skill.getDisplayId(), skill);
+		}
+	}
+	
+	/**
+	 * Remove a skill level from the custom skill map.
+	 * @param skill the skill to remove
+	 */
+	private final void removeCustomSkill(L2Skill skill)
+	{
+		if ((skill != null) && (_customSkills != null) && (skill.getDisplayId() != skill.getId()))
+		{
+			_customSkills.remove(skill.getDisplayId());
 		}
 	}
 	
