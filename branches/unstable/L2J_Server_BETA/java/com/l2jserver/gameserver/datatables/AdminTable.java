@@ -212,6 +212,11 @@ public class AdminTable extends DocumentParser
 		return tmpGmList;
 	}
 	
+	public static java.util.Set<L2PcInstance> getAllGms()
+	{
+		return _gmList.keySet();
+	}
+	
 	/**
 	 * Gets the all GM names.
 	 * @param includeHidden the include hidden
