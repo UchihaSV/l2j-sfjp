@@ -78,7 +78,7 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 		super(objectId, template);
 		setInstanceType(InstanceType.L2TamedBeastInstance);
 		setHome(this);
-if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
+if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setAI(new L2TamedBeastAI(new AIAccessor()));
 }}
 	}
@@ -93,7 +93,7 @@ if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
 		setOwner(owner);
 		setFoodType(foodSkillId);
 		setHome(x, y, z);
-if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
+if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setAI(new L2TamedBeastAI(new AIAccessor()));
 }}
 		this.spawnMe(x, y, z);
@@ -110,7 +110,7 @@ if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
 		setHome(x, y, z);
 		spawnMe(x, y, z);
 		setOwner(owner);
-if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
+if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setAI(new L2TamedBeastAI(new AIAccessor()));
 }}
 		if (isFreyaBeast)
@@ -652,7 +652,7 @@ if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
 	@Override
 	public L2CharacterAI getAI()
 	{
-if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
+if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		L2CharacterAI ai = _ai; // copy handle
 		if (ai == null)
 		{
@@ -682,9 +682,9 @@ if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
 		protected void onEvtArrived()
 		{
 			super.onEvtArrived();
-if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
+if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 			final L2PcInstance owner;
-			if (getIntention() == CtrlIntention.AI_INTENTION_FOLLOW  && (owner = getOwner()) == getFollowTarget() /*&& !owner.isMoving()*/)
+			if (getIntention() == CtrlIntention.AI_INTENTION_FOLLOW  && (owner = getOwner()) == getFollowTarget() && owner.getAI().getIntention() == AI_INTENTION_IDLE)
 			{
 				/*private static*/final double AVOID_ANGLE = Math.PI / 6;
 				final List<L2TamedBeastInstance> trainedBeasts = owner.getTrainedBeasts();
@@ -704,7 +704,7 @@ if (com.l2jserver.Config.SORT_TAMED_BEAST) {{
 					if (x != beast.getX() && y != beast.getY() /*&& z != beast.getZ()*/)
 					{
 						beast.setXYZ(x, y, z);
-						owner.sendPacket(new ValidateLocation(beast));	//TODO:ñ¢äÆê¨
+						owner.sendPacket(new ValidateLocation(beast));
 					}
 				}
 			}
