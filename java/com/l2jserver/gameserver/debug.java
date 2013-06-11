@@ -11,7 +11,7 @@ public class debug
 //		 * example 1
 //		 */
 //		com.l2jserver.gameserver.network.serverpackets.CreatureSay cs = new com.l2jserver.gameserver.network.serverpackets.CreatureSay(0, com.l2jserver.gameserver.network.clientpackets.Say2.TELL, title, message);
-//		for (com.l2jserver.gameserver.model.actor.instance.L2PcInstance pc : com.l2jserver.gameserver.datatables.AdminTable.getInstance().getAllGms(true))
+//		for (com.l2jserver.gameserver.model.actor.instance.L2PcInstance pc : com.l2jserver.gameserver.datatables.AdminTable.getAllGms())
 //			pc.sendPacket(cs);
 
 //		/**
@@ -40,8 +40,8 @@ public class debug
 		if (task.isDone()) s.append("[DONE]");
 		return s.toString();
 	}
-	public static String AI_INTENTION(com.l2jserver.gameserver.model.actor.L2Npc npc)
+	public static String AI_INTENTION(com.l2jserver.gameserver.model.actor.L2Character character)
 	{
-		return npc.hasAI() ? npc.getAI().getIntention().name() : "NOAI";
+		return character.hasAI() ? character.getAI().getIntention().name() : "NOAI";
 	}
 }
