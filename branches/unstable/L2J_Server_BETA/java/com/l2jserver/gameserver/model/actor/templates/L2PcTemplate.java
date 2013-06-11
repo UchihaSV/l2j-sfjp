@@ -35,7 +35,6 @@ public class L2PcTemplate extends L2CharTemplate
 {
 	private final ClassId _classId;
 	private final Race _race;
-	private final String _className;
 	
 	private final int _spawnX;
 	private final int _spawnY;
@@ -64,7 +63,6 @@ public class L2PcTemplate extends L2CharTemplate
 		super(set);
 		_classId = ClassId.getClassId(set.getInteger("classId"));
 		_race = Race.values()[set.getInteger("raceId")];
-		_className = intern(set.getString("className"));
 		
 		_spawnX = set.getInteger("spawnX");
 		_spawnY = set.getInteger("spawnY");
@@ -103,16 +101,6 @@ public class L2PcTemplate extends L2CharTemplate
 	public Race getRace()
 	{
 		return _race;
-	}
-	
-	/**
-	 * @return the template server side class name.
-	 * @deprecated replaced by {@link ClassInfo#getClassName()}
-	 */
-	@Deprecated
-	public String getClassName()
-	{
-		return _className;
 	}
 	
 	/**
