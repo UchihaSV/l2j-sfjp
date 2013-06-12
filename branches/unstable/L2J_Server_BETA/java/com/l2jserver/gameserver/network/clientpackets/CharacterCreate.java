@@ -347,7 +347,6 @@ public final class CharacterCreate extends L2GameClientPacket
 		newChar.deleteMe();
 		
 		final CharSelectionInfo cl = new CharSelectionInfo(client.getAccountName(), client.getSessionId().playOkID1);
-		client.getConnection().sendPacket(cl);
 		client.setCharSelection(cl.getCharInfo());
 		
 		if (Config.DEBUG)
