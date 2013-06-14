@@ -129,14 +129,12 @@ public class NpcKnownList extends CharKnownList
 				if (monster.getAI().getIntention() == CtrlIntention.AI_INTENTION_MOVE_TO)
 				{
 					final Collection<L2PcInstance> players = getKnownPlayers().values();
-					if (players != null)
+					//if (players != null)	//-[JOJO]
 					{
 						for (L2PcInstance pl : players)
 						{
-if (com.l2jserver.Config.PC_PROTECT) {{
-							if (pl.isSpawnProtected() || pl.isTeleportProtected()) continue;
-}}
-							if (!pl.isDead() && !pl.isInvul() && pl.isInsideRadius(monster, monster.getAggroRange(), true, false))
+							if (!pl.isDead() && !pl.isInvul() && pl.isInsideRadius(monster, monster.getAggroRange(), true, false)
+							 && autoAttackCondition(pl))	//[JOJO]
 							{
 								// Send aggroRangeEnter
 								if (monster.getHating(pl) == 0)
@@ -157,5 +155,20 @@ if (com.l2jserver.Config.PC_PROTECT) {{
 				}
 			}
 		}
+		//[JOJO]-------------------------------------------------
+		private boolean autoAttackCondition(L2PcInstance target)
+		{
+			//TODO: return getActiveChar().getAI().autoAttackCondition(target); --> L2AttackableAI#autoAttackCondition
+if (com.l2jserver.Config.PC_PROTECT) {{
+			if (target.isSpawnProtected() || target.isTeleportProtected()) return false;
+}}
+if (com.l2jserver.Config.SILENT_MOVE_PROTECT) {{
+			// Check if the AI isn't a Raid Boss, can See Silent Moving players and the target isn't in silent move mode
+			final L2Attackable me = (L2Attackable) getActiveChar();
+			if (!me.isRaid() && !me.canSeeThroughSilentMove() && target.isSilentMoving()) return false;
+}}
+			return true;
+		}
+		//-------------------------------------------------------
 	}
 }

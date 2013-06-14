@@ -1202,6 +1202,7 @@ public final class Config
 	public static final boolean FIX_CoupleSocial_AI_INTENTION = true;	//[JOJO]相手が追従モードのときカップル アクションが行えない.
 	public static final boolean FIX_WALKER_ATTACK = true;				//[JOJO]WalkerManager 歩行中のモンスターを攻撃すると無反応のまま停止する不具合の修正.
 	public static final boolean PC_PROTECT = true;						//[JOJO]「今後、アクティブ モンスターを刺激するおそれがあります。」
+	public static final boolean SILENT_MOVE_PROTECT = true;				//[JOJO]サイレントムーブ
 	public static final boolean NEVER_TARGET_TAMED = true;				//[JOJO]槍・範囲攻撃をするとテイミングモンスターが巻き添えになる不具合の修正.
 	public static final boolean TAMED_BEAST_ALLIVE_SORT = true;			//[JOJO]テイミングモンスターの位置をソート
 	public static final boolean TAMED_BEAST_FOLLOW_RANDOM = true;		//[JOJO]テイミングモンスターの位置を分散
