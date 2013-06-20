@@ -30,6 +30,7 @@ import com.l2jserver.gameserver.model.actor.L2Trap;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2NpcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance;
 import com.l2jserver.gameserver.model.effects.AbnormalEffect;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 
@@ -52,6 +53,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 	
 	protected int _rhand, _lhand, _chest, _enchantEffect;
 	protected double _collisionHeight, _collisionRadius;
+	protected int _nameId = -1;	//[JOJO] npcstring
 	protected String _name = "";
 	protected String _title = "";
 	
@@ -95,6 +97,14 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			{
 				_name = cha.getName();// On every subclass
 			}
+			//[JOJO]-------------------------------------------------
+			L2TamedBeastInstance tamedBeast;
+			if (cha instanceof L2TamedBeastInstance && (tamedBeast = (L2TamedBeastInstance) cha).nameId > 0)
+			{
+				_nameId = tamedBeast.nameId;
+				_name = tamedBeast.nameParam;
+			}
+			//-------------------------------------------------------
 			
 			if (Config.L2JMOD_CHAMPION_ENABLE && cha.isChampion())
 			{
@@ -166,16 +176,8 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeC(_npc.isInCombat() ? 1 : 0);
 			writeC(_npc.isAlikeDead() ? 1 : 0);
 			writeC(_isSummoned ? 2 : 0); // invisible ?? 0=false 1=true 2=summoned (only works if model has a summon animation)
-			//[JOJO]-------------------------------------------------
-			if (_name.startsWith("\f")) {	// BeastFarm.java
-				String[] a = _name.split("\f");
-				writeD(Integer.parseInt(a[1])); // High Five NPCString ID
-				for (int i = 2, length = a.length; i < length; ++i) writeS(a[i]);
-			} else {
-			//-------------------------------------------------------
-				writeD(-1); // High Five NPCString ID
-				writeS(_name);
-			}
+			writeD(_nameId); // High Five NPCString ID [JOJO]
+			writeS(_name);
 			writeD(-1); // High Five NPCString ID
 			writeS(_title);
 			writeD(0x00); // Title color 0=client default
