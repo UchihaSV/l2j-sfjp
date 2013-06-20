@@ -22,10 +22,10 @@ import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_IDLE;
 import static com.l2jserver.gameserver.util.Util.calculateDistance;
 import static com.l2jserver.gameserver.util.Util.convertHeadingToRadian;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Future;
-
-import javolution.util.FastList;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlIntention;
@@ -46,7 +46,6 @@ import com.l2jserver.gameserver.network.serverpackets.MyTargetSelected;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.network.serverpackets.SocialAction;
 import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
-import com.l2jserver.gameserver.network.serverpackets.StopMove;
 import com.l2jserver.gameserver.network.serverpackets.ValidateLocation;
 import com.l2jserver.gameserver.util.Point3D;
 import com.l2jserver.util.Rnd;
@@ -58,6 +57,12 @@ import com.l2jserver.util.Rnd;
 // The (mostly optional) AI on feeding the spawn is handled by the datapack ai script
 public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 {
+	// Config
+	private static final boolean AUTO_CHAT = true;
+	private static final boolean AUTO_BUFF = true;
+	private static final boolean AUTO_DEBUFF = true;
+	private static final boolean AUTO_HEAL = true;
+	
 	private int _foodSkillId;
 	private static final int MAX_DISTANCE_FROM_HOME = 30000;
 	private static final int MAX_DISTANCE_FROM_OWNER = 2000;
@@ -73,7 +78,25 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 	private Future<?> _buffTask = null;
 	private Future<?> _durationCheckTask = null;
 	protected boolean _isFreyaBeast;
-	private List<L2Skill> _beastSkills = null;
+	protected boolean _hasDeBuffSkill, _hasHealSkill;	//+[JOJO]
+	
+	//[JOJO]-------------------------------------------------
+	protected long _chatTime;
+	protected int _chatIndex;
+	protected static int[] AUTO_CHAT_TEXT =
+	{
+		2029,	// がんばれ！よいしょ！
+		2030,	// 食いしん坊でごめんね。もぐもぐ。
+		2031,	// あなたと息を合わせるのが楽になってきたよ。
+		2032,	// 手伝ってやろう！
+		2033,	// 天気がいいな。ピクニックでも行こうか。
+		2034,	// これといってあなたが気に入ったわけじゃなく．．．あの、その．．．
+		2035,	// ここから離れるな。力を貸してやれなくなるぞ。
+		2036,	// 役に立ってるのかなぁ、私。
+		2037,	// 食べること以外にもできるんだってば！
+		2038,	// えいっ、えいっ、えいっ、えーいっ！
+	};
+	//-------------------------------------------------------
 	
 	public L2TamedBeastInstance(int objectId, L2NpcTemplate template)
 	{
@@ -85,23 +108,24 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 }}
 	}
 	
-	public L2TamedBeastInstance(int objectId, L2NpcTemplate template, L2PcInstance owner, int foodSkillId, int x, int y, int z)
+	public L2TamedBeastInstance(int objectId, L2NpcTemplate template, L2PcInstance owner, int foodSkillId, int x, int y, int z) // FeedableBeasts
 	{
 		super(objectId, template);
 		_isFreyaBeast = false;
 		setInstanceType(InstanceType.L2TamedBeastInstance);
 		setCurrentHp(getMaxHp());
 		setCurrentMp(getMaxMp());
-		setOwner(owner);
 		setFoodType(foodSkillId);
 		setHome(x, y, z);
+		spawnMe(x, y, z);
 if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setAI(new L2TamedBeastAI(new AIAccessor()));
 }}
-		this.spawnMe(x, y, z);
+		setOwner(owner);
+		startOwnerBuffs();
 	}
 	
-	public L2TamedBeastInstance(int objectId, L2NpcTemplate template, L2PcInstance owner, int food, int x, int y, int z, boolean isFreyaBeast)
+	public L2TamedBeastInstance(int objectId, L2NpcTemplate template, L2PcInstance owner, int food, int x, int y, int z, boolean isFreyaBeast) // BeastFarm
 	{
 		super(objectId, template);
 		_isFreyaBeast = isFreyaBeast;
@@ -111,15 +135,14 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setFoodType(food);
 		setHome(x, y, z);
 		spawnMe(x, y, z);
-		setOwner(owner);
 if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setAI(new L2TamedBeastAI(new AIAccessor()));
 }}
+		setOwner(owner);
 		if (isFreyaBeast)
 		{
 			getAI().setIntention(CtrlIntention.AI_INTENTION_FOLLOW, _owner);
 		}
-		
 	}
 	
 	public void onReceiveFood()
@@ -176,7 +199,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 			{
 				_durationCheckTask.cancel(true);
 			}
-			_durationCheckTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new CheckDuration(this), DURATION_CHECK_INTERVAL, DURATION_CHECK_INTERVAL);
+			_durationCheckTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new CheckDuration(), DURATION_CHECK_INTERVAL, DURATION_CHECK_INTERVAL);
 		}
 	}
 	
@@ -217,31 +240,117 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		return !_isFreyaBeast;
 	}
 	
-	public boolean isFreyaBeast()
+	//[JOJO]-------------------------------------------------
+	private boolean canAutoBuff()
 	{
-		return _isFreyaBeast;
+		if (AUTO_BUFF)
+			return true;
+		else
+			return !_isFreyaBeast;
 	}
 	
-	public void addBeastSkill(L2Skill skill)
+	private boolean canAutoDeBuff()
 	{
-		if (_beastSkills == null)
-		{
-			_beastSkills = new FastList<>();
-		}
-		_beastSkills.add(skill);
+		if (AUTO_DEBUFF)
+			return true;
+		else
+			return !_isFreyaBeast;
 	}
+	
+	private boolean canAutoHeal()
+	{
+		if (AUTO_HEAL)
+			return true;
+		else
+			return !_isFreyaBeast;
+	}
+	
+	private boolean hasDeBuffSkill()
+	{
+		if (canAutoDeBuff())
+		{
+			for (L2Skill skill : getSkills().values())
+				if (isDeBuffSkill(skill))
+					return true;
+		}
+		return false;
+	}
+	
+	private boolean hasHealSkill()
+	{
+		if (canAutoHeal())
+		{
+			for (L2Skill skill : getSkills().values())
+				if (isHealSkill(skill))
+					return true;
+		}
+		return false;
+	}
+	
+	protected static boolean isBuffSkill(L2Skill skill)
+	{
+		return skill.getSkillType() == L2SkillType.BUFF;
+	}
+	
+	protected static boolean isDeBuffSkill(L2Skill skill)
+	{
+		return skill.getSkillType() == L2SkillType.DEBUFF;
+	}
+	
+	protected static boolean isHealSkill(L2Skill skill)
+	{
+		switch (skill.getSkillType())
+		{
+			case HEAL:
+			case HEAL_PERCENT:
+			case MANAHEAL_BY_LEVEL:
+			case MANAHEAL_PERCENT:
+				return true;
+			default:
+				return skill.hasEffectType(L2EffectType.CPHEAL,
+					L2EffectType.HEAL,
+					L2EffectType.HEAL_PERCENT,
+					L2EffectType.MANAHEAL_BY_LEVEL,
+					L2EffectType.MANAHEAL_PERCENT);
+		}
+	}
+	
+	@Override
+	public L2Skill addSkill(L2Skill newSkill)
+	{
+		L2Skill oldSkill = super.addSkill(newSkill);
+		_hasDeBuffSkill = hasDeBuffSkill();
+		_hasHealSkill = hasHealSkill();
+		return oldSkill;
+	}
+	
+	public void removeBuffSkills()
+	{
+		for (Iterator<Map.Entry<Integer, L2Skill>> it = getSkills().entrySet().iterator(); it.hasNext(); )
+		{
+			Map.Entry<Integer, L2Skill> e = it.next();
+			L2Skill skill = e.getValue();
+			if (isBuffSkill(skill))
+				it.remove();
+		}
+	}
+	
+	//-------------------------------------------------------
 	
 	public void castBeastSkills()
 	{
-		if ((_owner == null) || (_beastSkills == null))
+		if (_owner == null)
 		{
 			return;
 		}
 		int delay = 100;
-		for (L2Skill skill : _beastSkills)
+		for (L2Skill skill : getSkills().values())
 		{
-			ThreadPoolManager.getInstance().scheduleGeneral(new buffCast(skill), delay);
-			delay += (100 + skill.getHitTime());
+			if (isBuffSkill(skill))
+			{
+				ThreadPoolManager.getInstance().scheduleGeneral(new buffCast(skill), delay);
+				delay += (100 + skill.getHitTime());
+			}
 		}
 		ThreadPoolManager.getInstance().scheduleGeneral(new buffCast(null), delay);
 	}
@@ -274,14 +383,13 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		return _owner;
 	}
 	
-	public void setOwner(L2PcInstance owner)
+	private void setOwner(L2PcInstance owner)
 	{
 		if (owner != null)
 		{
 			_owner = owner;
 			setTitle(owner.getName());
 			// broadcast the new title
-			setShowSummonAnimation(true);
 			broadcastPacket(new AbstractNpcInfo.NpcInfo(this, owner));
 			
 			owner.addTrainedBeast(this);
@@ -289,30 +397,25 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 			// always and automatically follow the owner.
 			getAI().startFollow(_owner, 100);
 			
-			if (!_isFreyaBeast)
-			{
-				// instead of calculating this value each time, let's get this now and pass it on
-				int totalBuffsAvailable = 0;
-				for (L2Skill skill : getTemplate().getSkills().values())
-				{
-					// if the skill is a buff, check if the owner has it already [ owner.getEffect(L2Skill skill) ]
-					if (skill.getSkillType() == L2SkillType.BUFF)
-					{
-						totalBuffsAvailable++;
-					}
-				}
-				
-				// start the buff tasks
-				if (_buffTask != null)
-				{
-					_buffTask.cancel(true);
-				}
-				_buffTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new CheckOwnerBuffs(this, totalBuffsAvailable), BUFF_INTERVAL, BUFF_INTERVAL);
-			}
+			_hasDeBuffSkill = hasDeBuffSkill();
+			_hasHealSkill = hasHealSkill();
 		}
 		else
 		{
 			deleteMe(); // despawn if no owner
+		}
+	}
+	
+	public void startOwnerBuffs()
+	{
+		if (canAutoBuff())
+		{
+			// start the buff tasks
+			if (_buffTask != null)
+			{
+				_buffTask.cancel(true);
+			}
+			_buffTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new CheckOwnerBuffs(), 30000/*BUFF_INTERVAL*/, BUFF_INTERVAL);
 		}
 	}
 	
@@ -360,11 +463,16 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		// if the owner is too far away, stop anything else and immediately run towards the owner.
 		if (!_owner.isInsideRadius(this, MAX_DISTANCE_FROM_OWNER, true, true))
 		{
-			getAI().startFollow(_owner);
+			if (!isMoving())
+				getAI().startFollow(_owner);
+			return;
+		}
+		if (!(_hasDeBuffSkill || _hasHealSkill))
+		{
 			return;
 		}
 		// if the owner is dead, do nothing...
-		if (_owner.isDead() || _isFreyaBeast)
+		if (_owner.isDead())
 		{
 			return;
 		}
@@ -381,10 +489,11 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		// use of more than one debuff at this moment is acceptable
 		if (HPRatio >= 0.8)
 		{
-			for (L2Skill skill : getTemplate().getSkills().values())
+		  if (attacker != null && getCurrentHp() == getMaxHp())
+			for (L2Skill skill : /*getTemplate().*/getSkills().values())
 			{
 				// if the skill is a debuff, check if the attacker has it already [ attacker.getEffect(L2Skill skill) ]
-				if ((skill.getSkillType() == L2SkillType.DEBUFF) && (Rnd.get(3) < 1) && ((attacker != null) && (attacker.getFirstEffect(skill) != null)))
+				if (isDeBuffSkill(skill) && Rnd.get(3) < 1 && attacker.getFirstEffect(skill) == null)
 				{
 					sitCastAndFollow(skill, attacker);
 				}
@@ -401,10 +510,10 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 			}
 			
 			// if the owner has a lot of HP, then debuff the enemy with a random debuff among the available skills
-			for (L2Skill skill : getTemplate().getSkills().values())
+			for (L2Skill skill : /*getTemplate().*/getSkills().values())
 			{
 				// if the skill is a buff, check if the owner has it already [ owner.getEffect(L2Skill skill) ]
-				if ((Rnd.get(5) < chance) && skill.hasEffectType(L2EffectType.CPHEAL, L2EffectType.HEAL, L2EffectType.HEAL_PERCENT, L2EffectType.MANAHEAL_BY_LEVEL, L2EffectType.MANAHEAL_PERCENT))
+				if (Rnd.get(5) < chance && isHealSkill(skill))
 				{
 					sitCastAndFollow(skill, _owner);
 				}
@@ -423,7 +532,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	protected void sitCastAndFollow(L2Skill skill, L2Character target)
 	{
 		stopMove(null);
-		broadcastPacket(new StopMove(this));
+ //		broadcastPacket(new StopMove(this));	//-[JOJO]
 		getAI().setIntention(AI_INTENTION_IDLE);
 		
 		setTarget(target);
@@ -431,36 +540,12 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		getAI().setIntention(CtrlIntention.AI_INTENTION_FOLLOW, _owner);
 	}
 	
-	private static class CheckDuration implements Runnable
+	protected class CheckDuration implements Runnable
 	{
-		private final L2TamedBeastInstance _tamedBeast;
-		
-		//[JOJO]-------------------------------------------------
-		private long _chatTime;
-		private int _chatIndex;
-		private static int[] AUTO_CHAT_TEXT =
-		{
-			2029,	// がんばれ！よいしょ！
-			2030,	// 食いしん坊でごめんね。もぐもぐ。
-			2031,	// あなたと息を合わせるのが楽になってきたよ。
-			2032,	// 手伝ってやろう！
-			2033,	// 天気がいいな。ピクニックでも行こうか。
-			2034,	// これといってあなたが気に入ったわけじゃなく．．．あの、その．．．
-			2035,	// ここから離れるな。力を貸してやれなくなるぞ。
-			2036,	// 役に立ってるのかなぁ、私。
-			2037,	// 食べること以外にもできるんだってば！
-			2038,	// えいっ、えいっ、えいっ、えーいっ！
-		};
-		//-------------------------------------------------------
-		
-		CheckDuration(L2TamedBeastInstance tamedBeast)
-		{
-			_tamedBeast = tamedBeast;
-		}
-		
 		@Override
 		public void run()
 		{
+			final L2TamedBeastInstance _tamedBeast = L2TamedBeastInstance.this;
 			int foodTypeSkillId = _tamedBeast.getFoodType();
 			L2PcInstance owner = _tamedBeast.getOwner();
 			
@@ -527,37 +612,48 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 				}
 			}
 			//[JOJO]-------------------------------------------------
-			long now;
-			if ((now = System.currentTimeMillis()) > _chatTime)
+			if (AUTO_CHAT)
 			{
-				_chatTime = now + Rnd.get(30_000, 120_000) * _tamedBeast.getOwner().getTrainedBeasts().size();
-				int chatIndex;
-				while ((chatIndex = Rnd.get(AUTO_CHAT_TEXT.length)) == _chatIndex) {}
-				_chatIndex = chatIndex;
-				_tamedBeast.broadcastPacket(new NpcSay(_tamedBeast, Say2.ALL, AUTO_CHAT_TEXT[chatIndex]));
+				long now;
+				if ((now = System.currentTimeMillis()) > _chatTime)
+				{
+					_chatTime = now + Rnd.get(30_000, 120_000) * _tamedBeast.getOwner().getTrainedBeasts().size();
+					int chatIndex;
+					while ((chatIndex = Rnd.get(AUTO_CHAT_TEXT.length)) == _chatIndex) {}
+					_chatIndex = chatIndex;
+					_tamedBeast.broadcastPacket(new NpcSay(_tamedBeast, Say2.ALL, AUTO_CHAT_TEXT[chatIndex]));
+				}
 			}
 			//-------------------------------------------------------
 		}
 	}
 	
-	private class CheckOwnerBuffs implements Runnable
+	protected class CheckOwnerBuffs implements Runnable
 	{
-		private final L2TamedBeastInstance _tamedBeast;
-		private final int _numBuffs;
+		private final int _numBuffs, _limitBuffs;
 		
-		CheckOwnerBuffs(L2TamedBeastInstance tamedBeast, int numBuffs)
+		protected CheckOwnerBuffs()
 		{
-			_tamedBeast = tamedBeast;
-			_numBuffs = numBuffs;
+			// instead of calculating this value each time, let's get this now and pass it on
+			int totalBuffsAvailable = 0;
+			for (L2Skill skill : getSkills().values())
+			{
+				// if the skill is a buff, check if the owner has it already [ owner.getEffect(L2Skill skill) ]
+				if (isBuffSkill(skill))
+					++totalBuffsAvailable;
+			}
+			int limitBuffs = totalBuffsAvailable >= 3 ? totalBuffsAvailable * 2 / 3 : totalBuffsAvailable;
+			_numBuffs = totalBuffsAvailable;
+			_limitBuffs = limitBuffs;
 		}
 		
 		@Override
 		public void run()
 		{
-			L2PcInstance owner = _tamedBeast.getOwner();
+			L2PcInstance owner = getOwner();
 			
 			// check if the owner is no longer around...if so, despawn
-			if ((owner == null) || !owner.isOnline())
+			if (owner == null || !owner.isOnline())
 			{
 				deleteMe();
 				return;
@@ -585,27 +681,27 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 			L2Skill buffToGive = null;
 			
 			// get this npc's skills: getSkills()
-			for (L2Skill skill : _tamedBeast.getTemplate().getSkills().values())
+			for (L2Skill skill : getSkills().values())
 			{
 				// if the skill is a buff, check if the owner has it already [ owner.getEffect(L2Skill skill) ]
-				if (skill.getSkillType() == L2SkillType.BUFF)
+				if (isBuffSkill(skill))
 				{
-					if (i++ == rand)
+					if (owner.getFirstEffect(skill) != null)
+					{
+						++totalBuffsOnOwner;
+					}
+					else if (i == rand)
 					{
 						buffToGive = skill;
 					}
-					if (owner.getFirstEffect(skill) != null)
-					{
-						totalBuffsOnOwner++;
-					}
+					++i;
 				}
 			}
 			// if the owner has less than 60% of this beast's available buff, cast a random buff
-			if (((_numBuffs * 2) / 3) > totalBuffsOnOwner)
-			{
-				_tamedBeast.sitCastAndFollow(buffToGive, owner);
-			}
-			getAI().setIntention(CtrlIntention.AI_INTENTION_FOLLOW, _tamedBeast.getOwner());
+			if (buffToGive != null && totalBuffsOnOwner < _limitBuffs)
+				sitCastAndFollow(buffToGive, owner);
+			else
+				getAI().setIntention(CtrlIntention.AI_INTENTION_FOLLOW, getOwner());
 		}
 	}
 	
