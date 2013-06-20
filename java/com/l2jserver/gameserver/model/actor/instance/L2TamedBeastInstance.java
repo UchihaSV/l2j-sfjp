@@ -68,6 +68,8 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 	private int _remainingTime = MAX_DURATION;
 	private int _homeX, _homeY, _homeZ;
 	protected L2PcInstance _owner;
+	public int nameId = -1;	//+[JOJO] npcstring
+	public String nameParam = null;	//+[JOJO]
 	private Future<?> _buffTask = null;
 	private Future<?> _durationCheckTask = null;
 	protected boolean _isFreyaBeast;
