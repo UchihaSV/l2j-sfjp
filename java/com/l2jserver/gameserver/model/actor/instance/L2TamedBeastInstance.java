@@ -496,6 +496,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 				if (isDeBuffSkill(skill) && Rnd.get(3) < 1 && attacker.getFirstEffect(skill) == null)
 				{
 					sitCastAndFollow(skill, attacker);
+					break;	// isCastingNow
 				}
 			}
 		}
@@ -516,6 +517,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 				if (Rnd.get(5) < chance && isHealSkill(skill))
 				{
 					sitCastAndFollow(skill, _owner);
+					break;	// isCastingNow
 				}
 			}
 		}
