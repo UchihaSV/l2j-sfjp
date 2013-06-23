@@ -748,7 +748,8 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 			final List<L2NpcWalkerNode> WALKS = route.getNodeList();
 			assert WALKS instanceof ArrayList;
 			final L2NpcTemplate markerNpcTemplate = NpcTable.getInstance().getTemplate(MARKER_NPC);
-			for (int index = 0, length = WALKS.size(); index < length; ++index) {
+			int length = WALKS.size();
+			for (int index = 0; index < length; ++index) {
 				L2NpcWalkerNode node = WALKS.get(index);
 				L2NpcWalkerNode next = WALKS.get((index + 1) % length);
 				
@@ -771,6 +772,8 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 					n.setName(name);
 					n.broadcastPacket(new AbstractNpcInfo.NpcInfo(n, null));
 				}
+				
+				if (route.getRepeatType() != REPEAT_GO_FIRST && index + 1 == length) break;
 				
 				// adena line
 				for (double p = pitch; p < distance; p += pitch) {
