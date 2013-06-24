@@ -804,7 +804,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 * @param player : L2Character pointing out the player
 	 * @return Func[] : array of functions
 	 */
-	public Func[] getStatFuncs(L2ItemInstance item, L2Character player)
+	public final Func[] getStatFuncs(L2ItemInstance item, L2Character player)
 	{
 		if ((_funcTemplates == null) || (_funcTemplates.length == 0))
 		{
@@ -821,7 +821,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		Func f;
 		for (FuncTemplate t : _funcTemplates)
 		{
-			f = t.getFunc(env, this); // skill is owner
+			f = t.getFunc(env, item);
 			if (f != null)
 			{
 				funcs.add(f);
@@ -1174,5 +1174,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public boolean isPetItem()
 	{
 		return getItemType() == L2EtcItemType.PET_COLLAR;
+	}
+	
+	public L2Skill getEnchant4Skill()
+	{
+		return null;
 	}
 }
