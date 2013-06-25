@@ -190,7 +190,7 @@ public final class L2ItemInstance extends L2Object
 	
 	private int _shotsMask = 0;
 	
-	private final List<Options> _enchantOptions = new ArrayList<>();
+	private List<Options> _enchantOptions;
 	
 	/**
 	 * Constructor of the L2ItemInstance from the objectId and the itemId.
@@ -216,6 +216,9 @@ public final class L2ItemInstance extends L2Object
 		_mana = _item.getDuration();
 		_time = _item.getTime() == -1 ? -1 : System.currentTimeMillis() + ((long) _item.getTime() * 60 * 1000);
 		scheduleLifeTimeTask();
+if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
+		_enchantOptions = new ArrayList<>();
+}}
 	}
 	
 	/**
@@ -239,6 +242,9 @@ public final class L2ItemInstance extends L2Object
 		_mana = _item.getDuration();
 		_time = _item.getTime() == -1 ? -1 : System.currentTimeMillis() + ((long) _item.getTime() * 60 * 1000);
 		scheduleLifeTimeTask();
+if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
+		_enchantOptions = new ArrayList<>();
+}}
 	}
 	
 	@Override
@@ -2249,18 +2255,20 @@ public final class L2ItemInstance extends L2Object
 	 */
 	public void clearEnchantStats()
 	{
-		final L2PcInstance player = getActingPlayer();
-		if (player == null)
-		{
-			_enchantOptions.clear();
+if (com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
+		if (_enchantOptions == null)
 			return;
-		}
-		
-		for (Options op : _enchantOptions)
+}}
+		final L2PcInstance player = getActingPlayer();
+		if (player != null)
 		{
-			op.remove(player);
+			for (Options op : _enchantOptions)
+			{
+				op.remove(player);
+			}
 		}
 		_enchantOptions.clear();
+	//	_enchantOptions = null;	//[JOJO] TODO:
 	}
 	
 	/**
@@ -2280,6 +2288,10 @@ public final class L2ItemInstance extends L2Object
 			if (options != null)
 			{
 				options.apply(player);
+if (com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
+				if (_enchantOptions == null)
+					_enchantOptions = new ArrayList<>();
+}}
 				_enchantOptions.add(options);
 			}
 			else if (id != 0)
