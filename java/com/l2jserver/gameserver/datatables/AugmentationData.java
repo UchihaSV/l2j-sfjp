@@ -86,10 +86,10 @@ public class AugmentationData
 	private static final int ACC_NECK_SKILLS = 24;
 	private static final int ACC_NECK_BLOCKSIZE = ACC_NECK_SKILLS + (4 * ACC_STAT_SUBBLOCKSIZE);
 	
-	private final ArrayList<?>[] _blueSkills = new ArrayList[10];
-	private final ArrayList<?>[] _purpleSkills = new ArrayList[10];
-	private final ArrayList<?>[] _redSkills = new ArrayList[10];
-	private final ArrayList<?>[] _yellowSkills = new ArrayList[10];
+	@SuppressWarnings("unchecked") private final ArrayList<Integer>[] _blueSkills = new ArrayList[10];
+	@SuppressWarnings("unchecked") private final ArrayList<Integer>[] _purpleSkills = new ArrayList[10];
+	@SuppressWarnings("unchecked") private final ArrayList<Integer>[] _redSkills = new ArrayList[10];
+	@SuppressWarnings("unchecked") private final ArrayList<Integer>[] _yellowSkills = new ArrayList[10];
 	
 	private final List<augmentationChance> _augmentationChances = new ArrayList<>();
 	private final List<augmentationChanceAcc> _augmentationChancesAcc = new ArrayList<>();
@@ -100,10 +100,10 @@ public class AugmentationData
 	{
 		for (int i = 0; i < 10; i++)
 		{
-			_blueSkills[i] = new ArrayList<Integer>();
-			_purpleSkills[i] = new ArrayList<Integer>();
-			_redSkills[i] = new ArrayList<Integer>();
-			_yellowSkills[i] = new ArrayList<Integer>();
+			_blueSkills[i] = new ArrayList<>();
+			_purpleSkills[i] = new ArrayList<>();
+			_redSkills[i] = new ArrayList<>();
+			_yellowSkills[i] = new ArrayList<>();
 		}
 		
 		load();
@@ -237,7 +237,6 @@ public class AugmentationData
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	private final void load()
 	{
 		// Load stats
@@ -320,15 +319,15 @@ public class AugmentationData
 								
 								if (type.equalsIgnoreCase("blue"))
 								{
-									((ArrayList<Integer>) _blueSkills[k]).add(augmentationId);
+									_blueSkills[k].add(augmentationId);
 								}
 								else if (type.equalsIgnoreCase("purple"))
 								{
-									((ArrayList<Integer>) _purpleSkills[k]).add(augmentationId);
+									_purpleSkills[k].add(augmentationId);
 								}
 								else
 								{
-									((ArrayList<Integer>) _redSkills[k]).add(augmentationId);
+									_redSkills[k].add(augmentationId);
 								}
 								
 								_allSkills.put(augmentationId, new AugmentationSkill(skillId, skillLvL));
@@ -836,13 +835,13 @@ public class AugmentationData
 			switch (resultColor)
 			{
 				case 1: // blue skill
-					stat34 = ((Integer) _blueSkills[lifeStoneLevel].get(Rnd.get(0, _blueSkills[lifeStoneLevel].size() - 1)));
+					stat34 = (_blueSkills[lifeStoneLevel].get(Rnd.get(_blueSkills[lifeStoneLevel].size())));
 					break;
 				case 2: // purple skill
-					stat34 = ((Integer) _purpleSkills[lifeStoneLevel].get(Rnd.get(0, _purpleSkills[lifeStoneLevel].size() - 1)));
+					stat34 = (_purpleSkills[lifeStoneLevel].get(Rnd.get(_purpleSkills[lifeStoneLevel].size())));
 					break;
 				case 3: // red skill
-					stat34 = ((Integer) _redSkills[lifeStoneLevel].get(Rnd.get(0, _redSkills[lifeStoneLevel].size() - 1)));
+					stat34 = (_redSkills[lifeStoneLevel].get(Rnd.get(_redSkills[lifeStoneLevel].size())));
 					break;
 			}
 		}
