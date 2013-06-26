@@ -82,10 +82,10 @@ public class AugmentationData
 	private static final int ACC_NECK_SKILLS = 24;
 	private static final int ACC_NECK_BLOCKSIZE = ACC_NECK_SKILLS + (4 * ACC_STAT_SUBBLOCKSIZE);
 	
-	private final List<List<Integer>> _blueSkills = new ArrayList<>(10);
-	private final List<List<Integer>> _purpleSkills = new ArrayList<>(10);
-	private final List<List<Integer>> _redSkills = new ArrayList<>(10);
-	private final List<List<Integer>> _yellowSkills = new ArrayList<>(10);
+	private final ArrayList<ArrayList<Integer>> _blueSkills = new ArrayList<>(10);
+	private final ArrayList<ArrayList<Integer>> _purpleSkills = new ArrayList<>(10);
+	private final ArrayList<ArrayList<Integer>> _redSkills = new ArrayList<>(10);
+	private final ArrayList<ArrayList<Integer>> _yellowSkills = new ArrayList<>(10);
 	
 	private final List<AugmentationChance> _augmentationChances = new ArrayList<>();
 	private final List<augmentationChanceAcc> _augmentationChancesAcc = new ArrayList<>();
@@ -807,13 +807,13 @@ public class AugmentationData
 			switch (resultColor)
 			{
 				case 1: // blue skill
-					stat34 = _blueSkills.get(lifeStoneLevel).get(Rnd.get(0, _blueSkills.get(lifeStoneLevel).size() - 1));
+					stat34 = _blueSkills.get(lifeStoneLevel).get(Rnd.get(_blueSkills.get(lifeStoneLevel).size()));
 					break;
 				case 2: // purple skill
-					stat34 = _purpleSkills.get(lifeStoneLevel).get(Rnd.get(0, _purpleSkills.get(lifeStoneLevel).size() - 1));
+					stat34 = _purpleSkills.get(lifeStoneLevel).get(Rnd.get(_purpleSkills.get(lifeStoneLevel).size()));
 					break;
 				case 3: // red skill
-					stat34 = _redSkills.get(lifeStoneLevel).get(Rnd.get(0, _redSkills.get(lifeStoneLevel).size() - 1));
+					stat34 = _redSkills.get(lifeStoneLevel).get(Rnd.get(_redSkills.get(lifeStoneLevel).size()));
 					break;
 			}
 		}
