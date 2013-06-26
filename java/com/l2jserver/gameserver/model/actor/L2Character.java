@@ -1640,7 +1640,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			case PARTY:
 			case CLAN:
 			case PARTY_CLAN:
-			case ALLY:
 				doit = true;
 			default:
 				if (targets.length == 0)
@@ -8229,6 +8228,16 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public static void removeGlobalSkillUseListener(SkillUseListener listener)
 	{
 		globalSkillUseListeners.remove(listener);
+	}
+	
+	public int getClanId()
+	{
+		return 0;
+	}
+	
+	public int getAllyId()
+	{
+		return 0;
 	}
 }
 

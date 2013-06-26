@@ -71,6 +71,7 @@ import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.Util;
+import com.l2jserver.util.Rnd;
 
 public abstract class L2Skill implements IChanceSkillTrigger
 {
@@ -257,8 +258,6 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	private final boolean _simultaneousCast;
 	
 	private L2ExtractableSkill _extractableItems = null;
-	
-	private final int _maxTargets;
 	
 	private int _npcId = 0;
 	
@@ -516,7 +515,6 @@ public abstract class L2Skill implements IChanceSkillTrigger
 			
 			_extractableItems = parseExtractableSkill(_id, _level, capsuled_items);
 		}
-		_maxTargets = set.getInteger("maxTargets", -1);
 		_npcId = set.getInteger("npcId", 0);
 	}
 	
@@ -987,9 +985,9 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		return _affectRange;
 	}
 	
-	public final int[] getAffectLimit()
+	public final int getAffectLimit()
 	{
-		return _affectLimit;
+		return (_affectLimit[0] + Rnd.get(_affectLimit[1]));
 	}
 	
 	public final boolean isActive()
@@ -2014,11 +2012,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	public L2ExtractableSkill getExtractableSkill()
 	{
 		return _extractableItems;
-	}
-	
-	public int getMaxTargets()
-	{
-		return _maxTargets;
 	}
 	
 	/**
