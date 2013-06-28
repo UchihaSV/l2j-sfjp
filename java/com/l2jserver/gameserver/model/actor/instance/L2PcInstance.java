@@ -368,15 +368,15 @@ public final class L2PcInstance extends L2Playable
 	public static final int STORE_PRIVATE_MANUFACTURE = 5;
 	public static final int STORE_PRIVATE_PACKAGE_SELL = 8;
 	
-	private static final List<PlayerDespawnListener> DESPAWN_LISTENERS = new FastList<PlayerDespawnListener>().shared();
-	private static final List<HennaListener> HENNA_LISTENERS = new FastList<HennaListener>().shared();
-	private static final List<EquipmentListener> GLOBAL_EQUIPMENT_LISTENERS = new FastList<EquipmentListener>().shared();
-	private static final List<ProfessionChangeListener> GLOBAL_PROFESSION_CHANGE_LISTENERS = new FastList<ProfessionChangeListener>().shared();
+	private static final FastList<PlayerDespawnListener> DESPAWN_LISTENERS = new FastList<PlayerDespawnListener>().shared();
+	private static final FastList<HennaListener> HENNA_LISTENERS = new FastList<HennaListener>().shared();
+	private static final FastList<EquipmentListener> GLOBAL_EQUIPMENT_LISTENERS = new FastList<EquipmentListener>().shared();
+	private static final FastList<ProfessionChangeListener> GLOBAL_PROFESSION_CHANGE_LISTENERS = new FastList<ProfessionChangeListener>().shared();
 	
-	private final List<EquipmentListener> _equipmentListeners = new FastList<EquipmentListener>().shared();
-	private final List<TransformListener> _transformListeners = new FastList<TransformListener>().shared();
-	private final List<ProfessionChangeListener> _professionChangeListeners = new FastList<ProfessionChangeListener>().shared();
-	private final List<EventListener> _eventListeners = new FastList<EventListener>().shared();
+	private final FastList<EquipmentListener> _equipmentListeners = new FastList<EquipmentListener>().shared();
+	private final FastList<TransformListener> _transformListeners = new FastList<TransformListener>().shared();
+	private final FastList<ProfessionChangeListener> _professionChangeListeners = new FastList<ProfessionChangeListener>().shared();
+	private final FastList<EventListener> _eventListeners = new FastList<EventListener>().shared();
 	
 	public class AIAccessor extends L2Character.AIAccessor
 	{
@@ -660,7 +660,7 @@ public final class L2PcInstance extends L2Playable
 	private int _agathionId = 0;
 	// apparently, a L2PcInstance CAN have both a summon AND a tamed beast at the same time!!
 	// after Freya players can control more than one tamed beast
-	private List<L2TamedBeastInstance> _tamedBeast = null;
+	private FastList<L2TamedBeastInstance> _tamedBeast = null;
 	
 	private boolean _minimapAllowed = false;
 	
@@ -1693,15 +1693,14 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public Quest[] getAllActiveQuests()
 	{
-		List<Quest> quests = new ArrayList<>();
+		ArrayList<Quest> quests = new ArrayList<>();
 		for (QuestState qs : _quests.values())
 		{
 			if ((qs == null) || (qs.getQuest() == null) || (!qs.isStarted() && !Config.DEVELOPER))
 			{
 				continue;
 			}
-			final int questId = qs.getQuest().getQuestIntId();
-			if ((questId > 19999) || (questId < 1))
+			if (!qs.getQuest().isQuests())
 			{
 				continue;
 			}
