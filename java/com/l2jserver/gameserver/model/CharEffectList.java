@@ -346,12 +346,9 @@ public class CharEffectList
 		{
 			if ((e != null) && e.getShowIcon() && !e.getSkill().isDance() && !e.getSkill().isTriggeredSkill() && !e.getSkill().is7Signs())
 			{
-				switch (e.getSkill().getSkillType())
+				if (e.getSkill().getSkillType() == L2SkillType.BUFF)
 				{
-					case BUFF:
-					case HEAL_PERCENT:
-					case MANAHEAL_PERCENT:
-						buffCount++;
+					buffCount++;
 				}
 			}
 		}
@@ -940,34 +937,30 @@ public class CharEffectList
 					effectsToRemove = getBuffCount() - _owner.getMaxBuffCount();
 					if (effectsToRemove >= 0)
 					{
-						switch (newSkill.getSkillType())
+						if (newSkill.getSkillType() == L2SkillType.BUFF)
 						{
-							case BUFF:
-							case HEAL_PERCENT:
-							case MANAHEAL_PERCENT:
-								for (L2Effect e : _buffs)
+							for (L2Effect e : _buffs)
+							{
+								if ((e == null) || e.getSkill().isDance() || e.getSkill().isTriggeredSkill())
 								{
-									if ((e == null) || e.getSkill().isDance() || e.getSkill().isTriggeredSkill())
-									{
-										continue;
-									}
-									
-									switch (e.getSkill().getSkillType())
-									{
-										case BUFF:
-										case HEAL_PERCENT:
-										case MANAHEAL_PERCENT:
-											e.exit();
-											effectsToRemove--;
-											break; // break switch()
-										default:
-											continue; // continue for()
-									}
-									if (effectsToRemove < 0)
-									{
-										break; // break for()
-									}
+									continue;
 								}
+								
+								if (e.getSkill().getSkillType() == L2SkillType.BUFF)
+								{
+									e.exit();
+									effectsToRemove--;
+								}
+								else
+								{
+									continue; // continue for()
+								}
+								
+								if (effectsToRemove < 0)
+								{
+									break; // break for()
+								}
+							}
 						}
 					}
 				}
@@ -1237,11 +1230,9 @@ public class CharEffectList
 					continue;
 				}
 				
-				switch (e.getEffectType())
+				if (e.getEffectType() == L2EffectType.SIGNET_GROUND)
 				{
-					case CHARGE: // handled by EtcStatusUpdate
-					case SIGNET_GROUND:
-						continue;
+					continue;
 				}
 				
 				if (e.getInUse())

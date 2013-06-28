@@ -922,10 +922,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 						}
 						
 						// Avoid "over damage"
-						if (partyDmg > getMaxHp())
-						{
-							partyDmg = getMaxHp();
-						}
+						partyDmg = Math.min(partyDmg, getMaxHp());
 						
 						// Calculate the level difference between Party and L2Attackable
 						levelDiff = partyLvl - getLevel();
