@@ -7956,6 +7956,41 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		}
 	}
 	
+	/**
+	 * Dummy method overriden in {@link L2PcInstance}
+	 * @return {@code true} if current player can revive and shows 'To Village' button upon death, {@code false} otherwise.
+	 */
+	public boolean canRevive()
+	{
+		return true;
+	}
+	
+	/**
+	 * Dummy method overriden in {@link L2PcInstance}
+	 * @param val
+	 */
+	public void setCanRevive(boolean val)
+	{
+	}
+	
+	/**
+	 * Dummy method overriden in {@link L2Attackable}
+	 * @return {@code true} if there is a loot to sweep, {@code false} otherwise.
+	 */
+	public boolean isSweepActive()
+	{
+		return false;
+	}
+	
+	/**
+	 * Dummy method overriden in {@link L2PcInstance}
+	 * @return {@code true} if player is on event, {@code false} otherwise.
+	 */
+	public boolean isOnEvent()
+	{
+		return false;
+	}
+	
 	// LISTENERS
 	
 	/**
