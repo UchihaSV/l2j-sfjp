@@ -584,10 +584,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					case BUFF:
 						addBuffSkill(skill);
 						break;
-					case HEAL:
-					case HEAL_PERCENT:
-						addHealSkill(skill);
-						break;
 					case RESURRECT:
 						addResSkill(skill);
 						break;
@@ -645,6 +641,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						{
 							addNegativeSkill(skill);
 							addRangeSkill(skill);
+						}
+						else if (skill.hasEffectType(L2EffectType.HEAL, L2EffectType.HEAL_PERCENT))
+						{
+							addHealSkill(skill);
 						}
 						else
 						{
