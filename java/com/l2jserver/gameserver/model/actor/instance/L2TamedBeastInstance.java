@@ -303,7 +303,6 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		{
 			case HEAL:
 			case HEAL_PERCENT:
-			case MANAHEAL_BY_LEVEL:
 			case MANAHEAL_PERCENT:
 				return true;
 			default:
