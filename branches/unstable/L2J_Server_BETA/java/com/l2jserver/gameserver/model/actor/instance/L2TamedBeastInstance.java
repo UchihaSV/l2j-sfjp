@@ -299,19 +299,11 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	
 	protected static boolean isHealSkill(L2Skill skill)
 	{
-		switch (skill.getSkillType())
-		{
-			case HEAL:
-			case HEAL_PERCENT:
-			case MANAHEAL_PERCENT:
-				return true;
-			default:
-				return skill.hasEffectType(L2EffectType.CPHEAL,
-					L2EffectType.HEAL,
-					L2EffectType.HEAL_PERCENT,
-					L2EffectType.MANAHEAL_BY_LEVEL,
-					L2EffectType.MANAHEAL_PERCENT);
-		}
+		return skill.hasEffectType(L2EffectType.CPHEAL,
+			L2EffectType.HEAL,
+			L2EffectType.HEAL_PERCENT,
+			L2EffectType.MANAHEAL_BY_LEVEL,
+			L2EffectType.MANAHEAL_PERCENT);
 	}
 	
 	@Override
