@@ -222,9 +222,10 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		}
 		
 		// clean up variables
-		if ((_owner != null) && (_owner.getTrainedBeasts() != null))
+		List<L2TamedBeastInstance> trainedBeasts;
+		if (_owner != null && (trainedBeasts = _owner.getTrainedBeasts()) != null)
 		{
-			_owner.getTrainedBeasts().remove(this);
+			trainedBeasts.remove(this);
 		}
 		_buffTask = null;
 		_durationCheckTask = null;
@@ -335,38 +336,30 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 			return;
 		}
 		int delay = 100;
+		boolean done = false;
 		for (L2Skill skill : getSkills().values())
 		{
-			if (isBuffSkill(skill))
+			if (isBuffSkill(skill) && !isSkillDisabled(skill))
 			{
-				ThreadPoolManager.getInstance().scheduleGeneral(new buffCast(skill), delay);
+				final L2Skill _skill = skill;
+				ThreadPoolManager.getInstance().scheduleGeneral(new Runnable(){
+					@Override public void run()
+					{
+						sitCastAndFollow(_skill, _owner);
+					}
+				}, delay);
 				delay += (100 + skill.getHitTime());
+				done = true;
 			}
 		}
-		ThreadPoolManager.getInstance().scheduleGeneral(new buffCast(null), delay);
-	}
-	
-	private class buffCast implements Runnable
-	{
-		private final L2Skill _skill;
-		
-		public buffCast(L2Skill skill)
-		{
-			_skill = skill;
-		}
-		
-		@Override
-		public void run()
-		{
-			if (_skill == null)
+		ThreadPoolManager.getInstance().scheduleGeneral(new Runnable(){
+			@Override public void run()
 			{
 				getAI().setIntention(CtrlIntention.AI_INTENTION_FOLLOW, _owner);
 			}
-			else
-			{
-				sitCastAndFollow(_skill, _owner);
-			}
-		}
+		}, delay);
+		if (!done)
+			_owner.sendMessage("条件が合わないため、能力は使用できません。");
 	}
 	
 	public L2PcInstance getOwner()
@@ -484,7 +477,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 			for (L2Skill skill : /*getTemplate().*/getSkills().values())
 			{
 				// if the skill is a debuff, check if the attacker has it already [ attacker.getEffect(L2Skill skill) ]
-				if (isDeBuffSkill(skill) && Rnd.get(3) < 1 && attacker.getFirstEffect(skill) == null)
+				if (isDeBuffSkill(skill) && !isSkillDisabled(skill) && Rnd.get(3) < 1 && attacker.getFirstEffect(skill) == null)
 				{
 					sitCastAndFollow(skill, attacker);
 					break;	// isCastingNow
@@ -505,7 +498,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 			for (L2Skill skill : /*getTemplate().*/getSkills().values())
 			{
 				// if the skill is a buff, check if the owner has it already [ owner.getEffect(L2Skill skill) ]
-				if (Rnd.get(5) < chance && isHealSkill(skill))
+				if (Rnd.get(5) < chance && isHealSkill(skill) && !isSkillDisabled(skill))
 				{
 					sitCastAndFollow(skill, _owner);
 					break;	// isCastingNow
@@ -683,7 +676,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 					{
 						++totalBuffsOnOwner;
 					}
-					else if (i == rand)
+					else if (i == rand && !isSkillDisabled(skill))
 					{
 						buffToGive = skill;
 					}
