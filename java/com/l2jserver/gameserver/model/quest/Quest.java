@@ -156,25 +156,39 @@ public class Quest extends ManagedScript
 		ITEMSOUND_QUEST_FANFARE_1("ItemSound.quest_fanfare_1"),
 		// Played only after class transfer via Test Server Helpers (Id 31756 and 31757)
 		ITEMSOUND_QUEST_FANFARE_2("ItemSound.quest_fanfare_2"),
-		// Quests 336
+		// Quest 336
 		ITEMSOUND_QUEST_FANFARE_MIDDLE("ItemSound.quest_fanfare_middle"),
 		// Quest 114
 		ITEMSOUND_ARMOR_WOOD("ItemSound.armor_wood_3"),
 		// Quest 21
 		ITEMSOUND_ARMOR_CLOTH("ItemSound.item_drop_equip_armor_cloth"),
-		ITEMSOUND_ED_CHIMES("AmdSound.ed_chimes_05"),
+		AMDSOUND_ED_CHIMES("AmdSound.ed_chimes_05"),
+		HORROR_01("horror_01"), // played when spawned monster sees player
 		// Quest 22
-		ITEMSOUND_D_HORROR_03("AmbSound.d_horror_03"),
- 		ITEMSOUND_D_HORROR_15("AmbSound.d_horror_15"),
-		ITEMSOUND_DD_HORROR_01("AmbSound.dd_horror_01"),
-		// Quest 120
-		ITEMSOUND_ED_DRONE_02("AmbSound.ed_drone_02"),
+		AMBSOUND_HORROR_01("AmbSound.dd_horror_01"),
+		AMBSOUND_HORROR_03("AmbSound.d_horror_03"),
+		AMBSOUND_HORROR_15("AmbSound.d_horror_15"),
 		// Quest 23
 		ITEMSOUND_ARMOR_LEATHER("ItemSound.itemdrop_armor_leather"),
 		ITEMSOUND_WEAPON_SPEAR("ItemSound.itemdrop_weapon_spear"),
+		AMBSOUND_MT_CREAK("AmbSound.mt_creak01"),
+		AMBSOUND_EG_DRON("AmbSound.eg_dron_02"),
+		SKILLSOUND_HORROR_02("SkillSound5.horror_02"),
+		CHRSOUND_MHFIGHTER_CRY("ChrSound.MHFighter_cry"),
 		// Quest 24
-		AMDSOUND_D_WIND_LOOT_02("AmdSound.d_wind_loot_02"),
-		INTERFACESOUND_CHARSTAT_OPEN_01("InterfaceSound.charstat_open_01"),
+		AMDSOUND_WIND_LOOT("AmdSound.d_wind_loot_02"),
+		INTERFACESOUND_CHARSTAT_OPEN("InterfaceSound.charstat_open_01"),
+		// Quest 25
+		AMDSOUND_HORROR_02("AmdSound.dd_horror_02"),
+		CHRSOUND_FDELF_CRY("ChrSound.FDElf_Cry"),
+		// Quest 115
+		AMBSOUND_WINGFLAP("AmbSound.t_wingflap_04"),
+		AMBSOUND_THUNDER("AmbSound.thunder_02"),
+		// Quest 120
+		AMBSOUND_DRONE("AmbSound.ed_drone_02"),
+		AMBSOUND_CRYSTAL_LOOP("AmbSound.cd_crystal_loop"),
+		AMBSOUND_PERCUSSION_01("AmbSound.dt_percussion_01"),
+		AMBSOUND_PERCUSSION_02("AmbSound.ac_percussion_02"),
 		// Quest 648 and treasure chests
 		ITEMSOUND_BROKEN_KEY("ItemSound2.broken_key"),
 		// Quest 184
@@ -196,16 +210,23 @@ public class Quest extends ManagedScript
 		SKILLSOUND_LIQUID_MIX("SkillSound5.liquid_mix_01"),
 		SKILLSOUND_LIQUID_SUCCESS("SkillSound5.liquid_success_01"),
 		SKILLSOUND_LIQUID_FAIL("SkillSound5.liquid_fail_01"),
-		// Elroki sounds - Quest 111
-		ETCSOUND_ELROKI_SOUND_FULL("EtcSound.elcroki_song_full"),
-		ETCSOUND_ELROKI_SOUND_1ST("EtcSound.elcroki_song_1st"),
-		ETCSOUND_ELROKI_SOUND_2ND("EtcSound.elcroki_song_2nd"),
-		ETCSOUND_ELROKI_SOUND_3RD("EtcSound.elcroki_song_3rd"),
-		// PailakaInjuredDragon
+		// Quest 111
+		ETCSOUND_ELROKI_SONG_FULL("EtcSound.elcroki_song_full"),
+		ETCSOUND_ELROKI_SONG_1ST("EtcSound.elcroki_song_1st"),
+		ETCSOUND_ELROKI_SONG_2ND("EtcSound.elcroki_song_2nd"),
+		ETCSOUND_ELROKI_SONG_3RD("EtcSound.elcroki_song_3rd"),
+		// Long duration AI sounds
+		BS01_A("BS01_A"),
+		BS02_A("BS02_A"),
+		BS03_A("BS03_A"),
+		BS04_A("BS04_A"),
+		BS06_A("BS06_A"),
+		BS07_A("BS07_A"),
 		BS08_A("BS08_A"),
-		// Quest 115
-		AMBSOUND_T_WINGFLAP_04("AmbSound.t_wingflap_04"),
-		AMBSOUND_THUNDER_02("AmbSound.thunder_02");
+		BS01_D("BS01_D"),
+		BS02_D("BS02_D"),
+		BS05_D("BS05_D"),
+		BS07_D("BS07_D");
 		
 		private final PlaySound _playSound;
 		
