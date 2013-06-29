@@ -976,12 +976,7 @@ public final class L2PcInstance extends L2Playable
 		@Override
 		public void run()
 		{
-			if (L2PcInstance.this == null)
-			{
-				return;
-			}
-			
-			L2PcInstance.this.sendPacket(new ShortBuffStatusUpdate(0, 0, 0));
+			sendPacket(new ShortBuffStatusUpdate(0, 0, 0));
 			setShortBuffTaskSkillId(0);
 		}
 	}
@@ -15028,7 +15023,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	
 	public void teleportBookmarkGo(int Id)
 	{
-		if (!teleportBookmarkCondition(0) || (this == null))
+		if (!teleportBookmarkCondition(0))
 		{
 			return;
 		}
@@ -15130,11 +15125,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	
 	public void teleportBookmarkAdd(int x, int y, int z, int icon, String tag, String name)
 	{
-		if (this == null)
-		{
-			return;
-		}
-		
 		if (!teleportBookmarkCondition(1))
 		{
 			return;
@@ -16108,11 +16098,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		@Override
 		public void run()
 		{
-			if (L2PcInstance.this == null)
-			{
-				// stopRecoGiveTask(); why is this here? it will lead to NPE
-				return;
-			}
 			int reco_to_give;
 			// 10 recommendations to give out after 2 hours of being logged in
 			// 1 more recommendation to give out every hour after that.
@@ -16141,12 +16126,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		@Override
 		public void run()
 		{
-			if (L2PcInstance.this == null)
-			{
-				return;
-			}
-			
-			L2PcInstance.this.sendPacket(new ExVoteSystemInfo(L2PcInstance.this));
+			sendPacket(new ExVoteSystemInfo(L2PcInstance.this));
 		}
 	}
 	
