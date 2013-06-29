@@ -2033,7 +2033,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	protected boolean checkDoCastConditions(L2Skill skill)
 	{
-		if ((skill == null) || isSkillDisabled(skill))
+		if ((skill == null) || isSkillDisabled(skill) || (((skill.getFlyRadius() > 0) || (skill.getFlyType() != null)) && isMovementDisabled()))
 		{
 			// Send a Server->Client packet ActionFailed to the L2PcInstance
 			sendPacket(ActionFailed.STATIC_PACKET);
