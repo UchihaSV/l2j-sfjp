@@ -56,7 +56,7 @@ public class Native2Ascii
 				return false;
 			if (file.isDirectory())
 				return true;
-			return fileName.endsWith(".java") || fileName.endsWith(".py");
+			return fileName.endsWith(".java") || fileName.endsWith(".js") || fileName.endsWith(".py");
 		}
 	};
 	
