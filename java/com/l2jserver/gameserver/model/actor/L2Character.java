@@ -2117,14 +2117,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			}
 		}
 		
-		// Check if the caster owns the weapon needed
-		if (!skill.getWeaponDependancy(this))
-		{
-			// Send a Server->Client packet ActionFailed to the L2PcInstance
-			sendPacket(ActionFailed.STATIC_PACKET);
-			return false;
-		}
-		
 		// Check if the caster's weapon is limited to use only its own skills
 		if (getActiveWeaponItem() != null)
 		{
@@ -7890,7 +7882,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	{
 		try
 		{
-			if (skill.getWeaponDependancy(this, true) && skill.checkCondition(this, target, false))
+			if (skill.checkCondition(this, target, false))
 			{
 				if (skill.triggersChanceSkill()) // skill will trigger another skill, but only if its not chance skill
 				{
@@ -7899,8 +7891,8 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 					{
 						return;
 					}
-					// We change skill to new one, we should verify conditions and dependancy for new one
-					if (!skill.getWeaponDependancy(this, true) || !skill.checkCondition(this, target, false))
+					// We change skill to new one, we should verify conditions for new one
+					if (!skill.checkCondition(this, target, false))
 					{
 						return;
 					}
