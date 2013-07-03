@@ -46,7 +46,6 @@ public class L2BossZone extends L2ZoneType
 	private int _timeServerDown = 0;	//+[JOJO]
 	private int _timeClientDown = 0;	//+[JOJO]
  //	private int _timeInvade;			//-[JOJO]
-	private boolean _enabled = true; // default value, unless overridden by xml...
 	
 	private int[] _oustLoc =
 	{
@@ -136,10 +135,6 @@ public class L2BossZone extends L2ZoneType
 				_timeServerDown = Integer.parseInt(value);
 			//-------------------------------------------------------
 		}
-		else if (name.equals("default_enabled"))
-		{
-			_enabled = Boolean.parseBoolean(value);
-		}
 		else if (name.equals("oustX"))
 		{
 			_oustLoc[0] = Integer.parseInt(value);
@@ -170,7 +165,7 @@ public class L2BossZone extends L2ZoneType
 	@Override
 	protected void onEnter(L2Character character)
 	{
-		if (_enabled)
+		if (isEnabled())
 		{
 			if (character.isPlayer())
 			{
@@ -246,7 +241,7 @@ public class L2BossZone extends L2ZoneType
 	@Override
 	protected void onExit(L2Character character)
 	{
-		if (_enabled)
+		if (isEnabled())
 		{
 			if (character.isPlayer())
 			{
@@ -317,17 +312,17 @@ public class L2BossZone extends L2ZoneType
 		}
 	}
 	
-	@Deprecated public boolean isZoneEnabled() {return _enabled;}	//Å¨âºÅ¨
-	public void setZoneDisable() { _enabled = false; }	//[JOJO]
-	public void setZoneEnable() { _enabled = true; }	//[JOJO]
-	public void setZoneEnabled(boolean flag)
+	@Deprecated public boolean isZoneEnabled() { return isEnabled(); }	//Å¨âºÅ¨
+	public void setZoneDisable() { super.setEnabled(false); }	//[JOJO]
+	public void setZoneEnable() { super.setEnabled(true); }	//[JOJO]
+	@Override
+	public void setEnabled(boolean flag)
 	{
-		if (_enabled != flag)
+		if (isEnabled() != flag)
 		{
 			oustAllPlayers();
 		}
-		
-		_enabled = flag;
+		super.setEnabled(flag);
 	}
 	
 	public void setAllowedPlayers(FastSet<Integer> players)
@@ -486,7 +481,7 @@ public class L2BossZone extends L2ZoneType
 	// When the player has been annihilated, the player is banished from the lair.
 	public void checkAnnihilated(L2PcInstance pc/*:dummy*/)	//<<== L2PcInstance#doDie
 	{
-		if (! _enabled)
+		if (! isEnabled())
 			return;
 		if (isPlayersAnnihilated())
 		{

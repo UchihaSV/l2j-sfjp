@@ -61,6 +61,7 @@ public abstract class L2ZoneType
 	private Map<QuestEventType, List<Quest>> _questEvents;
 	private InstanceType _target = InstanceType.L2Character; // default all chars
 	private boolean _allowStore;
+	private boolean _enabled;
 	private AbstractZoneSettings _settings;
 	
 	protected L2ZoneType(int id)
@@ -75,6 +76,7 @@ public abstract class L2ZoneType
 		_race = null;
 		_class = null;
 		_allowStore = true;
+		_enabled = true;
 	}
 	
 	/**
@@ -185,6 +187,10 @@ public abstract class L2ZoneType
 		else if (name.equals("allowStore"))
 		{
 			_allowStore = Boolean.parseBoolean(value);
+		}
+		else if (name.equals("default_enabled"))
+		{
+			_enabled = Boolean.parseBoolean(value);
 		}
 		else
 		{
@@ -598,5 +604,15 @@ public abstract class L2ZoneType
 	public void visualizeZone(int z)
 	{
 		getZone().visualizeZone(z);
+	}
+	
+	public void setEnabled(boolean state)
+	{
+		_enabled = state;
+	}
+	
+	public boolean isEnabled()
+	{
+		return _enabled;
 	}
 }
