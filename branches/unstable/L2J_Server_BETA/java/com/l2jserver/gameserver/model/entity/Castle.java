@@ -24,11 +24,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -95,7 +94,7 @@ public class Castle
 	private L2Clan _formerOwner = null;
 	private final List<L2ArtefactInstance> _artefacts = new ArrayList<>(1);
 	private final TIntIntHashMap _engrave = new TIntIntHashMap(1);
-	private final Map<Integer, CastleFunction> _function;
+	private final FastIntObjectMap<CastleFunction> _function;
 	private final List<L2Skill> _residentialSkills = new ArrayList<>();
 	private int _ticketBuyCount = 0;
 	
@@ -262,7 +261,7 @@ public class Castle
 		 * if (_castleId == 7 || castleId == 9) // Goddard and Schuttgart _nbArtifact = 2;
 		 */
 		load();
-		_function = new FastMap<>();
+		_function = new FastIntObjectMap<>();
 		final List<L2SkillLearn> residentialSkills = SkillTreesData.getInstance().getAvailableResidentialSkills(castleId);
 		for (L2SkillLearn s : residentialSkills)
 		{
@@ -520,7 +519,7 @@ public class Castle
 	{
 		removeDoorUpgrade();
 		removeTrapUpgrade();
-		for (Integer fc : _function.keySet())
+		for (int fc : _function.keys())
 		{
 			removeFunction(fc);
 		}
@@ -618,7 +617,7 @@ public class Castle
 			getSiege().midVictory();
 		}
 		
-		for (Integer fc : _function.keySet())
+		for (int fc : _function.keys())
 		{
 			removeFunction(fc);
 		}
