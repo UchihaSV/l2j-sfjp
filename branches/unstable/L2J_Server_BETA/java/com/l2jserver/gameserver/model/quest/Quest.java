@@ -2036,17 +2036,6 @@ public class Quest extends ManagedScript
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed mob will respond to for the specified Event type.
-	 * @param npcId NPC Id to register
-	 * @param eventType type of event being registered
-	 */
-	//@Deprecated
-	public void addEventId(int npcId, QuestEventType eventType)
-	{
-		addEventId(eventType, npcId);
-	}
-	
-	/**
 	 * Add the quest to the NPC's startQuest..
 	 * @param npcId
 	 */
