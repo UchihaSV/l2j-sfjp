@@ -593,7 +593,8 @@ public class TerritoryWarManager implements Siegable
 				if (isKilled)
 				{
 					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.THE_CHAR_THAT_ACQUIRED_S1_WARD_HAS_BEEN_KILLED);
-					sm.addString(twWard.getNpc().getName().replace(" Ward", "").replace("の守護物", "領地"));
+					sm.addCastleId(twWard.getTerritoryId());	// 81～89 「○○領地」
+				//	sm.addString(twWard.getNpc().getName().replace(" Ward", "").replace("の守護物", "領地"));
 					announceToParticipants(sm, 0, 0);
 				}
 			}
