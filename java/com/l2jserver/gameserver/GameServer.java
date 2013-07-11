@@ -329,8 +329,8 @@ public class GameServer
 		
 		try
 		{
-			_log.info(getClass().getSimpleName() + ": Loading Server Scripts");
-			File scripts = new File(Config.DATAPACK_ROOT, "data/scripts.cfg");
+			_log.info(getClass().getSimpleName() + ": Loading server scripts:");
+			final File scripts = new File(Config.DATAPACK_ROOT, "data/scripts.cfg");
 			if (!Config.ALT_DEV_NO_HANDLERS || !Config.ALT_DEV_NO_QUESTS)
 			{
 				L2ScriptEngineManager.getInstance().executeScriptList(scripts);
@@ -338,7 +338,7 @@ public class GameServer
 		}
 		catch (IOException ioe)
 		{
-			_log.severe(getClass().getSimpleName() + ": Failed loading scripts.cfg, no script going to be loaded");
+			_log.severe(getClass().getSimpleName() + ": Failed loading scripts.cfg, scripts are not going to be loaded!");
 		}
 		//[JOJO]-------------------------------------------------
 		// data/scripts/handlers/* スクリプトのロードが１つでも失敗するとコマンドが全滅して
@@ -426,8 +426,7 @@ public class GameServer
 		}
 		System.gc();
 		// maxMemory is the upper limit the jvm can use, totalMemory the size of
-		// the current allocation pool, freeMemory the unused memory in the
-		// allocation pool
+		// the current allocation pool, freeMemory the unused memory in the allocation pool
 		long freeMem = ((Runtime.getRuntime().maxMemory() - Runtime.getRuntime().totalMemory()) + Runtime.getRuntime().freeMemory()) / 1048576;
 		long totalMem = Runtime.getRuntime().maxMemory() / 1048576;
 		_log.info(getClass().getSimpleName() + ": Started, free memory " + freeMem + " Mb of " + totalMem + " Mb");
@@ -471,7 +470,7 @@ public class GameServer
 			System.exit(1);
 		}
 		_selectorThread.start();
-		_log.info("Maximum Numbers of Connected Players: " + Config.MAXIMUM_ONLINE_USERS);
+		_log.info("Maximum numbers of connected players: " + Config.MAXIMUM_ONLINE_USERS);
 		//[JOJO]-------------------------------------------------
 		StringBuilder sb = new StringBuilder(256).append("AllowedProtocolRevisions: ");
 		for (int protocol : Config.PROTOCOL_LIST)
@@ -481,7 +480,7 @@ public class GameServer
 		sb = null;
 		//-------------------------------------------------------
 		/*long*/ serverLoadEnd = System.currentTimeMillis();	//[JOJO] public final long
-		_log.info("Server Loaded in " + ((serverLoadEnd - serverLoadStart) / 1000) + " seconds");
+		_log.info("Server loaded in " + ((serverLoadEnd - serverLoadStart) / 1000) + " seconds.");
 		
 		AutoAnnounceTaskManager.getInstance();
 	}

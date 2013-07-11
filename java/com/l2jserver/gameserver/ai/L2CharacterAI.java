@@ -1503,10 +1503,9 @@ public class L2CharacterAI extends AbstractAI
 							continue;
 						}
 					}
-					L2Effect[] effects = target.getAllEffects();
-					for (int i = 0; (effects != null) && (i < effects.length); i++)
+					
+					for (L2Effect effect : target.getAllEffects())
 					{
-						L2Effect effect = effects[i];
 						if (effect.getSkill() == sk)
 						{
 							cancast = false;
@@ -1537,8 +1536,8 @@ public class L2CharacterAI extends AbstractAI
 							continue;
 						}
 					}
-					L2Effect[] effects = target.getAllEffects();
-					if (effects.length > 0)
+					
+					if (!target.getAllEffects().isEmpty())
 					{
 						cancast = true;
 					}
@@ -1569,8 +1568,8 @@ public class L2CharacterAI extends AbstractAI
 							continue;
 						}
 					}
-					L2Effect[] effects = target.getAllEffects();
-					if (effects.length > 0)
+					
+					if (!target.getAllEffects().isEmpty())
 					{
 						cancast = true;
 					}
@@ -1598,10 +1597,9 @@ public class L2CharacterAI extends AbstractAI
 							continue;
 						}
 					}
-					L2Effect[] effects = target.getAllEffects();
-					for (int i = 0; (effects != null) && (i < effects.length); i++)
+					
+					for (L2Effect effect : target.getAllEffects())
 					{
-						L2Effect effect = effects[i];
 						if (effect.getSkill() == sk)
 						{
 							cancast = false;
@@ -1635,11 +1633,8 @@ public class L2CharacterAI extends AbstractAI
 				if ((actors.getFactionId() != null) && targets.getFactionId().equals(actors.getFactionId()))
 				{
 					count++;
-					L2Effect[] effects = target.getAllEffects();
-					for (int i = 0; (effects != null) && (i < effects.length); i++)
+					for (L2Effect effect : target.getAllEffects())
 					{
-						
-						L2Effect effect = effects[i];
 						if (effect.getSkill() == sk)
 						{
 							ccount++;
