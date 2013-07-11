@@ -1437,11 +1437,11 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 	}
 	
 	/**
-	 * This function basically returns a set of functions from L2Item/L2Armor/L2Weapon, but may add additional functions, if this particular item instance is enhanched for a particular player.
-	 * @param player : L2Character designating the player
-	 * @return Func[]
+	 * This function basically returns a set of functions from L2Item/L2Armor/L2Weapon, but may add additional functions, if this particular item instance is enhanced for a particular player.
+	 * @param player the player
+	 * @return the functions list
 	 */
-	public Func[] getStatFuncs(L2Character player)
+	public List<Func> getStatFuncs(L2Character player)
 	{
 		return getItem().getStatFuncs(this, player);
 	}

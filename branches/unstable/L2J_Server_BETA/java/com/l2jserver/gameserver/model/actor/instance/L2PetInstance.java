@@ -1105,7 +1105,7 @@ public class L2PetInstance extends L2Summon
 					
 					storedSkills.add(skill.getReuseHashCode());
 					
-					if (effect.getInUse() && !skill.isToggle())
+					if (effect.isInUse() && !skill.isToggle())
 					{
 						ps2.setInt(1, getControlObjectId());
 						ps2.setInt(2, skill.getId());
