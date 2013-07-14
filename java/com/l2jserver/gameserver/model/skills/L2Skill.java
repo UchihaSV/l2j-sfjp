@@ -1577,7 +1577,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			return EMPTY_EFFECT_SET;
 		}
 		
-		List<L2Effect> effects = new ArrayList<>(_effectTemplatesSelf.size());
+		final List<L2Effect> effects = new ArrayList<>(_effectTemplatesSelf.size());
 		for (EffectTemplate et : _effectTemplatesSelf)
 		{
 			Env env = new Env();
