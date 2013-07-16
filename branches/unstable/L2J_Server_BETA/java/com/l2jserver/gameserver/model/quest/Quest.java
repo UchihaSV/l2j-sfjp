@@ -2878,7 +2878,7 @@ public class Quest extends ManagedScript
 		return addSpawn(npcId, loc.getX(), loc.getY(), loc.getZ(), loc.getHeading(), randomOffSet, despawnDelay, false, 0);
 	}
 	
-	public L2Npc addSpawn(int npcId, L2CharPosition pos, boolean randomOffSet, long despawnDelay)	//+[JOJO]
+	public static L2Npc addSpawn(int npcId, L2CharPosition pos, boolean randomOffSet, long despawnDelay)	//+[JOJO]
 	{
 		return addSpawn(npcId, pos.x, pos.y, pos.z, pos.heading, randomOffSet, despawnDelay, false, 0);
 	}
@@ -2912,7 +2912,7 @@ public class Quest extends ManagedScript
 		return addSpawn(npcId, loc.getX(), loc.getY(), loc.getZ(), loc.getHeading(), randomOffset, despawnDelay, isSummonSpawn, 0);
 	}
 	
-	public L2Npc addSpawn(int npcId, L2CharPosition pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn)	//+[JOJO]
+	public static L2Npc addSpawn(int npcId, L2CharPosition pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn)	//+[JOJO]
 	{
 		return addSpawn(npcId, pos.x, pos.y, pos.z, pos.heading, randomOffset, despawnDelay, isSummonSpawn, 0);
 	}
@@ -2931,7 +2931,7 @@ public class Quest extends ManagedScript
 		return addSpawn(npcId, loc.getX(), loc.getY(), loc.getZ(), loc.getHeading(), randomOffset, despawnDelay, isSummonSpawn, instanceId);
 	}
 	
-	public L2Npc addSpawn(int npcId, L2CharPosition pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn, int instanceId)	//+[JOJO]
+	public static L2Npc addSpawn(int npcId, L2CharPosition pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn, int instanceId)	//+[JOJO]
 	{
 		return addSpawn(npcId, pos.x, pos.y, pos.z, pos.heading, randomOffset, despawnDelay, isSummonSpawn, instanceId);
 	}
