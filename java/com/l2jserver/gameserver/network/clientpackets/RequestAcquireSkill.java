@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.network.clientpackets;
 
+import java.util.List;
+
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
@@ -499,9 +501,10 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 			player.sendPacket(new ExStorageMaxCount(player));
 		}
 		// Notify scripts of the skill learn.
-		if (trainer.getTemplate().getEventQuests().containsKey(QuestEventType.ON_SKILL_LEARN))
+		List<Quest> eventQuests;
+		if ((eventQuests = trainer.getTemplate().getEventQuests(QuestEventType.ON_SKILL_LEARN)) != null)
 		{
-			for (Quest quest : trainer.getTemplate().getEventQuests(QuestEventType.ON_SKILL_LEARN))
+			for (Quest quest : eventQuests)
 			{
 				quest.notifyAcquireSkill(trainer, player, skill, _skillType);
 			}

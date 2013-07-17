@@ -196,9 +196,10 @@ public class WalkingManager extends DocumentParser
 				if (_currentNode == getRoute().getNodesCount()) // Last node arrived
 				{
 					// Notify quest
-					if (npc.getTemplate().getEventQuests(Quest.QuestEventType.ON_ROUTE_FINISHED) != null)
+					List<Quest> eventQuests;
+					if ((eventQuests = npc.getTemplate().getEventQuests(Quest.QuestEventType.ON_ROUTE_FINISHED)) != null)
 					{
-						for (Quest quest : npc.getTemplate().getEventQuests(Quest.QuestEventType.ON_ROUTE_FINISHED))
+						for (Quest quest : eventQuests)
 						{
 							quest.notifyRouteFinished(npc);
 						}
