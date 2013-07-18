@@ -2266,23 +2266,23 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		// if the Character isn't affected by Soul of The Phoenix or Salvation
 		if (isPlayable() && ((L2Playable) this).isPhoenixBlessed())
 		{
-			if (((L2Playable) this).getCharmOfLuck())
+			if (((L2Playable) this).isCharmOfLuckAffected())
 			{
-				((L2Playable) this).stopCharmOfLuck(null);
+				stopEffects(L2EffectType.CHARM_OF_LUCK);
 			}
 			if (((L2Playable) this).isNoblesseBlessed())
 			{
-				((L2Playable) this).stopNoblesseBlessing(null);
+				stopEffects(L2EffectType.NOBLESSE_BLESSING);
 			}
 		}
 		// Same thing if the Character isn't a Noblesse Blessed L2Playable
 		else if (isPlayable() && ((L2Playable) this).isNoblesseBlessed())
 		{
-			((L2Playable) this).stopNoblesseBlessing(null);
+			stopEffects(L2EffectType.NOBLESSE_BLESSING);
 			
-			if (((L2Playable) this).getCharmOfLuck())
+			if (((L2Playable) this).isCharmOfLuckAffected())
 			{
-				((L2Playable) this).stopCharmOfLuck(null);
+				stopEffects(L2EffectType.CHARM_OF_LUCK);
 			}
 		}
 		else
@@ -2384,7 +2384,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			if (isPlayable() && ((L2Playable) this).isPhoenixBlessed())
 			{
 				restorefull = true;
-				((L2Playable) this).stopPhoenixBlessing(null);
+				stopEffects(L2EffectType.PHOENIX_BLESSING);
 			}
 			if (restorefull)
 			{

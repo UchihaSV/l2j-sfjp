@@ -11798,7 +11798,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		// If character refuses a PhoenixBless autoress, cancel all buffs he had
 		if ((answer == 0) && isPhoenixBlessed())
 		{
-			stopPhoenixBlessing(null);
+			stopEffects(L2EffectType.PHOENIX_BLESSING);
 			stopAllEffectsExceptThoseThatLastThroughDeath();
 		}
 		if (answer == 1)
@@ -13969,7 +13969,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	
 	public void calculateDeathPenaltyBuffLevel(L2Character killer)
 	{
-		if (((getKarma() > 0) || (Rnd.get(1, 100) <= Config.DEATH_PENALTY_CHANCE)) && !(killer instanceof L2PcInstance) && !(canOverrideCond(PcCondOverride.DEATH_PENALTY)) && !(getCharmOfLuck() && killer.isRaid()) && !isPhoenixBlessed() && !isLucky() && !isBlockedFromDeathPenalty() && !(isInsideZone(ZoneId.PVP) || isInsideZone(ZoneId.SIEGE)))
+		if (((getKarma() > 0) || (Rnd.get(1, 100) <= Config.DEATH_PENALTY_CHANCE)) && !(killer instanceof L2PcInstance) && !(canOverrideCond(PcCondOverride.DEATH_PENALTY)) && !(isCharmOfLuckAffected() && killer.isRaid()) && !isPhoenixBlessed() && !isLucky() && !isBlockedFromDeathPenalty() && !(isInsideZone(ZoneId.PVP) || isInsideZone(ZoneId.SIEGE)))
 		{
 			increaseDeathPenaltyBuffLevel();
 		}
