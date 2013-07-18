@@ -10658,7 +10658,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		getKnownList().removeAllKnownObjects(); // reinit knownlist
 		setXYZ(_lastX, _lastY, _lastZ);
 		setIsParalyzed(false);
-		stopParalyze(false);
 		if (!isGM())
 		{
 			getAppearance().setVisible();
