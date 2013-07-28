@@ -56,13 +56,13 @@ public class MultisellData extends DocumentParser
 	
 	protected MultisellData()
 	{
-		setCurrentFileFilter(new MultisellFilter());
 		load();
 	}
 	
 	@Override
 	public final void load()
 	{
+		setCurrentFileFilter(new MultisellFilter());
 		_entries.clear();
 		parseDirectory("data/multisell");
 		if (Config.CUSTOM_MULTISELL_LOAD)
@@ -72,6 +72,7 @@ public class MultisellData extends DocumentParser
 		
 		verify();
 		_log.log(Level.INFO, getClass().getSimpleName() + ": Loaded " + _entries.size() + " lists.");
+		setCurrentFileFilter(null);
 	}
 	
 	@Override

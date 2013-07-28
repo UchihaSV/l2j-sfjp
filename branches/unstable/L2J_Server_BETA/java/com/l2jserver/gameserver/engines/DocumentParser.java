@@ -52,7 +52,7 @@ public abstract class DocumentParser
 	
 	private Document _currentDocument;
 	
-	private FileFilter _currentFilter = null;
+	private FileFilter _currentFilter = xmlFilter;
 	
 	/**
 	 * This method can be used to load/reload the data.<br>
@@ -297,7 +297,7 @@ public abstract class DocumentParser
 	
 	public FileFilter getCurrentFileFilter()
 	{
-		return _currentFilter != null ? _currentFilter : xmlFilter;
+		return _currentFilter;
 	}
 	
 	/**
