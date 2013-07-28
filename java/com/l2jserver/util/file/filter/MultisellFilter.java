@@ -19,7 +19,6 @@
 package com.l2jserver.util.file.filter;
 
 import java.io.File;
-import java.io.FileFilter;
 
 /**
  * Specialized {@link FileFilter} class.<br>
