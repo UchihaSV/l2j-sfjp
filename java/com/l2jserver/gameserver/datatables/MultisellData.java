@@ -80,7 +80,7 @@ public class MultisellData extends DocumentParser
 	{
 		try
 		{
-			int id = Integer.parseInt(getCurrentFile().getName().replaceAll(".xml", ""));
+			int id = Integer.parseInt(getCurrentFile().getName().replace(".xml", ""));	//[JOJO] s/replaceAll/replace/
 			int entryId = 1;
 			Node att;
 			final ListContainer list = new ListContainer(id);

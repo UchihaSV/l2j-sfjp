@@ -99,7 +99,6 @@ public abstract class DocumentParser
 		}
 		catch (Exception e)
 		{
-			_log.warning(getClass().getSimpleName() + ": Could not parse " + f.getPath() + " file. " + e.getMessage());	//[JOJO]
 			return;
 		}
 		parseDocument();
