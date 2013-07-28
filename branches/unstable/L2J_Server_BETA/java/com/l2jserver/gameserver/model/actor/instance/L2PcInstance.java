@@ -14822,7 +14822,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return _charges.get();
 	}
 	
-	public synchronized void increaseCharges(int count, int max)
+	public void increaseCharges(int count, int max)
 	{
 		if (_charges.get() >= max)
 		{
@@ -14848,7 +14848,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		sendPacket(new EtcStatusUpdate(this));
 	}
 	
-	public synchronized boolean decreaseCharges(int count)
+	public boolean decreaseCharges(int count)
 	{
 		if (_charges.get() < count)
 		{
@@ -14896,7 +14896,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		if (_chargeTask != null)
 		{
 			_chargeTask.cancel(false);
-			// ThreadPoolManager.getInstance().removeGeneral((Runnable)_chargeTask);
 			_chargeTask = null;
 		}
 	}
