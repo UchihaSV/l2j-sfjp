@@ -19,6 +19,7 @@
 package com.l2jserver.gameserver.engines;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -51,6 +52,8 @@ public abstract class DocumentParser
 	
 	private Document _currentDocument;
 	
+	private FileFilter _currentFilter = null;
+	
 	/**
 	 * This method can be used to load/reload the data.<br>
 	 * It's highly recommended to clear the data storage, either the list or map.
@@ -75,7 +78,7 @@ public abstract class DocumentParser
 	protected void parseFile(File f)
 	{
 	  try {
-		if (!xmlFilter.accept(f))
+		if (!getCurrentFileFilter().accept(f))
 		{
 			_log.warning(getClass().getSimpleName() + ": Could not parse " + f.getPath() + " is not a file or it doesn't exist!");	//[JOJO]
 			return;
@@ -177,7 +180,7 @@ public abstract class DocumentParser
 			{
 				parseDirectory(f, recursive);
 			}
-			else if (xmlFilter.accept(f))
+			else if (getCurrentFileFilter().accept(f))
 			{
 				parseFile(f);
 			}
@@ -285,6 +288,16 @@ public abstract class DocumentParser
 	{
 		final Node b = n.getNamedItem(name);
 		return (b == null) ? "" : b.getNodeValue();
+	}
+	
+	public void setCurrentFileFilter(FileFilter filter)
+	{
+		_currentFilter = filter;
+	}
+	
+	public FileFilter getCurrentFileFilter()
+	{
+		return _currentFilter != null ? _currentFilter : xmlFilter;
 	}
 	
 	/**
