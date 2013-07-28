@@ -7678,18 +7678,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		abortAttack();
 	}
 	
-	public final void stopPhysicalAttackMuted(L2Effect effect)
-	{
-		if (effect == null)
-		{
-			stopEffects(L2EffectType.PHYSICAL_ATTACK_MUTE);
-		}
-		else
-		{
-			_effectList.remove(effect);
-		}
-	}
-	
 	public void disableCoreAI(boolean val)
 	{
 		_AIdisabled = val;
