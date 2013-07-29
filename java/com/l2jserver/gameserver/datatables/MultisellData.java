@@ -18,10 +18,9 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.logging.Level;
+
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.NamedNodeMap;
@@ -52,7 +51,7 @@ public class MultisellData extends DocumentParser
 	public static final int CLAN_REPUTATION = -200;
 	public static final int FAME = -300;
 	
-	private final Map<Integer, ListContainer> _entries = new HashMap<>();
+	private final SortedIntObjectArrayMap<ListContainer> _entries = new SortedIntObjectArrayMap<>();
 	
 	protected MultisellData()
 	{
@@ -344,12 +343,8 @@ public class MultisellData extends DocumentParser
 	
 	private final void verify()
 	{
-		ListContainer list;
-		final Iterator<ListContainer> iter = _entries.values().iterator();
-		while (iter.hasNext())
+		for (ListContainer list : _entries.values())
 		{
-			list = iter.next();
-			
 			for (Entry ent : list.getEntries())
 			{
 				for (Ingredient ing : ent.getIngredients())
