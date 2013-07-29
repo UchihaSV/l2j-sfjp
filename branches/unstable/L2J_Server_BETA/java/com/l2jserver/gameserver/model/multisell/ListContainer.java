@@ -20,7 +20,6 @@ package com.l2jserver.gameserver.model.multisell;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,7 +32,7 @@ public class ListContainer
 	protected boolean _maintainEnchantment = false;
 	protected double _useRate = 1.0;
 	
-	protected List<Entry> _entries = new ArrayList<>();
+	protected ArrayList<Entry> _entries = new ArrayList<>();
 	protected Set<Integer> _npcsAllowed = null;
 	
 	public ListContainer(int listId)
@@ -41,7 +40,7 @@ public class ListContainer
 		_listId = listId;
 	}
 	
-	public final List<Entry> getEntries()
+	public final ArrayList<Entry> getEntries()
 	{
 		return _entries;
 	}
