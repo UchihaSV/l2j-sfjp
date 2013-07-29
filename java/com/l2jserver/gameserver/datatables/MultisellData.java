@@ -147,6 +147,7 @@ public class MultisellData extends DocumentParser
 							}
 						}
 					}
+					list.getEntries().trimToSize();	//[JOJO]
 				}
 			}
 			_entries.put(id, list);
