@@ -19,8 +19,8 @@
 package com.l2jserver.gameserver.model.multisell;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+
+import jp.sf.l2j.arrayMaps.SortedIntIntArrayMap;
 
 /**
  * @author DS
@@ -33,7 +33,7 @@ public class ListContainer
 	protected double _useRate = 1.0;
 	
 	protected ArrayList<Entry> _entries = new ArrayList<>();
-	protected Set<Integer> _npcsAllowed = null;
+	protected SortedIntIntArrayMap _npcsAllowed = null;
 	
 	public ListContainer(int listId)
 	{
@@ -89,14 +89,14 @@ public class ListContainer
 	{
 		if (_npcsAllowed == null)
 		{
-			_npcsAllowed = new HashSet<>();
+			_npcsAllowed = new SortedIntIntArrayMap();
 		}
-		_npcsAllowed.add(npcId);
+		_npcsAllowed.put(npcId, npcId);
 	}
 	
 	public boolean isNpcAllowed(int npcId)
 	{
-		return (_npcsAllowed == null) || _npcsAllowed.contains(npcId);
+		return (_npcsAllowed == null) || _npcsAllowed.containsKey(npcId);
 	}
 	
 	public boolean isNpcOnly()
