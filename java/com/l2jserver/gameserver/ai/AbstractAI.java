@@ -701,7 +701,7 @@ if (com.l2jserver.Config.TAMED_BEAST_FOLLOW_RANDOM) {{
 		}
 		if (!isAutoAttacking())
 		{
-			if ((_actor instanceof L2PcInstance) && ((L2PcInstance) _actor).hasSummon())
+			if (_actor.isPlayer() && _actor.hasSummon())
 			{
 				_actor.getSummon().broadcastPacket(new AutoAttackStart(_actor.getSummon().getObjectId()));
 			}

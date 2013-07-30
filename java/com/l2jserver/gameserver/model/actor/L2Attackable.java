@@ -684,8 +684,8 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 					
 					// Penalty applied to the attacker's XP
 					penalty = 0;
-					// If this attacker is a L2PcInstance with a summoned L2ServitorInstance, get Exp Penalty applied for the current summoned L2SummonInstance
-					if (attacker.isPlayer() && attacker.hasSummon() && attacker.getSummon().isServitor())
+					// If this attacker is a player with a servitor, get Exp Penalty applied for the servitor.
+					if (attacker.isPlayer() && attacker.hasServitor())
 					{
 						penalty = ((L2ServitorInstance) attacker.getSummon()).getExpPenalty();
 					}
@@ -702,7 +702,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 						// Calculate Exp and SP rewards
 						if (attacker.getKnownList().knowsObject(this))
 						{
-							// Calculate the difference of level between this attacker (L2PcInstance or L2ServitorInstance owner) and the L2Attackable
+							// Calculate the difference of level between this attacker (player or servitor owner) and the L2Attackable
 							// mob = 24, atk = 10, diff = -14 (full xp)
 							// mob = 24, atk = 28, diff = 4 (some xp)
 							// mob = 24, atk = 50, diff = 26 (no xp)
@@ -820,7 +820,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 								}
 							}
 							
-							if (pl.hasSummon() && pl.getSummon().isPet())
+							if (pl.hasPet())
 							{
 								final L2Summon summon = pl.getSummon();
 								reward2 = rewards.get(summon);
