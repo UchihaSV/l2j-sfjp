@@ -61,4 +61,12 @@ public class GameTimeFunction
 	{
 		 return (long) hh * GameTimeController.MILLIS_PER_IG_HOUR;
 	}
+	
+	/**
+	 * @return åoâﬂïbêî
+	 */
+	public static int currentTime()
+	{
+		return (int)((System.currentTimeMillis() - com.l2jserver.gameserver.GameServer.gameServer.serverLoadEnd) / 1000);
+	}
 }
