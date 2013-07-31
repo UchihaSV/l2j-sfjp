@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.instancemanager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Arrays;
 
 import jp.sf.l2j.troja.FastIntObjectMap;
 
@@ -42,7 +43,7 @@ public class InstanceManager extends DocumentParser
 	private final FastIntObjectMap<InstanceWorld> _instanceWorlds = new FastIntObjectMap<>();
 	private int _dynamic = 300000;
 	// InstanceId Names
-	private static final FastIntObjectMap<String> _instanceIdNames = new FastIntObjectMap<>();
+	private static String[] _instanceIdNames;
 	private final FastIntObjectMap<FastIntObjectMap<Long>> _playerInstanceTimes = new FastIntObjectMap<>();
 	// SQL Queries
 	private static final String ADD_INSTANCE_TIME = "INSERT INTO character_instance_time (charId,instanceId,time) values (?,?,?) ON DUPLICATE KEY UPDATE time=?";
@@ -63,9 +64,9 @@ public class InstanceManager extends DocumentParser
 	@Override
 	public void load()
 	{
-		_instanceIdNames.clear();
+		_instanceIdNames = new String[0];
 		parseDatapackFile("data/instancenames.xml");
-		_log.info(getClass().getSimpleName() + ": Loaded " + _instanceIdNames.size() + " instance names.");
+		_log.info(getClass().getSimpleName() + ": Loaded " + _instanceIdNames.length + " instance names.");
 	}
 	
 	/**
@@ -182,11 +183,8 @@ public class InstanceManager extends DocumentParser
 	 */
 	public String getInstanceIdName(int id)
 	{
-		String name = _instanceIdNames.get(id);
-		if (name != null)
-			return name;
-		else
-			return "UnknownInstance";
+		String name;
+		return  id < 0 || id >= _instanceIdNames.length || (name = _instanceIdNames[id]) == null ? "UnknownInstance" : name;
 	}
 	
 	@Override
@@ -202,7 +200,11 @@ public class InstanceManager extends DocumentParser
 					if ("instance".equals(d.getNodeName()))
 					{
 						attrs = d.getAttributes();
-						_instanceIdNames.put(parseInteger(attrs, "id"), attrs.getNamedItem("name").getNodeValue());
+						final int id = parseInt(attrs, "id");
+						final String name = attrs.getNamedItem("name").getNodeValue();
+						if (_instanceIdNames.length < id + 1)
+							_instanceIdNames = Arrays.copyOf(_instanceIdNames, id + 1);
+						_instanceIdNames[id] = name;
 					}
 				}
 			}

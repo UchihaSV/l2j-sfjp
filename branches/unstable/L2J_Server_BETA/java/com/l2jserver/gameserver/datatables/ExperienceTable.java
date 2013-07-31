@@ -18,8 +18,7 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -32,7 +31,7 @@ import com.l2jserver.gameserver.engines.DocumentParser;
  */
 public final class ExperienceTable extends DocumentParser
 {
-	private final Map<Integer, Long> _expTable = new HashMap<>();
+	private long[] _expTable;
 	
 	private byte MAX_LEVEL;
 	private byte MAX_PET_LEVEL;
@@ -48,9 +47,9 @@ public final class ExperienceTable extends DocumentParser
 	@Override
 	public void load()
 	{
-		_expTable.clear();
+		_expTable = new long[0];
 		parseDatapackFile("data/stats/experience.xml");
-		_log.info(getClass().getSimpleName() + ": Loaded " + _expTable.size() + " levels.");
+		_log.info(getClass().getSimpleName() + ": Loaded " + _expTable.length + " levels.");
 		_log.info(getClass().getSimpleName() + ": Max Player Level is: " + (MAX_LEVEL - 1));
 		_log.info(getClass().getSimpleName() + ": Max Pet Level is: " + (MAX_PET_LEVEL - 1));
 	}
@@ -70,7 +69,11 @@ public final class ExperienceTable extends DocumentParser
 			if ("experience".equals(n.getNodeName()))
 			{
 				attrs = n.getAttributes();
-				_expTable.put(parseInteger(attrs, "level"), parseLong(attrs, "tolevel"));
+				final int level = parseInt(attrs, "level");
+				final long tolevel = parseLong(attrs, "tolevel");
+				if (_expTable.length < level + 1)
+					_expTable = Arrays.copyOf(_expTable, level + 1);
+				_expTable[level] = tolevel;
 			}
 		}
 	}
@@ -82,7 +85,7 @@ public final class ExperienceTable extends DocumentParser
 	 */
 	public long getExpForLevel(int level)
 	{
-		return _expTable.get(level);
+		return _expTable[level];
 	}
 	
 	/**
