@@ -397,14 +397,19 @@ if (com.l2jserver.Config.TEST_GET_AI) {{
 		
 		if (!skill.isStatic())
 		{
-			if (skill.isMagic() && isMuted())
+			if (skill.isMagic())
 			{
-				return;
+				if (isMuted())
+				{
+					return;
+				}
 			}
-			
-			if (isPhysicalMuted())
+			else
 			{
-				return;
+				if (isPhysicalMuted())
+				{
+					return;
+				}
 			}
 		}
 		
