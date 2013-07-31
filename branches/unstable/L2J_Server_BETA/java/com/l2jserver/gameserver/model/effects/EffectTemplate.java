@@ -47,7 +47,7 @@ public class EffectTemplate
 	private final Condition _attachCond;
 	// private final Condition _applyCond; // TODO: Use or cleanup.
 	private final Lambda _lambda;
-	private final int _totalCount;
+	private final int _totalTickCount;
 	/** Custom abnormal time. */
 	private final int _customAbnormalTime;
 	private final AbnormalEffect _abnormalEffect;
@@ -61,12 +61,12 @@ public class EffectTemplate
 	private final int _triggeredLevel;
 	private final ChanceCondition _chanceCondition;
 	
-	public EffectTemplate(Condition attachCond, Condition applyCond, String func, Lambda lambda, int totalCount, int abnormalTime, AbnormalEffect abnormalEffect, AbnormalEffect[] specialEffect, AbnormalEffect eventEffect, boolean showIcon, double power, int trigId, int trigLvl, ChanceCondition chanceCond)
+	public EffectTemplate(Condition attachCond, Condition applyCond, String func, Lambda lambda, int totalTickCount, int abnormalTime, AbnormalEffect abnormalEffect, AbnormalEffect[] specialEffect, AbnormalEffect eventEffect, boolean showIcon, double power, int trigId, int trigLvl, ChanceCondition chanceCond)
 	{
 		_attachCond = attachCond;
 		// _applyCond = applyCond;
 		_lambda = lambda;
-		_totalCount = totalCount;
+		_totalTickCount = totalTickCount;
 		_customAbnormalTime = abnormalTime;
 		_abnormalEffect = abnormalEffect;
 		_specialEffect = specialEffect;
@@ -182,9 +182,9 @@ public class EffectTemplate
 		return _lambda;
 	}
 	
-	public int getTotalCount()
+	public int getTotalTickCount()
 	{
-		return _totalCount;
+		return _totalTickCount;
 	}
 	
 	public int getCustomAbnormalTime()
