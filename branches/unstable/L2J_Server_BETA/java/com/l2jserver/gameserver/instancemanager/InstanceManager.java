@@ -202,7 +202,7 @@ public class InstanceManager extends DocumentParser
 						attrs = d.getAttributes();
 						final int id = parseInt(attrs, "id");
 						final String name = attrs.getNamedItem("name").getNodeValue();
-						if (_instanceIdNames.length < id + 1)
+						if (_instanceIdNames.length <= id)
 							_instanceIdNames = Arrays.copyOf(_instanceIdNames, id + 1);
 						_instanceIdNames[id] = name;
 					}
