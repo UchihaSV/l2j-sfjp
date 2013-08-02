@@ -71,7 +71,7 @@ public final class ExperienceTable extends DocumentParser
 				attrs = n.getAttributes();
 				final int level = parseInt(attrs, "level");
 				final long tolevel = parseLong(attrs, "tolevel");
-				if (_expTable.length < level + 1)
+				if (_expTable.length <= level)
 					_expTable = Arrays.copyOf(_expTable, level + 1);
 				_expTable[level] = tolevel;
 			}
