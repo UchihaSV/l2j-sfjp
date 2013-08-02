@@ -18,10 +18,10 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.engines.DocumentEngine;
@@ -38,9 +38,9 @@ public class SkillTable
 {
 	private static Logger _log = Logger.getLogger(SkillTable.class.getName());
 	
-	private final Map<Integer, L2Skill> _skills = new HashMap<>();
-	private final TIntIntHashMap _skillMaxLevel = new TIntIntHashMap();
-	private final TIntArrayList _enchantable = new TIntArrayList();
+	private FastIntObjectMap<L2Skill> _skills;
+	private TIntIntHashMap _skillMaxLevel;
+	private TIntArrayList _enchantable;	//TODO: int[] _enchantable;
 	
 	protected SkillTable()
 	{
@@ -56,6 +56,12 @@ public class SkillTable
 	
 	private void load()
 	{
+		//[JOJO]-------------------------------------------------
+		final FastIntObjectMap<L2Skill> _skills = new FastIntObjectMap<>();
+		final TIntIntHashMap _skillMaxLevel = new TIntIntHashMap();
+		final TIntArrayList _enchantable = new TIntArrayList();
+		//-------------------------------------------------------
+		
 		_skills.clear();
 		DocumentEngine.getInstance().loadAllSkills(_skills);
 		
@@ -83,6 +89,14 @@ public class SkillTable
 		
 		// Sorting for binarySearch
 		_enchantable.sort();
+		
+		//[JOJO]-------------------------------------------------
+		_skillMaxLevel.trimToSize();
+		_enchantable.trimToSize();
+		this._skills = _skills; 
+		this._skillMaxLevel = _skillMaxLevel; 
+		this._enchantable = _enchantable; 
+		//-------------------------------------------------------
 	}
 	
 	/**
