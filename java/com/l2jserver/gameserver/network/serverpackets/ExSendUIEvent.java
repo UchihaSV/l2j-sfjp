@@ -28,8 +28,10 @@ public class ExSendUIEvent extends L2GameServerPacket
 	private final boolean _countUp;
 	private final int _startTime;
 	private final int _endTime;
+	private final String _text;
 	private final int _npcstringId;
 	private String[] _params = null;
+	private static final String[] STRING_EMPTY = new String[0];
 	
 	/**
 	 * @param player
@@ -41,7 +43,7 @@ public class ExSendUIEvent extends L2GameServerPacket
 	 */
 	public ExSendUIEvent(L2PcInstance player, boolean hide, boolean countUp, int startTime, int endTime, String text)
 	{
-		this(player, hide, countUp, startTime, endTime, -1, text);
+		this(player, hide, countUp, startTime, endTime, text, -1, STRING_EMPTY);
 	}
 	
 	/**
@@ -55,7 +57,7 @@ public class ExSendUIEvent extends L2GameServerPacket
 	 */
 	public ExSendUIEvent(L2PcInstance player, boolean hide, boolean countUp, int startTime, int endTime, NpcStringId npcString, String... params)
 	{
-		this(player, hide, countUp, startTime, endTime, npcString.getId(), params);
+		this(player, hide, countUp, startTime, endTime, null, npcString.getId(), params);
 	}
 	
 	/**
@@ -69,11 +71,17 @@ public class ExSendUIEvent extends L2GameServerPacket
 	 */
 	public ExSendUIEvent(L2PcInstance player, boolean hide, boolean countUp, int startTime, int endTime, int npcstringId, String... params)
 	{
+		this(player, hide, countUp, startTime, endTime, null, npcstringId, params);
+	}
+	
+	private ExSendUIEvent(L2PcInstance player, boolean hide, boolean countUp, int startTime, int endTime, String text, int npcstringId, String... params)
+	{
 		_objectId = player.getObjectId();
 		_type = hide;
 		_countUp = countUp;
 		_startTime = startTime;
 		_endTime = endTime;
+		_text = text;
 		_npcstringId = npcstringId;
 		_params = params;
 	}
@@ -94,7 +102,11 @@ public class ExSendUIEvent extends L2GameServerPacket
 		writeS(String.valueOf(_endTime / 60));
 		writeS(String.valueOf(_endTime % 60));
 		writeD(_npcstringId);
-		if (_params != null)
+		if (_npcstringId == -1)
+		{
+			writeS(_text);
+		}
+		else if (_params != null)
 		{
 			for (String param : _params)
 			{
