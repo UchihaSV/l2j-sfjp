@@ -18,9 +18,6 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.NpcStringId;
 
@@ -32,7 +29,7 @@ public class ExSendUIEvent extends L2GameServerPacket
 	private final int _startTime;
 	private final int _endTime;
 	private final int _npcstringId;
-	private List<String> _params = null;
+	private String[] _params = null;
 	
 	/**
 	 * @param player
@@ -78,7 +75,7 @@ public class ExSendUIEvent extends L2GameServerPacket
 		_startTime = startTime;
 		_endTime = endTime;
 		_npcstringId = npcstringId;
-		_params = Arrays.asList(params);
+		_params = params;
 	}
 	
 	@Override
