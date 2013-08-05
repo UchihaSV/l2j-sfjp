@@ -611,19 +611,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						addImmobiliseSkill(skill);
 						addRangeSkill(skill);
 						break;
-					case PDAM:
-					case MDAM:
-					case BLOW:
-					case DRAIN:
-					case CHARGEDAM:
-					case FATAL:
-					case DEATHLINK:
-					case MANADAM:
-					case CPDAMPERCENT:
-						addAtkSkill(skill);
-						addUniversalSkill(skill);
-						addRangeSkill(skill);
-						break;
 					case POISON:
 					case DOT:
 					case MDOT:
@@ -636,7 +623,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						addCOTSkill(skill);
 						addRangeSkill(skill);
 						break;
-					default:
+					case DUMMY:
 						if (skill.hasEffectType(L2EffectType.CANCEL, L2EffectType.CANCEL_ALL, L2EffectType.NEGATE))
 						{
 							addNegativeSkill(skill);
@@ -645,6 +632,12 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						else if (skill.hasEffectType(L2EffectType.HEAL, L2EffectType.HEAL_PERCENT))
 						{
 							addHealSkill(skill);
+						}
+						else if (skill.hasEffectType(L2EffectType.PHYSICAL_ATTACK, L2EffectType.PHYSICAL_ATTACK_HP_LINK, L2EffectType.FATAL_BLOW, L2EffectType.ENERGY_ATTACK, L2EffectType.MAGICAL_ATTACK_MP, L2EffectType.MAGICAL_ATTACK, L2EffectType.DEATH_LINK, L2EffectType.HP_DRAIN))
+						{
+							addAtkSkill(skill);
+							addUniversalSkill(skill);
+							addRangeSkill(skill);
 						}
 						else
 						{

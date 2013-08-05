@@ -1637,44 +1637,6 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				break;
 			}
-			case PDAM:
-			case MDAM:
-			case BLOW:
-			case DRAIN:
-			case CHARGEDAM:
-			case FATAL:
-			case DEATHLINK:
-			case MANADAM:
-			case CPDAMPERCENT:
-			{
-				if (!canAura(sk))
-				{
-					if (GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && (dist2 <= srange))
-					{
-						clientStopMoving(null);
-						caster.doCast(sk);
-						return true;
-					}
-					
-					L2Character target = skillTargetReconsider(sk);
-					if (target != null)
-					{
-						clientStopMoving(null);
-						L2Object targets = attackTarget;
-						caster.setTarget(target);
-						caster.doCast(sk);
-						caster.setTarget(targets);
-						return true;
-					}
-				}
-				else
-				{
-					clientStopMoving(null);
-					caster.doCast(sk);
-					return true;
-				}
-				break;
-			}
 			default:
 			{
 				if (sk.hasEffectType(L2EffectType.CANCEL, L2EffectType.CANCEL_ALL, L2EffectType.NEGATE))
@@ -1727,6 +1689,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						}
 					}
 				}
+				
 				if (sk.hasEffectType(L2EffectType.HEAL, L2EffectType.HEAL_PERCENT))
 				{
 					double percentage = (caster.getCurrentHp() / caster.getMaxHp()) * 100;
@@ -1805,6 +1768,36 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						}
 					}
 				}
+				
+				if (sk.hasEffectType(L2EffectType.PHYSICAL_ATTACK, L2EffectType.PHYSICAL_ATTACK_HP_LINK, L2EffectType.FATAL_BLOW, L2EffectType.ENERGY_ATTACK, L2EffectType.MAGICAL_ATTACK_MP, L2EffectType.MAGICAL_ATTACK, L2EffectType.DEATH_LINK, L2EffectType.HP_DRAIN))
+				{
+					if (!canAura(sk))
+					{
+						if (GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && (dist2 <= srange))
+						{
+							clientStopMoving(null);
+							caster.doCast(sk);
+							return true;
+						}
+						
+						L2Character target = skillTargetReconsider(sk);
+						if (target != null)
+						{
+							clientStopMoving(null);
+							L2Object targets = attackTarget;
+							caster.setTarget(target);
+							caster.doCast(sk);
+							caster.setTarget(targets);
+							return true;
+						}
+					}
+					else
+					{
+						clientStopMoving(null);
+						caster.doCast(sk);
+						return true;
+					}
+				}
 				if (!canAura(sk))
 				{
 					
@@ -1835,8 +1828,8 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					// _actor.setTarget(targets);
 					return true;
 				}
-			}
 				break;
+			}
 		}
 		
 		return false;

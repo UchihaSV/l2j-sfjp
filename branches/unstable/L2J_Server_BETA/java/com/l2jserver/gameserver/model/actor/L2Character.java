@@ -1183,7 +1183,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			crit1 = Formulas.calcCrit(getStat().getCriticalHit(target, null), false, target);
 			
 			// Calculate physical damages
-			damage1 = (int) Formulas.calcPhysDam(this, target, null, shld1, crit1, false, attack.soulshot);
+			damage1 = (int) Formulas.calcPhysDam(this, target, null, shld1, crit1, attack.soulshot);
 			
 			// Bows Ranged Damage Formula (Damage gradually decreases when 60% or lower than full hit range, and increases when 60% or higher).
 			// full hit range is 500 which is the base bow range, and the 60% of this is 800.
@@ -1252,7 +1252,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			crit1 = Formulas.calcCrit(getStat().getCriticalHit(target, null), false, target);
 			
 			// Calculate physical damages
-			damage1 = (int) Formulas.calcPhysDam(this, target, null, shld1, crit1, false, attack.soulshot);
+			damage1 = (int) Formulas.calcPhysDam(this, target, null, shld1, crit1, attack.soulshot);
 		}
 		
 		// Check if the L2Character is a L2PcInstance
@@ -1318,7 +1318,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			crit1 = Formulas.calcCrit(getStat().getCriticalHit(target, null), false, target);
 			
 			// Calculate physical damages of hit 1
-			damage1 = (int) Formulas.calcPhysDam(this, target, null, shld1, crit1, true, attack.soulshot);
+			damage1 = (int) Formulas.calcPhysDam(this, target, null, shld1, crit1, attack.soulshot);
 			damage1 /= 2;
 		}
 		
@@ -1332,7 +1332,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			crit2 = Formulas.calcCrit(getStat().getCriticalHit(target, null), false, target);
 			
 			// Calculate physical damages of hit 2
-			damage2 = (int) Formulas.calcPhysDam(this, target, null, shld2, crit2, true, attack.soulshot);
+			damage2 = (int) Formulas.calcPhysDam(this, target, null, shld2, crit2, attack.soulshot);
 			damage2 /= 2;
 		}
 		
@@ -1511,7 +1511,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			crit1 = Formulas.calcCrit(getStat().getCriticalHit(target, null), false, target);
 			
 			// Calculate physical damages
-			damage1 = (int) Formulas.calcPhysDam(this, target, null, shld1, crit1, false, attack.soulshot);
+			damage1 = (int) Formulas.calcPhysDam(this, target, null, shld1, crit1, attack.soulshot);
 			
 			if (attackpercent != 100)
 			{
@@ -6345,22 +6345,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				getStatus().reduceHp(consumeHp, this, true);
 				
 				su.addAttribute(StatusUpdate.CUR_HP, (int) getCurrentHp());
-				isSendStatus = true;
-			}
-			
-			// Consume CP if necessary and Send the Server->Client packet StatusUpdate with current CP/HP and MP to all other L2PcInstance to inform
-			if (skill.getCpConsume() > 0)
-			{
-				double consumeCp;
-				
-				consumeCp = skill.getCpConsume();
-				if ((consumeCp + 1) >= getCurrentHp())
-				{
-					consumeCp = getCurrentHp() - 1.0;
-				}
-				
-				getStatus().reduceCp((int) consumeCp);
-				su.addAttribute(StatusUpdate.CUR_CP, (int) getCurrentCp());
 				isSendStatus = true;
 			}
 			
