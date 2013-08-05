@@ -19375,6 +19375,8 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3031<br>
+	 * Message: アインハザードの聖剣の一撃スキルで、邪悪なリリムのやつらをぶちのめせ！<br>
+	 * Message: &#20351;&#29992;&#27575;&#28023;&#34217;&#32854;&#21133;&#30340;&#24517;&#27578;&#25216;&#20358;&#25802;&#25943;&#37034;&#24801;&#30340;&#33673;&#33673;&#24681;&#32676;&#65281;<br>
 	 * Message: By using the skill of Einhasad's holy sword, defeat the evil Lilims!
 	 */
 	public static final SystemMessageId USING_EINHASAD_HOLY_SWORD_DEFEAT_LILIMS;
@@ -19405,12 +19407,16 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3039<br>
+	 * Message: アインハザードの聖水を用いて、炎の呪いがかけられた門を開くのです。<br>
+	 * Message: &#20351;&#29992;&#27575;&#28023;&#34217;&#32854;&#27700;&#24460;&#65292;&#35531;&#38283;&#21855;&#22285;&#32350;&#28779;&#28976;&#35419;&#21650;&#30340;&#38272;&#12290;<br>
 	 * Message: By using the holy water of Einhasad, open the door possessed by the curse of flames.
 	 */
 	public static final SystemMessageId USING_EINHASAD_HOLY_WATER_TO_OPEN_DOOR;
 	
 	/**
 	 * ID: 3040<br>
+	 * Message: 宮廷魔術師の魔法棒を用いて、結界の張られた門を開くのです。<br>
+	 * Message: &#21033;&#29992;&#23470;&#24311;&#39764;&#27861;&#24107;&#30340;&#39764;&#27861;&#26834;&#65292;&#35531;&#38283;&#21855;&#38468;&#26377;&#39764;&#27861;&#24107;&#32080;&#30028;&#30340;&#38272;&#12290;<br>
 	 * Message: By using the Court Magician's Magic Staff, open the door on which the magician's barrier is placed.
 	 */
 	public static final SystemMessageId USING_COURT_MAGICIANS_STAFF_TO_OPEN_DOOR;
@@ -19425,6 +19431,8 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3060<br>
+	 * Message: 封印装置が光を放ちながら動き出した。作動できたぞ！<br>
+	 * Message: &#23553;&#21360;&#35037;&#32622;&#25955;&#30332;&#20809;&#33426;&#24460;&#38283;&#22987;&#36939;&#20316;&#20102;&#12290;&#24050;&#32147;&#22312;&#27491;&#24120;&#36939;&#20316;&#65281;<br>
 	 * Message: The sealing device glitters and moves. Activation complete normally!
 	 */
 	public static final SystemMessageId THE_SEALING_DEVICE_ACTIVATION_COMPLETE;
