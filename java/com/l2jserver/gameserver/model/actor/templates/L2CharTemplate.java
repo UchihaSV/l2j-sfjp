@@ -453,6 +453,24 @@ public class L2CharTemplate
 		return _baseMCritRate;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	/**
+	 * @return the baseWalkSpd
+	 */
+	public int getBaseWalkSpd()
+	{
+		return _baseWalkSpd;
+	}
+	
+	/**
+	 * @return the baseRunSpd
+	 */
+	public int getBaseRunSpd()
+	{
+		return _baseRunSpd;
+	}
+	//-------------------------------------------------------
+	
 	public int getBaseMoveSpd(MoveType mt)
 	{
 		switch(mt)
