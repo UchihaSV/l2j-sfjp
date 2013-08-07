@@ -452,7 +452,7 @@ public class CharStat
 		{
 			return 1f;
 		}
-		return getWalkSpeed() / (float) baseWalkSpd;
+		return (float) getWalkSpeed() / baseWalkSpd;
 	//	return getWalkSpeed() / (float) _activeChar.getTemplate().getBaseMoveSpd(MoveType.WALK);
 		//-------------------------------------------------------
 	}
