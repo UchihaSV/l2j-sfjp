@@ -63,7 +63,7 @@ public class NpcStat extends CharStat
 			return 1f;
 		}
 		
-		return (getWalkSpeed() * 1f) / baseMoveSpd;
+		return (float) getWalkSpeed() / baseMoveSpd;
 	//	//-------------------------------------------------------
 	//	if (getActiveChar() == null)
 	//	{
