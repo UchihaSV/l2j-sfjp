@@ -350,35 +350,13 @@ public abstract class L2Object
 			{
 				oldI.removePlayer(getObjectId());
 				if (oldI.isShowTimer())
-				{
-					int startTime = (int) ((System.currentTimeMillis() - oldI.getInstanceStartTime()) / 1000);
-					int endTime = (int) ((oldI.getInstanceEndTime() - oldI.getInstanceStartTime()) / 1000);
-					if (oldI.isTimerIncrease())
-					{
-						sendPacket(new ExSendUIEvent(getActingPlayer(), true, true, startTime, endTime, oldI.getTimerText()));
-					}
-					else
-					{
-						sendPacket(new ExSendUIEvent(getActingPlayer(), true, false, endTime - startTime, 0, oldI.getTimerText()));
-					}
-				}
+					hideInstanceTimer();	//[JOJO]
 			}
 			if (instanceId > 0)
 			{
 				newI.addPlayer(getObjectId());
 				if (newI.isShowTimer())
-				{
-					int startTime = (int) ((System.currentTimeMillis() - newI.getInstanceStartTime()) / 1000);
-					int endTime = (int) ((newI.getInstanceEndTime() - newI.getInstanceStartTime()) / 1000);
-					if (newI.isTimerIncrease())
-					{
-						sendPacket(new ExSendUIEvent(getActingPlayer(), false, true, startTime, endTime, newI.getTimerText()));
-					}
-					else
-					{
-						sendPacket(new ExSendUIEvent(getActingPlayer(), false, false, endTime - startTime, 0, newI.getTimerText()));
-					}
-				}
+					showInstanceTimer(newI);	//[JOJO]
 			}
 			
 			if (player.hasSummon())
@@ -417,6 +395,48 @@ public abstract class L2Object
 			}
 		}
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public void showInstanceTimer(Instance instance)
+	{
+		final int npcString;
+		String timerText = instance.getTimerText();
+		if (timerText != null && timerText.startsWith("#"))	// ex: <showTimer val="true" increase="true" text="#1911119" />
+		{
+			npcString = 
+				  timerText.equals("#1911119") ? 1911119	// "経過時間："
+				: timerText.equals("#1911120") ? 1911120	// "残り時間："
+				: Integer.parseInt(timerText.substring(1));
+			timerText = null;
+		}
+		else
+		{
+			npcString = -1;
+		}
+		final int start, end;
+		if (instance.isTimerIncrease()) // count up
+		{
+			start = (int) ((System.currentTimeMillis() - instance.getInstanceStartTime()) / 1000);
+			end = (int) ((instance.getInstanceEndTime() - instance.getInstanceStartTime()) / 1000);
+			assert start <= end;
+			assert start >= 0;
+			assert end >= 0;
+		}
+		else // count down
+		{
+			end = 0;
+			start = (int) ((instance.getInstanceEndTime() - System.currentTimeMillis()) / 1000);
+			assert end <= start;
+			assert start >= 0;
+		}
+		sendPacket(new ExSendUIEvent(getActingPlayer(), false, instance.isTimerIncrease(), start, end, timerText, npcString, null));
+	}
+	
+	public void hideInstanceTimer()
+	{
+		sendPacket(new ExSendUIEvent(getActingPlayer(), true, true, 0, 0, -1));
+	}
+	//-------------------------------------------------------
 	
 	public final int getY()
 	{

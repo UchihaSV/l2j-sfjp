@@ -30,8 +30,7 @@ public class ExSendUIEvent extends L2GameServerPacket
 	private final int _endTime;
 	private final String _text;
 	private final int _npcstringId;
-	private String[] _params = null;
-	private static final String[] STRING_EMPTY = new String[0];
+	private final String[] _params;
 	
 	/**
 	 * @param player
@@ -43,7 +42,20 @@ public class ExSendUIEvent extends L2GameServerPacket
 	 */
 	public ExSendUIEvent(L2PcInstance player, boolean hide, boolean countUp, int startTime, int endTime, String text)
 	{
-		this(player, hide, countUp, startTime, endTime, text, -1, STRING_EMPTY);
+		this(player, hide, countUp, startTime, endTime, text, -1, null);
+	}
+	
+	/**
+	 * @param player
+	 * @param hide
+	 * @param countUp
+	 * @param startTime
+	 * @param endTime
+	 * @param npcString
+	 */
+	public ExSendUIEvent(L2PcInstance player, boolean hide, boolean countUp, int startTime, int endTime, NpcStringId npcString)
+	{
+		this(player, hide, countUp, startTime, endTime, null, npcString.getId(), null);
 	}
 	
 	/**
@@ -67,6 +79,19 @@ public class ExSendUIEvent extends L2GameServerPacket
 	 * @param startTime
 	 * @param endTime
 	 * @param npcstringId
+	 */
+	public ExSendUIEvent(L2PcInstance player, boolean hide, boolean countUp, int startTime, int endTime, int npcstringId)
+	{
+		this(player, hide, countUp, startTime, endTime, null, npcstringId, null);
+	}
+	
+	/**
+	 * @param player
+	 * @param hide
+	 * @param countUp
+	 * @param startTime
+	 * @param endTime
+	 * @param npcstringId
 	 * @param params
 	 */
 	public ExSendUIEvent(L2PcInstance player, boolean hide, boolean countUp, int startTime, int endTime, int npcstringId, String... params)
@@ -74,7 +99,7 @@ public class ExSendUIEvent extends L2GameServerPacket
 		this(player, hide, countUp, startTime, endTime, null, npcstringId, params);
 	}
 	
-	private ExSendUIEvent(L2PcInstance player, boolean hide, boolean countUp, int startTime, int endTime, String text, int npcstringId, String... params)
+	public ExSendUIEvent(L2PcInstance player, boolean hide, boolean countUp, int startTime, int endTime, String text, int npcstringId, String[] params)
 	{
 		_objectId = player.getObjectId();
 		_type = hide;
