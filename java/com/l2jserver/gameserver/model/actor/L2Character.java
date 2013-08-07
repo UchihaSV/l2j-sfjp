@@ -4066,7 +4066,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				{
 					su.addAttribute(StatusUpdate.CAST_SPD, getMAtkSpd());
 				}
-				else if (stat == Stats.RUN_SPEED)
+				else if (stat == Stats.MOVE_SPEED)
 				{
 					broadcastFull = true;
 				}
@@ -6999,9 +6999,9 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	/**
 	 * @return the Level Modifier ((level + 89) / 100).
 	 */
-	public float getLevelMod()
+	public double getLevelMod()
 	{
-		return ((getLevel() + 89) / 100f);
+		return ((getLevel() + 89) / 100d);
 	}
 	
 	public final void setSkillCast(Future<?> newSkillCast)
