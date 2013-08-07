@@ -19,6 +19,7 @@
 package com.l2jserver.gameserver.model.actor.stat;
 
 import com.l2jserver.gameserver.model.actor.L2Npc;
+import com.l2jserver.gameserver.model.stats.MoveType;
 import com.l2jserver.gameserver.model.stats.Stats;
 
 public class NpcStat extends CharStat
@@ -43,41 +44,32 @@ public class NpcStat extends CharStat
 	@Override
 	public int getWalkSpeed()
 	{
-		return (int) calcStat(Stats.WALK_SPEED, getActiveChar().getTemplate().getBaseWalkSpd(), null, null);
+		return (int) calcStat(Stats.MOVE_SPEED, getActiveChar().getTemplate().getBaseMoveSpd(MoveType.WALK), null, null);
 	}
 	
 	@Override
 	public float getMovementSpeedMultiplier()
 	{
     	//[JOJO]-------------------------------------------------
-    	L2Npc ac = getActiveChar();
+		L2Npc ac = getActiveChar();
 		if (ac == null)
 		{
 			return 1f;
 		}
-		if (ac.isRunning())
+
+		int baseMoveSpd = ac.getTemplate().getBaseMoveSpd(ac.isRunning() ? MoveType.RUN : MoveType.WALK);
+		if (baseMoveSpd == 0)
 		{
-			int baseRunSpd = ac.getTemplate().getBaseRunSpd();
-			if (baseRunSpd == 0)
-				return 1f;
-			return (float)getRunSpeed() / baseRunSpd;
+			return 1f;
 		}
-		else
-		{
-			int baseWalkSpd = ac.getTemplate().getBaseWalkSpd();
-			if (baseWalkSpd == 0)
-				return 1f;
-			return (float)getWalkSpeed() / baseWalkSpd;
-		}
+		
+		return (getWalkSpeed() * 1f) / baseMoveSpd;
+	//	//-------------------------------------------------------
 	//	if (getActiveChar() == null)
 	//	{
 	//		return 1;
 	//	}
-	//	if (getActiveChar().isRunning())
-	//	{
-	//		return (getRunSpeed() * 1f) / getActiveChar().getTemplate().getBaseRunSpd();
-	//	}
-	//	return (getWalkSpeed() * 1f) / getActiveChar().getTemplate().getBaseWalkSpd();
-		//-------------------------------------------------------
+	//
+	//	return (getWalkSpeed() * 1f) / getActiveChar().getTemplate().getBaseMoveSpd(getActiveChar().isRunning() ? MoveType.RUN : MoveType.WALK);
 	}
 }

@@ -32,6 +32,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2NpcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance;
 import com.l2jserver.gameserver.model.effects.AbnormalEffect;
+import com.l2jserver.gameserver.model.stats.MoveType;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 
 public abstract class AbstractNpcInfo extends L2GameServerPacket
@@ -66,8 +67,8 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 		_heading = cha.getHeading();
 		_mAtkSpd = cha.getMAtkSpd();
 		_pAtkSpd = cha.getPAtkSpd();
-		_runSpd = cha.getTemplate().getBaseRunSpd();
-		_walkSpd = cha.getTemplate().getBaseWalkSpd();
+		_runSpd = cha.getTemplate().getBaseMoveSpd(MoveType.RUN);
+		_walkSpd = cha.getTemplate().getBaseMoveSpd(MoveType.WALK);
 	}
 	
 	/**
