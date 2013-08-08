@@ -134,6 +134,7 @@ import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.PlayerVariables;
 import com.l2jserver.gameserver.model.ShortCuts;
 import com.l2jserver.gameserver.model.ShotType;
+import com.l2jserver.gameserver.model.TeleportBookmark;
 import com.l2jserver.gameserver.model.TerritoryWard;
 import com.l2jserver.gameserver.model.TimeStamp;
 import com.l2jserver.gameserver.model.TradeList;
@@ -151,6 +152,27 @@ import com.l2jserver.gameserver.model.actor.knownlist.PcKnownList;
 import com.l2jserver.gameserver.model.actor.position.PcPosition;
 import com.l2jserver.gameserver.model.actor.stat.PcStat;
 import com.l2jserver.gameserver.model.actor.status.PcStatus;
+import com.l2jserver.gameserver.model.actor.tasks.player.DismountTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.FameTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.GameGuardCheckTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.HerbTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.InventoryEnableTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.LookingForFishTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.PetFeedTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.PunishTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.PvPFlagTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.RecoBonusTaskEnd;
+import com.l2jserver.gameserver.model.actor.tasks.player.RecoGiveTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.RentPetTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.ResetChargesTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.ResetSoulsTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.ShortBuffTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.SitDownTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.StandUpTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.TeleportWatchdogTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.VitalityTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.WarnUserTakeBreakTask;
+import com.l2jserver.gameserver.model.actor.tasks.player.WaterTask;
 import com.l2jserver.gameserver.model.actor.templates.L2PcTemplate;
 import com.l2jserver.gameserver.model.base.ClassId;
 import com.l2jserver.gameserver.model.base.ClassLevel;
@@ -174,6 +196,7 @@ import com.l2jserver.gameserver.model.entity.TvTEvent;
 import com.l2jserver.gameserver.model.fishing.L2Fish;
 import com.l2jserver.gameserver.model.fishing.L2Fishing;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
+import com.l2jserver.gameserver.model.holders.SkillUseHolder;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.itemcontainer.ItemContainer;
 import com.l2jserver.gameserver.model.itemcontainer.PcFreight;
@@ -237,8 +260,6 @@ import com.l2jserver.gameserver.network.serverpackets.ExSpawnEmitter;
 import com.l2jserver.gameserver.network.serverpackets.ExStartScenePlayer;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
 import com.l2jserver.gameserver.network.serverpackets.ExUseSharedGroupItem;
-import com.l2jserver.gameserver.network.serverpackets.ExVitalityPointInfo;
-import com.l2jserver.gameserver.network.serverpackets.ExVoteSystemInfo;
 import com.l2jserver.gameserver.network.serverpackets.FriendStatusPacket;
 import com.l2jserver.gameserver.network.serverpackets.GameGuardQuery;
 import com.l2jserver.gameserver.network.serverpackets.GetOnVehicle;
@@ -416,7 +437,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private L2GameClient _client;
 	
-	private String _accountName;
+	private final String _accountName;
 	private long _deleteTimer;
 	private Calendar _createDate = Calendar.getInstance();
 	
@@ -447,11 +468,11 @@ public final class L2PcInstance extends L2Playable
 	/** The list of sub-classes this character has. */
 	private Map<Integer, SubClass> _subClasses;
 	
-	private PcAppearance _appearance;
+	private final PcAppearance _appearance;
 	
 	/** The Identifier of the L2PcInstance */
 	@Deprecated
-	private int _charId = 0x00030b7a;
+	private final int _charId = 0x00030b7a;
 	
 	/** The Experience of the L2PcInstance before the last Death Penalty */
 	private long _expBeforeDeath;
@@ -493,7 +514,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private int _bookmarkslot = 0; // The Teleport Bookmark Slot
 	
-	private FastList<TeleportBookmark> tpbookmark = new FastList<>();
+	private final Map<Integer, TeleportBookmark> _tpbookmarks = new FastMap<>();
 	
 	private PunishLevel _punishLevel = PunishLevel.NONE;
 	private long _punishTimer = 0;
@@ -666,7 +687,7 @@ public final class L2PcInstance extends L2Playable
 	
  //	// client radar
  //	// TODO: This needs to be better integrated and saved/loaded
- //	private L2Radar _radar;
+ //	private final L2Radar _radar;
 	
 	// Party matching
 	// private int _partymatching = 0;
@@ -809,11 +830,11 @@ public final class L2PcInstance extends L2Playable
  //	private Forum _forumMemo;
 	
 	/** Current skill in use. Note that L2Character has _lastSkillCast, but this has the button presses */
-	private SkillDat _currentSkill;
-	private SkillDat _currentPetSkill;
+	private SkillUseHolder _currentSkill;
+	private SkillUseHolder _currentPetSkill;
 	
 	/** Skills queued because a skill is already in progress */
-	private SkillDat _queuedSkill;
+	private SkillUseHolder _queuedSkill;
 	
 	private int _cursedWeaponEquippedId = 0;
 	private boolean _combatFlagEquippedId = false;
@@ -878,7 +899,7 @@ public final class L2PcInstance extends L2Playable
 		
 		if (_PvPRegTask == null)
 		{
-			_PvPRegTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new PvPFlag(), 1000, 1000);
+			_PvPRegTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new PvPFlagTask(this), 1000, 1000);
 		}
 	}
 	
@@ -900,86 +921,14 @@ public final class L2PcInstance extends L2Playable
 		_PvPRegTask = null;
 	}
 	
-	/** Task launching the function stopPvPFlag() */
-	protected class PvPFlag implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			try
-			{
-				if (System.currentTimeMillis() > getPvpFlagLasts())
-				{
-					stopPvPFlag();
-				}
-				else if (System.currentTimeMillis() > (getPvpFlagLasts() - 20000))
-				{
-					updatePvPFlag(2);
-				}
-				else
-				{
-					updatePvPFlag(1);
-					// Start a new PvP timer check
-					// checkPvPFlag();
-				}
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.WARNING, "error in pvp flag task:", e);
-			}
-		}
-	}
-	
 	// Character UI
 	private UIKeysSettings _uiKeySettings;
 	
 	/** Herbs Task Time **/
 	private int _herbstask = 0;
 	
-	/** Task for Herbs */
-	private class HerbTask implements Runnable
-	{
-		private final String _process;
-		private final int _itemId;
-		private final long _count;
-		private final L2Object _reference;
-		private final boolean _sendMessage;
-		
-		HerbTask(String process, int itemId, long count, L2Object reference, boolean sendMessage)
-		{
-			_process = process;
-			_itemId = itemId;
-			_count = count;
-			_reference = reference;
-			_sendMessage = sendMessage;
-		}
-		
-		@Override
-		public void run()
-		{
-			try
-			{
-				addItem(_process, _itemId, _count, _reference, _sendMessage);
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.WARNING, "", e);
-			}
-		}
-	}
-	
 	/** ShortBuff clearing Task */
-	ScheduledFuture<?> _shortBuffTask = null;
-	
-	protected class ShortBuffTask implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			sendPacket(new ShortBuffStatusUpdate(0, 0, 0));
-			setShortBuffTaskSkillId(0);
-		}
-	}
+	private ScheduledFuture<?> _shortBuffTask = null;
 	
 	// L2JMOD Wedding
 	private boolean _married = false;
@@ -989,84 +938,6 @@ public final class L2PcInstance extends L2Playable
 	private int _engageid = 0;
 	private boolean _marryrequest = false;
 	private boolean _marryaccepted = false;
-	
-	/** Skill casting information (used to queue when several skills are cast in a short time) **/
-	public static class SkillDat
-	{
-		private final L2Skill _skill;
-		private final boolean _ctrlPressed;
-		private final boolean _shiftPressed;
-		
-		protected SkillDat(L2Skill skill, boolean ctrlPressed, boolean shiftPressed)
-		{
-			_skill = skill;
-			_ctrlPressed = ctrlPressed;
-			_shiftPressed = shiftPressed;
-		}
-		
-		public boolean isCtrlPressed()
-		{
-			return _ctrlPressed;
-		}
-		
-		public boolean isShiftPressed()
-		{
-			return _shiftPressed;
-		}
-		
-		public L2Skill getSkill()
-		{
-			return _skill;
-		}
-		
-		public int getSkillId()
-		{
-			return (getSkill() != null) ? getSkill().getId() : -1;
-		}
-	}
-	
-	// summon friend
-	private final SummonRequest _summonRequest = new SummonRequest();
-	
-	protected static class SummonRequest
-	{
-		private L2PcInstance _target = null;
-		private L2Skill _skill = null;
-		
-		public void setTarget(L2PcInstance destination, L2Skill skill)
-		{
-			_target = destination;
-			_skill = skill;
-		}
-		
-		public L2PcInstance getTarget()
-		{
-			return _target;
-		}
-		
-		public L2Skill getSkill()
-		{
-			return _skill;
-		}
-	}
-	
-	// open/close gates
-	private final GatesRequest _gatesRequest = new GatesRequest();
-	
-	protected static class GatesRequest
-	{
-		private L2DoorInstance _target = null;
-		
-		public void setTarget(L2DoorInstance door)
-		{
-			_target = door;
-		}
-		
-		public L2DoorInstance getDoor()
-		{
-			return _target;
-		}
-	}
 	
 	// Save responder name for log it
 	private String _lastPetitionGmName = null;
@@ -1101,15 +972,6 @@ public final class L2PcInstance extends L2Playable
 		player.setRecomLeft(20);
 		// Add the player in the characters table of the database
 		return player.createDb() ? player : null;
-	}
-	
-	public static L2PcInstance createDummyPlayer(int objectId, String name)
-	{
-		// Create a new L2PcInstance with an account name
-		L2PcInstance player = new L2PcInstance(objectId);
-		player.setName(name);
-		
-		return player;
 	}
 	
 	public String getAccountName()
@@ -1307,14 +1169,6 @@ public final class L2PcInstance extends L2Playable
  //		_radar = new L2Radar(this);
 		
 		startVitalityTask();
-	}
-	
-	private L2PcInstance(int objectId)
-	{
-		super(objectId, null);
-		setInstanceType(InstanceType.L2PcInstance);
-		super.initCharStatusUpdateValues();
-		initPcStatusUpdateValues();
 	}
 	
 	@Override
@@ -3353,33 +3207,8 @@ public final class L2PcInstance extends L2Playable
 			getAI().setIntention(CtrlIntention.AI_INTENTION_REST);
 			broadcastPacket(new ChangeWaitType(this, ChangeWaitType.WT_SITTING));
 			// Schedule a sit down task to wait for the animation to finish
-			ThreadPoolManager.getInstance().scheduleGeneral(new SitDownTask(), 2500);
+			ThreadPoolManager.getInstance().scheduleGeneral(new SitDownTask(this), 2500);
 			setIsParalyzed(true);
-		}
-	}
-	
-	/**
-	 * Sit down Task
-	 */
-	protected class SitDownTask implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			setIsParalyzed(false);
-		}
-	}
-	
-	/**
-	 * Stand up Task
-	 */
-	protected class StandUpTask implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			setIsSitting(false);
-			getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
 		}
 	}
 	
@@ -3401,7 +3230,7 @@ public final class L2PcInstance extends L2Playable
 			
 			broadcastPacket(new ChangeWaitType(this, ChangeWaitType.WT_STANDING));
 			// Schedule a stand up task to wait for the animation to finish
-			ThreadPoolManager.getInstance().scheduleGeneral(new StandUpTask(), 2500);
+			ThreadPoolManager.getInstance().scheduleGeneral(new StandUpTask(this), 2500);
 		}
 	}
 	
@@ -3481,16 +3310,6 @@ public final class L2PcInstance extends L2Playable
 	public int getCharId()
 	{
 		return _charId;
-	}
-	
-	/**
-	 * Set the Identifier of the L2PcInstance.
-	 * @param charId
-	 */
-	@Deprecated
-	public void setCharId(int charId)
-	{
-		_charId = charId;
 	}
 	
 	/**
@@ -3856,7 +3675,7 @@ public final class L2PcInstance extends L2Playable
 				else
 				{
 					_herbstask += 100;
-					ThreadPoolManager.getInstance().scheduleAi(new HerbTask(process, itemId, count, reference, sendMessage), _herbstask);
+					ThreadPoolManager.getInstance().scheduleAi(new HerbTask(this, process, itemId, count, reference, sendMessage), _herbstask);
 				}
 			}
 			else
@@ -4909,22 +4728,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		if (Config.GAMEGUARD_ENFORCE)
 		{
-			ThreadPoolManager.getInstance().scheduleGeneral(new GameGuardCheck(), 30 * 1000);
-		}
-	}
-	
-	protected class GameGuardCheck implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			L2GameClient client = getClient();
-			if ((client != null) && !client.isAuthedGG() && isOnline())
-			{
-				AdminTable.getInstance().broadcastMessageToGMs("Client " + client + " failed to reply GameGuard query and is being kicked!");
-				_log.info("Client " + client + " failed to reply GameGuard query and is being kicked!");
-				client.close(LeaveWorld.STATIC_PACKET);
-			}
+			ThreadPoolManager.getInstance().scheduleGeneral(new GameGuardCheckTask(this), 30 * 1000);
 		}
 	}
 	
@@ -9271,7 +9075,7 @@ public final class L2PcInstance extends L2Playable
 		// If a skill is currently being used, queue this one if this is not the same
 		if (isCastingNow())
 		{
-			SkillDat currentSkill = getCurrentSkill();
+			SkillUseHolder currentSkill = getCurrentSkill();
 			// Check if new skill different from current skill in progress
 			if ((currentSkill != null) && (skill.getId() == currentSkill.getSkillId()))
 			{
@@ -9885,53 +9689,39 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	 * @param target L2Object instance containing the target
 	 * @param skill L2Skill instance with the skill being casted
 	 * @param srcIsSummon is L2Summon - caster?
-	 * @return False if the skill is a pvpSkill and target is not a valid pvp target
+	 * @return {@code false} if the skill is a pvpSkill and target is not a valid pvp target, {@code true} otherwise.
 	 */
 	public boolean checkPvpSkill(L2Object target, L2Skill skill, boolean srcIsSummon)
 	{
-		// check for PC->PC Pvp status
-		if (target instanceof L2Summon)
+		final L2PcInstance targetPlayer = target != null ? target.getActingPlayer() : null;
+		if ((targetPlayer != null) && (target != this) && !(isInDuel() && (targetPlayer.getDuelId() == getDuelId())) && !isInsideZone(ZoneId.PVP) && !targetPlayer.isInsideZone(ZoneId.PVP))
 		{
-			target = target.getActingPlayer();
-		}
-		if ((target != null) && // target not null and
-		(target != this) && // target is not self and
-		(target instanceof L2PcInstance) && // target is L2PcInstance and
-		!(isInDuel() && (((L2PcInstance) target).getDuelId() == getDuelId())) && // self is not in a duel and attacking opponent
-		!isInsideZone(ZoneId.PVP) && // Pc is not in PvP zone
-		!target.isInsideZone(ZoneId.PVP) // target is not in PvP zone
-		)
-		{
-			SkillDat skilldat = getCurrentSkill();
-			SkillDat skilldatpet = getCurrentPetSkill();
+			SkillUseHolder skilldat = getCurrentSkill();
+			SkillUseHolder skilldatpet = getCurrentPetSkill();
 			if (skill.isPVP())
 			{
-				if ((getClan() != null) && (((L2PcInstance) target).getClan() != null))
+				if ((getClan() != null) && (targetPlayer.getClan() != null))
 				{
-					if (getClan().isAtWarWith(((L2PcInstance) target).getClan().getClanId()) && ((L2PcInstance) target).getClan().isAtWarWith(getClan().getClanId()))
+					if (getClan().isAtWarWith(targetPlayer.getClan().getClanId()) && targetPlayer.getClan().isAtWarWith(getClan().getClanId()))
 					{
 						return true; // in clan war player can attack whites even with sleep etc.
 					}
 				}
-				if ((((L2PcInstance) target).getPvpFlag() == 0) && // target's pvp flag is not set and
-				(((L2PcInstance) target).getKarma() == 0 // target has no karma
-				))
+				if ((targetPlayer.getPvpFlag() == 0) && (targetPlayer.getKarma() == 0))
 				{
 					return false;
 				}
 			}
 			else if (((skilldat != null) && !skilldat.isCtrlPressed() && skill.isOffensive() && !srcIsSummon) || ((skilldatpet != null) && !skilldatpet.isCtrlPressed() && skill.isOffensive() && srcIsSummon))
 			{
-				if ((getClan() != null) && (((L2PcInstance) target).getClan() != null))
+				if ((getClan() != null) && (targetPlayer.getClan() != null))
 				{
-					if (getClan().isAtWarWith(((L2PcInstance) target).getClan().getClanId()) && ((L2PcInstance) target).getClan().isAtWarWith(getClan().getClanId()))
+					if (getClan().isAtWarWith(targetPlayer.getClan().getClanId()) && targetPlayer.getClan().isAtWarWith(getClan().getClanId()))
 					{
 						return true; // in clan war player can attack whites even without ctrl
 					}
 				}
-				if ((((L2PcInstance) target).getPvpFlag() == 0) && // target's pvp flag is not set and
-				(((L2PcInstance) target).getKarma() == 0 // target has no karma
-				))
+				if ((targetPlayer.getPvpFlag() == 0) && (targetPlayer.getKarma() == 0))
 				{
 					return false;
 				}
@@ -10113,12 +9903,15 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	
 	/**
 	 * Disable the Inventory and create a new task to enable it after 1.5s.
+	 * @param val
 	 */
-	public void tempInventoryDisable()
+	public void setInventoryBlockingStatus(boolean val)
 	{
-		_inventoryDisable = true;
-		
-		ThreadPoolManager.getInstance().scheduleGeneral(new InventoryEnable(), 1500);
+		_inventoryDisable = val;
+		if (val)
+		{
+			ThreadPoolManager.getInstance().scheduleGeneral(new InventoryEnableTask(this), 1500);
+		}
 	}
 	
 	/**
@@ -10127,15 +9920,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	public boolean isInventoryDisabled()
 	{
 		return _inventoryDisable;
-	}
-	
-	protected class InventoryEnable implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			_inventoryDisable = false;
-		}
 	}
 	
 	public FastMap<Integer, L2CubicInstance> getCubics()
@@ -10328,94 +10112,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	}
 	
 	private ScheduledFuture<?> _taskWarnUserTakeBreak;
-	
-	protected class WarnUserTakeBreak implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			if (isOnline())
-			{
-				SystemMessageId.PLAYING_FOR_LONG_TIME.setParamCount(1);	//[JOJO] en=0, ja,ta=1
-				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.PLAYING_FOR_LONG_TIME);
-				// [L2J_JP_ADD][JOJO] 利用時間の計算・表示
-				msg.addNumber((int)(L2PcInstance.this.getUptime() / 3600000));
-				sendPacket(msg);
-			}
-			else
-			{
-				stopWarnUserTakeBreak();
-			}
-		}
-	}
-	
-	protected class RentPetTask implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			stopRentPet();
-		}
-	}
-	
-	protected class WaterTask implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			double reduceHp = getMaxHp() / 100.0;
-			
-			if (reduceHp < 1)
-			{
-				reduceHp = 1;
-			}
-			
-			reduceCurrentHp(reduceHp, L2PcInstance.this, false, false, null);
-			// reduced hp, becouse not rest
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.DROWN_DAMAGE_S1);
-			sm.addNumber((int) reduceHp);
-			sendPacket(sm);
-			
-		}
-	}
-	
-	private class LookingForFishTask implements Runnable
-	{
-		boolean _isNoob, _isUpperGrade;
-		int _fishGroup;
-		double _fishGutsCheck;
-		long _endTaskTime;
-		
-		protected LookingForFishTask(int startCombatTime, double fishGutsCheck, int fishGroup, boolean isNoob, boolean isUpperGrade)
-		{
-			_fishGutsCheck = fishGutsCheck;
-			_endTaskTime = System.currentTimeMillis() + (startCombatTime * 1000) + 10000;
-			_fishGroup = fishGroup;
-			_isNoob = isNoob;
-			_isUpperGrade = isUpperGrade;
-		}
-		
-		@Override
-		public void run()
-		{
-			if (System.currentTimeMillis() >= _endTaskTime)
-			{
-				endFishing(false);
-				return;
-			}
-			if (_fishGroup == -1)
-			{
-				return;
-			}
-			int check = Rnd.get(100);
-			if (_fishGutsCheck > check)
-			{
-				stopLookingForFishTask();
-				startFishCombat(_isNoob, _isUpperGrade);
-			}
-		}
-		
-	}
 	
 	public int getClanPrivileges()
 	{
@@ -11420,7 +11116,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		if (_taskWarnUserTakeBreak != null)
 		{
 			_taskWarnUserTakeBreak.cancel(true);
-			// ThreadPoolManager.getInstance().removeGeneral((Runnable)_taskWarnUserTakeBreak);
 			_taskWarnUserTakeBreak = null;
 		}
 	}
@@ -11429,7 +11124,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	{
 		if (_taskWarnUserTakeBreak == null)
 		{
-			_taskWarnUserTakeBreak = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new WarnUserTakeBreak(), 7200000, 7200000);
+			_taskWarnUserTakeBreak = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new WarnUserTakeBreakTask(this), 7200000, 7200000);
 		}
 	}
 	
@@ -11455,7 +11150,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	{
 		if (_taskRentPet == null)
 		{
-			_taskRentPet = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new RentPetTask(), seconds * 1000L, seconds * 1000L);
+			_taskRentPet = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new RentPetTask(this), seconds * 1000L, seconds * 1000L);
 		}
 	}
 	
@@ -11486,7 +11181,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			int timeinwater = (int) calcStat(Stats.BREATH, 60000, this, null);
 			
 			sendPacket(new SetupGauge(2, timeinwater));
-			_taskWater = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new WaterTask(), timeinwater, 1000);
+			_taskWater = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new WaterTask(this), timeinwater, 1000);
 		}
 	}
 	
@@ -11870,7 +11565,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 				{
 					if (_teleportWatchdog == null)
 					{
-						_teleportWatchdog = ThreadPoolManager.getInstance().scheduleGeneral(new TeleportWatchdog(), Config.TELEPORT_WATCHDOG_TIMEOUT * 1000);
+						_teleportWatchdog = ThreadPoolManager.getInstance().scheduleGeneral(new TeleportWatchdogTask(this), Config.TELEPORT_WATCHDOG_TIMEOUT * 1000);
 					}
 				}
 			}
@@ -11880,34 +11575,8 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			if (_teleportWatchdog != null)
 			{
 				_teleportWatchdog.cancel(false);
-				// ThreadPoolManager.getInstance().removeGeneral((Runnable)_teleportWatchdog);
 				_teleportWatchdog = null;
 			}
-		}
-	}
-	
-	private class TeleportWatchdog implements Runnable
-	{
-		private final L2PcInstance _player;
-		
-		TeleportWatchdog()
-		{
-			_player = L2PcInstance.this;
-		}
-		
-		@Override
-		public void run()
-		{
-			if ((_player == null) || !_player.isTeleporting())
-			{
-				return;
-			}
-			
-			if (Config.DEBUG)
-			{
-				_log.warning("Player " + _player.getName() + " teleport timeout expired");
-			}
-			_player.onTeleported();
 		}
 	}
 	
@@ -12781,7 +12450,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 					checkDelay = _fish.getGutsCheckTime() * 66;
 				}
 			}
-			_taskforfish = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new LookingForFishTask(_fish.getStartCombatTime(), _fish.getFishGuts(), _fish.getFishGroup(), isNoob, isUpperGrade), 10000, checkDelay);
+			_taskforfish = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new LookingForFishTask(this, _fish.getStartCombatTime(), _fish.getFishGuts(), _fish.getFishGroup(), isNoob, isUpperGrade), 10000, checkDelay);
 		}
 	}
 	
@@ -13238,7 +12907,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	/**
 	 * @return the current skill in use or return null.
 	 */
-	public SkillDat getCurrentSkill()
+	public SkillUseHolder getCurrentSkill()
 	{
 		return _currentSkill;
 	}
@@ -13256,13 +12925,13 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			_currentSkill = null;
 			return;
 		}
-		_currentSkill = new SkillDat(currentSkill, ctrlPressed, shiftPressed);
+		_currentSkill = new SkillUseHolder(currentSkill, ctrlPressed, shiftPressed);
 	}
 	
 	/**
 	 * @return the current pet skill in use or return null.
 	 */
-	public SkillDat getCurrentPetSkill()
+	public SkillUseHolder getCurrentPetSkill()
 	{
 		return _currentPetSkill;
 	}
@@ -13280,10 +12949,10 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			_currentPetSkill = null;
 			return;
 		}
-		_currentPetSkill = new SkillDat(currentSkill, ctrlPressed, shiftPressed);
+		_currentPetSkill = new SkillUseHolder(currentSkill, ctrlPressed, shiftPressed);
 	}
 	
-	public SkillDat getQueuedSkill()
+	public SkillUseHolder getQueuedSkill()
 	{
 		return _queuedSkill;
 	}
@@ -13301,7 +12970,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			_queuedSkill = null;
 			return;
 		}
-		_queuedSkill = new SkillDat(queuedSkill, ctrlPressed, shiftPressed);
+		_queuedSkill = new SkillUseHolder(queuedSkill, ctrlPressed, shiftPressed);
 	}
 	
 	/**
@@ -13425,7 +13094,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 					_punishTimer = delayInMilliseconds;
 					
 					// start the countdown
-					_punishTask = ThreadPoolManager.getInstance().scheduleGeneral(new PunishTask(), _punishTimer);
+					_punishTask = ThreadPoolManager.getInstance().scheduleGeneral(new PunishTask(this), _punishTimer);
 					sendPacket(SystemMessageId.CHATTING_PROHIBITED); //[JOJO]
 					sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CHAT_AVAILABLE_S1_MINUTE).addNumber(delayInMinutes)); //[JOJO]
 				//	sendMessage("You are chat banned for " + delayInMinutes + " minutes.");
@@ -13451,7 +13120,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 					_punishTimer = delayInMilliseconds;
 					
 					// start the countdown
-					_punishTask = ThreadPoolManager.getInstance().scheduleGeneral(new PunishTask(), _punishTimer);
+					_punishTask = ThreadPoolManager.getInstance().scheduleGeneral(new PunishTask(this), _punishTimer);
 					sendMessage(delayInMinutes+"分間GM相談所に収容されます。");
 				//	sendMessage("You are in jail for " + delayInMinutes + " minutes.");
 				}
@@ -13524,7 +13193,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			// If punish timer exists, restart punishtask.
 			if (_punishTimer > 0)
 			{
-				_punishTask = ThreadPoolManager.getInstance().scheduleGeneral(new PunishTask(), _punishTimer);
+				_punishTask = ThreadPoolManager.getInstance().scheduleGeneral(new PunishTask(this), _punishTimer);
 				sendMessage(Math.round(_punishTimer/60000)+"分間の"+getPunishLevel().string()+"中です。");	//[JOJO]
 			//	sendMessage("You are still " + getPunishLevel().string() + " for " + Math.round(_punishTimer / 60000f) + " minutes.");
 			}
@@ -13553,17 +13222,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 				setPunishTimer(delay);
 			}
 			_punishTask.cancel(false);
-			// ThreadPoolManager.getInstance().removeGeneral((Runnable)_punishTask);
 			_punishTask = null;
-		}
-	}
-	
-	protected class PunishTask implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			L2PcInstance.this.setPunishLevel(PunishLevel.NONE, 0);
 		}
 	}
 	
@@ -13575,7 +13234,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		}
 		if (_fameTask == null)
 		{
-			_fameTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new FameTask(fameFixRate), delay, delay);
+			_fameTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new FameTask(this, fameFixRate), delay, delay);
 		}
 	}
 	
@@ -13584,38 +13243,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		if (_fameTask != null)
 		{
 			_fameTask.cancel(false);
-			// ThreadPoolManager.getInstance().removeGeneral((Runnable)_fameTask);
 			_fameTask = null;
-		}
-	}
-	
-	private class FameTask implements Runnable
-	{
-		private final L2PcInstance _player;
-		private final int _value;
-		
-		protected FameTask(int value)
-		{
-			_player = L2PcInstance.this;
-			_value = value;
-		}
-		
-		@Override
-		public void run()
-		{
-			if ((_player == null) || (_player.isDead() && !Config.FAME_FOR_DEAD_PLAYERS))
-			{
-				return;
-			}
-			if (((_player.getClient() == null) || _player.getClient().isDetached()) && !Config.OFFLINE_FAME)
-			{
-				return;
-			}
-			_player.setFame(_player.getFame() + _value);
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.ACQUIRED_S1_REPUTATION_SCORE);
-			sm.addNumber(_value);
-			_player.sendPacket(sm);
-			_player.sendPacket(new UserInfo(_player));
 		}
 	}
 	
@@ -13632,49 +13260,15 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		if (_vitalityTask != null)
 		{
 			_vitalityTask.cancel(false);
-			// ThreadPoolManager.getInstance().removeGeneral((Runnable)_vitalityTask);
 			_vitalityTask = null;
 		}
 	}
 	
-	private class VitalityTask implements Runnable
-	{
-		private final L2PcInstance _player;
-		
-		protected VitalityTask(L2PcInstance player)
-		{
-			_player = player;
-		}
-		
-		@Override
-		public void run()
-		{
-			if (!_player.isInsideZone(ZoneId.PEACE))
-			{
-				return;
-			}
-			
-			if (_player.getVitalityPoints() >= PcStat.MAX_VITALITY_POINTS)
-			{
-				return;
-			}
-			
-			_player.updateVitalityPoints(Config.RATE_RECOVERY_VITALITY_PEACE_ZONE, false, false);
-			_player.sendPacket(new ExVitalityPointInfo(getVitalityPoints()));
-		}
-	}
-	
-	/**
-	 * @return
-	 */
 	public int getPowerGrade()
 	{
 		return _powerGrade;
 	}
 	
-	/**
-	 * @param power
-	 */
 	public void setPowerGrade(int power)
 	{
 		_powerGrade = power;
@@ -13803,15 +13397,13 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	 */
 	private void restartSoulTask()
 	{
-		synchronized (this)
+		if (_soulTask != null)
 		{
-			if (_soulTask != null)
-			{
-				_soulTask.cancel(false);
-				_soulTask = null;
-			}
-			_soulTask = ThreadPoolManager.getInstance().scheduleGeneral(new SoulTask(), 600000);
+			_soulTask.cancel(false);
+			_soulTask = null;
 		}
+		_soulTask = ThreadPoolManager.getInstance().scheduleGeneral(new ResetSoulsTask(this), 600000);
+		
 	}
 	
 	/**
@@ -13823,15 +13415,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		{
 			_soulTask.cancel(false);
 			_soulTask = null;
-		}
-	}
-	
-	protected class SoulTask implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			clearSouls();
 		}
 	}
 	
@@ -13847,7 +13430,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			_shortBuffTask.cancel(false);
 			_shortBuffTask = null;
 		}
-		_shortBuffTask = ThreadPoolManager.getInstance().scheduleGeneral(new ShortBuffTask(), time * 1000);
+		_shortBuffTask = ThreadPoolManager.getInstance().scheduleGeneral(new ShortBuffTask(this), time * 1000);
 		setShortBuffTaskSkillId(magicId);
 		
 		sendPacket(new ShortBuffStatusUpdate(magicId, level, time));
@@ -14139,40 +13722,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		getStat().updateVitalityPoints(points, useRates, quiet);
 	}
 	
-	/**
-	 * Function for skill summon friend or Gate Chant. Request Teleport
-	 * @param requester
-	 * @param skill
-	 * @return
-	 */
-	public boolean teleportRequest(L2PcInstance requester, L2Skill skill)
-	{
-		if ((_summonRequest.getTarget() != null) && (requester != null))
-		{
-			return false;
-		}
-		_summonRequest.setTarget(requester, skill);
-		return true;
-	}
-	
-	/**
-	 * Action teleport
-	 * @param answer
-	 * @param requesterId
-	 */
-	public void teleportAnswer(int answer, int requesterId)
-	{
-		if (_summonRequest.getTarget() == null)
-		{
-			return;
-		}
-		if ((answer == 1) && (_summonRequest.getTarget().getObjectId() == requesterId))
-		{
-			teleToTarget(this, _summonRequest.getTarget(), _summonRequest.getSkill());
-		}
-		_summonRequest.setTarget(null, null);
-	}
-	
 	public static void teleToTarget(L2PcInstance targetChar, L2PcInstance summonerChar, L2Skill summonSkill)
 	{
 		if ((targetChar == null) || (summonerChar == null) || (summonSkill == null))
@@ -14350,30 +13899,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return true;
 	}
 	
-	public void gatesRequest(L2DoorInstance door)
-	{
-		_gatesRequest.setTarget(door);
-	}
-	
-	public void gatesAnswer(int answer, int type)
-	{
-		if (_gatesRequest.getDoor() == null)
-		{
-			return;
-		}
-		
-		if ((answer == 1) && (getTarget() == _gatesRequest.getDoor()) && (type == 1))
-		{
-			_gatesRequest.getDoor().openMe();
-		}
-		else if ((answer == 1) && (getTarget() == _gatesRequest.getDoor()) && (type == 0))
-		{
-			_gatesRequest.getDoor().closeMe();
-		}
-		
-		_gatesRequest.setTarget(null);
-	}
-	
 	//[JOJO]-------------------------------------------------
 	/**
 	 * 一時的に経験値とSPの取得をON/OFFするマスク
@@ -14440,70 +13965,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return false;
 	}
 	
-	/** Section for mounted pets */
-	protected class FeedTask implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			try
-			{
-				if (!isMounted())
-				{
-					stopFeed();
-					return;
-				}
-				
-				if (getCurrentFeed() > getFeedConsume())
-				{
-					// eat
-					setCurrentFeed(getCurrentFeed() - getFeedConsume());
-				}
-				else
-				{
-					// go back to pet control item, or simply said, unsummon it
-					setCurrentFeed(0);
-					stopFeed();
-					dismount();
-					sendPacket(SystemMessageId.OUT_OF_FEED_MOUNT_CANCELED);
-				}
-				
-				List<Integer> foodIds = getPetData(getMountNpcId()).getFood();
-				if (foodIds.isEmpty())
-				{
-					return;
-				}
-				L2ItemInstance food = null;
-				for (int id : foodIds)
-				{
-					// TODO: possibly pet inv?
-					food = getInventory().getItemByItemId(id);
-					if (food != null)
-					{
-						break;
-					}
-				}
-				
-				if ((food != null) && isHungry())
-				{
-					IItemHandler handler = ItemHandler.getInstance().getHandler(food.getEtcItem());
-					if (handler != null)
-					{
-						handler.useItem(L2PcInstance.this, food, false);
-						SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.PET_TOOK_S1_BECAUSE_HE_WAS_HUNGRY);
-						sm.addItemName(food.getItemId());
-						sendPacket(sm);
-					}
-				}
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.SEVERE, "Mounted Pet [NpcId: " + getMountNpcId() + "] a feed task error has occurred", e);
-			}
-		}
-	}
-	
-	protected synchronized void startFeed(int npcId)
+	protected void startFeed(int npcId)
 	{
 		_canFeed = npcId > 0;
 		if (!isMounted())
@@ -14517,7 +13979,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			sendPacket(new SetupGauge(3, (getCurrentFeed() * 10000) / getFeedConsume(), (getMaxFeed() * 10000) / getFeedConsume()));
 			if (!isDead())
 			{
-				_mountFeedTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new FeedTask(), 10000, 10000);
+				_mountFeedTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new PetFeedTask(this), 10000, 10000);
 			}
 		}
 		else if (_canFeed)
@@ -14527,12 +13989,12 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			sendPacket(sg);
 			if (!isDead())
 			{
-				_mountFeedTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new FeedTask(), 10000, 10000);
+				_mountFeedTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new PetFeedTask(this), 10000, 10000);
 			}
 		}
 	}
 	
-	protected synchronized void stopFeed()
+	public void stopFeed()
 	{
 		if (_mountFeedTask != null)
 		{
@@ -14546,7 +14008,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		_data = null;
 	}
 	
-	protected final L2PetData getPetData(int npcId)
+	public final L2PetData getPetData(int npcId)
 	{
 		if (_data == null)
 		{
@@ -14569,7 +14031,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return _curFeed;
 	}
 	
-	protected int getFeedConsume()
+	public int getFeedConsume()
 	{
 		// if pet is attacking
 		if (isAttackingNow())
@@ -14585,7 +14047,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		_curFeed = num > getMaxFeed() ? getMaxFeed() : num;
 		SetupGauge sg = new SetupGauge(3, (getCurrentFeed() * 10000) / getFeedConsume(), (getMaxFeed() * 10000) / getFeedConsume());
 		sendPacket(sg);
-		// broadcast move speed change when strider becomes hungry / full 
+		// broadcast move speed change when strider becomes hungry / full
 		if (lastHungryState != isHungry())
 		{
 			broadcastUserInfo();
@@ -14602,25 +14064,9 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return _canFeed ? (getCurrentFeed() < ((getPetData(getMountNpcId()).getHungryLimit() / 100f) * getPetLevelData(getMountNpcId()).getPetMaxFeed())) : false;
 	}
 	
-	protected class Dismount implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			try
-			{
-				dismount();
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.WARNING, "Exception on dismount(): " + e.getMessage(), e);
-			}
-		}
-	}
-	
 	public void enteredNoLanding(int delay)
 	{
-		_dismountTask = ThreadPoolManager.getInstance().scheduleGeneral(new Dismount(), delay * 1000);
+		_dismountTask = ThreadPoolManager.getInstance().scheduleGeneral(new DismountTask(this), delay * 1000);
 	}
 	
 	public void exitedNoLanding()
@@ -14789,7 +14235,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			_chargeTask.cancel(false);
 			_chargeTask = null;
 		}
-		_chargeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChargeTask(), 600000);
+		_chargeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ResetChargesTask(this), 600000);
 	}
 	
 	/**
@@ -14804,98 +14250,55 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		}
 	}
 	
-	protected class ChargeTask implements Runnable
+	public void teleportBookmarkModify(int id, int icon, String tag, String name)
 	{
-		@Override
-		public void run()
+		TeleportBookmark bookmark = _tpbookmarks.get(id);
+		if (bookmark != null)
 		{
-			clearCharges();
-		}
-	}
-	
-	public static class TeleportBookmark
-	{
-		public int _id, _x, _y, _z, _icon;
-		public String _name, _tag;
-		
-		TeleportBookmark(int id, int x, int y, int z, int icon, String tag, String name)
-		{
-			_id = id;
-			_x = x;
-			_y = y;
-			_z = z;
-			_icon = icon;
-			_name = name;
-			_tag = tag;
-		}
-		
-	}
-	
-	public void teleportBookmarkModify(int Id, int icon, String tag, String name)
-	{
-		int count = 0;
-		int size = tpbookmark.size();
-		while (size > count)
-		{
-			if (tpbookmark.get(count)._id == Id)
+			bookmark.setIcon(icon);
+			bookmark.setTag(tag);
+			bookmark.setName(name);
+			
+			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+				PreparedStatement statement = con.prepareStatement(UPDATE_TP_BOOKMARK))
 			{
-				tpbookmark.get(count)._icon = icon;
-				tpbookmark.get(count)._tag = tag;
-				tpbookmark.get(count)._name = name;
-				
-				try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-					PreparedStatement statement = con.prepareStatement(UPDATE_TP_BOOKMARK))
-				{
-					statement.setInt(1, icon);
-					statement.setString(2, tag);
-					statement.setString(3, name);
-					statement.setInt(4, getObjectId());
-					statement.setInt(5, Id);
-					statement.execute();
-				}
-				catch (Exception e)
-				{
-					_log.log(Level.WARNING, "Could not update character teleport bookmark data: " + e.getMessage(), e);
-				}
+				statement.setInt(1, icon);
+				statement.setString(2, tag);
+				statement.setString(3, name);
+				statement.setInt(4, getObjectId());
+				statement.setInt(5, id);
+				statement.execute();
 			}
-			count++;
-		}
-		
-		sendPacket(new ExGetBookMarkInfoPacket(this));
-		
-	}
-	
-	public void teleportBookmarkDelete(int Id)
-	{
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement(DELETE_TP_BOOKMARK))
-		{
-			statement.setInt(1, getObjectId());
-			statement.setInt(2, Id);
-			statement.execute();
-		}
-		catch (Exception e)
-		{
-			_log.log(Level.WARNING, "Could not delete character teleport bookmark data: " + e.getMessage(), e);
-		}
-		
-		int count = 0;
-		int size = tpbookmark.size();
-		
-		while (size > count)
-		{
-			if (tpbookmark.get(count)._id == Id)
+			catch (Exception e)
 			{
-				tpbookmark.remove(count);
-				break;
+				_log.log(Level.WARNING, "Could not update character teleport bookmark data: " + e.getMessage(), e);
 			}
-			count++;
 		}
 		
 		sendPacket(new ExGetBookMarkInfoPacket(this));
 	}
 	
-	public void teleportBookmarkGo(int Id)
+	public void teleportBookmarkDelete(int id)
+	{
+		if (_tpbookmarks.remove(id) != null)
+		{
+			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+				PreparedStatement statement = con.prepareStatement(DELETE_TP_BOOKMARK))
+			{
+				statement.setInt(1, getObjectId());
+				statement.setInt(2, id);
+				statement.execute();
+			}
+			catch (Exception e)
+			{
+				_log.log(Level.WARNING, "Could not delete character teleport bookmark data: " + e.getMessage(), e);
+			}
+			
+			sendPacket(new ExGetBookMarkInfoPacket(this));
+		}
+	}
+	
+	public void teleportBookmarkGo(int id)
 	{
 		if (!teleportBookmarkCondition(0))
 		{
@@ -14909,17 +14312,12 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_DISAPPEARED);
 		sm.addItemName(13016);
 		sendPacket(sm);
-		int count = 0;
-		int size = tpbookmark.size();
-		while (size > count)
+		
+		final TeleportBookmark bookmark = _tpbookmarks.get(id);
+		if (bookmark != null)
 		{
-			if (tpbookmark.get(count)._id == Id)
-			{
-				destroyItem("Consume", getInventory().getItemByItemId(13016).getObjectId(), 1, null, false);
-				teleToLocation(tpbookmark.get(count)._x, tpbookmark.get(count)._y, tpbookmark.get(count)._z);
-				break;
-			}
-			count++;
+			destroyItem("Consume", getInventory().getItemByItemId(13016).getObjectId(), 1, null, false);
+			teleToLocation(bookmark, false);
 		}
 		sendPacket(new ExGetBookMarkInfoPacket(this));
 	}
@@ -15004,7 +14402,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			return;
 		}
 		
-		if (tpbookmark.size() >= _bookmarkslot)
+		if (_tpbookmarks.size() >= _bookmarkslot)
 		{
 			sendPacket(SystemMessageId.YOU_HAVE_NO_SPACE_TO_SAVE_THE_TELEPORT_LOCATION);
 			return;
@@ -15016,28 +14414,8 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			return;
 		}
 		
-		int count = 0;
-		int id = 1;
-		FastList<Integer> idlist = new FastList<>();
-		
-		int size = tpbookmark.size();
-		
-		while (size > count)
-		{
-			idlist.add(tpbookmark.get(count)._id);
-			count++;
-		}
-		
-		for (int i = 1; i < 10; i++)
-		{
-			if (!idlist.contains(i))
-			{
-				id = i;
-				break;
-			}
-		}
-		
-		tpbookmark.add(new TeleportBookmark(id, x, y, z, icon, tag, name));
+		int id = _tpbookmarks.size();
+		_tpbookmarks.put(id, new TeleportBookmark(id, x, y, z, icon, tag, name));
 		
 		destroyItem("Consume", getInventory().getItemByItemId(20033).getObjectId(), 1, null, false);
 		
@@ -15067,24 +14445,17 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	
 	public void restoreTeleportBookmark()
 	{
-		if (tpbookmark == null)
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement(RESTORE_TP_BOOKMARK))
 		{
-			tpbookmark = new FastList<>();
-		}
-		
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
-		{
-			PreparedStatement statement = con.prepareStatement(RESTORE_TP_BOOKMARK);
 			statement.setInt(1, getObjectId());
-			ResultSet rset = statement.executeQuery();
-			
-			while (rset.next())
+			try (ResultSet rset = statement.executeQuery())
 			{
-				tpbookmark.add(new TeleportBookmark(rset.getInt("Id"), rset.getInt("x"), rset.getInt("y"), rset.getInt("z"), rset.getInt("icon"), rset.getString("tag"), rset.getString("name")));
+				while (rset.next())
+				{
+					_tpbookmarks.put(rset.getInt("Id"), new TeleportBookmark(rset.getInt("Id"), rset.getInt("x"), rset.getInt("y"), rset.getInt("z"), rset.getInt("icon"), rset.getString("tag"), rset.getString("name")));
+				}
 			}
-			
-			rset.close();
-			statement.close();
 		}
 		catch (Exception e)
 		{
@@ -15717,9 +15088,9 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return _multiSocialTarget;
 	}
 	
-	public List<TeleportBookmark> getTpbookmark()
+	public Collection<TeleportBookmark> getTeleportBookmarks()
 	{
-		return tpbookmark;
+		return _tpbookmarks.values();
 	}
 	
 	public int getBookmarkslot()
@@ -15903,10 +15274,10 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	 */
 	public void storeRecommendations()
 	{
-		long _recoTaskEnd = 0;
+		long recoTaskEnd = 0;
 		if (_recoBonusTask != null)
 		{
-			_recoTaskEnd = Math.max(0, _recoBonusTask.getDelay(TimeUnit.MILLISECONDS));
+			recoTaskEnd = Math.max(0, _recoBonusTask.getDelay(TimeUnit.MILLISECONDS));
 		}
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
@@ -15915,11 +15286,11 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			statement.setInt(1, getObjectId());
 			statement.setInt(2, getRecomHave());
 			statement.setInt(3, getRecomLeft());
-			statement.setLong(4, _recoTaskEnd);
+			statement.setLong(4, recoTaskEnd);
 			// Update part
 			statement.setInt(5, getRecomHave());
 			statement.setInt(6, getRecomLeft());
-			statement.setLong(7, _recoTaskEnd);
+			statement.setLong(7, recoTaskEnd);
 			statement.execute();
 		}
 		catch (Exception e)
@@ -15931,20 +15302,23 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	public void checkRecoBonusTask()
 	{
 		// Load data
-		long _task_time = loadRecommendations();
+		long taskTime = loadRecommendations();
 		
-		if (_task_time > 0)
+		if (taskTime > 0)
 		{
 			// Add 20 recos on first login
-			if (_task_time == 3600000)
+			if (taskTime == 3600000)
 			{
 				setRecomLeft(getRecomLeft() + 20);
 			}
+			
 			// If player have some timeleft, start bonus task
-			_recoBonusTask = ThreadPoolManager.getInstance().scheduleGeneral(new RecoBonusTaskEnd(), _task_time);
+			_recoBonusTask = ThreadPoolManager.getInstance().scheduleGeneral(new RecoBonusTaskEnd(this), taskTime);
 		}
+		
 		// Create task to give new recommendations
-		_recoGiveTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new RecoGiveTask(), 7200000, 3600000);
+		_recoGiveTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new RecoGiveTask(this), 7200000, 3600000);
+		
 		// Store new data
 		storeRecommendations();
 	}
@@ -15967,41 +15341,14 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		}
 	}
 	
-	protected class RecoGiveTask implements Runnable
+	public boolean isRecoTwoHoursGiven()
 	{
-		@Override
-		public void run()
-		{
-			int reco_to_give;
-			// 10 recommendations to give out after 2 hours of being logged in
-			// 1 more recommendation to give out every hour after that.
-			if (_recoTwoHoursGiven)
-			{
-				reco_to_give = 1;
-			}
-			else
-			{
-				reco_to_give = 10;
-			}
-			
-			_recoTwoHoursGiven = true;
-			
-			setRecomLeft(getRecomLeft() + reco_to_give);
-			
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_OBTAINED_S1_RECOMMENDATIONS);
-			sm.addNumber(reco_to_give);
-			L2PcInstance.this.sendPacket(sm);
-			L2PcInstance.this.sendPacket(new UserInfo(L2PcInstance.this));
-		}
+		return _recoTwoHoursGiven;
 	}
 	
-	protected class RecoBonusTaskEnd implements Runnable
+	public void setRecoTwoHoursGiven(boolean val)
 	{
-		@Override
-		public void run()
-		{
-			sendPacket(new ExVoteSystemInfo(L2PcInstance.this));
-		}
+		_recoTwoHoursGiven = val;
 	}
 	
 	public int getRecomBonusTime()
