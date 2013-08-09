@@ -42,7 +42,7 @@ public class ExGetBookMarkInfoPacket extends L2GameServerPacket
 		writeD(player.getBookmarkslot());
 		writeD(player.getTeleportBookmarks().size());
 		
-		for (TeleportBookmark tpbm : player.getTeleportBookmarks())
+		for (TeleportBookmark tpbm : player.getTeleportBookmarks().values())
 		{
 			writeD(tpbm.getId());
 			writeD(tpbm.getX());
