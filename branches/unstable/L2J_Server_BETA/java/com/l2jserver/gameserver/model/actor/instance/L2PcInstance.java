@@ -44,6 +44,7 @@ import java.util.logging.Level;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 import javolution.util.FastSet;
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -353,7 +354,7 @@ public final class L2PcInstance extends L2Playable
 	private static final String RESTORE_CHARACTER = "SELECT account_name, charId, char_name, level, maxHp, curHp, maxCp, curCp, maxMp, curMp, face, hairStyle, hairColor, sex, heading, x, y, z, exp, expBeforeDeath, sp, karma, fame, pvpkills, pkkills, clanid, race, classid, deletetime, cancraft, title, title_color, accesslevel, online, char_slot, lastAccess, clan_privs, wantspeace, base_class, onlinetime, isin7sdungeon, punish_level, punish_timer, newbie, nobless, power_grade, subpledge, lvl_joined_academy, apprentice, sponsor, clan_join_expiry_time,clan_create_expiry_time,death_penalty_level,bookmarkslot,vitality_points,createDate,language,hero FROM characters WHERE charId=?";	//[L2J_JP EDIT] <,hero> 追加
 	
 	// Character Teleport Bookmark:
-	private static final String INSERT_TP_BOOKMARK = "INSERT INTO character_tpbookmark (charId,Id,x,y,z,icon,tag,name) values (?,?,?,?,?,?,?,?)";
+	private static final String INSERT_TP_BOOKMARK = "REPLACE INTO character_tpbookmark (charId,Id,x,y,z,icon,tag,name) values (?,?,?,?,?,?,?,?)";	//[JOJO] INSERT --> REPLACE
 	private static final String UPDATE_TP_BOOKMARK = "UPDATE character_tpbookmark SET icon=?,tag=?,name=? where charId=? AND Id=?";
 	private static final String RESTORE_TP_BOOKMARK = "SELECT Id,x,y,z,icon,tag,name FROM character_tpbookmark WHERE charId=?";
 	private static final String DELETE_TP_BOOKMARK = "DELETE FROM character_tpbookmark WHERE charId=? AND Id=?";
@@ -514,7 +515,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private int _bookmarkslot = 0; // The Teleport Bookmark Slot
 	
-	private final Map<Integer, TeleportBookmark> _tpbookmarks = new FastMap<>();
+	private final SortedIntObjectArrayMap<TeleportBookmark> _tpbookmarks = new SortedIntObjectArrayMap<>();	//[JOJO] FastMap --> SortedIntObjectArrayMap
 	
 	private PunishLevel _punishLevel = PunishLevel.NONE;
 	private long _punishTimer = 0;
@@ -14273,9 +14274,9 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			{
 				_log.log(Level.WARNING, "Could not update character teleport bookmark data: " + e.getMessage(), e);
 			}
+			
+			sendPacket(new ExGetBookMarkInfoPacket(this));
 		}
-		
-		sendPacket(new ExGetBookMarkInfoPacket(this));
 	}
 	
 	public void teleportBookmarkDelete(int id)
@@ -14300,26 +14301,34 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	
 	public void teleportBookmarkGo(int id)
 	{
-		if (!teleportBookmarkCondition(0))
-		{
-			return;
-		}
-		if (getInventory().getInventoryItemCount(13016, 0) == 0)
-		{
-			sendPacket(SystemMessageId.YOU_CANNOT_TELEPORT_BECAUSE_YOU_DO_NOT_HAVE_A_TELEPORT_ITEM);
-			return;
-		}
-		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_DISAPPEARED);
-		sm.addItemName(13016);
-		sendPacket(sm);
-		
 		final TeleportBookmark bookmark = _tpbookmarks.get(id);
 		if (bookmark != null)
 		{
-			destroyItem("Consume", getInventory().getItemByItemId(13016).getObjectId(), 1, null, false);
+			if (!teleportBookmarkCondition(0))
+			{
+				return;
+			}
+			int myTeleportScroll;
+			if (!destroyTeleportScroll(myTeleportScroll = 20025)	// フリーテレポート スクロール(premium)
+			 && !destroyTeleportScroll(myTeleportScroll = 13302)	// フリーテレポート スクロール：イベント
+			 && !destroyTeleportScroll(myTeleportScroll = 13016))	// フリーテレポート スクロール
+			{
+				sendPacket(SystemMessageId.YOU_CANNOT_TELEPORT_BECAUSE_YOU_DO_NOT_HAVE_A_TELEPORT_ITEM);
+				return;
+			}
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_DISAPPEARED);
+			sm.addItemName(myTeleportScroll);
+			sendPacket(sm);
+			
 			teleToLocation(bookmark, false);
+			sendPacket(new ExGetBookMarkInfoPacket(this));
 		}
-		sendPacket(new ExGetBookMarkInfoPacket(this));
+	}
+	private boolean destroyTeleportScroll(int itemId)
+	{
+		L2ItemInstance item = getInventory().getItemByItemId(itemId);
+		if (item == null) return false;
+		return destroyItem("Consume", item, 1, null, false);
 	}
 	
 	public boolean teleportBookmarkCondition(int type)
@@ -14397,6 +14406,8 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	
 	public void teleportBookmarkAdd(int x, int y, int z, int icon, String tag, String name)
 	{
+		final int MY_TELEPORT_FLAG = 20033;
+		
 		if (!teleportBookmarkCondition(1))
 		{
 			return;
@@ -14408,19 +14419,24 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			return;
 		}
 		
-		if (getInventory().getInventoryItemCount(20033, 0) == 0)
+		if (getInventory().getInventoryItemCount(MY_TELEPORT_FLAG, 0) == 0)
 		{
 			sendPacket(SystemMessageId.YOU_CANNOT_BOOKMARK_THIS_LOCATION_BECAUSE_YOU_DO_NOT_HAVE_A_MY_TELEPORT_FLAG);
 			return;
 		}
 		
-		int id = _tpbookmarks.size();
+		//[JOJO]-------------------------------------------------
+		int id;
+		for (id = 1; id <= _bookmarkslot; ++id)
+			if (!_tpbookmarks.containsKey(id))
+				break;
+		//-------------------------------------------------------
 		_tpbookmarks.put(id, new TeleportBookmark(id, x, y, z, icon, tag, name));
 		
-		destroyItem("Consume", getInventory().getItemByItemId(20033).getObjectId(), 1, null, false);
+		destroyItem("Consume", getInventory().getItemByItemId(MY_TELEPORT_FLAG).getObjectId(), 1, null, false);
 		
 		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_DISAPPEARED);
-		sm.addItemName(20033);
+		sm.addItemName(MY_TELEPORT_FLAG);
 		sendPacket(sm);
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
@@ -15088,9 +15104,9 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return _multiSocialTarget;
 	}
 	
-	public Collection<TeleportBookmark> getTeleportBookmarks()
+	public SortedIntObjectArrayMap<TeleportBookmark> getTeleportBookmarks()
 	{
-		return _tpbookmarks.values();
+		return _tpbookmarks;
 	}
 	
 	public int getBookmarkslot()
