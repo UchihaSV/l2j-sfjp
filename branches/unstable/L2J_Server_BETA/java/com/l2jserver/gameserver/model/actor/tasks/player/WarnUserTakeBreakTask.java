@@ -20,6 +20,7 @@ package com.l2jserver.gameserver.model.actor.tasks.player;
 
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * Task dedicated to warn user to take a break.
@@ -41,7 +42,11 @@ public class WarnUserTakeBreakTask implements Runnable
 		{
 			if (_player.isOnline())
 			{
-				_player.sendPacket(SystemMessageId.PLAYING_FOR_LONG_TIME);
+				SystemMessageId.PLAYING_FOR_LONG_TIME.setParamCount(1);	//[JOJO] en=0, ja,ta=1
+				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.PLAYING_FOR_LONG_TIME);
+				// [L2J_JP_ADD][JOJO] 利用時間の計算・表示
+				msg.addNumber((int)(_player.getUptime() / 3600000));
+				_player.sendPacket(msg);
 			}
 			else
 			{
