@@ -4130,6 +4130,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	/**
 	 * @return the orientation of the L2Character.
 	 */
+	@Override
 	public final int getHeading()
 	{
 		return _heading;
@@ -7342,6 +7343,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		getStatus().reduceMp(i);
 	}
 	
+	@Override
 	public void removeStatusListener(L2Character object)
 	{
 		getStatus().removeStatusListener(object);
