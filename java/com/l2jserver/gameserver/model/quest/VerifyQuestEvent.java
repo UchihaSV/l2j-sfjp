@@ -3,8 +3,8 @@ package com.l2jserver.gameserver.model.quest;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
-import com.l2jserver.gameserver.model.actor.L2Trap;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2TrapInstance;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.quest.Quest.TrapAction;
 import com.l2jserver.gameserver.model.skills.L2Skill;
@@ -259,8 +259,8 @@ public class VerifyQuestEvent
 	public static boolean hasOnTrapAction(Quest q)
 	{
 		try {
-			// onTrapAction(L2Trap trap, L2Character trigger, TrapAction action)
-			q.getClass().getDeclaredMethod("onTrapAction", L2Trap.class, L2Character.class, TrapAction.class);
+			// onTrapAction(L2TrapInstance trap, L2Character trigger, TrapAction action)
+			q.getClass().getDeclaredMethod("onTrapAction", L2TrapInstance.class, L2Character.class, TrapAction.class);
 			return true;
 		}
 		catch (NoSuchMethodException | SecurityException e) {
