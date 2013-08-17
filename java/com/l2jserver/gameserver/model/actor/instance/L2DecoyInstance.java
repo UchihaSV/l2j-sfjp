@@ -32,35 +32,42 @@ import com.l2jserver.gameserver.taskmanager.DecayTaskManager;
 
 public class L2DecoyInstance extends L2Decoy
 {
-	private int _totalLifeTime;
-	private int _timeRemaining;
-	private Future<?> _DecoyLifeTask;
-	private Future<?> _HateSpam;
+	protected L2Skill _hateSpamSkill;
+	private Future<?> _despawnTask;
+	private Future<?> _hateSpamTask;
 	
-	public L2DecoyInstance(int objectId, L2NpcTemplate template, L2PcInstance owner, int totalLifeTime)
+	public L2DecoyInstance(int objectId, L2NpcTemplate template, L2PcInstance owner, int despawnDelay)
 	{
 		super(objectId, template, owner);
 		setInstanceType(InstanceType.L2DecoyInstance);
-		_totalLifeTime = totalLifeTime;
-		_timeRemaining = _totalLifeTime;
-		int skilllevel = getTemplate().getIdTemplate() - 13070;
-		_DecoyLifeTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new DecoyLifetime(getOwner(), this), 1000, 1000);
-		_HateSpam = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new HateSpam(this, SkillTable.getInstance().getInfo(5272, skilllevel)), 2000, 5000);
+		int skillLevel = getTemplate().getIdTemplate() - 13070;
+		_hateSpamSkill = SkillTable.getInstance().getInfo(5272, skillLevel);
+		_despawnTask = ThreadPoolManager.getInstance().scheduleGeneral(new DespawnTask(), despawnDelay);
+		_hateSpamTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new HateSpam(), 2000, 5000);
+	}
+	
+	protected void stopAllTasks()
+	{
+		if (_hateSpamTask != null)
+		{
+			_hateSpamTask.cancel(true);
+			_hateSpamTask = null;
+		}
+		if (_despawnTask != null)
+		{
+			_despawnTask.cancel(false);
+			_despawnTask = null;
+		}
 	}
 	
 	@Override
 	public boolean doDie(L2Character killer)
 	{
+		stopAllTasks();
 		if (!super.doDie(killer))
 		{
 			return false;
 		}
-		if (_HateSpam != null)
-		{
-			_HateSpam.cancel(true);
-			_HateSpam = null;
-		}
-		_totalLifeTime = 0;
 		DecayTaskManager.getInstance().addDecayTask(this);
 		return true;
 	}
@@ -77,55 +84,26 @@ public class L2DecoyInstance extends L2Decoy
 		setKnownList(new DecoyKnownList(this));
 	}
 	
-	static class DecoyLifetime implements Runnable
+	protected class DespawnTask implements Runnable
 	{
-		private final L2PcInstance _activeChar;
-		
-		private final L2DecoyInstance _Decoy;
-		
-		DecoyLifetime(L2PcInstance activeChar, L2DecoyInstance Decoy)
-		{
-			_activeChar = activeChar;
-			_Decoy = Decoy;
-		}
-		
 		@Override
 		public void run()
 		{
-			try
-			{
-				_Decoy.decTimeRemaining(1000);
-				double newTimeRemaining = _Decoy.getTimeRemaining();
-				if (newTimeRemaining < 0)
-				{
-					_Decoy.unSummon(_activeChar);
-				}
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.SEVERE, "Decoy Error: ", e);
-			}
+			unSummon(getOwner());
 		}
 	}
 	
-	private static class HateSpam implements Runnable
+	protected class HateSpam implements Runnable
 	{
-		private final L2DecoyInstance _activeChar;
-		private final L2Skill _skill;
-		
-		HateSpam(L2DecoyInstance activeChar, L2Skill Hate)
-		{
-			_activeChar = activeChar;
-			_skill = Hate;
-		}
-		
 		@Override
 		public void run()
 		{
 			try
 			{
-				_activeChar.setTarget(_activeChar);
-				_activeChar.doCast(_skill);
+				// skill 5272 "Decoy Provocation" - targetType: AURA, effect name: TargetMe
+				final L2DecoyInstance me = L2DecoyInstance.this;
+				setTarget(me);
+				doCast(_hateSpamSkill);
 			}
 			catch (Throwable e)
 			{
@@ -137,31 +115,7 @@ public class L2DecoyInstance extends L2Decoy
 	@Override
 	public void unSummon(L2PcInstance owner)
 	{
-		if (_DecoyLifeTask != null)
-		{
-			_DecoyLifeTask.cancel(true);
-			_DecoyLifeTask = null;
-		}
-		if (_HateSpam != null)
-		{
-			_HateSpam.cancel(true);
-			_HateSpam = null;
-		}
+		stopAllTasks();
 		super.unSummon(owner);
-	}
-	
-	public void decTimeRemaining(int value)
-	{
-		_timeRemaining -= value;
-	}
-	
-	public int getTimeRemaining()
-	{
-		return _timeRemaining;
-	}
-	
-	public int getTotalLifeTime()
-	{
-		return _totalLifeTime;
 	}
 }
