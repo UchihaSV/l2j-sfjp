@@ -146,7 +146,6 @@ import com.l2jserver.gameserver.model.actor.L2Decoy;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.L2Playable;
 import com.l2jserver.gameserver.model.actor.L2Summon;
-import com.l2jserver.gameserver.model.actor.L2Trap;
 import com.l2jserver.gameserver.model.actor.L2Vehicle;
 import com.l2jserver.gameserver.model.actor.appearance.PcAppearance;
 import com.l2jserver.gameserver.model.actor.knownlist.PcKnownList;
@@ -227,7 +226,6 @@ import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.skills.L2SkillType;
 import com.l2jserver.gameserver.model.skills.l2skills.L2SkillSiegeFlag;
 import com.l2jserver.gameserver.model.skills.l2skills.L2SkillSummon;
-import com.l2jserver.gameserver.model.skills.l2skills.L2SkillTrap;
 import com.l2jserver.gameserver.model.skills.targets.L2TargetType;
 import com.l2jserver.gameserver.model.stats.Env;
 import com.l2jserver.gameserver.model.stats.Formulas;
@@ -680,7 +678,7 @@ public final class L2PcInstance extends L2Playable
 	/** The L2Decoy of the L2PcInstance */
 	private L2Decoy _decoy = null;
 	/** The L2Trap of the L2PcInstance */
-	private L2Trap _trap = null;
+	private L2TrapInstance _trap = null;
 	/** The L2Agathion of the L2PcInstance */
 	private int _agathionId = 0;
 	// apparently, a L2PcInstance CAN have both a summon AND a tamed beast at the same time!!
@@ -4430,22 +4428,6 @@ public final class L2PcInstance extends L2Playable
 		
 		switch (skill.getSkillType())
 		{
-			case SUMMON_TRAP:
-			{
-				if (isInsideZone(ZoneId.PEACE))
-				{
-					sendPacket(SystemMessageId.A_MALICIOUS_SKILL_CANNOT_BE_USED_IN_PEACE_ZONE);
-					return false;
-				}
-				if ((getTrap() != null) && (getTrap().getSkill().getId() == ((L2SkillTrap) skill).getTriggerSkillId()))
-				{
-					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
-					sm.addSkillName(skill);
-					sendPacket(sm);
-					return false;
-				}
-				break;
-			}
 			case SUMMON:
 			{
 				if (!((L2SkillSummon) skill).isCubic() && (hasSummon() || isMounted() || CharSummonTable.getInstance().getPets().contains(getObjectId()) || CharSummonTable.getInstance().getPets().contains(getObjectId())))
@@ -6332,7 +6314,7 @@ public final class L2PcInstance extends L2Playable
 	/**
 	 * @return the L2Trap of the L2PcInstance or null.
 	 */
-	public L2Trap getTrap()
+	public L2TrapInstance getTrap()
 	{
 		return _trap;
 	}
@@ -6359,7 +6341,7 @@ public final class L2PcInstance extends L2Playable
 	 * Set the L2Trap of this L2PcInstance
 	 * @param trap
 	 */
-	public void setTrap(L2Trap trap)
+	public void setTrap(L2TrapInstance trap)
 	{
 		_trap = trap;
 	}
