@@ -530,7 +530,7 @@ public class NpcTable
 	 */
 	public void loadNpcs(int id)
 	{
-		StringIntern.begin();
+		StringIntern.begin(NpcTable.class.getSimpleName());
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
 			int count = loadNpcs(con, id, false);

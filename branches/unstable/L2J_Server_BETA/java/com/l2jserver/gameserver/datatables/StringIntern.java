@@ -28,11 +28,13 @@ import com.l2jserver.Config;
  */
 public class StringIntern
 {
+	static String _name;
 	static private FastMap<String, String> _stringSet;
 	
-	public static void begin()
+	public static void begin(String name)
 	{
 		if (Config.STRING_INTERN) {
+			_name = name;
 			if (_stringSet != null)
 				throw new RuntimeException();
 			_stringSet = new FastMap<>();
@@ -59,6 +61,7 @@ public class StringIntern
 			if (_stringSet == null || _stringSet.size() == 0)
 				throw new RuntimeException();
 			_stringSet = null;
+			_name = null;
 		}
 	}
 }
