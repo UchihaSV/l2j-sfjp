@@ -48,6 +48,16 @@ public class VerifyQuestEvent
 				return hasOnTrapAction(q);
 			case ON_ITEM_USE:
 				return hasOnItemUse(q);
+			case ON_EVENT_RECEIVED:
+				return hasOnEventReceived(q);
+			case ON_MOVE_FINISHED:
+				return hasOnMoveFinished(q);
+			case ON_NODE_ARRIVED:
+				return hasOnNodeArrived(q);
+			case ON_SEE_CREATURE:
+				return hasOnSeeCreature(q);
+			case ON_ROUTE_FINISHED:
+				return hasOnRouteFinished(q);
 			default:
 				return true;
 		//		throw new RuntimeException();
@@ -117,6 +127,26 @@ public class VerifyQuestEvent
 			case ON_ITEM_USE:
 				if (!hasOnItemUse(q))
 					result = "onItemUse()";
+				break;
+			case ON_EVENT_RECEIVED:
+				if (!hasOnEventReceived(q))
+					result = "onEventReceived()";
+				break;
+			case ON_MOVE_FINISHED:
+				if (!hasOnMoveFinished(q))
+					result = "onMoveFinished()";
+				break;
+			case ON_NODE_ARRIVED:
+				if (!hasOnNodeArrived(q))
+					result = "onNodeArrived()";
+				break;
+			case ON_SEE_CREATURE:
+				if (!hasOnSeeCreature(q))
+					result = "onSeeCreature()";
+				break;
+			case ON_ROUTE_FINISHED:
+				if (!hasOnRouteFinished(q))
+					result = "onRouteFinished()";
 				break;
 			default:
 		//		throw new RuntimeException();
@@ -273,6 +303,66 @@ public class VerifyQuestEvent
 		try {
 			// onItemUse(L2Item item, L2PcInstance player)
 			q.getClass().getDeclaredMethod("onItemUse", L2Item.class, L2PcInstance.class);
+			return true;
+		}
+		catch (NoSuchMethodException | SecurityException e) {
+			return false;
+		}
+	}
+	
+	public static boolean hasOnEventReceived(Quest q)
+	{
+		try {
+			// onEventReceived(String eventName, L2Npc sender, L2Npc receiver, L2Object reference)
+			q.getClass().getDeclaredMethod("onEventReceived", String.class, L2Npc.class, L2Npc.class, L2Object.class);
+			return true;
+		}
+		catch (NoSuchMethodException | SecurityException e) {
+			return false;
+		}
+	}
+	
+	public static boolean hasOnMoveFinished(Quest q)
+	{
+		try {
+			// onMoveFinished(L2Npc npc)
+			q.getClass().getDeclaredMethod("onMoveFinished", L2Npc.class);
+			return true;
+		}
+		catch (NoSuchMethodException | SecurityException e) {
+			return false;
+		}
+	}
+	
+	public static boolean hasOnNodeArrived(Quest q)
+	{
+		try {
+			// onNodeArrived(L2Npc npc)
+			q.getClass().getDeclaredMethod("onNodeArrived", L2Npc.class);
+			return true;
+		}
+		catch (NoSuchMethodException | SecurityException e) {
+			return false;
+		}
+	}
+	
+	public static boolean hasOnSeeCreature(Quest q)
+	{
+		try {
+			// onSeeCreature(L2Npc npc, L2Character creature, boolean isSummon)
+			q.getClass().getDeclaredMethod("onSeeCreature", L2Npc.class, L2Character.class, boolean.class);
+			return true;
+		}
+		catch (NoSuchMethodException | SecurityException e) {
+			return false;
+		}
+	}
+	
+	public static boolean hasOnRouteFinished(Quest q)
+	{
+		try {
+			// onRouteFinished(L2Npc npc)
+			q.getClass().getDeclaredMethod("onRouteFinished", L2Npc.class);
 			return true;
 		}
 		catch (NoSuchMethodException | SecurityException e) {
