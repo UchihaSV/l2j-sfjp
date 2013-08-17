@@ -349,7 +349,7 @@ public abstract class DocumentBase
 				for (int i = 0; i < params.getLength(); i++)
 				{
 					Node att = params.item(i);
-					parameters.set(att.getNodeName(), getValue(att.getNodeValue(), template));
+					parameters.set(intern(att.getNodeName()), intern(getValue(att.getNodeValue(), template)));
 				}
 			}
 			n = n.getNextSibling();
