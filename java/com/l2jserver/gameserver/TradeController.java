@@ -54,7 +54,7 @@ public class TradeController
 	{
 		_lists.clear();
 		// Initialize Shop buy list
-		StringIntern.begin();
+		StringIntern.begin(TradeController.class.getSimpleName());
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			Statement s = con.createStatement();
 			ResultSet rs1 = s.executeQuery("SELECT  shop_id, npc_id FROM merchant_shopids"))

@@ -26,6 +26,7 @@ import javolution.util.FastList;
 import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
+import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.datatables.StringIntern;
 import com.l2jserver.gameserver.engines.items.DocumentItem;
@@ -84,7 +85,7 @@ public class DocumentEngine
 		if (Config.CUSTOM_SKILLS_LOAD)
 			hashFiles("data/stats/skills/custom", files);
 		
-		StringIntern.begin();
+		StringIntern.begin(SkillTable.class.getSimpleName());
 		for (File file : files)
 		{
 			List<L2Skill> s = loadSkills(file);
@@ -114,7 +115,7 @@ public class DocumentEngine
 		if (Config.CUSTOM_ITEMS_LOAD)
 			hashFiles("data/stats/items/custom", files);
 		
-		StringIntern.begin();
+		StringIntern.begin(ItemTable.class.getSimpleName());
 		for (File f : files)
 		{
 			DocumentItem document = new DocumentItem(f);
