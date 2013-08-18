@@ -5883,9 +5883,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			{
 				addChanceTrigger(newSkill);
 			}
-			
-			// Add passive effects if there are any.
-			_effectList.add(newSkill.getPassiveEffects(this));
+			newSkill.getPassiveEffects(this);
 		}
 		return oldSkill;
 	}
