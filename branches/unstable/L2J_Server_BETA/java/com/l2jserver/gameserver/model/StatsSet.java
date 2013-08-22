@@ -637,7 +637,8 @@ public class StatsSet
 		}
 		catch (Exception e)
 		{
-			throw new IllegalArgumentException("Enum value of type " + enumClass.getName() + " required, but found: " + val);
+			throw new IllegalArgumentException("getEnum(\"" + name + "\"," + enumClass.getSimpleName() + "," + deflt.name() + "):  <set name=\"" + name + "\" val=\"" + val + "\" /> ÇÃ" + val + "ÇÕñ≥å¯Ç»ílÅB" + dump());
+		//	throw new IllegalArgumentException("Enum value of type " + enumClass.getName() + " required, but found: " + val);
 		}
 	}
 	
