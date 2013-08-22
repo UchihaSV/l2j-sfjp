@@ -18,6 +18,7 @@
  */
 package com.l2jserver.gameserver.model.conditions;
 
+import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.stats.Env;
@@ -46,18 +47,17 @@ public class ConditionPlayerRangeFromNpc extends Condition
 	@Override
 	public boolean testImpl(Env env)
 	{
-		boolean existNpc = false;
-		if ((_npcIds != null) && (_npcIds.length > 0) && (_radius > 0))
+		if (_npcIds != null && _npcIds.length > 0 && _radius > 0)
 		{
-			for (L2Character target : env.getCharacter().getKnownList().getKnownCharactersInRadius(_radius))
+			final L2Character player = env.getCharacter();
+			for (L2Object obj : player.getKnownList().getKnownObjects().values())
 			{
-				if (target.isNpc() && Util.contains(_npcIds, ((L2Npc) target).getNpcId()))
+				if (obj.isNpc() && Util.contains(_npcIds, ((L2Npc) obj).getNpcId()) && Util.checkIfInRange(_radius, player, obj, true))
 				{
-					existNpc = true;
-					break;
+					return _val;
 				}
 			}
 		}
-		return existNpc == _val;
+		return !_val;
 	}
 }
