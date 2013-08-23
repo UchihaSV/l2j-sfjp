@@ -56,7 +56,7 @@ public class NpcStat extends CharStat
 		{
 			return 1f;
 		}
-
+		
 		int baseMoveSpd = ac.getTemplate().getBaseMoveSpd(ac.isRunning() ? MoveType.RUN : MoveType.WALK);
 		if (baseMoveSpd == 0)
 		{
