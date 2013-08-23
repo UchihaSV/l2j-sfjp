@@ -456,7 +456,7 @@ public class CharStat
 	//	return getWalkSpeed() / (float) _activeChar.getTemplate().getBaseMoveSpd(MoveType.WALK);
 		//-------------------------------------------------------
 	}
-
+	
 	/**
 	 * @param mt movement type
 	 * @return the base move speed of given movement type.
@@ -476,7 +476,7 @@ public class CharStat
 			return 1;
 		}
 		
-		return  _activeChar.isRunning() ? getRunSpeed() : getWalkSpeed();
+		return _activeChar.isRunning() ? getRunSpeed() : getWalkSpeed();
 	}
 	
 	/**
