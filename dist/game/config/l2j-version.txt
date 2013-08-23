@@ -1,1 +1,1 @@
-version=6005M
+version=6006M

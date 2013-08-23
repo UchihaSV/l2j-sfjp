@@ -129,7 +129,8 @@ public class WalkingManager extends DocumentParser
 	}
 	
 	/**
-	 * Holds info about current walk progress
+	 * Holds info about current walk progress.<br>
+	 * Zoey76: TODO: Move to own file, and use getters and setters.
 	 */
 	private class WalkInfo
 	{
@@ -504,7 +505,7 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 			else
 			// walk was stopped due to some reason (arrived to node, script action, fight or something else), resume it
 			{
-				if ((npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE) || (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE))
+				if (_activeRoutes.containsKey(npc.getObjectId()) && ((npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE) || (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE)))
 				{
 					WalkInfo walk = _activeRoutes.get(npc.getObjectId());
 					
