@@ -40,40 +40,35 @@ public class ConditionPlayerCanEscape extends Condition
 	@Override
 	public boolean testImpl(Env env)
 	{
-		boolean canTeleport = true;
 		final L2PcInstance player = env.getPlayer();
 		if (player == null)
 		{
-			canTeleport = false;
 		}
 		else if (!TvTEvent.onEscapeUse(player.getObjectId()))
 		{
-			canTeleport = false;
 		}
 		else if (player.isInDuel())
 		{
-			canTeleport = false;
 		}
 		else if (player.isAfraid())
 		{
-			canTeleport = false;
 		}
 		else if (player.isCombatFlagEquipped())
 		{
-			canTeleport = false;
 		}
 		else if (player.isFlying() || player.isFlyingMounted())
 		{
-			canTeleport = false;
 		}
 		else if (player.isInOlympiadMode())
 		{
-			canTeleport = false;
 		}
 		else if ((GrandBossManager.getInstance().getZone(player) != null) && !player.canOverrideCond(PcCondOverride.SKILL_CONDITIONS))
 		{
-			canTeleport = false;
 		}
-		return (_val == canTeleport);
+		else
+		{
+			return _val;
+		}
+		return !_val;
 	}
 }
