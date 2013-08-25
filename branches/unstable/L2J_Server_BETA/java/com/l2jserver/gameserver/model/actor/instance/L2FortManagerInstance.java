@@ -25,7 +25,6 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.datatables.TeleportLocationTable;
-import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2TeleportLocation;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
@@ -177,7 +176,7 @@ public class L2FortManagerInstance extends L2MerchantInstance
 					}
 					hour = (int) Math.floor(getFort().getTimeTillNextFortUpdate() / 3600);
 					minutes = (int) (Math.floor(getFort().getTimeTillNextFortUpdate() - (hour * 3600)) / 60);
-					html.replace("%castle%", CastleManager.getInstance().getCastleById(getFort().getCastleId()).getCastleNameHtm());
+					html.replace("%castle%", getFort().getContractedCastle().getCastleNameHtm());
 					html.replace("%hr2%", hour);
 					html.replace("%min2%", minutes);
 					player.sendPacket(html);
