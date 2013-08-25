@@ -23,7 +23,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -44,6 +46,7 @@ import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.datatables.StaticObjects;
+import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.L2Clan;
@@ -97,6 +100,7 @@ public class Fort
 	private final FastList<L2Spawn> _specialEnvoys = new FastList<>();
 	
 	private final TIntIntHashMap _envoyCastles = new TIntIntHashMap(2);
+	private final Set<Integer> _availableCastles = new HashSet<>(1);
 	
 	/** Fortress Functions */
 	public static final int FUNC_TELEPORT = 1;
@@ -1108,7 +1112,7 @@ public class Fort
 	 *            <li>1 - independent</li>
 	 *            <li>2 - contracted with castle</li>
 	 *            </ul>
-	 * @param castleId set Castle Id for contracted fort
+	 * @param castleId the Id of the contracted castle (0 if no contract with any castle)
 	 */
 	public final void setFortState(int state, int castleId)
 	{
@@ -1118,7 +1122,7 @@ public class Fort
 			PreparedStatement ps = con.prepareStatement("UPDATE fort SET state=?,castleId=? WHERE id = ?"))
 		{
 			ps.setInt(1, getFortState());
-			ps.setInt(2, getCastleId());
+			ps.setInt(2, getContractedCastleId());
 			ps.setInt(3, getFortId());
 			ps.execute();
 		}
@@ -1129,31 +1133,58 @@ public class Fort
 	}
 	
 	/**
-	 * @return Returns Castle Id of fortress contracted with castle.
-	 */
-	public final int getCastleId()
-	{
-		return _castleId;
-	}
-	
-	/**
-	 * @return Returns fortress type.<BR>
-	 * <BR>
-	 *         0 - small (3 commanders) <BR>
-	 *         1 - big (4 commanders + control room)
+	 * @return the fortress type (0 - small (3 commanders), 1 - big (4 commanders + control room))
 	 */
 	public final int getFortType()
 	{
 		return _fortType;
 	}
 	
-	public final int getCastleIdFromEnvoy(int npcId)
+	/**
+	 * @param npcId the Id of the ambassador NPC
+	 * @return the Id of the castle this ambassador represents
+	 */
+	public final int getCastleIdByAmbassador(int npcId)
 	{
 		return _envoyCastles.get(npcId);
 	}
 	
 	/**
-	 * @return Returns amount of barracks.
+	 * @param npcId the Id of the ambassador NPC
+	 * @return the castle this ambassador represents
+	 */
+	public final Castle getCastleByAmbassador(int npcId)
+	{
+		return CastleManager.getInstance().getCastleById(getCastleIdByAmbassador(npcId));
+	}
+	
+	/**
+	 * @return the Id of the castle contracted with this fortress
+	 */
+	public final int getContractedCastleId()
+	{
+		return _castleId;
+	}
+	
+	/**
+	 * @return the castle contracted with this fortress ({@code null} if no contract with any castle)
+	 */
+	public final Castle getContractedCastle()
+	{
+		return CastleManager.getInstance().getCastleById(getContractedCastleId());
+	}
+	
+	/**
+	 * Check if this is a border fortress (associated with multiple castles).
+	 * @return {@code true} if this is a border fortress (associated with more than one castle), {@code false} otherwise
+	 */
+	public final boolean isBorderFortress()
+	{
+		return _availableCastles.size() > 1;
+	}
+	
+	/**
+	 * @return the amount of barracks in this fortress
 	 */
 	public final int getFortSize()
 	{
@@ -1229,7 +1260,7 @@ public class Fort
 	private void initNpcs()
 	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM fort_spawnlist WHERE fortId = ? AND spawnType = ? "))
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM fort_spawnlist WHERE fortId = ? AND spawnType = ?"))
 		{
 			ps.setInt(1, getFortId());
 			ps.setInt(2, 0);
@@ -1349,6 +1380,7 @@ public class Fort
 	{
 		_specialEnvoys.clear();
 		_envoyCastles.clear();
+		_availableCastles.clear();
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement("SELECT id, npcId, x, y, z, heading, castleId FROM fort_spawnlist WHERE fortId = ? AND spawnType = ? ORDER BY id"))
 		{
@@ -1374,6 +1406,7 @@ public class Fort
 						spawnDat.setRespawnDelay(60);
 						_specialEnvoys.add(spawnDat);
 						_envoyCastles.put(npcId, castleId);
+						_availableCastles.add(castleId);
 					}
 					else
 					{
