@@ -22,14 +22,14 @@ s!"Stage " *\+ *(.+?) *(?=\);)!$1+"段階"!g;	# "Stage "+hoge());
 s!"Stage (\d+)"!"$1段階"!g;
 
 ## %name% "data/html/clanHallManager/functions-apply.htm"
-s!"Fireplace \(HP Recovery Device\)"!"ペチカ(HP回復施設)"!;
-s!"Carpet \(MP Recovery\)"!"カーペット(MP回復機能)"!;
-s!"Chandelier \(EXP Recovery Device\)"!"シャンデリア(経験値回復施設)"!;
-s!"Magic Equipment \(Item Production Facilities\)"!"魔法の機械(アイテムの生産施設)"!;
-s!"Insignia \(Supplementary Magic\)"!"記章(補助魔法施設)"!;
-s!"Mirror \(Teleportation Device\)"!"鏡(テレポート施設)"!;
-s!"Curtains \(Decoration\)"!"カーテン(装飾)"!;	#〓
-s!"Front Platform \(Decoration\)"!"正面壇(装飾)"!;	#〓
+s!\Q"Fireplace (HP Recovery Device)"!"ペチカ(HP回復施設)"!;
+s!\Q"Carpet (MP Recovery)"!"カーペット(MP回復機能)"!;
+s!\Q"Chandelier (EXP Recovery Device)"!"シャンデリア(経験値回復施設)"!;
+s!\Q"Magic Equipment (Item Production Facilities)"!"魔法の機械(アイテムの生産施設)"!;
+s!\Q"Insignia (Supplementary Magic)"!"記章(補助魔法施設)"!;
+s!\Q"Mirror (Teleportation Device)"!"鏡(テレポート施設)"!;
+s!\Q"Curtains (Decoration)"!"カーテン(装飾)"!;	#〓
+s!\Q"Front Platform (Decoration)"!"正面壇(装飾)"!;	#〓
 
 ## %use% "○○○.<font color=\"00FFFF\">"+String.valueOf(percent)+"%</font>"
 s{"Provides additional HP recovery for clan members in the clan hall\.(<font.*?</font>)"}
@@ -55,3 +55,8 @@ s{"These curtains can be used to decorate the clan hall\."}
 
 s{"Used to decorate the clan hall\."}
  {"アジトの飾り付けができます。"}; #正面壇〓
+
+__END__
+
+./L2ClanHallManagerInstance.java.ja
+./L2FortManagerInstance.java.ja
