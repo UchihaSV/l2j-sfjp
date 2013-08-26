@@ -138,20 +138,13 @@ public class L2FortManagerInstance extends L2MerchantInstance
 					NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 					html.setFile(player.getHtmlPrefix(), "data/html/fortress/foreman-report.htm");
 					html.replace("%objectId%", getObjectId());
+					final int ownTime;
 					if (Config.FS_MAX_OWN_TIME > 0)
-					{
-						int hour = (int) Math.floor(getFort().getTimeTillRebelArmy() / 3600);
-						int minutes = (int) (Math.floor(getFort().getTimeTillRebelArmy() - (hour * 3600)) / 60);
-						html.replace("%hr%", hour);
-						html.replace("%min%", minutes);
-					}
+						ownTime = getFort().getTimeTillRebelArmy();
 					else
-					{
-						int hour = (int) Math.floor(getFort().getOwnedTime() / 3600);
-						int minutes = (int) (Math.floor(getFort().getOwnedTime() - (hour * 3600)) / 60);
-						html.replace("%hr%", hour);
-						html.replace("%min%", minutes);
-					}
+						ownTime = getFort().getOwnedTime();
+					html.replace("%hr%", ownTime / 3600);
+					html.replace("%min%", ownTime / 60 % 60);
 					player.sendPacket(html);
 				}
 				else
@@ -159,26 +152,18 @@ public class L2FortManagerInstance extends L2MerchantInstance
 					NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 					html.setFile(player.getHtmlPrefix(), "data/html/fortress/foreman-castlereport.htm");
 					html.replace("%objectId%", getObjectId());
-					int hour, minutes;
+					final int ownTime;
 					if (Config.FS_MAX_OWN_TIME > 0)
-					{
-						hour = (int) Math.floor(getFort().getTimeTillRebelArmy() / 3600);
-						minutes = (int) (Math.floor(getFort().getTimeTillRebelArmy() - (hour * 3600)) / 60);
-						html.replace("%hr%", hour);
-						html.replace("%min%", minutes);
-					}
+						ownTime = getFort().getTimeTillRebelArmy();
 					else
-					{
-						hour = (int) Math.floor(getFort().getOwnedTime() / 3600);
-						minutes = (int) (Math.floor(getFort().getOwnedTime() - (hour * 3600)) / 60);
-						html.replace("%hr%", hour);
-						html.replace("%min%", minutes);
-					}
-					hour = (int) Math.floor(getFort().getTimeTillNextFortUpdate() / 3600);
-					minutes = (int) (Math.floor(getFort().getTimeTillNextFortUpdate() - (hour * 3600)) / 60);
+						ownTime = getFort().getOwnedTime();
+					html.replace("%hr%", ownTime / 3600);
+					html.replace("%min%", ownTime / 60 % 60);
+					
+					final long nextTime = getFort().getTimeTillNextFortUpdate();	// TimeUnit.SECONDS
 					html.replace("%castle%", getFort().getContractedCastle().getCastleNameHtm());
-					html.replace("%hr2%", hour);
-					html.replace("%min2%", minutes);
+					html.replace("%hr2%", nextTime / 3600);
+					html.replace("%min2%", nextTime / 60 % 60);
 					player.sendPacket(html);
 				}
 				return;

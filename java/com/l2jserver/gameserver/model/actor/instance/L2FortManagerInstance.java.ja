@@ -1,0 +1,53 @@
+﻿use utf8;
+
+## edit_recovery.htm, edit_other.htm
+s!"none"!"非活性化"!g;
+s!>Deactivate<!>非活性化<!g;
+s!>Level (\d+)<!>$1段階<!g;
+s!"</font>Adena /"!"</font>アデナ/"!g;
+s!" Day\)"!"日)"!g;
+s!" Day</font>\)"!"日</font>"!g;
+
+## 支払日
+s!(?<=SimpleDateFormat\()"dd/MM/yyyy HH:mm"!"M/d H"!;
+
+s{"Withdraw the fee for the next time at " *\+ *(.+?)(?=\);)}
+ {$1+"時に次回の使用料を引き出す"}g;
+
+s!"Withdraw the fee for the next time at "!"次回の使用料を引き出す時刻は<br1>"!g;
+
+## "Stage 1" ⇒ "1段階"
+s!"Stage " *\+ *(.+?) *(?=\+)!$1+"段階"!g;	# "Stage "+hoge()+
+s!"Stage " *\+ *(.+?) *(?=\);)!$1+"段階"!g;	# "Stage "+hoge());
+s!"Stage (\d+)"!"$1段階"!g;
+
+## %name% "data/html/fortress/functions-apply.htm"
+s!\Q"Fireplace (HP Recovery Device)"!"ペチカ(HP回復施設)"!;
+s!\Q"(HP Recovery Device)"!"(HP回復施設)"!;
+s!\Q"Carpet (MP Recovery)"!"カーペット(MP回復機能)"!;
+s!\Q"(MP Recovery)"!"(MP回復機能)"!;
+s!\Q"Chandelier (EXP Recovery Device)"!"シャンデリア(経験値回復施設)"!;
+s!\Q"(EXP Recovery Device)"!"(経験値回復施設)"!;
+s!\Q"Insignia (Supplementary Magic)"!"記章(補助魔法施設)"!;
+s!\Q"Mirror (Teleportation Device)"!"鏡(テレポート施設)"!;
+
+## %use% "○○○.<font color=\"00FFFF\">"+String.valueOf(percent)+"%</font>"
+s{"Provides additional HP recovery for clan members in the fortress\.(<font.*?</font>)"}
+ {"要塞内の血盟員のHPが "+"$1"+" 追加回復"}; #ペチカ
+
+s{"Provides additional MP recovery for clan members in the fortress\.(<font.*?</font>)"}
+ {"要塞内の血盟員のMPが "+"$1"+" 追加回復"}; #カーペット
+
+s{"Restores the Exp of any clan member who is resurrected in the fortress\.(<font.*?</font>)"}
+ {"血盟員が要塞で蘇る場合、経験値 "+"$1"+" 回復"}; #シャンデリア
+
+s{"Enables the use of supplementary magic\."}
+ {"役立つ補助魔法が利用可能"}; #記章
+
+s{"Teleports clan members in a fort to the target (<font.*?</font>) staging area"}
+ {"要塞内の血盟員が "+"$1"+"のエリアにテレポートできます。"}; #鏡〓
+
+__END__
+
+./L2ClanHallManagerInstance.java.ja
+./L2FortManagerInstance.java.ja
