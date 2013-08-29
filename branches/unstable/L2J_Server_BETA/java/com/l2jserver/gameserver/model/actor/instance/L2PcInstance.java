@@ -794,7 +794,7 @@ public final class L2PcInstance extends L2Playable
 	
 	protected boolean _inventoryDisable = false;
 	
-	private final List<L2CubicInstance> _cubics = new CopyOnWriteArrayList<>();
+	private final CopyOnWriteArrayList<L2CubicInstance> _cubics = new CopyOnWriteArrayList<>();
 	
 	/** Active shots. */
 	protected FastSet<Integer> _activeSoulShots = new FastSet<Integer>().shared();
