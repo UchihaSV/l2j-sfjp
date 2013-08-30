@@ -9905,7 +9905,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return _inventoryDisable;
 	}
 	
-	public List<L2CubicInstance> getCubics()
+	public CopyOnWriteArrayList<L2CubicInstance> getCubics()
 	{
 		return _cubics;
 	}
