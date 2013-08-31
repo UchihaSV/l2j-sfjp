@@ -1541,14 +1541,8 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			}
 			default:
 			{
-				if (sk.hasEffectType(L2EffectType.CANCEL, L2EffectType.CANCEL_ALL, L2EffectType.NEGATE))
+				if (sk.hasEffectType(L2EffectType.DISPEL))
 				{
-					// decrease cancel probability
-					if (Rnd.get(50) != 0)
-					{
-						return true;
-					}
-					
 					if (sk.getTargetType() == L2TargetType.ONE)
 					{
 						if ((attackTarget.getFirstEffect(L2EffectType.BUFF) != null) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && (dist2 <= srange))
@@ -2095,7 +2089,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			return null;
 		}
 		L2Attackable actor = getActiveChar();
-		if (!sk.hasEffectType(L2EffectType.CANCEL, L2EffectType.CANCEL_ALL, L2EffectType.NEGATE))
+		if (!sk.hasEffectType(L2EffectType.DISPEL))
 		{
 			if (!positive)
 			{
