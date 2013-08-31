@@ -18644,9 +18644,9 @@ public final class SystemMessageId
 	 * ID: 2721<br>
 	 * Message: ここは飛行体に搭乗、搭乗解除ができない地域です。<br>
 	 * Message: &#30446;&#21069;&#30340;&#25152;&#22312;&#20301;&#32622;&#26159;&#28961;&#27861;&#25645;&#20056;&#39131;&#34892;&#29289;&#25110;&#35299;&#38500;&#25645;&#20056;&#30340;&#22320;&#21312;&#12290;<br>
-	 * Message: Boarding or cancellation of boarding on Airships is not allowed in the current area.
+	 * Message: You are too high to perform this action. Please lower your altitude and try again.
 	 */
-	public static final SystemMessageId BOARD_OR_CANCEL_NOT_POSSIBLE_HERE;
+	public static final SystemMessageId TOO_HIGH_TO_PERFORM_THIS_ACTION;
 	
 	/**
 	 * ID: 2722<br>
@@ -22325,7 +22325,7 @@ public final class SystemMessageId
 		LOC_OUT_SEED_INFINITY_S1_S2_S3 = new SystemMessageId(2712);
 		LOC_CLEFT_S1_S2_S3 = new SystemMessageId(2716);
 		INSTANT_ZONE_S1_RESTRICTED = new SystemMessageId(2720);
-		BOARD_OR_CANCEL_NOT_POSSIBLE_HERE = new SystemMessageId(2721);
+		TOO_HIGH_TO_PERFORM_THIS_ACTION = new SystemMessageId(2721);
 		ANOTHER_AIRSHIP_ALREADY_SUMMONED = new SystemMessageId(2722);
 		YOU_CANNOT_BOARD_NOT_MEET_REQUEIREMENTS = new SystemMessageId(2727);
 		ACTION_PROHIBITED_WHILE_MOUNTED_OR_ON_AN_AIRSHIP = new SystemMessageId(2728);
