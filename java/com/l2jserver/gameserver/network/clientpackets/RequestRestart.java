@@ -75,7 +75,7 @@ public final class RequestRestart extends L2GameClientPacket
 		}
 		// [L2J_JP ADD END]
 		
-		if ((player.getActiveEnchantItem() != null) || (player.getActiveEnchantAttrItem() != null))
+		if ((player.getActiveEnchantItemId() != L2PcInstance.ID_NONE) || (player.getActiveEnchantAttrItemId() != L2PcInstance.ID_NONE))
 		{
 			sendPacket(RestartResponse.valueOf(false));
 			return;

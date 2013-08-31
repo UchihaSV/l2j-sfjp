@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.SevenSignsFestival;
-import com.l2jserver.gameserver.model.L2Party;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.entity.L2Event;
 import com.l2jserver.gameserver.network.SystemMessageId;
@@ -52,7 +51,6 @@ public final class Logout extends L2GameClientPacket
 	{
 		// Don't allow leaving if player is fighting
 		final L2PcInstance player = getClient().getActiveChar();
-		
 		if (player == null)
 		{
 			return;
@@ -68,8 +66,12 @@ public final class Logout extends L2GameClientPacket
 		}
 		// [L2J_JP ADD END]
 		
-		if ((player.getActiveEnchantItem() != null) || (player.getActiveEnchantAttrItem() != null))
+		if ((player.getActiveEnchantItemId() != L2PcInstance.ID_NONE) || (player.getActiveEnchantAttrItemId() != L2PcInstance.ID_NONE))
 		{
+			if (Config.DEBUG)
+			{
+				_log.fine("Player " + player.getName() + " tried to logout while enchanting.");
+			}
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}
@@ -81,6 +83,7 @@ public final class Logout extends L2GameClientPacket
 			return;
 		}
 		
+		// Don't allow leaving if player is fighting
 		if (AttackStanceTaskManager.getInstance().hasAttackStanceTask(player))
 		{
 			if (player.isGM() && Config.GM_RESTART_FIGHTING)
@@ -90,7 +93,7 @@ public final class Logout extends L2GameClientPacket
 			
 			if (Config.DEBUG)
 			{
-				_log.fine("Player " + player.getName() + " tried to logout while fighting");
+				_log.fine("Player " + player.getName() + " tried to logout while fighting.");
 			}
 			
 			player.sendPacket(SystemMessageId.CANT_LOGOUT_WHILE_FIGHTING);
@@ -116,9 +119,8 @@ public final class Logout extends L2GameClientPacket
 				player.sendPacket(ActionFailed.STATIC_PACKET);
 				return;
 			}
-			final L2Party playerParty = player.getParty();
 			
-			if (playerParty != null)
+			if (player.isInParty())
 			{
 				player.getParty().broadcastPacket(SystemMessage.sendString(player.getName() + " has been removed from the upcoming Festival."));
 			}
