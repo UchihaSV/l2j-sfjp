@@ -593,7 +593,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						addRangeSkill(skill);
 						break;
 					case DUMMY:
-						if (skill.hasEffectType(L2EffectType.CANCEL, L2EffectType.CANCEL_ALL, L2EffectType.NEGATE))
+						if (skill.hasEffectType(L2EffectType.DISPEL))
 						{
 							addNegativeSkill(skill);
 							addRangeSkill(skill);
