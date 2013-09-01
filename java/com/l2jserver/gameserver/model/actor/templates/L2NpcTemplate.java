@@ -54,31 +54,31 @@ public final class L2NpcTemplate extends L2CharTemplate
 {
 	private static final Logger _log = Logger.getLogger(L2NpcTemplate.class.getName());
 	
-	private final int _npcId;
-	private final int _idTemplate;
-	private final String _type;
-	private final String _name;
-	private final boolean _serverSideName;
-	private final String _title;
-	private final boolean _serverSideTitle;
-	private final String _sex;
-	private final byte _level;
-	private final int _rewardExp;
-	private final int _rewardSp;
-	private final int _rHand;
-	private final int _lHand;
-	private final int _enchantEffect;
+	private int _npcId;
+	private int _idTemplate;
+	private String _type;
+	private String _name;
+	private boolean _serverSideName;
+	private String _title;
+	private boolean _serverSideTitle;
+	private String _sex;
+	private byte _level;
+	private int _rewardExp;
+	private int _rewardSp;
+	private int _rHand;
+	private int _lHand;
+	private int _enchantEffect;
 	
-	private Race _race;
-	private final String _clientClass;
+	private Race _race = Race.NONE;
+	private String _clientClass;
 	
-	private final int _dropHerbGroup;
-	private final boolean _isCustom;
+	private int _dropHerbGroup;
+	private boolean _isCustom;
 	/**
 	 * Doesn't include all mobs that are involved in quests, just plain quest monsters for preventing champion spawn.
 	 */
-	private final boolean _isQuestMonster;
-	private final float _baseVitalityDivider;
+	private boolean _isQuestMonster;
+	private float _baseVitalityDivider;
 	
 	// Skill AI
 	private List<L2Skill> _buffSkills;// = new ArrayList<>();
@@ -164,49 +164,6 @@ public final class L2NpcTemplate extends L2CharTemplate
 		NONE
 	}
 	
-	public static boolean isAssignableTo(Class<?> sub, Class<?> clazz)
-	{
-		// If clazz represents an interface
-		if (clazz.isInterface())
-		{
-			// check if obj implements the clazz interface
-			Class<?>[] interfaces = sub.getInterfaces();
-			for (Class<?> interface1 : interfaces)
-			{
-				if (clazz.getName().equals(interface1.getName()))
-				{
-					return true;
-				}
-			}
-		}
-		else
-		{
-			do
-			{
-				if (sub.getName().equals(clazz.getName()))
-				{
-					return true;
-				}
-				
-				sub = sub.getSuperclass();
-			}
-			while (sub != null);
-		}
-		return false;
-	}
-	
-	/**
-	 * Checks if obj can be assigned to the Class represented by clazz.<br>
-	 * This is true if, and only if, obj is the same class represented by clazz, or a subclass of it or obj implements the interface represented by clazz.
-	 * @param obj
-	 * @param clazz
-	 * @return {@code true} if the object can be assigned to the class, {@code false} otherwise
-	 */
-	public static boolean isAssignableTo(Object obj, Class<?> clazz)
-	{
-		return L2NpcTemplate.isAssignableTo(obj.getClass(), clazz);
-	}
-	
 	/**
 	 * Constructor of L2Character.
 	 * @param set The StatsSet object to transfer data to the method
@@ -269,6 +226,12 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		_teachInfo = new ArrayList<>(0);
 		//_skills = new FastMap<Integer, L2Skill>().shared();
 }}
+	}
+	
+	@Override
+	public void set(StatsSet set)
+	{
+		super.set(set);
 		_npcId = set.getInteger("npcId");
 		_idTemplate = set.getInteger("idTemplate");
 		_type = intern(set.getString("type"));
@@ -284,7 +247,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		_rHand = set.getInteger("rhand");
 		_lHand = set.getInteger("lhand");
 		_enchantEffect = set.getInteger("enchant");
-		_race = null;
 		final int herbGroup = set.getInteger("dropHerbGroup");
 		if ((herbGroup > 0) && (HerbDropTable.getInstance().getHerbDroplist(herbGroup) == null))
 		{
@@ -302,6 +264,49 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		_baseVitalityDivider = (getLevel() > 0) && (getRewardExp() > 0) ? (getBaseHpMax() * 9 * getLevel() * getLevel()) / (100 * getRewardExp()) : 0;
 		
 		_isCustom = _npcId != _idTemplate;
+	}
+	
+	public static boolean isAssignableTo(Class<?> sub, Class<?> clazz)
+	{
+		// If clazz represents an interface
+		if (clazz.isInterface())
+		{
+			// check if obj implements the clazz interface
+			Class<?>[] interfaces = sub.getInterfaces();
+			for (Class<?> interface1 : interfaces)
+			{
+				if (clazz.getName().equals(interface1.getName()))
+				{
+					return true;
+				}
+			}
+		}
+		else
+		{
+			do
+			{
+				if (sub.getName().equals(clazz.getName()))
+				{
+					return true;
+				}
+				
+				sub = sub.getSuperclass();
+			}
+			while (sub != null);
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if obj can be assigned to the Class represented by clazz.<br>
+	 * This is true if, and only if, obj is the same class represented by clazz, or a subclass of it or obj implements the interface represented by clazz.
+	 * @param obj
+	 * @param clazz
+	 * @return {@code true} if the object can be assigned to the class, {@code false} otherwise
+	 */
+	public static boolean isAssignableTo(Object obj, Class<?> clazz)
+	{
+		return L2NpcTemplate.isAssignableTo(obj.getClass(), clazz);
 	}
 	
 	private void addAtkSkill(L2Skill skill)
@@ -904,10 +909,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public Race getRace()
 	{
-		if (_race == null)
-		{
-			_race = Race.NONE;
-		}
 		return _race;
 	}
 	
