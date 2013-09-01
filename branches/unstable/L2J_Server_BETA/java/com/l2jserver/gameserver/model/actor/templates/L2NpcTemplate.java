@@ -81,27 +81,27 @@ public final class L2NpcTemplate extends L2CharTemplate
 	private float _baseVitalityDivider;
 	
 	// Skill AI
-	private List<L2Skill> _buffSkills;// = new ArrayList<>();
-	private List<L2Skill> _negativeSkills;// = new ArrayList<>();
-	private List<L2Skill> _debuffSkills;// = new ArrayList<>();
-	private List<L2Skill> _atkSkills;// = new ArrayList<>();
-	private List<L2Skill> _rootSkills;// = new ArrayList<>();
-	private List<L2Skill> _stunSkills;// = new ArrayList<>();
-	private List<L2Skill> _sleepSkills;// = new ArrayList<>();
-	private List<L2Skill> _paralyzeSkills;// = new ArrayList<>();
-	private List<L2Skill> _fossilSkills;// = new ArrayList<>();
-	private List<L2Skill> _floatSkills;// = new ArrayList<>();
-	private List<L2Skill> _immobilizeSkills;// = new ArrayList<>();
-	private List<L2Skill> _healSkills;// = new ArrayList<>();
-	private List<L2Skill> _resSkills;// = new ArrayList<>();
-	private List<L2Skill> _dotSkills;// = new ArrayList<>();
-	private List<L2Skill> _cotSkills;// = new ArrayList<>();
-	private List<L2Skill> _universalSkills;// = new ArrayList<>();
-	private List<L2Skill> _manaSkills;// = new ArrayList<>();
-	private List<L2Skill> _longRangeSkills;// = new ArrayList<>();
-	private List<L2Skill> _shortRangeSkills;// = new ArrayList<>();
-	private List<L2Skill> _generalSkills;// = new ArrayList<>();
-	private List<L2Skill> _suicideSkills;// = new ArrayList<>();
+	private List<L2Skill> _buffSkills = emptyArrayList();
+	private List<L2Skill> _negativeSkills = emptyArrayList();
+	private List<L2Skill> _debuffSkills = emptyArrayList();
+	private List<L2Skill> _atkSkills = emptyArrayList();
+	private List<L2Skill> _rootSkills = emptyArrayList();
+	private List<L2Skill> _stunSkills = emptyArrayList();
+	private List<L2Skill> _sleepSkills = emptyArrayList();
+	private List<L2Skill> _paralyzeSkills = emptyArrayList();
+	private List<L2Skill> _fossilSkills = emptyArrayList();
+	private List<L2Skill> _floatSkills = emptyArrayList();
+	private List<L2Skill> _immobilizeSkills = emptyArrayList();
+	private List<L2Skill> _healSkills = emptyArrayList();
+	private List<L2Skill> _resSkills = emptyArrayList();
+	private List<L2Skill> _dotSkills = emptyArrayList();
+	private List<L2Skill> _cotSkills = emptyArrayList();
+	private List<L2Skill> _universalSkills = emptyArrayList();
+	private List<L2Skill> _manaSkills = emptyArrayList();
+	private List<L2Skill> _longRangeSkills = emptyArrayList();
+	private List<L2Skill> _shortRangeSkills = emptyArrayList();
+	private List<L2Skill> _generalSkills = emptyArrayList();
+	private List<L2Skill> _suicideSkills = emptyArrayList();
 	
 	private L2NpcAIData _AIdataStatic = new L2NpcAIData();
 	
@@ -113,9 +113,9 @@ public final class L2NpcTemplate extends L2CharTemplate
 	/**
 	 * The table containing all Minions that must be spawn with the L2NpcInstance using this L2NpcTemplate
 	 */
-	private List<L2MinionData> _minions;// = new ArrayList<>();
+	private List<L2MinionData> _minions = emptyArrayList();
 	
-	private List<ClassId> _teachInfo;// = new ArrayList<>();
+	private List<ClassId> _teachInfo = emptyArrayList();
 	
 	private final Map<Integer, L2Skill> _skills = new FastMap<Integer, L2Skill>().shared();
 	
@@ -171,61 +171,6 @@ public final class L2NpcTemplate extends L2CharTemplate
 	public L2NpcTemplate(StatsSet set)
 	{
 		super(set);
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		_buffSkills = Collections.emptyList();
-		_negativeSkills = Collections.emptyList();
-		_debuffSkills = Collections.emptyList();
-		_atkSkills = Collections.emptyList();
-		_rootSkills = Collections.emptyList();
-		_stunSkills = Collections.emptyList();
-		_sleepSkills = Collections.emptyList();
-		_paralyzeSkills = Collections.emptyList();
-		_fossilSkills = Collections.emptyList();
-		_floatSkills = Collections.emptyList();
-		_immobilizeSkills = Collections.emptyList();
-		_healSkills = Collections.emptyList();
-		_resSkills = Collections.emptyList();
-		_dotSkills = Collections.emptyList();
-		_cotSkills = Collections.emptyList();
-		_universalSkills = Collections.emptyList();
-		_manaSkills = Collections.emptyList();
-		_longRangeSkills = Collections.emptyList();
-		_shortRangeSkills = Collections.emptyList();
-		_generalSkills = Collections.emptyList();
-		_suicideSkills = Collections.emptyList();
-		
-		//_categories = new Collections.emptyList();
-		_minions = Collections.emptyList();
-		_teachInfo = Collections.emptyList();
-		//_skills = Collections.emptyMap();
-}} else {{
-		_buffSkills = new ArrayList<>(0);
-		_negativeSkills = new ArrayList<>(0);
-		_debuffSkills = new ArrayList<>(0);
-		_atkSkills = new ArrayList<>(0);
-		_rootSkills = new ArrayList<>(0);
-		_stunSkills = new ArrayList<>();
-		_sleepSkills = new ArrayList<>(0);
-		_paralyzeSkills = new ArrayList<>(0);
-		_fossilSkills = new ArrayList<>();
-		_floatSkills = new ArrayList<>();
-		_immobilizeSkills = new ArrayList<>(0);
-		_healSkills = new ArrayList<>(0);
-		_resSkills = new ArrayList<>();
-		_dotSkills = new ArrayList<>(0);
-		_cotSkills = new ArrayList<>(0);
-		_universalSkills = new ArrayList<>(0);
-		_manaSkills = new ArrayList<>();
-		_longRangeSkills = new ArrayList<>(0);
-		_shortRangeSkills = new ArrayList<>(0);
-		_generalSkills = new ArrayList<>(0);
-		_suicideSkills = new ArrayList<>(0);
-		
-		//_categories = new ArrayList<>(0);
-		_minions = new ArrayList<>(0);
-		_teachInfo = new ArrayList<>(0);
-		//_skills = new FastMap<Integer, L2Skill>().shared();
-}}
 	}
 	
 	@Override
@@ -308,6 +253,17 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	{
 		return L2NpcTemplate.isAssignableTo(obj.getClass(), clazz);
 	}
+	
+	//[JOJO]-------------------------------------------------
+	private static final <T> List <T> emptyArrayList()
+	{
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+		return Collections.emptyList();	// return Collections.EMPTY_LIST
+}} else {{
+		return new ArrayList<>(0);
+}}
+	}
+	//-------------------------------------------------------
 	
 	private void addAtkSkill(L2Skill skill)
 	{
