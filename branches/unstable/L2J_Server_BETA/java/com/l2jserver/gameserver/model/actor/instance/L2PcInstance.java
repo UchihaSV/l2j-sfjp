@@ -15456,6 +15456,23 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	}
 	
 	/**
+	 * @return {@code true} if {@link PlayerVariables} instance is attached to current player's scripts, {@code false} otherwise.
+	 */
+	public boolean hasVariables()
+	{
+		return getScript(PlayerVariables.class) != null;
+	}
+	
+	/**
+	 * @return {@link PlayerVariables} instance containing parameters regarding player.
+	 */
+	public PlayerVariables getVariables()
+	{
+		final PlayerVariables vars = getScript(PlayerVariables.class);
+		return vars != null ? vars : addScript(new PlayerVariables(getObjectId()));
+	}
+	
+	/**
 	 * Adds a despawn listener
 	 * @param listener
 	 */
