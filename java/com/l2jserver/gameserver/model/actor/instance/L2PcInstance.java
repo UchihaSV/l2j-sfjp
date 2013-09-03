@@ -9430,7 +9430,7 @@ public final class L2PcInstance extends L2Playable
 			}
 		}
 		
-		if (skill.getSkillType() == L2SkillType.INSTANT_JUMP)
+		if (skill.hasEffectType(L2EffectType.TELEPORT_TO_TARGET))
 		{
 			// You cannot jump while rooted right ;)
 			if (isMovementDisabled())
@@ -9439,10 +9439,8 @@ public final class L2PcInstance extends L2Playable
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
 				sm.addSkillName(skill.getId());
 				sendPacket(sm);
-				
 				// Send a Server->Client packet ActionFailed to the L2PcInstance
 				sendPacket(ActionFailed.STATIC_PACKET);
-				
 				return false;
 			}
 			// And this skill cannot be used in peace zone, not even on NPCs!
@@ -9450,13 +9448,10 @@ public final class L2PcInstance extends L2Playable
 			{
 				// Sends a sys msg to client
 				sendPacket(SystemMessageId.TARGET_IN_PEACEZONE);
-				
 				// Send a Server->Client packet ActionFailed to the L2PcInstance
 				sendPacket(ActionFailed.STATIC_PACKET);
-				
 				return false;
 			}
-			
 		}
 		// Check if the skill is defensive
 		if (!skill.isOffensive() && target.isMonster() && !forceUse)
@@ -9730,7 +9725,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	}
 	
 	/**
-	 * Set the type of Pet mounted (0 : none, 1 : Stridder, 2 : Wyvern) and send a Server->Client packet InventoryUpdate to the L2PcInstance.
+	 * Set the type of Pet mounted (0 : none, 1 : Strider, 2 : Wyvern) and send a Server->Client packet InventoryUpdate to the L2PcInstance.
 	 * @return
 	 */
 	public boolean checkLandingState()
