@@ -355,6 +355,10 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 				if ((npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE) || (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE))
 				{
 					WalkInfo walk = _activeRoutes.get(npc.getObjectId());
+					if (walk == null)
+					{
+						return;
+					}
 					
 					// Prevent call simultaneously from scheduled task and onArrived() or temporarily stop walking for resuming in future
 					if (walk.isBlocked() || walk.isSuspended())
