@@ -23,7 +23,6 @@ import com.l2jserver.gameserver.model.Elementals;
 import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.actor.templates.L2CharTemplate;
 import com.l2jserver.gameserver.model.items.L2Weapon;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.items.type.L2WeaponType;
@@ -446,22 +445,14 @@ public class CharStat
 		{
 			return 1f;
 		}
-		final L2CharTemplate template = _activeChar.getTemplate();
+		final float baseSpeed = _activeChar.getTemplate().getBaseMoveSpd(_activeChar.isRunning() ? MoveType.RUN : MoveType.WALK);
 		//[JOJO]-------------------------------------------------
-		if (_activeChar.isRunning())
+		if (baseSpeed == 0)
 		{
-			int baseRunSpd = template.getBaseMoveSpd(MoveType.RUN);
-			if (baseRunSpd == 0) return 1f;
-			return getRunSpeed() / baseRunSpd;
+			return 1f;
 		}
-		else
-		{
-			int baseWalkSpd = template.getBaseMoveSpd(MoveType.WALK);
-			if (baseWalkSpd == 0) return 1f;
-			return getWalkSpeed() / baseWalkSpd;
-		}
-	//	return _activeChar.isRunning() ? (getRunSpeed() / template.getBaseMoveSpd(MoveType.RUN)) : (getWalkSpeed() / template.getBaseMoveSpd(MoveType.WALK));
 		//-------------------------------------------------------
+		return (getMoveSpeed() / baseSpeed);
 	}
 	
 	/**
