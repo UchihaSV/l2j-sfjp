@@ -455,7 +455,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 			_extractableItems = parseExtractableSkill(_id, _level, capsuled_items);
 		}
 		_npcId = set.getInteger("npcId", 0);
-		_icon = set.getString("icon", "icon.skill0000");
+		_icon = intern(set.getString("icon", "icon.skill0000"));
 	}
 	
 	public abstract void useSkill(L2Character caster, L2Object[] targets);

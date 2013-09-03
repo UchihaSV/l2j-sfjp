@@ -86,6 +86,7 @@ public class DocumentEngine
 			hashFiles("data/stats/skills/custom", files);
 		
 		StringIntern.begin(SkillTable.class.getSimpleName());
+		StringIntern.intern("icon.skill0000");
 		for (File file : files)
 		{
 			List<L2Skill> s = loadSkills(file);
