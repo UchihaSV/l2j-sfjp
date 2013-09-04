@@ -83,7 +83,7 @@ public class RecipeController
 		//[JOJO]-------------------------------------------------
 		verify_cost:
 		{
-			for (L2ManufactureItem temp : manufacturer.getCreateList().getList())
+			for (L2ManufactureItem temp : manufacturer.getCreateList())
 				if (temp.getRecipeId() == recipeListId /*&& temp.getCost() > 0*/)
 					break verify_cost;
 			player.sendPacket(SystemMessageId.MANUFACTURE_PRICE_HAS_CHANGED);	//TODO:
