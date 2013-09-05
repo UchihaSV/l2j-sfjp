@@ -3431,7 +3431,7 @@ public class Quest extends ManagedScript
 	 * @param itemId
 	 * @param count
 	 */
-	public void giveItems(L2PcInstance player, int itemId, long count)
+	public static void giveItems(L2PcInstance player, int itemId, long count)
 	{
 		giveItems(player, itemId, count, 0);
 	}
@@ -3441,7 +3441,7 @@ public class Quest extends ManagedScript
 	 * @param player
 	 * @param holder
 	 */
-	protected void giveItems(L2PcInstance player, ItemHolder holder)
+	protected static void giveItems(L2PcInstance player, ItemHolder holder)
 	{
 		giveItems(player, holder.getId(), holder.getCount());
 	}
