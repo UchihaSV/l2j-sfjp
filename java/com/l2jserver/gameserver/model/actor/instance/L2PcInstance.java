@@ -9496,6 +9496,7 @@ public final class L2PcInstance extends L2Playable
 				{
 					switch (sklType)
 					{
+						case BEAST_FEED:
 						case DELUXE_KEY_UNLOCK:
 						case UNLOCK:
 							break;
