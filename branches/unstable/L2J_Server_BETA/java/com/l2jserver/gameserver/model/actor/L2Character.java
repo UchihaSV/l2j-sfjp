@@ -6809,6 +6809,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 								switch (skill.getSkillType())
 								{
 									case SUMMON:
+									case BEAST_FEED:
 									case UNLOCK:
 									case DELUXE_KEY_UNLOCK:
 									case UNLOCK_SPECIAL:
