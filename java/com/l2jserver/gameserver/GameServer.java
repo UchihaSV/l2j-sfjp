@@ -42,6 +42,7 @@ import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.datatables.AdminTable;
 import com.l2jserver.gameserver.datatables.ArmorSetsData;
 import com.l2jserver.gameserver.datatables.AugmentationData;
+import com.l2jserver.gameserver.datatables.BuyListData;
 import com.l2jserver.gameserver.datatables.CharNameTable;
 import com.l2jserver.gameserver.datatables.CharSummonTable;
 import com.l2jserver.gameserver.datatables.CharTemplateTable;
@@ -229,7 +230,7 @@ public class GameServer
 		OptionsData.getInstance();
 		EnchantHPBonusData.getInstance();
 		MerchantPriceConfigTable.getInstance().loadInstances();
-		TradeController.getInstance();
+		BuyListData.getInstance();
 		MultisellData.getInstance();
 		RecipeData.getInstance();
 		ArmorSetsData.getInstance();
@@ -402,7 +403,7 @@ public class GameServer
 		CleanUpManager.getInstance().execute();	// [L2J_JP ADD - TSL][JOJO]
 		if (Config.ALLOW_LOTTERY)
 			com.l2jserver.gameserver.instancemanager.games.Lottery.getInstance();	//[JOJO]
-		TradeController.getInstance().checkAllPrice();	//[JOJO]
+		BuyListData.getInstance().checkAllPrice();	//[JOJO]
 		
 		_log.info("IdFactory: Free ObjectID's remaining: " + IdFactory.getInstance().size());
 		

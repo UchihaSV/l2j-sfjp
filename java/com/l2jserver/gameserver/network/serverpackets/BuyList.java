@@ -21,20 +21,20 @@ package com.l2jserver.gameserver.network.serverpackets;
 import java.util.Collection;
 
 import com.l2jserver.Config;
-import com.l2jserver.gameserver.model.L2TradeList;
-import com.l2jserver.gameserver.model.L2TradeList.L2TradeItem;
+import com.l2jserver.gameserver.model.buylist.L2BuyList;
+import com.l2jserver.gameserver.model.buylist.Product;
 
 public final class BuyList extends L2GameServerPacket
 {
 	private final int _listId;
-	private final Collection<L2TradeItem> _list;
+	private final Collection<Product> _list;
 	private final long _money;
 	private double _taxRate = 0;
 	
-	public BuyList(L2TradeList list, long currentMoney, double taxRate)
+	public BuyList(L2BuyList list, long currentMoney, double taxRate)
 	{
 		_listId = list.getListId();
-		_list = list.getItems();
+		_list = list.getProducts();
 		_money = currentMoney;
 		_taxRate = taxRate;
 	}
@@ -50,19 +50,19 @@ public final class BuyList extends L2GameServerPacket
 		
 		writeH(_list.size());
 		
-		for (L2TradeItem item : _list)
+		for (Product product : _list)
 		{
-			final long item_getCurrentCount = item.getCurrentCount();	//[JOJO]
-			if ((item_getCurrentCount > 0) || !item.hasLimitedStock())
+			final long item_getCurrentCount = product.getCount();	//[JOJO]
+			if ((item_getCurrentCount > 0) || !product.hasLimitedStock())
 			{
-				writeD(item.getItemId());
-				writeD(item.getItemId());
+				writeD(product.getItemId());
+				writeD(product.getItemId());
 				writeD(0);
 				writeQ(item_getCurrentCount < 0 ? 0 : item_getCurrentCount);
-				writeH(item.getTemplate().getType2());
-				writeH(item.getTemplate().getType1()); // Custom Type 1
+				writeH(product.getItem().getType2());
+				writeH(product.getItem().getType1()); // Custom Type 1
 				writeH(0x00); // isEquipped
-				writeD(item.getTemplate().getBodyPart()); // Body Part
+				writeD(product.getItem().getBodyPart()); // Body Part
 				writeH(0x00); // Enchant
 				writeH(0x00); // Custom Type
 				writeD(0x00); // Augment
@@ -80,7 +80,7 @@ public final class BuyList extends L2GameServerPacket
 				writeH(0x00);
 				
 				//[L2J-JP EDIT START] —b•º”z’u}E‚‹‰—b•º”z’u}Eêt–¾‚Ì—b•º”z’u}E‚‹‰ŒP—û•º”z’u}EŒP—û•º”z’u}EƒlƒtƒBƒŠƒ€”z’u}
-				final int item_getItemId = item.getItemId();	//[JOJO]
+				final int item_getItemId = product.getItemId();	//[JOJO]
 				if (item_getItemId >= 3960 && item_getItemId <= 4026//Config.RATE_SIEGE_GUARDS_PRICE-//'
 				 || item_getItemId >= 5205 && item_getItemId <= 5219
 				 || item_getItemId >= 6038 && item_getItemId <= 6306
@@ -88,11 +88,11 @@ public final class BuyList extends L2GameServerPacket
 				 || item_getItemId >= 7918 && item_getItemId <= 8029)
 				//[L2J-JP EDIT END]
 				{
-					writeQ((long) (item.getPrice() * Config.RATE_SIEGE_GUARDS_PRICE * (1 + _taxRate)));
+					writeQ((long) (product.getPrice() * Config.RATE_SIEGE_GUARDS_PRICE * (1 + _taxRate)));
 				}
 				else
 				{
-					writeQ((long) (item.getPrice() * (1 + _taxRate)));
+					writeQ((long) (product.getPrice() * (1 + _taxRate)));
 				}
 			}
 		}
