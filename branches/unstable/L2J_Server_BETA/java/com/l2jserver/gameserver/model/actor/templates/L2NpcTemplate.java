@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
-
-import javolution.util.FastMap;
 
 import com.l2jserver.gameserver.datatables.HerbDropTable;
 import com.l2jserver.gameserver.datatables.SpawnTable;
@@ -74,55 +74,23 @@ public final class L2NpcTemplate extends L2CharTemplate
 	
 	private int _dropHerbGroup;
 	private boolean _isCustom;
-	/**
-	 * Doesn't include all mobs that are involved in quests, just plain quest monsters for preventing champion spawn.
-	 */
 	private boolean _isQuestMonster;
+	
 	private float _baseVitalityDivider;
 	
-	// Skill AI
-	private List<L2Skill> _buffSkills = emptyArrayList();
-	private List<L2Skill> _negativeSkills = emptyArrayList();
-	private List<L2Skill> _debuffSkills = emptyArrayList();
-	private List<L2Skill> _atkSkills = emptyArrayList();
-	private List<L2Skill> _rootSkills = emptyArrayList();
-	private List<L2Skill> _stunSkills = emptyArrayList();
-	private List<L2Skill> _sleepSkills = emptyArrayList();
-	private List<L2Skill> _paralyzeSkills = emptyArrayList();
-	private List<L2Skill> _fossilSkills = emptyArrayList();
-	private List<L2Skill> _floatSkills = emptyArrayList();
-	private List<L2Skill> _immobilizeSkills = emptyArrayList();
-	private List<L2Skill> _healSkills = emptyArrayList();
-	private List<L2Skill> _resSkills = emptyArrayList();
-	private List<L2Skill> _dotSkills = emptyArrayList();
-	private List<L2Skill> _cotSkills = emptyArrayList();
-	private List<L2Skill> _universalSkills = emptyArrayList();
-	private List<L2Skill> _manaSkills = emptyArrayList();
-	private List<L2Skill> _longRangeSkills = emptyArrayList();
-	private List<L2Skill> _shortRangeSkills = emptyArrayList();
-	private List<L2Skill> _generalSkills = emptyArrayList();
-	private List<L2Skill> _suicideSkills = emptyArrayList();
+	private Map<AISkillType, List<L2Skill>> _aiSkills = new ConcurrentHashMap<>();
 	
-	private L2NpcAIData _AIdataStatic = new L2NpcAIData();
+	private final Map<Integer, L2Skill> _skills = new ConcurrentHashMap<>();
 	
-	/**
-	 * The table containing all Item that can be dropped by L2NpcInstance using this L2NpcTemplate
-	 */
-	private final List<L2DropCategory> _categories = new ArrayList<>(0);
+	private final List<L2DropCategory> _dropCategories = new CopyOnWriteArrayList<>();
 	
-	/**
-	 * The table containing all Minions that must be spawn with the L2NpcInstance using this L2NpcTemplate
-	 */
 	private List<L2MinionData> _minions = emptyArrayList();
 	
 	private List<ClassId> _teachInfo = emptyArrayList();
 	
-	private final Map<Integer, L2Skill> _skills = new FastMap<Integer, L2Skill>().shared();
+	private final Map<QuestEventType, List<Quest>> _questEvents = new ConcurrentHashMap<>();
 	
-	/**
-	 * Contains a list of quests for each event type (questStart, questAttack, questKill, etc).
-	 */
-	private final Map<QuestEventType, List<Quest>> _questEvents = new FastMap<QuestEventType, List<Quest>>().shared();
+	private L2NpcAIData _aiData;
 	
 	public static enum AIType
 	{
@@ -164,6 +132,23 @@ public final class L2NpcTemplate extends L2CharTemplate
 		NONE
 	}
 	
+	private enum AISkillType
+	{
+		BUFF,
+		DEBUFF,
+		NEGATIVE,
+		ATTACK,
+		IMMOBILIZE,
+		HEAL,
+		RES,
+		COT,
+		UNIVERSAL,
+		LONG_RANGE,
+		SHORT_RANGE,
+		GENERAL,
+		SUICIDE
+	}
+	
 	/**
 	 * Constructor of L2Character.
 	 * @param set The StatsSet object to transfer data to the method
@@ -171,6 +156,7 @@ public final class L2NpcTemplate extends L2CharTemplate
 	public L2NpcTemplate(StatsSet set)
 	{
 		super(set);
+		resetSkills();
 	}
 	
 	@Override
@@ -209,6 +195,30 @@ public final class L2NpcTemplate extends L2CharTemplate
 		_baseVitalityDivider = (getLevel() > 0) && (getRewardExp() > 0) ? (getBaseHpMax() * 9 * getLevel() * getLevel()) / (100 * getRewardExp()) : 0;
 		
 		_isCustom = _npcId != _idTemplate;
+	}
+	
+	public void resetSkills()
+	{
+	//[JOJO]-------------------------------------------------
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+		final List<L2Skill> EMPTY_LIST = Collections.<L2Skill> emptyList();
+		for (AISkillType type : AISkillType.values())
+		{
+			_aiSkills.put(type, EMPTY_LIST);
+		}
+}} else {{
+		for (AISkillType type : AISkillType.values())
+		{
+			_aiSkills.put(type, new ArrayList<L2Skill>(0));
+		}
+}}
+	//-------------------------------------------------------
+		_skills.clear();
+	}
+	
+	public void resetDroplist()
+	{
+		_dropCategories.clear();
 	}
 	
 	public static boolean isAssignableTo(Class<?> sub, Class<?> clazz)
@@ -263,46 +273,51 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		return new ArrayList<>(0);
 }}
 	}
+	private void addAISkill(AISkillType aiSkillType, L2Skill skill)
+	{
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+		List<L2Skill> skills;
+		if ((skills = _aiSkills.get(aiSkillType)) == Collections.EMPTY_LIST)
+			_aiSkills.put(aiSkillType, skills = new ArrayList<>());
+		skills.add(skill);
+}}
+	}
 	//-------------------------------------------------------
 	
 	private void addAtkSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_atkSkills == Collections.EMPTY_LIST) _atkSkills = new ArrayList<>();
+		addAISkill(AISkillType.ATTACK, skill);
+}} else {{
+		getAtkSkills().add(skill);
 }}
-		_atkSkills.add(skill);
 	}
 	
 	private void addBuffSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_buffSkills == Collections.EMPTY_LIST) _buffSkills = new ArrayList<>();
+		addAISkill(AISkillType.BUFF, skill);
+}} else {{
+		getBuffSkills().add(skill);
 }}
-		_buffSkills.add(skill);
 	}
 	
 	private void addCOTSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_cotSkills == Collections.EMPTY_LIST) _cotSkills = new ArrayList<>();
+		addAISkill(AISkillType.COT, skill);
+}} else {{
+		getCostOverTimeSkills().add(skill);
 }}
-		_cotSkills.add(skill);
 	}
 	
 	private void addDebuffSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_debuffSkills == Collections.EMPTY_LIST) _debuffSkills = new ArrayList<>();
+		addAISkill(AISkillType.DEBUFF, skill);
+}} else {{
+		getDebuffSkills().add(skill);
 }}
-		_debuffSkills.add(skill);
-	}
-	
-	private void addDOTSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_dotSkills == Collections.EMPTY_LIST) _dotSkills = new ArrayList<>();
-}}
-		_dotSkills.add(skill);
 	}
 	
 	/**
@@ -316,51 +331,31 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (!drop.isQuestDrop())
 		{
 			// If the category doesn't already exist, create it first
-			synchronized (_categories)
+			boolean catExists = false;
+			for (L2DropCategory cat : _dropCategories)
 			{
-				boolean catExists = false;
-				for (L2DropCategory cat : _categories)
+				// If the category exists, add the drop to this category.
+				if (cat.getCategoryType() == categoryType)
 				{
-					// If the category exists, add the drop to this category.
-					if (cat.getCategoryType() == categoryType)
-					{
-						cat.addDropData(drop, isType("L2RaidBoss") || isType("L2GrandBoss"));
-						catExists = true;
-						break;
-					}
-				}
-				// If the category doesn't exit, create it and add the drop
-				if (!catExists)
-				{
-					final L2DropCategory cat = new L2DropCategory(categoryType);
 					cat.addDropData(drop, isType("L2RaidBoss") || isType("L2GrandBoss"));
-					_categories.add(cat);
+					catExists = true;
+					break;
 				}
 			}
+			// If the category doesn't exit, create it and add the drop
+			if (!catExists)
+			{
+				final L2DropCategory cat = new L2DropCategory(categoryType);
+				cat.addDropData(drop, isType("L2RaidBoss") || isType("L2GrandBoss"));
+				_dropCategories.add(cat);
+			}
 		}
-	}
-	
-	@SuppressWarnings("unused") private void addFloatSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_floatSkills == Collections.EMPTY_LIST) _floatSkills = new ArrayList<>();
-}}
-		_floatSkills.add(skill);
-	}
-	
-	@SuppressWarnings("unused") private void addFossilSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_fossilSkills == Collections.EMPTY_LIST) _fossilSkills = new ArrayList<>();
-}}
-		_fossilSkills.add(skill);
 	}
 	
 	private void addGeneralSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_generalSkills == Collections.EMPTY_LIST) _generalSkills = new ArrayList<>();
-		_generalSkills.add(skill);
+		addAISkill(AISkillType.GENERAL, skill);
 }} else {{
 		getGeneralskills().add(skill);
 }}
@@ -369,62 +364,46 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	private void addHealSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_healSkills == Collections.EMPTY_LIST) _healSkills = new ArrayList<>();
+		addAISkill(AISkillType.HEAL, skill);
+}} else {{
+		getHealSkills().add(skill);
 }}
-		_healSkills.add(skill);
 	}
 	
 	private void addImmobiliseSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_immobilizeSkills == Collections.EMPTY_LIST) _immobilizeSkills = new ArrayList<>();
+		addAISkill(AISkillType.IMMOBILIZE, skill);
+}} else {{
+		getImmobiliseSkills().add(skill);
 }}
-		_immobilizeSkills.add(skill);
-	}
-	
-	@SuppressWarnings("unused") private void addManaHealSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_manaSkills == Collections.EMPTY_LIST) _manaSkills = new ArrayList<>();
-}}
-		_manaSkills.add(skill);
 	}
 	
 	private void addNegativeSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_negativeSkills == Collections.EMPTY_LIST) _negativeSkills = new ArrayList<>();
+		addAISkill(AISkillType.NEGATIVE, skill);
+}} else {{
+		getNegativeSkills().add(skill);
 }}
-		_negativeSkills.add(skill);
 	}
 	
-	private void addParalyzeSkill(L2Skill skill)
+	public void addQuestEvent(QuestEventType eventType, Quest q)
 	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_paralyzeSkills == Collections.EMPTY_LIST) _paralyzeSkills = new ArrayList<>();
-}}
-		_paralyzeSkills.add(skill);
-	}
-	
-	public void addQuestEvent(QuestEventType EventType, Quest q)
-	{
-		List<Quest> quests = _questEvents.get(EventType);
+		List<Quest> quests = _questEvents.get(eventType);
 		if (quests == null)
 		{
 			quests = new ArrayList<>();
-			quests.add(q);
-			_questEvents.put(EventType, quests);
+			_questEvents.put(eventType, quests);
+		}
+		
+		if (!eventType.isMultipleRegistrationAllowed() && !quests.isEmpty())
+		{
+			_log.warning("Quest event not allowed in multiple quests.  Skipped addition of Event Type \"" + eventType + "\" for NPC \"" + _name + "\" and quest \"" + q.getName() + "\".");
 		}
 		else
 		{
-			if (!EventType.isMultipleRegistrationAllowed() && !quests.isEmpty())
-			{
-				_log.warning("Quest event not allowed in multiple quests.  Skipped addition of Event Type \"" + EventType + "\" for NPC \"" + _name + "\" and quest \"" + q.getName() + "\".");
-			}
-			else
-			{
-				quests.add(q);
-			}
+			quests.add(q);
 		}
 if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		// L2AttackableAIScript#onXXX ÇÕç≈å„Ç…åƒÇŒÇÍÇÈÇÊÇ§èáî‘ÇïœÇ¶ÇÈ.
@@ -433,7 +412,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 				quests.add(quests.remove(i));
 }}
 if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
-		if (EventType == QuestEventType.ON_SPAWN && !q.getName().equals("L2AttackableAIScript")) {
+		if (eventType == QuestEventType.ON_SPAWN && !q.getName().equals("L2AttackableAIScript")) {
 			boolean hasOnSpawn;
 			try {
 				q.getClass().getDeclaredMethod("onSpawn", L2Npc.class);	// @Override public String onSpawn(L2Npc npc)
@@ -487,7 +466,7 @@ if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 		}
 	}
 	
-	public void addRaidData(L2MinionData minion)
+	public void addMinionData(L2MinionData minion)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (_minions == Collections.EMPTY_LIST) _minions = new ArrayList<>();
@@ -500,33 +479,28 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if ((skill.getCastRange() <= 150) && (skill.getCastRange() > 0))
 		{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-			if (_shortRangeSkills == Collections.EMPTY_LIST) _shortRangeSkills = new ArrayList<>();
+			addAISkill(AISkillType.SHORT_RANGE, skill);
+}} else {{
+			getShortRangeSkills().add(skill);
 }}
-			_shortRangeSkills.add(skill);
 		}
 		else if (skill.getCastRange() > 150)
 		{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-			if (_longRangeSkills == Collections.EMPTY_LIST) _longRangeSkills = new ArrayList<>();
+			addAISkill(AISkillType.LONG_RANGE, skill);
+}} else {{
+			getLongRangeSkills().add(skill);
 }}
-			_longRangeSkills.add(skill);
 		}
 	}
 	
 	private void addResSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_resSkills == Collections.EMPTY_LIST) _resSkills = new ArrayList<>();
+		addAISkill(AISkillType.RES, skill);
+}} else {{
+		getResSkills().add(skill);
 }}
-		_resSkills.add(skill);
-	}
-	
-	private void addRootSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_rootSkills == Collections.EMPTY_LIST) _rootSkills = new ArrayList<>();
-}}
-		_rootSkills.add(skill);
 	}
 	
 	public void addSkill(L2Skill skill)
@@ -571,12 +545,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						}
 						else if (skill.hasEffectType(L2EffectType.SLEEP))
 						{
-							addSleepSkill(skill);
 							addImmobiliseSkill(skill);
 						}
 						else if (skill.hasEffectType(L2EffectType.STUN, L2EffectType.ROOT))
 						{
-							addRootSkill(skill);
 							addImmobiliseSkill(skill);
 							addRangeSkill(skill);
 						}
@@ -587,13 +559,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						}
 						else if (skill.hasEffectType(L2EffectType.PARALYZE))
 						{
-							addParalyzeSkill(skill);
 							addImmobiliseSkill(skill);
 							addRangeSkill(skill);
 						}
 						else if (skill.hasEffectType(L2EffectType.DMG_OVER_TIME, L2EffectType.DMG_OVER_TIME_PERCENT))
 						{
-							addDOTSkill(skill);
 							addRangeSkill(skill);
 						}
 						else
@@ -608,28 +578,13 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		_skills.put(skill.getId(), skill);
 	}
 	
-	private void addSleepSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_sleepSkills == Collections.EMPTY_LIST) _sleepSkills = new ArrayList<>();
-}}
-		_sleepSkills.add(skill);
-	}
-	
-	@SuppressWarnings("unused") private void addStunSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_stunSkills == Collections.EMPTY_LIST) _stunSkills = new ArrayList<>();
-}}
-		_stunSkills.add(skill);
-	}
-	
 	private void addSuicideSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_suicideSkills == Collections.EMPTY_LIST) _suicideSkills = new ArrayList<>();
+		addAISkill(AISkillType.SUICIDE, skill);
+}} else {{
+		getSuicideSkills().add(skill);
 }}
-		_suicideSkills.add(skill);
 	}
 	
 	public void addTeachInfo(ClassId classId)
@@ -643,9 +598,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	private void addUniversalSkill(L2Skill skill)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_universalSkills == Collections.EMPTY_LIST) _universalSkills = new ArrayList<>();
+		addAISkill(AISkillType.UNIVERSAL, skill);
+}} else {{
+		getUniversalSkills().add(skill);
 }}
-		_universalSkills.add(skill);
 	}
 	
 	public boolean canTeach(ClassId classId)
@@ -662,18 +618,22 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	/**
 	 * Empty all possible drops of this L2NpcTemplate.
 	 */
-	public synchronized void clearAllDropData()
+	public void clearAllDropData()
 	{
-		for (L2DropCategory cat : _categories)
+		for (L2DropCategory cat : _dropCategories)
 		{
 			cat.clearAllDrops();
 		}
-		_categories.clear();
+		_dropCategories.clear();
 	}
 	
 	public L2NpcAIData getAIDataStatic()
 	{
-		return _AIdataStatic;
+		if (_aiData == null)
+		{
+			_aiData = new L2NpcAIData();
+		}
+		return _aiData;
 	}
 	
 	/**
@@ -683,7 +643,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public List<L2DropData> getAllDropData()
 	{
 		final List<L2DropData> list = new ArrayList<>();
-		for (L2DropCategory tmp : _categories)
+		for (L2DropCategory tmp : _dropCategories)
 		{
 			list.addAll(tmp.getAllDrops());
 		}
@@ -695,7 +655,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2Skill> getAtkSkills()
 	{
-		return _atkSkills;
+		return _aiSkills.get(AISkillType.ATTACK);
 	}
 	
 	/**
@@ -711,7 +671,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2Skill> getBuffSkills()
 	{
-		return _buffSkills;
+		return _aiSkills.get(AISkillType.BUFF);
 	}
 	
 	/**
@@ -727,7 +687,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2Skill> getCostOverTimeSkills()
 	{
-		return _cotSkills;
+		return _aiSkills.get(AISkillType.COT);
 	}
 	
 	/**
@@ -735,7 +695,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2Skill> getDebuffSkills()
 	{
-		return _debuffSkills;
+		return _aiSkills.get(AISkillType.DEBUFF);
 	}
 	
 	/**
@@ -743,7 +703,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2DropCategory> getDropData()
 	{
-		return _categories;
+		return _dropCategories;
 	}
 	
 	/**
@@ -777,7 +737,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2Skill> getGeneralskills()
 	{
-		return _generalSkills;
+		return _aiSkills.get(AISkillType.GENERAL);
 	}
 	
 	/**
@@ -785,7 +745,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2Skill> getHealSkills()
 	{
-		return _healSkills;
+		return _aiSkills.get(AISkillType.HEAL);
 	}
 	
 	/**
@@ -801,7 +761,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2Skill> getImmobiliseSkills()
 	{
-		return _immobilizeSkills;
+		return _aiSkills.get(AISkillType.IMMOBILIZE);
 	}
 	
 	/**
@@ -825,7 +785,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2Skill> getLongRangeSkills()
 	{
-		return _longRangeSkills;
+		return _aiSkills.get(AISkillType.LONG_RANGE);
 	}
 	
 	/**
@@ -849,7 +809,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2Skill> getNegativeSkills()
 	{
-		return _negativeSkills;
+		return _aiSkills.get(AISkillType.NEGATIVE);
 	}
 	
 	/**
@@ -873,7 +833,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2Skill> getResSkills()
 	{
-		return _resSkills;
+		return _aiSkills.get(AISkillType.RES);
 	}
 	
 	/**
@@ -913,7 +873,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2Skill> getShortRangeSkills()
 	{
-		return _shortRangeSkills;
+		return _aiSkills.get(AISkillType.SHORT_RANGE);
 	}
 	
 	@Override
@@ -924,7 +884,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	
 	public List<L2Skill> getSuicideSkills()
 	{
-		return _suicideSkills;
+		return _aiSkills.get(AISkillType.SUICIDE);
 	}
 	
 	public List<ClassId> getTeachInfo()
@@ -953,7 +913,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 */
 	public List<L2Skill> getUniversalSkills()
 	{
-		return _universalSkills;
+		return _aiSkills.get(AISkillType.UNIVERSAL);
 	}
 	
 	/**
@@ -1006,9 +966,9 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		return _race == Race.UNDEAD;
 	}
 	
-	public void setAIData(L2NpcAIData AIData)
+	public void setAIData(L2NpcAIData aiData)
 	{
-		_AIdataStatic = AIData;
+		_aiData = aiData;
 	}
 	
 	public void setRace(int raceId)
