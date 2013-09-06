@@ -48,13 +48,13 @@ public final class BuyListData extends DocumentParser
 	
 	protected BuyListData()
 	{
-		setCurrentFileFilter(new NumericNameFilter());
 		load();
 	}
 	
 	@Override
 	public synchronized void load()
 	{
+		setCurrentFileFilter(new NumericNameFilter());
 		_buyLists.clear();
 		parseDirectory("data/buylists");
 		if (Config.CUSTOM_BUYLIST_LOAD)
@@ -63,6 +63,7 @@ public final class BuyListData extends DocumentParser
 		}
 		
 		_log.info(getClass().getSimpleName() + ": Loaded " + _buyLists.size() + " BuyLists.");
+		setCurrentFileFilter(null);
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			Statement statement = con.createStatement();
@@ -104,7 +105,7 @@ public final class BuyListData extends DocumentParser
 	{
 		try
 		{
-			final int buyListId = Integer.parseInt(getCurrentFile().getName().replaceAll(".xml", ""));
+			final int buyListId = Integer.parseInt(getCurrentFile().getName().replace(".xml", ""));
 			
 			for (Node node = getCurrentDocument().getFirstChild(); node != null; node = node.getNextSibling())
 			{

@@ -78,9 +78,9 @@ public final class L2NpcTemplate extends L2CharTemplate
 	
 	private float _baseVitalityDivider;
 	
-	private Map<AISkillType, List<L2Skill>> _aiSkills = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<AISkillType, List<L2Skill>> _aiSkills = new ConcurrentHashMap<>();
 	
-	private final Map<Integer, L2Skill> _skills = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<Integer, L2Skill> _skills = new ConcurrentHashMap<>();
 	
 	private final List<L2DropCategory> _dropCategories = new CopyOnWriteArrayList<>();
 	
@@ -88,7 +88,7 @@ public final class L2NpcTemplate extends L2CharTemplate
 	
 	private List<ClassId> _teachInfo = emptyArrayList();
 	
-	private final Map<QuestEventType, List<Quest>> _questEvents = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<QuestEventType, List<Quest>> _questEvents = new ConcurrentHashMap<>();
 	
 	private L2NpcAIData _aiData;
 	
@@ -390,8 +390,8 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	
 	public void addQuestEvent(QuestEventType eventType, Quest q)
 	{
-		List<Quest> quests = _questEvents.get(eventType);
-		if (quests == null)
+		List<Quest> quests;
+		if ((quests = _questEvents.get(eventType)) == null)
 		{
 			quests = new ArrayList<>();
 			_questEvents.put(eventType, quests);
@@ -476,20 +476,20 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	
 	private void addRangeSkill(L2Skill skill)
 	{
-		if ((skill.getCastRange() <= 150) && (skill.getCastRange() > 0))
-		{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-			addAISkill(AISkillType.SHORT_RANGE, skill);
-}} else {{
-			getShortRangeSkills().add(skill);
-}}
-		}
-		else if (skill.getCastRange() > 150)
+		if (skill.getCastRange() > 150)
 		{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			addAISkill(AISkillType.LONG_RANGE, skill);
 }} else {{
 			getLongRangeSkills().add(skill);
+}}
+		}
+		else if (skill.getCastRange() > 0)
+		{
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+			addAISkill(AISkillType.SHORT_RANGE, skill);
+}} else {{
+			getShortRangeSkills().add(skill);
 }}
 		}
 	}

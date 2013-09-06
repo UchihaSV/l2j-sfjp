@@ -75,4 +75,12 @@ public final class L2BuyList
 		}
 		return _allowedNpcs.contains(npcId);
 	}
+	
+	//[JOJO]-------------------------------------------------
+	// デバッグ用
+	/**@Deprecated*/public Set<Integer> getAllowedNpcs()
+	{
+		return _allowedNpcs;
+	}
+	//-------------------------------------------------------
 }
