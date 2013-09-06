@@ -584,7 +584,10 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 				quest.notifyKill(_attackable, _killer, _isSummon);
 			}
 }} else {{
-			_quest.notifyKill(_attackable, _killer, _isSummon);
+			if ((_quest != null) && (_attackable != null) && (_killer != null))
+			{
+				_quest.notifyKill(_attackable, _killer, _isSummon);
+			}
 }}
 		}
 	}
