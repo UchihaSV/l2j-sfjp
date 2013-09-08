@@ -225,6 +225,7 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 	private char[] _ca = null; private int _count;				//[JOJO]
 	public int replace(CharSequence token, CharSequence value)	//[JOJO]
 	{
+		if (value == null) value = "null";
 		int result = 0;
 		if (_ca == null) {
 			_count = _html.length();
