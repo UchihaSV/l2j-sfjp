@@ -47,7 +47,6 @@ import java.util.logging.Level;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 import javolution.util.FastSet;
-import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -517,7 +516,12 @@ public final class L2PcInstance extends L2Playable
 	
 	private int _bookmarkslot = 0; // The Teleport Bookmark Slot
 	
-	private final SortedIntObjectArrayMap<TeleportBookmark> _tpbookmarks = new SortedIntObjectArrayMap<>();	//[JOJO] FastMap --> SortedIntObjectArrayMap
+	@SuppressWarnings("serial")
+	private final ArrayList<TeleportBookmark> _tpbookmarks = new ArrayList<TeleportBookmark>(0){
+		@Override public TeleportBookmark get(int index) { --index; return index < 0 || index >= size() ? null : super.get(index); }
+		@Override public TeleportBookmark remove(int index) { --index; return index < 0 || index >= size() ? null : super.remove(index); }
+		@Override public TeleportBookmark set(int index, TeleportBookmark element) { --index; return super.set(index, element); }
+	};
 	
 	private PunishLevel _punishLevel = PunishLevel.NONE;
 	private long _punishTimer = 0;
@@ -14065,11 +14069,12 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		}
 	}
 	
-	public void teleportBookmarkModify(int id, int icon, String tag, String name)
+	public void teleportBookmarkModify(int ix, int icon, String tag, String name)
 	{
-		TeleportBookmark bookmark = _tpbookmarks.get(id);
+		TeleportBookmark bookmark = _tpbookmarks.get(ix);
 		if (bookmark != null)
 		{
+			final int id = bookmark.getId();
 			bookmark.setIcon(icon);
 			bookmark.setTag(tag);
 			bookmark.setName(name);
@@ -14093,10 +14098,12 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		}
 	}
 	
-	public void teleportBookmarkDelete(int id)
+	public void teleportBookmarkDelete(int ix)
 	{
-		if (_tpbookmarks.remove(id) != null)
+		TeleportBookmark bookmark = _tpbookmarks.remove(ix);
+		if (bookmark != null)
 		{
+			final int id = bookmark.getId();
 			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 				PreparedStatement statement = con.prepareStatement(DELETE_TP_BOOKMARK))
 			{
@@ -14113,9 +14120,9 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		}
 	}
 	
-	public void teleportBookmarkGo(int id)
+	public void teleportBookmarkGo(int ix)
 	{
-		final TeleportBookmark bookmark = _tpbookmarks.get(id);
+		TeleportBookmark bookmark = _tpbookmarks.get(ix);
 		if (bookmark != null)
 		{
 			if (!teleportBookmarkCondition(0))
@@ -14123,9 +14130,9 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 				return;
 			}
 			int myTeleportScroll;
-			if (!destroyTeleportScroll(myTeleportScroll = 20025)	// フリーテレポート スクロール(premium)
-			 && !destroyTeleportScroll(myTeleportScroll = 13302)	// フリーテレポート スクロール：イベント
-			 && !destroyTeleportScroll(myTeleportScroll = 13016))	// フリーテレポート スクロール
+			if (!destroyItemByItemId("Consume", myTeleportScroll = 20025, 1, null, false)	// フリーテレポート スクロール(premium)
+			 && !destroyItemByItemId("Consume", myTeleportScroll = 13302, 1, null, false)	// フリーテレポート スクロール：イベント
+			 && !destroyItemByItemId("Consume", myTeleportScroll = 13016, 1, null, false))	// フリーテレポート スクロール
 			{
 				sendPacket(SystemMessageId.YOU_CANNOT_TELEPORT_BECAUSE_YOU_DO_NOT_HAVE_A_TELEPORT_ITEM);
 				return;
@@ -14137,12 +14144,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			teleToLocation(bookmark, false);
 			sendPacket(new ExGetBookMarkInfoPacket(this));
 		}
-	}
-	private boolean destroyTeleportScroll(int itemId)
-	{
-		L2ItemInstance item = getInventory().getItemByItemId(itemId);
-		if (item == null) return false;
-		return destroyItem("Consume", item, 1, null, false);
 	}
 	
 	public boolean teleportBookmarkCondition(int type)
@@ -14227,7 +14228,8 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			return;
 		}
 		
-		if (_tpbookmarks.size() >= _bookmarkslot)
+		final int size = _tpbookmarks.size();
+		if (size >= _bookmarkslot)
 		{
 			sendPacket(SystemMessageId.YOU_HAVE_NO_SPACE_TO_SAVE_THE_TELEPORT_LOCATION);
 			return;
@@ -14239,13 +14241,8 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			return;
 		}
 		
-		//[JOJO]-------------------------------------------------
-		int id;
-		for (id = 1; id <= _bookmarkslot; ++id)
-			if (!_tpbookmarks.containsKey(id))
-				break;
-		//-------------------------------------------------------
-		_tpbookmarks.put(id, new TeleportBookmark(id, x, y, z, icon, tag, name));
+		final int id = size == 0 ? 1 : _tpbookmarks.get(size).getId() + 1;
+		_tpbookmarks.add(new TeleportBookmark(id, x, y, z, icon, tag, name));
 		
 		destroyItem("Consume", getInventory().getItemByItemId(MY_TELEPORT_FLAG).getObjectId(), 1, null, false);
 		
@@ -14283,7 +14280,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			{
 				while (rset.next())
 				{
-					_tpbookmarks.put(rset.getInt("Id"), new TeleportBookmark(rset.getInt("Id"), rset.getInt("x"), rset.getInt("y"), rset.getInt("z"), rset.getInt("icon"), rset.getString("tag"), rset.getString("name")));
+					_tpbookmarks.add(new TeleportBookmark(rset.getInt("Id"), rset.getInt("x"), rset.getInt("y"), rset.getInt("z"), rset.getInt("icon"), rset.getString("tag"), rset.getString("name")));
 				}
 			}
 		}
@@ -14928,7 +14925,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return _multiSocialTarget;
 	}
 	
-	public SortedIntObjectArrayMap<TeleportBookmark> getTeleportBookmarks()
+	public ArrayList<TeleportBookmark> getTeleportBookmarks()
 	{
 		return _tpbookmarks;
 	}
