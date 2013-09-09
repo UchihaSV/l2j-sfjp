@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import java.util.ArrayList;
+
 import com.l2jserver.gameserver.model.TeleportBookmark;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
@@ -36,15 +38,19 @@ public class ExGetBookMarkInfoPacket extends L2GameServerPacket
 	@Override
 	protected final void writeImpl()
 	{
+		ArrayList<TeleportBookmark> tpbookmarks = player.getTeleportBookmarks();
+		final int size = tpbookmarks.size();
+		assert size <= 18;
 		writeC(0xFE);
 		writeH(0x84);
 		writeD(0x00); // Dummy
 		writeD(player.getBookmarkslot());
-		writeD(player.getTeleportBookmarks().size());
+		writeD(size);
 		
-		for (TeleportBookmark tpbm : player.getTeleportBookmarks().values())
+		for (int ix = 1; ix <= size; ++ix)
 		{
-			writeD(tpbm.getId());
+			TeleportBookmark tpbm = tpbookmarks.get(ix);
+			writeD(ix);
 			writeD(tpbm.getX());
 			writeD(tpbm.getY());
 			writeD(tpbm.getZ());
