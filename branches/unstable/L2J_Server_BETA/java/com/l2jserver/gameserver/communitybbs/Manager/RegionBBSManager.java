@@ -221,7 +221,7 @@ public class RegionBBSManager extends BaseBBSManager
 					separateAndSend(htmlCode.toString(), activeChar);
 					return;
 				}
-				if (Config.JAIL_DISABLE_CHAT && receiver.isInJail())
+				if (Config.JAIL_DISABLE_CHAT && receiver.isJailed())
 				{
 					activeChar.sendMessage("相手はGM相談所に居ます。");
 					return;
@@ -231,7 +231,7 @@ public class RegionBBSManager extends BaseBBSManager
 					activeChar.sendPacket(SystemMessageId.TARGET_IS_CHAT_BANNED);
 					return;
 				}
-				if (activeChar.isInJail() && Config.JAIL_DISABLE_CHAT)
+				if (activeChar.isJailed() && Config.JAIL_DISABLE_CHAT)
 				{
 					activeChar.sendMessage("GM相談所ではチャットできません。");
 					return;

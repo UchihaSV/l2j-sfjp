@@ -1074,7 +1074,7 @@ public class Siege implements Siegable
 		
 		for (L2PcInstance player : players)
 		{
-			if (player.canOverrideCond(PcCondOverride.CASTLE_CONDITIONS) || player.isInJail())
+			if (player.canOverrideCond(PcCondOverride.CASTLE_CONDITIONS) || player.isJailed())
 			{
 				continue;
 			}
