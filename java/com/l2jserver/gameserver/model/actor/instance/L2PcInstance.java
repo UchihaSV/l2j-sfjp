@@ -6939,12 +6939,7 @@ public final class L2PcInstance extends L2Playable
 		
 		stopAllToggles();
 		Ride mount = new Ride(this, true, npcId);
-		//[JOJO]-------------------------------------------------
-		int level = getLevel();
-		if (npcId == 16041 && level < 70)	// GM wolf
-			level = 70;
-		//-------------------------------------------------------
-		if (setMount(npcId, level/*getLevel()*/, mount.getMountType()))
+		if (setMount(npcId, getLevel(), mount.getMountType()))
 		{
 			clearPetData();
 			setMountObjectID(controlItemObjId);
@@ -9320,8 +9315,7 @@ public final class L2PcInstance extends L2Playable
 		// ************************************* Check Skill Type *******************************************
 		
 		// Check if this is offensive magic skill
-		if (skill.isOffensive()
-				/*[L2J_JP EDIT][JOJO]*/&& sklType != L2SkillType.UNLOCK)
+		if (skill.isOffensive())
 		{
 			if ((isInsidePeaceZone(this, target)) && !getAccessLevel().allowPeaceAttack())
 			{
