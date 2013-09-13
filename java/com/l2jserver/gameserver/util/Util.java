@@ -329,22 +329,23 @@ public final class Util
 	
 	/**
 	 * Based on implode() in PHP
-	 * @param <T>
-	 * @param array
-	 * @param delim
+	 * @param objArray - an array of objects to concatenate
+	 * @param strDelim - the delimiter to put between the strings
 	 * @return a delimited string for a given array of string elements.
 	 */
-	public static <T> String implode(T[] array, String delim)
+	public static <T> String implode(T[] objArray, String strDelim)
 	{
-		String result = "";
-		for (T val : array)
+		final TextBuilder sbString = TextBuilder.newInstance();
+		
+		for (int i = 0, length = objArray.length; i < length; ++i)
 		{
-			result += val.toString() + delim;
+			if (i > 0)
+				sbString.append(strDelim);
+			sbString.append(objArray[i].toString());
 		}
-		if (!result.isEmpty())
-		{
-			result = result.substring(0, result.length() - 1);
-		}
+		
+		String result = sbString.toString();
+		TextBuilder.recycle(sbString);
 		return result;
 	}
 	
