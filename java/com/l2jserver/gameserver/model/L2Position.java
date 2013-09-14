@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 L2J Server
+ * Copyright (C) 2005-2008 L2J_JP / 2008-2013 L2J-SFJP
  * 
  * This file is part of L2J Server.
  * 
@@ -19,24 +19,23 @@
 package com.l2jserver.gameserver.model;
 
 /**
- * This class permit to pass (x, y, z, heading) position data to method.
+ * This class permit to pass (npcId, x, y, z, heading) position data to method.
+ * @author JOJO
  */
-public /*final*/ class L2CharPosition extends L2Position
+public class L2Position
 {
-	
-	public final int heading;
+	public final int x, y, z;
 	
 	/**
-	 * Constructor of L2CharPosition.
+	 * Constructor of L2Position.
 	 * @param pX
 	 * @param pY
 	 * @param pZ
-	 * @param pHeading
 	 */
-	public L2CharPosition(int pX, int pY, int pZ, int pHeading)
+	public L2Position(int pX, int pY, int pZ)
 	{
-		super(pX, pY, pZ);
-		heading = pHeading;
+		x = pX;
+		y = pY;
+		z = pZ;
 	}
-	
 }
