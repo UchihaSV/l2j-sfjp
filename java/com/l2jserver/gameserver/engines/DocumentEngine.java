@@ -20,6 +20,7 @@ package com.l2jserver.gameserver.engines;
 
 import java.io.File;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
@@ -96,7 +97,11 @@ public class DocumentEngine
 			}
 			for (L2Skill skill : s)
 			{
-				allSkills.put(SkillTable.getSkillHashCode(skill), skill);
+				//[JOJO]-------------------------------------------------
+				if (allSkills.put(SkillTable.getSkillHashCode(skill), skill) != null)
+					_log.log(Level.INFO, "<!>" + SkillTable.class.getSimpleName() + ": file '" + file.getPath() + "' override the skill " + skill.getSkillType() + " " + skill.getId() + " " + skill.getName());	//[JOJO]
+				//-------------------------------------------------------
+			//	allSkills.put(SkillTable.getSkillHashCode(skill), skill);
 				count++;
 			}
 		}
@@ -110,7 +115,7 @@ public class DocumentEngine
 	 */
 	public List<L2Item> loadItems()
 	{
-		List<L2Item> list = new FastList<>();
+		FastIntObjectMap<L2Item> list = new FastIntObjectMap<>();	//[JOJO] FastList --> FastIntObjectMap
 		List<File> files = new FastList<>();
 		hashFiles("data/stats/items", files);
 		if (Config.CUSTOM_ITEMS_LOAD)
@@ -121,10 +126,15 @@ public class DocumentEngine
 		{
 			DocumentItem document = new DocumentItem(f);
 			document.parse();
-			list.addAll(document.getItemList());
+			//[JOJO]-------------------------------------------------
+			for (L2Item item : document.getItemList())
+				if (list.put(item.getItemId(), item) != null)
+					_log.log(Level.INFO, "<!>" + ItemTable.class.getSimpleName() + ": file '" + f.getPath() + "' override the item " + item.getItemType() + " " + item.getItemId() + " " + item.getName());	//[JOJO]
+			//-------------------------------------------------------
+		//	list.addAll(document.getItemList());
 		}
 		StringIntern.end();
-		return list;
+		return new FastList<>(list.values());
 	}
 	
 	private static class SingletonHolder
