@@ -145,6 +145,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 		}
 		catch (UnknownHostException e)
 		{
+			_log.log(Level.SEVERE, "L2GameClient(" + con + "): 'etc/hosts' file problem?", e);	//[JOJO]
 			throw new Error("Unable to determine localhost address.");
 		}
 	}
