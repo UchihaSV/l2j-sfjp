@@ -19,8 +19,8 @@
 package com.l2jserver.gameserver.network.clientpackets;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -41,8 +41,6 @@ public abstract class AbstractRefinePacket extends L2GameClientPacket
 	protected static final int GEMSTONE_D = 2130;
 	protected static final int GEMSTONE_C = 2131;
 	protected static final int GEMSTONE_B = 2132;
-	
-	private static final Map<Integer, LifeStone> _lifeStones = new HashMap<>();
 	
 	protected static final class LifeStone
 	{
@@ -89,109 +87,108 @@ public abstract class AbstractRefinePacket extends L2GameClientPacket
 		}
 	}
 	
-	static
-	{
+	private static final SortedIntObjectArrayMap<LifeStone> _lifeStones = new SortedIntObjectArrayMap<AbstractRefinePacket.LifeStone>()
 		// itemId, (LS grade, LS level)
-		_lifeStones.put(8723, new LifeStone(GRADE_NONE, 0));
-		_lifeStones.put(8724, new LifeStone(GRADE_NONE, 1));
-		_lifeStones.put(8725, new LifeStone(GRADE_NONE, 2));
-		_lifeStones.put(8726, new LifeStone(GRADE_NONE, 3));
-		_lifeStones.put(8727, new LifeStone(GRADE_NONE, 4));
-		_lifeStones.put(8728, new LifeStone(GRADE_NONE, 5));
-		_lifeStones.put(8729, new LifeStone(GRADE_NONE, 6));
-		_lifeStones.put(8730, new LifeStone(GRADE_NONE, 7));
-		_lifeStones.put(8731, new LifeStone(GRADE_NONE, 8));
-		_lifeStones.put(8732, new LifeStone(GRADE_NONE, 9));
+		.append(8723, new LifeStone(GRADE_NONE, 0))
+		.append(8724, new LifeStone(GRADE_NONE, 1))
+		.append(8725, new LifeStone(GRADE_NONE, 2))
+		.append(8726, new LifeStone(GRADE_NONE, 3))
+		.append(8727, new LifeStone(GRADE_NONE, 4))
+		.append(8728, new LifeStone(GRADE_NONE, 5))
+		.append(8729, new LifeStone(GRADE_NONE, 6))
+		.append(8730, new LifeStone(GRADE_NONE, 7))
+		.append(8731, new LifeStone(GRADE_NONE, 8))
+		.append(8732, new LifeStone(GRADE_NONE, 9))
 		
-		_lifeStones.put(8733, new LifeStone(GRADE_MID, 0));
-		_lifeStones.put(8734, new LifeStone(GRADE_MID, 1));
-		_lifeStones.put(8735, new LifeStone(GRADE_MID, 2));
-		_lifeStones.put(8736, new LifeStone(GRADE_MID, 3));
-		_lifeStones.put(8737, new LifeStone(GRADE_MID, 4));
-		_lifeStones.put(8738, new LifeStone(GRADE_MID, 5));
-		_lifeStones.put(8739, new LifeStone(GRADE_MID, 6));
-		_lifeStones.put(8740, new LifeStone(GRADE_MID, 7));
-		_lifeStones.put(8741, new LifeStone(GRADE_MID, 8));
-		_lifeStones.put(8742, new LifeStone(GRADE_MID, 9));
+		.append(8733, new LifeStone(GRADE_MID, 0))
+		.append(8734, new LifeStone(GRADE_MID, 1))
+		.append(8735, new LifeStone(GRADE_MID, 2))
+		.append(8736, new LifeStone(GRADE_MID, 3))
+		.append(8737, new LifeStone(GRADE_MID, 4))
+		.append(8738, new LifeStone(GRADE_MID, 5))
+		.append(8739, new LifeStone(GRADE_MID, 6))
+		.append(8740, new LifeStone(GRADE_MID, 7))
+		.append(8741, new LifeStone(GRADE_MID, 8))
+		.append(8742, new LifeStone(GRADE_MID, 9))
 		
-		_lifeStones.put(8743, new LifeStone(GRADE_HIGH, 0));
-		_lifeStones.put(8744, new LifeStone(GRADE_HIGH, 1));
-		_lifeStones.put(8745, new LifeStone(GRADE_HIGH, 2));
-		_lifeStones.put(8746, new LifeStone(GRADE_HIGH, 3));
-		_lifeStones.put(8747, new LifeStone(GRADE_HIGH, 4));
-		_lifeStones.put(8748, new LifeStone(GRADE_HIGH, 5));
-		_lifeStones.put(8749, new LifeStone(GRADE_HIGH, 6));
-		_lifeStones.put(8750, new LifeStone(GRADE_HIGH, 7));
-		_lifeStones.put(8751, new LifeStone(GRADE_HIGH, 8));
-		_lifeStones.put(8752, new LifeStone(GRADE_HIGH, 9));
+		.append(8743, new LifeStone(GRADE_HIGH, 0))
+		.append(8744, new LifeStone(GRADE_HIGH, 1))
+		.append(8745, new LifeStone(GRADE_HIGH, 2))
+		.append(8746, new LifeStone(GRADE_HIGH, 3))
+		.append(8747, new LifeStone(GRADE_HIGH, 4))
+		.append(8748, new LifeStone(GRADE_HIGH, 5))
+		.append(8749, new LifeStone(GRADE_HIGH, 6))
+		.append(8750, new LifeStone(GRADE_HIGH, 7))
+		.append(8751, new LifeStone(GRADE_HIGH, 8))
+		.append(8752, new LifeStone(GRADE_HIGH, 9))
 		
-		_lifeStones.put(8753, new LifeStone(GRADE_TOP, 0));
-		_lifeStones.put(8754, new LifeStone(GRADE_TOP, 1));
-		_lifeStones.put(8755, new LifeStone(GRADE_TOP, 2));
-		_lifeStones.put(8756, new LifeStone(GRADE_TOP, 3));
-		_lifeStones.put(8757, new LifeStone(GRADE_TOP, 4));
-		_lifeStones.put(8758, new LifeStone(GRADE_TOP, 5));
-		_lifeStones.put(8759, new LifeStone(GRADE_TOP, 6));
-		_lifeStones.put(8760, new LifeStone(GRADE_TOP, 7));
-		_lifeStones.put(8761, new LifeStone(GRADE_TOP, 8));
-		_lifeStones.put(8762, new LifeStone(GRADE_TOP, 9));
+		.append(8753, new LifeStone(GRADE_TOP, 0))
+		.append(8754, new LifeStone(GRADE_TOP, 1))
+		.append(8755, new LifeStone(GRADE_TOP, 2))
+		.append(8756, new LifeStone(GRADE_TOP, 3))
+		.append(8757, new LifeStone(GRADE_TOP, 4))
+		.append(8758, new LifeStone(GRADE_TOP, 5))
+		.append(8759, new LifeStone(GRADE_TOP, 6))
+		.append(8760, new LifeStone(GRADE_TOP, 7))
+		.append(8761, new LifeStone(GRADE_TOP, 8))
+		.append(8762, new LifeStone(GRADE_TOP, 9))
 		
-		_lifeStones.put(9573, new LifeStone(GRADE_NONE, 10));
-		_lifeStones.put(9574, new LifeStone(GRADE_MID, 10));
-		_lifeStones.put(9575, new LifeStone(GRADE_HIGH, 10));
-		_lifeStones.put(9576, new LifeStone(GRADE_TOP, 10));
+		.append(9573, new LifeStone(GRADE_NONE, 10))
+		.append(9574, new LifeStone(GRADE_MID, 10))
+		.append(9575, new LifeStone(GRADE_HIGH, 10))
+		.append(9576, new LifeStone(GRADE_TOP, 10))
 		
-		_lifeStones.put(10483, new LifeStone(GRADE_NONE, 11));
-		_lifeStones.put(10484, new LifeStone(GRADE_MID, 11));
-		_lifeStones.put(10485, new LifeStone(GRADE_HIGH, 11));
-		_lifeStones.put(10486, new LifeStone(GRADE_TOP, 11));
+		.append(10483, new LifeStone(GRADE_NONE, 11))
+		.append(10484, new LifeStone(GRADE_MID, 11))
+		.append(10485, new LifeStone(GRADE_HIGH, 11))
+		.append(10486, new LifeStone(GRADE_TOP, 11))
 		
-		_lifeStones.put(12754, new LifeStone(GRADE_ACC, 0));
-		_lifeStones.put(12755, new LifeStone(GRADE_ACC, 1));
-		_lifeStones.put(12756, new LifeStone(GRADE_ACC, 2));
-		_lifeStones.put(12757, new LifeStone(GRADE_ACC, 3));
-		_lifeStones.put(12758, new LifeStone(GRADE_ACC, 4));
-		_lifeStones.put(12759, new LifeStone(GRADE_ACC, 5));
-		_lifeStones.put(12760, new LifeStone(GRADE_ACC, 6));
-		_lifeStones.put(12761, new LifeStone(GRADE_ACC, 7));
-		_lifeStones.put(12762, new LifeStone(GRADE_ACC, 8));
-		_lifeStones.put(12763, new LifeStone(GRADE_ACC, 9));
+		.append(12754, new LifeStone(GRADE_ACC, 0))
+		.append(12755, new LifeStone(GRADE_ACC, 1))
+		.append(12756, new LifeStone(GRADE_ACC, 2))
+		.append(12757, new LifeStone(GRADE_ACC, 3))
+		.append(12758, new LifeStone(GRADE_ACC, 4))
+		.append(12759, new LifeStone(GRADE_ACC, 5))
+		.append(12760, new LifeStone(GRADE_ACC, 6))
+		.append(12761, new LifeStone(GRADE_ACC, 7))
+		.append(12762, new LifeStone(GRADE_ACC, 8))
+		.append(12763, new LifeStone(GRADE_ACC, 9))
 		
-		_lifeStones.put(12821, new LifeStone(GRADE_ACC, 10));
-		_lifeStones.put(12822, new LifeStone(GRADE_ACC, 11));
+		.append(12821, new LifeStone(GRADE_ACC, 10))
+		.append(12822, new LifeStone(GRADE_ACC, 11))
 		
-		_lifeStones.put(12840, new LifeStone(GRADE_ACC, 0));
-		_lifeStones.put(12841, new LifeStone(GRADE_ACC, 1));
-		_lifeStones.put(12842, new LifeStone(GRADE_ACC, 2));
-		_lifeStones.put(12843, new LifeStone(GRADE_ACC, 3));
-		_lifeStones.put(12844, new LifeStone(GRADE_ACC, 4));
-		_lifeStones.put(12845, new LifeStone(GRADE_ACC, 5));
-		_lifeStones.put(12846, new LifeStone(GRADE_ACC, 6));
-		_lifeStones.put(12847, new LifeStone(GRADE_ACC, 7));
-		_lifeStones.put(12848, new LifeStone(GRADE_ACC, 8));
-		_lifeStones.put(12849, new LifeStone(GRADE_ACC, 9));
-		_lifeStones.put(12850, new LifeStone(GRADE_ACC, 10));
-		_lifeStones.put(12851, new LifeStone(GRADE_ACC, 11));
+		.append(12840, new LifeStone(GRADE_ACC, 0))
+		.append(12841, new LifeStone(GRADE_ACC, 1))
+		.append(12842, new LifeStone(GRADE_ACC, 2))
+		.append(12843, new LifeStone(GRADE_ACC, 3))
+		.append(12844, new LifeStone(GRADE_ACC, 4))
+		.append(12845, new LifeStone(GRADE_ACC, 5))
+		.append(12846, new LifeStone(GRADE_ACC, 6))
+		.append(12847, new LifeStone(GRADE_ACC, 7))
+		.append(12848, new LifeStone(GRADE_ACC, 8))
+		.append(12849, new LifeStone(GRADE_ACC, 9))
+		.append(12850, new LifeStone(GRADE_ACC, 10))
+		.append(12851, new LifeStone(GRADE_ACC, 11))
 		
-		_lifeStones.put(14008, new LifeStone(GRADE_ACC, 12));
+		.append(14008, new LifeStone(GRADE_ACC, 12))
 		
-		_lifeStones.put(14166, new LifeStone(GRADE_NONE, 12));
-		_lifeStones.put(14167, new LifeStone(GRADE_MID, 12));
-		_lifeStones.put(14168, new LifeStone(GRADE_HIGH, 12));
-		_lifeStones.put(14169, new LifeStone(GRADE_TOP, 12));
+		.append(14166, new LifeStone(GRADE_NONE, 12))
+		.append(14167, new LifeStone(GRADE_MID, 12))
+		.append(14168, new LifeStone(GRADE_HIGH, 12))
+		.append(14169, new LifeStone(GRADE_TOP, 12))
 		
-		_lifeStones.put(16160, new LifeStone(GRADE_NONE, 13));
-		_lifeStones.put(16161, new LifeStone(GRADE_MID, 13));
-		_lifeStones.put(16162, new LifeStone(GRADE_HIGH, 13));
-		_lifeStones.put(16163, new LifeStone(GRADE_TOP, 13));
-		_lifeStones.put(16177, new LifeStone(GRADE_ACC, 13));
+		.append(16160, new LifeStone(GRADE_NONE, 13))
+		.append(16161, new LifeStone(GRADE_MID, 13))
+		.append(16162, new LifeStone(GRADE_HIGH, 13))
+		.append(16163, new LifeStone(GRADE_TOP, 13))
+		.append(16177, new LifeStone(GRADE_ACC, 13))
 		
-		_lifeStones.put(16164, new LifeStone(GRADE_NONE, 13));
-		_lifeStones.put(16165, new LifeStone(GRADE_MID, 13));
-		_lifeStones.put(16166, new LifeStone(GRADE_HIGH, 13));
-		_lifeStones.put(16167, new LifeStone(GRADE_TOP, 13));
-		_lifeStones.put(16178, new LifeStone(GRADE_ACC, 13));
-	}
+		.append(16164, new LifeStone(GRADE_NONE, 13))
+		.append(16165, new LifeStone(GRADE_MID, 13))
+		.append(16166, new LifeStone(GRADE_HIGH, 13))
+		.append(16167, new LifeStone(GRADE_TOP, 13))
+		.append(16178, new LifeStone(GRADE_ACC, 13))
+	;
 	
 	protected static final LifeStone getLifeStone(int itemId)
 	{
