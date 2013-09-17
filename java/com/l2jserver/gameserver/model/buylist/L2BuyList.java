@@ -19,10 +19,8 @@
 package com.l2jserver.gameserver.model.buylist;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 /**
  * @author Nos
@@ -30,8 +28,8 @@ import java.util.Set;
 public final class L2BuyList
 {
 	private final int _listId;
-	private final Map<Integer, Product> _products = new LinkedHashMap<>();
-	private Set<Integer> _allowedNpcs = null;
+	private final FastIntObjectMap<Product> _products = new FastIntObjectMap<>();	//[JOJO] LinkedHashMap --> FastIntObjectMap
+	protected int[] _allowedNpcs = null;	//[JOJO] Set<Integer> --> int[]
 	
 	public L2BuyList(int listId)
 	{
@@ -60,25 +58,17 @@ public final class L2BuyList
 	
 	public void addAllowedNpc(int npcId)
 	{
-		if (_allowedNpcs == null)
-		{
-			_allowedNpcs = new HashSet<>();
-		}
-		_allowedNpcs.add(npcId);
+		_allowedNpcs = SortedIntArraySet.add(_allowedNpcs, npcId);
 	}
 	
 	public boolean isNpcAllowed(int npcId)
 	{
-		if (_allowedNpcs == null)
-		{
-			return false;
-		}
-		return _allowedNpcs.contains(npcId);
+		return SortedIntArraySet.contains(_allowedNpcs, npcId);
 	}
 	
 	//[JOJO]-------------------------------------------------
 	// デバッグ用
-	/**@Deprecated*/public Set<Integer> getAllowedNpcs()
+	/**@Deprecated*/public int[] getAllowedNpcs()
 	{
 		return _allowedNpcs;
 	}

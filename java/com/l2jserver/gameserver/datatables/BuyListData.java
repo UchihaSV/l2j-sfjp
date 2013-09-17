@@ -21,11 +21,9 @@ package com.l2jserver.gameserver.datatables;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -44,7 +42,7 @@ import com.l2jserver.util.file.filter.NumericNameFilter;
  */
 public final class BuyListData extends DocumentParser
 {
-	private final Map<Integer, L2BuyList> _buyLists = new HashMap<>();
+	private final FastIntObjectMap<L2BuyList> _buyLists = new FastIntObjectMap<>();
 	
 	protected BuyListData()
 	{
@@ -183,11 +181,10 @@ public final class BuyListData extends DocumentParser
 				if (0 < buyPrice && buyPrice < sellPrice)
 				{
 					StringBuilder npcName = new StringBuilder();
-					Set<Integer> npcIds = list.getAllowedNpcs();
+					int[] npcIds = list.getAllowedNpcs();
 					if (npcIds != null) {
-						for (Iterator<Integer> it = npcIds.iterator(); it.hasNext(); )
+						for (int npcId : npcIds)
 						{
-							int npcId = it.next();
 							npcName.append(',').append(npcId).append("-").append(NpcTable.getInstance().getTemplate(npcId).getName());
 						}
 					}
