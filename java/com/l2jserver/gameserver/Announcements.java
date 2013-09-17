@@ -125,7 +125,13 @@ public class Announcements
 		final StringBuilder replyMSG = StringUtil.startAppend(500, "<br>");
 		for (int i = 0; i < _announcements.size(); i++)
 		{
-			StringUtil.append(replyMSG, "<table width=260><tr><td width=220>", _announcements.get(i), "</td><td width=40>" + "<button value=\"Delete\" action=\"bypass -h admin_del_announcement ", String.valueOf(i), "\" width=60 height=20 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\"></td></tr></table>");
+			String line = String.valueOf(i);
+			StringUtil.append(replyMSG, "<table width=275 border=0 cellspacing=0 cellpadding=0 bgcolor=", i % 2 == 0 ? "333333" : "444444" , "><tr>"
+				+ "<td VALIGN=TOP fixwidth=14><button action=\"bypass -h admin_del_announcement "  , line, " -1 \" width=14 height=14 back=L2UI_CH3.Shortcut_Nextv_Down fore=L2UI_CH3.Shortcut_Nextv></td>"
+				+ "<td VALIGN=TOP fixwidth=14><button action=\"bypass -h admin_del_announcement ", line, " +1 \" width=14 height=14 back=L2UI_CH3.Shortcut_Prevv_Down fore=L2UI_CH3.Shortcut_Prevv></td>"
+				+ "<td VALIGN=TOP fixwidth=230>", _announcements.get(i), "</td>"
+				+ "<td VALIGN=TOP fixwidth=12><button action=\"bypass -h admin_del_announcement " , line, "\" width=12 height=12 back=L2UI.bbs_delete_Down fore=L2UI.bbs_delete></td>"
+				+ "</tr></table>");
 		}
 		adminReply.replace("%announces%", replyMSG.toString());
 		activeChar.sendPacket(adminReply);
@@ -139,7 +145,13 @@ public class Announcements
 		final StringBuilder replyMSG = StringUtil.startAppend(500, "<br>");
 		for (int i = 0; i < _critAnnouncements.size(); i++)
 		{
-			StringUtil.append(replyMSG, "<table width=260><tr><td width=220>", _critAnnouncements.get(i), "</td><td width=40>" + "<button value=\"Delete\" action=\"bypass -h admin_del_critannouncement ", String.valueOf(i), "\" width=60 height=20 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\"></td></tr></table>");
+			String line = String.valueOf(i);
+			StringUtil.append(replyMSG, "<table width=275 border=0 cellspacing=0 cellpadding=0 bgcolor=", i % 2 == 0 ? "333333" : "444444" , "><tr>"
+				+ "<td VALIGN=TOP fixwidth=14><button action=\"bypass -h admin_del_critannouncement "  , line, " -1 \" width=14 height=14 back=L2UI_CH3.Shortcut_Nextv_Down fore=L2UI_CH3.Shortcut_Nextv></td>"
+				+ "<td VALIGN=TOP fixwidth=14><button action=\"bypass -h admin_del_critannouncement ", line, " +1 \" width=14 height=14 back=L2UI_CH3.Shortcut_Prevv_Down fore=L2UI_CH3.Shortcut_Prevv></td>"
+				+ "<td VALIGN=TOP fixwidth=230>", _critAnnouncements.get(i), "</td>"
+				+ "<td VALIGN=TOP fixwidth=12><button action=\"bypass -h admin_del_critannouncement " , line, "\" width=12 height=12 back=L2UI.bbs_delete_Down fore=L2UI.bbs_delete></td>"
+				+ "</tr></table>");
 		}
 		adminReply.replace("%critannounces%", replyMSG.toString());
 		activeChar.sendPacket(adminReply);
@@ -151,10 +163,12 @@ public class Announcements
 		saveToDisk(false);
 	}
 	
-	public void delAnnouncement(int line)
+	/**
+	 * @param updown -1:up +1:down 0:remove
+	 */
+	public void delAnnouncement(int line, int updown)
 	{
-		_announcements.remove(line);
-		saveToDisk(false);
+		moveLine(line, updown, false);
 	}
 	
 	public void addCritAnnouncement(String text)
@@ -163,10 +177,25 @@ public class Announcements
 		saveToDisk(true);
 	}
 	
-	public void delCritAnnouncement(int line)
+	/**
+	 * @param updown -1:up +1:down 0:remove
+	 */
+	public void delCritAnnouncement(int line, int updown)
 	{
-		_critAnnouncements.remove(line);
-		saveToDisk(true);
+		moveLine(line, updown, true);
+	}
+	
+	private void moveLine(int line, int updown, boolean isCritical)
+	{
+		List<String> list = isCritical ? _critAnnouncements : _announcements;
+		int to;
+		if (updown == 0)
+			list.remove(line);
+		if ((to = line + updown) >= 0 && to < list.size())
+			list.add(to, list.remove(line));
+		else
+			return;
+		saveToDisk(isCritical);
 	}
 	
 	private void readFromDisk(String path, List<String> list)
