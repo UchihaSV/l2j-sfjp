@@ -191,7 +191,7 @@ public class Announcements
 		int to;
 		if (updown == 0)
 			list.remove(line);
-		if ((to = line + updown) >= 0 && to < list.size())
+		else if ((to = line + updown) >= 0 && to < list.size())
 			list.add(to, list.remove(line));
 		else
 			return;
