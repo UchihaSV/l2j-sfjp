@@ -78,10 +78,7 @@ public class ExShowScreenMessage extends L2GameServerPacket
 	public ExShowScreenMessage(NpcStringId npcString, int position, int time, String... params)
 	{
 		this(2, -1, position, 0, SIZE_LARGE, 0, 0, false, time, false, null, npcString.getId());
-		if (params != null)
-		{
-			_parameters = Arrays.asList(params);
-		}
+		addStringParameter(params);
 	}
 	
 	public ExShowScreenMessage(int npcString, int position, int time) // For npcstring
@@ -104,10 +101,7 @@ public class ExShowScreenMessage extends L2GameServerPacket
 	public ExShowScreenMessage(SystemMessageId systemMsg, int position, int time, String... params)
 	{
 		this(2, systemMsg.getId(), position, 0, SIZE_LARGE, 0, 0, false, time, false, null, -1);
-		if (params != null)
-		{
-			_parameters = Arrays.asList(params);
-		}
+		addStringParameter(params);
 	}
 	
 	public ExShowScreenMessage(SystemMessageId systemMsg, int position, int time) // For SystemMessage
@@ -161,6 +155,21 @@ public class ExShowScreenMessage extends L2GameServerPacket
 	/*TODO:@Deprecated */public ExShowScreenMessage(int type, int messageId, int position, int unk1, int size, int unk2, int unk3,boolean showEffect, int time,boolean fade, String text, NpcStringId npcString)
 	{
 		this(type, messageId, position, unk1, size, unk2, unk3, showEffect, time, fade, text, npcString.getId());
+	}
+	
+	/**
+	 * String parameter for argument S1,S2,.. in npcstring-e.dat
+	 * @param params the parameter
+	 */
+	public void addStringParameter(String... params)
+	{
+		if (params != null)
+		{
+			for (String param : params)
+			{
+				addStringParameter(param);
+			}
+		}
 	}
 	
 	/**
