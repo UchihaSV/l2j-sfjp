@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Future;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
@@ -85,6 +86,7 @@ import com.l2jserver.gameserver.model.entity.Instance;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.holders.SkillUseHolder;
 import com.l2jserver.gameserver.model.interfaces.IChanceSkillTrigger;
+import com.l2jserver.gameserver.model.interfaces.IDamageReceivedListener;
 import com.l2jserver.gameserver.model.interfaces.ISkillsHolder;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.items.L2Item;
@@ -226,6 +228,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	private volatile Map<Integer, OptionsSkillHolder> _triggerSkills;
 	
 	private final CharEffectList _effectList = new CharEffectList(this);
+	
+	private volatile List<IDamageReceivedListener> _onDamageReceivedListeners;
 	
 	public final CharEffectList getEffectList()
 	{
@@ -5448,10 +5452,12 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				
 				// reduce targets HP
 				target.reduceCurrentHp(damage, this, null);
+				target.notifyDamageReceivedToEffects(damage, this, null, crit);
 				
 				if (reflectedDamage > 0)
 				{
 					reduceCurrentHp(reflectedDamage, target, true, false, null);
+					notifyDamageReceivedToEffects(reflectedDamage, target, null, crit);
 				}
 				
 				if (!isBow) // Do not absorb if weapon is of type bow
@@ -7696,6 +7702,63 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return false;
 	}
 	
+	public int getClanId()
+	{
+		return 0;
+	}
+	
+	public int getAllyId()
+	{
+		return 0;
+	}
+	
+	public void registerDamageReceiveListener(IDamageReceivedListener listener)
+	{
+		if (_onDamageReceivedListeners == null)
+		{
+			synchronized (this)
+			{
+				if (_onDamageReceivedListeners == null)
+				{
+					_onDamageReceivedListeners = new CopyOnWriteArrayList<>();
+				}
+			}
+		}
+		_onDamageReceivedListeners.add(listener);
+	}
+	
+	public void unregisterDamageReceiveListener(IDamageReceivedListener listener)
+	{
+		if (_onDamageReceivedListeners != null)
+		{
+			if (_onDamageReceivedListeners.contains(listener))
+			{
+				_onDamageReceivedListeners.remove(listener);
+			}
+			if (_onDamageReceivedListeners.isEmpty())
+			{
+				synchronized (this)
+				{
+					if (_onDamageReceivedListeners.isEmpty())
+					{
+						_onDamageReceivedListeners = null;
+					}
+				}
+			}
+		}
+	}
+	
+	public void notifyDamageReceivedToEffects(double damage, L2Character attacker, L2Skill skill, boolean critical)
+	{
+		if (_onDamageReceivedListeners != null)
+		{
+			for (IDamageReceivedListener listener : _onDamageReceivedListeners)
+			{
+				listener.onDamageReceived(damage, attacker, skill, critical);
+			}
+		}
+	}
+	
 	// LISTENERS
 	
 	/**
@@ -7968,16 +8031,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	public static void removeGlobalSkillUseListener(SkillUseListener listener)
 	{
 		globalSkillUseListeners.remove(listener);
-	}
-	
-	public int getClanId()
-	{
-		return 0;
-	}
-	
-	public int getAllyId()
-	{
-		return 0;
 	}
 }
 
