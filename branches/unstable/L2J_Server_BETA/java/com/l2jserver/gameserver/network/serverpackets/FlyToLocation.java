@@ -38,20 +38,6 @@ public final class FlyToLocation extends L2GameServerPacket
 		CHARGE;
 	}
 	
-	//[JOJO]-------------------------------------------------
-	public FlyToLocation(int chaObjId, int chaX, int chaY, int chaZ, int destX, int destY, int destZ, FlyType type)
-	{
-		_chaObjId = chaObjId;
-		_chaX = chaX;
-		_chaY = chaY;
-		_chaZ = chaZ;
-		_destX = destX;
-		_destY = destY;
-		_destZ = destZ;
-		_type = type;
-	}
-	//-------------------------------------------------------
-	
 	public FlyToLocation(L2Character cha, int destX, int destY, int destZ, FlyType type)
 	{
 		_chaObjId = cha.getObjectId();
