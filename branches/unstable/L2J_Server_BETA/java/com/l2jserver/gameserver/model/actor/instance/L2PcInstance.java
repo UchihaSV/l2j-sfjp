@@ -112,7 +112,6 @@ import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2ClanMember;
 import com.l2jserver.gameserver.model.L2ContactList;
 import com.l2jserver.gameserver.model.L2EnchantSkillLearn;
-import com.l2jserver.gameserver.model.L2Macro;
 import com.l2jserver.gameserver.model.L2ManufactureItem;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Party;
@@ -129,6 +128,7 @@ import com.l2jserver.gameserver.model.L2Transformation;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.L2WorldRegion;
 import com.l2jserver.gameserver.model.Location;
+import com.l2jserver.gameserver.model.Macro;
 import com.l2jserver.gameserver.model.MacroList;
 import com.l2jserver.gameserver.model.PartyMatchRoom;
 import com.l2jserver.gameserver.model.PartyMatchRoomList;
@@ -1820,7 +1820,7 @@ public final class L2PcInstance extends L2Playable
 	/**
 	 * @param macro the macro to add to this L2PcInstance.
 	 */
-	public void registerMacro(L2Macro macro)
+	public void registerMacro(Macro macro)
 	{
 		_macros.registerMacro(macro);
 	}
@@ -7819,46 +7819,45 @@ public final class L2PcInstance extends L2Playable
 	 */
 	private void restoreRecipeBook(boolean loadCommon)
 	{
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		final String sql = loadCommon ? "SELECT id, type, classIndex FROM character_recipebook WHERE charId=?" : "SELECT id FROM character_recipebook WHERE charId=? AND classIndex=? AND type = 1";
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement(sql))
 		{
-			String sql = loadCommon ? "SELECT id, type, classIndex FROM character_recipebook WHERE charId=?" : "SELECT id FROM character_recipebook WHERE charId=? AND classIndex=? AND type = 1";
-			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setInt(1, getObjectId());
 			if (!loadCommon)
 			{
 				statement.setInt(2, _classIndex);
 			}
-			ResultSet rset = statement.executeQuery();
 			
-			_dwarvenRecipeBook.clear();
-			
-			L2RecipeList recipe;
-			RecipeData rd = RecipeData.getInstance();
-			while (rset.next())
+			try (ResultSet rset = statement.executeQuery())
 			{
-				recipe = rd.getRecipeList(rset.getInt("id"));
-				if (loadCommon)
+				_dwarvenRecipeBook.clear();
+				
+				L2RecipeList recipe;
+				RecipeData rd = RecipeData.getInstance();
+				while (rset.next())
 				{
-					if (rset.getInt(2) == 1)
+					recipe = rd.getRecipeList(rset.getInt("id"));
+					if (loadCommon)
 					{
-						if (rset.getInt(3) == _classIndex)
+						if (rset.getInt(2) == 1)
 						{
-							registerDwarvenRecipeList(recipe, false);
+							if (rset.getInt(3) == _classIndex)
+							{
+								registerDwarvenRecipeList(recipe, false);
+							}
+						}
+						else
+						{
+							registerCommonRecipeList(recipe, false);
 						}
 					}
 					else
 					{
-						registerCommonRecipeList(recipe, false);
+						registerDwarvenRecipeList(recipe, false);
 					}
 				}
-				else
-				{
-					registerDwarvenRecipeList(recipe, false);
-				}
 			}
-			
-			rset.close();
-			statement.close();
 		}
 		catch (Exception e)
 		{
@@ -7873,22 +7872,22 @@ public final class L2PcInstance extends L2Playable
 	
 	private void loadPremiumItemList()
 	{
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		final String sql = "SELECT itemNum, itemId, itemCount, itemSender FROM character_premium_items WHERE charId=?";
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement(sql))
 		{
-			String sql = "SELECT itemNum, itemId, itemCount, itemSender FROM character_premium_items WHERE charId=?";
-			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setInt(1, getObjectId());
-			ResultSet rset = statement.executeQuery();
-			while (rset.next())
+			try (ResultSet rset = statement.executeQuery())
 			{
-				int itemNum = rset.getInt("itemNum");
-				int itemId = rset.getInt("itemId");
-				long itemCount = rset.getLong("itemCount");
-				String itemSender = rset.getString("itemSender");
-				_premiumItems.put(itemNum, new L2PremiumItem(itemId, itemCount, itemSender));
+				while (rset.next())
+				{
+					int itemNum = rset.getInt("itemNum");
+					int itemId = rset.getInt("itemId");
+					long itemCount = rset.getLong("itemCount");
+					String itemSender = rset.getString("itemSender");
+					_premiumItems.put(itemNum, new L2PremiumItem(itemId, itemCount, itemSender));
+				}
 			}
-			rset.close();
-			statement.close();
 		}
 		catch (Exception e)
 		{
@@ -7967,16 +7966,13 @@ public final class L2PcInstance extends L2Playable
 	
 	private void storeCharBase()
 	{
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		// Get the exp, level, and sp of base class to store in base table
+		long exp = getStat().getBaseExp();
+		int level = getStat().getBaseLevel();
+		int sp = getStat().getBaseSp();
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement(UPDATE_CHARACTER))
 		{
-			// Get the exp, level, and sp of base class to store in base table
-			long exp = getStat().getBaseExp();
-			int level = getStat().getBaseLevel();
-			int sp = getStat().getBaseSp();
-			
-			// Update base class
-			PreparedStatement statement = con.prepareStatement(UPDATE_CHARACTER);
-			
 			statement.setInt(1, level);
 			statement.setInt(2, getMaxHp());
 			statement.setDouble(3, getCurrentHp());
@@ -8013,7 +8009,6 @@ public final class L2PcInstance extends L2Playable
 			statement.setInt(34, getBaseClass());
 			
 			long totalOnlineTime = _onlineTime;
-			
 			if (_onlineBeginTime > 0)
 			{
 				totalOnlineTime += (System.currentTimeMillis() - _onlineBeginTime) / 1000;
@@ -8038,7 +8033,6 @@ public final class L2PcInstance extends L2Playable
 			statement.setInt(51, getObjectId());		// [L2J_JP EDIT] î‘çÜÇÇPÇ¬ëùÇ‚Ç∑Ç±Ç∆
 			
 			statement.execute();
-			statement.close();
 		}
 		catch (Exception e)
 		{
@@ -8083,24 +8077,20 @@ public final class L2PcInstance extends L2Playable
 			return;
 		}
 		
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement delete = con.prepareStatement(DELETE_SKILL_SAVE);
+			PreparedStatement statement = con.prepareStatement(ADD_SKILL_SAVE);)
 		{
 			// Delete all current stored effects for char to avoid dupe
-			PreparedStatement statement = con.prepareStatement(DELETE_SKILL_SAVE);
-			
-			statement.setInt(1, getObjectId());
-			statement.setInt(2, getClassIndex());
-			statement.execute();
-			statement.close();
+			delete.setInt(1, getObjectId());
+			delete.setInt(2, getClassIndex());
+			delete.execute();
 			
 			int buff_index = 0;
-			
 			final ArrayList<Integer> storedSkills = new ArrayList<>();
 			
 			// Store all effect data along with calulated remaining
 			// reuse delays for matching skills. 'restore_type'= 0.
-			statement = con.prepareStatement(ADD_SKILL_SAVE);
-			
 			if (storeEffects)
 			{
 				for (L2Effect effect : getAllEffects())
@@ -8187,7 +8177,6 @@ public final class L2PcInstance extends L2Playable
 					statement.execute();
 				}
 			}
-			statement.close();
 		}
 		catch (Exception e)
 		{
@@ -8390,39 +8379,38 @@ public final class L2PcInstance extends L2Playable
 			// Retrieve all skills of this L2PcInstance from the database
 			statement.setInt(1, getObjectId());
 			statement.setInt(2, getClassIndex());
-			final ResultSet rset = statement.executeQuery();
-			
-			// Go though the recordset of this SQL query
-			while (rset.next())
+			try (ResultSet rset = statement.executeQuery())
 			{
-				final int id = rset.getInt("skill_id");
-				final int level = rset.getInt("skill_level");
-				
-				// Create a L2Skill object for each record
-				final L2Skill skill = SkillTable.getInstance().getInfo(id, level);
-				
-				if (skill == null)
+				while (rset.next())
 				{
-					_log.warning("Skipped null skill Id: " + id + " Level: " + level + " while restoring player skills for playerObjId: " + getObjectId());
-					continue;
-				}
-				
-				// Add the L2Skill object to the L2Character _skills and its Func objects to the calculator set of the L2Character
-				addSkill(skill);
-				
-				if (Config.SKILL_CHECK_ENABLE && (!canOverrideCond(PcCondOverride.SKILL_CONDITIONS) || Config.SKILL_CHECK_GM))
-				{
-					if (!SkillTreesData.getInstance().isSkillAllowed(this, skill))
+					final int id = rset.getInt("skill_id");
+					final int level = rset.getInt("skill_level");
+					
+					// Create a L2Skill object for each record
+					final L2Skill skill = SkillTable.getInstance().getInfo(id, level);
+					
+					if (skill == null)
 					{
-						Util.handleIllegalPlayerAction(this, "Player " + getName() + " has invalid skill " + skill.getName() + " (" + skill.getId() + "/" + skill.getLevel() + "), class:" + ClassListData.getInstance().getClass(getClassId()).getClassName(), 1);
-						if (Config.SKILL_CHECK_REMOVE)
+						_log.warning("Skipped null skill Id: " + id + " Level: " + level + " while restoring player skills for playerObjId: " + getObjectId());
+						continue;
+					}
+					
+					// Add the L2Skill object to the L2Character _skills and its Func objects to the calculator set of the L2Character
+					addSkill(skill);
+					
+					if (Config.SKILL_CHECK_ENABLE && (!canOverrideCond(PcCondOverride.SKILL_CONDITIONS) || Config.SKILL_CHECK_GM))
+					{
+						if (!SkillTreesData.getInstance().isSkillAllowed(this, skill))
 						{
-							removeSkill(skill);
+							Util.handleIllegalPlayerAction(this, "Player " + getName() + " has invalid skill " + skill.getName() + " (" + skill.getId() + "/" + skill.getLevel() + "), class:" + ClassListData.getInstance().getClass(getClassId()).getClassName(), 1);
+							if (Config.SKILL_CHECK_REMOVE)
+							{
+								removeSkill(skill);
+							}
 						}
 					}
 				}
 			}
-			rset.close();
 		}
 		catch (Exception e)
 		{
@@ -8500,11 +8488,11 @@ public final class L2PcInstance extends L2Playable
 				}
 			}
 			// Remove previously restored skills
-			try (PreparedStatement del = con.prepareStatement(DELETE_SKILL_SAVE))
+			try (PreparedStatement delelete = con.prepareStatement(DELETE_SKILL_SAVE))
 			{
-				del.setInt(1, getObjectId());
-				del.setInt(2, getClassIndex());
-				del.executeUpdate();
+				delelete.setInt(1, getObjectId());
+				delelete.setInt(2, getClassIndex());
+				delelete.executeUpdate();
 			}
 		}
 		catch (Exception e)
@@ -8518,61 +8506,60 @@ public final class L2PcInstance extends L2Playable
 	 */
 	private void restoreItemReuse()
 	{
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
-		{
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement(RESTORE_ITEM_REUSE_SAVE);
+			PreparedStatement delelete = con.prepareStatement(DELETE_ITEM_REUSE_SAVE);)
+		{
 			statement.setInt(1, getObjectId());
-			final ResultSet rset = statement.executeQuery();
-			int itemId;
-			@SuppressWarnings("unused")
-			int itemObjId;
-			long reuseDelay;
-			long systime;
-			boolean isInInventory;
-			long remainingTime;
-			while (rset.next())
+			try (ResultSet rset = statement.executeQuery())
 			{
-				itemId = rset.getInt("itemId");
-				itemObjId = rset.getInt("itemObjId");
-				reuseDelay = rset.getLong("reuseDelay");
-				systime = rset.getLong("systime");
-				isInInventory = true;
-				
-				// Using item Id
-				L2ItemInstance item = getInventory().getItemByItemId(itemId);
-				if (item == null)
+				int itemId;
+				@SuppressWarnings("unused")
+				int itemObjId;
+				long reuseDelay;
+				long systime;
+				boolean isInInventory;
+				long remainingTime;
+				while (rset.next())
 				{
-					item = getWarehouse().getItemByItemId(itemId);
-					isInInventory = false;
-				}
-				
-				if ((item != null) && (item.getItemId() == itemId) && (item.getReuseDelay() > 0))
-				{
-					remainingTime = systime - System.currentTimeMillis();
-					// Hardcoded to 10 seconds.
-					if (remainingTime > 10)
+					itemId = rset.getInt("itemId");
+					itemObjId = rset.getInt("itemObjId");
+					reuseDelay = rset.getLong("reuseDelay");
+					systime = rset.getLong("systime");
+					isInInventory = true;
+					
+					// Using item Id
+					L2ItemInstance item = getInventory().getItemByItemId(itemId);
+					if (item == null)
 					{
-						addTimeStampItem(item, reuseDelay, systime);
-						
-						if (isInInventory && item.isEtcItem())
+						item = getWarehouse().getItemByItemId(itemId);
+						isInInventory = false;
+					}
+					
+					if ((item != null) && (item.getItemId() == itemId) && (item.getReuseDelay() > 0))
+					{
+						remainingTime = systime - System.currentTimeMillis();
+						// Hardcoded to 10 seconds.
+						if (remainingTime > 10)
 						{
-							final int group = item.getSharedReuseGroup();
-							if (group > 0)
+							addTimeStampItem(item, reuseDelay, systime);
+							
+							if (isInInventory && item.isEtcItem())
 							{
-								sendPacket(new ExUseSharedGroupItem(itemId, group, (int) remainingTime, (int) reuseDelay));
+								final int group = item.getSharedReuseGroup();
+								if (group > 0)
+								{
+									sendPacket(new ExUseSharedGroupItem(itemId, group, (int) remainingTime, (int) reuseDelay));
+								}
 							}
 						}
 					}
 				}
 			}
 			
-			rset.close();
-			statement.close();
-			
-			statement = con.prepareStatement(DELETE_ITEM_REUSE_SAVE);
-			statement.setInt(1, getObjectId());
-			statement.executeUpdate();
-			statement.close();
+			// Delete item reuse.
+			delelete.setInt(1, getObjectId());
+			delelete.executeUpdate();
 		}
 		catch (Exception e)
 		{
@@ -8585,43 +8572,41 @@ public final class L2PcInstance extends L2Playable
 	 */
 	private void restoreHenna()
 	{
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		for (int i = 0; i < 3; i++)
 		{
-			PreparedStatement statement = con.prepareStatement(RESTORE_CHAR_HENNAS);
+			_henna[i] = null;
+		}
+		
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement(RESTORE_CHAR_HENNAS))
+		{
 			statement.setInt(1, getObjectId());
 			statement.setInt(2, getClassIndex());
-			ResultSet rset = statement.executeQuery();
-			
-			for (int i = 0; i < 3; i++)
+			try (ResultSet rset = statement.executeQuery())
 			{
-				_henna[i] = null;
-			}
-			
-			while (rset.next())
-			{
-				int slot = rset.getInt("slot");
-				if ((slot < 1) || (slot > 3))
+				while (rset.next())
 				{
-					continue;
+					int slot = rset.getInt("slot");
+					if ((slot < 1) || (slot > 3))
+					{
+						continue;
+					}
+					
+					int symbolId = rset.getInt("symbol_id");
+					if (symbolId == 0)
+					{
+						continue;
+					}
+					_henna[slot - 1] = HennaData.getInstance().getHenna(symbolId);
 				}
-				
-				int symbolId = rset.getInt("symbol_id");
-				if (symbolId == 0)
-				{
-					continue;
-				}
-				_henna[slot - 1] = HennaData.getInstance().getHenna(symbolId);
 			}
-			
-			rset.close();
-			statement.close();
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.SEVERE, "Failed restoing character " + this + " hennas.", e);
 		}
 		
-		// Calculate Henna modifiers of this L2PcInstance
+		// Calculate henna modifiers of this player.
 		recalcHennaStats();
 	}
 	
@@ -10771,12 +10756,12 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	}
 	
 	/**
-	 * 1. Completely erase all existance of the subClass linked to the classIndex.<BR>
-	 * 2. Send over the newClassId to addSubClass()to create a new instance on this classIndex.<BR>
-	 * 3. Upon Exception, revert the player to their BaseClass to avoid further problems.<BR>
-	 * @param classIndex
-	 * @param newClassId
-	 * @return boolean subclassAdded
+	 * 1. Completely erase all existance of the subClass linked to the classIndex.<br>
+	 * 2. Send over the newClassId to addSubClass() to create a new instance on this classIndex.<br>
+	 * 3. Upon Exception, revert the player to their BaseClass to avoid further problems.
+	 * @param classIndex the class index to delete
+	 * @param newClassId the new class Id
+	 * @return {@code true} if the sub-class was modified, {@code false} otherwise
 	 */
 	public boolean modifySubClass(int classIndex, int newClassId)
 	{
@@ -10787,42 +10772,37 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		
 		try
 		{
-			try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+				PreparedStatement deleteHennas = con.prepareStatement(DELETE_CHAR_HENNAS);
+				PreparedStatement deleteShortcuts = con.prepareStatement(DELETE_CHAR_SHORTCUTS);
+				PreparedStatement deleteSkillReuse = con.prepareStatement(DELETE_SKILL_SAVE);
+				PreparedStatement deleteSkills = con.prepareStatement(DELETE_CHAR_SKILLS);
+				PreparedStatement deleteSubclass = con.prepareStatement(DELETE_CHAR_SUBCLASS))
 			{
 				// Remove all henna info stored for this sub-class.
-				PreparedStatement statement = con.prepareStatement(DELETE_CHAR_HENNAS);
-				statement.setInt(1, getObjectId());
-				statement.setInt(2, classIndex);
-				statement.execute();
-				statement.close();
+				deleteHennas.setInt(1, getObjectId());
+				deleteHennas.setInt(2, classIndex);
+				deleteHennas.execute();
 				
 				// Remove all shortcuts info stored for this sub-class.
-				statement = con.prepareStatement(DELETE_CHAR_SHORTCUTS);
-				statement.setInt(1, getObjectId());
-				statement.setInt(2, classIndex);
-				statement.execute();
-				statement.close();
+				deleteShortcuts.setInt(1, getObjectId());
+				deleteShortcuts.setInt(2, classIndex);
+				deleteShortcuts.execute();
 				
 				// Remove all effects info stored for this sub-class.
-				statement = con.prepareStatement(DELETE_SKILL_SAVE);
-				statement.setInt(1, getObjectId());
-				statement.setInt(2, classIndex);
-				statement.execute();
-				statement.close();
+				deleteSkillReuse.setInt(1, getObjectId());
+				deleteSkillReuse.setInt(2, classIndex);
+				deleteSkillReuse.execute();
 				
 				// Remove all skill info stored for this sub-class.
-				statement = con.prepareStatement(DELETE_CHAR_SKILLS);
-				statement.setInt(1, getObjectId());
-				statement.setInt(2, classIndex);
-				statement.execute();
-				statement.close();
+				deleteSkills.setInt(1, getObjectId());
+				deleteSkills.setInt(2, classIndex);
+				deleteSkills.execute();
 				
 				// Remove all basic info stored about this sub-class.
-				statement = con.prepareStatement(DELETE_CHAR_SUBCLASS);
-				statement.setInt(1, getObjectId());
-				statement.setInt(2, classIndex);
-				statement.execute();
-				statement.close();
+				deleteSubclass.setInt(1, getObjectId());
+				deleteSubclass.setInt(2, classIndex);
+				deleteSubclass.execute();
 			}
 			catch (Exception e)
 			{
@@ -10832,7 +10812,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 				getSubClasses().remove(classIndex);
 				return false;
 			}
-			
 			getSubClasses().remove(classIndex);
 		}
 		finally
@@ -14212,26 +14191,23 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	{
 		_friendList.clear();
 		
-		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
+		final String sqlQuery = "SELECT friendId FROM character_friends WHERE charId=? AND relation=0";
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement(sqlQuery))
 		{
-			String sqlQuery = "SELECT friendId FROM character_friends WHERE charId=? AND relation=0";
-			PreparedStatement statement = con.prepareStatement(sqlQuery);
 			statement.setInt(1, getObjectId());
-			ResultSet rset = statement.executeQuery();
-			
-			int friendId;
-			while (rset.next())
+			try (ResultSet rset = statement.executeQuery())
 			{
-				friendId = rset.getInt("friendId");
-				if (friendId == getObjectId())
+				while (rset.next())
 				{
-					continue;
+					int friendId = rset.getInt("friendId");
+					if (friendId == getObjectId())
+					{
+						continue;
+					}
+					_friendList.add(friendId);
 				}
-				_friendList.add(friendId);
 			}
-			
-			rset.close();
-			statement.close();
 		}
 		catch (Exception e)
 		{
