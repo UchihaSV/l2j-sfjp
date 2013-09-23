@@ -31,7 +31,7 @@ public class Macro
 	private final String _name;
 	private final String _descr;
 	private final String _acronym;
-	private final List<MacroCmd> _commands;
+	private final MacroCmd[] _commands;
 	
 	public Macro(int id, int icon, String name, String descr, String acronym, List<MacroCmd> list)
 	{
@@ -40,7 +40,7 @@ public class Macro
 		_name = name;
 		_descr = descr;
 		_acronym = acronym;
-		_commands = list;
+		_commands = list.toArray(new MacroCmd[list.size()]);
 	}
 	
 	public int getId()
@@ -73,7 +73,7 @@ public class Macro
 		return _acronym;
 	}
 	
-	public List<MacroCmd> getCommands()
+	public MacroCmd[] getCommands()
 	{
 		return _commands;
 	}
