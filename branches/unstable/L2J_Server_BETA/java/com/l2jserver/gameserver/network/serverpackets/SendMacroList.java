@@ -52,7 +52,7 @@ public class SendMacroList extends L2GameServerPacket
 			writeS(_macro.getAcronym()); // acronym
 			writeC(_macro.getIcon()); // icon
 			
-			writeC(_macro.getCommands().size()); // count
+			writeC(_macro.getCommands().length); // count
 			
 			int i = 1;
 			for (MacroCmd cmd : _macro.getCommands())
