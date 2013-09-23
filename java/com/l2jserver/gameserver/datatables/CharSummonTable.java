@@ -23,9 +23,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -47,8 +47,8 @@ import com.l2jserver.gameserver.network.serverpackets.PetItemList;
 public class CharSummonTable
 {
 	private static final Logger _log = Logger.getLogger(CharSummonTable.class.getName());
-	private static final Map<Integer, Integer> _pets = new ConcurrentHashMap<>();
-	private static final Map<Integer, Integer> _servitors = new ConcurrentHashMap<>();
+	private static final FastIntObjectMap<Integer> _pets = new FastIntObjectMap<Integer>().shared();
+	private static final FastIntObjectMap<Integer> _servitors = new FastIntObjectMap<Integer>().shared();
 	
 	// SQL
 	private static final String INIT_PET = "SELECT ownerId, item_obj_id FROM pets WHERE restore = 'true'";
@@ -57,12 +57,12 @@ public class CharSummonTable
 	private static final String REMOVE_SUMMON = "DELETE FROM character_summons WHERE ownerId = ?";
 	private static final String SAVE_SUMMON = "REPLACE INTO character_summons (ownerId,summonSkillId,curHp,curMp,time) VALUES (?,?,?,?,?)";
 	
-	public Map<Integer, Integer> getPets()
+	public FastIntObjectMap<Integer> getPets()
 	{
 		return _pets;
 	}
 	
-	public Map<Integer, Integer> getServitors()
+	public FastIntObjectMap<Integer> getServitors()
 	{
 		return _servitors;
 	}
@@ -196,25 +196,20 @@ public class CharSummonTable
 			ps.setInt(2, skillId);
 			try (ResultSet rs = ps.executeQuery())
 			{
-				
-				L2NpcTemplate summonTemplate;
-				L2ServitorInstance summon;
-				L2SkillSummon skill;
-				
 				while (rs.next())
 				{
 					int curHp = rs.getInt("curHp");
 					int curMp = rs.getInt("curMp");
 					int time = rs.getInt("time");
 					
-					skill = (L2SkillSummon) SkillTable.getInstance().getInfo(skillId, activeChar.getSkillLevel(skillId));
+					L2SkillSummon skill = (L2SkillSummon) SkillTable.getInstance().getInfo(skillId, activeChar.getSkillLevel(skillId));
 					if (skill == null)
 					{
 						removeServitor(activeChar);
 						return;
 					}
 					
-					summonTemplate = NpcTable.getInstance().getTemplate(skill.getNpcId());
+					L2NpcTemplate summonTemplate = NpcTable.getInstance().getTemplate(skill.getNpcId());
 					if (summonTemplate == null)
 					{
 						_log.warning(getClass().getSimpleName() + ": Summon attemp for nonexisting Skill ID:" + skillId);
@@ -222,6 +217,7 @@ public class CharSummonTable
 					}
 					
 					final int id = IdFactory.getInstance().getNextId();
+					L2ServitorInstance summon;
 					if (summonTemplate.isType("L2SiegeSummon"))
 					{
 						summon = new L2SiegeSummonInstance(id, summonTemplate, activeChar, skill);
