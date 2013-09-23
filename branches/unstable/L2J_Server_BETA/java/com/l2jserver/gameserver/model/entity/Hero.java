@@ -231,8 +231,7 @@ public class Hero
 	
 	public void loadDiary(int charId)
 	{
-		FastList<StatsSet> _diary = new FastList<>();
-		
+		final FastList<StatsSet> _diary = new FastList<>();
 		int diaryentries = 0;
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement("SELECT * FROM  heroes_diary WHERE charId=? ORDER BY time ASC"))
