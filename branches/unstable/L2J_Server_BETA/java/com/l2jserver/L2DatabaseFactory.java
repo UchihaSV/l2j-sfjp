@@ -270,7 +270,7 @@ public class L2DatabaseFactory
 		}
 		else
 		{
-			getExecutor().schedule(cc, Config.CONNECTION_CLOSE_TIME, TimeUnit.SECONDS);
+			getExecutor().schedule(cc, Config.CONNECTION_CLOSE_TIME, TimeUnit.MILLISECONDS);
 		}
 		return con;
 	}
