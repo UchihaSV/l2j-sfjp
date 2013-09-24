@@ -1222,6 +1222,7 @@ public final class Config
 	public static final boolean NEVER_TARGET_TAMED = true;				//[JOJO]槍・範囲攻撃をするとテイミングモンスターが巻き添えになる不具合の修正.
 	public static final boolean TAMED_BEAST_ALLIVE_SORT = true;			//[JOJO]テイミングモンスターの位置をソート
 	public static final boolean TAMED_BEAST_FOLLOW_RANDOM = true;		//[JOJO]テイミングモンスターの位置を分散
+	public static final boolean FIX_FAKEDEATH_EXIT = true;				//[JOJO]フェイク デス中断・終了処理
 	
 
 	//

@@ -3207,9 +3207,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		// [L2J_JP ADD START][JOJO]
 		setIsFallsdown(true);
 		
-		boolean isFakeDeath = true;
 		if (Config.FAILD_FAKEDEATH)
 		{
+			
+			boolean isFakeDeath = true;
+			
 			//It fails in Fake Death at the probability
 			if (getAttackByList() != null && getAttackByList().size() != 0)
 			{
@@ -3274,8 +3276,12 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				if (Rnd.get(100) < 25) //fails at 25%.
 					isFakeDeath = false;
 			}
+			getActingPlayer().setIsFakeDeath(isFakeDeath);
 		}
-		getActingPlayer().setIsFakeDeath(isFakeDeath);
+		else
+		{
+			getActingPlayer().setIsFakeDeath(true);
+		}
 		// [L2J_JP ADD END]
 		
 		// Aborts any attacks/casts if fake dead
