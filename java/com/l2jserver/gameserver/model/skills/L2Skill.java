@@ -200,7 +200,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	private final int _lethalStrikeRate;
 	private final boolean _directHpDmg; // If true then damage is being make directly
 	private final boolean _isTriggeredSkill; // If true the skill will take activation buff slot instead of a normal buff slot
-	private final int _aggroPoints;
+	private final int _effectPoint;
 	// Condition lists
 	private List<Condition> _preCondition;
 	private List<Condition> _itemPreCondition;
@@ -417,7 +417,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		
 		_directHpDmg = set.getBool("dmgDirectlyToHp", false);
 		_isTriggeredSkill = set.getBool("isTriggeredSkill", false);
-		_aggroPoints = set.getInteger("aggroPoints", 0);
+		_effectPoint = set.getInteger("effectPoint", 0);
 		
 		_flyType = intern(set.getString("flyType", null));
 		_flyRadius = set.getInteger("flyRadius", 0);
@@ -864,9 +864,9 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		return _isTriggeredSkill;
 	}
 	
-	public final int getAggroPoints()
+	public final int getEffectPoint()
 	{
-		return _aggroPoints;
+		return _effectPoint;
 	}
 	
 	public final boolean useSoulShot()
