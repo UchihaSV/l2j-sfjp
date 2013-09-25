@@ -23,13 +23,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -43,7 +42,7 @@ public class MacroList
 	private final L2PcInstance _owner;
 	private int _revision;
 	private int _macroId;
-	private final Map<Integer, Macro> _macroses = Collections.synchronizedMap(new LinkedHashMap<Integer, Macro>());
+	private final FastIntObjectMap<Macro> _macroses = new FastIntObjectMap<Macro>().shared();
 	
 	public MacroList(L2PcInstance owner)
 	{
@@ -57,10 +56,15 @@ public class MacroList
 		return _revision;
 	}
 	
-	public Map<Integer, Macro> getAllMacroses()
+	public int size()
 	{
-		return _macroses;
+		return _macroses.size();
 	}
+//	
+//	public FastIntObjectMap<Macro> getAllMacroses()
+//	{
+//		return _macroses;
+//	}
 	
 	public void registerMacro(Macro macro)
 	{
