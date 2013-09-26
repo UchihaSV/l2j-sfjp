@@ -41,14 +41,12 @@ public class MacroList
 	
 	private final L2PcInstance _owner;
 	private int _revision;
-	private int _macroId;
-	private final FastIntObjectMap<Macro> _macroses = new FastIntObjectMap<Macro>().shared();
+	private final FastIntObjectMap<Macro> _macroses = new FastIntObjectMap<Macro>().shared();	//[JOJO] Collections.synchronizedMap(new LinkedHashMap<Integer, Macro>()) --> FastIntObjectMap
 	
 	public MacroList(L2PcInstance owner)
 	{
 		_owner = owner;
 		_revision = 1;
-		_macroId = 1000;
 	}
 	
 	public int getRevision()
@@ -68,25 +66,17 @@ public class MacroList
 	
 	public void registerMacro(Macro macro)
 	{
-		if (macro.getId() == 0)
+		int macroId = macro.getId();
+		if (macroId == 0)
 		{
-			macro.setId(_macroId++);
-			while (_macroses.containsKey(macro.getId()))
-			{
-				macro.setId(_macroId++);
-			}
-			_macroses.put(macro.getId(), macro);
-			registerMacroInDb(macro);
+			macroId = _macroses.size() == 0 ? 1000 : _macroses.tail().getPrevious().getValue().getId();
+			do { ++macroId; macro.setId(macroId); } while (_macroses.putIfAbsent(macroId, macro) != null);
 		}
 		else
 		{
-			final Macro old = _macroses.put(macro.getId(), macro);
-			if (old != null)
-			{
-				deleteMacroFromDb(old);
-			}
-			registerMacroInDb(macro);
+			_macroses.put(macroId, macro);
 		}
+		registerMacroInDb(macro);
 		sendUpdate();
 	}
 	
@@ -133,7 +123,7 @@ public class MacroList
 	private void registerMacroInDb(Macro macro)
 	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement ps = con.prepareStatement("INSERT INTO character_macroses (charId,id,icon,name,descr,acronym,commands) values(?,?,?,?,?,?,?)"))
+			PreparedStatement ps = con.prepareStatement("REPLACE INTO character_macroses (charId,id,icon,name,descr,acronym,commands) values(?,?,?,?,?,?,?)"))	//[JOJO] INSERT --> REPLACE
 		{
 			ps.setInt(1, _owner.getObjectId());
 			ps.setInt(2, macro.getId());
