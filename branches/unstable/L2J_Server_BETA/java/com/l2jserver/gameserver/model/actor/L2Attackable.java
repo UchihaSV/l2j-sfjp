@@ -635,7 +635,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 			}
 			
 			// Creates an empty list of rewards
-			final FastMap<L2Character, RewardInfo> rewards = new FastMap<>();
+			final FastMap<L2Character, RewardInfo> rewards = new FastMap<>();	//[JOJO]
 			// L2J–{‰Æ •ÏX—š—ð
 			// 6073  UnAfraid  2013/06/20  HashMap --> ConcurrentHashMap<>()
 			// 6070  UnAfraid  2013/06/20  ConcurrentHashMap --> HashMap<>()
@@ -794,44 +794,22 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 							// Delete the RewardInfo from the L2Attackable rewards
 							final RewardInfo reward2 = rewards.put(partyPlayer, null);
 							
-							// If the L2PcInstance is in the L2Attackable rewards add its damages to party damages
-							if (reward2 != null)
+							if (Util.checkIfInRange(Config.ALT_PARTY_RANGE, this, partyPlayer, true))
 							{
-								if (Util.checkIfInRange(Config.ALT_PARTY_RANGE, this, partyPlayer, true))
-								{
+								// If the L2PcInstance is in the L2Attackable rewards add its damages to party damages
+								if (reward2 != null)
 									partyDmg += reward2.getDamage(); // Add L2PcInstance damages to party damages
-									rewardedMembers.add(partyPlayer);
-									
-									if (partyPlayer.getLevel() > partyLvl)
-									{
-										if (attackerParty.isInCommandChannel())
-										{
-											partyLvl = attackerParty.getCommandChannel().getLevel();
-										}
-										else
-										{
-											partyLvl = partyPlayer.getLevel();
-										}
-									}
-								}
-							}
-							else
-							{
-								// Add L2PcInstance of the party (that have attacked or not) to members that can be rewarded
-								// and in range of the monster.
-								if (Util.checkIfInRange(Config.ALT_PARTY_RANGE, this, partyPlayer, true))
+								rewardedMembers.add(partyPlayer);
+								
+								if (partyPlayer.getLevel() > partyLvl)
 								{
-									rewardedMembers.add(partyPlayer);
-									if (partyPlayer.getLevel() > partyLvl)
+									if (attackerParty.isInCommandChannel())
 									{
-										if (attackerParty.isInCommandChannel())
-										{
-											partyLvl = attackerParty.getCommandChannel().getLevel();
-										}
-										else
-										{
-											partyLvl = partyPlayer.getLevel();
-										}
+										partyLvl = attackerParty.getCommandChannel().getLevel();
+									}
+									else
+									{
+										partyLvl = partyPlayer.getLevel();
 									}
 								}
 							}
