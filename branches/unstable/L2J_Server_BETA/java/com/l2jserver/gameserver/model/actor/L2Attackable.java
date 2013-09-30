@@ -635,7 +635,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 			}
 			
 			// Creates an empty list of rewards
-			final FastMap<L2Character, RewardInfo> rewards = new FastMap<L2Character, RewardInfo>().shared();
+			final FastMap<L2Character, RewardInfo> rewards = new FastMap<>();
 			// L2J–{‰Æ •ÏX—š—ð
 			// 6073  UnAfraid  2013/06/20  HashMap --> ConcurrentHashMap<>()
 			// 6070  UnAfraid  2013/06/20  ConcurrentHashMap --> HashMap<>()
@@ -791,7 +791,8 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 							}
 							
 							// Get the RewardInfo of this L2PcInstance from L2Attackable rewards
-							final RewardInfo reward2 = rewards.get(partyPlayer);
+							// Delete the RewardInfo from the L2Attackable rewards
+							final RewardInfo reward2 = rewards.put(partyPlayer, null);
 							
 							// If the L2PcInstance is in the L2Attackable rewards add its damages to party damages
 							if (reward2 != null)
@@ -813,7 +814,6 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 										}
 									}
 								}
-								rewards.remove(partyPlayer); // Remove the L2PcInstance from the L2Attackable rewards
 							}
 							else
 							{
