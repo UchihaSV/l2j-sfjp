@@ -206,7 +206,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	private Calculator[] _calculators;
 	
 	/** Map containing all skills of this character. */
-	private final Map<Integer, L2Skill> _skills;// = Collections.synchronizedMap(new LinkedHashMap<Integer, L2Skill>());
+	private final Map<Integer, L2Skill> _skills;// = new FastMap<Integer, L2Skill>().shared();
 	
 	/** Map containing the active chance skills on this character */
 	private volatile ChanceSkillList _chanceSkills;
