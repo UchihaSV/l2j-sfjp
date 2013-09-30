@@ -9273,51 +9273,11 @@ public final class L2PcInstance extends L2Playable
 				return false;
 			}
 		}
-		// Check if the skill is defensive
-		if (!skill.isOffensive() && target.isMonster() && !forceUse)
+		// Check if the skill is not a good magic, target is a monster and if force attack is set, if not then we don't want to cast.
+		if (!skill.isBad() && target.isMonster() && !forceUse)
 		{
-			// check if the target is a monster and if force attack is set.. if not then we don't want to cast.
-			switch (sklTargetType)
-			{
-				case PET:
-				case SERVITOR:
-				case SUMMON:
-				case AURA:
-				case FRONT_AURA:
-				case BEHIND_AURA:
-				case AURA_CORPSE_MOB:
-				case CLAN:
-				case PARTY_CLAN:
-				case SELF:
-				case PARTY:
-				case CORPSE_MOB:
-				case AREA_CORPSE_MOB:
-				case GROUND:
-					break;
-				default:
-				{
-					switch (sklType)
-					{
-						case BEAST_FEED:
-						case DELUXE_KEY_UNLOCK:
-						case UNLOCK:
-							break;
-						//[JOJO]-------------------------------------------------
-						case BEAST_RELEASE:		// ONE  8362 –ÒbŒP—ûF‰ğ‚«•ú‚Â - –Òb‚ğ1“ª•ú‚¿‚Ü‚·B
-						case BEAST_ACCOMPANY:	// ONE  8363 –ÒbŒP—ûF‚Â‚¢‚Ä—ˆ‚é - –Òb‚É‚Â‚¢‚Ä—ˆ‚é‚æ‚¤–½—ß‚µ‚Ü‚·B
-						case BEAST_SKILL:		// ONE  8364 –ÒbŒP—ûF“Áê”\—Íg—p - –Òb‚É“Áê”\—Í‚ğg‚¤‚æ‚¤–½—ß‚µ‚Ü‚·B
-					//	case BEAST_RELEASE_ALL:	// SELF 8378 –ÒbŒP—ûF‚·‚×‚Ä‰ğ‚«•ú‚Â - –Òb‚ğ‚·‚×‚Ä•ú‚¿‚Ü‚·B
-if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
-							break;
-}}
-						//-------------------------------------------------------
-						default:
-							sendPacket(ActionFailed.STATIC_PACKET);
-							return false;
-					}
-					break;
-				}
-			}
+			sendPacket(ActionFailed.STATIC_PACKET);
+			return false;
 		}
 		
 		// Check if this is a Pvp skill and target isn't a non-flagged/non-karma player

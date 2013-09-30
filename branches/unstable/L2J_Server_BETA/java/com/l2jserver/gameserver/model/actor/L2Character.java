@@ -6781,7 +6781,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					// EVT_ATTACKED and PvPStatus
 					if (target instanceof L2Character)
 					{
-						if (skill.isOffensive())
+						if (skill.isBad())
 						{
 							if (target.isPlayer() || target.isSummon() || target.isTrap())
 							{
@@ -6838,26 +6838,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 							}
 							else if (target.isL2Attackable())
 							{
-								switch (skill.getSkillType())
-								{
-									case SUMMON:
-									case BEAST_FEED:
-									case UNLOCK:
-									case DELUXE_KEY_UNLOCK:
-									case UNLOCK_SPECIAL:
-										break;
-									//[JOJO]-------------------------------------------------
-									case BEAST_RELEASE:		// ONE  8362 猛獣訓練：解き放つ - 猛獣を1頭放ちます。
-									case BEAST_ACCOMPANY:	// ONE  8363 猛獣訓練：ついて来る - 猛獣について来るよう命令します。
-									case BEAST_SKILL:		// ONE  8364 猛獣訓練：特殊能力使用 - 猛獣に特殊能力を使うよう命令します。
-								//	case BEAST_RELEASE_ALL:	// SELF 8378 猛獣訓練：すべて解き放つ - 猛獣をすべて放ちます。
-if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
-										break;
-}}
-									//-------------------------------------------------------
-									default:
-										player.updatePvPStatus();
-								}
+								player.updatePvPStatus();
 							}
 						}
 					}
