@@ -25,6 +25,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
+import javolution.util.FastMap;
+
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ItemsAutoDestroy;
 import com.l2jserver.gameserver.SevenSigns;
@@ -632,8 +634,14 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 				return;
 			}
 			
-			// NOTE: Concurrent-safe map is used because while iterating to verify all conditions sometimes an entry must be removed.
-			final Map<L2PcInstance, RewardInfo> rewards = new ConcurrentHashMap<>();
+			// Creates an empty list of rewards
+			final FastMap<L2Character, RewardInfo> rewards = new FastMap<L2Character, RewardInfo>().shared();
+			// L2J–{‰Æ •ÏX—š—ð
+			// 6073  UnAfraid  2013/06/20  HashMap --> ConcurrentHashMap<>()
+			// 6070  UnAfraid  2013/06/20  ConcurrentHashMap --> HashMap<>()
+			// 5964  Zoey76    2013/05/04  FastMap --> ConcurrentHashMap<>()
+			// 4057  JIV       2010/04/10  FastMap<L2PcInstance, RewardInfo>().shared()
+			// 4     kadarl2j  2006/09/13  FastMap<L2PcInstance, RewardInfo>().setShared(true)
 			
 			L2PcInstance maxDealer = null;
 			int maxDamage = 0;
