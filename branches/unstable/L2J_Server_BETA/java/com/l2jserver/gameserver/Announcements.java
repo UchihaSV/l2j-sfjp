@@ -47,7 +47,7 @@ public class Announcements
 	
 	private final List<String> _announcements = new FastList<>();
 	private final List<String> _critAnnouncements = new FastList<>();
-	private final List<List<Object>> _eventAnnouncements = new FastList<>();
+	private final List<EventAnnounce> _eventAnnouncements = new FastList<>();
 	
 	protected Announcements()
 	{
@@ -72,6 +72,19 @@ public class Announcements
 		}
 	}
 	
+	//[JOJO]-------------------------------------------------
+	private static class EventAnnounce
+	{
+		DateRange validDateRange;
+		String[] messages;
+		EventAnnounce(DateRange validDateRange, String[] messages)
+		{
+			this.validDateRange = validDateRange;
+			this.messages = messages;
+		}
+	}
+	//-------------------------------------------------------
+	
 	public void showAnnouncements(L2PcInstance activeChar)
 	{
 		for (String announce : _announcements)
@@ -90,17 +103,15 @@ public class Announcements
 			activeChar.sendPacket(cs);
 		}
 		
-		for (List<Object> eventAnnounce : _eventAnnouncements)
+		final Date currentDate = new Date();
+		for (EventAnnounce eventAnnounce : _eventAnnouncements)
 		{
-			List<Object> entry = eventAnnounce;
-			
-			DateRange validDateRange = (DateRange) entry.get(0);
-			String[] msg = (String[]) entry.get(1);
-			Date currentDate = new Date();
+			DateRange validDateRange = eventAnnounce.validDateRange;
+			String[] messages = eventAnnounce.messages;
 			
 			if (validDateRange.isValid() && validDateRange.isWithinRange(currentDate)) // [JOJO]
 			{
-				for (String s : msg)
+				for (String s : messages)
 				{
 					activeChar.sendMessage(s);/* ÉeÉXÉgçœ */
 				}
@@ -111,10 +122,7 @@ public class Announcements
 	
 	public void addEventAnnouncement(DateRange validDateRange, String... msg)
 	{
-		List<Object> entry = new FastList<>();
-		entry.add(validDateRange);
-		entry.add(msg);
-		_eventAnnouncements.add(entry);
+		_eventAnnouncements.add(new EventAnnounce(validDateRange, msg));
 	}
 	
 	public void listAnnouncements(L2PcInstance activeChar)
