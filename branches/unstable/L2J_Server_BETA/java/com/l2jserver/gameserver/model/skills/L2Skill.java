@@ -1101,10 +1101,6 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		{
 			return false;
 		}
-if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
-		if (skill.isOffensive() && caster instanceof L2PcInstance && target instanceof com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance)
-			return false;
-}}
 		
 		final L2PcInstance player = caster.getActingPlayer();
 		final L2PcInstance targetPlayer = target.getActingPlayer();
@@ -1169,6 +1165,14 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 						return false;
 					}
 				}
+			}
+			else
+			{
+				// target is mob
+if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
+				if (skill.isOffensive() && target instanceof com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance)
+					return false;
+}}
 			}
 		}
 		else
