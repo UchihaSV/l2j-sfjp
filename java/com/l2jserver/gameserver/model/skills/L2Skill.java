@@ -1156,7 +1156,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 			{
 				// target is mob
 if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
-				if (skill.isOffensive() && target instanceof com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance)
+				if (skill.isBad() && target instanceof com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance)
 					return false;
 }}
 			}
