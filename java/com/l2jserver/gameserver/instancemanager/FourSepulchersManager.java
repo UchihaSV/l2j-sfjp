@@ -328,9 +328,9 @@ public class FourSepulchersManager
 					{
 						L2Spawn spawnDat = new L2Spawn(template1);
 						spawnDat.setAmount(rs.getInt("count"));
-						spawnDat.setLocx(rs.getInt("locx"));
-						spawnDat.setLocy(rs.getInt("locy"));
-						spawnDat.setLocz(rs.getInt("locz"));
+						spawnDat.setX(rs.getInt("locx"));
+						spawnDat.setY(rs.getInt("locy"));
+						spawnDat.setZ(rs.getInt("locz"));
 						spawnDat.setHeading(rs.getInt("heading"));
 						spawnDat.setRespawnDelay(rs.getInt("respawn_delay"));
 					//	SpawnTable.getInstance().addNewSpawn(spawnDat, false);	//[JOJO] ’n—‹“P‹Ž
@@ -398,9 +398,9 @@ public class FourSepulchersManager
 							{
 								L2Spawn spawnDat = new L2Spawn(template1);
 								spawnDat.setAmount(rs2.getInt("count"));
-								spawnDat.setLocx(rs2.getInt("locx"));
-								spawnDat.setLocy(rs2.getInt("locy"));
-								spawnDat.setLocz(rs2.getInt("locz"));
+								spawnDat.setX(rs2.getInt("locx"));
+								spawnDat.setY(rs2.getInt("locy"));
+								spawnDat.setZ(rs2.getInt("locz"));
 								spawnDat.setHeading(rs2.getInt("heading"));
 								spawnDat.setRespawnDelay(rs2.getInt("respawn_delay"));
 							//	SpawnTable.getInstance().addNewSpawn(spawnDat, false);	//[JOJO] ’n—‹“P‹Ž
@@ -453,9 +453,9 @@ public class FourSepulchersManager
 							{
 								L2Spawn spawnDat = new L2Spawn(template1);
 								spawnDat.setAmount(rset2.getInt("count"));
-								spawnDat.setLocx(rset2.getInt("locx"));
-								spawnDat.setLocy(rset2.getInt("locy"));
-								spawnDat.setLocz(rset2.getInt("locz"));
+								spawnDat.setX(rset2.getInt("locx"));
+								spawnDat.setY(rset2.getInt("locy"));
+								spawnDat.setZ(rset2.getInt("locz"));
 								spawnDat.setHeading(rset2.getInt("heading"));
 								spawnDat.setRespawnDelay(rset2.getInt("respawn_delay"));
 							//	SpawnTable.getInstance().addNewSpawn(spawnDat, false);	//[JOJO] ’n—‹“P‹Ž
@@ -511,9 +511,9 @@ public class FourSepulchersManager
 							{
 								L2Spawn spawnDat = new L2Spawn(template1);
 								spawnDat.setAmount(rset2.getInt("count"));
-								spawnDat.setLocx(rset2.getInt("locx"));
-								spawnDat.setLocy(rset2.getInt("locy"));
-								spawnDat.setLocz(rset2.getInt("locz"));
+								spawnDat.setX(rset2.getInt("locx"));
+								spawnDat.setY(rset2.getInt("locy"));
+								spawnDat.setZ(rset2.getInt("locz"));
 								spawnDat.setHeading(rset2.getInt("heading"));
 								spawnDat.setRespawnDelay(rset2.getInt("respawn_delay"));
 							//	SpawnTable.getInstance().addNewSpawn(spawnDat, false);	//[JOJO] ’n—‹“P‹Ž
@@ -567,9 +567,9 @@ public class FourSepulchersManager
 							{
 								L2Spawn spawnDat = new L2Spawn(template1);
 								spawnDat.setAmount(rs2.getInt("count"));
-								spawnDat.setLocx(rs2.getInt("locx"));
-								spawnDat.setLocy(rs2.getInt("locy"));
-								spawnDat.setLocz(rs2.getInt("locz"));
+								spawnDat.setX(rs2.getInt("locx"));
+								spawnDat.setY(rs2.getInt("locy"));
+								spawnDat.setZ(rs2.getInt("locz"));
 								spawnDat.setHeading(rs2.getInt("heading"));
 								spawnDat.setRespawnDelay(rs2.getInt("respawn_delay"));
 							//	SpawnTable.getInstance().addNewSpawn(spawnDat, false);	//[JOJO] ’n—‹“P‹Ž
@@ -975,10 +975,7 @@ public class FourSepulchersManager
 						{
 							L2Spawn keyBoxMobSpawn = new L2Spawn(template);
 							keyBoxMobSpawn.setAmount(1);
-							keyBoxMobSpawn.setLocx(spawnDat.getLocx());
-							keyBoxMobSpawn.setLocy(spawnDat.getLocy());
-							keyBoxMobSpawn.setLocz(spawnDat.getLocz());
-							keyBoxMobSpawn.setHeading(spawnDat.getHeading());
+							keyBoxMobSpawn.setLocation(spawnDat.getLocation());
 							keyBoxMobSpawn.setRespawnDelay(3600);
 						//	SpawnTable.getInstance().addNewSpawn(keyBoxMobSpawn, false);	//[JOJO] ’n—‹“P‹Ž
 							mob = (L2SepulcherMonsterInstance) keyBoxMobSpawn.doSpawn();

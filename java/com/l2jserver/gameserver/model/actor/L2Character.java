@@ -59,7 +59,6 @@ import com.l2jserver.gameserver.model.ChanceSkillList;
 import com.l2jserver.gameserver.model.CharEffectList;
 import com.l2jserver.gameserver.model.FusionSkill;
 import com.l2jserver.gameserver.model.L2AccessLevel;
-import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Party;
 import com.l2jserver.gameserver.model.L2World;
@@ -3696,11 +3695,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		
 		/**
 		 * Accessor to L2Character stopMove() method.
-		 * @param pos
+		 * @param loc
 		 */
-		public void stopMove(L2CharPosition pos)
+		public void stopMove(Location loc)
 		{
-			L2Character.this.stopMove(pos);
+			L2Character.this.stopMove(loc);
 		}
 		
 		/**
@@ -4170,11 +4169,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		_heading = heading;
 	}
 	
-	public Location getLocation()
-	{
-		return new Location(getX(), getY(), getZ(), getHeading(), getInstanceId());
-	}
-	
 	public final int getXdestination()
 	{
 		MoveData m = _move;
@@ -4544,14 +4538,14 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 * <li>Remove object from _knownObjects and _knownPlayer of all surrounding L2WorldRegion L2Characters</li>
 	 * </ul>
 	 * <FONT COLOR=#FF0000><B><U>Caution</U>: This method DOESN'T send Server->Client packet StopMove/StopRotation</B></FONT>
-	 * @param pos
+	 * @param loc
 	 */
-	public void stopMove(L2CharPosition pos)
+	public void stopMove(Location loc)
 	{
-		stopMove(pos, false);
+		stopMove(loc, false);
 	}
 	
-	public void stopMove(L2CharPosition pos, boolean updateKnownObjects)
+	public void stopMove(Location loc, boolean updateKnownObjects)
 	{
 		// Delete movement data of the L2Character
 		_move = null;
@@ -4560,11 +4554,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		// getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
 		
 		// Set the current position (x,y,z), its current L2WorldRegion if necessary and its heading
-		// All data are contained in a L2CharPosition object
-		if (pos != null)
+		// All data are contained in a Location object
+		if (loc != null)
 		{
-			getPosition().setXYZ(pos.x, pos.y, pos.z);
-			setHeading(pos.heading);
+			getPosition().setXYZ(loc.getX(), loc.getY(), loc.getZ());
+			setHeading(loc.getHeading());
 			revalidateZone(true);
 		}
 		broadcastPacket(new StopMove(this));
@@ -4658,7 +4652,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	 * <FONT COLOR=#FF0000><B><U>Caution</U>: This method DOESN'T send Server->Client packet MoveToPawn/CharMoveToLocation.</B></FONT><br>
 	 * <B><U>Example of use</U>:</B>
 	 * <ul>
-	 * <li>AI : onIntentionMoveTo(L2CharPosition), onIntentionPickUp(L2Object), onIntentionInteract(L2Object)</li>
+	 * <li>AI : onIntentionMoveTo(Location), onIntentionPickUp(L2Object), onIntentionInteract(L2Object)</li>
 	 * <li>FollowTask</li>
 	 * </ul>
 	 * @param x The X position of the destination

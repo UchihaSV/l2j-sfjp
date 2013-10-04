@@ -485,11 +485,11 @@ if (TEST1) {{
 					_log.warning("Couldnt find NPC id" + spawnInst.getNpcId() + " Try to update your DP");
 					return;
 				}
-				L2Spawn newSpawn = new L2Spawn(npcTemp);
 				
-				newSpawn.setLocx(x);
-				newSpawn.setLocy(y);
-				newSpawn.setLocz(z);
+				L2Spawn newSpawn = new L2Spawn(npcTemp);
+				newSpawn.setX(x);
+				newSpawn.setY(y);
+				newSpawn.setZ(z);
 				if (heading != -1)
 				{
 					newSpawn.setHeading(heading);

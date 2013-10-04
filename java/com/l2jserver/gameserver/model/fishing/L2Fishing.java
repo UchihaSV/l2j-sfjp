@@ -393,9 +393,9 @@ public class L2Fishing implements Runnable
 			e.printStackTrace();
 			return;
 		}
-		spawn.setLocx(player.getX());
-		spawn.setLocy(player.getY());
-		spawn.setLocz(player.getZ());
+		spawn.setX(player.getX());
+		spawn.setY(player.getY());
+		spawn.setZ(player.getZ());
 		spawn.setAmount(1);
 		spawn.setHeading(player.getHeading());
 		spawn.stopRespawn();

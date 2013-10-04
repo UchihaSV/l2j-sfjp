@@ -39,7 +39,6 @@ import com.l2jserver.gameserver.ai.CtrlIntention;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.engines.DocumentParser;
 import com.l2jserver.gameserver.idfactory.IdFactory;
-import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2NpcWalkerNode;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.L2WalkRoute;
@@ -322,7 +321,7 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 					
 					npc.sendDebugMessage("Starting to move at route " + routeName);
 					npc.setIsRunning(node.getRunning());
-					npc.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, new L2CharPosition(node.getMoveX(), node.getMoveY(), node.getMoveZ(), 0));
+					npc.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, new Location(node.getMoveX(), node.getMoveY(), node.getMoveZ(), 0));
 					walk.setWalkCheckTask(ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new Runnable()
 					{
 						@Override
@@ -371,7 +370,7 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 					L2NpcWalkerNode node = walk.getCurrentNode();
 					npc.sendDebugMessage("Route id: " + routeName + ", continue to node " + walk.getCurrentNodeId());
 					npc.setIsRunning(node.getRunning());
-					npc.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, new L2CharPosition(node.getMoveX(), node.getMoveY(), node.getMoveZ(), 0));
+					npc.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, new Location(node.getMoveX(), node.getMoveY(), node.getMoveZ(), 0));
 					walk.setBlocked(false);
 					walk.setStoppedByAttack(false);
 				}
@@ -596,9 +595,9 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 				// npc marker
 				if (markerNpcTemplate != null) {
 					L2Spawn spawn = new L2Spawn(markerNpcTemplate);
-					spawn.setLocx(x1);
-					spawn.setLocy(y1);
-					spawn.setLocz(z1 + com.l2jserver.Config.NPC_SPAWN_Z_MARGIN);
+					spawn.setX(x1);
+					spawn.setY(y1);
+					spawn.setZ(z1 + com.l2jserver.Config.NPC_SPAWN_Z_MARGIN);
 					spawn.setHeading(com.l2jserver.gameserver.util.Util.calculateHeadingFrom(x1, y1, x2, y2));
 					spawn.stopRespawn();
 					L2Npc n = spawn.spawnOne(false);

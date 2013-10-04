@@ -406,7 +406,6 @@ public class FortSiegeManager
 	{
 		Location _location;
 		private final int _npcId;
-		private final int _heading;
 		private final int _fortId;
 		private final int _id;
 		
@@ -414,7 +413,6 @@ public class FortSiegeManager
 		{
 			_fortId = fort_id;
 			_location = new Location(x, y, z, heading);
-			_heading = heading;
 			_npcId = npc_id;
 			_id = id;
 		}
@@ -427,11 +425,6 @@ public class FortSiegeManager
 		public int getNpcId()
 		{
 			return _npcId;
-		}
-		
-		public int getHeading()
-		{
-			return _heading;
 		}
 		
 		public int getId()
