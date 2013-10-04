@@ -26,6 +26,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.instancemanager.ItemsOnGroundManager;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
+import com.l2jserver.gameserver.model.items.instance.L2ItemInstance.ItemLocation;
 import com.l2jserver.gameserver.model.items.type.L2EtcItemType;
 
 public class ItemsAutoDestroy
@@ -66,7 +67,7 @@ public class ItemsAutoDestroy
 		for (Iterator<L2ItemInstance> it = _items.iterator(); it.hasNext(); )	//[JOJO]
 		{
 			final L2ItemInstance item = it.next();
-			if ((item == null) || (item.getDropTime() == 0) || (item.getLocation() != L2ItemInstance.ItemLocation.VOID))
+			if ((item == null) || (item.getDropTime() == 0) || (item.getItemLocation() != ItemLocation.VOID))
 			{
 				it.remove();	//[JOJO]
 			}
