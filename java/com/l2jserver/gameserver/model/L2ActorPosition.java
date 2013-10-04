@@ -21,19 +21,19 @@ package com.l2jserver.gameserver.model;
 /**
  * This class permit to pass (x, y, z, heading) position data to method.
  */
-public /*final*/ class L2CharPosition extends L2Position
+public /*final*/ class L2ActorPosition extends L2Position
 {
 	
 	public final int heading;
 	
 	/**
-	 * Constructor of L2CharPosition.
+	 * Constructor of L2ActorPosition.
 	 * @param pX
 	 * @param pY
 	 * @param pZ
 	 * @param pHeading
 	 */
-	public L2CharPosition(int pX, int pY, int pZ, int pHeading)
+	public L2ActorPosition(int pX, int pY, int pZ, int pHeading)
 	{
 		super(pX, pY, pZ);
 		heading = pHeading;

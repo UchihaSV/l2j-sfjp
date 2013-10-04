@@ -22,7 +22,7 @@ package com.l2jserver.gameserver.model;
  * This class permit to pass (npcId, x, y, z, heading) position data to method.
  * @author JOJO
  */
-public class L2NpcPosition extends L2CharPosition
+public class L2NpcPosition extends L2ActorPosition
 {
 	
 	public final int npcId;
