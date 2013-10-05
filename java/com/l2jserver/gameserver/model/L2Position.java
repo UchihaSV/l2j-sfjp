@@ -18,24 +18,44 @@
  */
 package com.l2jserver.gameserver.model;
 
+import com.l2jserver.gameserver.model.interfaces.IPositionable;
+
 /**
- * This class permit to pass (npcId, x, y, z, heading) position data to method.
  * @author JOJO
  */
-public class L2Position
+public class L2Position implements IPositionable
 {
 	public final int x, y, z;
 	
-	/**
-	 * Constructor of L2Position.
-	 * @param pX
-	 * @param pY
-	 * @param pZ
-	 */
-	public L2Position(int pX, int pY, int pZ)
+	public L2Position(int x, int y, int z)
 	{
-		x = pX;
-		y = pY;
-		z = pZ;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+	
+	@Override
+	public int getX()
+	{
+		return x;
+	}
+	
+	@Override
+	public int getY()
+	{
+		return x;
+	}
+	
+	@Override
+	public int getZ()
+	{
+		return x;
+	}
+	
+	@Deprecated
+	@Override
+	public Location getLocation()
+	{
+		throw new UnsupportedOperationException();
 	}
 }
