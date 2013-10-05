@@ -38,8 +38,8 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.DoorTable;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.datatables.SpawnTable;
-import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.L2Spawn;
+import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2DoorInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -84,12 +84,12 @@ public class FourSepulchersManager
 	protected ScheduledFuture<?> _onPartyAnnihilatedTask = null;
 	
 	// @formatter:off
-	private L2CharPosition[] START_HALL_SPAWN =
+	private Location[] START_HALL_SPAWN =
 	{
-		new L2CharPosition(181632, -85587, -7218, 0),
-		new L2CharPosition(179963, -88978, -7218, 0),
-		new L2CharPosition(173217, -86132, -7218, 0),
-		new L2CharPosition(175608, -82296, -7218, 0),
+		new Location(181632, -85587, -7218, 0),
+		new Location(179963, -88978, -7218, 0),
+		new Location(173217, -86132, -7218, 0),
+		new Location(175608, -82296, -7218, 0),
 	};
 	
 	private final int[] DUKES_HALL_GATEKEEPER =
@@ -108,19 +108,19 @@ public class FourSepulchersManager
 		25342,
 	};
 	
-	private final L2CharPosition[] SHADOW_SPAWN =
+	private final Location[] SHADOW_SPAWN =
 	{
-		new L2CharPosition(191231, -85574, -7216, 33380),
-		new L2CharPosition(189534, -88969, -7216, 32768),
-		new L2CharPosition(173195, -76560, -7215, 49277),
-		new L2CharPosition(175591, -72744, -7215, 49317),
+		new Location(191231, -85574, -7216, 33380),
+		new Location(189534, -88969, -7216, 32768),
+		new Location(173195, -76560, -7215, 49277),
+		new Location(175591, -72744, -7215, 49317),
 	};
 	// @formatter:on
 	
 	protected SortedIntBooleanArrayMap _archonSpawned = new SortedIntBooleanArrayMap();
 	protected SortedIntBooleanArrayMap _hallInUse = new SortedIntBooleanArrayMap();
 //	protected FastMap<Integer, L2PcInstance> _challengers = new FastMap<>();
-	protected SortedIntObjectArrayMap<L2CharPosition> _startHallSpawns = new SortedIntObjectArrayMap<>();
+	protected SortedIntObjectArrayMap<Location> _startHallSpawns = new SortedIntObjectArrayMap<>();
 	protected SortedIntIntArrayMap _hallGateKeepers = new SortedIntIntArrayMap();
 	protected SortedIntIntArrayMap _keyBoxNpc = new SortedIntIntArrayMap();
 	protected SortedIntIntArrayMap _victim = new SortedIntIntArrayMap();
@@ -198,10 +198,10 @@ public class FourSepulchersManager
 	
 	public void clean()
 	{
-		for (L2CharPosition location : _startHallSpawns.values())
+		for (Location location : _startHallSpawns.values())
 		{
 			L2BossZone zone;
-			if ((zone = GrandBossManager.getInstance().getZone(location.x, location.y, location.z)) != null)
+			if ((zone = GrandBossManager.getInstance().getZone(location.getX(), location.getY(), location.getZ())) != null)
 				zone.oustAllPlayers();
 			else if (GrandBossManager.getInstance().getZones().size() > 0)
 				throw new RuntimeException();
@@ -615,7 +615,7 @@ public class FourSepulchersManager
 		{
 			int keyNpcId = DUKES_HALL_GATEKEEPER[i];
 			int spawnNpcId = SHADOW_OF_HALISHA[i];
-			L2CharPosition loc = SHADOW_SPAWN[i];
+			Location loc = SHADOW_SPAWN[i];
 			L2NpcTemplate template = NpcTable.getInstance().getTemplate(spawnNpcId);
 			if (template != null)
 			{
@@ -624,8 +624,8 @@ public class FourSepulchersManager
 					L2Spawn spawnDat;
 					spawnDat = new L2Spawn(template);
 					spawnDat.setAmount(1);
-					spawnDat.setXYZ(loc.x, loc.y, loc.z);
-					spawnDat.setHeading(loc.heading);
+					spawnDat.setXYZ(loc.getX(), loc.getY(), loc.getZ());
+					spawnDat.setHeading(loc.getHeading());
 				//	SpawnTable.getInstance().addNewSpawn(spawnDat, false);	//[JOJO] ’n—‹“P‹Ž
 					_shadowSpawns.put(keyNpcId, spawnDat);
 				}
@@ -799,7 +799,7 @@ public class FourSepulchersManager
 	
 	private void entry(int npcId, L2PcInstance player)
 	{
-		L2CharPosition location = _startHallSpawns.get(npcId);
+		Location location = _startHallSpawns.get(npcId);
 		
 		if (Config.FS_PARTY_MEMBER_COUNT > 1)
 		{
@@ -814,10 +814,10 @@ public class FourSepulchersManager
 			
 			for (L2PcInstance mem : members)
 			{
-				GrandBossManager.getInstance().getZone(location.x, location.y, location.z).allowPlayerEntry(mem, 30);
+				GrandBossManager.getInstance().getZone(location.getX(), location.getY(), location.getZ()).allowPlayerEntry(mem, 30);
 				int driftx = Rnd.get(-80, 80);
 				int drifty = Rnd.get(-80, 80);
-				mem.teleToLocation(location.x + driftx, location.y + drifty, location.z);
+				mem.teleToLocation(location.getX() + driftx, location.getY() + drifty, location.getZ());
 				mem.destroyItemByItemId("Quest", ENTRANCE_PASS, 1, mem, true);
 				if (mem.getInventory().getItemByItemId(ANTIQUE_BROOCH) == null)
 				{
@@ -850,10 +850,10 @@ public class FourSepulchersManager
 			
 			for (L2PcInstance mem : members)
 			{
-				GrandBossManager.getInstance().getZone(location.x, location.y, location.z).allowPlayerEntry(mem, 30);
+				GrandBossManager.getInstance().getZone(location.getX(), location.getY(), location.getZ()).allowPlayerEntry(mem, 30);
 				int driftx = Rnd.get(-80, 80);
 				int drifty = Rnd.get(-80, 80);
-				mem.teleToLocation(location.x + driftx, location.y + drifty, location.z);
+				mem.teleToLocation(location.getX() + driftx, location.getY() + drifty, location.getZ());
 				mem.destroyItemByItemId("Quest", ENTRANCE_PASS, 1, mem, true);
 				if (mem.getInventory().getItemByItemId(ANTIQUE_BROOCH) == null)
 				{
@@ -875,10 +875,10 @@ public class FourSepulchersManager
 		}
 		else
 		{
-			GrandBossManager.getInstance().getZone(location.x, location.y, location.z).allowPlayerEntry(player, 30);
+			GrandBossManager.getInstance().getZone(location.getX(), location.getY(), location.getZ()).allowPlayerEntry(player, 30);
 			int driftx = Rnd.get(-80, 80);
 			int drifty = Rnd.get(-80, 80);
-			player.teleToLocation(location.x + driftx, location.y + drifty, location.z);
+			player.teleToLocation(location.getX() + driftx, location.getY() + drifty, location.getZ());
 			player.destroyItemByItemId("Quest", ENTRANCE_PASS, 1, player, true);
 			if (player.getInventory().getItemByItemId(ANTIQUE_BROOCH) == null)
 			{

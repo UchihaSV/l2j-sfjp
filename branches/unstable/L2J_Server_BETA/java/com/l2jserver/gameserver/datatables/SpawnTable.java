@@ -213,14 +213,14 @@ public final class SpawnTable
 			}
 			
 			//[JOJO]
-			String zoneName = MapRegionManager.getInstance().getClosestTownName(spawn.getLocx(),spawn.getLocy());
+			String zoneName = MapRegionManager.getInstance().getClosestTownName(spawn.getX(),spawn.getY());
 			addSqlLog("-- " + Util.dateFormat() + " " + spawn.getTemplate().getTitle() + " " + spawn.getTemplate().getName() + " - " + zoneName + "\r\n"
 					+ "INSERT INTO " + spawnTable + " SET location='//spawn." + zoneName + "'"
 					+ ", count=" + spawn.getAmount()
 					+ ", npc_templateid=" + spawn.getNpcid()
-					+ ", locx=" + spawn.getLocx()
-					+ ", locy=" + spawn.getLocy()
-					+ ", locz=" + spawn.getLocz()
+					+ ", locx=" + spawn.getX()
+					+ ", locy=" + spawn.getY()
+					+ ", locz=" + spawn.getZ()
 					+ ", heading=" + spawn.getHeading()
 					+ ", respawn_delay=" + (spawn.getRespawnDelay() / 1000)
 					+ ", loc_id=" + spawn.getLocation()
@@ -258,13 +258,13 @@ public final class SpawnTable
 				_log.log(Level.WARNING, getClass().getSimpleName() + ": Spawn " + spawn + " could not be removed from DB: " + e.getMessage(), e);
 			}
 			//[JOJO]
-			String zoneName = MapRegionManager.getInstance().getClosestTownName(spawn.getLocx(),spawn.getLocy());
+			String zoneName = MapRegionManager.getInstance().getClosestTownName(spawn.getX(),spawn.getY());
 			addSqlLog("-- " + Util.dateFormat() + " " + spawn.getTemplate().getTitle() + " " + spawn.getTemplate().getName() + " - " + zoneName + "\r\n"
 					+ "DELETE FROM "
 					+ (spawn.isCustom() ? "custom_spawnlist" : "spawnlist")
-					+ " WHERE locx=" + spawn.getLocx()
-					+ " AND locy=" + spawn.getLocy()
-					+ " AND locz=" + spawn.getLocz()
+					+ " WHERE locx=" + spawn.getX()
+					+ " AND locy=" + spawn.getY()
+					+ " AND locz=" + spawn.getZ()
 					+ " AND npc_templateid=" + spawn.getNpcid()
 					+ " AND heading=" + spawn.getHeading()
 					+ ";\r\n");

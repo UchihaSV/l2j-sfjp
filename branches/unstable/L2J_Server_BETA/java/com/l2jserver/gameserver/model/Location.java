@@ -114,6 +114,15 @@ public class Location implements IPositionable
 		_z = z;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	public void setXYZ(int x, int y, int z)	//[JOJO]
+	{
+		_x = x;
+		_y = y;
+		_z = z;
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * Get the heading.
 	 * @return the heading
