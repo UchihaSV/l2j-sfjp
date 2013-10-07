@@ -2079,6 +2079,11 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public void setPkKills(int pkKills)
 	{
+		if (!getEvents().onPKChange(_pkKills, pkKills))
+		{
+			return;
+		}
+		
 		_pkKills = pkKills;
 	}
 	
@@ -2190,6 +2195,11 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public void setKarma(int karma)
 	{
+		if (!getEvents().onKarmaChange(_karma, karma))
+		{
+			return;
+		}
+		
 		if (karma < 0)
 		{
 			karma = 0;
@@ -2483,6 +2493,10 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public void setPvpKills(int pvpKills)
 	{
+		if (!getEvents().onPvPChange(_pvpKills, pvpKills))
+		{
+			return;
+		}
 		_pvpKills = pvpKills;
 	}
 	
@@ -2500,6 +2514,10 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public void setFame(int fame)
 	{
+		if (!getEvents().onFameChange(_fame, fame))
+		{
+			return;
+		}
 		_fame = (fame > Config.MAX_PERSONAL_FAME_POINTS) ? Config.MAX_PERSONAL_FAME_POINTS : fame;
 	}
 	

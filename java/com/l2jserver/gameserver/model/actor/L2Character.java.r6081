@@ -23,7 +23,6 @@ import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_FOLLOW;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,6 +49,7 @@ import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.handler.ISkillHandler;
 import com.l2jserver.gameserver.handler.SkillHandler;
 import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
+import com.l2jserver.gameserver.instancemanager.GlobalVariablesManager;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager.TeleportWhereType;
@@ -162,7 +162,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	private L2Skill _lastSkillCast;
 	private L2Skill _lastSimultaneousSkillCast;
 	
-	private boolean _isFallsdown; // [L2J_JP ADD]
 	private boolean _isDead = false;
 	private boolean _isImmobilized = false;
 	private boolean _isOverloaded = false; // the char is carrying too much
@@ -192,7 +191,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	private Calculator[] _calculators;
 	
 	/** Map containing all skills of this character. */
-	private final Map<Integer, L2Skill> _skills;// = new FastMap<Integer, L2Skill>().shared();
+	private final Map<Integer, L2Skill> _skills = new FastMap<Integer, L2Skill>().shared();
 	
 	/** Map containing the active chance skills on this character */
 	private volatile ChanceSkillList _chanceSkills;
@@ -209,7 +208,11 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	
 	private int _team;
 	
+	protected long _exceptions = 0L;
+	
 	private boolean _lethalable = true;
+	
+	protected final String COND_EXCEPTIONS = "COND_EX_" + getObjectId();
 	
 	private volatile Map<Integer, OptionsSkillHolder> _triggerSkills;
 	
@@ -403,13 +406,11 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		if (isDoor())
 		{
 			_calculators = Formulas.getStdDoorCalculators();
-			_skills = Collections.emptyMap();
 		}
 		else if (isNpc())
 		{
 			// Copy the Standard Calculators of the L2NPCInstance in _calculators
 			_calculators = NPC_STD_CALCULATOR;
-			_skills = new FastMap<Integer, L2Skill>().shared();
 			
 			// Copy the skills of the L2NPCInstance from its template to the L2Character Instance
 			// The skills list can be affected by spell effects so it's necessary to make a copy
@@ -427,9 +428,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		else
 		{
 			// If L2Character is a L2PcInstance or a L2Summon, create the basic calculator set
-			//    or a L2StaticObjectInstance or a L2BoatInstance or a L2AirShipInstance +[JOJO]
 			_calculators = new Calculator[Stats.NUM_STATS];
-			_skills = new FastMap<Integer, L2Skill>().shared();
 			
 			if (isSummon())
 			{
@@ -705,11 +704,11 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	 */
 	public void teleToLocation(Location loc, int randomOffset)
 	{
-		teleToInstance(loc.getInstanceId(), loc.getX(), loc.getY(), loc.getZ(), getHeading(), randomOffset);	//[JOJO]
-	}
-	public void teleToInstance(int instanceId, int x, int y, int z, int heading, int randomOffset)	//[JOJO]
-	{
-		setInstanceId(instanceId);
+		setInstanceId(loc.getInstanceId());
+		
+		int x = loc.getX();
+		int y = loc.getY();
+		int z = loc.getZ();
 		
 		if (isPlayer() && DimensionalRiftManager.getInstance().checkIfInRiftZone(getX(), getY(), getZ(), true)) // true -> ignore waiting room :)
 		{
@@ -724,32 +723,41 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			y = newCoords[1];
 			z = newCoords[2];
 		}
-		teleToLocation(x, y, z, heading, randomOffset);
-	}
-	public void teleToInstance(int instanceId, int x, int y, int z, boolean allowRandomOffset)	//[JOJO]
-	{
-		teleToInstance(instanceId, x, y, z, getHeading(), (allowRandomOffset ? Config.MAX_OFFSET_ON_TELEPORT : 0));
+		teleToLocation(x, y, z, getHeading(), randomOffset);
 	}
 	
 	public void teleToLocation(TeleportWhereType teleportWhere)
 	{
-		Location loc = MapRegionManager.getInstance().getTeleToLocation(this, teleportWhere);
-		teleToInstance(loc.getInstanceId(), loc.getX(), loc.getY(), loc.getZ(), getHeading(), Config.MAX_OFFSET_ON_TELEPORT);	//[JOJO]
+		teleToLocation(MapRegionManager.getInstance().getTeleToLocation(this, teleportWhere), true);
 	}
 	
 	public void teleToLocation(Location loc, boolean allowRandomOffset)
 	{
-		teleToInstance(loc.getInstanceId(), loc.getX(), loc.getY(), loc.getZ(), getHeading(), (allowRandomOffset ? Config.MAX_OFFSET_ON_TELEPORT : 0));	//[JOJO]
+		teleToLocation(loc, (allowRandomOffset ? Config.MAX_OFFSET_ON_TELEPORT : 0));
 	}
 	
 	public void teleToLocation(int x, int y, int z, boolean allowRandomOffset)
 	{
-		teleToLocation(x, y, z, getHeading(), (allowRandomOffset ? Config.MAX_OFFSET_ON_TELEPORT : 0));
+		if (allowRandomOffset)
+		{
+			teleToLocation(x, y, z, Config.MAX_OFFSET_ON_TELEPORT);
+		}
+		else
+		{
+			teleToLocation(x, y, z, 0);
+		}
 	}
 	
 	public void teleToLocation(int x, int y, int z, int heading, boolean allowRandomOffset)
 	{
-		teleToLocation(x, y, z, heading, (allowRandomOffset ? Config.MAX_OFFSET_ON_TELEPORT : 0));
+		if (allowRandomOffset)
+		{
+			teleToLocation(x, y, z, heading, Config.MAX_OFFSET_ON_TELEPORT);
+		}
+		else
+		{
+			teleToLocation(x, y, z, heading, 0);
+		}
 	}
 	
 	/**
@@ -1384,6 +1392,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		
 		boolean hitted = doAttackHitSimple(attack, target, 100, sAtk);
 		double attackpercent = 85;
+		L2Character temp;
 		Collection<L2Object> objs = getKnownList().getKnownObjects().values();
 		
 		for (L2Object obj : objs)
@@ -1431,7 +1440,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 					continue;
 				}
 				
-				L2Character temp = (L2Character) obj;
+				temp = (L2Character) obj;
 				
 				// Launch a simple attack against the L2Character targeted
 				if (!temp.isAlikeDead())
@@ -1777,8 +1786,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		
 		if (!simultaneously)
 		{
-			// Set the _castEndTime. +10 ticks for lag situations, will be reseted in onMagicFinalizer
-			_castEndTime       = 10 + GameTimeController.getInstance().getGameTicks() + (skillTime / GameTimeController.MILLIS_IN_TICK); //[JOJO]
 			_castInterruptTime = -2 + GameTimeController.getInstance().getGameTicks() + (skillTime / GameTimeController.MILLIS_IN_TICK);
 			setLastSkillCast(skill);
 		}
@@ -1903,7 +1910,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		broadcastPacket(new MagicSkillUse(this, target, skill.getDisplayId(), skill.getDisplayLevel(), skillTime, reuseDelay));
 		
 		// Send a system message USE_S1 to the L2Character
-	//	if (!skill.isPotion() && isPlayer() && magicId != 1312) //[L2J_JP EDIT - TSL]	//[JOJO]r5394廃止
 		if (isPlayer())
 		{
 			SystemMessage sm = null;
@@ -2143,6 +2149,15 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			// Check if the caster owns enough consumed Item to cast
 			if ((requiredItems == null) || (requiredItems.getCount() < skill.getItemConsume()))
 			{
+				// Checked: when a summon skill failed, server show required consume item count
+				if (skill.getSkillType() == L2SkillType.SUMMON)
+				{
+					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.SUMMONING_SERVITOR_COSTS_S2_S1);
+					sm.addItemName(skill.getItemConsumeId());
+					sm.addNumber(skill.getItemConsume());
+					sendPacket(sm);
+				}
+				else
 				{
 					// Send a System Message to the caster
 					sendPacket(SystemMessageId.THERE_ARE_NOT_ENOUGH_NECESSARY_ITEMS_TO_USE_THE_SKILL);
@@ -2539,7 +2554,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	 */
 	public boolean isAttackingDisabled()
 	{
-		return isFlying() || isStunned() || isSleeping() || (_attackEndTime > GameTimeController.getInstance().getGameTicks()) || isAlikeDead() || isParalyzed() || isPhysicalAttackMuted() || isCoreAIDisabled() /*[L2J_JP]*/|| isFallsdown()/**/;
+		return isFlying() || isStunned() || isSleeping() || (_attackEndTime > GameTimeController.getInstance().getGameTicks()) || isAlikeDead() || isParalyzed() || isPhysicalAttackMuted() || isCoreAIDisabled();
 	}
 	
 	public final Calculator[] getCalculators()
@@ -2573,16 +2588,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		_isDead = value;
 	}
 	
-	public final boolean isFallsdown() // [L2J_JP]
-	{
-		return _isFallsdown;
-	}
-	
-	public final void setIsFallsdown(boolean value) // [L2J_JP]
-	{
-		_isFallsdown = value;
-	}
-	
 	public boolean isImmobilized()
 	{
 		return _isImmobilized;
@@ -2614,8 +2619,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	public boolean isMovementDisabled()
 	{
 		// check for isTeleporting to prevent teleport cheating (if appear packet not received)
-		return isStunned() || isRooted() || isSleeping() || isOverloaded() || isParalyzed() || isImmobilized() || isAlikeDead() || isTeleporting()
-		/*[L2J_JP]*/|| isFallsdown();
+		return isStunned() || isRooted() || isSleeping() || isOverloaded() || isParalyzed() || isImmobilized() || isAlikeDead() || isTeleporting();
 	}
 	
 	/**
@@ -3140,13 +3144,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	/** Map 32 bits (0x0000) containing all abnormal effect in progress */
 	private int _AbnormalEffects;
 	
-	public final int getAbnormalEffects() //+[JOJO]
-	{
-		return _AbnormalEffects;
-	}
-	
-	protected CharEffectList _effects = new CharEffectList(this);
-	
 	private int _SpecialEffects;
 	
 	/**
@@ -3194,86 +3191,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			return;
 		}
 		
-		// [L2J_JP ADD START][JOJO]
-		setIsFallsdown(true);
-		
-		if (Config.FAILD_FAKEDEATH)
-		{
-			
-			boolean isFakeDeath = true;
-			
-			//It fails in Fake Death at the probability
-			if (getAttackByList() != null && getAttackByList().size() != 0)
-			{
-				boolean isRaid = false;
-				int highestLevel = this.getLevel();
-				for (L2Character atkChar : getAttackByList())
-				{
-					if (atkChar.isRaid())
-					{
-						isRaid = true;
-						break;
-					}
-					if (atkChar.getLevel() > highestLevel)
-						highestLevel = atkChar.getLevel();
-				}
-				//If L2RaidBoss in getAttackByList(), Fake Death will have failed.
-				if (isRaid)
-				{
-					isFakeDeath = false;
-				}
-				else
-				{
-					int _diff = highestLevel - this.getLevel();
-					switch (_diff)
-					{
-						case 1:
-						case 2:
-						case 3:
-						case 4:
-						case 5:
-							if (Rnd.get(100) < 5) //fails at 5%.
-								isFakeDeath = false;
-							break;
-						case 6:
-							if (Rnd.get(100) < 10) //fails at 10%.
-								isFakeDeath = false;
-							break;
-						case 7:
-							if (Rnd.get(100) < 15) //fails at 15%.
-								isFakeDeath = false;
-							break;
-						case 8:
-							if (Rnd.get(100) < 20) //fails at 20%.
-								isFakeDeath = false;
-							break;
-						case 9:
-							if (Rnd.get(100) < 25) //fails at 25%.
-								isFakeDeath = false;
-							break;
-						default:
-							if (_diff > 9)
-							{
-								if (Rnd.get(100) < 50) //fails at 50%.
-									isFakeDeath = false;
-							}
-					}
-				}
-			}
-			else
-			//attacked from aggressive monster
-			{
-				if (Rnd.get(100) < 25) //fails at 25%.
-					isFakeDeath = false;
-			}
-			getActingPlayer().setIsFakeDeath(isFakeDeath);
-		}
-		else
-		{
-			getActingPlayer().setIsFakeDeath(true);
-		}
-		// [L2J_JP ADD END]
-		
+		getActingPlayer().setIsFakeDeath(true);
 		// Aborts any attacks/casts if fake dead
 		abortAttack();
 		abortCast();
@@ -3426,7 +3344,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			stopEffects(L2EffectType.FAKE_DEATH);
 		}
 		
-		setIsFallsdown(false); // [L2J_JP_ADD]
 		// if this is a player instance, start the grace period for this character (grace from mobs only)!
 		if (isPlayer())
 		{
@@ -3779,7 +3696,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	private int _disableBowAttackEndTime;
 	private int _disableCrossBowAttackEndTime;
 	
-	private int _castEndTime; //[L2J_JP]
 	private int _castInterruptTime;
 	
 	/** Table of calculators containing all standard NPC calculator (ex : ACCURACY_COMBAT, EVASION_RATE) */
@@ -3859,8 +3775,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	 */
 	public final void addStatFuncs(List<Func> funcs)
 	{
-		if (funcs.size() == 0) return;	//[JOJO]
-		List<Stats> modifiedStats = new ArrayList<>(funcs.size());
+		List<Stats> modifiedStats = new ArrayList<>();
 		for (Func f : funcs)
 		{
 			modifiedStats.add(f.stat);
@@ -3945,8 +3860,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	 */
 	public final void removeStatFuncs(Func[] funcs)
 	{
-		if (funcs.length == 0) return;	//[JOJO]
-		List<Stats> modifiedStats = new ArrayList<>(funcs.length);
+		List<Stats> modifiedStats = new ArrayList<>();
 		for (Func f : funcs)
 		{
 			modifiedStats.add(f.stat);
@@ -5496,14 +5410,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 				// Notify AI with EVT_ATTACKED
 				if (target.hasAI())
 				{
-					if (Config.FIX_FleeNpc && target.getTemplate().getBasePAtk() == 0 && target.getTemplate().getBaseMAtk() == 0)
-					{
-						// pass
-					}
-					else
-					{
-						target.getAI().notifyEvent(CtrlEvent.EVT_ATTACKED, this);
-					}
+					target.getAI().notifyEvent(CtrlEvent.EVT_ATTACKED, this);
 				}
 				getAI().clientStartAutoAttack();
 				if (isSummon())
@@ -6037,7 +5944,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	 */
 	public final Collection<L2Skill> getAllSkills()
 	{
-		return _skills.size() == 0 ? Collections.<L2Skill>emptyList() : new ArrayList<>(_skills.values());
+		return new ArrayList<>(_skills.values());
 	}
 	
 	/**
@@ -6517,7 +6424,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			return;
 		}
 		
-		_disabledSkills.remove(skill.getReuseHashCode());
+		_disabledSkills.remove(Integer.valueOf(skill.getReuseHashCode()));
 	}
 	
 	/**
@@ -6537,7 +6444,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			_disabledSkills = new L2TIntObjectHashMap<>();
 		}
 		
-		_disabledSkills.put(skill.getReuseHashCode(), delay > 10 ? System.currentTimeMillis() + delay : Long.MAX_VALUE);
+		_disabledSkills.put(Integer.valueOf(skill.getReuseHashCode()), delay > 10 ? System.currentTimeMillis() + delay : Long.MAX_VALUE);
 	}
 	
 	/**
@@ -6574,7 +6481,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			return false;
 		}
 		
-		final Long timeStamp = _disabledSkills.get(reuseHashcode);
+		final Long timeStamp = _disabledSkills.get(Integer.valueOf(reuseHashcode));
 		if (timeStamp == null)
 		{
 			return false;
@@ -6582,7 +6489,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		
 		if (timeStamp < System.currentTimeMillis())
 		{
-			_disabledSkills.remove(reuseHashcode);
+			_disabledSkills.remove(Integer.valueOf(reuseHashcode));
 			return false;
 		}
 		
@@ -6820,10 +6727,9 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 					{
 						L2Npc npcMob = (L2Npc) spMob;
 						
-						List<Quest> eventQuests;
-						if (npcMob.isInsideRadius(player, 1000, true, true) && (eventQuests = npcMob.getTemplate().getEventQuests(Quest.QuestEventType.ON_SKILL_SEE)) != null)
+						if ((npcMob.isInsideRadius(player, 1000, true, true)) && (npcMob.getTemplate().getEventQuests(Quest.QuestEventType.ON_SKILL_SEE) != null))
 						{
-							for (Quest quest : eventQuests)
+							for (Quest quest : npcMob.getTemplate().getEventQuests(Quest.QuestEventType.ON_SKILL_SEE))
 							{
 								quest.notifySkillSee(npcMob, player, skill, targets, isSummon());
 							}
@@ -7016,18 +6922,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	public int getBowAttackEndTime()
 	{
 		return _disableBowAttackEndTime;
-	}
-	
-	// [JOJO] スレッド タイマー用
-	public long getCastEndTimeLeftMilli()
-	{
-		if (isCastingNow())
-		{
-			int t = _castEndTime - GameTimeController.getInstance().getGameTicks();
-			if (t > 0)
-				return (long) t * GameTimeController.MILLIS_IN_TICK;
-		}
-		return 0L;
 	}
 	
 	/**
@@ -7523,9 +7417,27 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		}
 	}
 	
+	public void addOverrideCond(PcCondOverride... excs)
+	{
+		for (PcCondOverride exc : excs)
+		{
+			_exceptions |= exc.getMask();
+		}
+		GlobalVariablesManager.getInstance().storeVariable(COND_EXCEPTIONS, Long.toString(_exceptions));
+	}
+	
+	public void removeOverridedCond(PcCondOverride... excs)
+	{
+		for (PcCondOverride exc : excs)
+		{
+			_exceptions &= ~exc.getMask();
+		}
+		GlobalVariablesManager.getInstance().storeVariable(COND_EXCEPTIONS, Long.toString(_exceptions));
+	}
+	
 	public boolean canOverrideCond(PcCondOverride excs)
 	{
-		return false;	//[JOJO] L2Chracter から l2pcInstance へ引越し.
+		return (_exceptions & excs.getMask()) == excs.getMask();
 	}
 	
 	public void setLethalable(boolean val)
@@ -7684,8 +7596,3 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		attacker.getEvents().onDamageDealt(damage, this, skill, critical);
 	}
 }
-
-// L2J r2884:
-//  svn move 
-//   java\net\sf\l2j\gameserver\model\L2Character.java
-//   java\net\sf\l2j\gameserver\model\actor\L2Character.java
