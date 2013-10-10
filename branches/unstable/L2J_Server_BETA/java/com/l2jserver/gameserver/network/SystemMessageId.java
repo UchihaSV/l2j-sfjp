@@ -1700,6 +1700,7 @@ public final class SystemMessageId
 	 * Message: &#22294;&#20687;&#27284;&#26696;&#19981;&#31526;&#65292;&#35531;&#20351;&#29992;&#49;&#54;&#42;&#49;&#50;&#20687;&#32032;&#65292;&#50;&#53;&#54;&#33394;&#30340;&#98;&#109;&#112;&#27284;&#26696;&#12290;<br>
 	 * Message: The size of the image file is inappropriate. Please adjust to 16x12 pixels.
 	 */
+	public static final SystemMessageId THE_SIZE_OF_THE_IMAGE_FILE_IS_INAPPROPRIATE;
 	
 	/**
 	 * ID: 210<br>
@@ -19750,6 +19751,12 @@ public final class SystemMessageId
 	public static final SystemMessageId C1_IS_CURRENTLY_DEAD_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION;
 	
 	/**
+	 * ID: 3140<br>
+	 * Message: The crest was successfully registered.
+	 */
+	public static final SystemMessageId CLAN_CREST_WAS_SUCCESSFULLY_REGISTRED;
+	
+	/**
 	 * ID: 3144<br>
 	 * Message: $s1Ç…$s2ÇÃëÆê´Çïtó^ÇµÇ‹ÇµÇΩÅB$s3Ç…ëŒÇ∑ÇÈëœê´Ç™å¸è„ÇµÇ‹ÇµÇΩÅB<br>
 	 * Message: &#22312;&#12300;&#36;&#115;&#49;&#12301;&#19978;&#24050;&#25104;&#21151;&#36070;&#20104;&#12300;&#36;&#115;&#50;&#12301;&#23660;&#24615;&#65292;&#22240;&#27492;&#22686;&#21152;&#20102;&#23565;&#12300;&#36;&#115;&#51;&#12301;&#30340;&#25239;&#24615;&#12290;<br>
@@ -20218,6 +20225,7 @@ public final class SystemMessageId
 		INCORRECT_CHARACTER_NAME_TRY_AGAIN = new SystemMessageId(205);
 		ENTER_CLAN_NAME_TO_DECLARE_WAR = new SystemMessageId(206);
 		S2_OF_THE_CLAN_S1_REQUESTS_WAR = new SystemMessageId(207);
+		THE_SIZE_OF_THE_IMAGE_FILE_IS_INAPPROPRIATE = new SystemMessageId(209);
 		YOU_ARE_NOT_A_CLAN_MEMBER = new SystemMessageId(212);
 		NOT_WORKING_PLEASE_TRY_AGAIN_LATER = new SystemMessageId(213);
 		TITLE_CHANGED = new SystemMessageId(214);
@@ -22464,6 +22472,7 @@ public final class SystemMessageId
 		PARTY_LOOT_CHANGE_CANCELLED = new SystemMessageId(3137);
 		PARTY_LOOT_CHANGED_S1 = new SystemMessageId(3138);
 		C1_IS_CURRENTLY_DEAD_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION = new SystemMessageId(3139);
+		CLAN_CREST_WAS_SUCCESSFULLY_REGISTRED = new SystemMessageId(3140);
 		THE_S2_ATTRIBUTE_WAS_SUCCESSFULLY_BESTOWED_ON_S1_RES_TO_S3_INCREASED = new SystemMessageId(3144);
 		YOU_WILL_BE_EXPELLED_IN_S1 = new SystemMessageId(3147);
 		YOU_HAVE_REQUESTED_COUPLE_ACTION_C1 = new SystemMessageId(3150);

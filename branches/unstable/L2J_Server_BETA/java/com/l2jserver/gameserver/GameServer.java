@@ -37,7 +37,6 @@ import org.mmocore.network.SelectorThread;
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.Server;
-import com.l2jserver.gameserver.cache.CrestCache;
 import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.datatables.AdminTable;
 import com.l2jserver.gameserver.datatables.ArmorSetsData;
@@ -48,6 +47,7 @@ import com.l2jserver.gameserver.datatables.CharSummonTable;
 import com.l2jserver.gameserver.datatables.CharTemplateTable;
 import com.l2jserver.gameserver.datatables.ClanTable;
 import com.l2jserver.gameserver.datatables.ClassListData;
+import com.l2jserver.gameserver.datatables.CrestTable;
 import com.l2jserver.gameserver.datatables.DoorTable;
 import com.l2jserver.gameserver.datatables.EnchantGroupsData;
 import com.l2jserver.gameserver.datatables.EnchantHPBonusData;
@@ -202,7 +202,6 @@ public class GameServer
 		
 		ThreadPoolManager.getInstance();
 		
-		new File(Config.DATAPACK_ROOT, "data/crests").mkdirs();
 		new File("log/game").mkdirs();
 		
 		// load script engines
@@ -302,7 +301,7 @@ public class GameServer
 		// Call to load caches
 		printSection("Cache");
 		HtmCache.getInstance();
-		CrestCache.getInstance();
+		CrestTable.getInstance();
 		TeleportLocationTable.getInstance();
 		UIData.getInstance();
 		PartyMatchWaitingList.getInstance();
