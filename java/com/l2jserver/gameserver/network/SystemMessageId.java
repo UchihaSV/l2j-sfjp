@@ -19752,6 +19752,8 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3140<br>
+	 * Message: ƒGƒ“ƒuƒŒƒ€‚ğ“o˜^‚µ‚Ü‚µ‚½B<br>
+	 * Message: &#32011;&#31456;&#30331;&#37636;&#25104;&#21151;&#12290;<br>
 	 * Message: The crest was successfully registered.
 	 */
 	public static final SystemMessageId CLAN_CREST_WAS_SUCCESSFULLY_REGISTRED;
