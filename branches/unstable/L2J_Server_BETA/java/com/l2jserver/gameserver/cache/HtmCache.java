@@ -84,7 +84,7 @@ if (CHECK_HASH_COLLISION) {{
 		reload(Config.DATAPACK_ROOT);
 	}
 	
-	private void reload(File f)
+	public void reload(File f)
 	{
 		if (getLoadedFiles() > 0)
 			_log.info("Cache[HTML]: " + String.format("%.3f", getMemoryUsage()) + " megabytes on " + getLoadedFiles() + " files loaded");
