@@ -95,7 +95,6 @@ import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
 import com.l2jserver.gameserver.instancemanager.DuelManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.FortSiegeManager;
-import com.l2jserver.gameserver.instancemanager.GlobalVariablesManager;
 import com.l2jserver.gameserver.instancemanager.GrandBossManager;
 import com.l2jserver.gameserver.instancemanager.HandysBlockCheckerManager;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
@@ -315,7 +314,6 @@ import com.l2jserver.gameserver.scripting.scriptengine.events.TransformEvent;
 import com.l2jserver.gameserver.scripting.scriptengine.listeners.player.EquipmentListener;
 import com.l2jserver.gameserver.scripting.scriptengine.listeners.player.EventListener;
 import com.l2jserver.gameserver.scripting.scriptengine.listeners.player.HennaListener;
-import com.l2jserver.gameserver.scripting.scriptengine.listeners.player.PlayerDespawnListener;
 import com.l2jserver.gameserver.scripting.scriptengine.listeners.player.ProfessionChangeListener;
 import com.l2jserver.gameserver.scripting.scriptengine.listeners.player.TransformListener;
 import com.l2jserver.gameserver.taskmanager.AttackStanceTaskManager;
@@ -384,6 +382,8 @@ public final class L2PcInstance extends L2Playable
 	private static final String LOAD_ZONE_RESTART_LIMIT = "SELECT time_limit FROM character_norestart_zone_time WHERE charId = ?";
 	private static final String UPDATE_ZONE_RESTART_LIMIT = "REPLACE INTO character_norestart_zone_time (charId, time_limit) VALUES (?,?)";
 	
+	private static final String COND_OVERRIDE_KEY = "cond_override";
+	
 	public static final int ID_NONE = -1;
 	
 	public static final int REQUEST_TIMEOUT = 15;
@@ -393,7 +393,6 @@ public final class L2PcInstance extends L2Playable
 	public static final int STORE_PRIVATE_MANUFACTURE = 5;
 	public static final int STORE_PRIVATE_PACKAGE_SELL = 8;
 	
-	private static final FastList<PlayerDespawnListener> DESPAWN_LISTENERS = new FastList<PlayerDespawnListener>().shared();
 	private static final FastList<HennaListener> HENNA_LISTENERS = new FastList<HennaListener>().shared();
 	private static final FastList<EquipmentListener> GLOBAL_EQUIPMENT_LISTENERS = new FastList<EquipmentListener>().shared();
 	private static final FastList<ProfessionChangeListener> GLOBAL_PROFESSION_CHANGE_LISTENERS = new FastList<ProfessionChangeListener>().shared();
@@ -1318,10 +1317,6 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public void logout()
 	{
-		for (PlayerDespawnListener listener : DESPAWN_LISTENERS)
-		{
-			listener.onDespawn(this);
-		}
 		logout(true);
 	}
 	
@@ -7125,29 +7120,6 @@ public final class L2PcInstance extends L2Playable
 		return _accessLevel;
 	}
 	
-	//[JOJO]-------------------------------------------------
-	// L2Chracter ‚©‚ç l2pcInstance ‚Öˆø‰z‚µ.
-	private long _exceptions = 0L;
-	private final String COND_EXCEPTIONS = "COND_EX_" + getObjectId();
-	
-	public void addOverrideCond(PcCondOverride exc)
-	{
-		_exceptions |= exc.getMask();
-		GlobalVariablesManager.getInstance().storeVariable(COND_EXCEPTIONS, Long.toString(_exceptions));
-	}
-	
-	public void removeOverridedCond(PcCondOverride exc)
-	{
-		_exceptions &= ~exc.getMask();
-		GlobalVariablesManager.getInstance().storeVariable(COND_EXCEPTIONS, Long.toString(_exceptions));
-	}
-	
-	@Override public boolean canOverrideCond(PcCondOverride excs)
-	{
-		return (_exceptions & excs.getMask()) != 0;
-	}
-	//-------------------------------------------------------
-	
 	/**
 	 * Update Stats of the L2PcInstance client side by sending Server->Client packet UserInfo/StatusUpdate to this L2PcInstance and CharInfo/StatusUpdate to all L2PcInstance in its _KnownPlayers (broadcast).
 	 * @param broadcastType
@@ -7564,6 +7536,12 @@ public final class L2PcInstance extends L2Playable
 			}
 			
 			player.restoreZoneRestartLimitTime();
+			
+			if (player.isGM())
+			{
+				final long masks = player.getVariables().getLong(COND_OVERRIDE_KEY, PcCondOverride.getAllExceptionsMask());
+				player.setOverrideCond(masks);
+			}
 		}
 		catch (Exception e)
 		{
@@ -10999,23 +10977,6 @@ public final class L2PcInstance extends L2Playable
 			{
 				sendMessage("Entering world in Silence mode.");
 			}
-			
-			if (GlobalVariablesManager.getInstance().isVariableStored(COND_EXCEPTIONS))
-			{
-				String exes = GlobalVariablesManager.getInstance().getStoredVariable(COND_EXCEPTIONS);
-				if (Util.isDigit(exes))
-				{
-					_exceptions = Long.valueOf(exes);
-				}
-				else
-				{
-					_exceptions = PcCondOverride.getAllExceptionsMask();
-				}
-			}
-			else
-			{
-				_exceptions = PcCondOverride.getAllExceptionsMask();
-			}
 		}
 		
 		revalidateZone(true);
@@ -11025,6 +10986,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			checkPlayerSkills();
 		}
+		getEvents().onPlayerLogin();
 	}
 	
 	public long getLastAccess()
@@ -11669,6 +11631,8 @@ public final class L2PcInstance extends L2Playable
 	
 	private synchronized void cleanup()
 	{
+		getEvents().onPlayerLogout();
+		
 		// Set the online Flag to True or False and update the characters table of the database with online status and lastAccess (called when login and logout)
 		try
 		{
@@ -14983,27 +14947,6 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	/**
-	 * Adds a despawn listener
-	 * @param listener
-	 */
-	public static void addDespawnListener(PlayerDespawnListener listener)
-	{
-		if (!DESPAWN_LISTENERS.contains(listener))
-		{
-			DESPAWN_LISTENERS.add(listener);
-		}
-	}
-	
-	/**
-	 * Removes a despawn listener
-	 * @param listener
-	 */
-	public static void removeDespawnListener(PlayerDespawnListener listener)
-	{
-		DESPAWN_LISTENERS.remove(listener);
-	}
-	
-	/**
 	 * Adds a henna listener
 	 * @param listener
 	 */
@@ -15179,5 +15122,47 @@ public final class L2PcInstance extends L2Playable
 			}
 		}
 		return false;
+	}
+	
+	//[JOJO]-------------------------------------------------
+	// L2Character ‚©‚ç L2PcInstance ‚Öˆø‰z‚µ.
+	private long _exceptions = 0L;
+	
+	@Override public boolean canOverrideCond(PcCondOverride excs)
+	{
+		return (_exceptions & excs.getMask()) != 0;
+	}
+	public void setOverrideCond(long masks)
+	{
+		_exceptions = masks;
+	}
+	//-------------------------------------------------------
+	
+	public void addOverrideCond(PcCondOverride exc)
+	{
+		_exceptions |= exc.getMask();
+	}
+	
+	public void addOverrideCond(PcCondOverride... excs)
+	{
+		for (PcCondOverride exc : excs)
+		{
+			_exceptions |= exc.getMask();
+		}
+		getVariables().set(COND_OVERRIDE_KEY, Long.toString(_exceptions));
+	}
+	
+	public void removeOverridedCond(PcCondOverride exc)
+	{
+		_exceptions &= ~exc.getMask();
+	}
+	
+	public void removeOverridedCond(PcCondOverride... excs)
+	{
+		for (PcCondOverride exc : excs)
+		{
+			_exceptions &= ~exc.getMask();
+		}
+		getVariables().set(COND_OVERRIDE_KEY, Long.toString(_exceptions));
 	}
 }
