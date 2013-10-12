@@ -18,19 +18,16 @@
  */
 package com.l2jserver.util;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FilterInputStream;
 import java.io.FilterOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -69,7 +66,7 @@ public class Base64
 	/** Don't break lines when encoding (violates strict Base64 specification) */
 	public static final int DONT_BREAK_LINES = 8;
 	
-	/* P R I V A T E F I E L D S */
+	/* Private Fields */
 	
 	/** Maximum line length (76) of Base64 output. */
 	private static final int MAX_LINE_LENGTH = 76;
@@ -81,37 +78,10 @@ public class Base64
 	private static final byte NEW_LINE = (byte) '\n';
 	
 	/** Preferred encoding. */
-	private static final Charset PREFERRED_ENCODING = UTF_8;
+	private static final Charset PREFERRED_ENCODING = StandardCharsets.UTF_8;
 	
 	/** The 64 valid Base64 values. */
 	private static final byte[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".getBytes(PREFERRED_ENCODING);
- //	/* May be something funny like EBCDIC */
- //	// @formatter:off
- //	private static final byte[] _NATIVE_ALPHABET =
- //	{
- //		(byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G',
- //		(byte) 'H', (byte) 'I', (byte) 'J', (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N',
- //		(byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U',
- //		(byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z', (byte) 'a', (byte) 'b',
- //		(byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i',
- //		(byte) 'j', (byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n', (byte) 'o', (byte) 'p',
- //		(byte) 'q', (byte) 'r', (byte) 's', (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w',
- //		(byte) 'x', (byte) 'y', (byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3',
- //		(byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9', (byte) '+',
- //		(byte) '/'
- //	};
- //	// @formatter:on
-	
-	public static void main(String[] args) throws IOException
-	{
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		System.out.print("Enter String to encode: ");
-		final String line = bf.readLine();
-		if (line != null)
-		{
-			System.out.println(Base64.encodeBytes(line.getBytes()));
-		}
-	}
 	
 	/**
 	 * Translates a Base64 value to either its 6-bit reconstruction value or a negative number indicating some other meaning.
@@ -296,12 +266,7 @@ public class Base64
 			return null;
 		}
 		
-		// Return value according to relevant encoding.
-		if (value != null)
-		{
-			return new String(value, PREFERRED_ENCODING);
-		}
-		return null;
+		return value != null ? new String(value, PREFERRED_ENCODING) : null;
 	}
 	
 	/**
@@ -579,8 +544,7 @@ public class Base64
 	 */
 	public static byte[] decode(String s)
 	{
-		byte[] bytes;
-		bytes = s.getBytes(PREFERRED_ENCODING);
+		byte[] bytes = s.getBytes(PREFERRED_ENCODING);
 		
 		// Decode
 		bytes = decode(bytes, 0, bytes.length);

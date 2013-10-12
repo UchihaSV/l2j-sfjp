@@ -7525,7 +7525,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	
 	public boolean canOverrideCond(PcCondOverride excs)
 	{
-		return false;	//[JOJO] L2Chracter ‚©‚ç l2pcInstance ‚Öˆø‰z‚µ.
+		return false;	//[JOJO] L2Character ‚©‚ç L2PcInstance ‚Öˆø‰z‚µ.
 	}
 	
 	public void setLethalable(boolean val)
