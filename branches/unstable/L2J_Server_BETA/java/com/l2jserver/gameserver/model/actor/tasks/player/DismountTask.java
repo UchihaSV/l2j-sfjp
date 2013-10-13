@@ -36,9 +36,6 @@ public class DismountTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_player != null)
-		{
 			_player.dismount();
-		}
 	}
 }

@@ -36,11 +36,6 @@ public class PvPFlagTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_player == null)
-		{
-			return;
-		}
-		
 		if (System.currentTimeMillis() > _player.getPvpFlagLasts())
 		{
 			_player.stopPvPFlag();

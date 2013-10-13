@@ -46,8 +46,6 @@ public class LookingForFishTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_player != null)
-		{
 			if (System.currentTimeMillis() >= _endTaskTime)
 			{
 				_player.endFishing(false);
@@ -63,6 +61,5 @@ public class LookingForFishTask implements Runnable
 				_player.stopLookingForFishTask();
 				_player.startFishCombat(_isNoob, _isUpperGrade);
 			}
-		}
 	}
 }

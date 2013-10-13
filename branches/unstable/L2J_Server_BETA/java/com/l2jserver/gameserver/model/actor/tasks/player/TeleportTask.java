@@ -38,7 +38,7 @@ public class TeleportTask implements Runnable
 	@Override
 	public void run()
 	{
-		if ((_activeChar != null) && _activeChar.isOnline())
+		if (_activeChar.isOnline())
 		{
 			_activeChar.teleToLocation(_loc, true);
 		}

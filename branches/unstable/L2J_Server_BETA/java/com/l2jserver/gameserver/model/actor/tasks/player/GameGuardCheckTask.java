@@ -43,8 +43,6 @@ public class GameGuardCheckTask implements Runnable
 	@Override
 	public void run()
 	{
-		if ((_player != null))
-		{
 			L2GameClient client = _player.getClient();
 			if ((client != null) && !client.isAuthedGG() && _player.isOnline())
 			{
@@ -53,6 +51,5 @@ public class GameGuardCheckTask implements Runnable
 				
 				client.close(LeaveWorld.STATIC_PACKET);
 			}
-		}
 	}
 }

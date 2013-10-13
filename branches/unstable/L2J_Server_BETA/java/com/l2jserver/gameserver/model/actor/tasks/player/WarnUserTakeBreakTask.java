@@ -38,8 +38,6 @@ public class WarnUserTakeBreakTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_player != null)
-		{
 			if (_player.isOnline())
 			{
 				SystemMessageId.PLAYING_FOR_LONG_TIME.setParamCount(1);	//[JOJO] en=0, ja,ta=1
@@ -52,6 +50,5 @@ public class WarnUserTakeBreakTask implements Runnable
 			{
 				_player.stopWarnUserTakeBreak();
 			}
-		}
 	}
 }

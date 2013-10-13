@@ -50,10 +50,6 @@ public final class MagicUseTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_character == null)
-		{
-			return;
-		}
 		switch (_phase)
 		{
 			case 1:

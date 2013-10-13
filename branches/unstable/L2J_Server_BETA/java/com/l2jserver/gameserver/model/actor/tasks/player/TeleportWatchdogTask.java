@@ -36,7 +36,7 @@ public class TeleportWatchdogTask implements Runnable
 	@Override
 	public void run()
 	{
-		if ((_player == null) || !_player.isTeleporting())
+		if (!_player.isTeleporting())
 		{
 			return;
 		}

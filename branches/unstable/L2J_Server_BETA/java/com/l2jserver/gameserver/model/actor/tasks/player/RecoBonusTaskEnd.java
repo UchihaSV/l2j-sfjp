@@ -37,9 +37,6 @@ public class RecoBonusTaskEnd implements Runnable
 	@Override
 	public void run()
 	{
-		if (_player != null)
-		{
 			_player.sendPacket(new ExVoteSystemInfo(_player));
-		}
 	}
 }

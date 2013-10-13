@@ -39,8 +39,6 @@ public class RecoGiveTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_player != null)
-		{
 			// 10 recommendations to give out after 2 hours of being logged in
 			// 1 more recommendation to give out every hour after that.
 			int recoToGive = 1;
@@ -56,6 +54,5 @@ public class RecoGiveTask implements Runnable
 			sm.addNumber(recoToGive);
 			_player.sendPacket(sm);
 			_player.sendPacket(new UserInfo(_player));
-		}
 	}
 }

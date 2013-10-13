@@ -39,9 +39,6 @@ public final class UsePotionTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_character != null)
-		{
 			_character.doSimultaneousCast(_skill);
-		}
 	}
 }

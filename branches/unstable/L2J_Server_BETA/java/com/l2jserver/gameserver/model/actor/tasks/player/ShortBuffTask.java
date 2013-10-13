@@ -37,10 +37,7 @@ public class ShortBuffTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_player != null)
-		{
 			_player.sendPacket(new ShortBuffStatusUpdate(0, 0, 0));
 			_player.setShortBuffTaskSkillId(0);
-		}
 	}
 }
