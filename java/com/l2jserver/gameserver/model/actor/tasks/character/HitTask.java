@@ -55,9 +55,6 @@ public final class HitTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_character != null)
-		{
 			_character.onHitTimer(_hitTarget, _damage, _crit, _miss, _soulshot, _shld);
-		}
 	}
 }

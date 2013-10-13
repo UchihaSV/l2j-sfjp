@@ -47,8 +47,6 @@ public class PetFeedTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_player != null)
-		{
 			try
 			{
 				if (!_player.isMounted() || (_player.getMountNpcId() == 0))
@@ -103,6 +101,5 @@ public class PetFeedTask implements Runnable
 			{
 				_log.log(Level.SEVERE, "Mounted Pet [NpcId: " + _player.getMountNpcId() + "] a feed task error has occurred", e);
 			}
-		}
 	}
 }

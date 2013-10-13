@@ -39,9 +39,6 @@ public final class NotifyAITask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_character != null)
-		{
 			_character.getAI().notifyEvent(_event, null);
-		}
 	}
 }

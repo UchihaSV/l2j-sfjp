@@ -36,9 +36,6 @@ public class ResetChargesTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_player != null)
-		{
 			_player.clearCharges();
-		}
 	}
 }

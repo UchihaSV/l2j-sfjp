@@ -42,7 +42,7 @@ public class FameTask implements Runnable
 	@Override
 	public void run()
 	{
-		if ((_player == null) || (_player.isDead() && !Config.FAME_FOR_DEAD_PLAYERS))
+		if (_player.isDead() && !Config.FAME_FOR_DEAD_PLAYERS)
 		{
 			return;
 		}

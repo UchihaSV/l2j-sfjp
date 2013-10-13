@@ -47,9 +47,6 @@ public class HerbTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_player != null)
-		{
 			_player.addItem(_process, _itemId, _count, _reference, _sendMessage);
-		}
 	}
 }

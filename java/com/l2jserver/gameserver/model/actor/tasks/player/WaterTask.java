@@ -38,8 +38,6 @@ public class WaterTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_player != null)
-		{
 			double reduceHp = _player.getMaxHp() / 100.0;
 			
 			if (reduceHp < 1)
@@ -52,6 +50,5 @@ public class WaterTask implements Runnable
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.DROWN_DAMAGE_S1);
 			sm.addNumber((int) reduceHp);
 			_player.sendPacket(sm);
-		}
 	}
 }

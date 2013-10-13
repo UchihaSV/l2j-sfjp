@@ -43,9 +43,6 @@ public final class QueuedMagicUseTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_currPlayer != null)
-		{
 			_currPlayer.useMagic(_queuedSkill, _isCtrlPressed, _isShiftPressed);
-		}
 	}
 }

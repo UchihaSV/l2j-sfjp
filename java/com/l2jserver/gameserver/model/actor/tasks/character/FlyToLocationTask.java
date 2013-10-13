@@ -44,12 +44,9 @@ public final class FlyToLocationTask implements Runnable
 	@Override
 	public void run()
 	{
-		if (_character != null)
-		{
 			final FlyType flyType;
 			flyType = FlyType.valueOf(_skill.getFlyType());
 			_character.broadcastPacket(new FlyToLocation(_character, _target, flyType));
 			_character.setXYZ(_target.getX(), _target.getY(), _target.getZ());
-		}
 	}
 }
