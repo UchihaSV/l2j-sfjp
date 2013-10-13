@@ -74,6 +74,12 @@ import com.l2jserver.gameserver.model.actor.knownlist.CharKnownList;
 import com.l2jserver.gameserver.model.actor.position.CharPosition;
 import com.l2jserver.gameserver.model.actor.stat.CharStat;
 import com.l2jserver.gameserver.model.actor.status.CharStatus;
+import com.l2jserver.gameserver.model.actor.tasks.character.FlyToLocationTask;
+import com.l2jserver.gameserver.model.actor.tasks.character.HitTask;
+import com.l2jserver.gameserver.model.actor.tasks.character.MagicUseTask;
+import com.l2jserver.gameserver.model.actor.tasks.character.NotifyAITask;
+import com.l2jserver.gameserver.model.actor.tasks.character.QueuedMagicUseTask;
+import com.l2jserver.gameserver.model.actor.tasks.character.UsePotionTask;
 import com.l2jserver.gameserver.model.actor.templates.L2CharTemplate;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.effects.AbnormalEffect;
@@ -109,8 +115,6 @@ import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.Attack;
 import com.l2jserver.gameserver.network.serverpackets.ChangeMoveType;
 import com.l2jserver.gameserver.network.serverpackets.ChangeWaitType;
-import com.l2jserver.gameserver.network.serverpackets.FlyToLocation;
-import com.l2jserver.gameserver.network.serverpackets.FlyToLocation.FlyType;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillCanceld;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillLaunched;
@@ -912,7 +916,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 						if (getCurrentMp() < mpConsume)
 						{
 							// If L2PcInstance doesn't have enough MP, stop the attack
-							ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(CtrlEvent.EVT_READY_TO_ACT), 1000);
+							ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(this, CtrlEvent.EVT_READY_TO_ACT), 1000);
 							sendPacket(SystemMessageId.NOT_ENOUGH_MP);
 							sendPacket(ActionFailed.STATIC_PACKET);
 							return;
@@ -930,7 +934,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 					else
 					{
 						// Cancel the action because the bow can't be re-use at this moment
-						ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(CtrlEvent.EVT_READY_TO_ACT), 1000);
+						ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(this, CtrlEvent.EVT_READY_TO_ACT), 1000);
 						sendPacket(ActionFailed.STATIC_PACKET);
 						return;
 					}
@@ -974,7 +978,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 						if (getCurrentMp() < mpConsume)
 						{
 							// If L2PcInstance doesn't have enough MP, stop the attack
-							ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(CtrlEvent.EVT_READY_TO_ACT), 1000);
+							ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(this, CtrlEvent.EVT_READY_TO_ACT), 1000);
 							sendPacket(SystemMessageId.NOT_ENOUGH_MP);
 							sendPacket(ActionFailed.STATIC_PACKET);
 							return;
@@ -992,7 +996,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 					else
 					{
 						// Cancel the action because the crossbow can't be re-use at this moment
-						ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(CtrlEvent.EVT_READY_TO_ACT), 1000);
+						ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(this, CtrlEvent.EVT_READY_TO_ACT), 1000);
 						sendPacket(ActionFailed.STATIC_PACKET);
 						return;
 					}
@@ -1119,7 +1123,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		}
 		
 		// Notify AI with EVT_READY_TO_ACT
-		ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(CtrlEvent.EVT_READY_TO_ACT), timeAtk + reuse);
+		ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(this, CtrlEvent.EVT_READY_TO_ACT), timeAtk + reuse);
 	}
 	
 	/**
@@ -1180,7 +1184,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		}
 		
 		// Create a new hit task with Medium priority
-		ThreadPoolManager.getInstance().scheduleAi(new HitTask(target, damage1, crit1, miss1, attack.hasSoulshot(), shld1), sAtk);
+		ThreadPoolManager.getInstance().scheduleAi(new HitTask(this, target, damage1, crit1, miss1, attack.hasSoulshot(), shld1), sAtk);
 		
 		// Calculate and set the disable delay of the bow in function of the Attack Speed
 		_disableBowAttackEndTime = ((sAtk + reuse) / GameTimeController.MILLIS_IN_TICK) + GameTimeController.getInstance().getGameTicks();
@@ -1250,7 +1254,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		}
 		
 		// Create a new hit task with Medium priority
-		ThreadPoolManager.getInstance().scheduleAi(new HitTask(target, damage1, crit1, miss1, attack.hasSoulshot(), shld1), sAtk);
+		ThreadPoolManager.getInstance().scheduleAi(new HitTask(this, target, damage1, crit1, miss1, attack.hasSoulshot(), shld1), sAtk);
 		
 		// Calculate and set the disable delay of the bow in function of the Attack Speed
 		_disableCrossBowAttackEndTime = ((sAtk + reuse) / GameTimeController.MILLIS_IN_TICK) + GameTimeController.getInstance().getGameTicks();
@@ -1320,10 +1324,10 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		}
 		
 		// Create a new hit task with Medium priority for hit 1
-		ThreadPoolManager.getInstance().scheduleAi(new HitTask(target, damage1, crit1, miss1, attack.hasSoulshot(), shld1), sAtk / 2);
+		ThreadPoolManager.getInstance().scheduleAi(new HitTask(this, target, damage1, crit1, miss1, attack.hasSoulshot(), shld1), sAtk / 2);
 		
 		// Create a new hit task with Medium priority for hit 2 with a higher delay
-		ThreadPoolManager.getInstance().scheduleAi(new HitTask(target, damage2, crit2, miss2, attack.hasSoulshot(), shld2), sAtk);
+		ThreadPoolManager.getInstance().scheduleAi(new HitTask(this, target, damage2, crit2, miss2, attack.hasSoulshot(), shld2), sAtk);
 		
 		// Add those hits to the Server-Client packet Attack
 		attack.addHit(target, damage1, miss1, crit1, shld1);
@@ -1504,7 +1508,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		}
 		
 		// Create a new hit task with Medium priority
-		ThreadPoolManager.getInstance().scheduleAi(new HitTask(target, damage1, crit1, miss1, attack.hasSoulshot(), shld1), sAtk);
+		ThreadPoolManager.getInstance().scheduleAi(new HitTask(this, target, damage1, crit1, miss1, attack.hasSoulshot(), shld1), sAtk);
 		
 		// Add this hit to the Server-Client packet Attack
 		attack.addHit(target, damage1, miss1, crit1, shld1);
@@ -1961,7 +1965,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			ThreadPoolManager.getInstance().scheduleEffect(new FlyToLocationTask(this, target, skill), 50);
 		}
 		
-		MagicUseTask mut = new MagicUseTask(targets, skill, skillTime, simultaneously);
+		MagicUseTask mut = new MagicUseTask(this, targets, skill, skillTime, simultaneously);
 		
 		// launch the magic in skillTime milliseconds
 		if (skillTime > 0)
@@ -1979,7 +1983,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			
 			if (effectWhileCasting)
 			{
-				mut.phase = 2;
+				mut.setPhase(2);
 			}
 			
 			if (simultaneously)
@@ -2011,7 +2015,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		}
 		else
 		{
-			mut.skillTime = 0;
+			mut.setSkillTime(0);
 			onMagicLaunchedTimer(mut);
 		}
 	}
@@ -2951,191 +2955,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		}
 	}
 	
-	/**
-	 * Task launching the function onHitTimer().<br>
-	 * <B><U>Actions</U>:</B>
-	 * <ul>
-	 * <li>If the attacker/target is dead or use fake death, notify the AI with EVT_CANCEL and send a Server->Client packet ActionFailed (if attacker is a L2PcInstance)</li>
-	 * <li>If attack isn't aborted, send a message system (critical hit, missed...) to attacker/target if they are L2PcInstance</li>
-	 * <li>If attack isn't aborted and hit isn't missed, reduce HP of the target and calculate reflection damage to reduce HP of attacker if necessary</li>
-	 * <li>if attack isn't aborted and hit isn't missed, manage attack or cast break of the target (calculating rate, sending message...)</li>
-	 * </ul>
-	 */
-	class HitTask implements Runnable
-	{
-		L2Character _hitTarget;
-		int _damage;
-		boolean _crit;
-		boolean _miss;
-		byte _shld;
-		boolean _soulshot;
-		
-		public HitTask(L2Character target, int damage, boolean crit, boolean miss, boolean soulshot, byte shld)
-		{
-			_hitTarget = target;
-			_damage = damage;
-			_crit = crit;
-			_shld = shld;
-			_miss = miss;
-			_soulshot = soulshot;
-		}
-		
-		@Override
-		public void run()
-		{
-			try
-			{
-				onHitTimer(_hitTarget, _damage, _crit, _miss, _soulshot, _shld);
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.SEVERE, "Failed executing HitTask.", e);
-			}
-		}
-	}
-	
-	/** Task launching the magic skill phases */
-	class MagicUseTask implements Runnable
-	{
-		L2Object[] targets;
-		L2Skill skill;
-		int count;
-		int skillTime;
-		int phase;
-		boolean simultaneously;
-		
-		public MagicUseTask(L2Object[] tgts, L2Skill s, int hit, boolean simultaneous)
-		{
-			targets = tgts;
-			skill = s;
-			count = 0;
-			phase = 1;
-			skillTime = hit;
-			simultaneously = simultaneous;
-		}
-		
-		@Override
-		public void run()
-		{
-			try
-			{
-				switch (phase)
-				{
-					case 1:
-						onMagicLaunchedTimer(this);
-						break;
-					case 2:
-						onMagicHitTimer(this);
-						break;
-					case 3:
-						onMagicFinalizer(this);
-						break;
-					default:
-						break;
-				}
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.SEVERE, "Failed executing MagicUseTask.", e);
-				if (simultaneously)
-				{
-					setIsCastingSimultaneouslyNow(false);
-				}
-				else
-				{
-					setIsCastingNow(false);
-				}
-			}
-		}
-	}
-	
-	/** Task launching the function useMagic() */
-	private static class QueuedMagicUseTask implements Runnable
-	{
-		L2PcInstance _currPlayer;
-		L2Skill _queuedSkill;
-		boolean _isCtrlPressed;
-		boolean _isShiftPressed;
-		
-		public QueuedMagicUseTask(L2PcInstance currPlayer, L2Skill queuedSkill, boolean isCtrlPressed, boolean isShiftPressed)
-		{
-			_currPlayer = currPlayer;
-			_queuedSkill = queuedSkill;
-			_isCtrlPressed = isCtrlPressed;
-			_isShiftPressed = isShiftPressed;
-		}
-		
-		@Override
-		public void run()
-		{
-			try
-			{
-				_currPlayer.useMagic(_queuedSkill, _isCtrlPressed, _isShiftPressed);
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.SEVERE, "Failed executing QueuedMagicUseTask.", e);
-			}
-		}
-	}
-	
-	/** Task of AI notification */
-	public class NotifyAITask implements Runnable
-	{
-		private final CtrlEvent _evt;
-		
-		NotifyAITask(CtrlEvent evt)
-		{
-			_evt = evt;
-		}
-		
-		@Override
-		public void run()
-		{
-			try
-			{
-				getAI().notifyEvent(_evt, null);
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.WARNING, "NotifyAITask failed. " + e.getMessage() + " Actor " + L2Character.this, e);
-			}
-		}
-	}
-	
-	/** Task launching the magic skill phases */
-	class FlyToLocationTask implements Runnable
-	{
-		private final L2Object _tgt;
-		private final L2Character _actor;
-		private final L2Skill _skill;
-		
-		public FlyToLocationTask(L2Character actor, L2Object target, L2Skill skill)
-		{
-			_actor = actor;
-			_tgt = target;
-			_skill = skill;
-		}
-		
-		@Override
-		public void run()
-		{
-			try
-			{
-				FlyType _flyType;
-				
-				_flyType = FlyType.valueOf(_skill.getFlyType());
-				
-				broadcastPacket(new FlyToLocation(_actor, _tgt, _flyType));
-				setXYZ(_tgt.getX(), _tgt.getY(), _tgt.getZ());
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.SEVERE, "Failed executing FlyToLocationTask.", e);
-			}
-		}
-	}
-	
 	// TODO: Abnormal Effect - NEED TO REMOVE ONCE L2CHARABNORMALEFFECT IS COMPLETE
 	/** Map 32 bits (0x0000) containing all abnormal effect in progress */
 	private int _AbnormalEffects;
@@ -3701,7 +3520,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		 */
 		public NotifyAITask newNotifyTask(CtrlEvent evt)
 		{
-			return new NotifyAITask(evt);
+			return new NotifyAITask(getActor(), evt);
 		}
 		
 		/**
@@ -4913,7 +4732,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		// Create a task to notify the AI that L2Character arrives at a check point of the movement
 		if ((ticksToMove * GameTimeController.MILLIS_IN_TICK) > 3000)
 		{
-			ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(CtrlEvent.EVT_ARRIVED_REVALIDATE), 2000);
+			ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(this, CtrlEvent.EVT_ARRIVED_REVALIDATE), 2000);
 		}
 		
 		// the CtrlEvent.EVT_ARRIVED will be sent when the character will actually arrive
@@ -4994,7 +4813,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		// Create a task to notify the AI that L2Character arrives at a check point of the movement
 		if ((ticksToMove * GameTimeController.MILLIS_IN_TICK) > 3000)
 		{
-			ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(CtrlEvent.EVT_ARRIVED_REVALIDATE), 2000);
+			ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(this, CtrlEvent.EVT_ARRIVED_REVALIDATE), 2000);
 		}
 		
 		// the CtrlEvent.EVT_ARRIVED will be sent when the character will actually arrive
@@ -5338,7 +5157,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	 * @param soulshot True if SoulShot are charged
 	 * @param shld True if shield is efficient
 	 */
-	protected void onHitTimer(L2Character target, int damage, boolean crit, boolean miss, boolean soulshot, byte shld)
+	public void onHitTimer(L2Character target, int damage, boolean crit, boolean miss, boolean soulshot, byte shld)
 	{
 		// If the attacker/target is dead or use fake death, notify the AI with EVT_CANCEL
 		// and send a Server->Client packet ActionFailed (if attacker is a L2PcInstance)
@@ -6106,8 +5925,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	 */
 	public void onMagicLaunchedTimer(MagicUseTask mut)
 	{
-		final L2Skill skill = mut.skill;
-		L2Object[] targets = mut.targets;
+		final L2Skill skill = mut.getSkill();
+		L2Object[] targets = mut.getTargets();
 		
 		if ((skill == null) || (targets == null))
 		{
@@ -6204,13 +6023,13 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 				abortCast();
 				return;
 			}
-			mut.targets = targetList.toArray(new L2Character[targetList.size()]);
+			mut.setTargets(targetList.toArray(new L2Character[targetList.size()]));
 		}
 		
 		// Ensure that a cast is in progress
 		// Check if player is using fake death.
 		// Static skills can be used while faking death.
-		if ((mut.simultaneously && !isCastingSimultaneouslyNow()) || (!mut.simultaneously && !isCastingNow()) || (isAlikeDead() && !skill.isStatic()))
+		if ((mut.isSimultaneous() && !isCastingSimultaneouslyNow()) || (!mut.isSimultaneous() && !isCastingNow()) || (isAlikeDead() && !skill.isStatic()))
 		{
 			// now cancels both, simultaneous and normal
 			getAI().notifyEvent(CtrlEvent.EVT_CANCEL);
@@ -6223,8 +6042,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			broadcastPacket(new MagicSkillLaunched(this, skill.getDisplayId(), skill.getDisplayLevel(), targets));
 		}
 		
-		mut.phase = 2;
-		if (mut.skillTime == 0)
+		mut.setPhase(2);
+		if (mut.getSkillTime() == 0)
 		{
 			onMagicHitTimer(mut);
 		}
@@ -6237,8 +6056,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	// Runs in the end of skill casting
 	public void onMagicHitTimer(MagicUseTask mut)
 	{
-		final L2Skill skill = mut.skill;
-		final L2Object[] targets = mut.targets;
+		final L2Skill skill = mut.getSkill();
+		final L2Object[] targets = mut.getTargets();
 		
 		if ((skill == null) || (targets == null))
 		{
@@ -6248,7 +6067,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		
 		if (getFusionSkill() != null)
 		{
-			if (mut.simultaneously)
+			if (mut.isSimultaneous())
 			{
 				_skillCast2 = null;
 				setIsCastingSimultaneouslyNow(false);
@@ -6265,7 +6084,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		L2Effect mog = getFirstEffect(L2EffectType.SIGNET_GROUND);
 		if (mog != null)
 		{
-			if (mut.simultaneously)
+			if (mut.isSimultaneous())
 			{
 				_skillCast2 = null;
 				setIsCastingSimultaneouslyNow(false);
@@ -6378,16 +6197,16 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			}
 			
 			// On each repeat restore shots before cast
-			if (mut.count > 0)
+			if (mut.getCount() > 0)
 			{
 				final L2ItemInstance weaponInst = getActiveWeaponInstance();
 				if (weaponInst != null)
 				{
-					if (mut.skill.useSoulShot())
+					if (mut.getSkill().useSoulShot())
 					{
 						setChargedShot(ShotType.SOULSHOTS, true);
 					}
-					else if (mut.skill.useSpiritShot())
+					else if (mut.getSkill().useSpiritShot())
 					{
 						setChargedShot(ShotType.SPIRITSHOTS, true);
 					}
@@ -6395,20 +6214,20 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			}
 			
 			// Launch the magic skill in order to calculate its effects
-			callSkill(mut.skill, mut.targets);
+			callSkill(mut.getSkill(), mut.getTargets());
 		}
 		catch (NullPointerException e)
 		{
 			_log.log(Level.WARNING, "", e);
 		}
 		
-		if (mut.skillTime > 0)
+		if (mut.getSkillTime() > 0)
 		{
-			mut.count++;
-			if (mut.count < skill.getHitCounts())
+			mut.setCount(mut.getCount() + 1);
+			if (mut.getCount() < skill.getHitCounts())
 			{
-				int skillTime = (mut.skillTime * skill.getHitTimings()[mut.count]) / 100;
-				if (mut.simultaneously)
+				int skillTime = (mut.getSkillTime() * skill.getHitTimings()[mut.getCount()]) / 100;
+				if (mut.isSimultaneous())
 				{
 					_skillCast2 = ThreadPoolManager.getInstance().scheduleEffect(mut, skillTime);
 				}
@@ -6420,14 +6239,14 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			}
 		}
 		
-		mut.phase = 3;
-		if (mut.skillTime == 0)
+		mut.setPhase(3);
+		if (mut.getSkillTime() == 0)
 		{
 			onMagicFinalizer(mut);
 		}
 		else
 		{
-			if (mut.simultaneously)
+			if (mut.isSimultaneous())
 			{
 				_skillCast2 = ThreadPoolManager.getInstance().scheduleEffect(mut, 0);
 			}
@@ -6441,7 +6260,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	// Runs after skillTime
 	public void onMagicFinalizer(MagicUseTask mut)
 	{
-		if (mut.simultaneously)
+		if (mut.isSimultaneous())
 		{
 			_skillCast2 = null;
 			setIsCastingSimultaneouslyNow(false);
@@ -6452,8 +6271,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 		setIsCastingNow(false);
 		_castInterruptTime = 0;
 		
-		final L2Skill skill = mut.skill;
-		final L2Object target = mut.targets.length > 0 ? mut.targets[0] : null;
+		final L2Skill skill = mut.getSkill();
+		final L2Object target = mut.getTargets().length > 0 ? mut.getTargets()[0] : null;
 		
 		// Attack target after skill use
 		if ((skill.nextActionIsAttack()) && (getTarget() instanceof L2Character) && (getTarget() != this) && (target != null) && (getTarget() == target) && target.isAttackable())
@@ -7458,32 +7277,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	public boolean isCoreAIDisabled()
 	{
 		return _AIdisabled;
-	}
-	
-	/** Task for potion and herb queue */
-	private static class UsePotionTask implements Runnable
-	{
-		private final L2Character _activeChar;
-		private final L2Skill _skill;
-		
-		UsePotionTask(L2Character activeChar, L2Skill skill)
-		{
-			_activeChar = activeChar;
-			_skill = skill;
-		}
-		
-		@Override
-		public void run()
-		{
-			try
-			{
-				_activeChar.doSimultaneousCast(_skill);
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.WARNING, "", e);
-			}
-		}
 	}
 	
 	/**
