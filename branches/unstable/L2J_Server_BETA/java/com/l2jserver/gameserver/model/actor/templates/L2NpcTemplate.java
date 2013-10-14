@@ -586,12 +586,12 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 }}
 	}
 	
-	public void addTeachInfo(ClassId classId)
+	public void addTeachInfo(List<ClassId> teachInfo)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		if (_teachInfo == Collections.EMPTY_LIST) _teachInfo = new ArrayList<>();
 }}
-		_teachInfo.add(classId);
+		_teachInfo.addAll(teachInfo);
 	}
 	
 	private void addUniversalSkill(L2Skill skill)
