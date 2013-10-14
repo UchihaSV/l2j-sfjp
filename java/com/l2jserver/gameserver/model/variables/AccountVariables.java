@@ -68,20 +68,21 @@ public class AccountVariables extends AbstractVariables
 		{
 			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't restore variables for: " + _accountName, e);
 		}
-		finally
-		{
-			compareAndSetChanges(true, false);
-		}
+	//	finally
+	//	{
+	//		compareAndSetChanges(true, false);
+	//	}
 	}
 	
 	@Override
 	public void store()
 	{
 		// No changes, nothing to store.
-		if (!hasChanges())
+		if (!isChanges())
 		{
 			return;
 		}
+		setChanges(false);
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
@@ -108,10 +109,6 @@ public class AccountVariables extends AbstractVariables
 		catch (SQLException e)
 		{
 			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't update variables for: " + _accountName, e);
-		}
-		finally
-		{
-			compareAndSetChanges(true, false);
 		}
 	}
 }
