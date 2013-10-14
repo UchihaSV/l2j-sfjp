@@ -18,8 +18,6 @@
  */
 package com.l2jserver.gameserver.model.variables;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import com.l2jserver.gameserver.model.StatsSet;
 
 /**
@@ -27,7 +25,7 @@ import com.l2jserver.gameserver.model.StatsSet;
  */
 public abstract class AbstractVariables extends StatsSet
 {
-	private final AtomicBoolean _hasChanges = new AtomicBoolean(false);
+	private volatile boolean _changes = false;	//[JOJO] AtomicBoolean --> volatile boolean
 	
 	protected abstract void load();
 	
@@ -40,61 +38,55 @@ public abstract class AbstractVariables extends StatsSet
 	@Override
 	public final void set(String name, boolean value)
 	{
-		_hasChanges.compareAndSet(false, true);
 		super.set(name, value);
+		_changes = true;
 	}
 	
 	@Override
 	public final void set(String name, double value)
 	{
-		_hasChanges.compareAndSet(false, true);
 		super.set(name, value);
+		_changes = true;
 	}
 	
 	@Override
 	public final void set(String name, Enum<?> value)
 	{
-		_hasChanges.compareAndSet(false, true);
 		super.set(name, value);
+		_changes = true;
 	}
 	
 	@Override
 	public final void set(String name, int value)
 	{
-		_hasChanges.compareAndSet(false, true);
 		super.set(name, value);
+		_changes = true;
 	}
 	
 	@Override
 	public final void set(String name, long value)
 	{
-		_hasChanges.compareAndSet(false, true);
 		super.set(name, value);
+		_changes = true;
 	}
 	
 	@Override
 	public final void set(String name, String value)
 	{
-		_hasChanges.compareAndSet(false, true);
 		super.set(name, value);
+		_changes = true;
 	}
 	
 	/**
 	 * @return {@code true} if changes are made since last load/save.
 	 */
-	public final boolean hasChanges()
+	public final boolean isChanges()
 	{
-		return _hasChanges.get();
+		return _changes;
 	}
 	
-	/**
-	 * Atomically sets the value to the given updated value if the current value {@code ==} the expected value.
-	 * @param expect
-	 * @param update
-	 * @return {@code true} if successful. {@code false} return indicates that the actual value was not equal to the expected value.
-	 */
-	public final boolean compareAndSetChanges(boolean expect, boolean update)
+	public final void setChanges(boolean update)
 	{
-		return _hasChanges.compareAndSet(expect, update);
+		_changes = update;
 	}
 }
