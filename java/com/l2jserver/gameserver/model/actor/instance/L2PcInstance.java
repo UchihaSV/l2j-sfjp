@@ -133,7 +133,6 @@ import com.l2jserver.gameserver.model.PartyMatchRoom;
 import com.l2jserver.gameserver.model.PartyMatchRoomList;
 import com.l2jserver.gameserver.model.PartyMatchWaitingList;
 import com.l2jserver.gameserver.model.PcCondOverride;
-import com.l2jserver.gameserver.model.PlayerVariables;
 import com.l2jserver.gameserver.model.ShortCuts;
 import com.l2jserver.gameserver.model.ShotType;
 import com.l2jserver.gameserver.model.TeleportBookmark;
@@ -232,6 +231,8 @@ import com.l2jserver.gameserver.model.skills.targets.L2TargetType;
 import com.l2jserver.gameserver.model.stats.Env;
 import com.l2jserver.gameserver.model.stats.Formulas;
 import com.l2jserver.gameserver.model.stats.Stats;
+import com.l2jserver.gameserver.model.variables.AccountVariables;
+import com.l2jserver.gameserver.model.variables.PlayerVariables;
 import com.l2jserver.gameserver.model.zone.L2ZoneType;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.model.zone.type.L2BossZone;
@@ -7806,6 +7807,12 @@ public final class L2PcInstance extends L2Playable
 		{
 			vars.store();
 		}
+		
+		final AccountVariables aVars = getScript(AccountVariables.class);
+		if (aVars != null)
+		{
+			aVars.store();
+		}
 	}
 	
 	@Override
@@ -8638,6 +8645,21 @@ public final class L2PcInstance extends L2Playable
 			return null;
 		}
 		return _henna[slot - 1];
+	}
+	
+	/**
+	 * @return {@code true} if player has at least 1 henna symbol, {@code false} otherwise.
+	 */
+	public boolean hasHennas()
+	{
+		for (L2Henna henna : _henna)
+		{
+			if (henna != null)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -14929,6 +14951,32 @@ public final class L2PcInstance extends L2Playable
 		return false;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	// L2Character ‚©‚ç L2PcInstance ‚Öˆø‰z‚µ.
+	private long _exceptions = 0L;
+	
+	@Override public boolean canOverrideCond(PcCondOverride excs)
+	{
+		return (_exceptions & excs.getMask()) != 0;
+	}
+	public void setOverrideCond(long masks)
+	{
+		_exceptions = masks;
+	}
+	
+	public void addOverrideCond(PcCondOverride exc)
+	{
+		_exceptions |= exc.getMask();
+		getVariables().set(COND_OVERRIDE_KEY, Long.toString(_exceptions));
+	}
+	
+	public void removeOverridedCond(PcCondOverride exc)
+	{
+		_exceptions &= ~exc.getMask();
+		getVariables().set(COND_OVERRIDE_KEY, Long.toString(_exceptions));
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * @return {@code true} if {@link PlayerVariables} instance is attached to current player's scripts, {@code false} otherwise.
 	 */
@@ -14944,6 +14992,23 @@ public final class L2PcInstance extends L2Playable
 	{
 		final PlayerVariables vars = getScript(PlayerVariables.class);
 		return vars != null ? vars : addScript(new PlayerVariables(getObjectId()));
+	}
+	
+	/**
+	 * @return {@code true} if {@link AccountVariables} instance is attached to current player's scripts, {@code false} otherwise.
+	 */
+	public boolean hasAccountVariables()
+	{
+		return getScript(AccountVariables.class) != null;
+	}
+	
+	/**
+	 * @return {@link AccountVariables} instance containing parameters regarding player.
+	 */
+	public AccountVariables getAccountVariables()
+	{
+		final AccountVariables vars = getScript(AccountVariables.class);
+		return vars != null ? vars : addScript(new AccountVariables(getAccountName()));
 	}
 	
 	/**
@@ -15107,62 +15172,5 @@ public final class L2PcInstance extends L2Playable
 	public Collection<EventListener> getEventListeners()
 	{
 		return _eventListeners;
-	}
-	
-	/**
-	 * @return {@code true} if player has at least 1 henna symbol, {@code false} otherwise.
-	 */
-	public boolean hasHennas()
-	{
-		for (L2Henna henna : _henna)
-		{
-			if (henna != null)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	//[JOJO]-------------------------------------------------
-	// L2Character ‚©‚ç L2PcInstance ‚Öˆø‰z‚µ.
-	private long _exceptions = 0L;
-	
-	@Override public boolean canOverrideCond(PcCondOverride excs)
-	{
-		return (_exceptions & excs.getMask()) != 0;
-	}
-	public void setOverrideCond(long masks)
-	{
-		_exceptions = masks;
-	}
-	//-------------------------------------------------------
-	
-	public void addOverrideCond(PcCondOverride exc)
-	{
-		_exceptions |= exc.getMask();
-	}
-	
-	public void addOverrideCond(PcCondOverride... excs)
-	{
-		for (PcCondOverride exc : excs)
-		{
-			_exceptions |= exc.getMask();
-		}
-		getVariables().set(COND_OVERRIDE_KEY, Long.toString(_exceptions));
-	}
-	
-	public void removeOverridedCond(PcCondOverride exc)
-	{
-		_exceptions &= ~exc.getMask();
-	}
-	
-	public void removeOverridedCond(PcCondOverride... excs)
-	{
-		for (PcCondOverride exc : excs)
-		{
-			_exceptions &= ~exc.getMask();
-		}
-		getVariables().set(COND_OVERRIDE_KEY, Long.toString(_exceptions));
 	}
 }
