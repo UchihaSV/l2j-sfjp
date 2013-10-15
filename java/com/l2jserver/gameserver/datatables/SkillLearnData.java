@@ -19,9 +19,9 @@
 package com.l2jserver.gameserver.datatables;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.Node;
 
@@ -34,7 +34,8 @@ import com.l2jserver.gameserver.model.base.ClassId;
  */
 public final class SkillLearnData extends DocumentParser
 {
-	private final Map<Integer, List<ClassId>> _skillLearn = new HashMap<>();
+	@SuppressWarnings("unchecked")
+	private final SortedIntObjectArrayMap<List<ClassId>> _skillLearn = new SortedIntObjectArrayMap<>();
 	
 	protected SkillLearnData()
 	{
@@ -59,7 +60,7 @@ public final class SkillLearnData extends DocumentParser
 				{
 					if ("npc".equalsIgnoreCase(list_node.getNodeName()))
 					{
-						final List<ClassId> classIds = new ArrayList<>();
+						final ArrayList<ClassId> classIds = new ArrayList<>();
 						for (Node c = list_node.getFirstChild(); c != null; c = c.getNextSibling())
 						{
 							if ("classId".equalsIgnoreCase(c.getNodeName()))
@@ -67,6 +68,7 @@ public final class SkillLearnData extends DocumentParser
 								classIds.add(ClassId.getClassId(Integer.parseInt(c.getTextContent())));
 							}
 						}
+						classIds.trimToSize();
 						_skillLearn.put(parseInteger(list_node.getAttributes(), "id"), classIds);
 					}
 				}
