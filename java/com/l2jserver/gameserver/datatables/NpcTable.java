@@ -813,7 +813,7 @@ public class NpcTable
 			final L2NpcTemplate template = _npcs.get(id);
 			if ((teachInfo != null) && (template != null))
 			{
-				template.addTeachInfo(teachInfo);
+				template.setTeachInfo(teachInfo);
 			}
 		}
 		else
@@ -823,7 +823,7 @@ public class NpcTable
 				final List<ClassId> teachInfo = SkillLearnData.getInstance().getSkillLearnData(template.getNpcId());
 				if (teachInfo != null)
 				{
-					template.addTeachInfo(teachInfo);
+					template.setTeachInfo(teachInfo);
 				}
 			}
 		}
