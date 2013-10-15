@@ -18,10 +18,9 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,7 +38,7 @@ public final class CategoryData extends DocumentParser
 {
 	private static final Logger _log = Logger.getLogger(CategoryData.class.getName());
 	
-	private final Map<CategoryType, Set<Integer>> _categories = new HashMap<>();
+	private final HashMap<CategoryType, int[]> _categories = new HashMap<>();
 	
 	protected CategoryData()
 	{
@@ -72,7 +71,7 @@ public final class CategoryData extends DocumentParser
 							continue;
 						}
 						
-						final Set<Integer> ids = new HashSet<>();
+						final HashSet<Integer> ids = new HashSet<>();
 						for (Node category_node = list_node.getFirstChild(); category_node != null; category_node = category_node.getNextSibling())
 						{
 							if ("id".equalsIgnoreCase(category_node.getNodeName()))
@@ -80,7 +79,13 @@ public final class CategoryData extends DocumentParser
 								ids.add(Integer.parseInt(category_node.getTextContent()));
 							}
 						}
-						_categories.put(categoryType, ids);
+						
+						int[] ida = new int[ids.size()];
+						int index = 0;
+						for (Integer id : ids)
+							ida[index++] = id;
+						Arrays.sort(ida);
+						_categories.put(categoryType, ida);
 					}
 				}
 			}
@@ -95,22 +100,13 @@ public final class CategoryData extends DocumentParser
 	 */
 	public boolean isInCategory(CategoryType type, int id)
 	{
-		final Set<Integer> category = getCategoryByType(type);
+		final int[] category = _categories.get(type);
 		if (category == null)
 		{
 			_log.log(Level.WARNING, getClass().getSimpleName() + ": Can't find category type :" + type);
 			return false;
 		}
-		return category.contains(id);
-	}
-	
-	/**
-	 * @param type The category type
-	 * @return A {@code Set} containing all the ids in category if category is found, {@code null} if category was not found.
-	 */
-	public Set<Integer> getCategoryByType(CategoryType type)
-	{
-		return _categories.get(type);
+		return Arrays.binarySearch(category, id) >= 0;
 	}
 	
 	public static CategoryData getInstance()
