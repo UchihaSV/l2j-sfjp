@@ -557,7 +557,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 		}
 		
 		// Check if the actor is a L2GuardInstance
-		if (npc instanceof L2GuardInstance)
+		if ((npc instanceof L2GuardInstance) && !npc.isWalker())
 		{
 			// Order to the L2GuardInstance to return to its home location because there's no target to attack
 			((L2GuardInstance) npc).returnHome();
