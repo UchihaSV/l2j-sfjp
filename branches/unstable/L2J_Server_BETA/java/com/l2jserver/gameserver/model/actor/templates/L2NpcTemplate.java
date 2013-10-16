@@ -586,7 +586,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 }}
 	}
 	
-	public void setTeachInfo(List<ClassId> teachInfo)
+	public void setTeachInfo(List<ClassId> teachInfo)	// skillLearn.xml
 	{
 		_teachInfo = teachInfo;
 	}

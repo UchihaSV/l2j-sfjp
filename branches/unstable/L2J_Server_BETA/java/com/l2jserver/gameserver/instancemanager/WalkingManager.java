@@ -147,9 +147,10 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 						int y = parseInt(attrs, "Y");
 						int z = parseInt(attrs, "Z");
 						int delay = parseInt(attrs, "delay");
-						
-						String chatString = null;
+						boolean run = parseBoolean(attrs, "run");
 						NpcStringId npcString = null;
+						String chatString = null;
+						
 						Node node = attrs.getNamedItem("string");
 						if (node != null)
 						{
@@ -163,7 +164,7 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 								npcString = NpcStringId.getNpcStringId(node.getNodeValue());
 								if (npcString == null)
 								{
-									_log.warning(getClass().getSimpleName() + ": Unknown npcstring '" + node.getNodeValue() + ".");
+									_log.warning(getClass().getSimpleName() + ": Unknown npcString '" + node.getNodeValue() + "' for route '" + routeName + "'");
 									continue;
 								}
 							}
@@ -175,13 +176,13 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 									npcString = NpcStringId.getNpcStringId(Integer.parseInt(node.getNodeValue()));
 									if (npcString == null)
 									{
-										_log.warning(getClass().getSimpleName() + ": Unknown npcstring '" + node.getNodeValue() + ".");
+										_log.warning(getClass().getSimpleName() + ": Unknown npcString '" + node.getNodeValue() + "' for route '" + routeName + "'");
 										continue;
 									}
 								}
 							}
 						}
-						list.add(new L2NpcWalkerNode(0, npcString, chatString, x, y, z, delay, parseBoolean(attrs, "run")));
+						list.add(new L2NpcWalkerNode(x, y, z, delay, run, npcString, chatString));
 					}
 					
 					else if (r.getNodeName().equals("target"))
@@ -190,11 +191,9 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 						try
 						{
 							int npcId = Integer.parseInt(attrs.getNamedItem("id").getNodeValue());
-							int x = 0, y = 0, z = 0;
-							
-							x = Integer.parseInt(attrs.getNamedItem("spawnX").getNodeValue());
-							y = Integer.parseInt(attrs.getNamedItem("spawnY").getNodeValue());
-							z = Integer.parseInt(attrs.getNamedItem("spawnZ").getNodeValue());
+							int x = Integer.parseInt(attrs.getNamedItem("spawnX").getNodeValue());
+							int y = Integer.parseInt(attrs.getNamedItem("spawnY").getNodeValue());
+							int z = Integer.parseInt(attrs.getNamedItem("spawnZ").getNodeValue());
 							
 							NpcRoutesHolder holder = _routesToAttach.get(npcId); if (holder == null) holder = new NpcRoutesHolder();
 							holder.addRoute(routeName, new Location(x, y, z));
@@ -204,7 +203,7 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 						}
 						catch (Exception e)
 						{
-							_log.warning("Walking Manager: Error in target definition for route : " + routeName);
+							_log.warning(getClass().getSimpleName() + ": Error in target definition for route '" + routeName + "'");
 						}
 					}
 				}
@@ -306,22 +305,24 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 					L2NpcWalkerNode node = walk.getCurrentNode();
 					
 					// adjust next waypoint, if NPC spawns at first waypoint
-					if ((npc.getX() == node.getMoveX()) && (npc.getY() == node.getMoveY()))
+					if ((npc.getX() == node.getX()) && (npc.getY() == node.getY()))
 					{
 						walk.calculateNextNode(npc);
 						node = walk.getCurrentNode();
-						npc.sendDebugMessage("Route " + routeName + ", spawn point is same with first waypoint, adjusted to next");
+						npc.sendDebugMessage("Route '" + routeName + "': spawn point is same with first waypoint, adjusted to next");
 					}
 					
-					if (!npc.isInsideRadius(node.getMoveX(), node.getMoveY(), node.getMoveZ(), 3000, true, false))
+					if (!npc.isInsideRadius(node, 3000, true, false))
 					{
-						npc.sendDebugMessage("Route " + routeName + ", NPC is too far from starting point, walking will no start");
+						String message = "Route '" + routeName + "': NPC is too far from starting point, walking will not start";
+						_log.warning(getClass().getSimpleName() + ": " + message);
+						npc.sendDebugMessage(message);
 						return;
 					}
 					
-					npc.sendDebugMessage("Starting to move at route " + routeName);
-					npc.setIsRunning(node.getRunning());
-					npc.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, new Location(node.getMoveX(), node.getMoveY(), node.getMoveZ(), 0));
+					npc.sendDebugMessage("Starting to move at route '" + routeName + "'");
+					npc.setIsRunning(node.runToLocation());
+					npc.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, node);
 					walk.setWalkCheckTask(ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new Runnable()
 					{
 						@Override
@@ -337,7 +338,7 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 				}
 				else
 				{
-					npc.sendDebugMessage("Trying to start move at route " + routeName + ", but cannot now, scheduled");
+					npc.sendDebugMessage("Failed to start moving along route '" + routeName + "', scheduled");
 					ThreadPoolManager.getInstance().scheduleGeneral(new Runnable()
 					{
 						@Override
@@ -362,21 +363,21 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 					// Prevent call simultaneously from scheduled task and onArrived() or temporarily stop walking for resuming in future
 					if (walk.isBlocked() || walk.isSuspended())
 					{
-						npc.sendDebugMessage("Trying continue to move at route " + routeName + ", but cannot now (operation is blocked)");
+						npc.sendDebugMessage("Failed to continue moving along route '" + routeName + "' (operation is blocked)");
 						return;
 					}
 					
 					walk.setBlocked(true);
 					L2NpcWalkerNode node = walk.getCurrentNode();
-					npc.sendDebugMessage("Route id: " + routeName + ", continue to node " + walk.getCurrentNodeId());
-					npc.setIsRunning(node.getRunning());
-					npc.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, new Location(node.getMoveX(), node.getMoveY(), node.getMoveZ(), 0));
+					npc.sendDebugMessage("Route '" + routeName + "', continuing to node " + walk.getCurrentNodeId());
+					npc.setIsRunning(node.runToLocation());
+					npc.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, node);
 					walk.setBlocked(false);
 					walk.setStoppedByAttack(false);
 				}
 				else
 				{
-					npc.sendDebugMessage("Trying continue to move at route " + routeName + ", but cannot now (wrong AI state)");
+					npc.sendDebugMessage("Failed to continue moving along route '" + routeName + "' (wrong AI state)");
 				}
 			}
 		}
@@ -489,12 +490,11 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 			if ((walk.getCurrentNodeId() >= 0) && (walk.getCurrentNodeId() < walk.getRoute().getNodesCount()))
 			{
 				L2NpcWalkerNode node = walk.getRoute().getNodeList().get(walk.getCurrentNodeId());
-				if (npc.isInsideRadius(node.getMoveX(), node.getMoveY(), node.getMoveZ(), 10, false, false))
+				if (npc.isInsideRadius(node, 10, false, false))
 				{
-					npc.sendDebugMessage("Route: " + walk.getRoute().getName() + ", arrived to node " + walk.getCurrentNodeId());
-					npc.sendDebugMessage("Done in " + ((System.currentTimeMillis() - walk.getLastAction()) / 1000) + " s.");
+					npc.sendDebugMessage("Route '" + walk.getRoute().getName() + "', arrived to node " + walk.getCurrentNodeId());
+					npc.sendDebugMessage("Done in " + ((System.currentTimeMillis() - walk.getLastAction()) / 1000) + " s");
 					walk.calculateNextNode(npc);
-					int delay = node.getDelay();
 					walk.setBlocked(true); // prevents to be ran from walk check task, if there is delay in this node.
 					
 					NpcStringId npcString;
@@ -516,7 +516,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 					}
 					
 					npc.getAI().setIntention(AI_INTENTION_ACTIVE);
-					ThreadPoolManager.getInstance().scheduleGeneral(new ArrivedTask(npc, walk), delay * 1000L);
+					ThreadPoolManager.getInstance().scheduleGeneral(new ArrivedTask(npc, walk), node.getDelay() * 1000L);
 					return true;
 				}
 			}
@@ -586,8 +586,8 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 				L2NpcWalkerNode node = WALKS.get(index);
 				L2NpcWalkerNode next = WALKS.get((index + 1) % length);
 				
-				final int x1 = node.getMoveX(), y1 = node.getMoveY(), z1 = node.getMoveZ();
-				final int x2 = next.getMoveX(), y2 = next.getMoveY(), z2 = next.getMoveZ();
+				final int x1 = node.getX(), y1 = node.getY(), z1 = node.getZ();
+				final int x2 = next.getX(), y2 = next.getY(), z2 = next.getZ();
 				final double dx = x2 - x1, dy = y2 - y1, dz = z2 - z1;
 				final double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 				final double pitch = 50;
