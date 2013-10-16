@@ -2293,7 +2293,7 @@ public class L2Clan
 		{
 			return false;
 		}
-		if ((activeChar.getClanPrivileges() & L2Clan.CP_CL_JOIN_CLAN) != L2Clan.CP_CL_JOIN_CLAN)
+		if (!activeChar.hasClanPrivilege(L2Clan.CP_CL_JOIN_CLAN))
 		{
 			activeChar.sendPacket(SystemMessageId.YOU_ARE_NOT_AUTHORIZED_TO_DO_THAT);
 			return false;
