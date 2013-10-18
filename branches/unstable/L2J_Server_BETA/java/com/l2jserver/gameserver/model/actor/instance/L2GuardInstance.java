@@ -19,13 +19,12 @@
 package com.l2jserver.gameserver.model.actor.instance;
 
 import java.util.List;
-import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import com.l2jserver.Config;
-import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlIntention;
 import com.l2jserver.gameserver.ai.L2AttackableAI;
+import com.l2jserver.gameserver.ai.L2CharacterAI;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.L2WorldRegion;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
@@ -44,22 +43,6 @@ import com.l2jserver.util.Rnd;
 public class L2GuardInstance extends L2Attackable
 {
 	private static Logger _log = Logger.getLogger(L2GuardInstance.class.getName());
-	
-	private static final int RETURN_INTERVAL = 60000;
-	
-	private Future<?> _returnTask;
-	
-	public class ReturnTask implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			if (getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE)
-			{
-				returnHome();
-			}
-		}
-	}
 	
 	/**
 	 * Constructor of L2GuardInstance (use L2Character and L2NpcInstance constructor).<br>
@@ -99,18 +82,64 @@ public class L2GuardInstance extends L2Attackable
 		return attacker instanceof L2MonsterInstance;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	private static class L2GuardAI extends L2AttackableAI
+	{
+		public L2GuardAI(AIAccessor accessor)
+		{
+			super(accessor);
+		}
+		@Override
+		protected void onIntentionIdle()
+		{
+			super.onIntentionIdle();
+			if (!getActor().isWalker())
+				getActor().returnHome();
+		}
+		@Override
+		public L2GuardInstance getActor()
+		{
+			return (L2GuardInstance) super.getActor();
+		}
+	}
+	@Override
+	public L2CharacterAI getAI()
+	{
+		L2CharacterAI ai = _ai; // copy handle
+		if (ai == null)
+		{
+			synchronized (this)
+			{
+				if (_ai == null)
+				{
+					_ai = new L2GuardAI(new AIAccessor());
+				}
+				return _ai;
+			}
+		}
+		return ai;
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * Notify the L2GuardInstance to return to its home location (AI_INTENTION_MOVE_TO) and clear its _aggroList.
 	 */
 	@Override
 	public void returnHome()
 	{
+		assert !isWalker();
 		if (!isInsideRadius(getSpawn().getX(), getSpawn().getY(), 150, false))
 		{
 			clearAggroList();
 			
 			getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, getSpawn().getLocation());
 		}
+		//[JOJO]-------------------------------------------------
+		else if (hasAI() && getAI().getIntention() != CtrlIntention.AI_INTENTION_IDLE && getKnownList().getKnownPlayers().isEmpty())
+		{
+			getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
+		}
+		//-------------------------------------------------------
 	}
 	
 	/**
@@ -121,11 +150,6 @@ public class L2GuardInstance extends L2Attackable
 	{
 		setIsNoRndWalk(true);
 		super.onSpawn();	// [L2J_JP DEL - TSL] --> [JOJO]•œŠˆ TODO:—vŠm”F
-		
-		if ((_returnTask == null) && !isWalker())
-		{
-			_returnTask = ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new ReturnTask(), RETURN_INTERVAL, RETURN_INTERVAL + Rnd.nextInt(60000));
-		}
 		
 		// check the region where this mob is, do not activate the AI if region is inactive.
 		L2WorldRegion region = L2World.getInstance().getRegion(getX(), getY());
