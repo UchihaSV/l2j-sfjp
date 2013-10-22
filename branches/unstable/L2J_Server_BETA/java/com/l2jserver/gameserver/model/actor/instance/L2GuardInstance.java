@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
+import static com.l2jserver.gameserver.ai.CtrlIntention.*;
+
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -25,6 +27,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.ai.CtrlIntention;
 import com.l2jserver.gameserver.ai.L2AttackableAI;
 import com.l2jserver.gameserver.ai.L2CharacterAI;
+import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.L2WorldRegion;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
@@ -35,6 +38,7 @@ import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.quest.Quest.QuestEventType;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.SocialAction;
+import com.l2jserver.gameserver.network.serverpackets.ValidateLocation;
 import com.l2jserver.util.Rnd;
 
 /**
@@ -89,19 +93,30 @@ public class L2GuardInstance extends L2Attackable
 		{
 			super(accessor);
 		}
+		
 		@Override
 		protected void onIntentionIdle()
 		{
 			super.onIntentionIdle();
 			if (!getActor().isWalker())
-				getActor().returnHome();
+				getActor().home();
 		}
+		
 		@Override
 		public L2GuardInstance getActor()
 		{
 			return (L2GuardInstance) super.getActor();
 		}
 	}
+	
+	@Override
+	public void setAI(L2CharacterAI newAI)
+	{
+		super.setAI(newAI);
+		if (newAI == null && !isWalker())
+			home();
+	}
+	
 	@Override
 	public L2CharacterAI getAI()
 	{
@@ -119,28 +134,68 @@ public class L2GuardInstance extends L2Attackable
 		}
 		return ai;
 	}
-	//-------------------------------------------------------
 	
+	protected boolean home()
+	{
+		assert !isWalker();
+		
+		if (!isInsideRadius(getSpawn().getX(), getSpawn().getY(), 150, false))
+		{
+			clearAggroList();
+			
+			setRunning();	//+[JOJO]
+			getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, getSpawn().getLocation());
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 	/**
 	 * Notify the L2GuardInstance to return to its home location (AI_INTENTION_MOVE_TO) and clear its _aggroList.
 	 */
 	@Override
 	public void returnHome()
 	{
-		assert !isWalker();
-		if (!isInsideRadius(getSpawn().getX(), getSpawn().getY(), 150, false))
+		if (home())
 		{
-			clearAggroList();
+			// Œx”õ•º‚ÌŒü‚«’²®
+			if (getX() == getSpawn().getX() && getY() == getSpawn().getY() && getHeading() != getSpawn().getHeading())
+			{
+				setHeading(getSpawn().getHeading());
+				broadcastPacket(new ValidateLocation(this));
+			}
 			
-			getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, getSpawn().getLocation());
+			// AI‚Ì–µ‚‚ð’²®
+			if (hasAI() && getAI().getIntention() != AI_INTENTION_IDLE)
+			{
+				if (getKnownList().getKnownPlayers().isEmpty())
+					super.setAI(null);
+				else if (getAggroList().isEmpty() && getAI().getIntention() == AI_INTENTION_ACTIVE && !autoAttackCondition())
+					super.setAI(null);
+			}
 		}
-		//[JOJO]-------------------------------------------------
-		else if (hasAI() && getAI().getIntention() != CtrlIntention.AI_INTENTION_IDLE && getKnownList().getKnownPlayers().isEmpty())
-		{
-			getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
-		}
-		//-------------------------------------------------------
 	}
+	// L2AttackableAI#autoAttackCondition(L2Character)
+	private boolean autoAttackCondition()
+	{
+		for (L2Object target : getKnownList().getKnownObjects().values())
+		{
+			// Check if the L2PcInstance target has karma (=PK)
+			if (target instanceof L2PcInstance)
+			{
+				if (((L2PcInstance) target).getKarma() > 0) return true;
+			}
+			// Check if the L2MonsterInstance target is aggressive
+			else if (target instanceof L2MonsterInstance && Config.GUARD_ATTACK_AGGRO_MOB)
+			{
+				if ((((L2MonsterInstance) target).isAggressive())) return true;
+			}
+		}
+		return false;
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * Set the home location of its L2GuardInstance.
