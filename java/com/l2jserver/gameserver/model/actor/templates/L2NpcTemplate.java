@@ -92,6 +92,8 @@ public final class L2NpcTemplate extends L2CharTemplate
 	
 	private L2NpcAIData _aiData;
 	
+	private StatsSet _parameters;
+	
 	public static enum AIType
 	{
 		FIGHTER,
@@ -1050,5 +1052,20 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				_race = Race.NONE;
 				break;
 		}
+	}
+	
+	public boolean hasParameters()
+	{
+		return _parameters != null;
+	}
+	
+	public StatsSet getParameters()
+	{
+		return _parameters;
+	}
+	
+	public void setParameters(StatsSet set)
+	{
+		_parameters = set;
 	}
 }
