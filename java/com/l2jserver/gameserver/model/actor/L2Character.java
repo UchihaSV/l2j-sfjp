@@ -18,8 +18,7 @@
  */
 package com.l2jserver.gameserver.model.actor;
 
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ACTIVE;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_FOLLOW;
+import static com.l2jserver.gameserver.ai.CtrlIntention.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
