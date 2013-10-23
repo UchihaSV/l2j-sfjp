@@ -21,7 +21,6 @@ package com.l2jserver.gameserver.instancemanager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
@@ -38,6 +37,7 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.DoorTable;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.datatables.SpawnTable;
+import com.l2jserver.gameserver.instancemanager.tasks.FourSepulchersChangeCoolDownTimeTask;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -60,9 +60,9 @@ import com.l2jserver.util.Rnd;
  * Zoey76: TODO: Use Location DTO instead of array of int.
  * @author sandman
  */
-public class FourSepulchersManager
+public final class FourSepulchersManager
 {
-	protected static final Logger _log = Logger.getLogger(FourSepulchersManager.class.getName());
+	private static final Logger _log = Logger.getLogger(FourSepulchersManager.class.getName());
 	
 	private static final int QUEST_ID = 620;
 	
@@ -71,17 +71,16 @@ public class FourSepulchersManager
 	private static final int CHAPEL_KEY = 7260;
 	private static final int ANTIQUE_BROOCH = 7262;
 	
- //	protected boolean _firstTimeRun;	//-[JOJO]
-	protected boolean _inEntryTime = false;
-	protected boolean _inWarmUpTime = false;
-	protected boolean _inAttackTime = false;
-	protected boolean _inCoolDownTime = false;
+ //	private boolean _firstTimeRun;	//-[JOJO]
+	private boolean _inEntryTime = false;
+	private boolean _inWarmUpTime = false;
+	private boolean _inAttackTime = false;
+	private boolean _inCoolDownTime = false;
 	
-	protected ScheduledFuture<?> _changeCoolDownTimeTask = null;
-	protected ScheduledFuture<?> _changeEntryTimeTask = null;
-	protected ScheduledFuture<?> _changeWarmUpTimeTask = null;
-	protected ScheduledFuture<?> _changeAttackTimeTask = null;
-	protected ScheduledFuture<?> _onPartyAnnihilatedTask = null;
+	private ScheduledFuture<?> _changeCoolDownTimeTask = null;
+	private ScheduledFuture<?> _changeEntryTimeTask = null;
+	private ScheduledFuture<?> _changeWarmUpTimeTask = null;
+	private ScheduledFuture<?> _changeAttackTimeTask = null;
 	
 	// @formatter:off
 	private Location[] START_HALL_SPAWN =
@@ -142,10 +141,10 @@ public class FourSepulchersManager
  //	protected FastList<L2Spawn> _emperorsGraveSpawns;
 	protected FastList<L2Npc> _allMobs = new FastList<>();
 	
- //	protected long _attackTimeEnd = 0;	//-[JOJO]
- //	protected long _coolDownTimeEnd = 0;	//-[JOJO]
- //	protected long _entryTimeEnd = 0;	//-[JOJO]
- //	protected long _warmUpTimeEnd = 0;	//-[JOJO]
+ //	private long _attackTimeEnd = 0;	//-[JOJO]
+ //	private long _coolDownTimeEnd = 0;	//-[JOJO]
+ //	private long _entryTimeEnd = 0;	//-[JOJO]
+ //	private long _warmUpTimeEnd = 0;	//-[JOJO]
 	long _attackTimeStart;	//+[JOJO]
 	
 	private static final int NEW_CYCLE_MINUTE = 55;
@@ -192,7 +191,7 @@ public class FourSepulchersManager
 		loadEmperorsGraveMonsters();
 		spawnManagers();
 	//	timeSelector();
-		_changeCoolDownTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeCoolDownTime(), 0);	//+[JOJO]
+		_changeCoolDownTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeCoolDownTimeTask(), 0);	//+[JOJO]
 		_log.info(getClass().getSimpleName() + ": Beginning in Cooldown time");	//+[JOJO]
 	}
 	
@@ -658,14 +657,129 @@ public class FourSepulchersManager
 		}
 	}
 	
-	public boolean isEntryTime()
+	public ScheduledFuture<?> getChangeAttackTimeTask()
 	{
-		return _inEntryTime;
+		return _changeAttackTimeTask;
+	}
+	
+	public void setChangeAttackTimeTask(ScheduledFuture<?> task)
+	{
+		_changeAttackTimeTask = task;
+	}
+	
+	public ScheduledFuture<?> getChangeCoolDownTimeTask()
+	{
+		return _changeCoolDownTimeTask;
+	}
+	
+	public void setChangeCoolDownTimeTask(ScheduledFuture<?> task)
+	{
+		_changeCoolDownTimeTask = task;
+	}
+	
+	public ScheduledFuture<?> getChangeEntryTimeTask()
+	{
+		return _changeEntryTimeTask;
+	}
+	
+	public void setChangeEntryTimeTask(ScheduledFuture<?> task)
+	{
+		_changeEntryTimeTask = task;
+	}
+	
+	public ScheduledFuture<?> getChangeWarmUpTimeTask()
+	{
+		return _changeWarmUpTimeTask;
+	}
+	
+	public void setChangeWarmUpTimeTask(ScheduledFuture<?> task)
+	{
+		_changeWarmUpTimeTask = task;
+	}
+	
+	public long getAttackTimeEnd()
+	{
+		return _attackTimeEnd;
+	}
+	
+	public void setAttackTimeEnd(long attackTimeEnd)
+	{
+		_attackTimeEnd = attackTimeEnd;
+	}
+	
+	public byte getCycleMin()
+	{
+		return _newCycleMin;
+	}
+	
+	public long getEntrytTimeEnd()
+	{
+		return _entryTimeEnd;
+	}
+	
+	public void setEntryTimeEnd(long entryTimeEnd)
+	{
+		_entryTimeEnd = entryTimeEnd;
+	}
+	
+	public long getWarmUpTimeEnd()
+	{
+		return _warmUpTimeEnd;
+	}
+	
+	public void setWarmUpTimeEnd(long warmUpTimeEnd)
+	{
+		_warmUpTimeEnd = warmUpTimeEnd;
 	}
 	
 	public boolean isAttackTime()
 	{
 		return _inAttackTime;
+	}
+	
+	public void setIsAttackTime(boolean attackTime)
+	{
+		_inAttackTime = attackTime;
+	}
+	
+	public boolean isCoolDownTime()
+	{
+		return _inCoolDownTime;
+	}
+	
+	public void setIsCoolDownTime(boolean isCoolDownTime)
+	{
+		_inCoolDownTime = isCoolDownTime;
+	}
+	
+	public boolean isEntryTime()
+	{
+		return _inEntryTime;
+	}
+	
+	public void setIsEntryTime(boolean entryTime)
+	{
+		_inEntryTime = entryTime;
+	}
+	
+	public boolean isFirstTimeRun()
+	{
+		return _firstTimeRun;
+	}
+	
+	public void setIsFirstTimeRun(boolean isFirstTimeRun)
+	{
+		_firstTimeRun = isFirstTimeRun;
+	}
+	
+	public boolean isWarmUpTime()
+	{
+		return _inWarmUpTime;
+	}
+	
+	public void setIsWarmUpTime(boolean isWarmUpTime)
+	{
+		_inWarmUpTime = isWarmUpTime;
 	}
 	
 	// quests/620_FourGoblets/__init__.py --> onAdvEvent(...) --> if event == "Enter" --> here
@@ -1183,7 +1297,7 @@ public class FourSepulchersManager
 		}
 	}
 	
-	protected void locationShadowSpawns()
+	public void locationShadowSpawns()
 	{
 		initLocationShadowSpawns();
 	}
@@ -1322,144 +1436,6 @@ public class FourSepulchersManager
 				}
 				((L2SepulcherNpcInstance) temp.getLastSpawn()).sayInShout(msg1);
 				((L2SepulcherNpcInstance) temp.getLastSpawn()).sayInShout(msg2);
-			}
-		}
-	}
-	
-	protected class ManagerSay implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			if (_inAttackTime)
-			{
-				Calendar tmp = Calendar.getInstance();
-				tmp.setTimeInMillis(Calendar.getInstance().getTimeInMillis() - _attackTimeStart);
-				int min = tmp.get(Calendar.MINUTE);
-				managerSay(min);
-				if (min + 5 <= Config.FS_TIME_ATTACK)
-				{
-					ThreadPoolManager.getInstance().scheduleGeneral(this/*new ManagerSay()*/, 5 * 60000);
-				}
-			}
-			else if (_inEntryTime)
-			{
-				managerSay(0);
-			}
-		}
-	}
-	
-	protected class ChangeEntryTime implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			// _log.info("FourSepulchersManager:In Entry Time");
-			_inEntryTime = true;
-			_inWarmUpTime = false;
-			_inAttackTime = false;
-			_inCoolDownTime = false;
-			
-			long interval = Config.FS_TIME_ENTRY * 60000L;
-			ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), 0);
-			_changeWarmUpTimeTask = ThreadPoolManager.getInstance().scheduleEffect(new ChangeWarmUpTime(), interval);
-			if (_changeEntryTimeTask != null)
-			{
-				_changeEntryTimeTask.cancel(true);
-				_changeEntryTimeTask = null;
-			}
-			
-		}
-	}
-	
-	protected class ChangeWarmUpTime implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			// _log.info("FourSepulchersManager:In Warm-Up Time");
-			_inEntryTime = true;
-			_inWarmUpTime = false;
-			_inAttackTime = false;
-			_inCoolDownTime = false;
-			
-			long interval = Config.FS_TIME_WARMUP * 60000L;
-			_changeAttackTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeAttackTime(), interval);
-			
-			if (_changeWarmUpTimeTask != null)
-			{
-				_changeWarmUpTimeTask.cancel(true);
-				_changeWarmUpTimeTask = null;
-			}
-		}
-	}
-	
-	protected class ChangeAttackTime implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			// _log.info("FourSepulchersManager:In Attack Time");
-			_inEntryTime = false;
-			_inWarmUpTime = false;
-			_inAttackTime = true;
-			_inCoolDownTime = false;
-			
-			locationShadowSpawns();
-			
-			spawnMysteriousBox(31921);
-			spawnMysteriousBox(31922);
-			spawnMysteriousBox(31923);
-			spawnMysteriousBox(31924);
-			
-			_attackTimeStart = Calendar.getInstance().getTimeInMillis();
-			
-			// say task
-			ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), 5 * 60400);
-			
-			long interval = Config.FS_TIME_ATTACK * 60000L;
-			_changeCoolDownTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeCoolDownTime(), interval + OUST_PLAYER_MARGIN_TIME);
-			
-			if (_changeAttackTimeTask != null)
-			{
-				_changeAttackTimeTask.cancel(true);
-				_changeAttackTimeTask = null;
-			}
-		}
-	}
-	
-	protected class ChangeCoolDownTime implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			// _log.info("FourSepulchersManager:In Cool-Down Time");
-			_inEntryTime = false;
-			_inWarmUpTime = false;
-			_inAttackTime = false;
-			_inCoolDownTime = true;
-			
-			clean();
-			
-			Calendar time = Calendar.getInstance();
-			// one hour = 55th min to 55 min of next hour
-			if (Calendar.getInstance().get(Calendar.MINUTE) > NEW_CYCLE_MINUTE)
-			{
-				time.set(Calendar.HOUR, Calendar.getInstance().get(Calendar.HOUR) + 1);
-			}
-			time.set(Calendar.MINUTE, NEW_CYCLE_MINUTE);
-			time.set(Calendar.SECOND, 0);		//+[JOJO] ç≈ëÂÇPï™ÇÃåÎç∑Ç™èoÇƒÇµÇ‹Ç§ÇÃÇ≈
-			time.set(Calendar.MILLISECOND, 0);	//+[JOJO]
-			_log.info(getClass().getSimpleName() + ": Entry time: " + com.l2jserver.util.Util.dateFormat(time));
-		//	_log.info(getClass().getSimpleName() + ": Entry time: " + time.getTime());
-			
-			long interval = time.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
-			_changeEntryTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeEntryTime(), interval);
-			
-			if (_changeCoolDownTimeTask != null)
-			{
-				_changeCoolDownTimeTask.cancel(true);
-				_changeCoolDownTimeTask = null;
 			}
 		}
 	}

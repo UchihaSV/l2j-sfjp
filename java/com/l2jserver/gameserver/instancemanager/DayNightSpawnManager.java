@@ -33,7 +33,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2RaidBossInstance;
 /**
  * @author godson
  */
-public class DayNightSpawnManager
+public final class DayNightSpawnManager
 {
 	
 	private static Logger _log = Logger.getLogger(DayNightSpawnManager.class.getName());
