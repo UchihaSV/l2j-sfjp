@@ -270,50 +270,36 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 			++result;
 		}
 	}
-	public int replace(CharSequence token, boolean value)
-	{
-		return replace(token, Boolean.toString(value));
-	}
-	public int replace(CharSequence token, int value)
-	{
-		return replace(token, Integer.toString(value));
-	}
-	public int replace(CharSequence token, long value)
-	{
-		return replace(token, Long.toString(value));
-	}
-	public int replace(CharSequence token, float value)
-	{
-		return replace(token, Float.toString(value));
-	}
-	public int replace(CharSequence token, double value)
-	{
-		return replace(token, Double.toString(value));
-	}
+	
 	@Override
 	public String toString()
 	{
 		return _ca != null ? new String(_ca, 0, _count) : _html;
 	}
 	
-	public void replace(String pattern, boolean val)
+	public int replace(CharSequence token, boolean value)
 	{
-		replace(pattern, String.valueOf(val));
+		return replace(token, Boolean.toString(value));
 	}
 	
-	public void replace(String pattern, int val)
+	public int replace(CharSequence token, int value)
 	{
-		replace(pattern, String.valueOf(val));
+		return replace(token, Integer.toString(value));
 	}
 	
-	public void replace(String pattern, long val)
+	public int replace(CharSequence token, long value)
 	{
-		replace(pattern, String.valueOf(val));
+		return replace(token, Long.toString(value));
 	}
 	
-	public void replace(String pattern, double val)
+	public int replace(CharSequence token, float value)
 	{
-		replace(pattern, String.valueOf(val));
+		return replace(token, Float.toString(value));
+	}
+	
+	public int replace(CharSequence token, double value)
+	{
+		return replace(token, Double.toString(value));
 	}
 	
 	/*
