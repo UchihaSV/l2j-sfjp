@@ -296,6 +296,26 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 		return _ca != null ? new String(_ca, 0, _count) : _html;
 	}
 	
+	public void replace(String pattern, boolean val)
+	{
+		replace(pattern, String.valueOf(val));
+	}
+	
+	public void replace(String pattern, int val)
+	{
+		replace(pattern, String.valueOf(val));
+	}
+	
+	public void replace(String pattern, long val)
+	{
+		replace(pattern, String.valueOf(val));
+	}
+	
+	public void replace(String pattern, double val)
+	{
+		replace(pattern, String.valueOf(val));
+	}
+	
 	/*
 		<a action="bypass -h Quest 100_SagaOfTheMaestro 0-1">"I'll do it."</a></body></html>
 				   |         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
@@ -341,6 +361,11 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 				activeChar.addBypass(_html.substring(start, finish).trim());
 			}
 		}
+	}
+	
+	public String getHtml()
+	{
+		return _html;
 	}
 	
 	@Override
