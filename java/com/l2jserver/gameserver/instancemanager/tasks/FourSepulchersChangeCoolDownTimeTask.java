@@ -18,14 +18,15 @@
  */
 package com.l2jserver.gameserver.instancemanager.tasks;
 
+import static com.l2jserver.gameserver.instancemanager.FourSepulchersManager.*;
+
 import java.util.Calendar;
-import java.util.concurrent.ScheduledFuture;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
 
 /**
- * @author xban1x
+ * @author xban1x, sandman
  */
 public final class FourSepulchersChangeCoolDownTimeTask implements Runnable
 {
@@ -33,35 +34,19 @@ public final class FourSepulchersChangeCoolDownTimeTask implements Runnable
 	public void run()
 	{
 		final FourSepulchersManager manager = FourSepulchersManager.getInstance();
-		manager.setIsEntryTime(false);
-		manager.setIsWarmUpTime(false);
-		manager.setIsAttackTime(false);
-		manager.setIsCoolDownTime(true);
+		manager.setCoolDownTime();
 		
 		manager.clean();
 		
+		long interval;
+		final long now = System.currentTimeMillis();
 		final Calendar time = Calendar.getInstance();
-		// one hour = 55th min to 55 min of next hour, so we check for this,
-		// also check for first launch
-		if (!manager.isFirstTimeRun() && (Calendar.getInstance().get(Calendar.MINUTE) > manager.getCycleMin()))
-		{
-			time.set(Calendar.HOUR, Calendar.getInstance().get(Calendar.HOUR) + 1);
-		}
-		time.set(Calendar.MINUTE, manager.getCycleMin());
-		if (manager.isFirstTimeRun())
-		{
-			manager.setIsFirstTimeRun(false);
-		}
+		time.set(Calendar.MINUTE, NEW_CYCLE_MINUTE);
+		time.set(Calendar.SECOND, 0);
+		time.set(Calendar.MILLISECOND, 0);
+		while ((interval = time.getTimeInMillis() - now) < 0)
+			time.add(Calendar.HOUR, 1);
 		
-		long interval = time.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
-		
-		manager.setChangeEntryTimeTask(ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeEntryTimeTask(), interval));
-		final ScheduledFuture<?> changeCoolDownTimeTask = manager.getChangeCoolDownTimeTask();
-		
-		if (changeCoolDownTimeTask != null)
-		{
-			changeCoolDownTimeTask.cancel(true);
-			manager.setChangeCoolDownTimeTask(null);
-		}
+		manager.setChangePeriodTask(ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeEntryTimeTask(), interval));
 	}
 }

@@ -71,16 +71,16 @@ public final class FourSepulchersManager
 	private static final int CHAPEL_KEY = 7260;
 	private static final int ANTIQUE_BROOCH = 7262;
 	
- //	private boolean _firstTimeRun;	//-[JOJO]
-	private boolean _inEntryTime = false;
-	private boolean _inWarmUpTime = false;
-	private boolean _inAttackTime = false;
-	private boolean _inCoolDownTime = false;
+	private static enum FourSepulchersPeriod
+	{
+		COOL_DOWN,	// **:**:**~00:55:00
+		ENTRY,		// 00:55:00~00:58:00
+		WARM_UP,	// 00:58:00~01:00:00
+		ATTACK		// 01:00:00~01:50:00
+	}
 	
-	private ScheduledFuture<?> _changeCoolDownTimeTask = null;
-	private ScheduledFuture<?> _changeEntryTimeTask = null;
-	private ScheduledFuture<?> _changeWarmUpTimeTask = null;
-	private ScheduledFuture<?> _changeAttackTimeTask = null;
+	private FourSepulchersPeriod _currentPeriod;
+	private ScheduledFuture<?> _changePeriodTask;
 	
 	// @formatter:off
 	private Location[] START_HALL_SPAWN =
@@ -141,43 +141,21 @@ public final class FourSepulchersManager
  //	protected FastList<L2Spawn> _emperorsGraveSpawns;
 	protected FastList<L2Npc> _allMobs = new FastList<>();
 	
- //	private long _attackTimeEnd = 0;	//-[JOJO]
- //	private long _coolDownTimeEnd = 0;	//-[JOJO]
- //	private long _entryTimeEnd = 0;	//-[JOJO]
- //	private long _warmUpTimeEnd = 0;	//-[JOJO]
-	long _attackTimeStart;	//+[JOJO]
+	public static final int NEW_CYCLE_MINUTE = 55;	// min
+	public static final int OUST_PLAYER_MARGIN_TIME = 60000;	// sec
+	public static final int ATTACK_ELASPED_INTERVAL = 5;	// min
 	
-	private static final int NEW_CYCLE_MINUTE = 55;
-	private static final int OUST_PLAYER_MARGIN_TIME = 60000;
+	private long _attackTimeStart;
 	
 	public void init()
 	{
-		if (_changeCoolDownTimeTask != null)
+		if (_changePeriodTask != null)
 		{
-			_changeCoolDownTimeTask.cancel(true);
-		}
-		if (_changeEntryTimeTask != null)
-		{
-			_changeEntryTimeTask.cancel(true);
-		}
-		if (_changeWarmUpTimeTask != null)
-		{
-			_changeWarmUpTimeTask.cancel(true);
-		}
-		if (_changeAttackTimeTask != null)
-		{
-			_changeAttackTimeTask.cancel(true);
+			_changePeriodTask.cancel(false);
+			_changePeriodTask = null;
 		}
 		
-		_changeCoolDownTimeTask = null;
-		_changeEntryTimeTask = null;
-		_changeWarmUpTimeTask = null;
-		_changeAttackTimeTask = null;
-		
-		_inEntryTime = false;
-		_inWarmUpTime = false;
-		_inAttackTime = false;
-		_inCoolDownTime = false;
+		_currentPeriod = null;
 		
 	//	_firstTimeRun = true;
 		initFixedInfo();
@@ -191,7 +169,7 @@ public final class FourSepulchersManager
 		loadEmperorsGraveMonsters();
 		spawnManagers();
 	//	timeSelector();
-		_changeCoolDownTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeCoolDownTimeTask(), 0);	//+[JOJO]
+		_changePeriodTask = ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeCoolDownTimeTask(), 0);	//+[JOJO]
 		_log.info(getClass().getSimpleName() + ": Beginning in Cooldown time");	//+[JOJO]
 	}
 	
@@ -657,129 +635,59 @@ public final class FourSepulchersManager
 		}
 	}
 	
-	public ScheduledFuture<?> getChangeAttackTimeTask()
+	public void setChangePeriodTask(ScheduledFuture<?> task)
 	{
-		return _changeAttackTimeTask;
+		_changePeriodTask = task;
 	}
 	
-	public void setChangeAttackTimeTask(ScheduledFuture<?> task)
+	public void setAttackTimeStart(long attackTimeStart)
 	{
-		_changeAttackTimeTask = task;
+		_attackTimeStart = attackTimeStart;
 	}
 	
-	public ScheduledFuture<?> getChangeCoolDownTimeTask()
+	public long getAttackTimeStart()
 	{
-		return _changeCoolDownTimeTask;
-	}
-	
-	public void setChangeCoolDownTimeTask(ScheduledFuture<?> task)
-	{
-		_changeCoolDownTimeTask = task;
-	}
-	
-	public ScheduledFuture<?> getChangeEntryTimeTask()
-	{
-		return _changeEntryTimeTask;
-	}
-	
-	public void setChangeEntryTimeTask(ScheduledFuture<?> task)
-	{
-		_changeEntryTimeTask = task;
-	}
-	
-	public ScheduledFuture<?> getChangeWarmUpTimeTask()
-	{
-		return _changeWarmUpTimeTask;
-	}
-	
-	public void setChangeWarmUpTimeTask(ScheduledFuture<?> task)
-	{
-		_changeWarmUpTimeTask = task;
-	}
-	
-	public long getAttackTimeEnd()
-	{
-		return _attackTimeEnd;
-	}
-	
-	public void setAttackTimeEnd(long attackTimeEnd)
-	{
-		_attackTimeEnd = attackTimeEnd;
-	}
-	
-	public byte getCycleMin()
-	{
-		return _newCycleMin;
-	}
-	
-	public long getEntrytTimeEnd()
-	{
-		return _entryTimeEnd;
-	}
-	
-	public void setEntryTimeEnd(long entryTimeEnd)
-	{
-		_entryTimeEnd = entryTimeEnd;
-	}
-	
-	public long getWarmUpTimeEnd()
-	{
-		return _warmUpTimeEnd;
-	}
-	
-	public void setWarmUpTimeEnd(long warmUpTimeEnd)
-	{
-		_warmUpTimeEnd = warmUpTimeEnd;
+		return _attackTimeStart;
 	}
 	
 	public boolean isAttackTime()
 	{
-		return _inAttackTime;
+		return _currentPeriod == FourSepulchersPeriod.ATTACK;
 	}
 	
-	public void setIsAttackTime(boolean attackTime)
+	public void setAttackTime()
 	{
-		_inAttackTime = attackTime;
+		_currentPeriod = FourSepulchersPeriod.ATTACK;
 	}
 	
 	public boolean isCoolDownTime()
 	{
-		return _inCoolDownTime;
+		return _currentPeriod == FourSepulchersPeriod.COOL_DOWN;
 	}
 	
-	public void setIsCoolDownTime(boolean isCoolDownTime)
+	public void setCoolDownTime()
 	{
-		_inCoolDownTime = isCoolDownTime;
+		_currentPeriod = FourSepulchersPeriod.COOL_DOWN;
 	}
 	
 	public boolean isEntryTime()
 	{
-		return _inEntryTime;
+		return _currentPeriod == FourSepulchersPeriod.ENTRY;
 	}
 	
-	public void setIsEntryTime(boolean entryTime)
+	public void setEntryTime()
 	{
-		_inEntryTime = entryTime;
-	}
-	
-	public boolean isFirstTimeRun()
-	{
-		return _firstTimeRun;
-	}
-	
-	public void setIsFirstTimeRun(boolean isFirstTimeRun)
-	{
-		_firstTimeRun = isFirstTimeRun;
+		_currentPeriod = FourSepulchersPeriod.ENTRY;
 	}
 	
 	public boolean isWarmUpTime()
 	{
-		return _inWarmUpTime;
+		return _currentPeriod == FourSepulchersPeriod.WARM_UP;
 	}
 	
-	public void setIsWarmUpTime(boolean isWarmUpTime)
+	public void setWarmUpTime()
 	{
-		_inWarmUpTime = isWarmUpTime;
+		_currentPeriod = FourSepulchersPeriod.WARM_UP;
 	}
 	
 	// quests/620_FourGoblets/__init__.py --> onAdvEvent(...) --> if event == "Enter" --> here
@@ -1374,15 +1282,15 @@ public final class FourSepulchersManager
 	public void managerSay(int min)
 	{
 		// for attack phase, sending message every 5 minutes
-		if (_inAttackTime)
+		if (isAttackTime())
 		{
 			final String msg;
 			
-			if (min < 5)
+			if (min < ATTACK_ELASPED_INTERVAL)
 			{
 				return; // do not shout when < 5 minutes
 			}
-			min = (min + 2) / 5 * 5;
+			min = (min + ATTACK_ELASPED_INTERVAL / 2) / ATTACK_ELASPED_INTERVAL * ATTACK_ELASPED_INTERVAL;
 			if (min >= Config.FS_TIME_ATTACK)
 			{
 				msg = /*TODO:1000457*/"ゲームが終了しました。間もなく自動テレポートします。";
@@ -1418,7 +1326,7 @@ public final class FourSepulchersManager
 			}
 		}
 		
-		else if (_inEntryTime)
+		else if (isEntryTime())
 		{
 			final NpcStringId msg1 = NpcStringId.YOU_MAY_NOW_ENTER_THE_SEPULCHER;
 			final NpcStringId msg2 = NpcStringId.IF_YOU_PLACE_YOUR_HAND_ON_THE_STONE_STATUE_IN_FRONT_OF_EACH_SEPULCHER_YOU_WILL_BE_ABLE_TO_ENTER;

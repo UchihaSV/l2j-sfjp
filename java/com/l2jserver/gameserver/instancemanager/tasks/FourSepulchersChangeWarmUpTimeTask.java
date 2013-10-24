@@ -18,15 +18,12 @@
  */
 package com.l2jserver.gameserver.instancemanager.tasks;
 
-import java.util.Calendar;
-import java.util.concurrent.ScheduledFuture;
-
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
 
 /**
- * @author xban1x
+ * @author xban1x, sandman
  */
 public final class FourSepulchersChangeWarmUpTimeTask implements Runnable
 {
@@ -34,32 +31,9 @@ public final class FourSepulchersChangeWarmUpTimeTask implements Runnable
 	public void run()
 	{
 		final FourSepulchersManager manager = FourSepulchersManager.getInstance();
-		manager.setIsEntryTime(true);
-		manager.setIsWarmUpTime(false);
-		manager.setIsAttackTime(false);
-		manager.setIsCoolDownTime(false);
+		manager.setEntryTime();
 		
-		long interval = 0;
-		// searching time when warmup time will be ended:
-		// counting difference between time when warmup time ends and
-		// current time
-		// and then launching change time task
-		if (manager.isFirstTimeRun())
-		{
-			interval = manager.getWarmUpTimeEnd() - Calendar.getInstance().getTimeInMillis();
-		}
-		else
-		{
-			interval = Config.FS_TIME_WARMUP * 60000L;
-		}
-		
-		manager.setChangeAttackTimeTask(ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeAttackTimeTask(), interval));
-		final ScheduledFuture<?> changeWarmUpTimeTask = manager.getChangeWarmUpTimeTask();
-		
-		if (changeWarmUpTimeTask != null)
-		{
-			changeWarmUpTimeTask.cancel(true);
-			manager.setChangeWarmUpTimeTask(null);
-		}
+		long interval = Config.FS_TIME_WARMUP * 60000L;
+		manager.setChangePeriodTask(ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeAttackTimeTask(), interval));
 	}
 }
