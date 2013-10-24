@@ -142,7 +142,7 @@ public final class FourSepulchersManager
 	protected FastList<L2Npc> _allMobs = new FastList<>();
 	
 	public static final int NEW_CYCLE_MINUTE = 55;	// min
-	public static final int OUST_PLAYER_MARGIN_TIME = 60000;	// sec
+	public static final int OUST_PLAYER_MARGIN_TIME = 30000;	// sec
 	public static final int ATTACK_ELASPED_INTERVAL = 5;	// min
 	
 	private long _attackTimeStart;
