@@ -18,15 +18,12 @@
  */
 package com.l2jserver.gameserver.instancemanager.tasks;
 
-import java.util.Calendar;
-import java.util.concurrent.ScheduledFuture;
-
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
 
 /**
- * @author xban1x
+ * @author xban1x, sandman
  */
 public final class FourSepulchersChangeEntryTimeTask implements Runnable
 {
@@ -34,36 +31,20 @@ public final class FourSepulchersChangeEntryTimeTask implements Runnable
 	public void run()
 	{
 		final FourSepulchersManager manager = FourSepulchersManager.getInstance();
-		manager.setIsEntryTime(true);
-		manager.setIsWarmUpTime(false);
-		manager.setIsAttackTime(false);
-		manager.setIsCoolDownTime(false);
+		manager.setEntryTime();
 		
-		long interval = 0;
-		// if this is first launch - search time whFourSepulchersManager_inEntryTime = true;naFourSepulchersManager_inEntryTime = true;maen entry time will be
-		// ended:
-		// counting difference between time when entry time ends and current
-		// time
-		// and then launching change time task
-		if (manager.isFirstTimeRun())
-		{
-			interval = manager.getEntrytTimeEnd() - Calendar.getInstance().getTimeInMillis();
-		}
-		else
-		{
-			interval = Config.FS_TIME_ENTRY * 60000L; // else use stupid
-			// method
-		}
-		
-		// launching saying process...
+		long interval = Config.FS_TIME_ENTRY * 60000L;
+		manager.setChangePeriodTask(ThreadPoolManager.getInstance().scheduleEffect(new FourSepulchersChangeWarmUpTimeTask(), interval));
 		ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersManagerSay(), 0);
-		manager.setChangeWarmUpTimeTask(ThreadPoolManager.getInstance().scheduleEffect(new FourSepulchersChangeWarmUpTimeTask(), interval));
-		final ScheduledFuture<?> changeEntryTimeTask = manager.getChangeEntryTimeTask();
-		
-		if (changeEntryTimeTask != null)
+	}
+	
+	static class FourSepulchersManagerSay implements Runnable
+	{
+		@Override
+		public void run()
 		{
-			changeEntryTimeTask.cancel(true);
-			manager.setChangeEntryTimeTask(null);
+			final FourSepulchersManager manager = FourSepulchersManager.getInstance();
+			manager.managerSay(0);
 		}
 	}
 }

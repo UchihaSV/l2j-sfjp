@@ -18,43 +18,10 @@
  */
 package com.l2jserver.gameserver.instancemanager.tasks;
 
-import java.util.Calendar;
-
-import com.l2jserver.Config;
-import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
 
 /**
  * @author xban1x
  */
-public final class FourSepulchersManagerSay implements Runnable
+@Deprecated final class FourSepulchersManagerSay
 {
-	@Override
-	public void run()
-	{
-		if (FourSepulchersManager.getInstance().isAttackTime())
-		{
-			final Calendar tmp = Calendar.getInstance();
-			tmp.setTimeInMillis(Calendar.getInstance().getTimeInMillis() - FourSepulchersManager.getInstance().getWarmUpTimeEnd());
-			if ((tmp.get(Calendar.MINUTE) + 5) < Config.FS_TIME_ATTACK)
-			{
-				FourSepulchersManager.getInstance().managerSay((byte) tmp.get(Calendar.MINUTE)); // byte
-				// because
-				// minute
-				// cannot be
-				// more than
-				// 59
-				ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersManagerSay(), 5 * 60000);
-			}
-			// attack time ending chat
-			else if ((tmp.get(Calendar.MINUTE) + 5) >= Config.FS_TIME_ATTACK)
-			{
-				FourSepulchersManager.getInstance().managerSay((byte) 90); // sending a unique id :D
-			}
-		}
-		else if (FourSepulchersManager.getInstance().isEntryTime())
-		{
-			FourSepulchersManager.getInstance().managerSay((byte) 0);
-		}
-	}
 }
