@@ -262,6 +262,8 @@ sub PreProcess($$) {
 	# -> try (java.sql.Connection con = L2DatabaseFactory.getInstance().getConnectionFast()
 	$text =~ s{(try *\((?:java\.sql\.|)Connection *\w+ *= *L2DatabaseFactory\.getInstance\(\))\.getConnection\(\)}
 	          {$1.getConnectionFast()}g;
+
+	$text =~ s/\QCalendar.getInstance().getTimeInMillis()/System.currentTimeMillis()/g;
 	#####################################
 
 	@LL = split /(?<=\n)/,$text;
