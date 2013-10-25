@@ -93,17 +93,7 @@ public abstract class AbstractVariables extends StatsSet
 	public final boolean getAndResetChanges()
 	{
 		boolean changes = _changes;
-		_changes = false;
+		if (changes) _changes = false;
 		return changes;
-	}
-	
-	@Deprecated public final boolean isChanges()
-	{
-		return _changes;
-	}
-	
-	@Deprecated public final void setChanges(boolean update)
-	{
-		_changes = update;
 	}
 }
