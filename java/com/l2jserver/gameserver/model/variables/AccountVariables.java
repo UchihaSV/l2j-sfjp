@@ -78,7 +78,7 @@ public class AccountVariables extends AbstractVariables
 	public void store()
 	{
 		// No changes, nothing to store.
-		if (!getChangesAndClear())
+		if (!getAndResetChanges())
 		{
 			return;
 		}

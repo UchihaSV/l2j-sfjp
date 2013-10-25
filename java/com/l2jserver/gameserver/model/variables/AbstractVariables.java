@@ -90,7 +90,7 @@ public abstract class AbstractVariables extends StatsSet
 	/**
 	 * @return {@code true} if changes are made since last load/save.
 	 */
-	public final boolean getChangesAndClear()
+	public final boolean getAndResetChanges()
 	{
 		boolean changes = _changes;
 		_changes = false;
