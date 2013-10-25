@@ -84,7 +84,7 @@ public abstract class AbstractVariables extends StatsSet
 	 */
 	public boolean hasVariable(String name)
 	{
-		return getSet().keySet().contains(name);
+		return getSet().containsKey(name);
 	}
 	
 	/**
