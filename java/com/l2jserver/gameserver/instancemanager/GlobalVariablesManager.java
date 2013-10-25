@@ -73,11 +73,10 @@ public final class GlobalVariablesManager extends AbstractVariables
 	public void store()
 	{
 		// No changes, nothing to store.
-		if (!isChanges())
+		if (!getChangesAndClear())
 		{
 			return;
 		}
-		setChanges(false);
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
