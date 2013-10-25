@@ -66,10 +66,6 @@ public final class GlobalVariablesManager extends AbstractVariables
 		{
 			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't restore global variables");
 		}
-		finally
-		{
-			compareAndSetChanges(true, false);
-		}
 		_log.log(Level.INFO, getClass().getSimpleName() + ": Loaded " + getSet().size() + " variables.");
 	}
 	
@@ -77,10 +73,11 @@ public final class GlobalVariablesManager extends AbstractVariables
 	public void store()
 	{
 		// No changes, nothing to store.
-		if (!hasChanges())
+		if (!isChanges())
 		{
 			return;
 		}
+		setChanges(false);
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
@@ -105,10 +102,6 @@ public final class GlobalVariablesManager extends AbstractVariables
 		catch (SQLException e)
 		{
 			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't save global variables to database.", e);
-		}
-		finally
-		{
-			compareAndSetChanges(true, false);
 		}
 		_log.log(Level.INFO, getClass().getSimpleName() + ": Stored " + getSet().size() + " variables.");
 	}
