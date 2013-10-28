@@ -22,8 +22,8 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.TaskPriority;
 import com.l2jserver.gameserver.geoeditorcon.GeoEditorListener;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
-import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.model.L2Clan;
+import com.l2jserver.gameserver.model.TeleportWhereType;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.serverpackets.GetOnVehicle;
@@ -233,7 +233,7 @@ public class ValidatePosition extends L2GameClientPacket
 			   && CastleManager.getInstance().getCastle(activeChar) == CastleManager.getInstance().getCastleByOwner(clan))  )
 			{
 				activeChar.sendMessage("You entered into a no-fly zone.");
-				activeChar.teleToLocation(MapRegionManager.TeleportWhereType.Town);
+				activeChar.teleToLocation(TeleportWhereType.TOWN);
 			}
 		}
 		// [L2J_JP ADD END]

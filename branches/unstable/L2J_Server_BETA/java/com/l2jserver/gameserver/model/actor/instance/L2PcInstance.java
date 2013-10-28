@@ -6936,7 +6936,7 @@ public final class L2PcInstance extends L2Playable
 			if (!Config.ALT_WYVERN_MAKEALANDING) //Wyvern can make a landing in zone of 'No Landing'
 			{
 				if (!isGM() && Config.ALT_DISMOUNT_WYVERN_IN_NOLANDING) //Playe moves to the nearest town.
-					teleToLocation(MapRegionManager.getInstance().getTeleToLocation(this, MapRegionManager.TeleportWhereType.Town), true);
+					teleToLocation(TeleportWhereType.TOWN);
 				else
 					return false;
 			}
