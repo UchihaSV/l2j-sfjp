@@ -1305,13 +1305,15 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		env.setTarget(effected);
 		env.setSkill(this);
 		
+		boolean addContinuousEffects = _operateType.isContinuous() && Formulas.calcEffectSuccess(env);
+		
 		final List<L2Effect> effects = new ArrayList<>(_effectTemplates.size());
 		for (EffectTemplate et : _effectTemplates)
 		{
 			final L2Effect e = et.getEffect(env);
 			if (e != null)
 			{
-				if (e.calcSuccess())
+				if ((e.isInstant() && e.calcSuccess()) || (!e.isInstant() && addContinuousEffects))
 				{
 					e.scheduleEffect();
 					effects.add(e);
@@ -1362,13 +1364,15 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		env.setTarget(effected);
 		env.setSkill(this);
 		
+		boolean addContinuousEffects = _operateType.isContinuous() && Formulas.calcEffectSuccess(env);
+		
 		final List<L2Effect> effects = new ArrayList<>(_effectTemplates.size());
 		for (EffectTemplate et : _effectTemplates)
 		{
 			final L2Effect e = et.getEffect(env);
 			if (e != null)
 			{
-				if (e.calcSuccess())
+				if ((e.isInstant() && e.calcSuccess()) || (!e.isInstant() && addContinuousEffects))
 				{
 					e.scheduleEffect();
 					effects.add(e);
@@ -1390,13 +1394,15 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		env.setTarget(effector);
 		env.setSkill(this);
 		
+		boolean addContinuousEffects = _operateType.isContinuous() && Formulas.calcEffectSuccess(env);
+		
 		final List<L2Effect> effects = new ArrayList<>(_effectTemplatesSelf.size());
 		for (EffectTemplate et : _effectTemplatesSelf)
 		{
 			final L2Effect e = et.getEffect(env);
 			if (e != null)
 			{
-				if (e.calcSuccess())
+				if ((e.isInstant() && e.calcSuccess()) || (!e.isInstant() && addContinuousEffects))
 				{
 					e.setSelfEffect();
 					e.scheduleEffect();
@@ -1425,7 +1431,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			final L2Effect e = et.getEffect(env);
 			if (e != null)
 			{
-				if (e.calcSuccess())
+				if (!e.isInstant())
 				{
 					e.scheduleEffect();
 					effects.add(e);
