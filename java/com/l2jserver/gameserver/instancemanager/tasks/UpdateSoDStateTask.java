@@ -18,23 +18,19 @@
  */
 package com.l2jserver.gameserver.instancemanager.tasks;
 
-import com.l2jserver.Config;
-import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
+import com.l2jserver.gameserver.instancemanager.GraciaSeedsManager;
 
 /**
- * Four Sepulchers change warm up time task.
- * @author xban1x, sandman
+ * Task which updates Seed of Destruction state.
+ * @author xban1x
  */
-public final class FourSepulchersChangeWarmUpTimeTask implements Runnable
+public final class UpdateSoDStateTask implements Runnable
 {
 	@Override
 	public void run()
 	{
-		final FourSepulchersManager manager = FourSepulchersManager.getInstance();
-		manager.setEntryTime();
-		
-		long interval = Config.FS_TIME_WARMUP * 60000L;
-		manager.setChangePeriodTask(ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeAttackTimeTask(), interval));
+		final GraciaSeedsManager manager = GraciaSeedsManager.getInstance();
+		manager.setSoDState(1, true);
+		manager.updateSodState();
 	}
 }

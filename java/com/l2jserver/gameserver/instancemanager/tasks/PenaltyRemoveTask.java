@@ -18,10 +18,24 @@
  */
 package com.l2jserver.gameserver.instancemanager.tasks;
 
+import com.l2jserver.gameserver.instancemanager.HandysBlockCheckerManager;
 
 /**
- * @author xban1x
+ * Handys Block Checker penalty remove.
+ * @author xban1x, BiggBoss
  */
-@Deprecated final class FourSepulchersManagerSay
+public final class PenaltyRemoveTask implements Runnable
 {
+	private final int _objectId;
+	
+	public PenaltyRemoveTask(int id)
+	{
+		_objectId = id;
+	}
+	
+	@Override
+	public void run()
+	{
+		HandysBlockCheckerManager.getInstance().removePenalty(_objectId);
+	}
 }

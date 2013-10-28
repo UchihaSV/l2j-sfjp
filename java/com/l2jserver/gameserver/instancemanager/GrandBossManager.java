@@ -47,7 +47,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 /**
  * @author DaRkRaGe Revised by Emperorc
  */
-public class GrandBossManager
+public final class GrandBossManager
 {
 	/* =========================================================
 	 * This class handles all Grand Bosses:
@@ -513,6 +513,10 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		return com.l2jserver.util.Util.dateFormat(info.getLong("respawn_time"));
 	}
 	
+	/**
+	 * Gets the single instance of {@code GrandBossManager}.
+	 * @return single instance of {@code GrandBossManager}
+	 */
 	public static GrandBossManager getInstance()
 	{
 		return SingletonHolder._instance;

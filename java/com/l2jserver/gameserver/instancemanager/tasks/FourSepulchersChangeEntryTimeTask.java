@@ -23,6 +23,7 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
 
 /**
+ * Four Sepulchers change entry time task.
  * @author xban1x, sandman
  */
 public final class FourSepulchersChangeEntryTimeTask implements Runnable
@@ -35,10 +36,10 @@ public final class FourSepulchersChangeEntryTimeTask implements Runnable
 		
 		long interval = Config.FS_TIME_ENTRY * 60000L;
 		manager.setChangePeriodTask(ThreadPoolManager.getInstance().scheduleEffect(new FourSepulchersChangeWarmUpTimeTask(), interval));
-		ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersManagerSay(), 0);
+		ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersManagerSayTask(), 0);
 	}
 	
-	static class FourSepulchersManagerSay implements Runnable
+	static class FourSepulchersManagerSayTask implements Runnable
 	{
 		@Override
 		public void run()

@@ -16,25 +16,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.instancemanager.tasks;
-
-import com.l2jserver.Config;
-import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
+package com.l2jserver.gameserver.model;
 
 /**
- * Four Sepulchers change warm up time task.
- * @author xban1x, sandman
+ * Enum with petition types.
+ * @author xban1x, Tempy
  */
-public final class FourSepulchersChangeWarmUpTimeTask implements Runnable
+public enum PetitionType
 {
-	@Override
-	public void run()
-	{
-		final FourSepulchersManager manager = FourSepulchersManager.getInstance();
-		manager.setEntryTime();
-		
-		long interval = Config.FS_TIME_WARMUP * 60000L;
-		manager.setChangePeriodTask(ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeAttackTimeTask(), interval));
-	}
+	IMMOBILITY,
+	RECOVERY_RELATED,
+	BUG_REPORT,
+	QUEST_RELATED,
+	BAD_USER,
+	SUGGESTIONS,
+	GAME_TIP,
+	OPERATION_RELATED,
+	OTHER
 }

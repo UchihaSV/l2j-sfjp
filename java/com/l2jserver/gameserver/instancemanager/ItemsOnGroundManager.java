@@ -40,11 +40,11 @@ import com.l2jserver.gameserver.model.items.type.L2EtcItemType;
  * This class manage all items on ground.
  * @author Enforcer
  */
-public class ItemsOnGroundManager implements Runnable
+public final class ItemsOnGroundManager implements Runnable
 {
 	private static final Logger _log = Logger.getLogger(ItemsOnGroundManager.class.getName());
 	
-	protected FastList<L2ItemInstance> _items = new FastList<L2ItemInstance>().shared();
+	private final FastList<L2ItemInstance> _items = new FastList<L2ItemInstance>().shared();
 	
 	protected ItemsOnGroundManager()
 	{
@@ -259,6 +259,10 @@ public class ItemsOnGroundManager implements Runnable
 		}
 	}
 	
+	/**
+	 * Gets the single instance of {@code ItemsOnGroundManager}.
+	 * @return single instance of {@code ItemsOnGroundManager}
+	 */
 	public static final ItemsOnGroundManager getInstance()
 	{
 		return SingletonHolder._instance;
