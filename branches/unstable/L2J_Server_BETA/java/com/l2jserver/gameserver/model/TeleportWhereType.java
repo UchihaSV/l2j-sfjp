@@ -16,25 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.instancemanager.tasks;
-
-import com.l2jserver.Config;
-import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
+package com.l2jserver.gameserver.model;
 
 /**
- * Four Sepulchers change warm up time task.
- * @author xban1x, sandman
+ * All teleport types.
+ * @author xban1x, Nyaran
  */
-public final class FourSepulchersChangeWarmUpTimeTask implements Runnable
+public enum TeleportWhereType
 {
-	@Override
-	public void run()
-	{
-		final FourSepulchersManager manager = FourSepulchersManager.getInstance();
-		manager.setEntryTime();
-		
-		long interval = Config.FS_TIME_WARMUP * 60000L;
-		manager.setChangePeriodTask(ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeAttackTimeTask(), interval));
-	}
+	CASTLE,
+	CASTLE_BANISH,
+	CLANHALL,
+	CLANHALL_BANISH,
+	SIEGEFLAG,
+	TOWN,
+	FORTRESS,
+	FORTRESS_BANISH,
+	TERRITORY,
+	TERRITORY_BANISH
 }

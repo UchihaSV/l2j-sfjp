@@ -45,13 +45,13 @@ import com.l2jserver.gameserver.datatables.DoorTable;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
-import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.L2WorldRegion;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.StatsSet;
+import com.l2jserver.gameserver.model.TeleportWhereType;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -876,7 +876,7 @@ public final class Instance
 				}
 				else
 				{
-					_player.teleToLocation(MapRegionManager.TeleportWhereType.Town);
+					_player.teleToLocation(TeleportWhereType.TOWN);
 				}
 			}
 		}
@@ -894,7 +894,7 @@ public final class Instance
 				}
 				else
 				{
-					player.teleToLocation(MapRegionManager.TeleportWhereType.Town);
+					player.teleToLocation(TeleportWhereType.TOWN);
 				}
 			}
 	}

@@ -26,6 +26,7 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
 
 /**
+ * Four Sepulchers change cool down time task.
  * @author xban1x, sandman
  */
 public final class FourSepulchersChangeCoolDownTimeTask implements Runnable

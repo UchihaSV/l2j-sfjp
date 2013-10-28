@@ -99,12 +99,12 @@ import com.l2jserver.gameserver.instancemanager.GrandBossManager;
 import com.l2jserver.gameserver.instancemanager.HandysBlockCheckerManager;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.ItemsOnGroundManager;
-import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.PunishmentManager;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.instancemanager.SiegeManager;
 import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
+import com.l2jserver.gameserver.model.ArenaParticipantsHolder;
 import com.l2jserver.gameserver.model.BlockList;
 import com.l2jserver.gameserver.model.L2AccessLevel;
 import com.l2jserver.gameserver.model.L2Clan;
@@ -136,6 +136,7 @@ import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.ShortCuts;
 import com.l2jserver.gameserver.model.ShotType;
 import com.l2jserver.gameserver.model.TeleportBookmark;
+import com.l2jserver.gameserver.model.TeleportWhereType;
 import com.l2jserver.gameserver.model.TerritoryWard;
 import com.l2jserver.gameserver.model.TimeStamp;
 import com.l2jserver.gameserver.model.TradeList;
@@ -1075,7 +1076,7 @@ public final class L2PcInstance extends L2Playable
 		if (getBlockCheckerArena() != -1)
 		{
 			result |= RelationChanged.RELATION_INSIEGE;
-			HandysBlockCheckerManager.ArenaParticipantsHolder holder = HandysBlockCheckerManager.getInstance().getHolder(getBlockCheckerArena());
+			ArenaParticipantsHolder holder = HandysBlockCheckerManager.getInstance().getHolder(getBlockCheckerArena());
 			if (holder.getPlayerTeam(this) == 0)
 			{
 				result |= RelationChanged.RELATION_ENEMY;
@@ -10895,7 +10896,7 @@ public final class L2PcInstance extends L2Playable
 			// if the rent of a wyvern expires while over a flying zone, tp to down before unmounting
 			if (checkLandingState() && (getMountType() == 2))
 			{
-				teleToLocation(MapRegionManager.TeleportWhereType.Town);
+				teleToLocation(TeleportWhereType.TOWN);
 			}
 			
 			if (dismount()) // this should always be true now, since we teleported already
@@ -10975,7 +10976,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			if (!isGM() && isIn7sDungeon() && (SevenSigns.getInstance().getPlayerCabal(getObjectId()) != SevenSigns.getInstance().getCabalHighestScore()))
 			{
-				teleToLocation(MapRegionManager.TeleportWhereType.Town);
+				teleToLocation(TeleportWhereType.TOWN);
 				setIsIn7sDungeon(false);
 				sendMessage("You have been teleported to the nearest town due to the beginning of the Seal Validation period.");
 			}
@@ -10984,7 +10985,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			if (!isGM() && isIn7sDungeon() && (SevenSigns.getInstance().getPlayerCabal(getObjectId()) == SevenSigns.CABAL_NULL))
 			{
-				teleToLocation(MapRegionManager.TeleportWhereType.Town);
+				teleToLocation(TeleportWhereType.TOWN);
 				setIsIn7sDungeon(false);
 				sendMessage("You have been teleported to the nearest town because you have not signed for any cabal.");
 			}

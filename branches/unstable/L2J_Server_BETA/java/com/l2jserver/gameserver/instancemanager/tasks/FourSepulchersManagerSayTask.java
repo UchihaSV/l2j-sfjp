@@ -18,23 +18,10 @@
  */
 package com.l2jserver.gameserver.instancemanager.tasks;
 
-import com.l2jserver.Config;
-import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
-
 /**
- * Four Sepulchers change warm up time task.
- * @author xban1x, sandman
+ * Four Sepulchers manager say task.
+ * @author xban1x
  */
-public final class FourSepulchersChangeWarmUpTimeTask implements Runnable
+@Deprecated final class FourSepulchersManagerSayTask
 {
-	@Override
-	public void run()
-	{
-		final FourSepulchersManager manager = FourSepulchersManager.getInstance();
-		manager.setEntryTime();
-		
-		long interval = Config.FS_TIME_WARMUP * 60000L;
-		manager.setChangePeriodTask(ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeAttackTimeTask(), interval));
-	}
 }

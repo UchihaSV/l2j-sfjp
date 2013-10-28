@@ -37,7 +37,7 @@ import com.l2jserver.gameserver.model.instancezone.InstanceWorld;
 /**
  * @author evill33t, GodKratos
  */
-public class InstanceManager extends DocumentParser
+public final class InstanceManager extends DocumentParser
 {
 	private static final FastIntObjectMap<Instance> _instanceList = new FastIntObjectMap<>();
 	private final FastIntObjectMap<InstanceWorld> _instanceWorlds = new FastIntObjectMap<>();
@@ -255,7 +255,7 @@ public class InstanceManager extends DocumentParser
 			return;
 		}
 		_instanceWorlds.remove(instanceid);
-		Instance temp = _instanceList.remove(instanceid);
+		final Instance temp = _instanceList.remove(instanceid);
 		if (temp != null)
 		{
 			temp.cancelQuestTimers();
@@ -316,7 +316,7 @@ public class InstanceManager extends DocumentParser
 			return false;
 		}
 		
-		Instance instance = new Instance(id);
+		final Instance instance = new Instance(id);
 		_instanceList.put(id, instance);
 		return true;
 	}
@@ -333,7 +333,7 @@ public class InstanceManager extends DocumentParser
 			return false;
 		}
 		
-		Instance instance = new Instance(id);
+		final Instance instance = new Instance(id);
 		_instanceList.put(id, instance);
 		instance.loadInstanceTemplate(template);
 		return true;
@@ -355,7 +355,7 @@ public class InstanceManager extends DocumentParser
 				_dynamic = 300000;
 			}
 		}
-		Instance instance = new Instance(_dynamic);
+		final Instance instance = new Instance(_dynamic);
 		_instanceList.put(_dynamic, instance);
 		if (template != null)
 		{
@@ -365,6 +365,10 @@ public class InstanceManager extends DocumentParser
 	//	return _dynamic;
 	}
 	
+	/**
+	 * Gets the single instance of {@code InstanceManager}.
+	 * @return single instance of {@code InstanceManager}
+	 */
 	public static final InstanceManager getInstance()
 	{
 		return SingletonHolder._instance;

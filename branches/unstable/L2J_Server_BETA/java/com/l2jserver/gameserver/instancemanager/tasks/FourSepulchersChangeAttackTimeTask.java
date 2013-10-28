@@ -27,6 +27,7 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
 
 /**
+ * Four Sepulchers change attack time task.
  * @author xban1x, sandman
  */
 public final class FourSepulchersChangeAttackTimeTask implements Runnable
@@ -48,10 +49,10 @@ public final class FourSepulchersChangeAttackTimeTask implements Runnable
 		
 		long interval = Config.FS_TIME_ATTACK * 60000L;
 		manager.setChangePeriodTask(ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeCoolDownTimeTask(), interval + OUST_PLAYER_MARGIN_TIME));
-		ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersManagerSay(), ATTACK_ELASPED_INTERVAL * 60000 + 500);
+		ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersManagerSayTask(), ATTACK_ELASPED_INTERVAL * 60000 + 500);
 	}
 	
-	static class FourSepulchersManagerSay implements Runnable
+	static class FourSepulchersManagerSayTask implements Runnable
 	{
 		@Override
 		public void run()
