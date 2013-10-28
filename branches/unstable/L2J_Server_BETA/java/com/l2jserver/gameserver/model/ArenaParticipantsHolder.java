@@ -34,8 +34,8 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 public final class ArenaParticipantsHolder
 {
 	private final int _arena;
-	private final List<L2PcInstance> _redPlayers;
-	private final List<L2PcInstance> _bluePlayers;
+	private final ArrayList<L2PcInstance> _redPlayers;
+	private final ArrayList<L2PcInstance> _bluePlayers;
 	private final BlockCheckerEngine _engine;
 	
 	public ArenaParticipantsHolder(int arena)
@@ -58,7 +58,7 @@ public final class ArenaParticipantsHolder
 	
 	public List<L2PcInstance> getAllPlayers()
 	{
-		List<L2PcInstance> all = new ArrayList<>(12);
+		ArrayList<L2PcInstance> all = new ArrayList<>(12);
 		all.addAll(_redPlayers);
 		all.addAll(_bluePlayers);
 		return all;
