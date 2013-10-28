@@ -42,7 +42,7 @@ public final class Petition
 	private final PetitionType _type;
 	private PetitionState _state = PetitionState.PENDING;
 	private final String _content;
-	private final List<CreatureSay> _messageLog = new FastList<>();
+	private final FastList<CreatureSay> _messageLog = new FastList<>();
 	private final L2PcInstance _petitioner;
 	private L2PcInstance _responder;
 	
