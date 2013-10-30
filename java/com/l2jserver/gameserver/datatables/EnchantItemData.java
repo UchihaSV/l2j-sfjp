@@ -18,8 +18,7 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Map;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -36,8 +35,8 @@ import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
  */
 public class EnchantItemData extends DocumentParser
 {
-	public static final Map<Integer, EnchantScroll> _scrolls = new HashMap<>();
-	public static final Map<Integer, EnchantItem> _supports = new HashMap<>();
+	public static final FastIntObjectMap<EnchantScroll> _scrolls = new FastIntObjectMap<>();
+	public static final FastIntObjectMap<EnchantItem> _supports = new FastIntObjectMap<>();
 	
 	/**
 	 * Instantiates a new enchant item data.

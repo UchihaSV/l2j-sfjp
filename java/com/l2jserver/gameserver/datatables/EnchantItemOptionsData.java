@@ -21,6 +21,8 @@ package com.l2jserver.gameserver.datatables;
 import java.util.HashMap;
 import java.util.logging.Level;
 
+import jp.sf.l2j.troja.FastIntObjectMap;
+
 import org.w3c.dom.Node;
 
 import com.l2jserver.gameserver.engines.DocumentParser;
@@ -33,7 +35,7 @@ import com.l2jserver.gameserver.util.Util;
  */
 public class EnchantItemOptionsData extends DocumentParser
 {
-	private final HashMap<Integer, HashMap<Integer, EnchantOptions>> _data = new HashMap<>();
+	private final FastIntObjectMap<HashMap<Integer, EnchantOptions>> _data = new FastIntObjectMap<>();
 	
 	protected EnchantItemOptionsData()
 	{
@@ -60,16 +62,18 @@ public class EnchantItemOptionsData extends DocumentParser
 					if ("item".equalsIgnoreCase(d.getNodeName()))
 					{
 						int itemId = parseInt(d.getAttributes(), "id");
-						if (!_data.containsKey(itemId))
+						HashMap<Integer, EnchantOptions> options = _data.get(itemId);
+						if (options == null)
 						{
-							_data.put(itemId, new HashMap<Integer, EnchantOptions>());
+							options = new HashMap<>();
+							_data.put(itemId, options);
 						}
 						for (Node cd = d.getFirstChild(); cd != null; cd = cd.getNextSibling())
 						{
 							if ("options".equalsIgnoreCase(cd.getNodeName()))
 							{
 								EnchantOptions op = new EnchantOptions(parseInt(cd.getAttributes(), "level"));
-								_data.get(itemId).put(op.getLevel(), op);
+								options.put(op.getLevel(), op);
 								
 								for (byte i = 0; i < 3; i++)
 								{
@@ -96,11 +100,9 @@ public class EnchantItemOptionsData extends DocumentParser
 	 */
 	public EnchantOptions getOptions(int itemId, int enchantLevel)
 	{
-		if (!_data.containsKey(itemId) || !_data.get(itemId).containsKey(enchantLevel))
-		{
-			return null;
-		}
-		return _data.get(itemId).get(enchantLevel);
+		HashMap<Integer, EnchantOptions> options = _data.get(itemId);
+		if (options == null) return null;
+		return options.get(enchantLevel);
 	}
 	
 	/**
