@@ -19,10 +19,13 @@
 package com.l2jserver.gameserver.util;
 
 import java.io.File;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import javolution.text.TextBuilder;
@@ -436,6 +439,17 @@ public final class Util
 	public static int calcCameraAngle(L2Character target)	// [JOJO]
 	{
 		return (180 + 360 - (int)Math.round(convertHeadingToDegree(target.getHeading()))) % 360;
+	}
+	
+	/**
+	 * @param val
+	 * @param format
+	 * @return formatted double value by specified format.
+	 */
+	public static String formatDouble(double val, String format)
+	{
+		final DecimalFormat formatter = new DecimalFormat(format, new DecimalFormatSymbols(Locale.ENGLISH));
+		return formatter.format(val);
 	}
 	
 	/**
