@@ -19,7 +19,6 @@
 package com.l2jserver.gameserver.model.enchant;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,7 +30,7 @@ import com.l2jserver.gameserver.model.holders.RangeChanceHolder;
 public final class EnchantItemGroup
 {
 	private static final Logger _log = Logger.getLogger(EnchantItemGroup.class.getName());
-	private final List<RangeChanceHolder> _chances = new ArrayList<>();
+	private final ArrayList<RangeChanceHolder> _chances = new ArrayList<>();
 	private final String _name;
 	
 	public EnchantItemGroup(String name)
