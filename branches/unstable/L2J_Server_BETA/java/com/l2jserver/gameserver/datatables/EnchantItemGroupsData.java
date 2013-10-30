@@ -19,8 +19,9 @@
 package com.l2jserver.gameserver.datatables;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
+
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -38,8 +39,8 @@ import com.l2jserver.gameserver.util.Util;
  */
 public final class EnchantItemGroupsData extends DocumentParser
 {
-	private final Map<String, EnchantItemGroup> _itemGroups = new HashMap<>();
-	private final Map<Integer, EnchantScrollGroup> _scrollGroups = new HashMap<>();
+	private final HashMap<String, EnchantItemGroup> _itemGroups = new HashMap<>();
+	private final SortedIntObjectArrayMap<EnchantScrollGroup> _scrollGroups = new SortedIntObjectArrayMap<>();
 	
 	protected EnchantItemGroupsData()
 	{

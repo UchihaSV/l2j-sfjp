@@ -30,7 +30,7 @@ import com.l2jserver.gameserver.model.items.L2Item;
 public final class EnchantScrollGroup
 {
 	private final int _id;
-	private List<EnchantRateItem> _rateGroups;
+	private ArrayList<EnchantRateItem> _rateGroups;
 	
 	public EnchantScrollGroup(int id)
 	{
