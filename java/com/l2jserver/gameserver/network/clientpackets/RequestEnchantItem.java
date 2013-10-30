@@ -165,6 +165,7 @@ public final class RequestEnchantItem extends L2GameClientPacket
 				activeChar.sendPacket(new EnchantResult(2, 0, 0));
 				return;
 			}
+			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_DISAPPEARED).addItemName(support));	// [JOJO]
 		}
 		
 		synchronized (item)
