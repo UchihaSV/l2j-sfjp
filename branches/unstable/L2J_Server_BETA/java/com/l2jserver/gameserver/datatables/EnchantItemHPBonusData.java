@@ -20,9 +20,8 @@ package com.l2jserver.gameserver.datatables;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.Node;
 
@@ -39,7 +38,7 @@ import com.l2jserver.gameserver.model.stats.Stats;
  */
 public class EnchantItemHPBonusData extends DocumentParser
 {
-	private final Map<Integer, List<Integer>> _armorHPBonuses = new HashMap<>();
+	private final SortedIntObjectArrayMap<ArrayList<Integer>> _armorHPBonuses = new SortedIntObjectArrayMap<>();
 	
 	private static final float fullArmorModifier = 1.5f; // TODO: Move it to config!
 	
@@ -62,7 +61,7 @@ public class EnchantItemHPBonusData extends DocumentParser
 				{
 					if ("enchantHP".equals(d.getNodeName()))
 					{
-						List<Integer> bonuses = new ArrayList<>();
+						ArrayList<Integer> bonuses = new ArrayList<>();
 						for (Node e = d.getFirstChild(); e != null; e = e.getNextSibling())
 						{
 							if ("bonus".equals(e.getNodeName()))
@@ -70,7 +69,7 @@ public class EnchantItemHPBonusData extends DocumentParser
 								bonuses.add(Integer.valueOf(e.getTextContent()));
 							}
 						}
-						_armorHPBonuses.put(parseInteger(d.getAttributes(), "grade"), bonuses);
+						_armorHPBonuses.put(parseInt(d.getAttributes(), "grade"), bonuses);
 					}
 				}
 			}
@@ -141,7 +140,7 @@ public class EnchantItemHPBonusData extends DocumentParser
 	 */
 	public final int getHPBonus(L2ItemInstance item)
 	{
-		final List<Integer> values = _armorHPBonuses.get(item.getItem().getItemGradeSPlus());
+		final ArrayList<Integer> values = _armorHPBonuses.get(item.getItem().getItemGradeSPlus());
 		if ((values == null) || values.isEmpty() || (item.getOlyEnchantLevel() <= 0))
 		{
 			return 0;

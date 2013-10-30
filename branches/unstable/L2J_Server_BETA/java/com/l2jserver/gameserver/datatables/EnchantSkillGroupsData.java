@@ -18,9 +18,10 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
+
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -48,8 +49,8 @@ public class EnchantSkillGroupsData extends DocumentParser
 	public static final int CHANGE_ENCHANT_BOOK = 9626;
 	public static final int UNTRAIN_ENCHANT_BOOK = 9625;
 	
-	private final Map<Integer, L2EnchantSkillGroup> _enchantSkillGroups = new HashMap<>();
-	private final Map<Integer, L2EnchantSkillLearn> _enchantSkillTrees = new HashMap<>();
+	private final SortedIntObjectArrayMap<L2EnchantSkillGroup> _enchantSkillGroups = new SortedIntObjectArrayMap<>();
+	private final FastIntObjectMap<L2EnchantSkillLearn> _enchantSkillTrees = new FastIntObjectMap<>();
 	
 	/**
 	 * Instantiates a new enchant groups table.
@@ -77,10 +78,7 @@ public class EnchantSkillGroupsData extends DocumentParser
 	protected void parseDocument()
 	{
 		NamedNodeMap attrs;
-		StatsSet set;
 		Node att;
-		int id = 0;
-		L2EnchantSkillGroup group;
 		for (Node n = getCurrentDocument().getFirstChild(); n != null; n = n.getNextSibling())
 		{
 			if ("list".equalsIgnoreCase(n.getNodeName()))
@@ -90,9 +88,9 @@ public class EnchantSkillGroupsData extends DocumentParser
 					if ("group".equalsIgnoreCase(d.getNodeName()))
 					{
 						attrs = d.getAttributes();
-						id = parseInt(attrs, "id");
+						int id = parseInt(attrs, "id");
 						
-						group = _enchantSkillGroups.get(id);
+						L2EnchantSkillGroup group = _enchantSkillGroups.get(id);
 						if (group == null)
 						{
 							group = new L2EnchantSkillGroup(id);
@@ -104,7 +102,7 @@ public class EnchantSkillGroupsData extends DocumentParser
 							if ("enchant".equalsIgnoreCase(b.getNodeName()))
 							{
 								attrs = b.getAttributes();
-								set = new StatsSet();
+								StatsSet set = new StatsSet();
 								
 								for (int i = 0; i < attrs.getLength(); i++)
 								{
