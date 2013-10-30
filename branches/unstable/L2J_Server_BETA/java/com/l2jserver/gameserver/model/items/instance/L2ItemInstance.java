@@ -40,7 +40,7 @@ import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.GeoData;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.cache.HtmCache;
-import com.l2jserver.gameserver.datatables.EnchantOptionsData;
+import com.l2jserver.gameserver.datatables.EnchantItemOptionsData;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.OptionsData;
 import com.l2jserver.gameserver.instancemanager.ItemsOnGroundManager;
@@ -2244,7 +2244,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 	 */
 	public int[] getEnchantOptions()
 	{
-		EnchantOptions op = EnchantOptionsData.getInstance().getOptions(this);
+		EnchantOptions op = EnchantItemOptionsData.getInstance().getOptions(this);
 		if (op != null)
 		{
 			return op.getOptions();
