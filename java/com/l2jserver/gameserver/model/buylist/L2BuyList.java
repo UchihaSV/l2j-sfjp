@@ -22,6 +22,8 @@ import java.util.Collection;
 
 import jp.sf.l2j.troja.FastIntObjectMap;
 
+import com.l2jserver.gameserver.util.SortedIntArraySet;
+
 /**
  * @author Nos
  */
