@@ -1,13 +1,13 @@
-package com.l2jserver.gameserver.model.buylist;
+package com.l2jserver.gameserver.util;
 
 import java.util.Arrays;
 
 /**
  * @author JOJO
  */
-class SortedIntArraySet
+public class SortedIntArraySet
 {
-	static int[] add(int[] array, int value)
+	public static int[] add(int[] array, int value)
 	{
 		if (array == null)
 			return new int[]{ value };
@@ -25,7 +25,7 @@ class SortedIntArraySet
 		return copy;
 	}
 	
-	static boolean contains(int[] array, int value)
+	public static boolean contains(int[] array, int value)
 	{
 		return array != null && Arrays.binarySearch(array, value) >= 0;
 	}
