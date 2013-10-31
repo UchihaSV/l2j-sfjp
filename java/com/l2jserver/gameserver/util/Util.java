@@ -22,6 +22,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -499,6 +500,17 @@ public final class Util
 		return -1;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static <T> T[] append(T[] array, T obj)		//[JOJO]
+	{
+		if (array == null)
+			return (T[]) new Object[]{ obj };
+		int len = array.length;
+		T[] tmp = (T[]) Arrays.copyOf(array, len + 1, array.getClass());
+		tmp[len] = obj;
+		return tmp;
+	}
+	
 	/**
 	 * @param array - the array to look into
 	 * @param obj - the integer to search for
@@ -530,6 +542,17 @@ public final class Util
 			if (array[i] == obj)
 				return i;
 		return -1;
+	}
+	
+	public static int[] append(int[] array, int obj)	//[JOJO]
+	{
+		if (array == null)
+			return new int[]{ obj };
+		int len = array.length;
+		int[] tmp = new int[len + 1];
+		System.arraycopy(array, 0, tmp, 0, len);
+		tmp[len] = obj;
+		return tmp;
 	}
 	
 	public static File[] getDatapackFiles(String dirname, String extention)
