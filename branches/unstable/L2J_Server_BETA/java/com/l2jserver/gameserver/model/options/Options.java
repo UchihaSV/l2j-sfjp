@@ -18,19 +18,21 @@
  */
 package com.l2jserver.gameserver.model.options;
 
+import static com.l2jserver.gameserver.datatables.SkillTable.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.skills.funcs.Func;
 import com.l2jserver.gameserver.model.skills.funcs.FuncTemplate;
 import com.l2jserver.gameserver.model.stats.Env;
 import com.l2jserver.gameserver.network.serverpackets.SkillCoolTime;
+import com.l2jserver.gameserver.util.Util;
 
 /**
  * @author UnAfraid
@@ -38,12 +40,14 @@ import com.l2jserver.gameserver.network.serverpackets.SkillCoolTime;
 public class Options
 {
 	private final int _id;
-	private final List<FuncTemplate> _funcs = new ArrayList<>();
+	private static final FuncTemplate[] EMPTY_FUNC_TEMPLATES = {};
+	private FuncTemplate[] _funcs = EMPTY_FUNC_TEMPLATES;
 	
-	private SkillHolder _activeSkill = null;
-	private SkillHolder _passiveSkill = null;
+	private int _activeSkill = 0;
+	private int _passiveSkill = 0;
 	
-	private final List<OptionsSkillHolder> _activationSkills = new ArrayList<>();
+	private static final OptionsSkillHolder[] EMPTY_OPTIONS_SKILL_HOLDERS = {};
+	private OptionsSkillHolder[] _activationSkills = EMPTY_OPTIONS_SKILL_HOLDERS;
 	
 	/**
 	 * @param id
@@ -60,17 +64,17 @@ public class Options
 	
 	public boolean hasFuncs()
 	{
-		return !_funcs.isEmpty();
+		return _funcs.length > 0;
 	}
 	
 	public List<Func> getStatFuncs(L2ItemInstance item, L2Character player)
 	{
-		if (_funcs.isEmpty())
+		if (_funcs.length == 0)
 		{
 			return Collections.<Func> emptyList();
 		}
 		
-		final List<Func> funcs = new ArrayList<>(_funcs.size());
+		final List<Func> funcs = new ArrayList<>(_funcs.length);
 		final Env env = new Env();
 		env.setCharacter(player);
 		env.setTarget(player);
@@ -89,42 +93,42 @@ public class Options
 	
 	public void addFunc(FuncTemplate template)
 	{
-		_funcs.add(template);
+		_funcs = Util.append(_funcs, template);
 	}
 	
 	public boolean hasActiveSkill()
 	{
-		return _activeSkill != null;
+		return _activeSkill != 0;
 	}
 	
-	public SkillHolder getActiveSkill()
+	public L2Skill getActiveSkill()
 	{
-		return _activeSkill;
+		return getSkill(_activeSkill);
 	}
 	
-	public void setActiveSkill(SkillHolder holder)
+	public void setActiveSkill(int id, int level)
 	{
-		_activeSkill = holder;
+		_activeSkill = getSkillHashCode(id, level);
 	}
 	
 	public boolean hasPassiveSkill()
 	{
-		return _passiveSkill != null;
+		return _passiveSkill != 0;
 	}
 	
-	public SkillHolder getPassiveSkill()
+	public L2Skill getPassiveSkill()
 	{
-		return _passiveSkill;
+		return getSkill(_passiveSkill);
 	}
 	
-	public void setPassiveSkill(SkillHolder holder)
+	public void setPassiveSkill(int id, int level)
 	{
-		_passiveSkill = holder;
+		_passiveSkill = getSkillHashCode(id, level);
 	}
 	
 	public boolean hasActivationSkills()
 	{
-		return !_activationSkills.isEmpty();
+		return _activationSkills.length > 0;
 	}
 	
 	public boolean hasActivationSkills(OptionsSkillType type)
@@ -139,7 +143,7 @@ public class Options
 		return false;
 	}
 	
-	public List<OptionsSkillHolder> getActivationsSkills()
+	@Deprecated public OptionsSkillHolder[] getActivationsSkills()
 	{
 		return _activationSkills;
 	}
@@ -159,7 +163,7 @@ public class Options
 	
 	public void addActivationSkill(OptionsSkillHolder holder)
 	{
-		_activationSkills.add(holder);
+		_activationSkills = Util.append(_activationSkills, holder);
 	}
 	
 	public void apply(L2PcInstance player)
@@ -171,12 +175,12 @@ public class Options
 		}
 		if (hasActiveSkill())
 		{
-			addSkill(player, getActiveSkill().getSkill());
+			addSkill(player, getActiveSkill());
 			player.sendDebugMessage("Adding active skill: " + getActiveSkill());
 		}
 		if (hasPassiveSkill())
 		{
-			addSkill(player, getPassiveSkill().getSkill());
+			addSkill(player, getPassiveSkill());
 			player.sendDebugMessage("Adding passive skill: " + getPassiveSkill());
 		}
 		if (hasActivationSkills())
@@ -200,12 +204,12 @@ public class Options
 		}
 		if (hasActiveSkill())
 		{
-			player.removeSkill(getActiveSkill().getSkill(), false, false);
+			player.removeSkill(getActiveSkill(), false, false);
 			player.sendDebugMessage("Removing active skill: " + getActiveSkill());
 		}
 		if (hasPassiveSkill())
 		{
-			player.removeSkill(getPassiveSkill().getSkill(), false, true);
+			player.removeSkill(getPassiveSkill(), false, true);
 			player.sendDebugMessage("Removing passive skill: " + getPassiveSkill());
 		}
 		if (hasActivationSkills())

@@ -18,15 +18,14 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import com.l2jserver.gameserver.engines.DocumentParser;
-import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.options.Options;
 import com.l2jserver.gameserver.model.options.OptionsSkillHolder;
 import com.l2jserver.gameserver.model.options.OptionsSkillType;
@@ -39,7 +38,7 @@ import com.l2jserver.gameserver.model.stats.Stats;
  */
 public class OptionsData extends DocumentParser
 {
-	private final Map<Integer, Options> _data = new HashMap<>();
+	private final FastIntObjectMap<Options> _data = new FastIntObjectMap<>();
 	
 	protected OptionsData()
 	{
@@ -56,8 +55,6 @@ public class OptionsData extends DocumentParser
 	@Override
 	protected void parseDocument()
 	{
-		int id;
-		Options op;
 		for (Node n = getCurrentDocument().getFirstChild(); n != null; n = n.getNextSibling())
 		{
 			if ("list".equalsIgnoreCase(n.getNodeName()))
@@ -66,8 +63,8 @@ public class OptionsData extends DocumentParser
 				{
 					if ("option".equalsIgnoreCase(d.getNodeName()))
 					{
-						id = parseInt(d.getAttributes(), "id");
-						op = new Options(id);
+						int id = parseInt(d.getAttributes(), "id");
+						Options op = new Options(id);
 						
 						for (Node cd = d.getFirstChild(); cd != null; cd = cd.getNextSibling())
 						{
@@ -115,12 +112,12 @@ public class OptionsData extends DocumentParser
 								}
 								case "active_skill":
 								{
-									op.setActiveSkill(new SkillHolder(parseInt(cd.getAttributes(), "id"), parseInt(cd.getAttributes(), "level")));
+									op.setActiveSkill(parseInt(cd.getAttributes(), "id"), parseInt(cd.getAttributes(), "level"));
 									break;
 								}
 								case "passive_skill":
 								{
-									op.setPassiveSkill(new SkillHolder(parseInt(cd.getAttributes(), "id"), parseInt(cd.getAttributes(), "level")));
+									op.setPassiveSkill(parseInt(cd.getAttributes(), "id"), parseInt(cd.getAttributes(), "level"));
 									break;
 								}
 								case "attack_skill":
