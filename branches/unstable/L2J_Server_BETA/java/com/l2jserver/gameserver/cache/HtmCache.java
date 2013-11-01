@@ -280,7 +280,7 @@ if (CHECK_HASH_COLLISION) {{
 	 * Timed Cache
 	 * @author  JOJO
 	 */
-	class TimedCache
+	static class TimedCache
 	{
 		long lastAccessTime;
 		String content;
@@ -292,7 +292,8 @@ if (CHECK_HASH_COLLISION) {{
 		{
 			TimedCache item;
 			if ((item = _timedCache.get(path.hashCode())) == null) return null;
-			item.lastAccessTime = GameTimeController.getInstance().getGameTime();
+			if (item.lastAccessTime != 0)
+				item.lastAccessTime = GameTimeController.getInstance().getGameTime();
 			return item.content;
 		}
 		else
@@ -306,7 +307,11 @@ if (CHECK_HASH_COLLISION) {{
 		if (TIMED_CACHE)
 		{
 			TimedCache item = new TimedCache();
-			item.lastAccessTime = GameTimeController.getInstance().getGameTime();
+			if (path.endsWith("data/html/noquest.htm")
+			 || path.endsWith("data/html/alreadycompleted.htm"))
+				item.lastAccessTime = 0;
+			else
+				item.lastAccessTime = GameTimeController.getInstance().getGameTime();
 			item.content = content;
 			_timedCache.put(path.hashCode(), item);
 		}
@@ -327,6 +332,7 @@ if (CHECK_HASH_COLLISION) {{
 			for (int hashcode : keys)
 			{
 				TimedCache item = _timedCache.get(hashcode);
+				if (item.lastAccessTime == 0) continue;	// noquest.htm, alreadycompleted.htm
 				if (cTime - item.lastAccessTime > EXPIRE_TIME)
 				{
 					--_loadedFiles;
