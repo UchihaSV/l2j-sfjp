@@ -129,6 +129,7 @@ import com.l2jserver.gameserver.model.L2WorldRegion;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.Macro;
 import com.l2jserver.gameserver.model.MacroList;
+import com.l2jserver.gameserver.model.MountType;
 import com.l2jserver.gameserver.model.PartyMatchRoom;
 import com.l2jserver.gameserver.model.PartyMatchRoomList;
 import com.l2jserver.gameserver.model.PartyMatchWaitingList;
@@ -549,7 +550,7 @@ public final class L2PcInstance extends L2Playable
 	private Point3D _inVehiclePosition;
 	
 	public ScheduledFuture<?> _taskforfish;
-	private int _mountType;
+	private MountType _mountType = MountType.NONE;
 	private int _mountNpcId;
 	private int _mountLevel;
 	/** Store object used to summon the strider you are mounting **/
@@ -6776,7 +6777,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		stopAllToggles();
-		setMount(pet.getNpcId(), pet.getLevel(), pet.getMountType());
+		setMount(pet.getNpcId(), pet.getLevel());
 		setMountObjectID(pet.getControlObjectId());
 		clearPetData();
 		startFeed(pet.getNpcId());
@@ -6790,7 +6791,7 @@ public final class L2PcInstance extends L2Playable
 		return true;
 	}
 	
-	public boolean mount(int npcId, int type, int controlItemObjId, boolean useFood)
+	public boolean mount(int npcId, int controlItemObjId, boolean useFood)
 	{
 		if (!disarmWeapons())
 		{
@@ -6806,7 +6807,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		stopAllToggles();
-		setMount(npcId, getLevel(), type);
+		setMount(npcId, getLevel());
 		clearPetData();
 		setMountObjectID(controlItemObjId);
 		broadcastPacket(new Ride(this));
@@ -6903,7 +6904,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		else if (isMounted())
 		{
-			if ((getMountType() == 2) && isInsideZone(ZoneId.NO_LANDING))
+			if ((getMountType() == MountType.WYVERN) && isInsideZone(ZoneId.NO_LANDING))
 			{
 				sendPacket(ActionFailed.STATIC_PACKET);
 				sendPacket(SystemMessageId.NO_DISMOUNT_HERE);
@@ -6942,7 +6943,7 @@ public final class L2PcInstance extends L2Playable
 		
 		sendPacket(new SetupGauge(3, 0, 0));
 		int petId = _mountNpcId;
-		setMount(0, 0, 0);
+		setMount(0, 0);
 		stopFeed();
 		clearPetData();
 		if (wasFlying)
@@ -9495,7 +9496,7 @@ public final class L2PcInstance extends L2Playable
 	
 	public boolean isMounted()
 	{
-		return _mountType > 0;
+		return _mountType != MountType.NONE;
 	}
 	
 	public boolean checkLandingState()
@@ -9518,16 +9519,17 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	// returns false if the change of mount type fails.
-	public void setMount(int npcId, int npcLevel, int mountType)
+	public void setMount(int npcId, int npcLevel)
 	{
-		switch (mountType)
+		final MountType type = MountType.findByNpcId(npcId);
+		switch (type)
 		{
-			case 0: // None
+			case NONE: // None
 			{
 				setIsFlying(false);
 				break;
 			}
-			case 1: // Strider
+			case STRIDER: // Strider
 			{
 				if (isNoble())
 				{
@@ -9535,14 +9537,14 @@ public final class L2PcInstance extends L2Playable
 				}
 				break;
 			}
-			case 2: // Wyvern
+			case WYVERN: // Wyvern
 			{
 				setIsFlying(true);
 				break;
 			}
 		}
 		
-		_mountType = mountType;
+		_mountType = type;
 		_mountNpcId = npcId;
 		_mountLevel = npcLevel;
 	}
@@ -9550,7 +9552,7 @@ public final class L2PcInstance extends L2Playable
 	/**
 	 * @return the type of Pet mounted (0 : none, 1 : Strider, 2 : Wyvern, 3: Wolf).
 	 */
-	public int getMountType()
+	public MountType getMountType()
 	{
 		return _mountType;
 	}
@@ -10874,7 +10876,7 @@ public final class L2PcInstance extends L2Playable
 		if (_taskRentPet != null)
 		{
 			// if the rent of a wyvern expires while over a flying zone, tp to down before unmounting
-			if (checkLandingState() && (getMountType() == 2))
+			if (checkLandingState() && (getMountType() == MountType.WYVERN))
 			{
 				teleToLocation(TeleportWhereType.TOWN);
 			}
