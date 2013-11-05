@@ -6927,7 +6927,7 @@ public final class L2PcInstance extends L2Playable
 	public boolean dismount()
 	{
 		// [L2J_JP ADD START SANDMAN]
-		if (checkLandingState() && getMountType() == 2)
+		if (checkLandingState() && getMountType() == MountType.WYVERN)
 		{
 			if (!Config.ALT_WYVERN_MAKEALANDING) //Wyvern can make a landing in zone of 'No Landing'
 			{
