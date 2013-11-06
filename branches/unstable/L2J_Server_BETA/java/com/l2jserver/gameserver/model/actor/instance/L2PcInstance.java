@@ -69,6 +69,7 @@ import com.l2jserver.gameserver.cache.WarehouseCacheManager;
 import com.l2jserver.gameserver.communitybbs.BB.Forum;
 import com.l2jserver.gameserver.communitybbs.Manager.RegionBBSManager;
 import com.l2jserver.gameserver.datatables.AdminTable;
+import com.l2jserver.gameserver.datatables.CategoryData;
 import com.l2jserver.gameserver.datatables.CharNameTable;
 import com.l2jserver.gameserver.datatables.CharSummonTable;
 import com.l2jserver.gameserver.datatables.CharTemplateTable;
@@ -107,6 +108,7 @@ import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.ArenaParticipantsHolder;
 import com.l2jserver.gameserver.model.BlockList;
+import com.l2jserver.gameserver.model.CategoryType;
 import com.l2jserver.gameserver.model.L2AccessLevel;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2ClanMember;
@@ -6768,15 +6770,7 @@ public final class L2PcInstance extends L2Playable
 	
 	public boolean mount(L2Summon pet)
 	{
-		if (!disarmWeapons())
-		{
-			return false;
-		}
-		if (!disarmShield())
-		{
-			return false;
-		}
-		if (isTransformed())
+		if (!disarmWeapons() || !disarmShield() || isTransformed())
 		{
 			return false;
 		}
@@ -6792,21 +6786,12 @@ public final class L2PcInstance extends L2Playable
 		broadcastUserInfo();
 		
 		pet.unSummon(this);
-		
 		return true;
 	}
 	
 	public boolean mount(int npcId, int controlItemObjId, boolean useFood)
 	{
-		if (!disarmWeapons())
-		{
-			return false;
-		}
-		if (!disarmShield())
-		{
-			return false;
-		}
-		if (isTransformed())
+		if (!disarmWeapons() || !disarmShield() || isTransformed())
 		{
 			return false;
 		}
@@ -13237,7 +13222,13 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (_transformAllowedSkills == null)
 		{
-			_transformAllowedSkills = new HashSet<>();
+			synchronized (this)
+			{
+				if (_transformAllowedSkills == null)
+				{
+					_transformAllowedSkills = new HashSet<>();
+				}
+			}
 		}
 		_transformAllowedSkills.add(id);
 	}
@@ -14093,12 +14084,28 @@ public final class L2PcInstance extends L2Playable
 	
 	public double getCollisionRadius()
 	{
-		return isMounted() ? (NpcTable.getInstance().getTemplate(getMountNpcId()).getfCollisionRadius()) : (isTransformed() && !getTransformation().isStance() ? getTransformation().getCollisionRadius(this) : (getAppearance().getSex() ? getBaseTemplate().getFCollisionRadiusFemale() : getBaseTemplate().getfCollisionRadius()));
+		if (isMounted() && (getMountNpcId() > 0))
+		{
+			return NpcTable.getInstance().getTemplate(getMountNpcId()).getfCollisionRadius();
+		}
+		else if (isTransformed())
+		{
+			return getTransformation().getCollisionRadius(this);
+		}
+		return getAppearance().getSex() ? getBaseTemplate().getFCollisionRadiusFemale() : getBaseTemplate().getfCollisionRadius();
 	}
 	
 	public double getCollisionHeight()
 	{
-		return isMounted() ? (NpcTable.getInstance().getTemplate(getMountNpcId()).getfCollisionHeight()) : (isTransformed() && !getTransformation().isStance() ? getTransformation().getCollisionHeight(this) : (getAppearance().getSex() ? getBaseTemplate().getFCollisionHeightFemale() : getBaseTemplate().getfCollisionHeight()));
+		if (isMounted() && (getMountNpcId() > 0))
+		{
+			return NpcTable.getInstance().getTemplate(getMountNpcId()).getfCollisionHeight();
+		}
+		else if (isTransformed())
+		{
+			return getTransformation().getCollisionHeight(this);
+		}
+		return getAppearance().getSex() ? getBaseTemplate().getFCollisionHeightFemale() : getBaseTemplate().getfCollisionHeight();
 	}
 	
 	public final int getClientX()
@@ -15145,5 +15152,11 @@ public final class L2PcInstance extends L2Playable
 	public Collection<EventListener> getEventListeners()
 	{
 		return _eventListeners;
+	}
+	
+	@Override
+	public boolean isInCategory(CategoryType type)
+	{
+		return CategoryData.getInstance().isInCategory(type, getClassId().getId());
 	}
 }
