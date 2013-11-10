@@ -5296,14 +5296,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 			// Notify AI with EVT_ATTACKED
 			if (target.hasAI())
 			{
-				if (Config.FIX_FleeNpc && target.getTemplate().getBasePAtk() == 0 && target.getTemplate().getBaseMAtk() == 0)
-				{
-					// pass
-				}
-				else
-				{
-					target.getAI().notifyEvent(CtrlEvent.EVT_ATTACKED, this);
-				}
+				target.getAI().notifyEvent(CtrlEvent.EVT_ATTACKED, this);
 			}
 			getAI().clientStartAutoAttack();
 			if (isSummon())
