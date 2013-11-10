@@ -18,15 +18,7 @@
  */
 package com.l2jserver.gameserver.ai;
 
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ACTIVE;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ATTACK;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_CAST;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_FOLLOW;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_IDLE;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_INTERACT;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_MOVE_TO;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_PICK_UP;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_REST;
+import static com.l2jserver.gameserver.ai.CtrlIntention.*;
 
 import java.util.List;
 
