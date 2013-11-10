@@ -1206,7 +1206,6 @@ public final class Config
 	public static final boolean FIX_OnKillNotifyTask_THREAD = true;		//[JOJO]槍・範囲魔法攻撃対策.モンスターを倒したときに発生するOnKillNotifyTaskのスレッド数を減らす.
 	public static final boolean FIX_onSpawn_for_SpawnTable = true;		//[JOJO]spawnlist.sqlをロードしたあとにAIスクリプトがロードされるため、onSpawnによるNPCの初期化がなされていない不具合の修正.
 	public static final int NPC_SPAWN_Z_MARGIN = 0;						//[JOJO]l2jserver.com rev.5425 '20' --> '0'
-	public static final boolean FIX_FleeNpc = true;						//[JOJO]反撃しないモンスター(エルピー、生贄など) TODO: UPDATE npc SET patk=0,matk=0
 	public static final boolean FIX_CoupleSocial_AI_INTENTION = true;	//[JOJO]相手が追従モードのときカップル アクションが行えない.
 	public static final boolean FIX_WALKER_ATTACK = true;				//[JOJO]WalkerManager 歩行中のモンスターを攻撃すると無反応のまま停止する不具合の修正.
 	public static final boolean PC_PROTECT = true;						//[JOJO]「今後、アクティブ モンスターを刺激するおそれがあります。」
