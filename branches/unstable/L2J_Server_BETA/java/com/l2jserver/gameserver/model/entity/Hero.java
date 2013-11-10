@@ -924,10 +924,7 @@ public class Hero
 		}
 		catch (SQLException e)
 		{
-			if (_log.isLoggable(Level.SEVERE))
-			{
-				_log.log(Level.SEVERE, "SQL exception while saving DiaryData.", e);
-			}
+			_log.log(Level.SEVERE, "SQL exception while saving DiaryData.", e);
 		}
 	}
 	
@@ -939,10 +936,6 @@ public class Hero
 	public void setHeroMessage(L2PcInstance player, String message)
 	{
 		_heroMessage.put(player.getObjectId(), message);
-		if (player.isDebug())
-		{
-			_log.info("Hero message for player: " + player.getName() + ":[" + player.getObjectId() + "] set to: [" + message + "]");
-		}
 	}
 	
 	/**
