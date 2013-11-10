@@ -46,6 +46,7 @@ import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.quest.Quest.QuestEventType;
 import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.stats.MoveType;
 
 /**
  * @author Zoey76
