@@ -18,9 +18,9 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
+
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -41,7 +41,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExBasicActionList;
  */
 public final class TransformData extends DocumentParser
 {
-	private final Map<Integer, Transform> _transformData = new HashMap<>();
+	private final SortedIntObjectArrayMap<Transform> _transformData = new SortedIntObjectArrayMap<>();
 	
 	protected TransformData()
 	{
@@ -80,9 +80,10 @@ public final class TransformData extends DocumentParser
 						final Transform transform = new Transform(set);
 						for (Node cd = d.getFirstChild(); cd != null; cd = cd.getNextSibling())
 						{
-							boolean isMale = "Male".equalsIgnoreCase(cd.getNodeName());
-							if ("Male".equalsIgnoreCase(cd.getNodeName()) || "Female".equalsIgnoreCase(cd.getNodeName()))
+							final String nodeName = cd.getNodeName();
+							if ("Male".equalsIgnoreCase(nodeName) || "Female".equalsIgnoreCase(nodeName))
 							{
+								final boolean isMale = "Male".equalsIgnoreCase(nodeName);
 								TransformTemplate templateData = null;
 								for (Node z = cd.getFirstChild(); z != null; z = z.getNextSibling())
 								{
