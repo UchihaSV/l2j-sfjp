@@ -18,73 +18,68 @@
  */
 package com.l2jserver.gameserver.util;
 
-import java.io.Serializable;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.interfaces.IPositionable;
 
 /**
  * @author Unknown, UnAfraid
  */
-public class Point3D implements Serializable, IPositionable
+public class Point3D implements /*java.io.Serializable,*/ IPositionable
 {
-	private static final long serialVersionUID = 4638345252031872576L;
+ //	private static final long serialVersionUID = 4638345252031872576L;
 	
-	private final AtomicInteger _x = new AtomicInteger();
-	private final AtomicInteger _y = new AtomicInteger();
-	private final AtomicInteger _z = new AtomicInteger();
+	private volatile int _x, _y, _z;
 	
 	public Point3D(int x, int y, int z)
 	{
-		_x.set(x);
-		_y.set(y);
-		_z.set(z);
+		_x = x;
+		_y = y;
+		_z = z;
 	}
 	
 	public boolean equals(int x, int y, int z)
 	{
-		return (getX() == x) && (getY() == y) && (getZ() == z);
+		return getX() == x && getY() == y && getZ() == z;
 	}
 	
 	@Override
 	public int getX()
 	{
-		return _x.get();
+		return _x;
 	}
 	
 	public void setX(int x)
 	{
-		_x.set(x);
+		_x = x;
 	}
 	
 	@Override
 	public int getY()
 	{
-		return _y.get();
+		return _y;
 	}
 	
 	public void setY(int y)
 	{
-		_y.set(y);
+		_y = y;
 	}
 	
 	@Override
 	public int getZ()
 	{
-		return _z.get();
+		return _z;
 	}
 	
 	public void setZ(int z)
 	{
-		_z.set(z);
+		_z = z;
 	}
 	
 	public void setXYZ(int x, int y, int z)
 	{
-		_x.set(x);
-		_y.set(y);
-		_z.set(z);
+		_x = x;
+		_y = y;
+		_z = z;
 	}
 	
 	@Override
@@ -96,7 +91,7 @@ public class Point3D implements Serializable, IPositionable
 	@Override
 	public String toString()
 	{
-		return "(" + _x + ", " + _y + ", " + _z + ")";
+		return "(" + getX() + ", " + getY() + ", " + getZ() + ")";
 	}
 	
 	@Override
