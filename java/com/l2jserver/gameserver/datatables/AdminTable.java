@@ -30,7 +30,6 @@ import javolution.util.FastMap;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import com.l2jserver.Config;
 import com.l2jserver.gameserver.engines.DocumentParser;
 import com.l2jserver.gameserver.model.L2AccessLevel;
 import com.l2jserver.gameserver.model.L2AdminCommandAccessRight;
@@ -50,16 +49,13 @@ public class AdminTable extends DocumentParser
 	private static final FastMap<L2PcInstance, Boolean> _gmList = new FastMap<L2PcInstance, Boolean>().shared();
 	private int _highestLevel = 0;
 	
-	/**
-	 * Instantiates a new admin table.
-	 */
 	protected AdminTable()
 	{
 		load();
 	}
 	
 	@Override
-	public void load()
+	public synchronized void load()
 	{
 		_accessLevels.clear();
 		_adminCommandAccessRights.clear();
@@ -185,7 +181,7 @@ public class AdminTable extends DocumentParser
 	 */
 	public boolean requireConfirm(String command)
 	{
-		L2AdminCommandAccessRight acar = _adminCommandAccessRights.get(command);
+		final L2AdminCommandAccessRight acar = _adminCommandAccessRights.get(command);
 		if (acar == null)
 		{
 			_log.info(getClass().getSimpleName() + ": No rights defined for admin command " + command + ".");
@@ -246,10 +242,6 @@ public class AdminTable extends DocumentParser
 	 */
 	public void addGm(L2PcInstance player, boolean hidden)
 	{
-		if (Config.DEBUG)
-		{
-			_log.fine("added gm: " + player.getName());
-		}
 		_gmList.put(player, hidden);
 	}
 	
@@ -259,10 +251,6 @@ public class AdminTable extends DocumentParser
 	 */
 	public void deleteGm(L2PcInstance player)
 	{
-		if (Config.DEBUG)
-		{
-			_log.fine("deleted gm: " + player.getName());
-		}
 		_gmList.remove(player);
 	}
 	
