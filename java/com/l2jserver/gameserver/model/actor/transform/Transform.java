@@ -109,15 +109,19 @@ public final class Transform
 		return player != null ? (player.getAppearance().getSex() ? _femaleTemplate : _maleTemplate) : null;
 	}
 	
-	public void setTemplate(boolean male, TransformTemplate template)
+	public void setTemplate(int sex, TransformTemplate template)
 	{
-		if (male)
+		if (sex == 1)
 		{
 			_maleTemplate = template;
 		}
-		else
+		else if (sex == 2)
 		{
 			_femaleTemplate = template;
+		}
+		else /*if (sex == 0)*/
+		{
+			_maleTemplate = _femaleTemplate = template;
 		}
 	}
 	

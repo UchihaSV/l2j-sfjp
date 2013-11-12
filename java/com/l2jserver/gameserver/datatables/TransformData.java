@@ -81,9 +81,9 @@ public final class TransformData extends DocumentParser
 						for (Node cd = d.getFirstChild(); cd != null; cd = cd.getNextSibling())
 						{
 							final String nodeName = cd.getNodeName();
-							if ("Male".equalsIgnoreCase(nodeName) || "Female".equalsIgnoreCase(nodeName))
+							if ("Male".equalsIgnoreCase(nodeName) || "Female".equalsIgnoreCase(nodeName) || "Both".equalsIgnoreCase(nodeName))
 							{
-								final boolean isMale = "Male".equalsIgnoreCase(nodeName);
+								final int isMale = "Male".equalsIgnoreCase(nodeName) ? 1 : "Female".equalsIgnoreCase(nodeName) ? 2 : 0;
 								TransformTemplate templateData = null;
 								for (Node z = cd.getFirstChild(); z != null; z = z.getNextSibling())
 								{
