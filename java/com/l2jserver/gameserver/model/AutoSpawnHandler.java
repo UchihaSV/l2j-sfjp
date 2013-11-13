@@ -689,6 +689,11 @@ if (TEST1) {{
 			return _npcId;
 		}
 		
+		public final int getNpcId()
+		{
+			return getId();
+		}
+		
 	//	public int getSpawnCount()
 	//	{
 	//		return _spawnCount;

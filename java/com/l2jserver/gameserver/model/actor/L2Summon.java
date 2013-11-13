@@ -307,6 +307,11 @@ public abstract class L2Summon extends L2Playable
 		return getTemplate().getId();
 	}
 	
+	public final int getNpcId()
+	{
+		return getId();
+	}
+	
 	public short getSoulShotsPerHit()
 	{
 		if (getTemplate().getAIDataStatic().getSoulShot() > 0)

@@ -53,6 +53,11 @@ public final class FortSiegeSpawn extends Location implements IIdentifiable
 		return _npcId;
 	}
 	
+	public final int getNpcId()
+	{
+		return getId();
+	}
+	
 	public int getMessageId()
 	{
 		return _id;

@@ -255,6 +255,11 @@ public class L2Spawn implements IPositionable, IIdentifiable
 		return _template.getId();
 	}
 	
+	public int getNpcid()
+	{
+		return getId();
+	}
+	
 	/**
 	 * @return min respawn delay.
 	 */

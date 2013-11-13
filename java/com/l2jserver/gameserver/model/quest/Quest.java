@@ -411,6 +411,11 @@ public class Quest extends ManagedScript implements IIdentifiable
 		return _questId;
 	}
 	
+	public int getQuestIntId()
+	{
+		return getId();
+	}
+	
 	/**
 	 * Add a new quest state of this quest to the database.
 	 * @param player the owner of the newly created quest state
