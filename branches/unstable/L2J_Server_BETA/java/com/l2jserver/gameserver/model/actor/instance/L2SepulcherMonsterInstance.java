@@ -57,7 +57,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 		super(objectId, template);
 		setInstanceType(InstanceType.L2SepulcherMonsterInstance);
 		setShowSummonAnimation(true);
-		switch (template.getNpcId())
+		switch (template.getId())
 		{
 			case 25339:
 			case 25342:
@@ -71,7 +71,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 	public void onSpawn()
 	{
 		setShowSummonAnimation(false);
-		if (DEBUG) switch (getNpcId())
+		if (DEBUG) switch (getId())
 		{
 			case 18120:
 			case 18121:
@@ -106,7 +106,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			case 18219:
 				setTitle("Å´åÆ");  broadcastPacket(new NpcInfo(this, null));
 		}
-		switch (getNpcId())
+		switch (getId())
 		{
 			case 18150:
 			case 18151:
@@ -186,7 +186,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			return false;
 		}
 		
-		switch (getNpcId())
+		switch (getId())
 		{
 			case 18120:
 			case 18121:
@@ -338,7 +338,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 		int cupId = 0;
 		int oldBrooch = 7262;
 		
-		switch (getNpcId())
+		switch (getId())
 		{
 			case 25339:
 				cupId = 7256;
@@ -424,7 +424,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				L2PcInstance player;
 				if ((player = getRandomPlayer(false)) != null)
 				{
-					broadcastPacket(new NpcSay(getObjectId(), 0, getNpcId(), 1010483/*"$s1! Help me!!"*/).addPcName(player));
+					broadcastPacket(new NpcSay(getObjectId(), 0, getId(), 1010483/*"$s1! Help me!!"*/).addPcName(player));
 					getAI().setIntention(CtrlIntention.AI_INTENTION_INTERACT, player);
 					setCanReturnToSpawnPoint(false);
 					setIsNoRndWalk(true);
@@ -439,11 +439,11 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				}
 				else if ((player = getRandomPlayer(true)) != null)
 				{
-					broadcastPacket(new NpcSay(getObjectId(), 0, getNpcId(), 1010483/*"$s1! Help me!!"*/).addPcName(player));
+					broadcastPacket(new NpcSay(getObjectId(), 0, getId(), 1010483/*"$s1! Help me!!"*/).addPcName(player));
 				}
 				else
 				{
-					broadcastPacket(new NpcSay(getObjectId(), 0, getNpcId(), 1010484/*"forgive me!!"*/));
+					broadcastPacket(new NpcSay(getObjectId(), 0, getId(), 1010484/*"forgive me!!"*/));
 				}
 			}
 
@@ -499,7 +499,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 	@Override
 	public void addDamageHate(L2Character attacker, int damage, int aggro)	//[JOJO]
 	{
-		switch (getNpcId())
+		switch (getId())
 		{
 		case 18150:
 		case 18151:
@@ -547,7 +547,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			{
 				victimKeyBoxSpawned = true;
 				FourSepulchersManager.getInstance().spawnKeyBox(activeChar);
-				broadcastPacket(new NpcSay(getObjectId(), 0, getNpcId(), 1000503/*"Many thanks for rescue me."*/));
+				broadcastPacket(new NpcSay(getObjectId(), 0, getId(), 1000503/*"Many thanks for rescue me."*/));
 				setWalking();
 			}
 			
@@ -607,7 +607,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 		@Override
 		public void run()
 		{
-			switch (_activeChar.getNpcId())
+			switch (_activeChar.getId())
 			{
 				case 18120:
 				case 18121:

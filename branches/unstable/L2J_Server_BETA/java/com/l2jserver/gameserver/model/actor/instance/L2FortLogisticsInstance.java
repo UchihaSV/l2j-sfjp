@@ -201,7 +201,7 @@ public class L2FortLogisticsInstance extends L2MerchantInstance
 		NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 		html.setFile(player.getHtmlPrefix(), filename);
 		html.replace("%objectId%", getObjectId());
-		html.replace("%npcId%", getNpcId());
+		html.replace("%npcId%", getId());
 		if (getFort().getOwnerClan() != null)
 		{
 			html.replace("%clanname%", getFort().getOwnerClan().getName());

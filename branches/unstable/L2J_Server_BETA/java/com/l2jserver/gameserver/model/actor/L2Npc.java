@@ -570,11 +570,13 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	/**
-	 * @return the generic Identifier of this L2NpcInstance contained in the L2NpcTemplate.
+	 * Gets the NPC ID.
+	 * @return the NPC ID
 	 */
-	public int getNpcId()
+	@Override
+	public int getId()
 	{
-		return getTemplate().getNpcId();
+		return getTemplate().getId();
 	}
 	
 	@Override
@@ -1015,7 +1017,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 				}
 				else
 				{
-					_log.info(getClass().getSimpleName() + ": Unknown NPC bypass: \"" + command + "\" NpcId: " + getNpcId());
+					_log.info(getClass().getSimpleName() + ": Unknown NPC bypass: \"" + command + "\" NpcId: " + getId());
 				}
 			}
 		}
@@ -1183,7 +1185,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 */
 	private boolean showPkDenyChatWindow(L2PcInstance player, String type)
 	{
-		String html = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/" + type + "/" + getNpcId() + "-pk.htm");
+		String html = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/" + type + "/" + getId() + "-pk.htm");
 		
 		if (html != null)
 		{
@@ -1210,7 +1212,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 */
 	public void showChatWindow(L2PcInstance player, int val)
 	{
-		if (Config.NON_TALKING_NPCS.contains(getNpcId()))
+		if (Config.NON_TALKING_NPCS.contains(getId()))
 		{
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
@@ -1257,7 +1259,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 			return;
 		}
 		
-		int npcId = getTemplate().getNpcId();
+		int npcId = getTemplate().getId();
 		
 		/* For use with Seven Signs implementation */
 		String filename = SevenSigns.SEVEN_SIGNS_HTML_PATH;
@@ -1647,7 +1649,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	@Override
 	public String toString()
 	{
-		return getClass().getSimpleName() + ":" + getName() + "(" + getNpcId() + ")" + "[" + getObjectId() + "]";
+		return getClass().getSimpleName() + ":" + getName() + "(" + getId() + ")" + "[" + getObjectId() + "]";
 	}
 	
 	public boolean isDecayed()
@@ -1752,7 +1754,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	
 	public void showNoTeachHtml(L2PcInstance player)
 	{
-		int npcId = getNpcId();
+		int npcId = getId();
 		String html = "";
 		
 		if (this instanceof L2WarehouseInstance)
@@ -1988,7 +1990,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	@Override
 	public boolean isInCategory(CategoryType type)
 	{
-		return CategoryData.getInstance().isInCategory(type, getNpcId());
+		return CategoryData.getInstance().isInCategory(type, getId());
 	}
 }
 

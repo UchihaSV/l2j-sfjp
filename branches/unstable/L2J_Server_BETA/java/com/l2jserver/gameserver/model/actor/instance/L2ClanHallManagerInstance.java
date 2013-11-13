@@ -1428,7 +1428,7 @@ public class L2ClanHallManagerInstance extends L2MerchantInstance
 			{
 				NpcHtmlMessage html = new NpcHtmlMessage(1);
 				String content;
-				String file = "data/html/clanHallManager/chamberlain-" + getNpcId() + ".htm";
+				String file = "data/html/clanHallManager/chamberlain-" + getId() + ".htm";
 				if ((content = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), file)) == null)
 				{
 					file = "data/html/clanHallManager/chamberlain.htm";
@@ -1463,7 +1463,7 @@ public class L2ClanHallManagerInstance extends L2MerchantInstance
 	private void sendHtmlMessage(L2PcInstance player, NpcHtmlMessage html)
 	{
 		html.replace("%objectId%", getObjectId());
-		html.replace("%npcId%", getNpcId());
+		html.replace("%npcId%", getId());
 		player.sendPacket(html);
 	}
 	
@@ -1476,7 +1476,7 @@ public class L2ClanHallManagerInstance extends L2MerchantInstance
 		int condition = validateCondition(player);
 		if (condition == COND_OWNER)
 		{
-			content = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/clanHallManager/chamberlain-" + getNpcId() + ".htm");
+			content = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/clanHallManager/chamberlain-" + getId() + ".htm");
 			if (content == null)
 			{
 				content = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/clanHallManager/chamberlain.htm");// Owner message window
@@ -1493,7 +1493,7 @@ public class L2ClanHallManagerInstance extends L2MerchantInstance
 		NpcHtmlMessage html = new NpcHtmlMessage(1);
 		html.setHtml(content);
 		html.replace("%objectId%", getObjectId());
-		html.replace("%npcId%", getNpcId());
+		html.replace("%npcId%", getId());
 		player.sendPacket(html);
 	}
 	

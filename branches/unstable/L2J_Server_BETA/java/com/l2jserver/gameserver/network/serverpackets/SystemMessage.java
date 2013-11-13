@@ -282,7 +282,7 @@ public final class SystemMessage extends L2GameServerPacket
 		else if (cha.isDoor())
 		{
 			L2DoorInstance door = (L2DoorInstance) cha;
-			return addDoorName(door.getDoorId());
+			return addDoorName(door.getId());
 		}
 		return addString(cha.getName());
 	}
@@ -310,7 +310,7 @@ public final class SystemMessage extends L2GameServerPacket
 	
 	public final SystemMessage addNpcName(final L2Summon npc)
 	{
-		return addNpcName(npc.getNpcId());
+		return addNpcName(npc.getId());
 	}
 	
 	public final SystemMessage addNpcName(final L2NpcTemplate template)
@@ -319,7 +319,7 @@ public final class SystemMessage extends L2GameServerPacket
 		{
 			return addString(template.getName());
 		}
-		return addNpcName(template.getNpcId());
+		return addNpcName(template.getId());
 	}
 	
 	public final SystemMessage addNpcName(final int id)
@@ -329,7 +329,7 @@ public final class SystemMessage extends L2GameServerPacket
 	
 	public final SystemMessage addItemName(final L2ItemInstance item)
 	{
-		return addItemName(item.getItemId());
+		return addItemName(item.getId());
 	}
 	
 	public final SystemMessage addItemName(final L2Item item)

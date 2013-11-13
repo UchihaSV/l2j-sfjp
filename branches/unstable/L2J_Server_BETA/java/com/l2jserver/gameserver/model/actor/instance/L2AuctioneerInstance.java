@@ -692,7 +692,7 @@ public final class L2AuctioneerInstance extends L2Npc
 		NpcHtmlMessage html = new NpcHtmlMessage(1);
 		html.setFile(player.getHtmlPrefix(), filename);
 		html.replace("%objectId%", getObjectId());
-		html.replace("%npcId%", getNpcId());
+		html.replace("%npcId%", getId());
 		html.replace("%npcname%", getName());
 		player.sendPacket(html);
 	}

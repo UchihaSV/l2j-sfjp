@@ -52,7 +52,7 @@ public class ConditionPlayerRangeFromNpc extends Condition
 			final L2Character player = env.getCharacter();
 			for (L2Object obj : player.getKnownList().getKnownObjects().values())
 			{
-				if (obj.isNpc() && Util.contains(_npcIds, ((L2Npc) obj).getNpcId()) && Util.checkIfInRange(_radius, player, obj, true))
+				if (obj.isNpc() && Util.contains(_npcIds, ((L2Npc) obj).getId()) && Util.checkIfInRange(_radius, player, obj, true))
 				{
 					return _val;
 				}

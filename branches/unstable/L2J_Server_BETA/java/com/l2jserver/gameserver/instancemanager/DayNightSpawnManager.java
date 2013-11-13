@@ -185,7 +185,7 @@ public final class DayNightSpawnManager
 				{
 					if (raidboss != null && raidboss.isVisible())
 						continue;
-					if (RaidBossSpawnManager.getInstance().getRaidBossStatusId(spawn.getNpcid()) == RaidBossSpawnManager.StatusEnum.DEAD)
+					if (RaidBossSpawnManager.getInstance().getRaidBossStatusId(spawn.getId()) == RaidBossSpawnManager.StatusEnum.DEAD)
 						continue;
 					raidboss = (L2RaidBossInstance) spawn.doSpawn();
 					RaidBossSpawnManager.getInstance().notifySpawnNightBoss(raidboss);
