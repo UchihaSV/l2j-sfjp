@@ -109,7 +109,7 @@ public class DecayTaskManager
 						if (actor instanceof L2Npc)
 						{
 							L2Npc npc = (L2Npc) actor;
-							switch (npc.getNpcId())
+							switch (npc.getId())
 							{
 //								case 29028: // Varakas
 //									delay = 18000;

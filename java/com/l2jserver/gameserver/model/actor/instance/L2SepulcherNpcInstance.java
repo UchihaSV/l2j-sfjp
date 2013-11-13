@@ -456,12 +456,12 @@ public class L2SepulcherNpcInstance extends L2Npc
 	
 	public void sayInShout(String msg)
 	{
-		sayInShout(new NpcSay(this.getObjectId(), Say2.NPC_SHOUT, this.getNpcId(), msg));
+		sayInShout(new NpcSay(this.getObjectId(), Say2.NPC_SHOUT, this.getId(), msg));
 	}
 	
 	public void sayInShout(int npcstring)
 	{
-		sayInShout(new NpcSay(this.getObjectId(), Say2.NPC_SHOUT, this.getNpcId(), npcstring));
+		sayInShout(new NpcSay(this.getObjectId(), Say2.NPC_SHOUT, this.getId(), npcstring));
 	}
 	
 	public void sayInShout(NpcStringId npcStringId)
@@ -471,7 +471,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 			return;// wrong usage
 		}
 		
-		sayInShout(new NpcSay(this.getObjectId(), Say2.NPC_SHOUT, this.getNpcId(), npcStringId));
+		sayInShout(new NpcSay(this.getObjectId(), Say2.NPC_SHOUT, this.getId(), npcStringId));
 	}
 	
 	private final class SayInShout implements TObjectProcedure<L2PcInstance>

@@ -803,7 +803,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 */
 	public boolean isWarehouse()
 	{
-		if (getNpcId() == 32478) return true;	//[JOJO] 32478 境界の商人「トッピング アイテムを共有」
+		if (getId() == 32478) return true;	//[JOJO] 32478 境界の商人「トッピング アイテムを共有」
 		return false;
 	}
 	

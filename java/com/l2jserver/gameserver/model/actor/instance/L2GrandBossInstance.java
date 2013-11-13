@@ -96,7 +96,7 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 			return false;
 		}
 		//[JOJO] ex. 'Frintezza' != null, 'Scarlet Van Halisha' == null
-		if (GrandBossManager.getInstance().getStatsSet(getNpcId()) == null)
+		if (GrandBossManager.getInstance().getStatsSet(getId()) == null)
 			return true;
 		
 		L2PcInstance player = null;

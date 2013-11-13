@@ -2328,7 +2328,7 @@ public class SevenSignsFestival implements SpawnListener
 		{
 			if ((_participants != null) && !_participants.isEmpty())
 			{
-				_witchInst.broadcastPacket(new NpcSay(_witchInst.getObjectId(), Say2.NPC_ALL, _witchInst.getNpcId()/*"Festival Witch"*/, npcStringId));
+				_witchInst.broadcastPacket(new NpcSay(_witchInst.getObjectId(), Say2.NPC_ALL, _witchInst.getId()/*"Festival Witch"*/, npcStringId));
 			}
 		}
 		
@@ -2336,7 +2336,7 @@ public class SevenSignsFestival implements SpawnListener
 		{
 			if ((_participants != null) && !_participants.isEmpty())
 			{
-				_witchInst.broadcastPacket(new NpcSay(_witchInst.getObjectId(), Say2.NPC_ALL, _witchInst.getNpcId()/*"Festival Witch"*/, npcString));
+				_witchInst.broadcastPacket(new NpcSay(_witchInst.getObjectId(), Say2.NPC_ALL, _witchInst.getId()/*"Festival Witch"*/, npcString));
 			}
 		}
 		
