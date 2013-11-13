@@ -267,7 +267,7 @@ public final class Formulas
 		
 		//[L2J_JP ADD SANDMAN][MODIFY JOJO]
 		// The recovery power of Zaken decreases under sunlight.
-		if (cha instanceof L2GrandBossInstance && ((L2GrandBossInstance)cha).getNpcId() == 29022/*zaken*/
+		if (cha instanceof L2GrandBossInstance && ((L2GrandBossInstance)cha).getId() == 29022/*zaken*/
 				&& CustomZoneManager.getInstance().isZakenWeakZone(cha))
 			hpRegenMultiplier *= 0.75;
 		

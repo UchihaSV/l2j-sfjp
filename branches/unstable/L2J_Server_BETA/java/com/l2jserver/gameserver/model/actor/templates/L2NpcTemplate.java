@@ -430,13 +430,13 @@ if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 				for (L2Spawn spawn : t) {
 					L2Npc npc;
 					if (spawn != null && (npc = spawn.getLastSpawn()) != null) {
-						if (npc.getNpcId() == _npcId && npc.isVisible()) {
+						if (npc.getId() == _npcId && npc.isVisible()) {
 							q.onSpawn(npc);
 						}
 						L2MonsterInstance leader;
 						if (npc.isMonster() && (leader = (L2MonsterInstance)npc).hasMinions()) {
 							for (L2MonsterInstance minion : leader.getMinionList().getSpawnedMinions())
-								if (minion.getNpcId() == _npcId && minion.isVisible()) {
+								if (minion.getId() == _npcId && minion.isVisible()) {
 									q.onSpawn(minion);
 								}
 						}

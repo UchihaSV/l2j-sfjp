@@ -522,7 +522,7 @@ public class Lottery
 			for (L2Spawn s : SpawnTable.getInstance().getSpawns(npcId))
 			{
 				L2Npc npc = s.getLastSpawn();
-				NpcSay packet = new NpcSay(npc.getObjectId(), Say2.SHOUT, npc.getNpcId(), npcString);
+				NpcSay packet = new NpcSay(npc.getObjectId(), Say2.SHOUT, npc.getId(), npcString);
 				for (String text : param) packet.addStringParameter(text);
 				npc.broadcastPacket(packet);
 			}

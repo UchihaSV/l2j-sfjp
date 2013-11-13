@@ -69,7 +69,7 @@ public class EventNpcAligner
 							guide = findGuide(manager, knownObjects);
 							if (guide == null)
 							{
-								//System.out.println("__BASENAME__:__LINE__: getNearestGuide(" + manager.getNpcId() + manager.getName() + ") is null");
+								//System.out.println("__BASENAME__:__LINE__: getNearestGuide(" + manager.getId() + manager.getName() + ") is null");
 								return manager;
 							}
 						}
@@ -90,7 +90,7 @@ public class EventNpcAligner
 		
 		if (mX != manager.getX() || mY != manager.getY())
 		{
-			//System.out.println("__BASENAME__:__LINE__: " + manager.getNpcId() + manager.getName() + ".setXYZ(" + mX + "," + mY + "," + mZ + ")");
+			//System.out.println("__BASENAME__:__LINE__: " + manager.getId() + manager.getName() + ".setXYZ(" + mX + "," + mY + "," + mZ + ")");
 			manager.setXYZ(mX, mY, mZ);
 			manager.broadcastPacket(new ValidateLocation(manager));
 			L2Spawn spawn = manager.getSpawn();
@@ -108,7 +108,7 @@ public class EventNpcAligner
 			if (o instanceof L2Npc)
 			{
 				L2Npc obj = (L2Npc)o;
-				switch (obj.getNpcId())
+				switch (obj.getId())
 				{
 //					default:
 //						if (obj.getInstanceType() != InstanceType.L2AdventurerInstance)
