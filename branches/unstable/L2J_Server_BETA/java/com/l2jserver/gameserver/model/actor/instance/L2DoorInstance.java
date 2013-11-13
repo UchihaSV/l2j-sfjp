@@ -276,6 +276,11 @@ public class L2DoorInstance extends L2Character
 		return getTemplate().getId();
 	}
 	
+	public int getDoorId()
+	{
+		return getId();
+	}
+	
 	/**
 	 * @return Returns the open.
 	 */

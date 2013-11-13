@@ -641,6 +641,11 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		return _itemId;
 	}
 	
+	public int getItemId()
+	{
+		return getId();
+	}
+	
 	/**
 	 * @return the display Id of the item.
 	 */

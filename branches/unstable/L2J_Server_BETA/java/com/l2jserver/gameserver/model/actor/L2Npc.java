@@ -579,6 +579,11 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		return getTemplate().getId();
 	}
 	
+	public int getNpcId()
+	{
+		return getId();
+	}
+	
 	@Override
 	public boolean isAttackable()
 	{

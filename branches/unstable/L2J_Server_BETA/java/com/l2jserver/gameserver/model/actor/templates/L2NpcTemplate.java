@@ -823,6 +823,11 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		return _npcId;
 	}
 	
+	public int getNpcId()
+	{
+		return getId();
+	}
+	
 	/**
 	 * @return the NPC race.
 	 */

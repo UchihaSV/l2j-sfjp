@@ -119,6 +119,11 @@ public class L2DoorTemplate extends L2CharTemplate implements IIdentifiable
 		return _doorId;
 	}
 	
+	public int getDoorId()
+	{
+		return getId();
+	}
+	
 	public String getName()
 	{
 		return _name;

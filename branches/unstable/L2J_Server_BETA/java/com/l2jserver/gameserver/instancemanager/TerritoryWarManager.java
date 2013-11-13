@@ -1533,6 +1533,11 @@ public final class TerritoryWarManager implements Siegable
 			return _npcId;
 		}
 		
+		public int getNpcId()
+		{
+			return getId();
+		}
+		
 		public int getType()
 		{
 			return _type;

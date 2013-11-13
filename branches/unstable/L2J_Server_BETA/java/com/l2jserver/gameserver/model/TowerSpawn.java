@@ -55,6 +55,11 @@ public class TowerSpawn implements IIdentifiable
 		return _npcId;
 	}
 	
+	public final int getNpcId()
+	{
+		return getId();
+	}
+	
 	public Location getLocation()
 	{
 		return _location;
