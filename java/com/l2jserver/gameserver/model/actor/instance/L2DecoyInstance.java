@@ -84,12 +84,6 @@ public class L2DecoyInstance extends L2Decoy
 		setKnownList(new DecoyKnownList(this));
 	}
 	
-	@Override
-	public int getId()
-	{
-		return 0;
-	}
-	
 	protected class DespawnTask implements Runnable
 	{
 		@Override
