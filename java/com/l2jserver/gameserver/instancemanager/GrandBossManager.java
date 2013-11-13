@@ -314,7 +314,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	{
 		if (boss != null)
 		{
-			_bosses.put(boss.getNpcId(), boss);
+			_bosses.put(boss.getId(), boss);
 		}
 	}
 	

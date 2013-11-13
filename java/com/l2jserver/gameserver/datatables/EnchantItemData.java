@@ -120,7 +120,7 @@ public class EnchantItemData extends DocumentParser
 	 */
 	public final EnchantScroll getEnchantScroll(L2ItemInstance scroll)
 	{
-		return _scrolls.get(scroll.getItemId());
+		return _scrolls.get(scroll.getId());
 	}
 	
 	/**
@@ -130,7 +130,7 @@ public class EnchantItemData extends DocumentParser
 	 */
 	public final EnchantItem getSupportItem(L2ItemInstance item)
 	{
-		return _supports.get(item.getItemId());
+		return _supports.get(item.getId());
 	}
 	
 	/**

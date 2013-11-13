@@ -287,7 +287,7 @@ public class MinionList
 			while (iter.hasNext())
 			{
 				minion = iter.next();
-				if ((minion != null) && (minion.getNpcId() == minionId))
+				if ((minion != null) && (minion.getId() == minionId))
 				{
 					iter.remove();
 					minion.refreshID();
@@ -398,7 +398,7 @@ public class MinionList
 		
 		if (Config.DEBUG)
 		{
-			_log.fine("Spawned minion template " + minion.getNpcId() + " with objid: " + minion.getObjectId() + " to boss " + master.getObjectId() + " ,at: " + minion.getX() + " x, " + minion.getY() + " y, " + minion.getZ() + " z");
+			_log.fine("Spawned minion template " + minion.getId() + " with objid: " + minion.getObjectId() + " to boss " + master.getObjectId() + " ,at: " + minion.getX() + " x, " + minion.getY() + " y, " + minion.getZ() + " z");
 		}
 		
 		return minion;
@@ -411,7 +411,7 @@ public class MinionList
 		int count = 0;
 		for (L2MonsterInstance minion : _minionReferences)
 		{
-			if ((minion != null) && (minion.getNpcId() == minionId))
+			if ((minion != null) && (minion.getId() == minionId))
 			{
 				count++;
 			}
@@ -434,7 +434,7 @@ public class MinionList
 				continue;
 			}
 			
-			seenGroups.add(minion.getNpcId());
+			seenGroups.add(minion.getId());
 		}
 		return seenGroups.size();
 	}

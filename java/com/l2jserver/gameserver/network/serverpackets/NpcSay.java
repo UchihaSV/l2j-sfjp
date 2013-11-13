@@ -56,7 +56,7 @@ public final class NpcSay extends L2GameServerPacket
 	{
 		_objectId = npc.getObjectId();
 		_textType = messageType;
-		_npcId = 1000000 + npc.getNpcId();
+		_npcId = 1000000 + npc.getId();
 		_npcString = -1;
 		_text = text;
 	}
@@ -83,7 +83,7 @@ public final class NpcSay extends L2GameServerPacket
 	{
 		_objectId = npc.getObjectId();
 		_textType = messageType;
-		_npcId = 1000000 + npc.getNpcId();
+		_npcId = 1000000 + npc.getId();
 		_npcString = npcString.getId();
 	}
 	

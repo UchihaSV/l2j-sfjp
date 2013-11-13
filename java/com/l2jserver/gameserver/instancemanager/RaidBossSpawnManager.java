@@ -180,7 +180,7 @@ public class RaidBossSpawnManager
 	 */
 	public void updateStatus(L2RaidBossInstance boss)	//[JOJO]
 	{
-		final StatsSet info = _storedInfo.get(boss.getNpcId());
+		final StatsSet info = _storedInfo.get(boss.getId());
 		if (info == null)
 		{
 			return;
@@ -197,8 +197,8 @@ public class RaidBossSpawnManager
 		info.set("currentMP", boss.getMaxMp());
 		info.set("respawnTime", respawnTime);
 		
-		if (!_schedules.containsKey(boss.getNpcId()) && respawnDelay > 0)					//+[JOJO]
-	//	if (!_schedules.containsKey(boss.getNpcId()) && ((respawnMinDelay > 0) || (respawnMaxDelay > 0)))	//-[JOJO]
+		if (!_schedules.containsKey(boss.getId()) && respawnDelay > 0)					//+[JOJO]
+	//	if (!_schedules.containsKey(boss.getId()) && ((respawnMinDelay > 0) || (respawnMaxDelay > 0)))	//-[JOJO]
 		{
 			String time = com.l2jserver.util.Util.dateFormat(respawnTime);	//[JOJO]
 			Broadcast.announceToOnlinePlayers(boss.getName() + " Ç™éÄñSÇµÇ‹ÇµÇΩÅBéüÇÃèoåªÇÕ " + time + " Ç≤ÇÎÇ≈Ç∑ÅB");	//[JOJO]
@@ -207,8 +207,8 @@ public class RaidBossSpawnManager
 		//	time.setTimeInMillis(respawnTime);
 		//	_log.info(getClass().getSimpleName() + ": Updated " + boss.getName() + " respawn time to " + time.getTime());
 			
-			_schedules.put(boss.getNpcId(), ThreadPoolManager.getInstance().scheduleGeneral(new SpawnSchedule(boss.getNpcId()), respawnDelay));
-			updateDb(boss.getNpcId());
+			_schedules.put(boss.getId(), ThreadPoolManager.getInstance().scheduleGeneral(new SpawnSchedule(boss.getId()), respawnDelay));
+			updateDb(boss.getId());
 		}
 		else
 		{
@@ -236,12 +236,12 @@ public class RaidBossSpawnManager
 		{
 			return;
 		}
-		if (_spawns.containsKey(spawnDat.getNpcid()))
+		if (_spawns.containsKey(spawnDat.getId()))
 		{
 			return;
 		}
 		
-		final int bossId = spawnDat.getNpcid();
+		final int bossId = spawnDat.getId();
 		final long time = Calendar.getInstance().getTimeInMillis();
 		
 		SpawnTable.getInstance().addNewSpawn(spawnDat, false);
@@ -288,7 +288,7 @@ public class RaidBossSpawnManager
 			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 				PreparedStatement statement = con.prepareStatement("INSERT INTO raidboss_spawnlist (boss_id,amount,loc_x,loc_y,loc_z,heading,respawn_time,currentHp,currentMp) VALUES(?,?,?,?,?,?,?,?,?)"))
 			{
-				statement.setInt(1, spawnDat.getNpcid());
+				statement.setInt(1, spawnDat.getId());
 				statement.setInt(2, spawnDat.getAmount());
 				statement.setInt(3, spawnDat.getX());
 				statement.setInt(4, spawnDat.getY());
@@ -319,7 +319,7 @@ public class RaidBossSpawnManager
 			return;
 		}
 		
-		final int bossId = spawnDat.getNpcid();
+		final int bossId = spawnDat.getId();
 		if (!_spawns.containsKey(bossId))
 		{
 			return;
@@ -531,11 +531,11 @@ public class RaidBossSpawnManager
 		
 		raidboss.setRaidStatus(StatusEnum.ALIVE);
 		
-		_storedInfo.put(raidboss.getNpcId(), info);
+		_storedInfo.put(raidboss.getId(), info);
 		
 		_log.info(getClass().getSimpleName() + ": Spawning Night Raid Boss " + raidboss.getName());
 		
-		_bosses.put(raidboss.getNpcId(), raidboss);
+		_bosses.put(raidboss.getId(), raidboss);
 	}
 	
 	/**

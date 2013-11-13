@@ -197,7 +197,7 @@ public final class SpawnTable
 				PreparedStatement insert = con.prepareStatement("INSERT INTO " + spawnTable + "(count,npc_templateid,locx,locy,locz,heading,respawn_delay,respawn_random,loc_id) values(?,?,?,?,?,?,?,?,?)"))
 			{
 				insert.setInt(1, spawn.getAmount());
-				insert.setInt(2, spawn.getNpcid());
+				insert.setInt(2, spawn.getId());
 				insert.setInt(3, spawn.getX());
 				insert.setInt(4, spawn.getY());
 				insert.setInt(5, spawn.getZ());
@@ -217,7 +217,7 @@ public final class SpawnTable
 			addSqlLog("-- " + Util.dateFormat() + " " + spawn.getTemplate().getTitle() + " " + spawn.getTemplate().getName() + " - " + zoneName + "\r\n"
 					+ "INSERT INTO " + spawnTable + " SET location='//spawn." + zoneName + "'"
 					+ ", count=" + spawn.getAmount()
-					+ ", npc_templateid=" + spawn.getNpcid()
+					+ ", npc_templateid=" + spawn.getId()
 					+ ", locx=" + spawn.getX()
 					+ ", locy=" + spawn.getY()
 					+ ", locz=" + spawn.getZ()
@@ -249,7 +249,7 @@ public final class SpawnTable
 				delete.setInt(1, spawn.getX());
 				delete.setInt(2, spawn.getY());
 				delete.setInt(3, spawn.getZ());
-				delete.setInt(4, spawn.getNpcid());
+				delete.setInt(4, spawn.getId());
 				delete.setInt(5, spawn.getHeading());
 				delete.execute();
 			}
@@ -265,7 +265,7 @@ public final class SpawnTable
 					+ " WHERE locx=" + spawn.getX()
 					+ " AND locy=" + spawn.getY()
 					+ " AND locz=" + spawn.getZ()
-					+ " AND npc_templateid=" + spawn.getNpcid()
+					+ " AND npc_templateid=" + spawn.getId()
 					+ " AND heading=" + spawn.getHeading()
 					+ ";\r\n");
 			//[JOJO]
@@ -281,10 +281,10 @@ public final class SpawnTable
 		FastSet<L2Spawn> test;
 //TODO:	synchronized (_spawnTable)
 //TODO:	{
-			if ((test = _spawnTable.get(spawn.getNpcid())) == null)
+			if ((test = _spawnTable.get(spawn.getId())) == null)
 			{
 				test = new FastSet<L2Spawn>().shared();
-				_spawnTable.put(spawn.getNpcid(), test);
+				_spawnTable.put(spawn.getId(), test);
 			}
 //TODO:	}
 		test.add(spawn);
@@ -298,14 +298,14 @@ public final class SpawnTable
 	private boolean removeSpawn(L2Spawn spawn)
 	{
 		FastSet<L2Spawn> set;
-		if ((set = _spawnTable.get(spawn.getNpcid())) != null)
+		if ((set = _spawnTable.get(spawn.getId())) != null)
 		{
 //TODO:	synchronized (_spawnTable)
 //TODO:	{
 			boolean removed = set.remove(spawn);
 			if (set.isEmpty())
 			{
-				_spawnTable.remove(spawn.getNpcid());
+				_spawnTable.remove(spawn.getId());
 			}
 			return removed;
 //TODO:	}
@@ -337,12 +337,12 @@ public final class SpawnTable
 	public void addNewSpawnOne(L2Npc npc)	//+[JOJO] Orfen, Zaken
 	{
 		Set<L2Spawn> t;
-		if ((t = _spawnTable.get(npc.getNpcId())) != null) t.clear();
+		if ((t = _spawnTable.get(npc.getId())) != null) t.clear();
 		addNewSpawn(npc.getSpawn(), false);
 	}
 	public void deleteSpawnOne(L2Npc npc)	//+[JOJO]
 	{
-		_spawnTable.remove(npc.getSpawn().getNpcid());
+		_spawnTable.remove(npc.getSpawn().getId());
 	}
 	public L2Spawn getSpawnOne(int npcId)	//+[JOJO]
 	{

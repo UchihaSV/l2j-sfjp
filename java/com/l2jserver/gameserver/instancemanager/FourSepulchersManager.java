@@ -699,7 +699,7 @@ public final class FourSepulchersManager
 			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't find quest: " + QUEST_ID);
 			return;
 		}
-		int npcId = npc.getNpcId();
+		int npcId = npc.getId();
 		switch (npcId)
 		{
 		// ID ok
@@ -1106,7 +1106,7 @@ public final class FourSepulchersManager
 			return;
 		}
 		
-		int keyNpcId = activeChar.getNpcId();
+		int keyNpcId = activeChar.getId();
 		int spawnNpcId = _keyBoxNpc.get(keyNpcId);
 		try
 		{
@@ -1134,7 +1134,7 @@ public final class FourSepulchersManager
 			return;
 		}
 		
-		int keyNpcId = activeChar.getNpcId();
+		int keyNpcId = activeChar.getId();
 		int spawnNpcId = _victim.get(keyNpcId);
 		try
 		{
@@ -1317,7 +1317,7 @@ public final class FourSepulchersManager
 				// hall not used right now, so its manager will not tell you
 				// anything :)
 				// if you don't need this - delete next two lines.
-				if (!_hallInUse.get(temp.getNpcid()))
+				if (!_hallInUse.get(temp.getId()))
 				{
 					continue;
 				}
