@@ -2727,7 +2727,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 	public final void setIsRunning(boolean value)
 	{
 		_isRunning = value;
-		if (getRunSpeed() != 0)
+		final int runSpeed = getRunSpeed();
+		if (runSpeed != 0)
 		{
 			broadcastPacket(new ChangeMoveType(this));
 		}
@@ -2748,7 +2749,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder
 				{
 					continue;
 				}
-				else if (getRunSpeed() == 0)
+				else if (runSpeed == 0)
 				{
 					player.sendPacket(new ServerObjectInfo((L2Npc) this, player));
 				}
