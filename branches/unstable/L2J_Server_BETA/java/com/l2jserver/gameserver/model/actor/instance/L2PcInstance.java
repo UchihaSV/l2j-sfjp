@@ -15117,4 +15117,9 @@ public final class L2PcInstance extends L2Playable
 	{
 		return 0;
 	}
+	
+	public boolean isNewbie()
+	{
+		return getAccountVariables().hasVariable(NEWBIE_KEY) ? getAccountVariables().getInteger(NEWBIE_KEY) == getObjectId() : false;
+	}
 }
