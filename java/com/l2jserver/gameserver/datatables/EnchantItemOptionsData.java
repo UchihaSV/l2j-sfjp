@@ -45,7 +45,7 @@ public class EnchantItemOptionsData extends DocumentParser
 	@Override
 	public synchronized void load()
 	{
-		parseDatapackFile("data/enchantOptions.xml");
+		parseDatapackFile("data/enchantItemOptions.xml");
 	}
 	
 	@Override
