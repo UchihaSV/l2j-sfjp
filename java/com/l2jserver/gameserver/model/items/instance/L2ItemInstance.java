@@ -230,7 +230,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 	{
 		super(objectId);
 		setInstanceType(InstanceType.L2ItemInstance);
-		_itemId = item.getItemId();
+		_itemId = item.getId();
 		_item = item;
 		if (_itemId == 0)
 		{
@@ -333,7 +333,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		
 		if (Config.LOG_ITEMS)
 		{
-			if (!Config.LOG_ITEMS_SMALL_LOG || (Config.LOG_ITEMS_SMALL_LOG && (getItem().isEquipable() || (getItem().getItemId() == ADENA_ID))))
+			if (!Config.LOG_ITEMS_SMALL_LOG || (Config.LOG_ITEMS_SMALL_LOG && (getItem().isEquipable() || (getItem().getId() == ADENA_ID))))
 			{
 				LogRecord record = new LogRecord(Level.INFO, "SETOWNER:" + process);
 				record.setLoggerName("item");
@@ -500,7 +500,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		
 		if (Config.LOG_ITEMS && (process != null))
 		{
-			if (!Config.LOG_ITEMS_SMALL_LOG || (Config.LOG_ITEMS_SMALL_LOG && (_item.isEquipable() || (_item.getItemId() == ADENA_ID))))
+			if (!Config.LOG_ITEMS_SMALL_LOG || (Config.LOG_ITEMS_SMALL_LOG && (_item.isEquipable() || (_item.getId() == ADENA_ID))))
 			{
 				LogRecord record = new LogRecord(Level.INFO, "CHANGE:" + process);
 				record.setLoggerName("item");
