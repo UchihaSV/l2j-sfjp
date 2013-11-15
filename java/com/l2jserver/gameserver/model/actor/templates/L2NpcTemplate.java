@@ -18,7 +18,7 @@
  */
 package com.l2jserver.gameserver.model.actor.templates;
 
-import static com.l2jserver.gameserver.datatables.StringIntern.intern;
+import static com.l2jserver.gameserver.datatables.StringIntern.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +47,6 @@ import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.quest.Quest.QuestEventType;
 import com.l2jserver.gameserver.model.skills.L2Skill;
-import com.l2jserver.gameserver.model.stats.MoveType;
 
 /**
  * NPC template.
