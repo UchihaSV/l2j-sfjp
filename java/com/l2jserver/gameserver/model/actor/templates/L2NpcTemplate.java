@@ -18,7 +18,7 @@
  */
 package com.l2jserver.gameserver.model.actor.templates;
 
-import static com.l2jserver.gameserver.datatables.StringIntern.*;
+import static com.l2jserver.gameserver.datatables.StringIntern.intern;
 
 import java.util.ArrayList;
 import java.util.Collections;
