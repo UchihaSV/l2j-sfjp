@@ -224,7 +224,7 @@ public class L2MerchantSummonInstance extends L2ServitorInstance
 			return;
 		}
 		
-		double taxRate = 0.50;	//[JOJO] スキル 831 サモン マーチャント ゴーレムの税率
+		double taxRate = 0.50;	//[JOJO] スキル 831 サモン マーチャント ゴーレム(NPC 13128 ゴーレムの商人)の税率 (50%)
 		
 		player.setInventoryBlockingStatus(true);
 		
@@ -253,7 +253,7 @@ public class L2MerchantSummonInstance extends L2ServitorInstance
 	private void showMessageWindow(L2PcInstance player)
 	{
 		player.sendPacket(ActionFailed.STATIC_PACKET);
-		final String filename = "data/html/merchant/" + getId() + ".htm";
+		final String filename = "data/html/merchant/" + getId() + ".htm";	// 13128.htm
 		final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 		html.setFile(player.getHtmlPrefix(), filename);
 		html.replace("%objectId%", getObjectId());
