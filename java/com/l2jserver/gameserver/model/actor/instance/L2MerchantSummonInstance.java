@@ -224,7 +224,7 @@ public class L2MerchantSummonInstance extends L2ServitorInstance
 			return;
 		}
 		
-		double taxRate = 0.05;	//[JOJO] スキル 831 サモン マーチャント ゴーレムの税率
+		double taxRate = 0.50;	//[JOJO] スキル 831 サモン マーチャント ゴーレムの税率
 		
 		player.setInventoryBlockingStatus(true);
 		
