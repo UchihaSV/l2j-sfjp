@@ -128,8 +128,8 @@ public class DocumentEngine
 			document.parse();
 			//[JOJO]-------------------------------------------------
 			for (L2Item item : document.getItemList())
-				if (list.put(item.getItemId(), item) != null)
-					_log.log(Level.INFO, "<!>" + ItemTable.class.getSimpleName() + ": file '" + f.getPath() + "' override the item " + item.getItemType() + " " + item.getItemId() + " " + item.getName());	//[JOJO]
+				if (list.put(item.getId(), item) != null)
+					_log.log(Level.INFO, "<!>" + ItemTable.class.getSimpleName() + ": file '" + f.getPath() + "' override the item " + item.getItemType() + " " + item.getId() + " " + item.getName());	//[JOJO]
 			//-------------------------------------------------------
 		//	list.addAll(document.getItemList());
 		}
