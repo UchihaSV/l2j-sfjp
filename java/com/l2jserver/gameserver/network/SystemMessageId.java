@@ -22,7 +22,9 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,8 +37,6 @@ import org.w3c.dom.Node;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.clientstrings.Builder;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
-
-import gnu.trove.map.hash.TIntObjectHashMap;
 
 /**
  * @author Noctarius, Nille02, crion, Forsaiken
@@ -20015,10 +20015,9 @@ public final class SystemMessageId
 	public static final SystemMessageId THOMAS_D_TURKEY_DISAPPEARED;
 	
 	/**
-	 * Array containing all SystemMessageIds<br>
-	 * Important: Always initialize with a length of the highest SystemMessageId + 1!!!
+	 * Map containing all SystemMessageIds<br>
 	 */
-	private static TIntObjectHashMap<SystemMessageId> VALUES;
+	private static Map<Integer, SystemMessageId> VALUES = new HashMap<>();
 	
 	static
 	{
@@ -22513,17 +22512,18 @@ public final class SystemMessageId
 	
 	private static final void buildFastLookupTable()
 	{
-		VALUES = new TIntObjectHashMap<>();
 		final Field[] fields = SystemMessageId.class.getDeclaredFields();
 		
+		int mod;
+		SystemMessageId smId;
 		for (final Field field : fields)
 		{
-			int mod = field.getModifiers();
+			mod = field.getModifiers();
 			if (Modifier.isStatic(mod) && Modifier.isPublic(mod) && Modifier.isFinal(mod) && field.getType().equals(SystemMessageId.class))
 			{
 				try
 				{
-					SystemMessageId smId = (SystemMessageId) field.get(null);
+					smId = (SystemMessageId) field.get(null);
 					smId.setName(field.getName());
 					smId.setParamCount(parseMessageParameters(field.getName()));
 					VALUES.put(smId.getId(), smId);
@@ -22581,7 +22581,7 @@ public final class SystemMessageId
 	
 	public static final void reloadLocalisations()
 	{
-		for (final SystemMessageId smId : VALUES.valueCollection())
+		for (final SystemMessageId smId : VALUES.values())
 		{
 			if (smId != null)
 			{

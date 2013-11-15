@@ -22,7 +22,9 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,8 +37,6 @@ import org.w3c.dom.Node;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.clientstrings.Builder;
 import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
-
-import gnu.trove.map.hash.TIntObjectHashMap;
 
 /**
  * NpcStringId implementation, based on SystemMessageId class
@@ -28791,10 +28791,9 @@ public final class NpcStringId
 	public static final NpcStringId IT_TELEPORTS_THE_GUARD_MEMBERS_OF_THE_ELMORE_IMPERIAL_CASTLE_TO_THE_INSIDE_OF_THE_CASTLE;
 	
 	/**
-	 * Array containing all NpcStringId<br>
-	 * Important: Always initialize with a length of the highest NpcStringId + 1!!!
+	 * Map containing all NpcStringId<br>
 	 */
-	private static TIntObjectHashMap<NpcStringId> VALUES;
+	private static Map<Integer, NpcStringId> VALUES = new HashMap<>();
 	
 	static
 	{
@@ -32397,19 +32396,21 @@ public final class NpcStringId
 	
 	private static final void buildFastLookupTable()
 	{
-		VALUES = new TIntObjectHashMap<>();
 		final Field[] fields = NpcStringId.class.getDeclaredFields();
 		
+		int mod;
+		NpcStringId nsId;
 		for (final Field field : fields)
 		{
-			int mod = field.getModifiers();
+			mod = field.getModifiers();
 			if (Modifier.isStatic(mod) && Modifier.isPublic(mod) && Modifier.isFinal(mod) && field.getType().equals(NpcStringId.class))
 			{
 				try
 				{
-					NpcStringId nsId = (NpcStringId) field.get(null);
+					nsId = (NpcStringId) field.get(null);
 					nsId.setName(field.getName());
 					nsId.setParamCount(parseMessageParameters(field.getName()));
+					
 					VALUES.put(nsId.getId(), nsId);
 				}
 				catch (final Exception e)
@@ -32465,7 +32466,7 @@ public final class NpcStringId
 	
 	public static final void reloadLocalisations()
 	{
-		for (final NpcStringId nsId : VALUES.valueCollection())
+		for (final NpcStringId nsId : VALUES.values())
 		{
 			if (nsId != null)
 			{
