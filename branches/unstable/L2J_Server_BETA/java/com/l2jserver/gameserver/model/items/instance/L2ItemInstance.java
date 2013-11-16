@@ -283,8 +283,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		L2WorldRegion oldregion = getPosition().getWorldRegion();
 		
 		// Create a server->client GetItem packet to pick up the L2ItemInstance
-		GetItem gi = new GetItem(this, player.getObjectId());
-		player.broadcastPacket(gi);
+		player.broadcastPacket(new GetItem(this, player.getObjectId()));
 		
 		synchronized (this)
 		{
