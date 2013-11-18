@@ -1924,11 +1924,15 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 */
 	public static void deleteQuestInDb(QuestState qs, boolean repeatable)
 	{
+		deleteQuestInDb(qs.getPlayer().getObjectId(), qs.getQuestName(), repeatable);
+	}
+	public static void deleteQuestInDb(int playerObjectId, String questName, boolean repeatable)	//[JOJO]
+	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(repeatable ? QUEST_DELETE_FROM_CHAR_QUERY : QUEST_DELETE_FROM_CHAR_QUERY_NON_REPEATABLE_QUERY))
 		{
-			ps.setInt(1, qs.getPlayer().getObjectId());
-			ps.setString(2, qs.getQuestName());
+			ps.setInt(1, playerObjectId);
+			ps.setString(2, questName);
 			if (!repeatable)
 			{
 				ps.setString(3, "<state>");
