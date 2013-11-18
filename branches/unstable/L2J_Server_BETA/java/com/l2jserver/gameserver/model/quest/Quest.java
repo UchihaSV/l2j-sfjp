@@ -2778,7 +2778,11 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 */
 	public String showHtmlFile(L2PcInstance player, String fileName)
 	{
-		boolean questwindow = !fileName.endsWith(".html");
+		return showHtmlFile(player, fileName, !fileName.endsWith(".html"));
+	}
+	
+	public String showHtmlFile(L2PcInstance player, String fileName, boolean questwindow)	//[JOJO]
+	{
 		int questId = getId();
 		
 		// Create handler to file linked to the quest
