@@ -3857,7 +3857,7 @@ public final class L2PcInstance extends L2Playable
 		
 		L2ItemInstance item = _inventory.getItemByItemId(itemId);
 		
-		if ((item == null) || (item.getCount() < count) || (_inventory.destroyItemByItemId(process, itemId, count, this, reference) == null))
+		if (item == null)
 		{
 			if (sendMessage)
 			{
@@ -3866,43 +3866,7 @@ public final class L2PcInstance extends L2Playable
 			
 			return false;
 		}
-		
-		// Send inventory update packet
-		if (!Config.FORCE_INVENTORY_UPDATE)
-		{
-			InventoryUpdate playerIU = new InventoryUpdate();
-			playerIU.addItem(item);
-			sendPacket(playerIU);
-		}
-		else
-		{
-			sendPacket(new ItemList(this, false));
-		}
-		
-		// Update current load as well
-		StatusUpdate su = new StatusUpdate(this);
-		su.addAttribute(StatusUpdate.CUR_LOAD, getCurrentLoad());
-		sendPacket(su);
-		
-		// Sends message to client if requested
-		if (sendMessage)
-		{
-			if (count > 1)
-			{
-				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
-				sm.addItemName(itemId);
-				sm.addItemNumber(count);
-				sendPacket(sm);
-			}
-			else
-			{
-				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_DISAPPEARED);
-				sm.addItemName(itemId);
-				sendPacket(sm);
-			}
-		}
-		
-		return true;
+		return destroyItem(process, item, count, reference, sendMessage);
 	}
 	
 	/**
