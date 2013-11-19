@@ -21,12 +21,14 @@ package com.l2jserver.gameserver.model.actor.transform;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.holders.AdditionalItemHolder;
 import com.l2jserver.gameserver.model.holders.AdditionalSkillHolder;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
+import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.stats.Stats;
 import com.l2jserver.gameserver.network.serverpackets.ExBasicActionList;
 
@@ -275,7 +277,7 @@ public final class Transform implements IIdentifiable
 					player.getInventory().setInventoryBlock(items, 1);
 				}
 				
-				if (notAllowed.isEmpty())
+				if (!notAllowed.isEmpty())
 				{
 					final int[] items = new int[notAllowed.size()];
 					for (int i = 0; i < items.length; i++)
@@ -319,7 +321,11 @@ public final class Transform implements IIdentifiable
 			{
 				for (SkillHolder holder : template.getSkills())
 				{
-					player.removeSkill(holder.getSkill(), false, holder.getSkill().isPassive());
+					final L2Skill skill = holder.getSkill();
+					if (!SkillTreesData.getInstance().isSkillAllowed(player, skill))
+					{
+						player.removeSkill(skill, false, skill.isPassive());
+					}
 				}
 			}
 			
@@ -328,9 +334,10 @@ public final class Transform implements IIdentifiable
 			{
 				for (AdditionalSkillHolder holder : template.getAdditionalSkills())
 				{
-					if (player.getLevel() >= holder.getMinLevel())
+					final L2Skill skill = holder.getSkill();
+					if ((player.getLevel() >= holder.getMinLevel()) && !SkillTreesData.getInstance().isSkillAllowed(player, skill))
 					{
-						player.removeSkill(holder.getSkill(), false, holder.getSkill().isPassive());
+						player.removeSkill(skill, false, skill.isPassive());
 					}
 				}
 			}
