@@ -18,9 +18,6 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 
@@ -31,7 +28,8 @@ public final class WareHouseDepositList extends AbstractItemPacket
 	public static final int CASTLE = 3; // not sure
 	public static final int FREIGHT = 1;
 	private final long _playerAdena;
-	private final List<L2ItemInstance> _items = new ArrayList<>();
+	private final L2ItemInstance[] _items;
+	private final int _size;
 	/**
 	 * <ul>
 	 * <li>0x01-Private Warehouse</li>
@@ -48,13 +46,16 @@ public final class WareHouseDepositList extends AbstractItemPacket
 		_playerAdena = player.getAdena();
 		
 		final boolean isPrivate = _whType == PRIVATE;
-		for (L2ItemInstance temp : player.getInventory().getAvailableItems(true, isPrivate, false))
+		
+		_items = player.getInventory().getAvailableItems(true, isPrivate, false);
+		int index = 0;
+		for (int i = 0, length = _items.length; i < length; ++i)
 		{
-			if ((temp != null) && temp.isDepositable(isPrivate))
-			{
-				_items.add(temp);
-			}
+			L2ItemInstance temp = _items[i];
+			if (temp.isDepositable(isPrivate))
+				_items[index++] = temp;
 		}
+		_size = index;
 	}
 	
 	@Override
@@ -63,10 +64,10 @@ public final class WareHouseDepositList extends AbstractItemPacket
 		writeC(0x41);
 		writeH(_whType);
 		writeQ(_playerAdena);
-		writeH(_items.size());
-		
-		for (L2ItemInstance item : _items)
+		writeH(_size);
+		for (int index = 0; index < _size; ++index)
 		{
+			L2ItemInstance item = _items[index];
 			writeItem(item);
 			writeD(item.getObjectId());
 		}

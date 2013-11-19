@@ -18,10 +18,9 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.model.ItemInfo;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
@@ -31,7 +30,7 @@ import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
  */
 public abstract class AbstractInventoryUpdate extends AbstractItemPacket
 {
-	private final Map<Integer, ItemInfo> _items = new ConcurrentSkipListMap<>();
+	private final FastIntObjectMap<ItemInfo> _items = new FastIntObjectMap<>();
 	
 	public AbstractInventoryUpdate()
 	{
@@ -76,11 +75,6 @@ public abstract class AbstractInventoryUpdate extends AbstractItemPacket
 		{
 			_items.put(item.getObjectId(), new ItemInfo(item));
 		}
-	}
-	
-	public final Collection<ItemInfo> getItems()
-	{
-		return _items.values();
 	}
 	
 	protected final void writeItems()
