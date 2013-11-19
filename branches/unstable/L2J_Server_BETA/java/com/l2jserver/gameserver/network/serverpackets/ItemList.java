@@ -18,16 +18,14 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 
 public final class ItemList extends AbstractItemPacket
 {
 	private final L2PcInstance _activeChar;
-	private final List<L2ItemInstance> _items = new ArrayList<>();
+	private final L2ItemInstance[] _items;
+	private final int _size;
 	private final boolean _showWindow;
 	
 	public ItemList(L2PcInstance activeChar, boolean showWindow)
@@ -35,13 +33,15 @@ public final class ItemList extends AbstractItemPacket
 		_activeChar = activeChar;
 		_showWindow = showWindow;
 		
-		for (L2ItemInstance item : activeChar.getInventory().getItems())
+		_items = activeChar.getInventory().getItems();
+		int index = 0;
+		for (int i = 0, length = _items.length; i < length; ++i)
 		{
+			L2ItemInstance item = _items[i];
 			if (!item.isQuestItem())
-			{
-				_items.add(item);
-			}
+				_items[index++] = item;
 		}
+		_size = index;
 	}
 	
 	@Override
@@ -49,10 +49,10 @@ public final class ItemList extends AbstractItemPacket
 	{
 		writeC(0x11);
 		writeH(_showWindow ? 0x01 : 0x00);
-		writeH(_items.size());
-		for (L2ItemInstance item : _items)
+		writeH(_size);
+		for (int index = 0; index < _size; ++index)
 		{
-			writeItem(item);
+			writeItem(_items[index]);
 		}
 		writeInventoryBlock(_activeChar.getInventory());
 	}

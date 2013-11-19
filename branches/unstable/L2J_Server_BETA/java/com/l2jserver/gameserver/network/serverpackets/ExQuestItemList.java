@@ -18,9 +18,6 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 
@@ -30,18 +27,22 @@ import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 public class ExQuestItemList extends AbstractItemPacket
 {
 	private final L2PcInstance _activeChar;
-	private final List<L2ItemInstance> _items = new ArrayList<>();
+	private final L2ItemInstance[] _items;
+	private final int _size;
 	
 	public ExQuestItemList(L2PcInstance activeChar)
 	{
 		_activeChar = activeChar;
-		for (L2ItemInstance item : activeChar.getInventory().getItems())
+		
+		_items = activeChar.getInventory().getItems();
+		int index = 0;
+		for (int i = 0, length = _items.length; i < length; ++i)
 		{
+			L2ItemInstance item = _items[i];
 			if (item.isQuestItem())
-			{
-				_items.add(item);
-			}
+				_items[index++] = item;
 		}
+		_size = index;
 	}
 	
 	@Override
@@ -49,10 +50,10 @@ public class ExQuestItemList extends AbstractItemPacket
 	{
 		writeC(0xFE);
 		writeH(0xC6);
-		writeH(_items.size());
-		for (L2ItemInstance item : _items)
+		writeH(_size);
+		for (int index = 0; index < _size; ++index)
 		{
-			writeItem(item, true);
+			writeItem(_items[index]);
 		}
 		writeInventoryBlock(_activeChar.getInventory());
 	}
