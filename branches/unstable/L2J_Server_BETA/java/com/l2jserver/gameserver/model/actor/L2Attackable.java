@@ -751,8 +751,8 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 							exp *= 1 - penalty;
 							
 							// Check for an over-hit enabled strike
-							L2Character overhitAttacker = getOverhitAttacker();
-							if (isOverhit() && (overhitAttacker != null) && (overhitAttacker.getActingPlayer() != null) && (attacker == overhitAttacker.getActingPlayer()))
+							L2Character overhitAttacker;
+							if (isOverhit() && (overhitAttacker = getOverhitAttacker()) != null && overhitAttacker.getActingPlayer() == attacker)
 							{
 								attacker.sendPacket(SystemMessageId.OVER_HIT);
 								exp += calculateOverhitExp(exp);
@@ -840,8 +840,8 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 						
 						// Check for an over-hit enabled strike
 						// (When in party, the over-hit exp bonus is given to the whole party and splitted proportionally through the party members)
-						L2Character overhitAttacker = getOverhitAttacker();
-						if (isOverhit() && (overhitAttacker != null) && (overhitAttacker.getActingPlayer() != null) && (attacker == overhitAttacker.getActingPlayer()))
+						L2Character overhitAttacker;
+						if (isOverhit() && (overhitAttacker = getOverhitAttacker()) != null && overhitAttacker.getActingPlayer() == attacker)
 						{
 							attacker.sendPacket(SystemMessageId.OVER_HIT);
 							exp += calculateOverhitExp(exp);
