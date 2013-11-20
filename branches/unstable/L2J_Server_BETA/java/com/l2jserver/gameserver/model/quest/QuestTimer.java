@@ -19,6 +19,7 @@
 package com.l2jserver.gameserver.model.quest;
 
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -171,6 +172,10 @@ public class QuestTimer
 	public final int getInstanceId()
 	{
 		return _instanceId;
+	}
+	public final long geRemainDelay()
+	{
+		return _schedular == null ? 0 : _schedular.getDelay(TimeUnit.MILLISECONDS);
 	}
 	//-------------------------------------------------------
 	
