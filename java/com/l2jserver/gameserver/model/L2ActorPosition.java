@@ -18,21 +18,54 @@
  */
 package com.l2jserver.gameserver.model;
 
+import com.l2jserver.gameserver.model.interfaces.IPositionable;
+
 /**
  * @author JOJO
  */
-public class L2ActorPosition extends L2Position
+public class L2ActorPosition implements IPositionable
 {
-	public final int heading;
+	// This class is read only.
+	public final int x, y, z, heading;
 	
 	public L2ActorPosition(int x, int y, int z, int heading)
 	{
-		super(x, y, z);
+		this.x = x;
+		this.y = y;
+		this.z = z;
 		this.heading = heading;
 	}
 	
+	@Override
+	public int getX()
+	{
+		return x;
+	}
+	
+	@Override
+	public int getY()
+	{
+		return y;
+	}
+	
+	@Override
+	public int getZ()
+	{
+		return z;
+	}
+	
+	@Override
 	public int getHeading()
 	{
 		return heading;
 	}
+	
+	@Deprecated @Override public Location getLocation() { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public int getInstanceId() { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public void setX(int x) { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public void setY(int y) { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public void setZ(int z) { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public void setHeading(int heading) { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public void setInstanceId(int instanceId) { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public void setLocation(Location loc) { throw new UnsupportedOperationException(); }
 }

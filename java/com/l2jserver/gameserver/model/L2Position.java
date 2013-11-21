@@ -25,6 +25,7 @@ import com.l2jserver.gameserver.model.interfaces.IPositionable;
  */
 public class L2Position implements IPositionable
 {
+	// This class is read only.
 	public final int x, y, z;
 	
 	public L2Position(int x, int y, int z)
@@ -43,19 +44,22 @@ public class L2Position implements IPositionable
 	@Override
 	public int getY()
 	{
-		return x;
+		return y;
 	}
 	
 	@Override
 	public int getZ()
 	{
-		return x;
+		return z;
 	}
 	
-	@Deprecated
-	@Override
-	public Location getLocation()
-	{
-		throw new UnsupportedOperationException();
-	}
+	@Deprecated @Override public Location getLocation() { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public int getHeading() { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public int getInstanceId() { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public void setX(int x) { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public void setY(int y) { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public void setZ(int z) { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public void setHeading(int heading) { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public void setInstanceId(int instanceId) { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public void setLocation(Location loc) { throw new UnsupportedOperationException(); }
 }
