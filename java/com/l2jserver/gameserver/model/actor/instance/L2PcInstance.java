@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -48,6 +47,7 @@ import java.util.logging.Level;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 import javolution.util.FastSet;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -771,7 +771,7 @@ public final class L2PcInstance extends L2Playable
 	
 	protected boolean _inventoryDisable = false;
 	
-	private final Map<Integer, L2CubicInstance> _cubics = new ConcurrentSkipListMap<>();
+	private final FastIntObjectMap<L2CubicInstance> _cubics = new FastIntObjectMap<L2CubicInstance>().shared();	//[JOJO] -ConcurrentSkipListMap
 	
 	/** Active shots. */
 	protected FastSet<Integer> _activeSoulShots = new FastSet<Integer>().shared();
@@ -9593,7 +9593,7 @@ public final class L2PcInstance extends L2Playable
 	 * Get the player's cubics.
 	 * @return the cubics
 	 */
-	public Map<Integer, L2CubicInstance> getCubics()
+	public FastIntObjectMap<L2CubicInstance> getCubics()
 	{
 		return _cubics;
 	}
