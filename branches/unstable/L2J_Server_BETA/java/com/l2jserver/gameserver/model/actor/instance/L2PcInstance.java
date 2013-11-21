@@ -201,7 +201,6 @@ import com.l2jserver.gameserver.model.fishing.L2Fish;
 import com.l2jserver.gameserver.model.fishing.L2Fishing;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
 import com.l2jserver.gameserver.model.holders.SkillUseHolder;
-import com.l2jserver.gameserver.model.interfaces.IPositionable;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.itemcontainer.ItemContainer;
 import com.l2jserver.gameserver.model.itemcontainer.PcFreight;
@@ -11084,19 +11083,19 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	@Override
-	public void teleToLocation(IPositionable loc, boolean allowRandomOffset)
+	public void teleToLocation(int x, int y, int z, int heading, int instanceId, int randomOffset)			//[JOJO]
 	{
-		if ((getVehicle() != null) && !getVehicle().isTeleporting())
+		if (getVehicle() != null && !getVehicle().isTeleporting())
 		{
 			setVehicle(null);
 		}
 		
-		if (isFlyingMounted() && (loc.getZ() < -1005))
+		if (isFlyingMounted() && z < -1005)
 		{
-			loc.setZ(-1005);
+			z = -1005;
 		}
 		
-		super.teleToLocation(loc, allowRandomOffset);
+		super.teleToLocation(x, y, z, heading, instanceId, randomOffset);	//[JOJO]
 	}
 	
 	@Override
