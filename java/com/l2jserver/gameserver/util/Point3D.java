@@ -18,8 +18,6 @@
  */
 package com.l2jserver.gameserver.util;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.interfaces.IPositionable;
 
@@ -28,69 +26,69 @@ import com.l2jserver.gameserver.model.interfaces.IPositionable;
  */
 public class Point3D implements IPositionable
 {
-	private final AtomicInteger _x = new AtomicInteger();
-	private final AtomicInteger _y = new AtomicInteger();
-	private final AtomicInteger _z = new AtomicInteger();
-	private final AtomicInteger _heading = new AtomicInteger();
-	private final AtomicInteger _instanceId = new AtomicInteger();
+	private int _x;
+	private int _y;
+	private int _z;
+	private int _heading;
+	private int _instanceId;
 	
 	public Point3D(int x, int y, int z)
 	{
-		_x.set(x);
-		_y.set(y);
-		_z.set(z);
+		_x = x;
+		_y = y;
+		_z = z;
 	}
 	
 	public Point3D(int x, int y, int z, int heading)
 	{
-		_x.set(x);
-		_y.set(y);
-		_z.set(z);
-		_heading.set(heading);
+		_x = x;
+		_y = y;
+		_z = z;
+		_heading = heading;
 	}
 	
 	public Point3D(int x, int y, int z, int heading, int instanceId)
 	{
-		_x.set(x);
-		_y.set(y);
-		_z.set(z);
-		_heading.set(heading);
-		_instanceId.set(instanceId);
+		_x = x;
+		_y = y;
+		_z = z;
+		_heading = heading;
+		_instanceId = instanceId;
 	}
 	
 	public boolean equals(int x, int y, int z)
 	{
-		return (getX() == x) && (getY() == y) && (getZ() == z);
+		return getX() == x && getY() == y && getZ() == z;
 	}
 	
 	@Override
 	public int getX()
 	{
-		return _x.get();
+		return _x;
 	}
 	
 	@Override
 	public int getY()
 	{
-		return _y.get();
+		return _y;
 	}
 	
 	@Override
 	public int getZ()
 	{
-		return _z.get();
+		return _z;
 	}
 	
 	@Override
 	public int getHeading()
 	{
-		return _heading.get();
+		return _heading;
 	}
 	
 	@Override
 	public int getInstanceId()
 	{
-		return _instanceId.get();
+		return _instanceId;
 	}
 	
 	@Override
@@ -102,48 +100,48 @@ public class Point3D implements IPositionable
 	@Override
 	public void setX(int x)
 	{
-		_x.set(x);
+		_x = x;
 	}
 	
 	@Override
 	public void setY(int y)
 	{
-		_y.set(y);
+		_y = y;
 	}
 	
 	@Override
 	public void setZ(int z)
 	{
-		_z.set(z);
+		_z = z;
 	}
 	
 	@Override
 	public void setHeading(int heading)
 	{
-		_heading.set(heading);
+		_heading = heading;
 	}
 	
 	@Override
 	public void setInstanceId(int instanceId)
 	{
-		_instanceId.set(instanceId);
+		_instanceId = instanceId;
 	}
 	
 	@Override
 	public void setLocation(Location loc)
 	{
-		_x.set(loc.getX());
-		_y.set(loc.getY());
-		_z.set(loc.getZ());
-		_heading.set(loc.getHeading());
-		_instanceId.set(loc.getInstanceId());
+		_x = loc.getX();
+		_y = loc.getY();
+		_z = loc.getZ();
+		_heading = loc.getHeading();
+		_instanceId = loc.getInstanceId();
 	}
 	
 	public void setXYZ(int x, int y, int z)
 	{
-		_x.set(x);
-		_y.set(y);
-		_z.set(z);
+		_x = x;
+		_y = y;
+		_z = z;
 	}
 	
 	public final Point3D getWorldPosition()
@@ -175,6 +173,6 @@ public class Point3D implements IPositionable
 	@Override
 	public String toString()
 	{
-		return "(" + _x + ", " + _y + ", " + _z + ")";
+		return "(" + getX() + "," + getY() + "," + getZ() + "," + getHeading() + ")";
 	}
 }
