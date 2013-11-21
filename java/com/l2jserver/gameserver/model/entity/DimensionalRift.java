@@ -29,7 +29,6 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.model.L2Party;
-import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
@@ -85,7 +84,7 @@ public class DimensionalRift
 					qs.startQuest();
 				}
 			}
-			p.teleToLocation(new Location(coords[0], coords[1], coords[2]));
+			p.teleToLocation(coords[0], coords[1], coords[2]);
 		}
 		createSpawnTimer(_choosenRoom);
 		createTeleporterTimer(true);
@@ -323,7 +322,7 @@ public class DimensionalRift
 		DimensionalRiftManager.getInstance().getRoom(_type, _choosenRoom).setPartyInside(true);
 		checkBossRoom(_choosenRoom);
 		int[] coords = getRoomCoord(_choosenRoom);
-		player.teleToLocation(new Location(coords[0], coords[1], coords[2]));
+		player.teleToLocation(coords[0], coords[1], coords[2]);
 	}
 	
 	protected void teleportToWaitingRoom(L2PcInstance player)
