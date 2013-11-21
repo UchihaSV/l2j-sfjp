@@ -90,7 +90,7 @@ public class ObjectPosition extends Point3D
 		}
 		else if (_activeObject.isPlayer())
 		{
-			((L2Character) getActiveObject()).teleToLocation(new Location(0, 0, 0), false);
+			((L2Character) getActiveObject()).teleToLocation(0, 0, 0, false);
 			((L2Character) getActiveObject()).sendMessage("Error with your coords, Please ask a GM for help!");
 		}
 	}

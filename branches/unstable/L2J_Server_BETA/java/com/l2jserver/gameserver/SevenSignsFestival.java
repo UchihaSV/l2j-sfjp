@@ -2126,7 +2126,7 @@ public class SevenSignsFestival implements SpawnListener
 						}
 						
 						participant.getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
-						participant.teleToLocation(new Location(x, y, _startLocation._z), true);
+						participant.teleToLocation(x, y, _startLocation._z, true);
 						
 						// Remove all buffs from all participants on entry. Works like the skill Cancel.
 						participant.stopAllEffectsExceptThoseThatLastThroughDeath();
@@ -2412,7 +2412,7 @@ public class SevenSignsFestival implements SpawnListener
 				}
 				
 				participant.getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
-				participant.teleToLocation(new Location(origPosition._x, origPosition._y, origPosition._z), true);
+				participant.teleToLocation(origPosition._x, origPosition._y, origPosition._z, true);
 				participant.sendMessage("You have been removed from the festival arena.");
 			}
 			catch (Exception e)
