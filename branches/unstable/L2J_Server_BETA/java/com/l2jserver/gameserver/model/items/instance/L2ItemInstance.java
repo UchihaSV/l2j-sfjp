@@ -278,9 +278,9 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		{
 			return;
 		}
-		assert getPosition().getWorldRegion() != null;
+		assert getWorldRegion() != null;
 		
-		L2WorldRegion oldregion = getPosition().getWorldRegion();
+		L2WorldRegion oldregion = getWorldRegion();
 		
 		// Create a server->client GetItem packet to pick up the L2ItemInstance
 		player.broadcastPacket(new GetItem(this, player.getObjectId()));
@@ -288,7 +288,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		synchronized (this)
 		{
 			setIsVisible(false);
-			getPosition().setWorldRegion(null);
+			setWorldRegion(null);
 		}
 		
 		// if this item is a mercenary ticket, remove the spawns!
@@ -1593,7 +1593,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		@Override
 		public final void run()
 		{
-			assert _itm.getPosition().getWorldRegion() == null;
+			assert _itm.getWorldRegion() == null;
 			
 			if ((Config.GEODATA > 0) && (_dropper != null))
 			{
@@ -1616,20 +1616,20 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 			{
 				// Set the x,y,z position of the L2ItemInstance dropped and update its _worldregion
 				_itm.setIsVisible(true);
-				_itm.getPosition().setWorldPosition(_x, _y, _z);
-				_itm.getPosition().setWorldRegion(L2World.getInstance().getRegion(getPosition().getWorldPosition()));
+				_itm.setXYZ(_x, _y, _z);
+				_itm.setWorldRegion(L2World.getInstance().getRegion(getWorldPosition()));
 				
 				// Add the L2ItemInstance dropped to _visibleObjects of its L2WorldRegion
 			}
 			
-			_itm.getPosition().getWorldRegion().addVisibleObject(_itm);
+			_itm.getWorldRegion().addVisibleObject(_itm);
 			_itm.setDropTime(System.currentTimeMillis());
 			_itm.setDropperObjectId(_dropper != null ? _dropper.getObjectId() : 0); // Set the dropper Id for the knownlist packets in sendInfo
 			
 			// this can synchronize on others instances, so it's out of
 			// synchronized, to avoid deadlocks
 			// Add the L2ItemInstance dropped in the world as a visible object
-			L2World.getInstance().addVisibleObject(_itm, _itm.getPosition().getWorldRegion());
+			L2World.getInstance().addVisibleObject(_itm, _itm.getWorldRegion());
 			if (Config.SAVE_DROPPED_ITEM)
 			{
 				ItemsOnGroundManager.getInstance().save(_itm);
@@ -2322,7 +2322,7 @@ if (com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 			ItemPickupEvent event = new ItemPickupEvent();
 			event.setItem(this);
 			event.setPicker(actor);
-			event.setLocation(new Location(getPosition().getX(), getPosition().getY(), getPosition().getZ()));
+			event.setLocation(new Location(getX(), getY(), getZ()));
 			for (DropListener listener : dropListeners)
 			{
 				if (!listener.onPickup(event))
@@ -2428,5 +2428,10 @@ if (com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 	public static void removeDropListener(DropListener listener)
 	{
 		dropListeners.remove(listener);
+	}
+	
+	@Override
+	public void setHeading(int heading)
+	{
 	}
 }
