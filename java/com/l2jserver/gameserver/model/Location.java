@@ -118,7 +118,7 @@ public class Location implements IPositionable
 	}
 	
 	//[JOJO]-------------------------------------------------
-	public void setXYZ(int x, int y, int z)	//[JOJO]
+	public void setXYZ(int x, int y, int z)
 	{
 		_x = x;
 		_y = y;
@@ -182,9 +182,20 @@ public class Location implements IPositionable
 		_instanceId = loc.getInstanceId();
 	}
 	
+	//[JOJO]-------------------------------------------------
+	public void setPosition(com.l2jserver.gameserver.util.Point3D loc)
+	{
+		_x = loc.getX();
+		_y = loc.getY();
+		_z = loc.getZ();
+		_heading = loc.getHeading();
+		_instanceId = loc.getInstanceId();
+	}
+	//-------------------------------------------------------
+	
 	@Override
 	public String toString()
 	{
-		return "[" + getClass().getSimpleName() + "] X: " + getX() + " Y: " + getY() + " Z: " + getZ() + " Heading: " + _heading + " InstanceId: " + _instanceId;
+		return "[" + getClass().getSimpleName() + "] X: " + getX() + " Y: " + getY() + " Z: " + getZ() + " Heading: " + getHeading() + " InstanceId: " + getInstanceId();
 	}
 }
