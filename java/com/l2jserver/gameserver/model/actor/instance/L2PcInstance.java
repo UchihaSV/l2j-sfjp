@@ -11132,7 +11132,7 @@ public final class L2PcInstance extends L2Playable
 		if (hasSummon())
 		{
 			getSummon().setFollowStatus(false);
-			getSummon().teleToLocation(getLocation(), false);
+			getSummon().teleToLocation(getPosition(), false);
 			((L2SummonAI) getSummon().getAI()).setStartFollowController(true);
 			getSummon().setFollowStatus(true);
 			getSummon().updateAndBroadcastStatus(0);
