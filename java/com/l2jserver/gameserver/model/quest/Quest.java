@@ -2894,7 +2894,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	//[JOJO]-------------------------------------------------
 	public static L2Npc addSpawn(int npcId, IPositionable loc, boolean randomOffSet, long despawnDelay)
 	{
-		return addSpawn(npcId, loc.getX(), loc.getY(), loc.getZ(), loc.getHeading(), randomOffSet, despawnDelay, false, loc.getInstanceId());
+		return addSpawn(npcId, loc.getX(), loc.getY(), loc.getZ(), loc.getHeading(), randomOffSet, despawnDelay, false, 0/*loc.getInstanceId()*/);
 	}
 	//-------------------------------------------------------
 	
