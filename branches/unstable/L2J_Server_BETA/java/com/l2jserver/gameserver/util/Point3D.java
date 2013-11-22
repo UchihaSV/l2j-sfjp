@@ -173,6 +173,6 @@ public class Point3D implements IPositionable
 	@Override
 	public String toString()
 	{
-		return "(" + getX() + "," + getY() + "," + getZ() + "," + getHeading() + ")";
+		return getClass().getSimpleName() + "{" + getX() + "," + getY() + "," + getZ() + "," + getHeading() + "," + getInstanceId() + "}";
 	}
 }

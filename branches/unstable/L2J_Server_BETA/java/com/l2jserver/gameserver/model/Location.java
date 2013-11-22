@@ -196,6 +196,6 @@ public class Location implements IPositionable
 	@Override
 	public String toString()
 	{
-		return "[" + getClass().getSimpleName() + "] X: " + getX() + " Y: " + getY() + " Z: " + getZ() + " Heading: " + getHeading() + " InstanceId: " + getInstanceId();
+		return getClass().getSimpleName() + "{" + getX() + "," + getY() + "," + getZ() + "," + getHeading() + "," + getInstanceId() + "}";
 	}
 }
