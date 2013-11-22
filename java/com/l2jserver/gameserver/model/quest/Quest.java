@@ -86,6 +86,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.scripting.ManagedScript;
 import com.l2jserver.gameserver.scripting.ScriptManager;
 import com.l2jserver.gameserver.util.MinionList;
+import com.l2jserver.gameserver.util.Point3D;
 import com.l2jserver.util.Rnd;
 import com.l2jserver.util.Util;
 
@@ -2890,6 +2891,12 @@ public class Quest extends ManagedScript implements IIdentifiable
 	{
 		return addSpawn(npcId, loc.getX(), loc.getY(), loc.getZ(), loc.getHeading(), randomOffSet, despawnDelay, false, 0);
 	}
+	//[JOJO]-------------------------------------------------
+	public static L2Npc addSpawn(int npcId, Point3D point, boolean randomOffSet, long despawnDelay)
+	{
+		return addSpawn(npcId, point.getX(), point.getY(), point.getZ(), point.getHeading(), randomOffSet, despawnDelay, false, point.getInstanceId());
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * @param npcId
