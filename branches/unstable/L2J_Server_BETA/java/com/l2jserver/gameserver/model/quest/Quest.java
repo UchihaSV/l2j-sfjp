@@ -63,6 +63,7 @@ import com.l2jserver.gameserver.model.entity.Instance;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
 import com.l2jserver.gameserver.model.interfaces.IL2Procedure;
+import com.l2jserver.gameserver.model.interfaces.IPositionable;
 import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
@@ -86,7 +87,6 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.scripting.ManagedScript;
 import com.l2jserver.gameserver.scripting.ScriptManager;
 import com.l2jserver.gameserver.util.MinionList;
-import com.l2jserver.gameserver.util.Point3D;
 import com.l2jserver.util.Rnd;
 import com.l2jserver.util.Util;
 
@@ -2892,9 +2892,9 @@ public class Quest extends ManagedScript implements IIdentifiable
 		return addSpawn(npcId, loc.getX(), loc.getY(), loc.getZ(), loc.getHeading(), randomOffSet, despawnDelay, false, 0);
 	}
 	//[JOJO]-------------------------------------------------
-	public static L2Npc addSpawn(int npcId, Point3D point, boolean randomOffSet, long despawnDelay)
+	public static L2Npc addSpawn(int npcId, IPositionable loc, boolean randomOffSet, long despawnDelay)
 	{
-		return addSpawn(npcId, point.getX(), point.getY(), point.getZ(), point.getHeading(), randomOffSet, despawnDelay, false, point.getInstanceId());
+		return addSpawn(npcId, loc.getX(), loc.getY(), loc.getZ(), loc.getHeading(), randomOffSet, despawnDelay, false, loc.getInstanceId());
 	}
 	//-------------------------------------------------------
 	
