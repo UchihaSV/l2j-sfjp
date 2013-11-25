@@ -412,6 +412,13 @@ public class LoginServerThread extends Thread
 		}
 	}
 	
+	//[JOJO]-------------------------------------------------
+	public void disconnect()
+	{
+		try { _loginSocket.close(); } catch (IOException e) { }
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * Adds the waiting client and send request.
 	 * @param acc the account
