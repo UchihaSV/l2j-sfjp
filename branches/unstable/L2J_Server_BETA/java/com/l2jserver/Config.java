@@ -4454,7 +4454,7 @@ public final class Config
 		return result;
 	}
 	
-	private static class IPConfigData extends DocumentParser
+	public static class IPConfigData extends DocumentParser	//[JOJO] -private +public
 	{
 		private static final List<String> _subnets = new ArrayList<>(5);
 		private static final List<String> _hosts = new ArrayList<>(5);
@@ -4467,6 +4467,8 @@ public final class Config
 		@Override
 		public void load()
 		{
+			_subnets.clear();	//[JOJO]
+			_hosts.clear();		//[JOJO]
 			File f = new File(IP_CONFIG_FILE);
 			if (f.exists())
 			{
