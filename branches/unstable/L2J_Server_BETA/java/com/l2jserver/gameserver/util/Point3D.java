@@ -18,6 +18,7 @@
  */
 package com.l2jserver.gameserver.util;
 
+import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.interfaces.IPositionable;
 
@@ -147,27 +148,6 @@ public class Point3D implements IPositionable
 	public final Point3D getWorldPosition()
 	{
 		return this;
-	}
-	
-	@Override
-	public boolean equals(Object o)
-	{
-		if (this == o)
-		{
-			return true;
-		}
-		if (o instanceof Point3D)
-		{
-			final Point3D point3D = (Point3D) o;
-			return (point3D.getX() == getX()) && (point3D.getY() == getY()) && ((point3D.getZ() == getZ()) && (point3D.getHeading() == getHeading()) && (point3D.getInstanceId() == getInstanceId()));
-		}
-		return false;
-	}
-	
-	@Override
-	public int hashCode()
-	{
-		return getX() ^ getY() ^ getZ();
 	}
 	
 	@Override
