@@ -109,17 +109,14 @@ public class AttackStanceTaskManager
 				for (Iterator<Entry<L2Character, Long>> iter = _attackStanceTasks.entrySet().iterator(); iter.hasNext(); )
 				{
 					Entry<L2Character, Long> e = iter.next();
-					if ((current - e.getValue()) > 15000)
+					if (e.getValue() != null && current - e.getValue() > 15000)
 					{
 						L2Character actor = e.getKey();
-						if (actor != null)
+						actor.broadcastPacket(new AutoAttackStop(actor.getObjectId()));
+						actor.getAI().setAutoAttacking(false);
+						if (actor.isPlayer() && actor.hasSummon())
 						{
-							actor.broadcastPacket(new AutoAttackStop(actor.getObjectId()));
-							actor.getAI().setAutoAttacking(false);
-							if (actor.isPlayer() && actor.hasSummon())
-							{
-								actor.getSummon().broadcastPacket(new AutoAttackStop(actor.getSummon().getObjectId()));
-							}
+							actor.getSummon().broadcastPacket(new AutoAttackStop(actor.getSummon().getObjectId()));
 						}
 						iter.remove();
 					}
