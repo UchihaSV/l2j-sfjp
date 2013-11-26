@@ -226,6 +226,11 @@ public class L2Clan implements IIdentifiable, INamable
 		return _clanId;
 	}
 	
+	public int getClanId()
+	{
+		return getId();
+	}
+	
 	/**
 	 * @param clanId The clanId to set.
 	 */
