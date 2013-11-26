@@ -310,7 +310,7 @@ public final class TerritoryWarManager implements Siegable
 		}
 		
 		_registeredClans.get(castleId).add(clan);
-		changeRegistration(castleId, clan.getClanId(), false);
+		changeRegistration(castleId, clan.getId(), false);
 	}
 	
 	public void registerMerc(int castleId, L2PcInstance player)
@@ -337,7 +337,7 @@ public final class TerritoryWarManager implements Siegable
 		else if ((_registeredClans.get(castleId) != null) && _registeredClans.get(castleId).contains(clan))
 		{
 			_registeredClans.get(castleId).remove(clan);
-			changeRegistration(castleId, clan.getClanId(), true);
+			changeRegistration(castleId, clan.getId(), true);
 		}
 	}
 	
@@ -1153,7 +1153,7 @@ public final class TerritoryWarManager implements Siegable
 		{
 			for (L2Clan clan : _registeredClans.get(castleId))
 			{
-				changeRegistration(castleId, clan.getClanId(), true);
+				changeRegistration(castleId, clan.getId(), true);
 			}
 		}
 		for (Integer castleId : _registeredMercenaries.keySet())

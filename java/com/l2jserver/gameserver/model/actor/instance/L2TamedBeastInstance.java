@@ -408,7 +408,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	}
 	
 	@Override
-	public void deleteMe()
+	public boolean deleteMe()
 	{
 		if (_buffTask != null)
 		{
@@ -430,7 +430,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		_remainingTime = 0;
 		
 		// remove the spawn
-		super.deleteMe();
+		return super.deleteMe();
 	}
 	
 	// notification triggered by the owner when the owner is attacked.

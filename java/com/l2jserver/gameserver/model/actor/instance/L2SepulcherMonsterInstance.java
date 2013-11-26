@@ -317,7 +317,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 	}
 	
 	@Override
-	public void deleteMe()
+	public boolean deleteMe()
 	{
 		if (_victimSpawnKeyBoxTask != null)
 		{
@@ -330,7 +330,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			_onDeadEventTask = null;
 		}
 		
-		super.deleteMe();
+		return super.deleteMe();
 	}
 	
 	private void giveCup(L2Character killer)

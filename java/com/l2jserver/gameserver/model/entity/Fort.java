@@ -347,7 +347,7 @@ public class Fort
 	 */
 	public void banishForeigners()
 	{
-		getFortZone().banishForeigners(getOwnerClan().getClanId());
+		getFortZone().banishForeigners(getOwnerClan().getId());
 	}
 	
 	/**
@@ -879,7 +879,7 @@ public class Fort
 		int clanId = 0;
 		if (clan != null)
 		{
-			clanId = clan.getClanId();
+			clanId = clan.getId();
 			_lastOwnedTime.setTimeInMillis(System.currentTimeMillis());
 		}
 		else

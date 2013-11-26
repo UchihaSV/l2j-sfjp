@@ -100,7 +100,7 @@ public class ClanBBSManager extends BaseBBSManager
 			String subcmd = st.nextToken();
 			String msgType = "";
 			int clanId = Integer.parseInt(st.nextToken());
-			if (activeChar.getClan() == null || activeChar.getClan().getClanId() != clanId
+			if (activeChar.getClan() == null || activeChar.getClan().getId() != clanId
 			        || activeChar.getClan().getLeaderId() != activeChar.getObjectId())
 			{
 				activeChar.sendPacket(SystemMessageId.YOU_ARE_NOT_AUTHORIZED_TO_DO_THAT);
@@ -131,7 +131,7 @@ public class ClanBBSManager extends BaseBBSManager
 		
 		else if (command.startsWith("_bbsclan_clannotice_edit;"))
 		{
-			clanNotice(activeChar, activeChar.getClanId());
+			clanNotice(activeChar, activeChar.getId());
 		}
 		else if (command.startsWith("_bbsclan_clannotice_enable"))
 		{
@@ -216,7 +216,7 @@ public class ClanBBSManager extends BaseBBSManager
 				+ "<td width=610 height=30 align=left><a action=\"bypass _bbshome\"> &$377; </a>&nbsp;>&nbsp;<a action=\"bypass _bbsclan_clanlist\"> &$809; </a>"	// CLAN COMMUNITY
 		        + "</td></tr></table><table border=0 cellspacing=0 cellpadding=0 width=610 bgcolor=434343>"
 				+ "<tr><td height=10></td></tr><tr><td fixWIDTH=5></td><td fixWIDTH=600>"
-				+ "<a action=\"bypass _bbsclan_clanhome;", String.valueOf((activeChar.getClan() != null) ? activeChar.getClan().getClanId() : 0), "\">[&$802;]</a>&nbsp;&nbsp;"	// [GO TO MY CLAN]
+				+ "<a action=\"bypass _bbsclan_clanhome;", String.valueOf((activeChar.getClan() != null) ? activeChar.getClan().getId() : 0), "\">[&$802;]</a>&nbsp;&nbsp;"	// [GO TO MY CLAN]
 		        + "</td>"
 				+ "<td fixWIDTH=5></td>"
 				+ "</tr>"
@@ -241,7 +241,7 @@ public class ClanBBSManager extends BaseBBSManager
 				continue;
 			html.append("<table border=0 cellspacing=0 cellpadding=5 width=610><tr> "
 					+ "<td FIXWIDTH=5></td>"
-					+ "<td FIXWIDTH=200 align=center><a action=\"bypass _bbsclan_clanhome;").append(cl.getClanId()).append("\">").append(cl.getName()).append("</a></td>"
+					+ "<td FIXWIDTH=200 align=center><a action=\"bypass _bbsclan_clanhome;").append(cl.getId()).append("\">").append(cl.getName()).append("</a></td>"
 					+ "<td FIXWIDTH=200 align=center>").append(cl.getLeaderName()).append("</td>"
 					+ "<td FIXWIDTH=100 align=center>").append(cl.getLevel()).append("</td>"
 					+ "<td FIXWIDTH=100 align=center>").append(cl.getMembersCount()).append("</td>"
@@ -309,7 +309,7 @@ public class ClanBBSManager extends BaseBBSManager
 	 */
 	private void clanhome(L2PcInstance activeChar)
 	{
-		clanhome(activeChar, activeChar.getClan().getClanId());
+		clanhome(activeChar, activeChar.getClan().getId());
 	}
 	
 	private static class SingletonHolder
@@ -326,7 +326,7 @@ public class ClanBBSManager extends BaseBBSManager
 		L2Clan cl = ClanTable.getInstance().getClan(clanId);
 		if (cl != null)
 		{
-			if (activeChar.getClan() != null && activeChar.getClan().getClanId() == clanId
+			if (activeChar.getClan() != null && activeChar.getClan().getId() == clanId
 			        && cl.getLevel() < 2)
 			{
 				activeChar.sendPacket(SystemMessageId.NO_CB_IN_MY_CLAN);
@@ -461,7 +461,7 @@ public class ClanBBSManager extends BaseBBSManager
 		if (ar1.equals("Set"))
 		{
 			activeChar.getClan().setNotice(ar4);
-			parsecmd("_bbsclan_clanhome;" + activeChar.getClan().getClanId(), activeChar);
+			parsecmd("_bbsclan_clanhome;" + activeChar.getClan().getId(), activeChar);
 		}
 		if (ar1.equals("comment") || ar1.equals("announce"))
 		{

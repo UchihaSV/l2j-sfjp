@@ -1592,7 +1592,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	 * UnAfraid: TODO: Add Listener here
 	 */
 	@Override
-	public void deleteMe()
+	public boolean deleteMe()
 	{
 		L2WorldRegion oldRegion = getWorldRegion();
 		
@@ -1641,7 +1641,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		// Remove L2Object object from _allObjects of L2World
 		L2World.getInstance().removeObject(this);
 		
-		super.deleteMe();
+		return super.deleteMe();
 	}
 	
 	/**

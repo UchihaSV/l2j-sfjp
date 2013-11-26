@@ -389,7 +389,7 @@ public abstract class ClanHall
 		{
 			return;
 		}
-		_ownerId = clan.getClanId();
+		_ownerId = clan.getId();
 		_isFree = false;
 		clan.setHideoutId(getId());
 		// Announce to Online member new ClanHall
