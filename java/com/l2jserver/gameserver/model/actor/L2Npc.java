@@ -1007,7 +1007,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 			{
 				player.sendPacket(ActionFailed.STATIC_PACKET);
 				
-				NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+				final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 				html.setFile(player.getHtmlPrefix(), "data/html/npcbusy.htm");
 				html.replace("%busymessage%", getBusyMessage());
 				html.replace("%npcname%", getName());
@@ -1105,7 +1105,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	{
 		// Send a Server->Client packet NpcHtmlMessage to the L2PcInstance in order to display the message of the L2NpcInstance
 		content = content.replaceAll("%objectId%", String.valueOf(getObjectId()));
-		NpcHtmlMessage npcReply = new NpcHtmlMessage(getObjectId());
+		final NpcHtmlMessage npcReply = new NpcHtmlMessage(getObjectId());
 		npcReply.setHtml(content);
 		player.sendPacket(npcReply);
 	}
@@ -1195,7 +1195,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		
 		if (html != null)
 		{
-			NpcHtmlMessage pkDenyMsg = new NpcHtmlMessage(getObjectId());
+			final NpcHtmlMessage pkDenyMsg = new NpcHtmlMessage(getObjectId());
 			pkDenyMsg.setHtml(html);
 			player.sendPacket(pkDenyMsg);
 			player.sendPacket(ActionFailed.STATIC_PACKET);
@@ -1428,7 +1428,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		}
 		
 		// Send a Server->Client NpcHtmlMessage containing the text of the L2NpcInstance to the L2PcInstance
-		NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+		final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 		html.setFile(player.getHtmlPrefix(), filename);
 		
 		if (Config.ALLOW_RENTPET)	//+[JOJO]
@@ -1457,7 +1457,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	public void showChatWindow(L2PcInstance player, String filename)
 	{
 		// Send a Server->Client NpcHtmlMessage containing the text of the L2NpcInstance to the L2PcInstance
-		NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+		final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 		html.setFile(player.getHtmlPrefix(), filename);
 		html.replace("%objectId%", getObjectId());
 		player.sendPacket(html);
@@ -1775,7 +1775,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		if (html == null)
 		{
 			_log.warning("Npc " + npcId + " missing noTeach html!");
-			NpcHtmlMessage msg = new NpcHtmlMessage(getObjectId());
+			final NpcHtmlMessage msg = new NpcHtmlMessage(getObjectId());
 			msg.setHtml("<html><body>I cannot teach you any skills.<br>You must find your current class teachers.</body></html>");
 			player.sendPacket(msg);
 			return;

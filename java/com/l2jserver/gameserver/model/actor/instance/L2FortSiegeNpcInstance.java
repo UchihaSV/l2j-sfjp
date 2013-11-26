@@ -51,7 +51,7 @@ public class L2FortSiegeNpcInstance extends L2Npc
 			filename = "data/html/fortress/merchant-" + val + ".htm";
 		}
 		
-		NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+		final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 		html.setFile(player.getHtmlPrefix(), filename);
 		html.replace("%objectId%", getObjectId());
 		html.replace("%npcId%", getId());

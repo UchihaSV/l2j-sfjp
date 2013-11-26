@@ -137,7 +137,7 @@ public class L2DawnPriestInstance extends L2SignsPriestInstance
 				break;
 		}
 		
-		NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+		final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 		html.setFile(player.getHtmlPrefix(), SevenSigns.SEVEN_SIGNS_HTML_PATH + filename);
 		html.replace("%objectId%", getObjectId());
 		player.sendPacket(html);
