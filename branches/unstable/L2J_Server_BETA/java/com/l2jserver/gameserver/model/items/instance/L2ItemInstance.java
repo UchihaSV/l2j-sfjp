@@ -2214,7 +2214,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 	 */
 	public void showChatWindow(L2PcInstance activeChar, String content)
 	{
-		NpcHtmlMessage html = new NpcHtmlMessage(0, getId());
+		final NpcHtmlMessage html = new NpcHtmlMessage(0, getId());
 		html.setHtml(content);
 		html.replace("%itemId%", String.valueOf(getObjectId()));
 		activeChar.sendPacket(html);

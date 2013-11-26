@@ -297,7 +297,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 	public void showChatWindow(L2PcInstance player, int val)
 	{
 		String filename = getHtmlPath(getId(), val);
-		NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+		final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 		html.setFile(player.getHtmlPrefix(), filename);
 		html.replace("%objectId%", getObjectId());
 		player.sendPacket(html);
@@ -309,7 +309,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 	{
 		if (isBusy())
 		{
-			NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+			final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 			html.setFile(player.getHtmlPrefix(), "data/html/npcbusy.htm");
 			html.replace("%busymessage%", getBusyMessage());
 			html.replace("%npcname%", getName());
@@ -503,7 +503,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 	
 	public void showHtmlFile(L2PcInstance player, String file)
 	{
-		NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+		final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 		html.setFile(player.getHtmlPrefix(), "data/html/SepulcherNpc/" + file);
 		html.replace("%npcname%", getName());
 		player.sendPacket(html);
