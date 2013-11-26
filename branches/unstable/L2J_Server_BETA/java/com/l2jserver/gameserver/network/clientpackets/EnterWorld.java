@@ -323,7 +323,7 @@ public class EnterWorld extends L2GameClientPacket
 
 			//////////////////////////////////////////////////////////////////////
 			// [L2J_JP ADD - TSL][JOJO]
-			String contents = ClanBBSManager.getInstance().getMsgData("announce", activeChar.getClan().getClanId());
+			String contents = ClanBBSManager.getInstance().getMsgData("announce", activeChar.getClan().getId());
 			if (! contents.isEmpty())
 			{
 				NpcHtmlMessage html = new NpcHtmlMessage(1);

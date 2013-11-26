@@ -154,7 +154,7 @@ public class CustomMsg
 			toId = activeChar.getAccountName2();
 			break;
 		case CLAN:
-			toId = String.valueOf(activeChar.getClan().getClanId());
+			toId = String.valueOf(activeChar.getClan().getId());
 			break;
 		case MEMO:
 			toId = activeChar.getAccountName2();
@@ -270,7 +270,7 @@ public class CustomMsg
 		case CLAN:
 			if (activeChar.getClan() == null) return _isSuccess;
 			toName = activeChar.getClan().getName();
-			toId = String.valueOf(activeChar.getClan().getClanId());
+			toId = String.valueOf(activeChar.getClan().getId());
 			break;
 		case MEMO:
 			toName = fromName; //= activeChar.getName();
