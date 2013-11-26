@@ -88,7 +88,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 	}
 	
 	@Override
-	public void deleteMe()
+	public boolean deleteMe()
 	{
 		if (_closeTask != null)
 		{
@@ -105,7 +105,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 			_spawnMonsterTask.cancel(true);
 			_spawnMonsterTask = null;
 		}
-		super.deleteMe();
+		return super.deleteMe();
 	}
 	
 	@Override
