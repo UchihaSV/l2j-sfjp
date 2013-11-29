@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.network.serverpackets;
 import java.util.logging.Level;
 
 import com.l2jserver.gameserver.cache.HtmCache;
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * @author FBIagent
@@ -62,6 +63,11 @@ public abstract class AbstractHtmlPacket extends L2GameServerPacket
 		_html = html;
 	}
 	
+	public boolean setFile(L2PcInstance pc, String path)	//[JOJO]
+	{
+		return setFile(pc.getHtmlPrefix(), path);
+	}
+	
 	public final boolean setFile(String prefix, String path)
 	{
 		String content = HtmCache.getInstance().getHtm(prefix, path);
@@ -77,39 +83,111 @@ public abstract class AbstractHtmlPacket extends L2GameServerPacket
 		return true;
 	}
 	
-	public final void replace(String pattern, String value)
+	private char[] _ca = null; private int _count;				//[JOJO]
+	public final int replace(CharSequence pattern, CharSequence value)	//[JOJO]
 	{
-		_html = _html.replaceAll(pattern, value.replaceAll("\\$", "\\\\\\$"));
+		if (value == null) value = "null";
+		int result = 0;
+		if (_ca == null) {
+			_count = _html.length();
+			_ca = new char[_count * 2];
+			_html.getChars(0, _count, _ca, 0);
+		}
+		final char first = pattern.charAt(0);
+		final int token_length = pattern.length();
+		final int value_length = value.length();
+		for (int start = 0, end; ; start += value_length) {
+			indexOf: {
+				int max = _count - token_length;
+				unko:
+				for (; start < max; start++) {
+					if (_ca[start] == first) {
+						end = start + 1;
+						int i = 1;
+						while (i < token_length)
+							if (_ca[end++] != pattern.charAt(i++))
+								continue unko;
+						/*assert(end == start + token_length);*/
+						break indexOf;
+					}
+				}
+				return result;
+			}
+			int newLen = _count - token_length + value_length;
+			if (newLen > _ca.length) {
+				char[] copy = new char[newLen * 2];
+				System.arraycopy(_ca, 0, copy, 0, _count);
+				_ca = copy;
+			}
+			int d = 0 - token_length + value_length;
+			if (d < 0)
+				{ for (int i = end; i <= _count-1; i++) _ca[i+d] = _ca[i]; }
+			else if (d > 0)
+				{ for (int i = _count-1; i >= end; i--) _ca[i+d] = _ca[i]; }
+			_count = newLen;
+		//	value.getChars(0, value_length, _ca, start);
+			for (int i = 0; i < value_length; i++) //CharSequence value
+				_ca[start+i] = value.charAt(i);
+			++result;
+		}
 	}
 	
-	public final void replace(String pattern, boolean val)
+	@Override
+	public String toString()
 	{
-		replace(pattern, String.valueOf(val));
+		return getHtml();	//[JOJO]
 	}
 	
-	public final void replace(String pattern, int val)
+	public final int replace(CharSequence pattern, boolean val)
 	{
-		replace(pattern, String.valueOf(val));
+		return replace(pattern, Boolean.toString(val));
 	}
 	
-	public final void replace(String pattern, long val)
+	public final int replace(CharSequence pattern, int val)
 	{
-		replace(pattern, String.valueOf(val));
+		return replace(pattern, Integer.toString(val));
 	}
 	
-	public final void replace(String pattern, double val)
+	public final int replace(CharSequence pattern, long val)
 	{
-		replace(pattern, String.valueOf(val));
+		return replace(pattern, Long.toString(val));
 	}
 	
+	public final int replace(CharSequence pattern, float val)
+	{
+		return replace(pattern, Float.toString(val));
+	}
+	
+	public final int replace(CharSequence pattern, double val)
+	{
+		return replace(pattern, Double.toString(val));
+	}
+	
+	public final AbstractHtmlPacket replaceAll(String regex, String replacement)	//[JOJO]
+	{
+		_html = getHtml().replaceAll(regex, replacement);
+		return this;
+	}
+	
+	public final AbstractHtmlPacket replaceFirst(String regex, String replacement)	//[JOJO]
+	{
+		_html = getHtml().replaceFirst(regex, replacement);
+		return this;
+	}
+	
+	/*
+		<a action="bypass -h Quest 100_SagaOfTheMaestro 0-1">"I'll do it."</a></body></html>
+		         |    9   |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+		  bypassStart bypassStartEnd                   bypassEnd
+	 */
 	private final void _buildHtmlBypassCache()
 	{
+		getHtml();	//[JOJO]
 		int bypassEnd = 0;
-		int bypassStart = _html.indexOf("=\"bypass ", bypassEnd);
-		int bypassStartEnd;
-		while (bypassStart != -1)
+		int bypassStart;
+		while ((bypassStart = _html.indexOf("=\"bypass ", bypassEnd)) != -1)
 		{
-			bypassStartEnd = bypassStart + 9;
+			int bypassStartEnd = bypassStart + 9;
 			bypassEnd = _html.indexOf("\"", bypassStartEnd);
 			if (bypassEnd == -1)
 			{
@@ -134,19 +212,18 @@ public abstract class AbstractHtmlPacket extends L2GameServerPacket
 			}
 			
 			addHtmlAction(bypass);
-			bypassStart = _html.indexOf("=\"bypass ", bypassEnd);
 		}
 	}
 	
 	private final void _buildHtmlLinkCache()
 	{
+		getHtml();	//[JOJO]
 		int linkEnd = 0;
-		int linkStart = _html.indexOf("=\"link ", linkEnd);
-		int linkStartEnd;
-		while (linkStart != -1)
+		int linkStart;
+		while ((linkStart = _html.indexOf("=\"link ", linkEnd)) != -1)
 		{
 			// we include the char sequence "link " in the cached html action
-			linkStartEnd = linkStart + 2;
+			int linkStartEnd = linkStart + 2;
 			linkEnd = _html.indexOf("\"", linkStartEnd);
 			if (linkEnd == -1)
 			{
@@ -167,7 +244,6 @@ public abstract class AbstractHtmlPacket extends L2GameServerPacket
 			}
 			
 			addHtmlAction(htmlLink);
-			linkStart = _html.indexOf("=\"link ", linkEnd);
 		}
 	}
 	
@@ -187,6 +263,7 @@ public abstract class AbstractHtmlPacket extends L2GameServerPacket
 	
 	public final String getHtml()
 	{
+		if (_ca != null) { _html = new String(_ca, 0, _count); _ca = null; }	//[JOJO]
 		return _html;
 	}
 	

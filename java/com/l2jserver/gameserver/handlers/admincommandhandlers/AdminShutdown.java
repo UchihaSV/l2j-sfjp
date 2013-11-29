@@ -1,23 +1,28 @@
 /**
  * [JOJO] This file is copy of:
  *   L2J_DataPack_BETA/dist/game/data/scripts/handlers/admincommandhandlers/AdminShutdown.java
+ *   sync revesion 9922, timestamp 2013/08/25 08:08
  *   sync revesion 9040, timestamp 2012/08/01 21:48
  *   sync revesion 7150, timestamp 2010/03/08 21:16
  *   sync revesion 5901, timestamp 2009/04/03 19:05
  **/
 /*
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Copyright (C) 2004-2013 L2J DataPack
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ * This file is part of L2J DataPack.
  * 
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
+ * L2J DataPack is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * L2J DataPack is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.l2jserver.gameserver.handlers.admincommandhandlers;		//[JOJO]
 //package handlers.admincommandhandlers;
@@ -33,16 +38,13 @@ import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 
-
 /**
- * This class handles following admin commands:
- * - server_shutdown [sec] = shows menu or shuts down server in sec seconds
- *
+ * This class handles following admin commands: - server_shutdown [sec] = shows menu or shuts down server in sec seconds
  * @version $Revision: 1.5.2.1.2.4 $ $Date: 2005/04/11 10:06:06 $
  */
 public class AdminShutdown implements IAdminCommandHandler
 {
-	//private static Logger _log = Logger.getLogger(AdminShutdown.class.getName());
+	// private static Logger _log = Logger.getLogger(AdminShutdown.class.getName());
 	
 	private static final String[] ADMIN_COMMANDS =
 	{
@@ -96,7 +98,7 @@ public class AdminShutdown implements IAdminCommandHandler
 	
 	private void sendHtmlForm(L2PcInstance activeChar)
 	{
-		NpcHtmlMessage adminReply = new NpcHtmlMessage(5);
+		final NpcHtmlMessage adminReply = new NpcHtmlMessage();
 		int t = GameTimeController.getInstance().getGameTime();
 		int h = t / 60;
 		int m = t % 60;

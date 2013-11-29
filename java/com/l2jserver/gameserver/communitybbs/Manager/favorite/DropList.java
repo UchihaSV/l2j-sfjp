@@ -125,7 +125,7 @@ public class DropList extends BaseFavoriteManager
 	// 検索条件入力用ウィンドウの表示
 	private void searchWindow(L2PcInstance activeChar)
 	{
-		NpcHtmlMessage html = new NpcHtmlMessage(5);
+		NpcHtmlMessage html = new NpcHtmlMessage();
 		html.setFile(activeChar.getHtmlPrefix(), "data/html/CommunityBoard/droplist/searchWindow.htm");
 		activeChar.sendPacket(html);
 	}
