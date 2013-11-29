@@ -18,7 +18,7 @@
  */
 package com.l2jserver.gameserver.network.clientpackets;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.charset.StandardCharsets.*;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.Announcements;
@@ -326,11 +326,11 @@ public class EnterWorld extends L2GameClientPacket
 			String contents = ClanBBSManager.getInstance().getMsgData("announce", activeChar.getClan().getId());
 			if (! contents.isEmpty())
 			{
-				NpcHtmlMessage html = new NpcHtmlMessage(1);
+				NpcHtmlMessage html = new NpcHtmlMessage();
 				html.setFile(activeChar.getHtmlPrefix(), "data/html/clannews.htm");
 				html.replace("%clan_name%", activeChar.getClan().getName());
 				html.replace("%contents%", contents);
-				activeChar.sendPacket(html);
+				sendPacket(html);
 			}
 			contents = null;
 			//////////////////////////////////////////////////////////////////////

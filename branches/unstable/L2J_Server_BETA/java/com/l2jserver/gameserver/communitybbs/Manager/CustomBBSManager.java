@@ -1078,7 +1078,7 @@ public class CustomBBSManager extends BaseBBSManager
 
 	private void errorDialog(L2PcInstance activeChar, String msg)
 	{
-		activeChar.sendPacket(new NpcHtmlMessage(0, "<html><title>ERROR</title><body><br><br><center><font color=FF0000>"+msg+"</font></center></body></html>"));
+		activeChar.sendPacket(new NpcHtmlMessage("<html><title>ERROR</title><body><br><br><center><font color=FF0000>"+msg+"</font></center></body></html>"));
 	}
 
 	/**

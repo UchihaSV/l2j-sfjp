@@ -1349,7 +1349,7 @@ public class L2ClanHallManagerInstance extends L2MerchantInstance
 				}
 				else
 				{
-					final NpcHtmlMessage html = new NpcHtmlMessage(1);
+					final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 					html.setFile(player.getHtmlPrefix(), "data/html/clanHallManager/not_authorized.htm");
 					sendHtmlMessage(player, html);
 				}

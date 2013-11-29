@@ -19,6 +19,9 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 import com.l2jserver.gameserver.enums.BypassScope;
+import com.l2jserver.gameserver.model.L2Object;
+import com.l2jserver.gameserver.model.L2World;
+import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
@@ -35,6 +38,11 @@ public final class NpcHtmlMessage extends AbstractHtmlPacket
 		_itemId = 0;
 	}
 	
+	public NpcHtmlMessage(L2Npc npc)	//[JOJO]
+	{
+		_npcObjId = npc.getObjectId();
+		_itemId = 0;
+	}
 	public NpcHtmlMessage(int npcObjId)
 	{
 		if (npcObjId < 0)
@@ -53,6 +61,12 @@ public final class NpcHtmlMessage extends AbstractHtmlPacket
 		_itemId = 0;
 	}
 	
+	public NpcHtmlMessage(L2Npc npc, String html)	//[JOJO]
+	{
+		super(html);
+		_npcObjId = npc.getObjectId();
+		_itemId = 0;
+	}
 	public NpcHtmlMessage(int npcObjId, String html)
 	{
 		super(html);
