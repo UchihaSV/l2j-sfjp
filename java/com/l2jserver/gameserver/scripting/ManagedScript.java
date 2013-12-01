@@ -76,6 +76,16 @@ public abstract class ManagedScript
 		return _scriptFile;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	public String getScriptDirectory()
+	{
+		return _scriptFile.getPath()
+				.substring(0, _scriptFile.getPath().lastIndexOf(File.separatorChar) + 1)
+				.substring(com.l2jserver.Config.DATAPACK_ROOT.getPath().length() + 1)
+				.replace('\\', '/');
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * @param lastLoadTime The lastLoadTime to set.
 	 */
