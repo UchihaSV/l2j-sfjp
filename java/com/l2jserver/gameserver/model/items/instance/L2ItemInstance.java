@@ -2013,13 +2013,18 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 	}
 	
 	@Override
-	public void decayMe()
+	public boolean decayMe()
 	{
 		if (Config.SAVE_DROPPED_ITEM)
 		{
 			ItemsOnGroundManager.getInstance().removeObject(this);
 		}
-		super.decayMe();
+		
+		if (!super.decayMe())
+		{
+			return false;
+		}
+		return true;
 	}
 	
 	public boolean isQuestItem()
