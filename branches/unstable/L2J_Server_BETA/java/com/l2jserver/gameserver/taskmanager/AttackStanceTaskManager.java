@@ -19,11 +19,11 @@
 package com.l2jserver.gameserver.taskmanager;
 
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javolution.util.FastMap;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -39,7 +39,7 @@ public class AttackStanceTaskManager
 {
 	protected static final Logger _log = Logger.getLogger(AttackStanceTaskManager.class.getName());
 	
-	protected static final Map<L2Character, Long> _attackStanceTasks = new ConcurrentHashMap<>();
+	protected static final FastMap<L2Character, Long> _attackStanceTasks = new FastMap<L2Character, Long>().shared();	//[JOJO] -ConcurrentHashMap
 	
 	/**
 	 * Instantiates a new attack stance task manager.
