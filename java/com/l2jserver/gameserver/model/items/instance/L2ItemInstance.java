@@ -2020,11 +2020,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 			ItemsOnGroundManager.getInstance().removeObject(this);
 		}
 		
-		if (!super.decayMe())
-		{
-			return false;
-		}
-		return true;
+		return super.decayMe();
 	}
 	
 	public boolean isQuestItem()
