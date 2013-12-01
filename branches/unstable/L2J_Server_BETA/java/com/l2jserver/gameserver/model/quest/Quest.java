@@ -2739,6 +2739,83 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
+	 * Get a random party member from the player's party who has this quest at the specified quest progress.<br>
+	 * If the player is not in a party, only the player himself is checked.
+	 * @param player the player whose random party member state to get
+	 * @param condition the quest progress step the random member should be at (-1 = check only if quest is started)
+	 * @param playerChance how many times more chance does the player get compared to other party members (3 - 3x more chance).<br>
+	 *            On retail servers, the killer usually gets 2-3x more chance than other party members
+	 * @param target the NPC to use for the distance check (can be null)
+	 * @return the {@link QuestState} object of the random party member or {@code null} if none matched the condition
+	 */
+	public QuestState getRandomPartyMemberState(L2PcInstance player, int condition, int playerChance, L2Npc target)
+	{
+		if ((player == null) || (playerChance < 1))
+		{
+			return null;
+		}
+		
+		QuestState qs = player.getQuestState(getName());
+		if (!player.isInParty())
+		{
+			if (!checkPartyMemberConditions(qs, condition))
+			{
+				return null;
+			}
+			if (!checkDistanceToTarget(player, target))
+			{
+				return null;
+			}
+			return qs;
+		}
+		
+		final List<QuestState> candidates = new ArrayList<>();
+		if (checkPartyMemberConditions(qs, condition) && (playerChance > 0))
+		{
+			for (int i = 0; i < playerChance; i++)
+			{
+				candidates.add(qs);
+			}
+		}
+		
+		for (L2PcInstance member : player.getParty().getMembers())
+		{
+			if (member == player)
+			{
+				continue;
+			}
+			
+			qs = member.getQuestState(getName());
+			if (checkPartyMemberConditions(qs, condition))
+			{
+				candidates.add(qs);
+			}
+		}
+		
+		if (candidates.isEmpty())
+		{
+			return null;
+		}
+		
+		qs = candidates.get(getRandom(candidates.size()));
+		if (!checkDistanceToTarget(qs.getPlayer(), target))
+		{
+			return null;
+		}
+		return qs;
+	}
+	
+	private static boolean checkPartyMemberConditions(QuestState qs, int condition)
+	{
+		return ((qs != null) && ((condition == -1) ? qs.isStarted() : qs.isCond(condition)));
+	}
+	
+	private static boolean checkDistanceToTarget(L2PcInstance player, L2Npc target)
+	{
+		return ((target == null) || com.l2jserver.gameserver.util.Util.checkIfInRange(1500, player, target, true));
+	}
+	
+	/**
 	 * Show an on screen message to the player.
 	 * @param player the player to display the message
 	 * @param text the message
@@ -3632,6 +3709,11 @@ public class Quest extends ManagedScript implements IIdentifiable
 				if (playSound)
 				{
 					playSound(player, QuestSound.ITEMSOUND_QUEST_ITEMGET);
+				}
+				// if there is no limit, return true every time an item is given
+				if (limit <= 0)
+				{
+					return true;
 				}
 			}
 		}
