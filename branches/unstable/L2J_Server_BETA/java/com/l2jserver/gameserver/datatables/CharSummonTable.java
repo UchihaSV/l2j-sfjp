@@ -221,11 +221,6 @@ public class CharSummonTable
 					{
 						summon = new L2SiegeSummonInstance(id, summonTemplate, activeChar, skill);
 					}
-					else if (summonTemplate.isType("L2MerchantSummon"))
-					{
-						// TODO: Confirm L2Merchant summon = new L2MerchantSummonInstance(id, summonTemplate, activeChar, skill);
-						summon = new L2ServitorInstance(id, summonTemplate, activeChar, skill);
-					}
 					else
 					{
 						summon = new L2ServitorInstance(id, summonTemplate, activeChar, skill);
