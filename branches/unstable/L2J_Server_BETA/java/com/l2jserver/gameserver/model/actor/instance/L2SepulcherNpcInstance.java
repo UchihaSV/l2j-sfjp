@@ -31,6 +31,7 @@ import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.effects.AbnormalEffect;
+import com.l2jserver.gameserver.model.interfaces.IL2Procedure;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.network.NpcStringId;
@@ -42,8 +43,6 @@ import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.network.serverpackets.SocialAction;
 import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
-
-import gnu.trove.procedure.TObjectProcedure;
 
 /**
  * @author sandman
@@ -475,7 +474,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 		sayInShout(new NpcSay(this.getObjectId(), Say2.NPC_SHOUT, this.getId(), npcStringId));
 	}
 	
-	private final class SayInShout implements TObjectProcedure<L2PcInstance>
+	private final class SayInShout implements IL2Procedure<L2PcInstance>
 	{
 		L2SepulcherNpcInstance _npc;
 		L2GameServerPacket _packet;
