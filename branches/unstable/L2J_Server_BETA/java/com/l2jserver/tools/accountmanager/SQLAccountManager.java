@@ -194,7 +194,7 @@ public class SQLAccountManager
 		{
 			MessageDigest md = MessageDigest.getInstance("SHA");
 			byte[] newPassword;
-			newPassword = password.getBytes("UTF-8");
+			newPassword = password.getBytes(java.nio.charset.StandardCharsets.UTF_8);
 			newPassword = md.digest(newPassword);
 			
 			ps.setString(1, account);
