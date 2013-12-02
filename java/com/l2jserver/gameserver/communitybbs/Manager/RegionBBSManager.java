@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -48,8 +49,6 @@ import com.l2jserver.gameserver.network.serverpackets.ShowBoard;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.util.StringUtil;
 
-import gnu.trove.iterator.TIntObjectIterator;
-
 public class RegionBBSManager extends BaseBBSManager
 {
 	private static Logger _logChat = Logger.getLogger("chat");
@@ -62,6 +61,19 @@ public class RegionBBSManager extends BaseBBSManager
 			return p1.getName().compareToIgnoreCase(p2.getName());
 		}
 	};
+	
+	private static final int _onlineCounts[] = new int[2];
+	private static final int FOR_PLAYER = 0, FOR_GM = 1;
+	@SuppressWarnings("unchecked")
+	private static final FastList<String> _communityPages[] = new FastList[2];
+	static
+	{
+		_communityPages[FOR_PLAYER] = new FastList<>();
+		_communityPages[FOR_GM] = new FastList<>();
+	}
+	
+	private static final String DATEFORMAT = "yyyy/MM/dd HH:mm";
+	private static final String SHORTFORMAT = "HŽž mm•ª";
 	
 	@Override
 	public void parsecmd(String command, L2PcInstance activeChar)
@@ -283,28 +295,6 @@ public class RegionBBSManager extends BaseBBSManager
 		
 	}
 	
-	private static final int _onlineCounts[] = new int[2];
-	private static final int FOR_PLAYER = 0, FOR_GM = 1;
-	@SuppressWarnings("unchecked")
-	private static final FastList<String> _communityPages[] = new FastList[2];
-	static
-	{
-		_communityPages[FOR_PLAYER] = new FastList<>();
-		_communityPages[FOR_GM] = new FastList<>();
-	}
-	
-	private static final String DATEFORMAT = "yyyy/MM/dd HH:mm";
-	private static final String SHORTFORMAT = "HŽž mm•ª";
-	
-	/**
-	 * Gets the single instance of RegionBBSManager.
-	 * @return single instance of RegionBBSManager
-	 */
-	public static RegionBBSManager getInstance()
-	{
-		return SingletonHolder._instance;
-	}
-	
 	private boolean _shutdown = false;
 	
 	public void shutdown()
@@ -325,16 +315,15 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 			return;
 		}
 }}
-		final FastList<L2PcInstance> sortedPlayers = new FastList<>();
-		final TIntObjectIterator<L2PcInstance> it = L2World.getInstance().getAllPlayers().iterator();
-		while (it.hasNext())
+		final ArrayList<L2PcInstance> sortedPlayers = new ArrayList<>();
+		for (L2PcInstance player : L2World.getInstance().getPlayers())
 		{
-			it.advance();
-			if (it.value() != null)
+			if (player != null)
 			{
-				sortedPlayers.add(it.value());
+				sortedPlayers.add(player);
 			}
 		}
+		
 		Collections.sort(sortedPlayers, PLAYER_NAME_COMPARATOR);
 		
 		_onlineCounts[FOR_PLAYER] = 0;
@@ -367,7 +356,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 	/**
 	 * Write community pages.
 	 */
-	private void writeCommunityPages(FastList<L2PcInstance> sortedPlayers)
+	private void writeCommunityPages(ArrayList<L2PcInstance> sortedPlayers)
 	{
 		final String trOpen = "<tr>";
 		final String trClose = "</tr>";
@@ -606,6 +595,15 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 		return pages.get(page - 1)
 					.replaceFirst("%gametime%", new SimpleDateFormat(SHORTFORMAT).format(gametime.getTime()))
 					.replaceFirst("%realtime%", new SimpleDateFormat(DATEFORMAT).format(realtime.getTime()));
+	}
+	
+	/**
+	 * Gets the single instance of RegionBBSManager.
+	 * @return single instance of RegionBBSManager
+	 */
+	public static RegionBBSManager getInstance()
+	{
+		return SingletonHolder._instance;
 	}
 	
 	private static class SingletonHolder
