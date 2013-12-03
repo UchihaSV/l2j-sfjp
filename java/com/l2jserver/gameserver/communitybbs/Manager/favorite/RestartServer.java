@@ -73,7 +73,7 @@ public class RestartServer extends BaseFavoriteManager
 	private void countRestartServer()
 	{
 		int total = 0, score = 0;
-		for (L2PcInstance pc : L2World.getInstance().getAllPlayersArray()) {
+		for (L2PcInstance pc : L2World.getInstance().getPlayers()) {
 			L2GameClient c = pc.getClient();
 			if (c == null || c.isDetached()) continue;	// 不在モードを除外
 			++total;
