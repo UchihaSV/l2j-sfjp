@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.AdminTable;
@@ -64,13 +65,13 @@ public final class L2World
 	private static final int REGIONS_Y = (MAP_MAX_Y >> SHIFT_BY) + OFFSET_Y;
 	
 	/** Map containing all the players in game. */
-	private final Map<Integer, L2PcInstance> _allPlayers = new ConcurrentHashMap<>();
+	private final FastIntObjectMap<L2PcInstance> _allPlayers = new FastIntObjectMap<L2PcInstance>().shared();	//[JOJO] -ConcurrentHashMap
 	/** Map containing all visible objects. */
-	private final Map<Integer, L2Object> _allObjects = new ConcurrentHashMap<>();
+	private final FastIntObjectMap<L2Object> _allObjects = new FastIntObjectMap<L2Object>().shared();	//[JOJO] -ConcurrentHashMap
 	/** Map used for debug. */
-	private final Map<Integer, String> _allObjectsDebug = new ConcurrentHashMap<>();
+	private final FastIntObjectMap<String> _allObjectsDebug = new FastIntObjectMap<String>().shared();	//[JOJO] -ConcurrentHashMap
 	/** Map with the pets instances and their owner ID. */
-	private final Map<Integer, L2PetInstance> _petsInstance = new ConcurrentHashMap<>();
+	private final FastIntObjectMap<L2PetInstance> _petsInstance = new FastIntObjectMap<L2PetInstance>().shared();	//[JOJO] -ConcurrentHashMap
 	
 	private L2WorldRegion[][] _worldRegions;
 	
