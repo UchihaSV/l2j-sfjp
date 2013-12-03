@@ -23,12 +23,6 @@ package com.l2jserver.gameserver.model.interfaces;
  * @author Battlecruiser
  * @param <T> the type of object on which the procedure will be executed
  */
-public interface IL2Procedure<T>
+public interface IL2Procedure<T> extends gnu.trove.procedure.TObjectProcedure<T>
 {
-	/**
-	 * Executes this procedure. A false return value indicates that the application executing this procedure should not invoke this procedure again.
-	 * @param arg the object on which the procedure will be executed
-	 * @return {@code true} if additional invocations of the procedure are allowed.
-	 */
-	public boolean execute(T arg);
 }
