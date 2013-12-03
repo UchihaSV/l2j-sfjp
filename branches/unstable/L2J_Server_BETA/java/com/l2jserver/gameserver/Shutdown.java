@@ -611,7 +611,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 				}
 				catch (Throwable t)
 				{
-					_log.log(Level.WARNING, "Failed logour char " + player, t);
+					_log.log(Level.WARNING, "Failed logout char " + player, t);
 				}
 			}
 			return true;
