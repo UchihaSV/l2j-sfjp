@@ -418,7 +418,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 			
 			if (type == FOR_GM)
 			{
-				StringUtil.append(htmlCode, String.valueOf(L2World.getInstance().getAllVisibleObjectsCount()), " 体のNPCが存在しています。<br1>");
+				StringUtil.append(htmlCode, String.valueOf(L2World.getInstance().getVisibleObjectsCount()), " 体のNPCが存在しています。<br1>");
 			}
 			StringUtil.append(htmlCode, String.valueOf(_onlineCounts[type]), " 名のプレイヤーがオンラインです。<br1>");
 			if (Config.BBS_SHOW_PLAYERLIST)
