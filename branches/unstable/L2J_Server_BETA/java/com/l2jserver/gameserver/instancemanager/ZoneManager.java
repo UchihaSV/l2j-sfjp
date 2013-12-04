@@ -341,7 +341,7 @@ public final class ZoneManager extends DocumentParser
 		
 		long started = System.currentTimeMillis();
 		
-		parseDirectory("data/zones");
+		parseDatapackDirectory("data/zones", false);
 		
 		started = System.currentTimeMillis() - started;
 		_log.info(getClass().getSimpleName() + ": Loaded " + _classZones.size() + " zone classes and " + getSize() + " zones in " + (started / 1000) + " seconds.");
