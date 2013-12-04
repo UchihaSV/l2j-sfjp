@@ -1913,7 +1913,8 @@ public final class Config
 			
 			// Load L2J Datapack Version L2Properties file (if exists)
 			L2Properties dpVersion = new L2Properties();
-			try (InputStream is = new FileInputStream(DATAPACK_VERSION_FILE))
+			
+			try (InputStream is = new FileInputStream(new File(DATAPACK_ROOT, DATAPACK_VERSION_FILE)))
 			{
 				dpVersion.load(is);
 			}
