@@ -33,8 +33,8 @@ public final class PcItemTemplate extends ItemHolder
 	 */
 	public PcItemTemplate(StatsSet set)
 	{
-		super(set.getInteger("id"), set.getInteger("count"));
-		_equipped = set.getBool("equipped", false);
+		super(set.getInt("id"), set.getInt("count"));
+		_equipped = set.getBoolean("equipped", false);
 	}
 	
 	/**
