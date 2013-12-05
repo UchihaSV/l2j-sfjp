@@ -421,7 +421,7 @@ public class Hero
 	{
 		for (Entry<Integer, StatsSet> e : _heroes.entrySet())
 		{
-			if (e.getValue().getInteger(Olympiad.CLASS_ID) == classid)
+			if (e.getValue().getInt(Olympiad.CLASS_ID) == classid)
 			{
 				return e.getKey();
 			}
@@ -545,9 +545,9 @@ public class Hero
 					if (_herocounts.containsKey(charid))
 					{
 						StatsSet _herocount = _herocounts.get(charid);
-						_win = _herocount.getInteger("victory");
-						_loss = _herocount.getInteger("loss");
-						_draw = _herocount.getInteger("draw");
+						_win = _herocount.getInt("victory");
+						_loss = _herocount.getInt("loss");
+						_draw = _herocount.getInt("draw");
 					}
 					
 					boolean color = true;
@@ -567,7 +567,7 @@ public class Hero
 						{
 							fList.append("<table width=270>");
 						}
-						fList.append("<tr><td width=220><font color=\"LEVEL\">" + fight.getString("start") + "</font>&nbsp;&nbsp;" + fight.getString("result") + "</td><td width=50 align=right>" + (fight.getInteger("classed") > 0 ? "<font color=\"FFFF99\">cls</font>" : "<font color=\"999999\">non-cls<font>") + "</td></tr>");
+						fList.append("<tr><td width=220><font color=\"LEVEL\">" + fight.getString("start") + "</font>&nbsp;&nbsp;" + fight.getString("result") + "</td><td width=50 align=right>" + (fight.getInt("classed") > 0 ? "<font color=\"FFFF99\">cls</font>" : "<font color=\"999999\">non-cls<font>") + "</td></tr>");
 						fList.append("<tr><td width=220>vs " + fight.getString("oponent") + " (" + fight.getString("oponentclass") + ")</td><td width=50 align=right>(" + fight.getString("time") + ")</td></tr>");
 						fList.append("<tr><td colspan=2>&nbsp;</td></tr></table>");
 						fList.append("</td></tr>");
@@ -673,12 +673,12 @@ public class Hero
 		
 		for (StatsSet hero : newHeroes)
 		{
-			int charId = hero.getInteger(Olympiad.CHAR_ID);
+			int charId = hero.getInt(Olympiad.CHAR_ID);
 			
 			if ((_completeHeroes != null) && _completeHeroes.containsKey(charId))
 			{
 				StatsSet oldHero = _completeHeroes.get(charId);
-				int count = oldHero.getInteger(COUNT);
+				int count = oldHero.getInt(COUNT);
 				oldHero.set(COUNT, count + 1);
 				oldHero.set(PLAYED, 1);
 				
@@ -688,7 +688,7 @@ public class Hero
 			{
 				StatsSet newHero = new StatsSet();
 				newHero.set(Olympiad.CHAR_NAME, hero.getString(Olympiad.CHAR_NAME));
-				newHero.set(Olympiad.CLASS_ID, hero.getInteger(Olympiad.CLASS_ID));
+				newHero.set(Olympiad.CLASS_ID, hero.getInt(Olympiad.CLASS_ID));
 				newHero.set(COUNT, 1);
 				newHero.set(PLAYED, 1);
 				
@@ -793,9 +793,9 @@ public class Hero
 						try (PreparedStatement insert = con.prepareStatement(INSERT_HERO))
 						{
 							insert.setInt(1, heroId);
-							insert.setInt(2, hero.getInteger(Olympiad.CLASS_ID));
-							insert.setInt(3, hero.getInteger(COUNT));
-							insert.setInt(4, hero.getInteger(PLAYED));
+							insert.setInt(2, hero.getInt(Olympiad.CLASS_ID));
+							insert.setInt(3, hero.getInt(COUNT));
+							insert.setInt(4, hero.getInt(PLAYED));
 							insert.execute();
 							insert.close();
 						}
@@ -843,8 +843,8 @@ public class Hero
 					{
 						try (PreparedStatement statement = con.prepareStatement(UPDATE_HERO))
 						{
-							statement.setInt(1, hero.getInteger(COUNT));
-							statement.setInt(2, hero.getInteger(PLAYED));
+							statement.setInt(1, hero.getInt(COUNT));
+							statement.setInt(2, hero.getInt(PLAYED));
 							statement.setInt(3, heroId);
 							statement.execute();
 						}
