@@ -49,6 +49,7 @@ import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.enums.CategoryType;
 import com.l2jserver.gameserver.enums.InstanceType;
+import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.enums.ShotType;
 import com.l2jserver.gameserver.handler.ISkillHandler;
 import com.l2jserver.gameserver.handler.SkillHandler;
@@ -6607,7 +6608,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 						L2Npc npcMob = (L2Npc) spMob;
 						
 						List<Quest> eventQuests;
-						if (npcMob.isInsideRadius(player, 1000, true, true) && (eventQuests = npcMob.getTemplate().getEventQuests(Quest.QuestEventType.ON_SKILL_SEE)) != null)
+						if (npcMob.isInsideRadius(player, 1000, true, true) && (eventQuests = npcMob.getTemplate().getEventQuests(QuestEventType.ON_SKILL_SEE)) != null)
 						{
 							for (Quest quest : eventQuests)
 							{

@@ -22,6 +22,7 @@ import java.util.List;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.enums.InstanceType;
+import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
@@ -51,7 +52,7 @@ public final class L2QuestGuardInstance extends L2GuardInstance
 		if (attacker instanceof L2Attackable)
 		{
 			List<Quest> eventQuests;
-			if ((eventQuests = getTemplate().getEventQuests(Quest.QuestEventType.ON_ATTACK)) != null)
+			if ((eventQuests = getTemplate().getEventQuests(QuestEventType.ON_ATTACK)) != null)
 			{
 				for (Quest quest : eventQuests)
 				{
@@ -73,7 +74,7 @@ public final class L2QuestGuardInstance extends L2GuardInstance
 		if (killer instanceof L2Attackable)
 		{
 			List<Quest> eventQuests;
-			if ((eventQuests = getTemplate().getEventQuests(Quest.QuestEventType.ON_KILL)) != null)
+			if ((eventQuests = getTemplate().getEventQuests(QuestEventType.ON_KILL)) != null)
 			{
 				for (Quest quest : eventQuests)
 				{

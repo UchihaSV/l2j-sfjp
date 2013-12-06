@@ -43,6 +43,7 @@ import com.l2jserver.gameserver.datatables.HerbDropTable;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.ManorData;
 import com.l2jserver.gameserver.enums.InstanceType;
+import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.instancemanager.CursedWeaponsManager;
 import com.l2jserver.gameserver.instancemanager.WalkingManager;
 import com.l2jserver.gameserver.model.L2CommandChannel;
@@ -561,7 +562,7 @@ if (com.l2jserver.Config.TEST_GET_AI) {{
 			if (player != null)
 			{
 				List<Quest> eventQuests;
-				if ((eventQuests = getTemplate().getEventQuests(Quest.QuestEventType.ON_KILL)) != null)
+				if ((eventQuests = getTemplate().getEventQuests(QuestEventType.ON_KILL)) != null)
 				{
 if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 					// TODO: L2QuestGuardInstance Ç…Ç‡ON_KILLèàóùÇ™Ç†ÇÈÇ™...
@@ -601,7 +602,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		public void run()
 		{
 if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
-			for (Quest quest : _attackable.getTemplate().getEventQuests(Quest.QuestEventType.ON_KILL))
+			for (Quest quest : _attackable.getTemplate().getEventQuests(QuestEventType.ON_KILL))
 			{
 				quest.notifyKill(_attackable, _killer, _isSummon);
 			}
@@ -900,7 +901,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 				if (player != null)
 				{
 					List<Quest> eventQuests;
-					if ((eventQuests = getTemplate().getEventQuests(Quest.QuestEventType.ON_ATTACK)) != null)
+					if ((eventQuests = getTemplate().getEventQuests(QuestEventType.ON_ATTACK)) != null)
 					{
 						for (Quest quest : eventQuests)
 						{
@@ -955,7 +956,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		if ((targetPlayer != null) && (aggro == 0))
 		{
 			List<Quest> eventQuests;
-			if ((eventQuests = getTemplate().getEventQuests(Quest.QuestEventType.ON_AGGRO_RANGE_ENTER)) != null)
+			if ((eventQuests = getTemplate().getEventQuests(QuestEventType.ON_AGGRO_RANGE_ENTER)) != null)
 			{
 				for (Quest quest : eventQuests)
 				{

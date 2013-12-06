@@ -23,6 +23,8 @@ import java.util.List;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.enums.InstanceType;
+import com.l2jserver.gameserver.enums.QuestEventType;
+import com.l2jserver.gameserver.enums.TrapAction;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -34,7 +36,6 @@ import com.l2jserver.gameserver.model.items.L2Weapon;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.olympiad.OlympiadGameManager;
 import com.l2jserver.gameserver.model.quest.Quest;
-import com.l2jserver.gameserver.model.quest.Quest.TrapAction;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
@@ -376,7 +377,7 @@ public final class L2TrapInstance extends L2Npc
 		_playersWhoDetectedMe.add(detector.getObjectId());
 		
 		List<Quest> eventQuests;
-		if ((eventQuests = getTemplate().getEventQuests(Quest.QuestEventType.ON_TRAP_ACTION)) != null)
+		if ((eventQuests = getTemplate().getEventQuests(QuestEventType.ON_TRAP_ACTION)) != null)
 		{
 			for (Quest quest : eventQuests)
 			{
@@ -402,7 +403,7 @@ public final class L2TrapInstance extends L2Npc
 		setTarget(target);
 		
 		List<Quest> eventQuests;
-		if ((eventQuests = getTemplate().getEventQuests(Quest.QuestEventType.ON_TRAP_ACTION)) != null)
+		if ((eventQuests = getTemplate().getEventQuests(QuestEventType.ON_TRAP_ACTION)) != null)
 		{
 			for (Quest quest : eventQuests)
 			{
