@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+//@formatter:off
 package com.l2jserver;
 
 import info.tak11.subnet.Subnet;
@@ -1223,6 +1224,8 @@ public final class Config
 	{
 		if (Server.serverMode == Server.MODE_GAMESERVER)
 		{
+		  // Flood Protectors
+		  {
 			FLOOD_PROTECTOR_USE_ITEM = new FloodProtectorConfig("UseItemFloodProtector");
 			FLOOD_PROTECTOR_ROLL_DICE = new FloodProtectorConfig("RollDiceFloodProtector");
 			FLOOD_PROTECTOR_FIREWORK = new FloodProtectorConfig("FireworkFloodProtector");
@@ -1239,7 +1242,9 @@ public final class Config
 			FLOOD_PROTECTOR_SENDMAIL = new FloodProtectorConfig("SendMailFloodProtector");
 			FLOOD_PROTECTOR_CHARACTER_SELECT = new FloodProtectorConfig("CharacterSelectFloodProtector");
 			FLOOD_PROTECTOR_ITEM_AUCTION = new FloodProtectorConfig("ItemAuctionFloodProtector");
-			
+		  }
+		  // Load Game server Properties file
+		  {
 			final PropertiesParser serverSettings = new PropertiesParser(CONFIGURATION_FILE);
 			
 			GAMESERVER_HOSTNAME = serverSettings.getString("GameserverHostname", "*");
@@ -1293,9 +1298,9 @@ public final class Config
 			IPConfigData ipcd = new IPConfigData();
 			GAME_SERVER_SUBNETS = ipcd.getSubnets();
 			GAME_SERVER_HOSTS = ipcd.getHosts();
-			ipcd = null;	//[JOJO]
-			
-			// Load Community Properties file (if exists)
+		  }
+		  // Load Community Properties file (if exists)
+		  {
 			final PropertiesParser communityServerSettings = new PropertiesParser(COMMUNITY_CONFIGURATION_FILE);
 			
 			ENABLE_COMMUNITY_BOARD = communityServerSettings.getBoolean("EnableCommunityBoard", false);
@@ -1304,7 +1309,9 @@ public final class Config
 			COMMUNITY_SERVER_HEX_ID = new BigInteger(communityServerSettings.getString("CommunityServerHexId", "0"), 16).toByteArray();
 			COMMUNITY_SERVER_SQL_DP_ID = communityServerSettings.getInt("CommunityServerSqlDpId", 200);
 			
-			// Load Feature L2Properties file (if exists)
+		  }
+		  // Load Feature L2Properties file (if exists)
+		  {
 			final PropertiesParser Feature = new PropertiesParser(FEATURE_CONFIG_FILE);
 			
 			CH_TELE_FEE_RATIO = Feature.getLong("ClanHallTeleportFunctionFeeRatio", 604800000);
@@ -1531,8 +1538,9 @@ public final class Config
 			CLAN_LEVEL_11_REQUIREMENT = Feature.getInt("ClanLevel11Requirement", 170);
 			ALLOW_WYVERN_ALWAYS = Feature.getBoolean("AllowRideWyvernAlways", false);
 			ALLOW_WYVERN_DURING_SIEGE = Feature.getBoolean("AllowRideWyvernDuringSiege", true);
-			
-			// Load Character L2Properties file (if exists)
+		  }
+		  // Load Character L2Properties file (if exists)
+		  {
 			final PropertiesParser Character = new PropertiesParser(CHARACTER_CONFIG_FILE);
 			
 			ALT_GAME_DELEVEL = Character.getBoolean("Delevel", true);
@@ -1856,34 +1864,34 @@ public final class Config
 			SILENCE_MODE_EXCLUDE = Character.getBoolean("SilenceModeExclude", false);
 			ALT_VALIDATE_TRIGGER_SKILLS = Character.getBoolean("AltValidateTriggerSkills", false);
 			PLAYER_MOVEMENT_BLOCK_TIME = Character.getInt("NpcTalkBlockingTime", 0) * 1000;
-			
-			// Load L2J Server Version L2Properties file (if exists)
+		  }
+		  // Load L2J Server Version L2Properties file (if exists)
+		  {
 			final PropertiesParser serverVersion = new PropertiesParser(SERVER_VERSION_FILE);
 			
 			SERVER_VERSION = serverVersion.getString("version", "Unsupported Custom Version.");
-			{
-				String rev = serverVersion.getString("revision", "");	//[JOJO]
-				if (! rev.isEmpty() && ! rev.equals(SERVER_VERSION))
-					SERVER_VERSION += "." + rev;
-			}
+			String rev = serverVersion.getString("revision", "");	//[JOJO]
+			if (! rev.isEmpty() && ! rev.equals(SERVER_VERSION))
+				SERVER_VERSION += "." + rev;
 			SERVER_BUILD_DATE = serverVersion.getString("builddate", "Undefined Date.");
-			
-			// Load L2J Datapack Version L2Properties file (if exists)
+		  }
+		  // Load L2J Datapack Version L2Properties file (if exists)
+		  {
 			final PropertiesParser dpVersion = new PropertiesParser(new File(DATAPACK_ROOT, DATAPACK_VERSION_FILE));
 			
 			DATAPACK_VERSION = dpVersion.getString("version", "Unsupported Custom Version.");
-			{
-				String rev = dpVersion.getString("revision", "");	//[JOJO]
-				if (! rev.isEmpty() && ! rev.equals(DATAPACK_VERSION))
-					DATAPACK_VERSION += "." + rev;
-			}
-			
-			// Load Telnet L2Properties file (if exists)
+			String rev = dpVersion.getString("revision", "");	//[JOJO]
+			if (! rev.isEmpty() && ! rev.equals(DATAPACK_VERSION))
+				DATAPACK_VERSION += "." + rev;
+		  }
+		  // Load Telnet L2Properties file (if exists)
+		  {
 			final PropertiesParser telnetSettings = new PropertiesParser(TELNET_FILE);
 			
 			IS_TELNET_ENABLED = telnetSettings.getBoolean("EnableTelnet", false);
-			
-			// MMO
+		  }
+		  // MMO
+		  {
 			final PropertiesParser mmoSettings = new PropertiesParser(MMO_CONFIG_FILE);
 			
 			MMO_SELECTOR_SLEEP_TIME = mmoSettings.getInt("SleepTime", 20);
@@ -1891,14 +1899,16 @@ public final class Config
 			MMO_MAX_READ_PER_PASS = mmoSettings.getInt("MaxReadPerPass", 12);
 			MMO_HELPER_BUFFER_COUNT = mmoSettings.getInt("HelperBufferCount", 20);
 			MMO_TCP_NODELAY = mmoSettings.getBoolean("TcpNoDelay", false);
-			
-			// Load IdFactory L2Properties file (if exists)
+		  }
+		  // Load IdFactory L2Properties file (if exists)
+		  {
 			final PropertiesParser IdFactory = new PropertiesParser(ID_CONFIG_FILE);
 			
 			IDFACTORY_TYPE = IdFactory.getEnum("IDFactory", IdFactoryType.class, IdFactoryType.BitSet);
 			BAD_ID_CHECKING = IdFactory.getBoolean("BadIdChecking", true);
-			
-			// Load General L2Properties file (if exists)
+		  }
+		  // Load General L2Properties file (if exists)
+		  {
 			final PropertiesParser General = new PropertiesParser(GENERAL_CONFIG_FILE);
 			
 			EVERYBODY_HAS_ADMIN_RIGHTS = General.getBoolean("EverybodyHasAdminRights", false);
@@ -2173,13 +2183,15 @@ public final class Config
 			
 			NORMAL_ENCHANT_COST_MULTIPLIER = General.getInt("NormalEnchantCostMultipiler", 1);
 			SAFE_ENCHANT_COST_MULTIPLIER = General.getInt("SafeEnchantCostMultipiler", 5);
-			
-			// Load FloodProtector L2Properties file
+		  }
+		  // Load FloodProtector L2Properties file
+		  {
 			final PropertiesParser FloodProtectors = new PropertiesParser(FLOOD_PROTECTOR_FILE);
 			
 			loadFloodProtectorConfigs(FloodProtectors);
-			
-			// Load NPC L2Properties file (if exists)
+		  }
+		  // Load NPC L2Properties file (if exists)
+		  {
 			final PropertiesParser NPC = new PropertiesParser(NPC_CONFIG_FILE);
 			
 			ANNOUNCE_MAMMON_SPAWN = NPC.getBoolean("AnnounceMammonSpawn", false);
@@ -2221,7 +2233,6 @@ public final class Config
 			RAID_MIN_RESPAWN_MULTIPLIER = NPC.getFloat("RaidMinRespawnMultiplier", 1.0f);
 			RAID_MAX_RESPAWN_MULTIPLIER = NPC.getFloat("RaidMaxRespawnMultiplier", 1.0f);
 			RAID_MINION_RESPAWN_TIMER = NPC.getInt("RaidMinionRespawnTime", 300000);
-			{
 			final String[] propertySplit = NPC.getString("CustomMinionsRespawnTime", "").split(";");
 			MINIONS_RESPAWN_TIME = new HashMap<>(propertySplit.length);
 			for (String prop : propertySplit)
@@ -2244,7 +2255,6 @@ public final class Config
 					}
 				}
 			}
-			}
 			
 			RAID_DISABLE_CURSE = NPC.getBoolean("DisableRaidCurse", false);
 			RAID_CHAOS_TIME = NPC.getInt("RaidChaosTime", 10);
@@ -2253,7 +2263,7 @@ public final class Config
 			INVENTORY_MAXIMUM_PET = NPC.getInt("MaximumSlotsForPet", 12);
 			PET_HP_REGEN_MULTIPLIER = NPC.getDouble("PetHpRegenMultiplier", 100) / 100;
 			PET_MP_REGEN_MULTIPLIER = NPC.getDouble("PetMpRegenMultiplier", 100) / 100;
-			split = NPC.getString("NonTalkingNpcs", "18684,18685,18686,18687,18688,18689,18690,19691,18692,31202,31203,31204,31205,31206,31207,31208,31209,31266,31557,31593,31606,31671,31672,31673,31674,31758,31955,32026,32030,32031,32032,32306,32619,32620,32621").split(",");
+			String[] split = NPC.getString("NonTalkingNpcs", "18684,18685,18686,18687,18688,18689,18690,19691,18692,31202,31203,31204,31205,31206,31207,31208,31209,31266,31557,31593,31606,31671,31672,31673,31674,31758,31955,32026,32030,32031,32032,32306,32619,32620,32621").split(",");
 			NON_TALKING_NPCS = new ArrayList<>(split.length);
 			for (String npcId : split)
 			{
@@ -2269,8 +2279,9 @@ public final class Config
 					}
 				}
 			}
-			
-			// Load Rates L2Properties file (if exists)
+		  }
+		  // Load Rates L2Properties file (if exists)
+		  {
 			final PropertiesParser RatesSettings = new PropertiesParser(RATES_CONFIG_FILE);
 			
 			RATE_XP = RatesSettings.getFloat("RateXp", 1);
@@ -2394,8 +2405,9 @@ public final class Config
 			{
 				RATE_DROP_ITEMS_ID.put(PcInventory.ADENA_ID, RATE_DROP_ITEMS); // for Adena rate if not defined
 			}
-			
-			// Load L2JMod L2Properties file (if exists)
+		  }
+		  // Load L2JMod L2Properties file (if exists)
+		  {
 			final PropertiesParser L2JModSettings = new PropertiesParser(L2JMOD_CONFIG_FILE);
 			
 			L2JMOD_CHAMPION_ENABLE = L2JModSettings.getBoolean("ChampionEnable", false);
@@ -2744,8 +2756,9 @@ public final class Config
 				}
 			}
 			L2JMOD_ALLOW_CHANGE_PASSWORD = L2JModSettings.getBoolean("AllowChangePassword", false);
-			
-			// Load PvP L2Properties file (if exists)
+		  }
+		  // Load PvP L2Properties file (if exists)
+		  {
 			final PropertiesParser PVPSettings = new PropertiesParser(PVP_CONFIG_FILE);
 			
 			KARMA_DROP_GM = PVPSettings.getBoolean("CanGMDropEquipment", false);
@@ -2776,8 +2789,9 @@ public final class Config
 			
 			PVP_NORMAL_TIME = PVPSettings.getInt("PvPVsNormalTime", 120000);
 			PVP_PVP_TIME = PVPSettings.getInt("PvPVsPvPTime", 60000);
-			
-			// Load Olympiad L2Properties file (if exists)
+		  }
+		  // Load Olympiad L2Properties file (if exists)
+		  {
 			final PropertiesParser Olympiad = new PropertiesParser(OLYMPIAD_CONFIG_FILE);
 			
 			ALT_OLY_START_TIME = Olympiad.getInt("AltOlyStartTime", 18);
@@ -2822,7 +2836,9 @@ public final class Config
 			}
 			ALT_OLY_ENCHANT_LIMIT = Olympiad.getInt("AltOlyEnchantLimit", -1);
 			ALT_OLY_WAIT_TIME = Olympiad.getInt("AltOlyWaitTime", 120);
-			
+		  }
+		  // Load hexid
+		  {
 			final File hexIdFile = new File(HEXID_FILE);
 			if (hexIdFile.exists())
 			{
@@ -2849,11 +2865,13 @@ public final class Config
 			{
 				_log.warning("Could not load HexID file (" + HEXID_FILE + "). Hopefully login will give us one.");
 			}
-			
-			//////////////////////////////////////////////////////////////
-			// [L2J_JP][l2jfree][JOJO]
-			
-			// Load JP Custom Properties file (if exists)
+		  }
+		  
+		  //////////////////////////////////////////////////////////////
+		  // [L2J_JP][l2jfree][JOJO]
+		  
+		  // Load JP Custom Properties file (if exists)
+		  {
 			final PropertiesParser settings = new PropertiesParser(JP_CUSTOM_FILE);
 			
 			FAILD_FAKEDEATH = settings.getBoolean("FaildFakeDeath", true);
@@ -2878,8 +2896,9 @@ public final class Config
 			}
 			CUSTOM_CHARA_REPAIR_NAME = settings.getString("CharaRepairLocationName", "Unknown");
 			LIMIT_LEVEL_STEPUP = minMax(settings.getInt("LimitLevelStepUp", 99), 1, 99);	//+[JOJO]
-			
-			// Load Grand Boss Properties file (if exists)
+		  }
+		  // Load Grand Boss Properties file (if exists)
+		  {
 			final PropertiesParser bossSettings = new PropertiesParser(BOSS_FILE);
 			
 			// sailren -- íçà”ÅFíPà ÇÕï™
@@ -2899,10 +2918,12 @@ public final class Config
 			HPH_CALLROYALGUARDHELPERINTERVAL = minMax(bossSettings.getInt("CallRoyalGuardHelperInterval", 10), 1, 60) * 1000;
 			HPH_INTERVALOFDOOROFALTER = minMax(bossSettings.getInt("IntervalOfDoorOfAlter", 5400), 60, 5400) * 1000;
 			HPH_TIMEOFLOCKUPDOOROFALTAR = minMax(bossSettings.getInt("TimeOfLockUpDoorOfAltar", 180), 60, 600) * 1000;
-			//
-			//////////////////////////////////////////////////////////////
-			
-			// Grand bosses
+		  }
+		  //
+		  //////////////////////////////////////////////////////////////
+		  
+		  // Grand bosses
+		  {
 			final PropertiesParser GrandBossSettings = new PropertiesParser(GRANDBOSS_CONFIG_FILE);
 			
 			ANTHARAS_WAIT_TIME = GrandBossSettings.getInt("AntharasWaitTime", 30);
@@ -2931,8 +2952,9 @@ public final class Config
 			BELETH_SPAWN_INTERVAL = GrandBossSettings.getInt("IntervalOfBelethSpawn", 192);
 			BELETH_SPAWN_RANDOM = GrandBossSettings.getInt("RandomOfBelethSpawn", 148);
 			BELETH_MIN_PLAYERS = GrandBossSettings.getInt("BelethMinPlayers", 36);
-			
-			// Gracia Seeds
+		  }
+		  // Gracia Seeds
+		  {
 			final PropertiesParser GraciaSeedsSettings = new PropertiesParser(GRACIASEEDS_CONFIG_FILE);
 			
 			// Seed of Destruction
@@ -2959,8 +2981,9 @@ public final class Config
 			{
 				_log.log(Level.WARNING, "Error while loading chat filter words!", e);
 			}
-			
-			// Security
+		  }
+		  // Security
+		  {
 			final PropertiesParser SecuritySettings = new PropertiesParser(SECURITY_CONFIG_FILE);
 			
 			// Second Auth Settings
@@ -2968,7 +2991,9 @@ public final class Config
 			SECOND_AUTH_MAX_ATTEMPTS = SecuritySettings.getInt("SecondAuthMaxAttempts", 5);
 			SECOND_AUTH_BAN_TIME = SecuritySettings.getInt("SecondAuthBanTime", 480);
 			SECOND_AUTH_REC_LINK = SecuritySettings.getString("SecondAuthRecoveryLink", "");
-			
+		  }
+		  // Conquerable Hall Siege
+		  {
 			final PropertiesParser ClanHallSiege = new PropertiesParser(CH_SIEGE_FILE);
 			
 			CHS_MAX_ATTACKERS = ClanHallSiege.getInt("MaxAttackers", 500);
@@ -2977,9 +3002,12 @@ public final class Config
 			CHS_ENABLE_FAME = ClanHallSiege.getBoolean("EnableFame", false);
 			CHS_FAME_AMOUNT = ClanHallSiege.getInt("FameAmount", 0);
 			CHS_FAME_FREQUENCY = ClanHallSiege.getInt("FameFrequency", 0);
+		  }
 		}
 		else if (Server.serverMode == Server.MODE_LOGINSERVER)
 		{
+		  // Load Login server Properties file
+		  {
 			final PropertiesParser ServerSettings = new PropertiesParser(LOGIN_CONFIGURATION_FILE);
 			
 			GAME_SERVER_LOGIN_HOST = ServerSettings.getString("LoginHostname", "127.0.0.1");
@@ -3027,8 +3055,9 @@ public final class Config
 			NORMAL_CONNECTION_TIME = ServerSettings.getInt("NormalConnectionTime", 700);
 			FAST_CONNECTION_TIME = ServerSettings.getInt("FastConnectionTime", 350);
 			MAX_CONNECTION_PER_IP = ServerSettings.getInt("MaxConnectionPerIP", 50);
-			
-			// MMO
+		  }
+		  // MMO
+		  {
 			final PropertiesParser mmoSettings = new PropertiesParser(MMO_CONFIG_FILE);
 			
 			MMO_SELECTOR_SLEEP_TIME = mmoSettings.getInt("SleepTime", 20);
@@ -3036,13 +3065,15 @@ public final class Config
 			MMO_MAX_READ_PER_PASS = mmoSettings.getInt("MaxReadPerPass", 12);
 			MMO_HELPER_BUFFER_COUNT = mmoSettings.getInt("HelperBufferCount", 20);
 			MMO_TCP_NODELAY = mmoSettings.getBoolean("TcpNoDelay", false);
-			
-			// Load Telnet L2Properties file (if exists)
+		  }
+		  // Load Telnet L2Properties file (if exists)
+		  {
 			final PropertiesParser telnetSettings = new PropertiesParser(TELNET_FILE);
 			
 			IS_TELNET_ENABLED = telnetSettings.getBoolean("EnableTelnet", false);
-			
-			// Email
+		  }
+		  // Email
+		  {
 			final PropertiesParser emailSettings = new PropertiesParser(EMAIL_CONFIG_FILE);
 			
 			EMAIL_SERVERINFO_NAME = emailSettings.getString("ServerInfoName", "Unconfigured L2J Server");
@@ -3059,6 +3090,7 @@ public final class Config
 			EMAIL_SYS_ADDRESS = emailSettings.getString("EmailSystemAddress", "noreply@myl2jserver.com");
 			EMAIL_SYS_SELECTQUERY = emailSettings.getString("EmailDBSelectQuery", "SELECT value FROM account_data WHERE account_name=? AND var='email_addr'");
 			EMAIL_SYS_DBFIELD = emailSettings.getString("EmailDBField", "value");
+		  }
 		}
 		else
 		{
