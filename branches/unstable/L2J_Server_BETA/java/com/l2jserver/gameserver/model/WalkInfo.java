@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.model;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 
+import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.instancemanager.WalkingManager;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.quest.Quest;
@@ -97,7 +98,7 @@ public class WalkInfo
 			{
 				// Notify quest
 				List<Quest> eventQuests;
-				if ((eventQuests = npc.getTemplate().getEventQuests(Quest.QuestEventType.ON_ROUTE_FINISHED)) != null)
+				if ((eventQuests = npc.getTemplate().getEventQuests(QuestEventType.ON_ROUTE_FINISHED)) != null)
 				{
 					for (Quest quest : eventQuests)
 					{

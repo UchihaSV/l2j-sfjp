@@ -39,6 +39,7 @@ import com.l2jserver.gameserver.ai.CtrlIntention;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.engines.DocumentParser;
 import com.l2jserver.gameserver.idfactory.IdFactory;
+import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.instancemanager.tasks.StartMovingTask;
 import com.l2jserver.gameserver.model.L2NpcWalkerNode;
 import com.l2jserver.gameserver.model.L2Spawn;
@@ -465,7 +466,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 		{
 			// Notify quest
 			List<Quest> eventQuests;
-			if ((eventQuests = npc.getTemplate().getEventQuests(Quest.QuestEventType.ON_NODE_ARRIVED)) != null)
+			if ((eventQuests = npc.getTemplate().getEventQuests(QuestEventType.ON_NODE_ARRIVED)) != null)
 			{
 				for (Quest quest : eventQuests)
 				{
