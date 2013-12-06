@@ -6,7 +6,8 @@ import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2TrapInstance;
 import com.l2jserver.gameserver.model.items.L2Item;
-import com.l2jserver.gameserver.model.quest.Quest.TrapAction;
+import com.l2jserver.gameserver.enums.QuestEventType;
+import com.l2jserver.gameserver.enums.TrapAction;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.zone.L2ZoneType;
 
@@ -15,7 +16,7 @@ import com.l2jserver.gameserver.model.zone.L2ZoneType;
  */
 public class VerifyQuestEvent
 {
-	public static boolean hasMethod(Quest.QuestEventType EventType, Quest q)
+	public static boolean hasMethod(QuestEventType EventType, Quest q)
 	{
 		switch (EventType) {
 			case ON_FIRST_TALK:
@@ -64,7 +65,7 @@ public class VerifyQuestEvent
 		}
 	}
 	
-	public static String checkMethod(Quest.QuestEventType EventType, Quest q)
+	public static String checkMethod(QuestEventType EventType, Quest q)
 	{
 		String result = null;
 		switch (EventType) {
