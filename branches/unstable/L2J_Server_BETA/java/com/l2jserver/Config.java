@@ -2877,28 +2877,28 @@ public final class Config
 				CUSTOM_CHARA_REPAIR_LOC[2] = Integer.parseInt(propertySplit[2]);
 			}
 			CUSTOM_CHARA_REPAIR_NAME = settings.getString("CharaRepairLocationName", "Unknown");
-			LIMIT_LEVEL_STEPUP = parseIntMinMax(settings.getString("LimitLevelStepUp", "99"), 1, 99);	//+[JOJO]
+			LIMIT_LEVEL_STEPUP = minMax(settings.getInt("LimitLevelStepUp", 99), 1, 99);	//+[JOJO]
 			
 			// Load Grand Boss Properties file (if exists)
 			final PropertiesParser bossSettings = new PropertiesParser(BOSS_FILE);
 			
 			// sailren -- 注意：単位は分
 			FWS_ENABLESINGLEPLAYER = bossSettings.getBoolean("EnableSinglePlayer", false);
-			FWS_FIXINTERVALOFSAILRENSPAWN = parseIntMinMax(bossSettings.getString("FixIntervalOfSailrenSpawn", "1440"), 5, 2880) * 60000;
-			FWS_RANDOMINTERVALOFSAILRENSPAWN = parseIntMinMax(bossSettings.getString("RandomIntervalOfSailrenSpawn", "1440"), 5, 2880) * 60000;
-			FWS_INTERVALOFNEXTMONSTER = parseIntMinMax(bossSettings.getString("IntervalOfNextMonster", "1"), 1, 10) * 60000;
-			FWS_ACTIVITYTIMEOFMOBS = parseIntMinMax(bossSettings.getString("ActivityTimeOfMobs", "120"), 1, 120) * 60000;
+			FWS_FIXINTERVALOFSAILRENSPAWN = minMax(bossSettings.getInt("FixIntervalOfSailrenSpawn", 1440), 5, 2880) * 60000;
+			FWS_RANDOMINTERVALOFSAILRENSPAWN = minMax(bossSettings.getInt("RandomIntervalOfSailrenSpawn", 1440), 5, 2880) * 60000;
+			FWS_INTERVALOFNEXTMONSTER = minMax(bossSettings.getInt("IntervalOfNextMonster", 1), 1, 10) * 60000;
+			FWS_ACTIVITYTIMEOFMOBS = minMax(bossSettings.getInt("ActivityTimeOfMobs", 120), 1, 120) * 60000;
 			
 			// High Priestess van Halter -- 注意：単位は秒
-			HPH_FIXINTERVALOFHALTER = parseIntMinMax(bossSettings.getString("FixIntervalOfHalter", "172800"), 1200/*300*/, 864000) * 1000;
-			HPH_RANDOMINTERVALOFHALTER = parseIntMinMax(bossSettings.getString("RandomIntervalOfHalter", "86400"), 300, 864000) * 1000;
-			HPH_APPTIMEOFHALTER = parseIntMinMax(bossSettings.getString("AppTimeOfHalter", "20"), 5, 60) * 1000;
-			HPH_ACTIVITYTIMEOFHALTER = parseIntMinMax(bossSettings.getString("ActivityTimeOfHalter", "21600"), 7200, 86400) * 1000;
-			HPH_FIGHTTIMEOFHALTER = parseIntMinMax(bossSettings.getString("FightTimeOfHalter", "7200"), 7200, 21600) * 1000;
-			HPH_CALLROYALGUARDHELPERCOUNT = parseIntMinMax(bossSettings.getString("CallRoyalGuardHelperCount", "6"), 1, 6);
-			HPH_CALLROYALGUARDHELPERINTERVAL = parseIntMinMax(bossSettings.getString("CallRoyalGuardHelperInterval", "10"), 1, 60) * 1000;
-			HPH_INTERVALOFDOOROFALTER = parseIntMinMax(bossSettings.getString("IntervalOfDoorOfAlter", "5400"), 60, 5400) * 1000;
-			HPH_TIMEOFLOCKUPDOOROFALTAR = parseIntMinMax(bossSettings.getString("TimeOfLockUpDoorOfAltar", "180"), 60, 600) * 1000;
+			HPH_FIXINTERVALOFHALTER = minMax(bossSettings.getInt("FixIntervalOfHalter", 172800), 1200/*300*/, 864000) * 1000;
+			HPH_RANDOMINTERVALOFHALTER = minMax(bossSettings.getInt("RandomIntervalOfHalter", 86400), 300, 864000) * 1000;
+			HPH_APPTIMEOFHALTER = minMax(bossSettings.getInt("AppTimeOfHalter", 20), 5, 60) * 1000;
+			HPH_ACTIVITYTIMEOFHALTER = minMax(bossSettings.getInt("ActivityTimeOfHalter", 21600), 7200, 86400) * 1000;
+			HPH_FIGHTTIMEOFHALTER = minMax(bossSettings.getInt("FightTimeOfHalter", 7200), 7200, 21600) * 1000;
+			HPH_CALLROYALGUARDHELPERCOUNT = minMax(bossSettings.getInt("CallRoyalGuardHelperCount", 6), 1, 6);
+			HPH_CALLROYALGUARDHELPERINTERVAL = minMax(bossSettings.getInt("CallRoyalGuardHelperInterval", 10), 1, 60) * 1000;
+			HPH_INTERVALOFDOOROFALTER = minMax(bossSettings.getInt("IntervalOfDoorOfAlter", 5400), 60, 5400) * 1000;
+			HPH_TIMEOFLOCKUPDOOROFALTAR = minMax(bossSettings.getInt("TimeOfLockUpDoorOfAltar", 180), 60, 600) * 1000;
 			//
 			//////////////////////////////////////////////////////////////
 			
@@ -4049,19 +4049,11 @@ public final class Config
 	}
 
 	//[JOJO]///////////////////////////////////////////////////////////////////
-	private static int parseIntMinMax(String value, int mini, int max)
-	{
-		return intMinMax(Integer.parseInt(value), mini, max);
-	}
-	private static int intMinMax(int value, int mini, int max)
+	private static int minMax(int value, int mini, int max)
 	{
 		return value < mini ? mini : value > max ? max : value;
 	}
-//	private static long parseLongMinMax(String value, long mini, long max)
-//	{
-//		return longMinMax(Long.parseLong(value), mini, max);
-//	}
-//	private static long longMinMax(long value, long mini, long max)
+//	private static long minMax(long value, long mini, long max)
 //	{
 //		return value < mini ? mini : value > max ? max : value;
 //	}
