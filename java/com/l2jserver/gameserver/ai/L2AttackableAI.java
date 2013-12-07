@@ -1335,8 +1335,8 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 							}
 						}
 					}
-				}
 					break;
+				}
 			}
 		}
 		
