@@ -22,10 +22,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -311,7 +308,8 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 		_onlineCounts[FOR_PLAYER] = 0;
 		_onlineCounts[FOR_GM] = 0;
 		
-		for (L2PcInstance player : L2World.getInstance().getPlayersSortedBy(Comparators.PLAYER_NAME_COMPARATOR))
+		final L2PcInstance[] sortedPlayers = L2World.getInstance().getPlayersSortedBy(Comparators.PLAYER_NAME_COMPARATOR);
+		for (L2PcInstance player : sortedPlayers)
 		{
 			addOnlinePlayer(player);
 		}
@@ -338,7 +336,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 	/**
 	 * Write community pages.
 	 */
-	private void writeCommunityPages(ArrayList<L2PcInstance> sortedPlayers)
+	private void writeCommunityPages(L2PcInstance[] sortedPlayers)
 	{
 		final String trOpen = "<tr>";
 		final String trClose = "</tr>";
@@ -418,7 +416,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 			
 			if (Config.BBS_SHOW_PLAYERLIST)
 			{
-				int cells[] = new int[(sortedPlayers.size() / Config.NAME_PAGE_SIZE_COMMUNITYBOARD) + 3];
+				int cells[] = new int[(sortedPlayers.length / Config.NAME_PAGE_SIZE_COMMUNITYBOARD) + 3];
 				int page = 0, cell = 0;
 				
 				final String tableOpen_1 = "<table border=0>";
