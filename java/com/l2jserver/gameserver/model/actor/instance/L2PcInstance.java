@@ -9079,7 +9079,6 @@ public final class L2PcInstance extends L2Playable
 			
 			if ((target.getActingPlayer() != null) && (getSiegeState() > 0) && isInsideZone(ZoneId.SIEGE) && (target.getActingPlayer().getSiegeState() == getSiegeState()) && (target.getActingPlayer() != this) && (target.getActingPlayer().getSiegeSide() == getSiegeSide()))
 			{
-				//
 				if (TerritoryWarManager.getInstance().isTWInProgress())
 				{
 					sendPacket(SystemMessageId.YOU_CANNOT_ATTACK_A_MEMBER_OF_THE_SAME_TERRITORY);
@@ -9093,12 +9092,25 @@ public final class L2PcInstance extends L2Playable
 			}
 			
 			// Check if the target is attackable
-			if (!target.isAttackable() && !getAccessLevel().allowPeaceAttack())
+			switch (skill.getSkillType())
 			{
-				// If target is not attackable, send a Server->Client packet ActionFailed
-				sendPacket(ActionFailed.STATIC_PACKET);
-				return false;
+				case UNLOCK:
+				case UNLOCK_SPECIAL:
+				case DELUXE_KEY_UNLOCK:
+				{
+					break;
+				}
+				default:
+				{
+					if (!target.isAttackable() && !getAccessLevel().allowPeaceAttack())
+					{
+						// If target is not attackable, send a Server->Client packet ActionFailed
+						sendPacket(ActionFailed.STATIC_PACKET);
+						return false;
+					}
+				}
 			}
+			
 			// Check for Event Mob's
 			if ((target instanceof L2EventMonsterInstance) && ((L2EventMonsterInstance) target).eventSkillAttackBlocked())
 			{
