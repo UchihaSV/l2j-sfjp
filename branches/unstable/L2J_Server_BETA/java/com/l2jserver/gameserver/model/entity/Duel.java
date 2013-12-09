@@ -19,7 +19,6 @@
 package com.l2jserver.gameserver.model.entity;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,7 +61,7 @@ public class Duel
 	private int _countdown = 4;
 	private boolean _finished = false;
 	
-	private List<PlayerCondition> _playerConditions;
+	private FastList<PlayerCondition> _playerConditions;
 	
 	public Duel(L2PcInstance playerA, L2PcInstance playerB, int partyDuel, int duelId)
 	{
