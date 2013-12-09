@@ -575,16 +575,22 @@ public final class Util
 		return new SimpleDateFormat("yyyy-MM-dd").format(date.getTime());
 	}
 	
+	// ˆø‰z‚µ com/l2jserver/gameserver/network/serverpackets/AbstractHtmlPacket.java r6175
+	//    --> com/l2jserver/gameserver/util/Util.java r6205
+	/*
+		<a action="bypass -h Quest 100_SagaOfTheMaestro 0-1">"I'll do it."</a></body></html>
+		         |    9    3 |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+		  bypassStart bypassStartEnd                   bypassEnd
+	 */
 	private static final void buildHtmlBypassCache(L2PcInstance player, HtmlActionScope scope, String html)
 	{
 		String htmlLower = html.toLowerCase(Locale.ENGLISH);
 		int bypassEnd = 0;
-		int bypassStart = htmlLower.indexOf("=\"bypass ", bypassEnd);
-		int bypassStartEnd;
-		while (bypassStart != -1)
+		int bypassStart;
+		while ((bypassStart = htmlLower.indexOf("=\"bypass ", bypassEnd)) != -1)
 		{
-			bypassStartEnd = bypassStart + 9;
-			bypassEnd = htmlLower.indexOf("\"", bypassStartEnd);
+			int bypassStartEnd = bypassStart + 9;
+			bypassEnd = htmlLower.indexOf('"', bypassStartEnd);
 			if (bypassEnd == -1)
 			{
 				break;
@@ -612,7 +618,6 @@ public final class Util
 				LOGGER.info("Cached html bypass(" + scope.toString() + "): '" + bypass + "'");
 			}
 			player.addHtmlAction(scope, bypass);
-			bypassStart = htmlLower.indexOf("=\"bypass ", bypassEnd);
 		}
 	}
 	
@@ -620,12 +625,11 @@ public final class Util
 	{
 		String htmlLower = html.toLowerCase(Locale.ENGLISH);
 		int linkEnd = 0;
-		int linkStart = htmlLower.indexOf("=\"link ", linkEnd);
-		int linkStartEnd;
-		while (linkStart != -1)
+		int linkStart;
+		while ((linkStart = htmlLower.indexOf("=\"link ", linkEnd)) != -1)
 		{
-			linkStartEnd = linkStart + 7;
-			linkEnd = htmlLower.indexOf("\"", linkStartEnd);
+			int linkStartEnd = linkStart + 7;
+			linkEnd = htmlLower.indexOf('"', linkStartEnd);
 			if (linkEnd == -1)
 			{
 				break;
@@ -650,7 +654,6 @@ public final class Util
 			}
 			// let's keep an action cache with "link " lowercase literal kept
 			player.addHtmlAction(scope, "link " + htmlLink);
-			linkStart = htmlLower.indexOf("=\"link ", linkEnd);
 		}
 	}
 	
