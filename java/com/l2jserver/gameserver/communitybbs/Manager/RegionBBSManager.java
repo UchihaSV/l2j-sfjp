@@ -47,20 +47,12 @@ import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.ShowBoard;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+import com.l2jserver.gameserver.util.Comparators;
 import com.l2jserver.util.StringUtil;
 
 public class RegionBBSManager extends BaseBBSManager
 {
-	private static Logger _logChat = Logger.getLogger("chat");
-	
-	private static final Comparator<L2PcInstance> PLAYER_NAME_COMPARATOR = new Comparator<L2PcInstance>()
-	{
-		@Override
-		public int compare(L2PcInstance p1, L2PcInstance p2)
-		{
-			return p1.getName().compareToIgnoreCase(p2.getName());
-		}
-	};
+	private static final Logger _logChat = Logger.getLogger("chat");
 	
 	private static final int _onlineCounts[] = new int[2];
 	private static final int FOR_PLAYER = 0, FOR_GM = 1;
@@ -315,21 +307,11 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 			return;
 		}
 }}
-		final ArrayList<L2PcInstance> sortedPlayers = new ArrayList<>();
-		for (L2PcInstance player : L2World.getInstance().getPlayers())
-		{
-			if (player != null)
-			{
-				sortedPlayers.add(player);
-			}
-		}
-		
-		Collections.sort(sortedPlayers, PLAYER_NAME_COMPARATOR);
 		
 		_onlineCounts[FOR_PLAYER] = 0;
 		_onlineCounts[FOR_GM] = 0;
 		
-		for (L2PcInstance player : sortedPlayers)
+		for (L2PcInstance player : L2World.getInstance().getPlayersSortedBy(Comparators.PLAYER_NAME_COMPARATOR))
 		{
 			addOnlinePlayer(player);
 		}
