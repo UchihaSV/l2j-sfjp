@@ -18,87 +18,70 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import com.l2jserver.gameserver.enums.BypassScope;
+import com.l2jserver.gameserver.enums.HtmlActionScope;
 import com.l2jserver.gameserver.model.actor.L2Npc;
-import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * @author Unknown, FBIagent
  */
 public final class NpcHtmlMessage extends AbstractHtmlPacket
 {
-	private final int _npcObjId;
 	private final int _itemId;
 	
 	public NpcHtmlMessage()
 	{
-		_npcObjId = 0;
 		_itemId = 0;
 	}
 	
 	public NpcHtmlMessage(L2Npc npc)	//[JOJO]
 	{
-		_npcObjId = npc.getObjectId();
+		super(npc.getObjectId());
 		_itemId = 0;
 	}
 	public NpcHtmlMessage(int npcObjId)
 	{
-		if (npcObjId < 0)
-		{
-			throw new IllegalArgumentException();
-		}
-		
-		_npcObjId = npcObjId;
+		super(npcObjId);
 		_itemId = 0;
 	}
 	
 	public NpcHtmlMessage(String html)
 	{
 		super(html);
-		_npcObjId = 0;
 		_itemId = 0;
 	}
 	
 	public NpcHtmlMessage(L2Npc npc, String html)	//[JOJO]
 	{
-		super(html);
-		_npcObjId = npc.getObjectId();
+		super(npc.getObjectId(), html);
 		_itemId = 0;
 	}
 	public NpcHtmlMessage(int npcObjId, String html)
 	{
-		super(html);
-		
-		if (npcObjId < 0)
-		{
-			throw new IllegalArgumentException();
-		}
-		
-		_npcObjId = npcObjId;
+		super(npcObjId, html);
 		_itemId = 0;
 	}
 	
 	public NpcHtmlMessage(int npcObjId, int itemId)
 	{
-		if ((npcObjId < 0) || (itemId < 0))
+		super(npcObjId);
+		
+		if (itemId < 0)
 		{
 			throw new IllegalArgumentException();
 		}
 		
-		_npcObjId = npcObjId;
 		_itemId = itemId;
 	}
 	
 	public NpcHtmlMessage(int npcObjId, int itemId, String html)
 	{
-		super(html);
+		super(npcObjId, html);
 		
-		if ((npcObjId < 0) || (itemId < 0))
+		if (itemId < 0)
 		{
 			throw new IllegalArgumentException();
 		}
 		
-		_npcObjId = npcObjId;
 		_itemId = itemId;
 	}
 	
@@ -107,38 +90,14 @@ public final class NpcHtmlMessage extends AbstractHtmlPacket
 	{
 		writeC(0x19);
 		
-		writeD(_npcObjId);
+		writeD(getNpcObjId());
 		writeS(getHtml());
 		writeD(_itemId);
 	}
 	
 	@Override
-	public void clearHtmlActionCache()
+	public HtmlActionScope getScope()
 	{
-		L2PcInstance player = getClient().getActiveChar();
-		
-		player.setHtmlActionOriginObjectId(BypassScope.NPC_ITEM_HTML, _npcObjId);
-		
-		if (_itemId > 0)
-		{
-			player.clearHtmlActions(BypassScope.NPC_ITEM_HTML);
-		}
-		else
-		{
-			player.clearHtmlActions(BypassScope.NPC_HTML);
-		}
-	}
-	
-	@Override
-	public void addHtmlAction(String action)
-	{
-		if (_itemId > 0)
-		{
-			getClient().getActiveChar().addHtmlAction(BypassScope.NPC_ITEM_HTML, action);
-		}
-		else
-		{
-			getClient().getActiveChar().addHtmlAction(BypassScope.NPC_HTML, action);
-		}
+		return _itemId == 0 ? HtmlActionScope.NPC_HTML : HtmlActionScope.NPC_ITEM_HTML;
 	}
 }
