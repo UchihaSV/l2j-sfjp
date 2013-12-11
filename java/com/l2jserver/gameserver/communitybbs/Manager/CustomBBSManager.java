@@ -1197,7 +1197,7 @@ public class CustomBBSManager extends BaseBBSManager
 	@Override // BaseBBSManager
 	protected void send1002(L2PcInstance activeChar, String string1, String string2,String string3)
 	{
-//		activeChar.TRACE("__BASENAME__:__LINE__: send1002(activeChar,["+string1+"],["+string2+"],["+string3+"])");
+//		TRACE("__BASENAME__:__LINE__: send1002(activeChar,["+string1+"],["+string2+"],["+string3+"])");
 		List<String> _arg = new FastList<>();
 		_arg.add("0");
 		_arg.add("0");
@@ -1209,11 +1209,11 @@ public class CustomBBSManager extends BaseBBSManager
 		_arg.add(Integer.toString(activeChar.getObjectId()));
 		_arg.add(activeChar.getAccountName());
 		_arg.add("9");
-		_arg.add(string3/*string2*/);
-		_arg.add(string2);
-		_arg.add(string1);
-		_arg.add("0"/*string3*/);
-		_arg.add("0"/*string3*/);
+		_arg.add(string3.length() == 0 ? " " : string3);
+		_arg.add(string2.length() == 0 ? " " : string2);
+		_arg.add(string1.length() == 0 ? " " : string1);
+		_arg.add("0");
+		_arg.add("0");
 		_arg.add("0");
 		_arg.add("0");
 		activeChar.sendPacket(new ShowBoard(_arg));
