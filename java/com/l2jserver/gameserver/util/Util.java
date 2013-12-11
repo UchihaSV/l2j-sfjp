@@ -27,8 +27,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Pattern;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import javolution.text.TextBuilder;
 import javolution.util.FastList;
@@ -39,6 +39,7 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.enums.HtmlActionScope;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Character;
+import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.AbstractHtmlPacket;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
@@ -718,6 +719,15 @@ public final class Util
 	 */
 	public static void sendCBHtml(L2PcInstance activeChar, String html, String fillMultiEdit, boolean buildActionCache)
 	{
+		sendCBHtml(0, activeChar, html, fillMultiEdit, buildActionCache);
+ //TODO:sendCBHtml(activeChar.getLastQuestNpcObject(), activeChar, html, fillMultiEdit, buildActionCache);
+	}
+	public static void sendCBHtml(L2Npc npc, L2PcInstance activeChar, String html, String fillMultiEdit, boolean buildActionCache)	//[JOJO] +L2Npc npc
+	{
+		sendCBHtml(npc.getObjectId(), activeChar, html, fillMultiEdit, buildActionCache);
+	}
+	public static void sendCBHtml(int npcObjId, L2PcInstance activeChar, String html, String fillMultiEdit, boolean buildActionCache)	//[JOJO] +int npcObjId
+	{
 		if (activeChar == null)
 		{
 			return;
@@ -727,7 +737,7 @@ public final class Util
 		
 		if (buildActionCache)
 		{
-			buildHtmlActionCache(activeChar, HtmlActionScope.COMM_BOARD_HTML, 0, html);
+			buildHtmlActionCache(activeChar, HtmlActionScope.COMM_BOARD_HTML, npcObjId, html);	//[JOJO] +npcObjId
 		}
 		
 		if (fillMultiEdit != null)
