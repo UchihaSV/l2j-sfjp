@@ -18,9 +18,7 @@
  */
 package com.l2jserver.gameserver.communitybbs.Manager;
 
-import java.util.List;
-
-import javolution.util.FastList;
+import java.util.ArrayList;
 
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.ShowBoard;
@@ -85,27 +83,28 @@ public abstract class BaseBBSManager
 	 * @param string2
 	 * @param string3
 	 */
-	protected void send1002(L2PcInstance activeChar, String string, String string2, String string3)
+	protected void send1002(L2PcInstance activeChar, String string1, String string2, String string3)
 	{
-		List<String> _arg = new FastList<>();
-		_arg.add("0");
-		_arg.add("0");
-		_arg.add("0");
-		_arg.add("0");
-		_arg.add("0");
-		_arg.add("0");
-		_arg.add(activeChar.getName());
-		_arg.add(Integer.toString(activeChar.getObjectId()));
-		_arg.add(activeChar.getAccountName());
-		_arg.add("9");
-		_arg.add(string2); // subject?
-		_arg.add(string2); // subject?
-		_arg.add(string); // text
-		_arg.add(string3); // date?
-		_arg.add(string3); // date?
-		_arg.add("0");
-		_arg.add("0");
-		activeChar.sendPacket(new ShowBoard(_arg));
+//		TRACE("__BASENAME__:__LINE__: send1002(activeChar,["+string1+"],["+string2+"],["+string3+"])");
+		ArrayList<String> arg = new ArrayList<>(17);
+		arg.add("0");
+		arg.add("0");
+		arg.add("0");
+		arg.add("0");
+		arg.add("0");
+		arg.add("0");
+		arg.add(activeChar.getName());
+		arg.add(Integer.toString(activeChar.getObjectId()));
+		arg.add(activeChar.getAccountName());
+		arg.add("9");
+		arg.add(string3 == null || string3.length() == 0 ? " " : string3);
+		arg.add(string2 == null || string2.length() == 0 ? " " : string2);
+		arg.add(string1 == null || string1.length() == 0 ? " " : string1);
+		arg.add("0");
+		arg.add("0");
+		arg.add("0");
+		arg.add("0");
+		activeChar.sendPacket(new ShowBoard(arg));
 	}
 //	// [L2J_JP ADD - TSL]
 //	protected String quoteString(String html)

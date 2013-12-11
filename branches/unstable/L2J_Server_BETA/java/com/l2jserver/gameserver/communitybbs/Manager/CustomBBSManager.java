@@ -30,7 +30,6 @@ import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
-import com.l2jserver.gameserver.network.serverpackets.ShowBoard;
 
 /**
  * @author  TSL
@@ -1188,35 +1187,6 @@ public class CustomBBSManager extends BaseBBSManager
 			super.separateAndSend(html, acha);
 		else
 			super.separateAndSend("<html><body><br><br><center><font color=FF0000>PACKET TOO LARGE!</font></center></body></html>", acha);
-	}
-
-	/**
-	 * ３番目の文字列の不具合？を修正。
-	 * イマイチ動きがわからないが、とりあえず動いている。
-	 */
-	@Override // BaseBBSManager
-	protected void send1002(L2PcInstance activeChar, String string1, String string2,String string3)
-	{
-//		TRACE("__BASENAME__:__LINE__: send1002(activeChar,["+string1+"],["+string2+"],["+string3+"])");
-		List<String> _arg = new FastList<>();
-		_arg.add("0");
-		_arg.add("0");
-		_arg.add("0");
-		_arg.add("0");
-		_arg.add("0");
-		_arg.add("0");
-		_arg.add(activeChar.getName());
-		_arg.add(Integer.toString(activeChar.getObjectId()));
-		_arg.add(activeChar.getAccountName());
-		_arg.add("9");
-		_arg.add(string3.length() == 0 ? " " : string3);
-		_arg.add(string2.length() == 0 ? " " : string2);
-		_arg.add(string1.length() == 0 ? " " : string1);
-		_arg.add("0");
-		_arg.add("0");
-		_arg.add("0");
-		_arg.add("0");
-		activeChar.sendPacket(new ShowBoard(_arg));
 	}
 
 	/**
