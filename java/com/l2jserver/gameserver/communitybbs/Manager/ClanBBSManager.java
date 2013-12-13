@@ -171,7 +171,7 @@ if (L2J_JP_CLAN_BBS) {{
 			}
 			else
 			{
-				final StringBuilder html = StringUtil.startAppend(2000, "<html><body><br><br><table border=0 width=610><tr><td width=10></td><td width=600 align=left><a action=\"bypass _bbshome\">HOME</a> &gt; <a action=\"bypass _bbsclan_clanlist\"> CLAN COMMUNITY </a>  &gt; <a action=\"bypass _bbsclan_clanhome;", String.valueOf(clanId), "\"> &amp;$802; </a></td></tr></table>");
+				final StringBuilder html = StringUtil.startAppend(3000, "<html><body><br><br><table border=0 width=610><tr><td width=10></td><td width=600 align=left><a action=\"bypass _bbshome\">HOME</a> &gt; <a action=\"bypass _bbsclan_clanlist\"> CLAN COMMUNITY </a>  &gt; <a action=\"bypass _bbsclan_clanhome;", String.valueOf(clanId), "\"> &amp;$802; </a></td></tr></table>");
 				if (activeChar.isClanLeader())
 				{
 					StringUtil.append(html, "<br><br><center><table width=610 border=0 cellspacing=0 cellpadding=0><tr><td fixwidth=610><font color=\"AAAAAA\">The Clan Notice function allows the clan leader to send messages through a pop-up window to clan members at login.</font> </td></tr><tr><td height=20></td></tr>");
@@ -484,7 +484,7 @@ if (L2J_JP_CLAN_BBS) {{
 	private void showMsgEdit(L2PcInstance activeChar, String msgType, int clanId)
 	{
 if (L2J_JP_CLAN_BBS) {{
-		StringBuilder html = new StringBuilder(2000).append("<html><body><br><br>"
+		StringBuilder html = new StringBuilder(3000).append("<html><body><br><br>"
 				+ "<table border=0 width=610><tr><td width=10></td><td width=600 align=left>").append(getHeaderTree(msgType, clanId)).append("</td></tr>"
 				+ "</table>"
 				+ "<img src=\"L2UI.squareblank\" width=\"1\" height=\"10\">"
