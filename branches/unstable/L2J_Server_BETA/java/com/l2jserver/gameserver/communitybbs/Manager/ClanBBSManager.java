@@ -124,8 +124,7 @@ if (L2J_JP_CLAN_BBS) {{
 					msgType = "comment";
 				else if (subcmd.equals("delanno"))
 					msgType = "announce";
-				File file = new File(Config.DATAPACK_ROOT + "/data/clans/" + msgType + "_" + clanId
-						+ ".txt");
+				File file = new File(Config.DATAPACK_ROOT + "/data/clans/" + msgType + "_" + clanId + ".txt");
 				file.delete();
 				clanhome(activeChar);
 			}
@@ -574,8 +573,9 @@ if (L2J_JP_CLAN_BBS) {{
 			e.printStackTrace();
 		}
 		return msgData;
-}}
+}} else {{
 		return null;
+}}
 	}
 	
 	/**
@@ -587,7 +587,7 @@ if (L2J_JP_CLAN_BBS) {{
 	{
 if (L2J_JP_CLAN_BBS) {{
 		File file = new File(Config.DATAPACK_ROOT + "/data/clans/" + msgType + "_" + clanId + ".txt");
-		try (FileOutputStream save = new FileOutputStream(file))
+		try (FileOutputStream save = new FileOutputStream(file, false))
 		{
 			save.write(msgData.getBytes(StandardCharsets.UTF_8));
 		}
@@ -631,7 +631,8 @@ if (L2J_JP_CLAN_BBS) {{
 		else
 			throw new RuntimeException();
 		return html;
-}}
+}} else {{
 		return null;
+}}
 	}
 }
