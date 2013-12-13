@@ -22,6 +22,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -31,7 +32,6 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import javolution.text.TextBuilder;
-import javolution.util.FastList;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GeoData;
@@ -783,7 +783,7 @@ public final class Util
 	{
 		text = Pattern.compile("(?:\r\n|\n|\r|<br>)", Pattern.CASE_INSENSITIVE).matcher(text).replaceAll("\n");	//[JOJO]/*ÉeÉXÉgçœ*/
 	//	text = text.replace("<br>", Config.EOL);	//-[JOJO]
-		List<String> arg = new FastList<>();
+		ArrayList<String> arg = new ArrayList<>(17);
 		arg.add("0");
 		arg.add("0");
 		arg.add("0");
@@ -796,7 +796,7 @@ public final class Util
 		arg.add("9");
 		arg.add(" ");
 		arg.add(" ");
-		arg.add(text);
+		arg.add(text == null || text.length() == 0 ? " " : text);
 		arg.add("0");
 		arg.add("0");
 		arg.add("0");

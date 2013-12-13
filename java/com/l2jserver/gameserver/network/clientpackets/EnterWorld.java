@@ -320,20 +320,6 @@ public class EnterWorld extends L2GameClientPacket
 			}
 			
 			showClanNotice = activeChar.getClan().isNoticeEnabled();
-
-			//////////////////////////////////////////////////////////////////////
-			// [L2J_JP ADD - TSL][JOJO]
-			String contents = ClanBBSManager.getInstance().getMsgData("announce", activeChar.getClan().getId());
-			if (! contents.isEmpty())
-			{
-				NpcHtmlMessage html = new NpcHtmlMessage();
-				html.setFile(activeChar.getHtmlPrefix(), "data/html/clannews.htm");
-				html.replace("%clan_name%", activeChar.getClan().getName());
-				html.replace("%contents%", contents);
-				sendPacket(html);
-			}
-			contents = null;
-			//////////////////////////////////////////////////////////////////////
 		}
 		
 		if (TerritoryWarManager.getInstance().getRegisteredTerritoryId(activeChar) > 0)
@@ -489,12 +475,29 @@ public class EnterWorld extends L2GameClientPacket
 		SevenSigns.getInstance().sendCurrentPeriodMsg(activeChar);
 		Announcements.getInstance().showAnnouncements(activeChar);
 		
+if (ClanBBSManager.L2J_JP_CLAN_BBS) {{
+		//////////////////////////////////////////////////////////////////////
+		// [L2J_JP ADD - TSL][JOJO]
+		String contents;
+		if (activeChar.getClan() != null
+			&& (contents= ClanBBSManager.getInstance().getMsgData("announce", activeChar.getClan().getId())) != null
+			&& ! contents.isEmpty())
+		{
+			NpcHtmlMessage html = new NpcHtmlMessage();
+			html.setFile(activeChar.getHtmlPrefix(), "data/html/clannews.htm");
+			html.replace("%clan_name%", activeChar.getClan().getName());
+			html.replace("%contents%", com.l2jserver.gameserver.communitybbs.Manager.BaseBBSManager.htmlescape(contents));
+			contents = null;
+			sendPacket(html);
+		}
+		//////////////////////////////////////////////////////////////////////
+}} else {{
 		if (showClanNotice)
 		{
 			final NpcHtmlMessage notice = new NpcHtmlMessage();
 			notice.setFile(activeChar.getHtmlPrefix(), "data/html/clanNotice.htm");
 			notice.replace("%clan_name%", activeChar.getClan().getName());
-			notice.replace("%notice_text%", activeChar.getClan().getNotice());
+			notice.replace("%notice_text%", com.l2jserver.gameserver.communitybbs.Manager.BaseBBSManager.htmlescape(activeChar.getClan().getNotice()));
 			notice.disableValidation();
 			sendPacket(notice);
 		}
@@ -506,6 +509,7 @@ public class EnterWorld extends L2GameClientPacket
 				sendPacket(new NpcHtmlMessage(serverNews));
 			}
 		}
+}}
 		
 		if (Config.PETITIONING_ALLOWED)
 		{

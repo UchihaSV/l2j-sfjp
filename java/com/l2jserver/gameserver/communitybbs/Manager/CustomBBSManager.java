@@ -1123,63 +1123,7 @@ public class CustomBBSManager extends BaseBBSManager
 		if (isShutout(activeChar)) return false;
 		return (! msgType.canPostAdminOnly) || msgType.isMail || activeChar.isGM() || isTuEEE(activeChar);
 	}
-
-//	BaseBBSManager に移動
-//	/**
-//	 * html に使えない文字をエスケープする。
-//	 * （ほんとは BaseBBSManager に書いたほうがいいかも）
-//	 * @param  text - plain text
-//	 * @return - html text
-//	 */
-//	private String htmlescape(CharSequence text)
-//	{
-//		CharSequence html = text;
-//		StringBuilder buf = new StringBuilder(text.length()*2);
-//		for (int index = 0; index < text.length(); ++index) {
-//			char ch = text.charAt(index);
-//			switch (ch) {
-//			case '&': html = buf.append("&amp;"); break;
-//			case '<': html = buf.append("&lt;"); break;
-//		//	case '>': html = buf.append("&gt;"); break;
-//			case ' ': html = buf.append("&nbsp;"); break;
-//			case '"': html = buf.append("&quot;"); break;
-//			case '\'': html = buf.append("&apos;"); break;
-//			case '\n': html = buf.append("<br1>"); break;
-//			default: buf.append(ch); break;
-//			}
-//		}
-//		return html.toString();
-//	}
-
-	/**
-	 * 文字列を所定の文字幅に切り詰める。
-	 * 漢字＝幅２、英数字半角カナ＝幅１として計算。
-	 * 文字幅を超えるものは … を付け加える。
-	 * 半角 : u0020-u007E, uFF61-uFFDC, uFFE8-uFFEE
-	 */
-	private CharSequence cut(CharSequence s, int max)
-	{
-		int length = s.length();
-		if (length * 2 <= max) return s;
-
-		int pos, index;
-		for (pos = index = 0; index < length; ++index) {
-			char c = s.charAt(index);
-			int w = c < 0x007F || c > 0xFF60 ? 1 : 2;	//かなり手抜き
-			if (pos + w > max) break;
-			pos += w;
-		}
-		if (index >= length) return s;
-		max -= 2;	// "…"
-		for (pos = index = 0; index < length; ++index) {
-			char c = s.charAt(index);
-			int w = c < 0x007F || c > 0xFF60 ? 1 : 2;	//かなり手抜き
-			if (pos + w > max) break;
-			pos += w;
-		}
-		return s.subSequence(0, index) + "\u2026"; //"…";
-	}
-
+	
 	@Override // BaseBBSManager
 	protected void separateAndSend(String html, L2PcInstance acha)
 	{
@@ -1187,48 +1131,6 @@ public class CustomBBSManager extends BaseBBSManager
 			super.separateAndSend(html, acha);
 		else
 			super.separateAndSend("<html><body><br><br><center><font color=FF0000>PACKET TOO LARGE!</font></center></body></html>", acha);
-	}
-
-	/**
-	 * ・クライアントで [Enter] を押すと改行コードが "\r\n" と入力される。
-	 * 　しかし '\r' と '\n' の２文字分として扱われるので
-	 * 　'\r' だけ消したり '\n' だけ消したりできてしまう。
-	 *   → '\r' はすべて取り除く。
-	 * 　→ '\n' が連続するときは１つに減らす。
-	 * ・連続空白は１つに減らす。
-	 * ・"&$数字;" や "&#数字;" の実体参照は禁止。
-	 */
-//	@Override // BaseBBSManager
-	protected String quoteString(String input)
-	{
-		if (input == null || input.isEmpty()) return input;
-		CharSequence result = input;
-		StringBuilder buf = new StringBuilder(input.length());
-		for (int index = 0; index < input.length(); ) {
-			char ch = input.charAt(index), cl;
-			switch (ch) {
-			case '\r':
-				result = buf; //\r は捨てる
-				index += 1;
-				break;
-			case '\n':
-			case ' ':
-				result = buf.append(ch);
-				do ++index; while (index < input.length() && ((cl = input.charAt(index)) == ch || cl == '\r'));
-				break;
-			case '&':
-				if (index+1 < input.length() && ((cl = input.charAt(index+1)) == '$' || cl == '#')) {
-					result = buf;
-					ch = '?';
-				}
-				/* not 'break'. goto default:*/
-			default:
-				buf.append(ch);
-				index += 1;
-				break;
-			}
-		}
-		return result.toString();
 	}
 
 //	private void DUMP(String data)
