@@ -18190,6 +18190,8 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2371<br>
+	 * Message: $c1を不正ユーティリティ利用者として報告しました。<br>
+	 * Message: &#24050;&#23559;&#12300;&#36;&#99;&#49;&#12301;&#30003;&#22577;&#28858;&#66;&#79;&#84;&#12290;<br>
 	 * Message: $c1 was reported as a BOT
 	 */
 	public static final SystemMessageId C1_WAS_REPORTED_AS_BOT;
@@ -18228,18 +18230,24 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2377<br>
+	 * Message: ピースゾーンや戦場にいるキャラクターは報告できません。<br>
+	 * Message: &#28961;&#27861;&#30003;&#22577;&#22312;&#23433;&#20840;&#21312;&#22495;&#25110;&#25136;&#22580;&#30340;&#35282;&#33394;&#12290;<br>
 	 * Message: You cannot report a character who is in a peace zone or a battlefield
 	 */
 	public static final SystemMessageId YOU_CANNOT_REPORT_CHARACTER_IN_PEACE_OR_BATTLE_ZONE;
 	
 	/**
 	 * ID: 2378<br>
+	 * Message: 血盟戦が布告された状態では報告できません。<br>
+	 * Message: &#23459;&#24067;&#34880;&#30431;&#25136;&#26178;&#65292;&#28961;&#27861;&#30003;&#22577;&#12290;<br>
 	 * Message: You cannot report when a clan war has been declared
 	 */
 	public static final SystemMessageId YOU_CANNOT_REPORT_CLAN_WAR_ENEMY;
 	
 	/**
 	 * ID: 2379<br>
+	 * Message: 接続後、経験値を獲得していないキャラクターは報告できません。<br>
+	 * Message: &#28961;&#27861;&#30003;&#22577;&#36899;&#32218;&#24460;&#26410;&#21462;&#24471;&#32147;&#39511;&#20540;&#30340;&#35282;&#33394;&#12290;<br>
 	 * Message: You cannot report a character who has not acquired any Exp. after connecting
 	 */
 	public static final SystemMessageId YOU_CANNOT_REPORT_CHAR_WHO_ACQUIRED_XP;
@@ -18542,120 +18550,160 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2468<br>
+	 * Message: $c1に対して報告ポイントを使用しました。現在のアカウントの残りポイントは$s2です。<br>
+	 * Message: &#23565;&#12300;&#36;&#99;&#49;&#12301;&#20351;&#29992;&#20102;&#30003;&#22577;&#40670;&#25976;&#65292;&#30446;&#21069;&#24115;&#34399;&#20839;&#21097;&#39192;&#30340;&#40670;&#25976;&#28858;&#12300;&#36;&#115;&#50;&#12301;&#12290;<br>
 	 * Message: You have used a report point on $c1. You have $s2 points remaining on this account
 	 */
 	public static final SystemMessageId YOU_HAVE_USED_REPORT_POINT_ON_C1_YOU_HAVE_C2_POINTS_LEFT;
 	
 	/**
 	 * ID: 2469<br>
+	 * Message: 使用できるポイントがもうありません。ポイントは毎日正午に初期化されて再使用できるようになります。<br>
+	 * Message: &#24050;&#29992;&#30433;&#25152;&#26377;&#30340;&#21487;&#29992;&#40670;&#25976;&#12290;&#40670;&#25976;&#23559;&#20197;&#20013;&#21320;&#26178;&#38291;&#28858;&#28310;&#36914;&#34892;&#21021;&#22987;&#21270;&#65292;&#28982;&#24460;&#21487;&#20877;&#27425;&#20351;&#29992;&#12290;<br>
 	 * Message: You have used all available points. Points are reset everyday at noon
 	 */
 	public static final SystemMessageId YOU_HAVE_USED_ALL_POINTS_POINTS_ARE_RESET_AT_NOON;
 	
 	/**
 	 * ID: 2470<br>
+	 * Message: このキャラクターは報告できません。ピースゾーンや戦場にいるプレーヤー、血盟戦中の敵の血盟員、オリンピアード中のプレーヤーの報告はできなくなっています。<br>
+	 * Message: &#28961;&#27861;&#30003;&#22577;&#35442;&#35282;&#33394;&#12290;&#20301;&#26044;&#23433;&#20840;&#21312;&#22495;&#12289;&#25136;&#22580;&#65292;&#25110;&#26159;&#27491;&#22312;&#21443;&#33287;&#34880;&#30431;&#25136;&#30340;&#23565;&#26041;&#34880;&#30431;&#25104;&#21729;&#20197;&#21450;&#22887;&#26519;&#21305;&#20126;&#32773;&#65292;&#30342;&#28961;&#27861;&#30003;&#22577;&#12290;<br>
 	 * Message: This character cannot make a report. You cannot make a report while located inside a peace zone or a battlefield, while you are an opposing clan member during a clan war, or while participating in the Olympiad
 	 */
 	public static final SystemMessageId TARGET_NOT_REPORT_CANNOT_REPORT_PEACE_PVP_ZONE_OR_OLYMPIAD_OR_CLAN_WAR_ENEMY;
 	
 	/**
 	 * ID: 2471<br>
+	 * Message: このキャラクターは報告できません。同盟または血盟からすでに報告されているか、同じIPから報告されています。<br>
+	 * Message: &#28961;&#27861;&#30003;&#22577;&#35442;&#35282;&#33394;&#12290;&#21516;&#30431;&#25110;&#34880;&#30431;&#24050;&#26377;&#30003;&#22577;&#35442;&#30446;&#27161;&#65292;&#25110;&#32773;&#24050;&#26377;&#30003;&#22577;&#21516;&#19968;&#73;&#80;&#12290;<br>
 	 * Message: This character cannot make a report. The target has already been reported by either your clan or alliance, or has already been reported from your current IP
 	 */
 	public static final SystemMessageId CANNOT_REPORT_TARGET_ALREDY_REPORTED_BY_CLAN_ALLY_MEMBER_OR_SAME_IP;
 	
 	/**
 	 * ID: 2472<br>
+	 * Message: このキャラクターは報告できません。同じアカウント内の別のキャラクターが報告しています。<br>
+	 * Message: &#28961;&#27861;&#30003;&#22577;&#35442;&#35282;&#33394;&#12290;&#24115;&#34399;&#20839;&#30340;&#20854;&#20182;&#35282;&#33394;&#24050;&#34389;&#26044;&#34987;&#30003;&#22577;&#30340;&#29376;&#24907;&#12290;<br>
 	 * Message: This character cannot make a report because another character from this account has already done so
 	 */
 	public static final SystemMessageId CANNOT_REPORT_ALREDY_REPORED_FROM_THIS_ACCOUNT;
 	
 	/**
 	 * ID: 2473<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、10分間チャットができなくなっています。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#31105;&#27490;&#32842;&#22825;&#49;&#48;&#20998;&#37912;&#12290;<br>
 	 * Message: You have been reported as an illegal program user, so your chatting will be blocked for 10 minutes
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_10_MIN_CHAT_BLOCKED;
 	
 	/**
 	 * ID: 2474<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、60分間パーティ参加ができなくなっています。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#31105;&#27490;&#32068;&#38538;&#54;&#48;&#20998;&#37912;&#12290;<br>
 	 * Message: You have been reported as an illegal program user, so your party participation will be blocked for 60 minutes
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_60_MIN_PARTY_BLOCKED;
 	
 	/**
 	 * ID: 2475<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、120分間パーティ参加ができなくなっています。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#31105;&#27490;&#32068;&#38538;&#49;&#50;&#48;&#20998;&#37912;&#12290;<br>
 	 * Message: You have been reported as an illegal program user, so your party participation will be blocked for 120 minutes
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_120_MIN_PARTY_BLOCKED;
 	
 	/**
 	 * ID: 2476<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、180分間パーティ参加ができなくなっています。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#31105;&#27490;&#32068;&#38538;&#49;&#56;&#48;&#20998;&#37912;&#12290;<br>
 	 * Message: You have been reported as an illegal program user, so your party participation will be blocked for 180 minutes
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_180_MIN_PARTY_BLOCKED;
 	
 	/**
 	 * ID: 2477<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、120分間行動が制限されています。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#22312;&#49;&#50;&#48;&#20998;&#37912;&#20839;&#23559;&#26371;&#21463;&#21040;&#34892;&#21205;&#38480;&#21046;&#12290;<br>
 	 * Message: You have been reported as an illegal program user, so your actions will be restricted for 120 minutes
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_120_MIN_ACTION_BLOCKED;
 	
 	/**
 	 * ID: 2478<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、180分間行動が制限されています。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#22312;&#49;&#56;&#48;&#20998;&#37912;&#20839;&#23559;&#26371;&#21463;&#21040;&#34892;&#21205;&#38480;&#21046;&#12290;<br>
 	 * Message: You have been reported as an illegal program user, so your actions will be restricted for 180 minutes
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_180_MIN_ACTION_BLOCKED;
 	
 	/**
 	 * ID: 2479<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、180分間行動が制限されています。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#22312;&#49;&#56;&#48;&#20998;&#37912;&#20839;&#23559;&#26371;&#21463;&#21040;&#34892;&#21205;&#38480;&#21046;&#12290;<br>
 	 * Message: You have been reported as an illegal program user, so your actions will be restricted for 180 minutes
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_180_MIN_ACTION_BLOCKED_2;
 	
 	/**
 	 * ID: 2480<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、120分間移動ができなくなっています。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#31105;&#27490;&#31227;&#21205;&#49;&#50;&#48;&#20998;&#37912;&#12290;<br>
 	 * Message: You have been reported as an illegal program user, so movement is prohibited for 120 minutes
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_120_MIN_MOVEMENT_BLOCKED;
 	
 	/**
 	 * ID: 2481<br>
+	 * Message: $c1 は不正ユーティリティを利用したとの報告に基づいて、指名手配されています。<br>
+	 * Message: &#12300;&#36;&#99;&#49;&#12301;&#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#25925;&#34987;&#36890;&#36655;&#12290;<br>
 	 * Message: $c1 has been reported as an illegal program user and is currently being investigated
 	 */
 	public static final SystemMessageId C1_REPORTED_AND_IS_BEING_INVESTIGATED;
 	
 	/**
 	 * ID: 2482<br>
+	 * Message: $c1 は不正ユーティリティを利用したとの報告に基づいて、パーティになれなくなっています。<br>
+	 * Message: &#12300;&#36;&#99;&#49;&#12301;&#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#28961;&#27861;&#36914;&#34892;&#32068;&#38538;&#12290;<br>
 	 * Message: $c1 has been reported as an illegal program user and cannot join a party
 	 */
 	public static final SystemMessageId C1_REPORTED_AND_CANNOT_PARTY;
 	
 	/**
 	 * ID: 2483<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、チャットが禁止されました。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#28961;&#27861;&#36914;&#34892;&#32842;&#22825;&#12290;<br>
 	 * Message: You have been reported as an illegal program user, so chatting is not allowed
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_SO_CHATTING_NOT_ALLOWED;
 	
 	/**
 	 * ID: 2484<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、パーティへの参加が禁止されました。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#28961;&#27861;&#32068;&#38538;&#12290;<br>
 	 * Message: You have been reported as an illegal program user, so participating in a party is not allowed
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_SO_PARTY_NOT_ALLOWED;
 	
 	/**
 	 * ID: 2485<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、行動が制限されました。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#23559;&#26371;&#21463;&#21040;&#34892;&#21205;&#38480;&#21046;&#12290;<br>
 	 * Message: You have been reported as an illegal program user so your actions have been restricted
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_SO_ACTIONS_NOT_ALLOWED;
 	
 	/**
 	 * ID: 2486<br>
+	 * Message: お客様は不正ユーティリティのポイントが規定値に達しましたので、相応の処置を図りました。今後同様の問題が発生した場合、ゲーム内のペナルティにとどまらず、アカウントの使用を一部制限させていただくことがございます。この点、何卒ご了承ください。<br>
+	 * Message: &#24744;&#21083;&#21463;&#21040;&#20381;&#29031;&#38750;&#27861;&#31243;&#24335;&#26368;&#32066;&#32047;&#31309;&#40670;&#25976;&#30340;&#34389;&#32622;&#25514;&#26045;&#12290;&#26085;&#24460;&#33509;&#20877;&#27425;&#34987;&#25581;&#30332;&#26178;&#65292;&#19981;&#21934;&#26159;&#36973;&#21040;&#36938;&#25138;&#19978;&#30340;&#25074;&#32624;&#65292;&#26356;&#26159;&#26371;&#36896;&#25104;&#24115;&#34399;&#20351;&#29992;&#19978;&#30340;&#19981;&#20415;&#65292;&#35531;&#29609;&#23478;&#30041;&#24847;&#27492;&#38917;&#20358;&#36914;&#34892;&#36938;&#25138;&#12290;<br>
 	 * Message: You have been blocked due to verification that you are using a third party program. Subsequent violations may result in termination of your account rather than a penalty within the game
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_BLOCKED_SUBSEQUENT_VIOLATIONS_RESULT_ACCOUNT_TERMINATION;
 	
 	/**
 	 * ID: 2487<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、接続が切断されました。改めて本人確認を行った後に、接続できるようになります。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#32080;&#26463;&#36899;&#32218;&#12290;&#36879;&#36942;&#26412;&#20154;&#35469;&#35657;&#65292;&#32147;&#30906;&#35469;&#24460;&#25165;&#33021;&#20877;&#27425;&#36899;&#32218;&#12290;<br>
 	 * Message: You have been reported as an illegal program user, and your connection has been ended. Please contact our CS team to confirm your identity.
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_AS_BOT_CONTACT_OUR_CS_TEAM;
@@ -18909,6 +18957,8 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2748<br>
+	 * Message: 不正ユーティリティを利用したとの報告に基づいて、他のユーザーの報告ができなくなっています。<br>
+	 * Message: &#34987;&#30003;&#22577;&#28858;&#38750;&#27861;&#31243;&#24335;&#29992;&#25142;&#65292;&#22240;&#27492;&#28961;&#27861;&#30003;&#22577;&#20854;&#20182;&#29992;&#25142;&#12290;<br>
 	 * Message: You have been reported as an illegal program user and cannot report other users
 	 */
 	public static final SystemMessageId YOU_HAVE_BEEN_REPORTED_AND_CANNOT_REPORT;
@@ -19019,6 +19069,8 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 2447<br>
+	 * Message: キャラクターが作られてから5年になりました。<br>
+	 * Message: &#35282;&#33394;&#21109;&#31435;&#24050;&#36229;&#36942;&#53;&#36913;&#24180;&#12290;<br>
 	 * Message: You can make another report in $s1-minute(s). You have $s2 points remaining on this account
 	 */
 	public static final SystemMessageId YOU_CAN_REPORT_IN_S1_MINS_YOU_HAVE_S2_POINTS_LEFT;
