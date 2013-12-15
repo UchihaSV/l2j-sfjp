@@ -6,13 +6,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Calendar;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -52,18 +53,18 @@ public final class BotReportTable
 	private static final String SQL_CLEAR_REPORTED_CHAR_DATA = "DELETE FROM bot_reported_char_data";
 	
 	private TIntLongHashMap _ipRegistry;
-	private Map<Integer, ReporterCharData> _charRegistry;
-	private Map<Integer, ReportedCharData> _reports;
-	private Map<Integer, PunishHolder> _punishments;
+	private FastIntObjectMap<ReporterCharData> _charRegistry;
+	private FastIntObjectMap<ReportedCharData> _reports;
+	private FastIntObjectMap<PunishHolder> _punishments;
 	
 	BotReportTable()
 	{
 		if (Config.BOTREPORT_ENABLE)
 		{
 			_ipRegistry = new TIntLongHashMap();
-			_charRegistry = new ConcurrentHashMap<>();
-			_reports = new ConcurrentHashMap<>();
-			_punishments = new ConcurrentHashMap<>();
+			_charRegistry = new FastIntObjectMap<ReporterCharData>().shared();
+			_reports = new FastIntObjectMap<ReportedCharData>().shared();
+			_punishments = new FastIntObjectMap<PunishHolder>().shared();
 			
 			try
 			{
@@ -171,12 +172,12 @@ public final class BotReportTable
 			st.execute();
 			
 			st = con.prepareStatement(SQL_INSERT_REPORTED_CHAR_DATA);
-			for (Map.Entry<Integer, ReportedCharData> entrySet : _reports.entrySet())
+			for (IntObjectMap.Entry<ReportedCharData> entry : _reports.entrySet())
 			{
-				TIntLongHashMap reportTable = entrySet.getValue()._reporters;
+				TIntLongHashMap reportTable = entry.getValue()._reporters;
 				for (int reporterId : reportTable.keys())
 				{
-					st.setInt(1, entrySet.getKey());
+					st.setInt(1, entry.getKey());
 					st.setInt(2, reporterId);
 					st.setLong(3, reportTable.get(reporterId));
 					st.execute();
@@ -326,11 +327,12 @@ public final class BotReportTable
 		punishBot(bot, _punishments.get(rcd.getReportCount()));
 		
 		// Range punishments
-		for (int key : _punishments.keySet())
+		for (IntObjectMap.Entry<PunishHolder> entry : _punishments.entrySet())
 		{
+			int key = entry.getKey();
 			if ((key < 0) && (Math.abs(key) <= rcd.getReportCount()))
 			{
-				punishBot(bot, _punishments.get(key));
+				punishBot(bot, entry.getValue());
 			}
 		}
 	}
