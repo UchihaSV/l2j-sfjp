@@ -15076,4 +15076,9 @@ public final class L2PcInstance extends L2Playable
 	{
 		return 0;
 	}
+	
+	public boolean isPartyBanned()
+	{
+		return PunishmentManager.getInstance().hasPunishment(getObjectId(), PunishmentAffect.CHARACTER, PunishmentType.PARTY_BAN);
+	}
 }
