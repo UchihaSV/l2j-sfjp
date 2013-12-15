@@ -467,9 +467,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					case BUFF:
 						addBuffSkill(skill);
 						break;
-					case RESURRECT:
-						addResSkill(skill);
-						break;
 					case DEBUFF:
 						addDebuffSkill(skill);
 						addCOTSkill(skill);
@@ -513,6 +510,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 						else if (skill.hasEffectType(L2EffectType.DMG_OVER_TIME, L2EffectType.DMG_OVER_TIME_PERCENT))
 						{
 							addRangeSkill(skill);
+						}
+						else if (skill.hasEffectType(L2EffectType.RESURRECTION))
+						{
+							addResSkill(skill);
 						}
 						else
 						{

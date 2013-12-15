@@ -11754,7 +11754,7 @@ public final class SystemMessageId
 	 * Message: &#12300;&#36;&#99;&#49;&#12301;&#27491;&#22312;&#35430;&#22294;&#36914;&#34892;&#24674;&#24489;&#12300;&#36;&#115;&#50;&#12301;&#40670;&#32147;&#39511;&#20540;&#30340;&#24489;&#27963;&#12290;&#35201;&#36914;&#34892;&#24489;&#27963;&#21966;&#65311;<br>
 	 * Message: $c1 is making an attempt at resurrection with $s2 experience points. Do you want to be resurrected?
 	 */
-	public static final SystemMessageId RESSURECTION_REQUEST_BY_C1_FOR_S2_XP;
+	public static final SystemMessageId RESURRECTION_REQUEST_BY_C1_FOR_S2_XP;
 	
 	/**
 	 * ID: 1511<br>
@@ -21468,7 +21468,7 @@ public final class SystemMessageId
 		THIS_ITEM_CANT_BE_EQUIPPED_FOR_THE_OLYMPIAD_EVENT = new SystemMessageId(1507);
 		THIS_ITEM_IS_NOT_AVAILABLE_FOR_THE_OLYMPIAD_EVENT = new SystemMessageId(1508);
 		THIS_SKILL_IS_NOT_AVAILABLE_FOR_THE_OLYMPIAD_EVENT = new SystemMessageId(1509);
-		RESSURECTION_REQUEST_BY_C1_FOR_S2_XP = new SystemMessageId(1510);
+		RESURRECTION_REQUEST_BY_C1_FOR_S2_XP = new SystemMessageId(1510);
 		MASTER_CANNOT_RES = new SystemMessageId(1511);
 		CANNOT_RES_PET = new SystemMessageId(1512);
 		RES_HAS_ALREADY_BEEN_PROPOSED = new SystemMessageId(1513);
