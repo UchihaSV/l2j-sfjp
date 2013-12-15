@@ -67,7 +67,6 @@ public enum L2SkillType
 	CONT,
 	FUSION,
 	
-	RESURRECT,
 	BEAST_FEED,			//[JOJO]
 	BEAST_RELEASE,		//[JOJO]
 	BEAST_RELEASE_ALL,	//[JOJO]
