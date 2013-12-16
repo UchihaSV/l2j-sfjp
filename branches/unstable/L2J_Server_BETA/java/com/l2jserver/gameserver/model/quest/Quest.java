@@ -2904,13 +2904,12 @@ public class Quest extends ManagedScript implements IIdentifiable
 			{
 				_log.log(Level.SEVERE, "addSpawn(): no NPC template found for NPC #" + npcId + "!");
 			}
+			else if (x == 0 && y == 0)
+			{
+				_log.log(Level.SEVERE, "addSpawn(): invalid spawn coordinates for NPC #" + npcId + "!");
+			}
 			else
 			{
-				if ((x == 0) && (y == 0))
-				{
-					_log.log(Level.SEVERE, "addSpawn(): invalid spawn coordinates for NPC #" + npcId + "!");
-					return null;
-				}
 				if (randomOffset)
 				{
 					double radius = 50.0 + 50.0 * Rnd.nextDouble();
