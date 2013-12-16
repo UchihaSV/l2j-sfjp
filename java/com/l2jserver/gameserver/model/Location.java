@@ -126,9 +126,9 @@ public class Location implements IPositionable
 	@Override
 	public void setXYZ(int x, int y, int z)
 	{
-		setX(x);
-		setY(y);
-		setZ(z);
+		_x = x;
+		_y = y;
+		_z = z;
 	}
 	
 	/**

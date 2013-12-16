@@ -218,9 +218,7 @@ public class L2Spawn implements IPositionable, IIdentifiable
 	@Override
 	public void setXYZ(int x, int y, int z)
 	{
-		setX(x);
-		setY(y);
-		setZ(z);
+		_location.setXYZ(x, y, z);
 	}
 	
 	/**
