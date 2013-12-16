@@ -417,7 +417,7 @@ public class CharStat
 	 */
 	public final double getMReuseRate(L2Skill skill)
 	{
-		return calcStat(Stats.MAGIC_REUSE_RATE, _activeChar.getTemplate().getBaseMReuseRate(), null, skill);
+		return calcStat(Stats.MAGIC_REUSE_RATE, 1, null, skill);
 	}
 	
 	/**
