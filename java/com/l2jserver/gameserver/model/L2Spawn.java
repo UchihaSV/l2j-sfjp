@@ -211,15 +211,17 @@ public class L2Spawn implements IPositionable, IIdentifiable
 		_location.setZ(z);
 	}
 	
-	//[JOJO]-------------------------------------------------
 	/**
-	 * Set the XYZ position of the spawn point.
+	 * Set the x, y, z position of the spawn point.
+	 * @param z the z coordinate
 	 */
-	public void setXYZ(int x, int y, int z)	//[JOJO]
+	@Override
+	public void setXYZ(int x, int y, int z)
 	{
-		_location.setXYZ(x, y, z);
+		setX(x);
+		setY(y);
+		setZ(z);
 	}
-	//-------------------------------------------------------
 	
 	/**
 	 * @return the heading of L2NpcInstance when they are spawned.

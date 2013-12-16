@@ -117,14 +117,19 @@ public class Location implements IPositionable
 		_z = z;
 	}
 	
-	//[JOJO]-------------------------------------------------
+	/**
+	 * Set the x, y, z coordinates.
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @param z the z coordinate
+	 */
+	@Override
 	public void setXYZ(int x, int y, int z)
 	{
-		_x = x;
-		_y = y;
-		_z = z;
+		setX(x);
+		setY(y);
+		setZ(z);
 	}
-	//-------------------------------------------------------
 	
 	/**
 	 * Get the heading.
@@ -167,7 +172,7 @@ public class Location implements IPositionable
 	}
 	
 	@Override
-	public Location getLocation()
+	public IPositionable getLocation()
 	{
 		return this;
 	}
@@ -192,6 +197,17 @@ public class Location implements IPositionable
 		_instanceId = loc.getInstanceId();
 	}
 	//-------------------------------------------------------
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if ((obj != null) && (obj instanceof Location))
+		{
+			final Location loc = (Location) obj;
+			return (getX() == loc.getX()) && (getY() == loc.getY()) && (getZ() == loc.getZ()) && (getHeading() == loc.getHeading()) && (getInstanceId() == loc.getInstanceId());
+		}
+		return false;
+	}
 	
 	@Override
 	public String toString()
