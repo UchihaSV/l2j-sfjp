@@ -97,6 +97,13 @@ public class Point3D implements IPositionable
 		return new Location(getX(), getY(), getZ(), getHeading(), getInstanceId());
 	}
 	
+	//[JOJO]-------------------------------------------------
+	public IPositionable getPosition()
+	{
+		return this;
+	}
+	//-------------------------------------------------------
+	
 	@Override
 	public void setX(int x)
 	{

@@ -183,7 +183,7 @@ public class Location implements IPositionable
 	}
 	
 	//[JOJO]-------------------------------------------------
-	public void setPosition(com.l2jserver.gameserver.util.Point3D loc)
+	public void setPosition(com.l2jserver.gameserver.model.interfaces.IPositionable loc)
 	{
 		_x = loc.getX();
 		_y = loc.getY();

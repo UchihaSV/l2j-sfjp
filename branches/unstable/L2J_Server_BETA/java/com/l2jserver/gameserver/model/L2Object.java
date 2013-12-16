@@ -668,7 +668,7 @@ public abstract class L2Object extends Point3D implements IIdentifiable, INamabl
 		}
 		else if (isPlayer())
 		{
-			((L2Character) this).teleToLocation(new Location(0, 0, 0), false);
+			((L2Character) this).teleToLocation(0, 0, 0, false);
 			((L2Character) this).sendMessage("Error with your coords, Please ask a GM for help!");
 		}
 	}
