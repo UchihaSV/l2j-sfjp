@@ -188,6 +188,11 @@ public abstract class DocumentBase
 	
 	protected void parseTemplate(Node n, Object template)
 	{
+		parseTemplate(n, template, false);
+	}
+	
+	protected void parseTemplate(Node n, Object template, boolean isChanneling)
+	{
 		Condition condition = null;
 		n = n.getFirstChild();
 		if (n == null)
@@ -258,7 +263,7 @@ public abstract class DocumentBase
 				{
 					throw new RuntimeException("Nested effects");
 				}
-				attachEffect(n, template, condition);
+				attachEffect(n, template, condition, isChanneling);
 			}
 		}
 	}
@@ -298,6 +303,11 @@ public abstract class DocumentBase
 	
 	protected void attachEffect(Node n, Object template, Condition attachCond)
 	{
+		attachEffect(n, template, attachCond, false);
+	}
+	
+	protected void attachEffect(Node n, Object template, Condition attachCond, boolean isChanneling)
+	{
 		final NamedNodeMap attrs = n.getAttributes();
 		final StatsSet set = new StatsSet();
 		for (int i = 0; i < attrs.getLength(); i++)
@@ -318,7 +328,11 @@ public abstract class DocumentBase
 		else if (template instanceof L2Skill)
 		{
 			final L2Skill sk = (L2Skill) template;
-			if (set.getInt("self", 0) == 1)
+			if (isChanneling)
+			{
+				sk.attachChanneling(effectTemplate);
+			}
+			else if (set.getInt("self", 0) == 1)
 			{
 				sk.attachSelf(effectTemplate);
 			}
