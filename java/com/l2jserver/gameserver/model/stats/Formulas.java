@@ -1107,9 +1107,9 @@ public final class Formulas
 	 */
 	public static final boolean calcAtkBreak(L2Character target, double dmg)
 	{
-		if (target.getFusionSkill() != null)
+		if (target.isChanneling())
 		{
-			return true;
+			return false;
 		}
 		
 		double init = 0;

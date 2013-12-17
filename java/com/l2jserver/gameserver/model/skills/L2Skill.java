@@ -103,6 +103,7 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	private final int _mpConsume;
 	/** Initial MP consumption. */
 	private final int _mpInitialConsume;
+	private final int _mpPerChanneling;
 	/** HP consumption. */
 	private final int _hpConsume;
 	/** Amount of items consumed by this skill from caster. */
@@ -129,8 +130,6 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	private final int _refId;
 	// all times in milliseconds
 	private final int _hitTime;
-	private final int[] _hitTimings;
-	private static final int[] EMPTY_HIT_TIMINGS = new int[0];	//[JOJO]
 	// private final int _skillInterruptTime;
 	private final int _coolTime;
 	private final int _reuseHashCode;
@@ -158,9 +157,6 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	private static final int[] DEFAULT_AFFECT_LIMIT = new int[2];	//[JOJO] <set name="affectLimit" val="0-0" />
 	
 	private final L2SkillType _skillType;
-	private final int _effectId;
-	private final int _effectLvl; // normal effect level
-	
 	private final boolean _nextActionIsAttack;
 	
 	private final boolean _removedOnAnyActionExceptMove;
@@ -200,6 +196,7 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	private List<EffectTemplate> _effectTemplates;
 	private List<EffectTemplate> _effectTemplatesSelf;
 	private List<EffectTemplate> _effectTemplatesPassive;
+	private List<EffectTemplate> _effectTemplatesChanneling;
 	
 	protected ChanceCondition _chanceCondition = null;
 	
@@ -229,6 +226,10 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	
 	private byte[] _effectTypes;
 	
+	private final int _channelingSkillId;
+	private final int _channelingTickInitialDelay;
+	private final int _channelingTickInterval;
+	
 	protected L2Skill(StatsSet set)
 	{
 		_isAbnormalInstant = set.getBoolean("abnormalInstant", false);
@@ -244,6 +245,7 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		_staticReuse = set.getBoolean("staticReuse", false);
 		_mpConsume = set.getInt("mpConsume", 0);
 		_mpInitialConsume = set.getInt("mpInitialConsume", 0);
+		_mpPerChanneling = set.getInt("mpPerChanneling", _mpConsume);
 		_hpConsume = set.getInt("hpConsume", 0);
 		_itemConsumeCount = set.getInt("itemConsumeCount", 0);
 		_itemConsumeId = set.getInt("itemConsumeId", 0);
@@ -275,28 +277,6 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		_stayOnSubclassChange = set.getBoolean("stayOnSubclassChange", true);
 		
 		_hitTime = set.getInt("hitTime", 0);
-		String hitTimings = set.getString("hitTimings", null);
-		if (hitTimings != null)
-		{
-			try
-			{
-				String[] valuesSplit = hitTimings.split(",");
-				_hitTimings = new int[valuesSplit.length];
-				for (int i = 0; i < valuesSplit.length; i++)
-				{
-					_hitTimings[i] = Integer.parseInt(valuesSplit[i]);
-				}
-			}
-			catch (Exception e)
-			{
-				throw new IllegalArgumentException("SkillId: " + _id + " invalid hitTimings value: " + hitTimings + ", \"percent,percent,...percent\" required");
-			}
-		}
-		else
-		{
-			_hitTimings = EMPTY_HIT_TIMINGS;
-		}
-		
 		_coolTime = set.getInt("coolTime", 0);
 		_isDebuff = set.getBoolean("isDebuff", false);
 		_feed = set.getInt("feed", 0);
@@ -349,8 +329,6 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		_maxChance = set.getInt("maxChance", Config.MAX_ABNORMAL_STATE_SUCCESS_RATE);
 		_ignoreShield = set.getBoolean("ignoreShld", false);
 		_skillType = set.getEnum("skillType", L2SkillType.class, L2SkillType.DUMMY);
-		_effectId = set.getInt("effectId", 0);
-		_effectLvl = set.getInt("effectLevel", 0);
 		
 		_nextActionIsAttack = set.getBoolean("nextActionAttack", false);
 		
@@ -410,6 +388,9 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		}
 		_npcId = set.getInt("npcId", 0);
 		_icon = intern(set.getString("icon", "icon.skill0000"));
+		_channelingSkillId = set.getInt("channelingSkillId", 0);
+		_channelingTickInterval = set.getInt("channelingTickInterval", 2) * 1000;
+		_channelingTickInitialDelay = set.getInt("channelingTickInitialDelay", _channelingTickInterval / 1000) * 1000;
 	}
 	
 	public abstract void useSkill(L2Character caster, L2Object[] targets);
@@ -572,18 +553,9 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Return the additional effect Id.
 	 * @return
 	 */
-	public final int getEffectId()
+	public final int getChannelingSkillId()
 	{
-		return _effectId;
-	}
-	
-	/**
-	 * Return the additional effect level.
-	 * @return
-	 */
-	public final int getEffectLvl()
-	{
-		return _effectLvl;
+		return _channelingSkillId;
 	}
 	
 	/**
@@ -752,6 +724,14 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	}
 	
 	/**
+	 * @return Mana consumption per channeling tick.
+	 */
+	public final int getMpPerChanneling()
+	{
+		return _mpPerChanneling;
+	}
+	
+	/**
 	 * @return the skill name
 	 */
 	public final String getName()
@@ -775,16 +755,6 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	public final int getHitTime()
 	{
 		return _hitTime;
-	}
-	
-	public final int getHitCounts()
-	{
-		return _hitTimings.length;
-	}
-	
-	public final int[] getHitTimings()
-	{
-		return _hitTimings;
 	}
 	
 	/**
@@ -823,6 +793,11 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	public final boolean isChance()
 	{
 		return (_chanceCondition != null) && isPassive();
+	}
+	
+	public final boolean isChanneling()
+	{
+		return (_operateType != null) && _operateType.isChanneling();
 	}
 	
 	public final boolean isTriggeredSkill()
@@ -1222,6 +1197,11 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return _effectTemplatesPassive;
 	}
 	
+	public List<EffectTemplate> getEffectTemplateChanneling()
+	{
+		return _effectTemplatesChanneling;
+	}
+	
 	public boolean hasSelfEffects()
 	{
 		return (_effectTemplatesSelf != null) && !_effectTemplatesSelf.isEmpty();
@@ -1230,6 +1210,11 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	public boolean hasPassiveEffects()
 	{
 		return (_effectTemplatesPassive != null) && !_effectTemplatesPassive.isEmpty();
+	}
+	
+	public boolean hasChannelingEffects()
+	{
+		return (_effectTemplatesChanneling != null) && !_effectTemplatesChanneling.isEmpty();
 	}
 	
 	/**
@@ -1414,6 +1399,37 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return effects;
 	}
 	
+	public final List<L2Effect> getChannelingEffects(L2Character effector, L2Character effected)
+	{
+		if ((effector == null) || (effected == null) || !hasChannelingEffects())
+		{
+			return EMPTY_EFFECT_LIST;
+		}
+		
+		final Env env = new Env();
+		env.setCharacter(effector);
+		env.setTarget(effected);
+		env.setSkill(this);
+		
+		boolean addContinuousEffects = _operateType.isToggle() || (_operateType.isContinuous() && Formulas.calcEffectSuccess(env));
+		
+		final List<L2Effect> effects = new ArrayList<>(_effectTemplatesChanneling.size());
+		for (EffectTemplate et : _effectTemplatesChanneling)
+		{
+			final L2Effect e = et.getEffect(env);
+			if (e != null)
+			{
+				if ((e.isInstant() && e.calcSuccess()) || (!e.isInstant() && addContinuousEffects))
+				{
+					e.scheduleEffect();
+					effects.add(e);
+				}
+			}
+		}
+		effector.getEffectList().add(effects);
+		return effects;
+	}
+	
 	public final void attach(FuncTemplate f)
 	{
 		if (_funcTemplates == null)
@@ -1448,6 +1464,15 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			_effectTemplatesPassive = new ArrayList<>(1);
 		}
 		_effectTemplatesPassive.add(effect);
+	}
+	
+	public final void attachChanneling(EffectTemplate effectTemplate)
+	{
+		if (_effectTemplatesChanneling == null)
+		{
+			_effectTemplatesChanneling = new ArrayList<>(1);
+		}
+		_effectTemplatesChanneling.add(effectTemplate);
 	}
 	
 	public final void attach(Condition c, boolean itemOrWeapon)
@@ -1682,5 +1707,15 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	public String getIcon()
 	{
 		return _icon;
+	}
+	
+	public int getChannelingTickInterval()
+	{
+		return _channelingTickInterval;
+	}
+	
+	public int getChannelingTickInitialDelay()
+	{
+		return _channelingTickInitialDelay;
 	}
 }
