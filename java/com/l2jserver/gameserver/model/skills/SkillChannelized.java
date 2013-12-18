@@ -18,8 +18,7 @@
  */
 package com.l2jserver.gameserver.model.skills;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.model.actor.L2Character;
 
@@ -28,42 +27,37 @@ import com.l2jserver.gameserver.model.actor.L2Character;
  */
 public final class SkillChannelized
 {
-	private final Map<Integer, Map<Integer, L2Character>> _channelizers = new ConcurrentHashMap<>();
+	private final FastIntObjectMap<FastIntObjectMap<L2Character>> _channelizers = new FastIntObjectMap<FastIntObjectMap<L2Character>>().shared();
 	
 	public void addChannelizer(int skillId, L2Character channelizer)
 	{
-		if (!_channelizers.containsKey(skillId))
-		{
-			_channelizers.put(skillId, new ConcurrentHashMap<Integer, L2Character>());
-		}
-		_channelizers.get(skillId).put(channelizer.getObjectId(), channelizer);
+		FastIntObjectMap<L2Character> c;
+		if ((c = _channelizers.get(skillId)) == null)
+			_channelizers.put(skillId, c = new FastIntObjectMap<L2Character>().shared());
+		c.put(channelizer.getObjectId(), channelizer);
 	}
 	
 	public void removeChannelizer(int skillId, L2Character channelizer)
 	{
-		if (_channelizers.containsKey(skillId))
-		{
-			_channelizers.get(skillId).remove(channelizer.getObjectId());
-		}
+		FastIntObjectMap<L2Character> c;
+		if ((c = _channelizers.get(skillId)) != null)
+			c.remove(channelizer.getObjectId());
 	}
 	
 	public int getChannerlizersSize(int skillId)
 	{
-		if (_channelizers.containsKey(skillId))
-		{
-			return _channelizers.get(skillId).size();
-		}
-		return 0;
+		FastIntObjectMap<L2Character> c;
+		return (c = _channelizers.get(skillId)) != null ? c.size() : 0;
 	}
 	
-	public Map<Integer, L2Character> getChannelizers(int skillId)
+	public FastIntObjectMap<L2Character> getChannelizers(int skillId)
 	{
 		return _channelizers.get(skillId);
 	}
 	
 	public void abortChannelization()
 	{
-		for (Map<Integer, L2Character> map : _channelizers.values())
+		for (FastIntObjectMap<L2Character> map : _channelizers.values())
 		{
 			for (L2Character channelizer : map.values())
 			{
@@ -75,9 +69,9 @@ public final class SkillChannelized
 	
 	public boolean isChannelized()
 	{
-		for (Map<Integer, L2Character> map : _channelizers.values())
+		for (FastIntObjectMap<L2Character> map : _channelizers.values())
 		{
-			if (!map.isEmpty())
+			if (map != null && !map.isEmpty())
 			{
 				return true;
 			}
