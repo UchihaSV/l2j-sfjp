@@ -25,7 +25,6 @@ import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.engines.DocumentEngine;
-import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 
 import gnu.trove.list.array.TIntArrayList;
@@ -239,26 +238,26 @@ public class SkillTable
 		WEAPON_GRADE_PENALTY(6209, 1),
 		ARMOR_GRADE_PENALTY(6213, 1);
 		
-		private final SkillHolder _holder;
+		private final int _skillHashCode;
 		
 		private FrequentSkill(int id, int level)
 		{
-			_holder = new SkillHolder(id, level);
+			_skillHashCode = SkillTable.getSkillHashCode(id, level);
 		}
 		
 		public int getId()
 		{
-			return _holder.getSkillId();
+			return SkillTable.getSkillId(_skillHashCode);
 		}
 		
 		public int getLevel()
 		{
-			return _holder.getSkillLvl();
+			return SkillTable.getSkillLevel(_skillHashCode);
 		}
 		
 		public L2Skill getSkill()
 		{
-			return _holder.getSkill();
+			return SkillTable.getSkill(_skillHashCode);
 		}
 	}
 	
