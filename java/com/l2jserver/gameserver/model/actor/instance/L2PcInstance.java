@@ -9889,7 +9889,7 @@ public final class L2PcInstance extends L2Playable
 		
 		setFalling(); // prevent receive falling damage
 		_observerMode = false;
-		sendPacket(new ObservationReturn(getLastLocation()));
+		sendPacket(new ObservationReturn(getLocation()));
 		unsetLastLocation();
 		broadcastUserInfo();
 	}
