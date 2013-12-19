@@ -391,7 +391,7 @@ public class CharStat
 			return 1f;
 		}
 		//-------------------------------------------------------
-		return (getMoveSpeed() / baseSpeed);
+		return (getRunSpeed() / baseSpeed);
 	}
 	
 	/**
