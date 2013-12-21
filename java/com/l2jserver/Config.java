@@ -4356,9 +4356,10 @@ public final class Config
 			}
 		}
 		
+		public static String externalIp = "127.0.0.1";	//+[JOJO]
 		protected void autoIpConfig()
 		{
-			String externalIp = "127.0.0.1";
+		//	String externalIp = "127.0.0.1";	//-[JOJO]
 			try
 			{
 				URL autoIp = new URL("http://api.externalip.net/ip/");
@@ -4416,6 +4417,12 @@ public final class Config
 				_hosts.add(externalIp);
 				_subnets.add("0.0.0.0/0");
 				_log.log(Level.INFO, "Network Config: Adding new subnet: 0.0.0.0/0 address: " + externalIp);
+				
+				//[JOJO]-------------------------------------------------
+				if (com.l2jserver.CheckDynamicIpAddressTask.CHECK_DYNAMIC_IP) {
+					CheckDynamicIpAddressTask.start();
+				}
+				//-------------------------------------------------------
 			}
 			catch (SocketException e)
 			{
