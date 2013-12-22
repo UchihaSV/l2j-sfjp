@@ -35,9 +35,12 @@ class CheckDynamicIpAddressTask implements Runnable
 		"http://taruo.net/ip/?",
 		"http://whatsmyip.net/",
 		"http://www.cybersyndrome.net/evc.html",
-		"http://www.ip-adress.com/",
+		"http://www.ipchicken.com/",
+		"http://www.iprivacytools.com/my-ip-address/",
 		"http://www.myipaddress.com/show-my-ip-address/",
+		"http://www.show-ip-addr.com/en/",
 		"http://www.tracemyip.org/",
+		"http://www.whereisip.net/",
 	//	"http://www.ugtop.com/spill.shtml",
 	};
 	
@@ -94,7 +97,7 @@ class CheckDynamicIpAddressTask implements Runnable
 			}
 			catch (IOException e)
 			{
-				_log.log(Level.WARNING, url, e);
+				_log.log(Level.WARNING, "", e);
 			}
 		}
 		return null;
