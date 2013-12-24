@@ -134,7 +134,7 @@ public final class DayNightSpawnManager
 	
 	private void changeMode(boolean isNight)
 	{
-		if (_nightCreatures.isEmpty() && _dayCreatures.isEmpty())
+		if (_nightCreatures.isEmpty() && _dayCreatures.isEmpty() && _bosses.isEmpty())
 		{
 			return;
 		}
