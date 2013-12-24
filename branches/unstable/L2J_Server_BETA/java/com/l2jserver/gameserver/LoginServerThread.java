@@ -44,6 +44,7 @@ import java.util.logging.Logger;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
+import com.l2jserver.CheckDynamicIpAddressTask;
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.model.L2World;
@@ -259,21 +260,6 @@ public class LoginServerThread extends Thread
 							_serverName = aresp.getServerName();
 							Config.saveHexid(_serverID, hexToString(_hexID));
 							_log.info("Registered on login as Server " + _serverID + " : " + _serverName);
-
-							if (System.getProperty("os.name").startsWith("Windows"))	//+[JOJO]
-							{
-								// msg.exe -- Windows XP Professional Edition のみ有り？Home には無し？未確認
-								Process processA = null;
-								try {
-									processA = Runtime.getRuntime().exec(new String[]{"msg.exe","*","/TIME:1","L2Jゲームサーバが起動しました."});
-									processA.waitFor();
-								}
-								catch (Exception e) {}
-								finally {
-									if (processA != null) processA.destroy();
-								}
-							}
-
 							ServerStatus st = new ServerStatus();
 							if (Config.SERVER_LIST_BRACKET)
 							{
@@ -314,6 +300,24 @@ public class LoginServerThread extends Thread
 								}
 								sendPacket(new PlayerInGame(playerList));
 							}
+							//[JOJO]-------------------------------------------------
+if (com.l2jserver.Config.CHECK_DYNAMIC_IP_ADDRESS_TASK) {{
+							CheckDynamicIpAddressTask.start();
+}}
+							if (System.getProperty("os.name").startsWith("Windows"))	//+[JOJO]
+							{
+								// msg.exe -- Windows XP Professional Edition のみ有り？Home には無し？未確認
+								Process processA = null;
+								try {
+									processA = Runtime.getRuntime().exec(new String[]{"msg.exe","*","/TIME:1","L2Jゲームサーバが起動しました."});
+									processA.waitFor();
+								}
+								catch (Exception e) {}
+								finally {
+									if (processA != null) processA.destroy();
+								}
+							}
+							//-------------------------------------------------------
 							break;
 						case 0x03:
 							PlayerAuthResponse par = new PlayerAuthResponse(incoming);
