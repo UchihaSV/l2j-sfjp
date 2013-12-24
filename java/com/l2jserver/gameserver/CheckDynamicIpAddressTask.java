@@ -1,5 +1,5 @@
 //@formatter:off
-package com.l2jserver;
+package com.l2jserver.gameserver;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,9 +12,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.l2jserver.Config;
 import com.l2jserver.Config.IPConfigData;
-import com.l2jserver.gameserver.LoginServerThread;
-import com.l2jserver.gameserver.ThreadPoolManager;
 
 /*
  * @auther JOJO
