@@ -4419,7 +4419,7 @@ public final class Config
 				_subnets.add("0.0.0.0/0");
 				_log.log(Level.INFO, "Network Config: Adding new subnet: 0.0.0.0/0 address: " + externalIp);
 if (com.l2jserver.Config.CHECK_DYNAMIC_IP_ADDRESS_TASK) {{
-				com.l2jserver.CheckDynamicIpAddressTask.isAutoIpConfig = !externalIp.equals("127.0.0.1");
+				com.l2jserver.gameserver.CheckDynamicIpAddressTask.isAutoIpConfig = !externalIp.equals("127.0.0.1");
 }}
 			}
 			catch (SocketException e)
