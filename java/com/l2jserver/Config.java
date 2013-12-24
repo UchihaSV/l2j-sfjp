@@ -1189,6 +1189,7 @@ public final class Config
 	//--------------------------------------------------
 	public static final String SCRIPT_ENCODING = null; /*"MS932"*/		//[JOJO] *.py,*.javaスクリプトの文字エンコード.
 																		//       "MS932":サーバ起動時に(スクリプトをMS932とみなして)Native2Asciiする. null:何もしない.
+	public static final boolean CHECK_DYNAMIC_IP_ADDRESS_TASK = true;	//[JOJO]IPアドレスを定期的に検査して変化していればログインサーバに接続しなおす.
 	public static final boolean ADMIN_MENU_AUTO_RETURN = true;			//[JOJO]adminメニューを開いたままにする.
 	public static final boolean NEVER_EVT_AGGRESSION_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体にはEVT_AGGRESSIONを発行しない.
 	public static final boolean NEVER_RandomAnimation_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体はあくびしない.
@@ -4417,12 +4418,9 @@ public final class Config
 				_hosts.add(externalIp);
 				_subnets.add("0.0.0.0/0");
 				_log.log(Level.INFO, "Network Config: Adding new subnet: 0.0.0.0/0 address: " + externalIp);
-				
-				//[JOJO]-------------------------------------------------
-				if (com.l2jserver.CheckDynamicIpAddressTask.CHECK_DYNAMIC_IP) {
-					CheckDynamicIpAddressTask.start();
-				}
-				//-------------------------------------------------------
+if (com.l2jserver.Config.CHECK_DYNAMIC_IP_ADDRESS_TASK) {{
+				com.l2jserver.CheckDynamicIpAddressTask.isAutoIpConfig = !externalIp.equals("127.0.0.1");
+}}
 			}
 			catch (SocketException e)
 			{
