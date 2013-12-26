@@ -312,7 +312,7 @@ public abstract class ClanHallSiegeEngine extends Quest implements Siegable
 		_hall.free();
 		_hall.banishForeigners();
 		SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.REGISTRATION_TERM_FOR_S1_ENDED);
-		msg.addString(getName());
+		msg.addSiegableHallName(_hall);	//[JOJO]
 		Announcements.getInstance().announceToAll(msg);
 		_hall.updateSiegeStatus(SiegeStatus.WAITING_BATTLE);
 		
