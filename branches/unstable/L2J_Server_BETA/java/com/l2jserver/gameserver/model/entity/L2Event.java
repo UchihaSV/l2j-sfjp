@@ -24,7 +24,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -33,6 +32,8 @@ import java.util.logging.Logger;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.cache.HtmCache;
@@ -64,12 +65,12 @@ public class L2Event
 	public static String _eventCreator = "";
 	public static String _eventInfo = "";
 	public static int _teamsNumber = 0;
-	public static final Map<Integer, String> _teamNames = new FastMap<>();
-	public static final List<L2PcInstance> _registeredPlayers = new FastList<>();
-	public static final Map<Integer, List<L2PcInstance>> _teams = new FastMap<>();
+	public static final FastIntObjectMap<String> _teamNames = new FastIntObjectMap<>();
+	public static final FastList<L2PcInstance> _registeredPlayers = new FastList<>();
+	public static final FastIntObjectMap<List<L2PcInstance>> _teams = new FastIntObjectMap<>();
 	public static int _npcId = 0;
 	// public static final List<L2Npc> _npcs = new FastList<L2Npc>();
-	private static final Map<L2PcInstance, PlayerEventHolder> _connectionLossData = new FastMap<>();
+	private static final FastMap<L2PcInstance, PlayerEventHolder> _connectionLossData = new FastMap<>();
 	
 	public enum EventState
 	{
@@ -89,7 +90,7 @@ public class L2Event
 			return -1;
 		}
 		
-		for (Entry<Integer, List<L2PcInstance>> team : _teams.entrySet())
+		for (IntObjectMap.Entry<List<L2PcInstance>> team : _teams.entrySet())
 		{
 			if (team.getValue().contains(player))
 			{
@@ -102,7 +103,7 @@ public class L2Event
 	
 	public static List<L2PcInstance> getTopNKillers(int n)
 	{
-		final Map<L2PcInstance, Integer> tmp = new HashMap<>();
+		final HashMap<L2PcInstance, Integer> tmp = new HashMap<>();
 		for (List<L2PcInstance> teamList : _teams.values())
 		{
 			for (L2PcInstance player : teamList)
@@ -115,16 +116,13 @@ public class L2Event
 			}
 		}
 		
-		sortByValue(tmp);
+		final ArrayList<L2PcInstance> toReturn = new ArrayList<>(sortByValue(tmp).keySet());
 		
 		// If the map size is less than "n", n will be as much as the map size
-		if (tmp.size() <= n)
-		{
-			return new ArrayList<>(tmp.keySet());
-		}
-		
-		final List<L2PcInstance> toReturn = new ArrayList<>(tmp.keySet());
-		return toReturn.subList(1, n);
+		if (toReturn.size() <= n)
+			return toReturn;
+		else
+			return toReturn.subList(0, n);
 	}
 	
 	public static void showEventHtml(L2PcInstance player, String objectid)
@@ -548,9 +546,9 @@ public class L2Event
 		return "The event has been successfully finished.";
 	}
 	
-	private static final Map<L2PcInstance, Integer> sortByValue(Map<L2PcInstance, Integer> unsortMap)
+	private static final LinkedHashMap<L2PcInstance, Integer> sortByValue(Map<L2PcInstance, Integer> unsortMap)
 	{
-		final List<Entry<L2PcInstance, Integer>> list = new LinkedList<>(unsortMap.entrySet());
+		final ArrayList<Entry<L2PcInstance, Integer>> list = new ArrayList<>(unsortMap.entrySet());
 		Collections.sort(list, new Comparator<Entry<L2PcInstance, Integer>>()
 		{
 			@Override
@@ -560,7 +558,7 @@ public class L2Event
 			}
 		});
 		
-		final Map<L2PcInstance, Integer> sortedMap = new LinkedHashMap<>();
+		final LinkedHashMap<L2PcInstance, Integer> sortedMap = new LinkedHashMap<>();
 		for (Entry<L2PcInstance, Integer> entry : list)
 		{
 			sortedMap.put(entry.getKey(), entry.getValue());
