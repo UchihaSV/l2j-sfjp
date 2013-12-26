@@ -143,7 +143,7 @@ public class L2GuardInstance extends L2Attackable
 		if (isDead() || !isVisible())
 			return false;
 		
-		if (!isInsideRadius(getSpawn().getX(), getSpawn().getY(), 150, false))
+		if (!isInsideRadius(getSpawn(), 150, false, false))
 		{
 			clearAggroList();
 			
