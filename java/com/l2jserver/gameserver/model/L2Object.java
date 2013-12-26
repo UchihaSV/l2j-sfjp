@@ -53,13 +53,11 @@ import com.l2jserver.gameserver.util.Point3D;
  */
 public abstract class L2Object extends Point3D implements IIdentifiable, INamable, ISpawnable, IUniqueId, IDecayable
 {
-	private boolean _isVisible; // Object visibility
+	private boolean _isVisible;
 	private ObjectKnownList _knownList;
 	private String _name;
-	private int _objectId; // Object identifier
-	private ObjectPoly _poly;
+	private int _objectId;
 	private L2WorldRegion _worldRegion;
-	
 	private InstanceType _instanceType = null;
 	private volatile Map<String, Object> _scripts;
 	
@@ -141,7 +139,6 @@ public abstract class L2Object extends Point3D implements IIdentifiable, INamabl
 		
 		Instance oldI = InstanceManager.getInstance().getInstance(getInstanceId());
 		Instance newI = InstanceManager.getInstance().getInstance(instanceId);
-		
 		if (newI == null)
 		{
 			return;
@@ -149,20 +146,23 @@ public abstract class L2Object extends Point3D implements IIdentifiable, INamabl
 		
 		if (isPlayer())
 		{
-			L2PcInstance player = getActingPlayer();
+			final L2PcInstance player = getActingPlayer();
 			if ((getInstanceId() > 0) && (oldI != null))
 			{
 				oldI.removePlayer(getObjectId());
 				if (oldI.isShowTimer())
+				{
 					hideInstanceTimer();	//[JOJO]
+				}
 			}
 			if (instanceId > 0)
 			{
 				newI.addPlayer(getObjectId());
 				if (newI.isShowTimer())
+				{
 					showInstanceTimer(newI);	//[JOJO]
+				}
 			}
-			
 			if (player.hasSummon())
 			{
 				player.getSummon().setInstanceId(instanceId);
@@ -170,7 +170,7 @@ public abstract class L2Object extends Point3D implements IIdentifiable, INamabl
 		}
 		else if (isNpc())
 		{
-			L2Npc npc = (L2Npc) this;
+			final L2Npc npc = (L2Npc) this;
 			if ((getInstanceId() > 0) && (oldI != null))
 			{
 				oldI.removeNpc(npc);
@@ -183,16 +183,12 @@ public abstract class L2Object extends Point3D implements IIdentifiable, INamabl
 		
 		super.setInstanceId(instanceId);
 		
-		// If we change it for visible objects, me must clear & revalidates knownlists
 		if (_isVisible && (_knownList != null))
 		{
-			if (isPlayer())
-			{
-				// We don't want some ugly looking disappear/appear effects, so don't update
-				// the knownlist here, but players usually enter instancezones through teleporting
-				// and the teleport will do the revalidation for us.
-			}
-			else
+			// We don't want some ugly looking disappear/appear effects, so don't update
+			// the knownlist here, but players usually enter instancezones through teleporting
+			// and the teleport will do the revalidation for us.
+			if (!isPlayer())
 			{
 				decayMe();
 				spawnMe();
@@ -411,11 +407,8 @@ public abstract class L2Object extends Point3D implements IIdentifiable, INamabl
 	
 	public final ObjectPoly getPoly()
 	{
-		if (_poly == null)
-		{
-			_poly = new ObjectPoly(this);
-		}
-		return _poly;
+		final ObjectPoly poly = getScript(ObjectPoly.class);
+		return (poly == null) ? addScript(new ObjectPoly(this)) : poly;
 	}
 	
 	public abstract void sendInfo(L2PcInstance activeChar);
