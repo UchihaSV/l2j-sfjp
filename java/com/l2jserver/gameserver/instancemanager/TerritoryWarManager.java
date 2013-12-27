@@ -25,13 +25,14 @@ import java.sql.Statement;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
+import jp.sf.l2j.arrayMaps.SortedIntIntArrayMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -81,20 +82,20 @@ public final class TerritoryWarManager implements Siegable
 	public static int MINTWBADGEFORNOBLESS;
 	public static int MINTWBADGEFORSTRIDERS;
 	public static int MINTWBADGEFORBIGSTRIDER;
-	public static Long WARLENGTH;
+	public static long WARLENGTH;
 	public static boolean PLAYER_WITH_WARD_CAN_BE_KILLED_IN_PEACEZONE;
 	public static boolean SPAWN_WARDS_WHEN_TW_IS_NOT_IN_PROGRESS;
 	public static boolean RETURN_WARDS_WHEN_TW_STARTS;
-	public final Map<Integer,Integer> TERRITORY_ITEM_IDS = new FastMap<>();
+	public final SortedIntIntArrayMap TERRITORY_ITEM_IDS = new SortedIntIntArrayMap();
 	
 	// Territory War settings
 	private final FastMap<Integer, FastList<L2Clan>> _registeredClans = new FastMap<Integer, FastList<L2Clan>>().shared();
 	private final FastMap<Integer, FastList<Integer>> _registeredMercenaries = new FastMap<Integer, FastList<Integer>>().shared();
-	private final FastMap<Integer, Territory> _territoryList = new FastMap<Integer, TerritoryWarManager.Territory>().shared();
+	private final FastIntObjectMap<Territory> _territoryList = new FastIntObjectMap<TerritoryWarManager.Territory>().shared();
 	protected final FastList<Integer> _disguisedPlayers = new FastList<Integer>().shared();
 	private final FastList<TerritoryWard> _territoryWards = new FastList<TerritoryWard>().shared();
 	private final FastMap<L2Clan, L2SiegeFlagInstance> _clanFlags = new FastMap<L2Clan, L2SiegeFlagInstance>().shared();
-	private final Map<Integer,int[]> _participantPoints = new FastMap<>();
+	private final FastIntObjectMap<int[]> _participantPoints = new FastIntObjectMap<>();
 	protected Calendar _startTWDate = Calendar.getInstance();
 	protected boolean _isRegistrationOver = true;
 	protected boolean _isTWChannelOpen = false;
