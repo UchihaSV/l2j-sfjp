@@ -4741,6 +4741,100 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		return result;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	/**
+	 * Return the distance between the current position of the L2Character and the target (x,y).
+	 * @param x X position of the target
+	 * @param y Y position of the target
+	 * @return the plan distance
+	 * @deprecated use getPlanDistanceSq(int x, int y, int z)
+	 */
+	@Deprecated
+	public final double getDistance(int x, int y)
+	{
+		return calculateDistance(x, y, 0, false, false);
+	//	double dx = x - getX();
+	//	double dy = y - getY();
+	//	
+	//	return Math.sqrt((dx * dx) + (dy * dy));
+	}
+	
+	/**
+	 * Return the distance between the current position of the L2Character and the target (x,y).
+	 * @param x X position of the target
+	 * @param y Y position of the target
+	 * @param z
+	 * @return the plan distance
+	 * @deprecated use getPlanDistanceSq(int x, int y, int z)
+	 */
+	@Deprecated
+	public final double getDistance(int x, int y, int z)
+	{
+		return calculateDistance(x, y, z, true, false);
+	//	double dx = x - getX();
+	//	double dy = y - getY();
+	//	double dz = z - getZ();
+	//	
+	//	return Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
+	}
+	
+	/**
+	 * Return the squared distance between the current position of the L2Character and the given object.
+	 * @param object L2Object
+	 * @return the squared distance
+	 */
+	public final double getDistanceSq(L2Object object)
+	{
+		return calculateDistance(object.getX(), object.getY(), object.getZ(), true, true);
+	//	return getDistanceSq(object.getX(), object.getY(), object.getZ());
+	}
+	
+	/**
+	 * Return the squared distance between the current position of the L2Character and the given x, y, z.
+	 * @param x X position of the target
+	 * @param y Y position of the target
+	 * @param z Z position of the target
+	 * @return the squared distance
+	 */
+	public final double getDistanceSq(int x, int y, int z)
+	{
+		return calculateDistance(x, y, z, true, true);
+	//	double dx = x - getX();
+	//	double dy = y - getY();
+	//	double dz = z - getZ();
+	//	
+	//	return ((dx * dx) + (dy * dy) + (dz * dz));
+	}
+	
+	/**
+	 * Return the squared plan distance between the current position of the L2Character and the given object.<BR>
+	 * (check only x and y, not z)
+	 * @param object L2Object
+	 * @return the squared plan distance
+	 */
+	public final double getPlanDistanceSq(L2Object object)
+	{
+		return calculateDistance(object.getX(), object.getY(), object.getZ(), false, true);
+	//	return getPlanDistanceSq(object.getX(), object.getY());
+	}
+	
+	/**
+	 * Return the squared plan distance between the current position of the L2Character and the given x, y, z.<BR>
+	 * (check only x and y, not z)
+	 * @param x X position of the target
+	 * @param y Y position of the target
+	 * @return the squared plan distance
+	 */
+	public final double getPlanDistanceSq(int x, int y)
+	{
+		return calculateDistance(x, y, 0, false, true);
+	//	double dx = x - getX();
+	//	double dy = y - getY();
+	//	
+	//	return ((dx * dx) + (dy * dy));
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * Check if this object is inside the given radius around the given point.
 	 * @param loc Location of the target

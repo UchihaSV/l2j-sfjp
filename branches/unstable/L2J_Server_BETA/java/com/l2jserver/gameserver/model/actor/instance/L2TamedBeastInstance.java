@@ -18,9 +18,8 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_IDLE;
-import static com.l2jserver.gameserver.util.Util.calculateDistance;
-import static com.l2jserver.gameserver.util.Util.convertHeadingToRadian;
+import static com.l2jserver.gameserver.ai.CtrlIntention.*;
+import static com.l2jserver.gameserver.util.Util.*;
 
 import java.util.Iterator;
 import java.util.List;
@@ -762,7 +761,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 				if (size >= 2)
 				{
 					final L2TamedBeastInstance beast = (L2TamedBeastInstance) getActor();
-					final double distance = Math.max(64.0, calculateDistance(owner, beast, false));
+					final double distance = Math.max(64.0, owner.calculateDistance(beast, false, false));
 					final int index = trainedBeasts.indexOf(beast);
 					final double angle = convertHeadingToRadian(owner.getHeading())
 						+ Math.PI
