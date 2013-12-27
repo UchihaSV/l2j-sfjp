@@ -1531,7 +1531,6 @@ public class Siege implements Siegable
 		if (!getSiegeGuardManager().getSiegeGuardSpawn().isEmpty())
 		{
 			L2ControlTowerInstance closestCt;
-			int x, y, z;
 			double distance;
 			double distanceClosest = 0;
 			for (L2Spawn spawn : getSiegeGuardManager().getSiegeGuardSpawn())
@@ -1544,10 +1543,6 @@ public class Siege implements Siegable
 				closestCt = null;
 				distanceClosest = Integer.MAX_VALUE;
 				
-				x = spawn.getX();
-				y = spawn.getY();
-				z = spawn.getZ();
-				
 				for (L2ControlTowerInstance ct : _controlTowers)
 				{
 					if (ct == null)
@@ -1555,7 +1550,7 @@ public class Siege implements Siegable
 						continue;
 					}
 					
-					distance = ct.getDistanceSq(x, y, z);
+					distance = ct.calculateDistance(spawn, true, true);
 					
 					if (distance < distanceClosest)
 					{
