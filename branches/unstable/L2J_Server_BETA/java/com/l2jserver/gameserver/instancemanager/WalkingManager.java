@@ -18,7 +18,7 @@
  */
 package com.l2jserver.gameserver.instancemanager;
 
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ACTIVE;
+import static com.l2jserver.gameserver.ai.CtrlIntention.*;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -38,8 +38,8 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlIntention;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.engines.DocumentParser;
-import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.enums.QuestEventType;
+import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.tasks.StartMovingTask;
 import com.l2jserver.gameserver.model.L2NpcWalkerNode;
 import com.l2jserver.gameserver.model.L2Spawn;
@@ -316,7 +316,7 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 					
 					if (!npc.isInsideRadius(node, 3000, true, false))
 					{
-						final String message = "Route '" + routeName + "': NPC (id=" + npc.getId() + ", x=" + npc.getX() + ", y=" + npc.getY() + ", z=" + npc.getZ() + ") is too far from starting point (node x=" + node.getX() + ", y=" + node.getY() + ", z=" + node.getZ() + ", range=" + npc.getDistanceSq(node.getX(), node.getY(), node.getZ()) + "), walking will not start";
+						final String message = "Route '" + routeName + "': NPC (id=" + npc.getId() + ", x=" + npc.getX() + ", y=" + npc.getY() + ", z=" + npc.getZ() + ") is too far from starting point (node x=" + node.getX() + ", y=" + node.getY() + ", z=" + node.getZ() + ", range=" + npc.calculateDistance(node, true, true) + "), walking will not start";
 						_log.warning(getClass().getSimpleName() + ": " + message);
 						npc.sendDebugMessage(message);
 						return;
