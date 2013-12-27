@@ -131,6 +131,62 @@ public final class Util
 		return (int) (Math.atan2(dy, dx) * HEADING_PER_RADIAN) & 0x0000FFFF;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	/**
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return the distance between the two coordinates in 2D plane
+	 */
+	public static double calculateDistance(int x1, int y1, int x2, int y2)
+	{
+		return calculateDistance(x1, y1, 0, x2, y2, 0, false, false);
+	//	return calculateDistance(x1, y1, 0, x2, y2, 0, false);
+	}
+	
+	/**
+	 * @param x1
+	 * @param y1
+	 * @param z1
+	 * @param x2
+	 * @param y2
+	 * @param z2
+	 * @param includeZAxis - if true, includes also the Z axis in the calculation
+	 * @return the distance between the two coordinates
+	 */
+	public static double calculateDistance(int x1, int y1, int z1, int x2, int y2, int z2, boolean includeZAxis)
+	{
+		return calculateDistance(x1, y1, z1, x2, y2, z2, includeZAxis, false);
+	//	double dx = (double) x1 - x2;
+	//	double dy = (double) y1 - y2;
+	//	
+	//	if (includeZAxis)
+	//	{
+	//		double dz = z1 - z2;
+	//		return Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
+	//	}
+	//	return Math.sqrt((dx * dx) + (dy * dy));
+	}
+	
+	/**
+	 * @param obj1
+	 * @param obj2
+	 * @param includeZAxis - if true, includes also the Z axis in the calculation
+	 * @return the distance between the two objects
+	 */
+	public static double calculateDistance(L2Object obj1, L2Object obj2, boolean includeZAxis)
+	{
+		if ((obj1 == null) || (obj2 == null))
+		{
+			return 1000000;
+		}
+		
+		return calculateDistance(obj1.getX(), obj1.getY(), obj1.getZ(), obj2.getX(), obj2.getY(), obj2.getZ(), includeZAxis, false);
+	//	return calculateDistance(obj1.getX(), obj1.getY(), obj1.getZ(), obj2.getX(), obj2.getY(), obj2.getZ(), includeZAxis);
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * Calculates distance between one set of x, y, z and another set of x, y, z.
 	 * @param x1 - X coordinate of first point.
