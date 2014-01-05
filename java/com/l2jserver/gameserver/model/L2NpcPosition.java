@@ -69,4 +69,5 @@ public class L2NpcPosition implements ILocational
 	
 	@Deprecated @Override public Location getLocation() { throw new UnsupportedOperationException(); }
 	@Deprecated @Override public int getInstanceId() { throw new UnsupportedOperationException(); }
+	@Deprecated @Override public ILocational getLocation(L2Object obj) { throw new UnsupportedOperationException(); }
 }
