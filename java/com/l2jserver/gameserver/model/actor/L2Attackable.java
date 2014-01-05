@@ -2297,7 +2297,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		
 		if (hasAI() && (getSpawn() != null))
 		{
-			getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, getSpawn().getLocation());
+			getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, getSpawn().getLocation(this));
 		}
 	}
 	
