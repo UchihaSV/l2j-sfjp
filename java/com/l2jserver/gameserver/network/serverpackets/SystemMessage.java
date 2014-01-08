@@ -37,7 +37,6 @@ import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2DoorInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
-import com.l2jserver.gameserver.model.effects.L2Effect;
 import com.l2jserver.gameserver.model.entity.Castle;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
@@ -356,11 +355,6 @@ public final class SystemMessage extends L2GameServerPacket
 			y,
 			z
 		}));
-	}
-	
-	public final SystemMessage addSkillName(final L2Effect effect)
-	{
-		return addSkillName(effect.getSkill());
 	}
 	
 	public final SystemMessage addSkillName(final L2Skill skill)

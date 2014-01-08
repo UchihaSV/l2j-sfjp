@@ -57,6 +57,7 @@ import com.l2jserver.gameserver.model.conditions.ConditionPlayerCallPc;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanEscape;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanPossessHolything;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanRefuelAirship;
+import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanSummon;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanSweep;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanTransform;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanUntransform;
@@ -115,7 +116,7 @@ import com.l2jserver.gameserver.model.conditions.ConditionTargetWeight;
 import com.l2jserver.gameserver.model.conditions.ConditionUsingItemType;
 import com.l2jserver.gameserver.model.conditions.ConditionUsingSkill;
 import com.l2jserver.gameserver.model.conditions.ConditionWithSkill;
-import com.l2jserver.gameserver.model.effects.EffectTemplate;
+import com.l2jserver.gameserver.model.effects.AbstractEffect;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.type.L2ArmorType;
 import com.l2jserver.gameserver.model.items.type.L2WeaponType;
@@ -259,7 +260,7 @@ public abstract class DocumentBase
 			}
 			else if ("effect".equalsIgnoreCase(n.getNodeName()))
 			{
-				if (template instanceof EffectTemplate)
+				if (template instanceof AbstractEffect)
 				{
 					throw new RuntimeException("Nested effects");
 				}
@@ -284,9 +285,9 @@ public abstract class DocumentBase
 		{
 			((L2Skill) template).attach(ft);
 		}
-		else if (template instanceof EffectTemplate)
+		else if (template instanceof AbstractEffect)
 		{
-			((EffectTemplate) template).attach(ft);
+			((AbstractEffect) template).attach(ft);
 		}
 	}
 	
@@ -317,32 +318,32 @@ public abstract class DocumentBase
 		}
 		
 		final StatsSet parameters = parseParameters(n.getFirstChild(), template);
-		final Lambda lambda = getLambda(n, template);
 		final Condition applayCond = parseCondition(n.getFirstChild(), template);
-		final EffectTemplate effectTemplate = new EffectTemplate(attachCond, applayCond, lambda, set, parameters);
-		parseTemplate(n, effectTemplate);
+		
+		final AbstractEffect effect = AbstractEffect.createEffect(attachCond, applayCond, set, parameters);
+		parseTemplate(n, effect);
 		if (template instanceof L2Item)
 		{
-			((L2Item) template).attach(effectTemplate);
+			((L2Item) template).attach(effect);
 		}
 		else if (template instanceof L2Skill)
 		{
-			final L2Skill sk = (L2Skill) template;
+			final L2Skill skill = (L2Skill) template;
 			if (isChanneling)
 			{
-				sk.attachChanneling(effectTemplate);
+				skill.attachChanneling(effect);
 			}
 			else if (set.getInt("self", 0) == 1)
 			{
-				sk.attachSelf(effectTemplate);
+				skill.attachSelf(effect);
 			}
-			else if (sk.isPassive())
+			else if (skill.isPassive())
 			{
-				sk.attachPassive(effectTemplate);
+				skill.attachPassive(effect);
 			}
 			else
 			{
-				sk.attach(effectTemplate);
+				skill.attach(effect);
 			}
 		}
 	}
@@ -792,6 +793,10 @@ public abstract class DocumentBase
 			else if ("canRefuelAirship".equalsIgnoreCase(a.getNodeName()))
 			{
 				cond = joinAnd(cond, new ConditionPlayerCanRefuelAirship(Integer.parseInt(a.getNodeValue())));
+			}
+			else if ("canSummon".equalsIgnoreCase(a.getNodeName()))
+			{
+				cond = joinAnd(cond, new ConditionPlayerCanSummon(Boolean.parseBoolean(a.getNodeValue())));
 			}
 			else if ("canSweep".equalsIgnoreCase(a.getNodeName()))
 			{

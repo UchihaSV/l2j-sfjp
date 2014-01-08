@@ -475,7 +475,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 			for (L2Skill skill : /*getTemplate().*/getSkills().values())
 			{
 				// if the skill is a debuff, check if the attacker has it already [ attacker.getEffect(L2Skill skill) ]
-				if (isDeBuffSkill(skill) && !isSkillDisabled(skill) && Rnd.get(3) < 1 && attacker.getFirstEffect(skill) == null)
+				if (isDeBuffSkill(skill) && !isSkillDisabled(skill) && Rnd.get(3) < 1 && !attacker.isAffectedBySkill(skill.getId()))
 				{
 					sitCastAndFollow(skill, attacker);
 					break;	// isCastingNow
@@ -670,7 +670,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 				// if the skill is a buff, check if the owner has it already [ owner.getEffect(L2Skill skill) ]
 				if (isBuffSkill(skill))
 				{
-					if (owner.getFirstEffect(skill) != null)
+					if (owner.isAffectedBySkill(skill.getId()))
 					{
 						++totalBuffsOnOwner;
 					}

@@ -30,7 +30,7 @@ public enum IllegalActionPunishmentType
 	KICKBAN,
 	JAIL;
 	
-	public final static IllegalActionPunishmentType findByName(String name)
+	public static final IllegalActionPunishmentType findByName(String name)
 	{
 		for (IllegalActionPunishmentType type : values())
 		{
@@ -39,6 +39,6 @@ public enum IllegalActionPunishmentType
 				return type;
 			}
 		}
-		return null;
+		return NONE;
 	}
 }
