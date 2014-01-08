@@ -31,7 +31,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2NpcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2TrapInstance;
-import com.l2jserver.gameserver.model.effects.AbnormalEffect;
+import com.l2jserver.gameserver.model.skills.AbnormalVisualEffect;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 
 public abstract class AbstractNpcInfo extends L2GameServerPacket
@@ -414,7 +414,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeD(_summon.getPvpFlag());
 			writeD(_summon.getKarma());
 			
-			writeD(gmSeeInvis ? _summon.getAbnormalEffect() | AbnormalEffect.STEALTH.getMask() : _summon.getAbnormalEffect());
+			writeD(gmSeeInvis ? _summon.getAbnormalEffect() | AbnormalVisualEffect.STEALTH.getMask() : _summon.getAbnormalEffect());
 			
 			writeD(0x00); // clan id
 			writeD(0x00); // crest id

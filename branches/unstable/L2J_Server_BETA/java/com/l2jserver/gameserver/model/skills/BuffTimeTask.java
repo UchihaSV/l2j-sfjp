@@ -16,28 +16,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.model.actor.tasks.player;
+package com.l2jserver.gameserver.model.skills;
 
-import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.network.serverpackets.ShortBuffStatusUpdate;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Task dedicated to update player's short buffs window.
- * @author UnAfraid
+ * Effect time task finish the effect when the abnormal time is reached.
+ * @author Zoey76
  */
-public class ShortBuffTask implements Runnable
+public class BuffTimeTask implements Runnable
 {
-	private final L2PcInstance _player;
+	private final AtomicInteger _time = new AtomicInteger();
+	private final BuffInfo _info;
 	
-	public ShortBuffTask(L2PcInstance player)
+	/**
+	 * EffectTimeTask constructor.
+	 * @param info the buff info
+	 */
+	public BuffTimeTask(BuffInfo info)
 	{
-		_player = player;
+		_info = info;
+	}
+	
+	/**
+	 * Gets the elapsed time.
+	 * @return the tick count
+	 */
+	public int getElapsedTime()
+	{
+		return _time.get();
 	}
 	
 	@Override
 	public void run()
 	{
-			_player.sendPacket(new ShortBuffStatusUpdate(0, 0, 0));
-			_player.setShortBuffTaskSkillId(0);
+		if (_time.incrementAndGet() > _info.getAbnormalTime())
+		{
+			_info.getEffected().getEffectList().stopSkillEffects(false, _info.getSkill().getId());
+		}
 	}
 }

@@ -40,7 +40,6 @@ import com.l2jserver.gameserver.model.actor.L2Playable;
 import com.l2jserver.gameserver.model.actor.instance.L2DoorInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
-import com.l2jserver.gameserver.model.effects.L2Effect;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.interfaces.ILocational;
 import com.l2jserver.gameserver.model.items.L2Weapon;
@@ -1496,13 +1495,9 @@ public class L2CharacterAI extends AbstractAI
 						}
 					}
 					
-					for (L2Effect effect : target.getAllEffects())
+					if (target.isAffectedBySkill(sk.getId()))
 					{
-						if (effect.getSkill() == sk)
-						{
-							cancast = false;
-							break;
-						}
+						cancast = false;
 					}
 				}
 				if (cancast)
@@ -1529,7 +1524,7 @@ public class L2CharacterAI extends AbstractAI
 						}
 					}
 					
-					if (!target.getAllEffects().isEmpty())
+					if (!target.getEffectList().isEmpty())
 					{
 						cancast = true;
 					}
@@ -1561,7 +1556,7 @@ public class L2CharacterAI extends AbstractAI
 						}
 					}
 					
-					if (!target.getAllEffects().isEmpty())
+					if (!target.getEffectList().isEmpty())
 					{
 						cancast = true;
 					}
@@ -1580,6 +1575,7 @@ public class L2CharacterAI extends AbstractAI
 					{
 						continue;
 					}
+					
 					if (target instanceof L2Attackable)
 					{
 						L2Npc targets = ((L2Npc) target);
@@ -1590,13 +1586,9 @@ public class L2CharacterAI extends AbstractAI
 						}
 					}
 					
-					for (L2Effect effect : target.getAllEffects())
+					if (target.isAffectedBySkill(sk.getId()))
 					{
-						if (effect.getSkill() == sk)
-						{
-							cancast = false;
-							break;
-						}
+						cancast = false;
 					}
 				}
 				if (cancast)
@@ -1625,13 +1617,9 @@ public class L2CharacterAI extends AbstractAI
 				if ((actors.getFactionId() != null) && targets.getFactionId().equals(actors.getFactionId()))
 				{
 					count++;
-					for (L2Effect effect : target.getAllEffects())
+					if (target.isAffectedBySkill(sk.getId()))
 					{
-						if (effect.getSkill() == sk)
-						{
-							ccount++;
-							break;
-						}
+						ccount++;
 					}
 				}
 			}
