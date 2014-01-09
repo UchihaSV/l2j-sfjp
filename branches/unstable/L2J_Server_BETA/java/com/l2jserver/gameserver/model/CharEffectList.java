@@ -119,11 +119,21 @@ public final class CharEffectList
 		}
 	}
 	
+	private Map<Integer, BuffInfo> checkNull(Map<Integer, BuffInfo> map)
+	{
+		if (map == null) return Collections.emptyMap();
+		else return map;
+	}
+	
 	/**
 	 * Gets buff skills.
 	 * @return the buff skills
 	 */
 	public Map<Integer, BuffInfo> getBuffs()
+	{
+		return checkNull(_buffs);
+	}
+	private Map<Integer, BuffInfo> _getBuffs()
 	{
 		if (_buffs == null)
 		{
@@ -145,6 +155,10 @@ public final class CharEffectList
 	 */
 	public Map<Integer, BuffInfo> getTriggered()
 	{
+		return checkNull(_triggered);
+	}
+	private Map<Integer, BuffInfo> _getTriggered()
+	{
 		if (_triggered == null)
 		{
 			synchronized (this)
@@ -164,6 +178,10 @@ public final class CharEffectList
 	 * @return the dance/song skills
 	 */
 	public Map<Integer, BuffInfo> getDances()
+	{
+		return checkNull(_dances);
+	}
+	private	Map<Integer, BuffInfo> _getDances()
 	{
 		if (_dances == null)
 		{
@@ -185,6 +203,10 @@ public final class CharEffectList
 	 */
 	public Map<Integer, BuffInfo> getToggles()
 	{
+		return checkNull(_toggles);
+	}
+	private	Map<Integer, BuffInfo> _getToggles()
+	{
 		if (_toggles == null)
 		{
 			synchronized (this)
@@ -205,6 +227,10 @@ public final class CharEffectList
 	 */
 	public Map<Integer, BuffInfo> getDebuffs()
 	{
+		return checkNull(_debuffs);
+	}
+	private	Map<Integer, BuffInfo> _getDebuffs()
+	{
 		if (_debuffs == null)
 		{
 			synchronized (this)
@@ -224,6 +250,10 @@ public final class CharEffectList
 	 * @return the passive skills
 	 */
 	public Map<Integer, BuffInfo> getPassives()
+	{
+		return checkNull(_passives);
+	}
+	private	Map<Integer, BuffInfo> _getPassives()
 	{
 		if (_passives == null)
 		{
@@ -293,27 +323,27 @@ public final class CharEffectList
 		final Map<Integer, BuffInfo> effects;
 		if (skill.isPassive())
 		{
-			effects = getPassives();
+			effects = _getPassives();
 		}
 		else if (skill.isDebuff())
 		{
-			effects = getDebuffs();
+			effects = _getDebuffs();
 		}
 		else if (skill.isTriggeredSkill())
 		{
-			effects = getTriggered();
+			effects = _getTriggered();
 		}
 		else if (skill.isDance())
 		{
-			effects = getDances();
+			effects = _getDances();
 		}
 		else if (skill.isToggle())
 		{
-			effects = getToggles();
+			effects = _getToggles();
 		}
 		else
 		{
-			effects = getBuffs();
+			effects = _getBuffs();
 		}
 		return effects;
 	}
@@ -422,6 +452,10 @@ public final class CharEffectList
 	 */
 	public boolean isAffectedBySkill(int skillId)
 	{
+		return isAffectedBySkill(Integer.valueOf(skillId));
+	}
+	public boolean isAffectedBySkill(Integer skillId)
+	{
 		return (hasBuffs() && getBuffs().containsKey(skillId)) || (hasDebuffs() && getDebuffs().containsKey(skillId)) || (hasTriggered() && getTriggered().containsKey(skillId)) || (hasDances() && getDances().containsKey(skillId)) || (hasToggles() && getToggles().containsKey(skillId)) || (hasPassives() && getPassives().containsKey(skillId));
 	}
 	
@@ -431,9 +465,10 @@ public final class CharEffectList
 	 * @param skillId the skill ID
 	 * @return the buff info
 	 */
-	public BuffInfo getBuffInfoBySkillId(int skillId)
+	public BuffInfo getBuffInfoBySkillId(int skillId_)
 	{
 		BuffInfo info = null;
+		Integer skillId = Integer.valueOf(skillId_);
 		if (isAffectedBySkill(skillId))
 		{
 			if (hasBuffs() && getBuffs().containsKey(skillId))
@@ -1390,7 +1425,7 @@ public final class CharEffectList
 			}
 			
 			// Puts the effects in the list.
-			final BuffInfo infoToRemove = getPassives().put(skill.getId(), info);
+			final BuffInfo infoToRemove = _getPassives().put(skill.getId(), info);
 			if (infoToRemove != null)
 			{
 				// Removes the old stats from the character if the skill was present.
