@@ -31,7 +31,7 @@ import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
-import com.l2jserver.gameserver.model.effects.AbnormalEffect;
+import com.l2jserver.gameserver.model.skills.AbnormalVisualEffect;
 import com.l2jserver.gameserver.model.interfaces.IL2Procedure;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
@@ -266,13 +266,13 @@ public class L2SepulcherNpcInstance extends L2Npc
 	{
 		BoxAction()
 		{
-			startAbnormalEffect(AbnormalEffect.STUN);
+			startAbnormalEffect(AbnormalVisualEffect.STUN);
 			ThreadPoolManager.getInstance().scheduleEffect(this, 3000);
 		}
 		@Override
 		public void run()
 		{
-			stopAbnormalEffect(AbnormalEffect.STUN);
+			stopAbnormalEffect(AbnormalVisualEffect.STUN);
 		}
 	}
 	

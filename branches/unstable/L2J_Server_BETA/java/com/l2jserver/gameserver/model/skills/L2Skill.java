@@ -1374,6 +1374,16 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			effector.getEffectList().add(info);
 		}
 	}
+	//[JOJO] L2J_Server_BETA r6249 / L2J_DataPack_BETA r9994 移行用
+	/*@Deprecated*/ public final void getEffects(L2Character effector, L2Character effected)
+	{
+		applyEffects(effector, null, effected, null, false, false);
+	}
+	//[JOJO] L2J_Server_BETA r6249 / L2J_DataPack_BETA r9994 移行用
+	/*@Deprecated*/ public final void getEffects(L2Character effector, L2Character effected, Env env)
+	{
+		applyEffects(effector, null, effected, null, false, false);
+	}
 	
 	public final void attach(FuncTemplate f)
 	{

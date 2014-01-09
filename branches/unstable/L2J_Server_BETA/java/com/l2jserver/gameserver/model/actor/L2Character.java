@@ -67,6 +67,7 @@ import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.L2WorldRegion;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.PcCondOverride;
+import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.TeleportWhereType;
 import com.l2jserver.gameserver.model.actor.events.CharEvents;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -84,6 +85,7 @@ import com.l2jserver.gameserver.model.actor.tasks.character.UsePotionTask;
 import com.l2jserver.gameserver.model.actor.templates.L2CharTemplate;
 import com.l2jserver.gameserver.model.actor.transform.Transform;
 import com.l2jserver.gameserver.model.actor.transform.TransformTemplate;
+import com.l2jserver.gameserver.model.conditions.Condition;
 import com.l2jserver.gameserver.model.effects.AbstractEffect;
 import com.l2jserver.gameserver.model.effects.EffectFlag;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
@@ -3317,6 +3319,45 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	public boolean isAffectedBySkill(int skillId)
 	{
 		return _effectList.isAffectedBySkill(skillId);
+	}
+	
+	//[JOJO] L2J_Server_BETA r6249 / L2J_DataPack_BETA r9994 移行用
+	/*@Deprecated*/ public final List<AbstractEffect/*L2Effect*/> getAllEffects()
+	{
+		return _effectList.getAllEffects();
+	}
+	private static final class DummyEffect extends AbstractEffect
+	{
+		protected DummyEffect(Condition attachCond, Condition applyCond, StatsSet set, StatsSet params)
+		{
+			super(attachCond, applyCond, set, params);
+		}
+	}
+	private static final AbstractEffect DUMMY_EFFECT;
+	static {
+		StatsSet set = new StatsSet();
+		set.set("name", "Dummy");
+		DUMMY_EFFECT = new DummyEffect(null, null, set, null);
+	}
+	//[JOJO] L2J_Server_BETA r6249 / L2J_DataPack_BETA r9994 移行用
+	/*@Deprecated*/ public final AbstractEffect/*L2Effect*/ getFirstEffect(int skillId)
+	{
+		return isAffectedBySkill(skillId) ? DUMMY_EFFECT : null;
+	}
+	//[JOJO] L2J_Server_BETA r6249 / L2J_DataPack_BETA r9994 移行用
+	/*@Deprecated*/ public final AbstractEffect/*L2Effect*/ getFirstEffect(L2Skill skill)
+	{
+		return isAffectedBySkill(skill.getId()) ? DUMMY_EFFECT : null;
+	}
+	//[JOJO] L2J_Server_BETA r6249 / L2J_DataPack_BETA r9994 移行用
+	/*@Deprecated*/ public final AbstractEffect/*L2Effect*/ getFirstEffect(L2EffectType tp)
+	{
+		BuffInfo info = _effectList.getFirstEffect(tp);
+		if (info != null)
+			for (AbstractEffect effect : info.getEffects())
+				if (effect != null && effect.getEffectType() == tp)
+					return effect;
+		return null;
 	}
 	
 	// TODO: NEED TO ORGANIZE AND MOVE TO PROPER PLACE
