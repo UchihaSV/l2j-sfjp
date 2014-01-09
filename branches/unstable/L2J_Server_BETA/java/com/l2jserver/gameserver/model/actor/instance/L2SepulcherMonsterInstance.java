@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
+import static com.l2jserver.gameserver.datatables.SkillTable.*;
+
 import java.util.Collection;
 import java.util.concurrent.Future;
 
@@ -30,7 +32,6 @@ import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
-import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.quest.QuestState;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo.NpcInfo;
@@ -45,7 +46,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 {
 	@Deprecated static final boolean DEBUG = false;
 	static final long TIME_VICTIM_SPAWN_KEYBOX = 300000;
-	protected static final SkillHolder FAKE_PETRIFICATION = new SkillHolder(4616, 1);
+	protected static final int FAKE_PETRIFICATION = getSkillHashCode(4616, 1);
 	
 	public int mysteriousBoxId = 0;
 	boolean victimKeyBoxSpawned;
@@ -717,7 +718,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 		public void run()
 		{
 			// Invulnerable by petrification
-			FAKE_PETRIFICATION.getSkill().applyEffects(activeChar, null, activeChar, null, false, false);
+			getSkill(FAKE_PETRIFICATION).applyEffects(activeChar, null, activeChar, null, false, false);
 		}
 	}
 	
