@@ -103,6 +103,22 @@ public final class CharEffectList
 		_owner = owner;
 	}
 	
+	//[JOJO] L2J_Server_BETA r6249 / L2J_DataPack_BETA r9994 à⁄çsóp
+	/*@Deprecated*/ public final List<AbstractEffect/*L2Effect*/> getAllEffects()
+	{
+		if (hasBuffs() || hasDebuffs()) {
+			final List<AbstractEffect/*L2Effect*/> effects = new /*CopyOnWriteArrayList*/ArrayList<>(_buffs.size() + _debuffs.size());
+			if (hasBuffs())
+				for (BuffInfo b : _buffs.values()) effects.addAll(b.getEffects());
+			if (hasDebuffs())
+				for (BuffInfo b : _debuffs.values()) effects.addAll(b.getEffects());
+			return effects;
+		}
+		else {
+			return Collections.<AbstractEffect/*L2Effect*/> emptyList();
+		}
+	}
+	
 	/**
 	 * Gets buff skills.
 	 * @return the buff skills

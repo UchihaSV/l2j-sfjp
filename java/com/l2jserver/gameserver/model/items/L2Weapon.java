@@ -19,6 +19,7 @@
 package com.l2jserver.gameserver.model.items;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.handler.ISkillHandler;
