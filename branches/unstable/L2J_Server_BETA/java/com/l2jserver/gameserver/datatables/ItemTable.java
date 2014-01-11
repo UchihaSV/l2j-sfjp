@@ -19,6 +19,7 @@
 package com.l2jserver.gameserver.datatables;
 
 import static com.l2jserver.gameserver.model.itemcontainer.PcInventory.ADENA_ID;
+import static com.l2jserver.util.Util.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -199,6 +200,7 @@ public class ItemTable
 	
 	private void load()
 	{
+		long started = System.currentTimeMillis();
 		int highest = 0;
 		_armors.clear();
 		_etcItems.clear();
@@ -226,7 +228,7 @@ public class ItemTable
 		_log.log(Level.INFO, getClass().getSimpleName() + ": Loaded: " + _etcItems.size() + " Etc Items");
 		_log.log(Level.INFO, getClass().getSimpleName() + ": Loaded: " + _armors.size() + " Armor Items");
 		_log.log(Level.INFO, getClass().getSimpleName() + ": Loaded: " + _weapons.size() + " Weapon Items");
-		_log.log(Level.INFO, getClass().getSimpleName() + ": Loaded: " + (_etcItems.size() + _armors.size() + _weapons.size()) + " Items in total.");
+		_log.log(Level.INFO, getClass().getSimpleName() + ": Loaded: " + (_etcItems.size() + _armors.size() + _weapons.size()) + " Items in total. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 	}
 	
 	/**

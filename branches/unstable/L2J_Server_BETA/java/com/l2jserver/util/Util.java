@@ -178,7 +178,7 @@ public class Util
 	}
 	public static String strMillTime(long milliTime)
 	{
-		if (milliTime == 0) return milliTime + "0•b";
+		if (milliTime == 0) return "0•b";
 		if (milliTime <= 999) return milliTime + "‡_•b";
 		return strTime((int)((milliTime + 999) / 1000)); // •b–¢–ž‚ÍØ‚èã‚°
 	}

@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import static com.l2jserver.util.Util.*;
+
 import java.io.BufferedWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,18 +77,22 @@ public final class SpawnTable extends DocumentParser
 	{
 		if (!Config.ALT_DEV_NO_SPAWNS)
 		{
+			long started;
+			started = System.currentTimeMillis();
 			fillSpawnTable(false);
 			final int spawnCount = _spawnTable.size();
-			_log.info(getClass().getSimpleName() + ": Loaded " + spawnCount + " npc spawns.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + spawnCount + " npc spawns. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 			if (Config.CUSTOM_SPAWNLIST_TABLE)
 			{
+				started = System.currentTimeMillis();
 				fillSpawnTable(true);
-				_log.info(getClass().getSimpleName() + ": Loaded " + (_spawnTable.size() - spawnCount) + " custom npc spawns.");
+				_log.info(getClass().getSimpleName() + ": Loaded " + (_spawnTable.size() - spawnCount) + " custom npc spawns. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 			}
 			
 			// Load XML list
+			started = System.currentTimeMillis();
 			parseDirectory("data/spawnlist");
-			_log.info(getClass().getSimpleName() + ": Loaded " + _xmlSpawnCount + " npc spawns from XML.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + _xmlSpawnCount + " npc spawns from XML. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		}
 	}
 	

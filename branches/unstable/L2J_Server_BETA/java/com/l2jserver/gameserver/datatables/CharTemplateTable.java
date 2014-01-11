@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import static com.l2jserver.util.Util.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,9 +55,10 @@ public final class CharTemplateTable extends DocumentParser
 	@Override
 	public void load()
 	{
+		long started = System.currentTimeMillis();
 		_charTemplates.clear();
 		parseDatapackDirectory("data/stats/chars/baseStats", false);
-		_log.info(getClass().getSimpleName() + ": Loaded " + _charTemplates.size() + " character templates.");
+		_log.info(getClass().getSimpleName() + ": Loaded " + _charTemplates.size() + " character templates. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		_log.info(getClass().getSimpleName() + ": Loaded " + _dataCount + " level up gain records.");
 	}
 	
