@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import static com.l2jserver.util.Util.*;
+
 import java.util.logging.Level;
 
 import jp.sf.l2j.troja.FastIntObjectMap;
@@ -48,9 +50,10 @@ public class OptionsData extends DocumentParser
 	@Override
 	public synchronized void load()
 	{
+		long started = System.currentTimeMillis();
 		_data.clear();
 		parseDatapackDirectory("data/stats/options", false);
-		_log.log(Level.INFO, getClass().getSimpleName() + ": Loaded: " + _data.size() + " Options.");
+		_log.log(Level.INFO, getClass().getSimpleName() + ": Loaded: " + _data.size() + " Options. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 	}
 	
 	@Override

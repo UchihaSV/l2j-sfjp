@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import static com.l2jserver.util.Util.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,6 +47,7 @@ public class SummonSkillsTable
 	
 	public void load()
 	{
+		long started = System.currentTimeMillis();
 		_skillTrees.clear();
 		int npcId = 0;
 		int count = 0;
@@ -79,7 +82,7 @@ public class SummonSkillsTable
 		{
 			_log.log(Level.SEVERE, getClass().getSimpleName() + ": Error while creating pet skill tree (Pet ID " + npcId + "): " + e.getMessage(), e);
 		}
-		_log.info(getClass().getSimpleName() + ": Loaded " + count + " skills.");
+		_log.info(getClass().getSimpleName() + ": Loaded " + count + " skills. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 	}
 	
 	public int getAvailableLevel(L2Summon cha, int skillId)

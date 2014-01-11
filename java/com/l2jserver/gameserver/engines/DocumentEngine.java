@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.engines;
 
+import static com.l2jserver.util.Util.*;
+
 import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
@@ -80,6 +82,7 @@ public class DocumentEngine
 	
 	public void loadAllSkills(final FastIntObjectMap<L2Skill> allSkills)
 	{
+		long started = System.currentTimeMillis();
 		int count = 0;
 		List<File> files = new FastList<>();
 		hashFiles("data/stats/skills", files);
@@ -106,7 +109,7 @@ public class DocumentEngine
 			}
 		}
 		StringIntern.end();
-		_log.info(getClass().getSimpleName() + ": Loaded " + count + " Skill templates from XML files.");
+		_log.info("SkillTable"/*getClass().getSimpleName()*/ + ": Loaded " + count + " Skill templates from XML files. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 	}
 	
 	/**

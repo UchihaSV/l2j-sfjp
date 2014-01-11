@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import static com.l2jserver.util.Util.*;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -52,6 +54,8 @@ public final class BuyListData extends DocumentParser
 	@Override
 	public synchronized void load()
 	{
+		long started;
+		started = System.currentTimeMillis();
 		setCurrentFileFilter(new NumericNameFilter());
 		_buyLists.clear();
 		parseDatapackDirectory("data/buylists", false);
@@ -60,9 +64,10 @@ public final class BuyListData extends DocumentParser
 			parseDatapackDirectory("data/buylists/custom", false);
 		}
 		
-		_log.info(getClass().getSimpleName() + ": Loaded " + _buyLists.size() + " BuyLists.");
 		setCurrentFileFilter(null);
+		_log.info(getClass().getSimpleName() + ": Loaded " + _buyLists.size() + " BuyLists from XML. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		
+		started = System.currentTimeMillis();
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			Statement statement = con.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM `buylists`"))
@@ -96,6 +101,7 @@ public final class BuyListData extends DocumentParser
 		{
 			_log.log(Level.WARNING, "Failed to load buyList data from database.", e);
 		}
+		_log.info(getClass().getSimpleName() + ": Loaded " + _buyLists.size() + " BuyLists from DB. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 	}
 	
 	@Override

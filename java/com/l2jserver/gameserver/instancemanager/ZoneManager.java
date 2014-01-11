@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.instancemanager;
 
+import static com.l2jserver.util.Util.*;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -386,13 +388,14 @@ public final class ZoneManager extends DocumentParser
 		_classZones.clear();
 		_spawnTerritories.clear();
 		
-		long started = System.currentTimeMillis();
-		
+		long started;
+		started = System.currentTimeMillis();
 		parseDatapackDirectory("data/zones", false);
+		_log.info(getClass().getSimpleName() + ": Loaded " + _classZones.size() + " zone classes and " + getSize() + " zones. (" + strMillTime(System.currentTimeMillis() - started) + ")");
+		
+		started = System.currentTimeMillis();
 		parseDatapackDirectory("data/zones/npcSpawnTerritories", false);
-		started = System.currentTimeMillis() - started;
-		_log.info(getClass().getSimpleName() + ": Loaded " + _classZones.size() + " zone classes and " + getSize() + " zones in " + (started / 1000) + " seconds.");
-		_log.info(getClass().getSimpleName() + ": Loaded " + _spawnTerritories.size() + " NPC spawn territoriers in " + (started / 1000) + " seconds.");
+		_log.info(getClass().getSimpleName() + ": Loaded " + _spawnTerritories.size() + " NPC spawn territoriers. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 	}
 	
 	/**
