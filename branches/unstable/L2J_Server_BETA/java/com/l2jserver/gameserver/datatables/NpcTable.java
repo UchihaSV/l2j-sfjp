@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import static com.l2jserver.util.Util.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -742,6 +744,7 @@ public class NpcTable extends DocumentParser
 	 */
 	public void loadNpcs(int id)
 	{
+		long started = System.currentTimeMillis();
 		StringIntern.begin(NpcTable.class.getSimpleName());
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
@@ -751,7 +754,7 @@ public class NpcTable extends DocumentParser
 			{
 				ccount = loadNpcs(con, id, true);
 			}
-			_log.info(getClass().getSimpleName() + ": Loaded " + count + " (Custom: " + ccount + ") NPC template(s).");
+			if (id == 0) _log.info(getClass().getSimpleName() + ": Loaded " + count + " (Custom: " + ccount + ") NPC template(s). (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		}
 		catch (Exception e)
 		{
@@ -806,6 +809,7 @@ public class NpcTable extends DocumentParser
 	 */
 	public void loadNpcsSkills(int id)
 	{
+		long started = System.currentTimeMillis();
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
 			int count = loadNpcsSkills(con, id, false);
@@ -814,7 +818,7 @@ public class NpcTable extends DocumentParser
 			{
 				ccount = loadNpcsSkills(con, id, true);
 			}
-			_log.info(getClass().getSimpleName() + ": Loaded " + count + " (Custom: " + ccount + ") NPC skills.");
+			if (id == 0) _log.info(getClass().getSimpleName() + ": Loaded " + count + " (Custom: " + ccount + ") NPC skills. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		}
 		catch (Exception e)
 		{
@@ -903,6 +907,7 @@ public class NpcTable extends DocumentParser
 	 */
 	public void loadNpcsDrop(int id)
 	{
+		long started = System.currentTimeMillis();
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
 			int count = loadNpcsDrop(con, id, false);
@@ -911,7 +916,7 @@ public class NpcTable extends DocumentParser
 			{
 				ccount = loadNpcsDrop(con, id, true);
 			}
-			_log.info(getClass().getSimpleName() + ": Loaded " + count + " (Custom: " + ccount + ") drops.");
+			if (id == 0) _log.info(getClass().getSimpleName() + ": Loaded " + count + " (Custom: " + ccount + ") drops. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		}
 		catch (Exception e)
 		{
@@ -1025,6 +1030,7 @@ public class NpcTable extends DocumentParser
 	 */
 	public void loadMinions(int id)
 	{
+		long started = System.currentTimeMillis();
 		final String query = (id > 0) ? SELECT_MINION_BY_ID : SELECT_MINION_ALL;
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement(query))
@@ -1059,7 +1065,7 @@ public class NpcTable extends DocumentParser
 					count++;
 				}
 			}
-			_log.info(getClass().getSimpleName() + ": Loaded " + count + " Minions.");
+			if (id == 0) _log.info(getClass().getSimpleName() + ": Loaded " + count + " Minions. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		}
 		catch (Exception e)
 		{
@@ -1073,6 +1079,7 @@ public class NpcTable extends DocumentParser
 	 */
 	public void loadNpcsAI(int id)
 	{
+		long started = System.currentTimeMillis();
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
 			int count = loadNpcAi(con, id, false);
@@ -1081,7 +1088,7 @@ public class NpcTable extends DocumentParser
 			{
 				ccount = loadNpcAi(con, id, true);
 			}
-			_log.info(getClass().getSimpleName() + ": Loaded " + count + " (Custom: " + ccount + ") AI Data.");
+			if (id == 0) _log.info(getClass().getSimpleName() + ": Loaded " + count + " (Custom: " + ccount + ") AI Data. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		}
 		catch (Exception e)
 		{
@@ -1165,6 +1172,7 @@ public class NpcTable extends DocumentParser
 	 */
 	public void loadNpcsElement(int id)
 	{
+		long started = System.currentTimeMillis();
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
 			int count = loadNpcsElement(con, id, false);
@@ -1173,7 +1181,7 @@ public class NpcTable extends DocumentParser
 			{
 				ccount = loadNpcsElement(con, id, true);
 			}
-			_log.info(getClass().getSimpleName() + ": Loaded " + count + " (Custom: " + ccount + ") Elementals Data.");
+			if (id == 0) _log.info(getClass().getSimpleName() + ": Loaded " + count + " (Custom: " + ccount + ") Elementals Data. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		}
 		catch (Exception e)
 		{
