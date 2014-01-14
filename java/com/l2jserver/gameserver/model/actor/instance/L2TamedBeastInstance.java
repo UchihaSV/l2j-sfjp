@@ -33,7 +33,6 @@ import com.l2jserver.gameserver.ai.L2CharacterAI;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.model.L2Object;
-import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
@@ -62,14 +61,12 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 	private static final boolean AUTO_HEAL = true;
 	
 	private int _foodSkillId;
-	private static final int MAX_DISTANCE_FROM_HOME = 30000;
 	private static final int MAX_DISTANCE_FROM_OWNER = 2000;
 	private static final int MAX_DURATION = 1200000; // 20 minutes
 	private static final int DURATION_CHECK_INTERVAL = 60000; // 1 minute
 	private static final int DURATION_INCREASE_INTERVAL = 20000; // 20 secs (gained upon feeding)
 	private static final int BUFF_INTERVAL = 5000; // 5 seconds
 	private int _remainingTime = MAX_DURATION;
-	private int _homeX, _homeY, _homeZ;
 	protected L2PcInstance _owner;
 	public int nameId = -1;	//+[JOJO] npcstring
 	public String nameParam = null;	//+[JOJO]
@@ -100,7 +97,6 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 	{
 		super(objectId, template);
 		setInstanceType(InstanceType.L2TamedBeastInstance);
-		setHome(this);
 if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setAI(new L2TamedBeastAI(new AIAccessor()));
 }}
@@ -114,7 +110,6 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setCurrentHp(getMaxHp());
 		setCurrentMp(getMaxMp());
 		setFoodType(foodSkillId);
-		setHome(x, y, z);
 		spawnMe(x, y, z);
 if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setAI(new L2TamedBeastAI(new AIAccessor()));
@@ -131,7 +126,6 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setCurrentHp(getMaxHp());
 		setCurrentMp(getMaxMp());
 		setFoodType(food);
-		setHome(x, y, z);
 		spawnMe(x, y, z);
 if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setAI(new L2TamedBeastAI(new AIAccessor()));
@@ -151,23 +145,6 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		{
 			_remainingTime = MAX_DURATION;
 		}
-	}
-	
-	public Location getHome()
-	{
-		return new Location(_homeX, _homeY, _homeZ);
-	}
-	
-	public void setHome(int x, int y, int z)
-	{
-		_homeX = x;
-		_homeY = y;
-		_homeZ = z;
-	}
-	
-	public void setHome(L2Character c)
-	{
-		setHome(c.getX(), c.getY(), c.getZ());
 	}
 	
 	public int getRemainingTime()
@@ -399,11 +376,6 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 			}
 			_buffTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new CheckOwnerBuffs(), 30000/*BUFF_INTERVAL*/, BUFF_INTERVAL);
 		}
-	}
-	
-	public boolean isTooFarFromHome()
-	{
-		return !(this.isInsideRadius(_homeX, _homeY, _homeZ, MAX_DISTANCE_FROM_HOME, true, true));
 	}
 	
 	@Override
