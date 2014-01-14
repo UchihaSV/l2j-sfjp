@@ -36,6 +36,7 @@ import com.l2jserver.gameserver.model.actor.L2Playable;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 import com.l2jserver.gameserver.model.interfaces.IL2Procedure;
+import com.l2jserver.gameserver.model.interfaces.ILocational;
 import com.l2jserver.util.StringUtil;
 
 public final class L2World
@@ -607,7 +608,7 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 	 * @param point position of the object
 	 * @return
 	 */
-	public L2WorldRegion getRegion(Location point)
+	public L2WorldRegion getRegion(ILocational point)	//[JOJO] -Location
 	{
 		return _worldRegions[(point.getX() >> SHIFT_BY) + OFFSET_X][(point.getY() >> SHIFT_BY) + OFFSET_Y];
 	}

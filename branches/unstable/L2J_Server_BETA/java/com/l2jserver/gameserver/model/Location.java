@@ -19,6 +19,7 @@
 package com.l2jserver.gameserver.model;
 
 import com.l2jserver.gameserver.model.L2Object;
+import com.l2jserver.gameserver.model.interfaces.ILocational;
 import com.l2jserver.gameserver.model.interfaces.IPositionable;
 
 /**
@@ -196,7 +197,16 @@ public class Location implements IPositionable
 	}
 	
 	//[JOJO]-------------------------------------------------
-	public void setPosition(com.l2jserver.gameserver.model.interfaces.IPositionable loc)
+	public final IPositionable getPosition()
+	{
+if (com.l2jserver.Config.FIX_GETLOCATION) {{
+		return this;
+}} else {{
+		return getLocation();
+}}
+	}
+	
+	public final void setPosition(ILocational loc)
 	{
 		_x = loc.getX();
 		_y = loc.getY();
