@@ -276,13 +276,13 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	@Override
 	public final boolean spawnMe()
 	{
-		assert (getWorldRegion() == null) && (getLocation().getX() != 0) && (getLocation().getY() != 0) && (getLocation().getZ() != 0);
+		assert (getWorldRegion() == null) && (getPosition().getX() != 0) && (getPosition().getY() != 0) && (getPosition().getZ() != 0);
 		
 		synchronized (this)
 		{
 			// Set the x,y,z position of the L2Object spawn and update its _worldregion
 			_isVisible = true;
-			setWorldRegion(L2World.getInstance().getRegion(getLocation()));
+			setWorldRegion(L2World.getInstance().getRegion(getPosition()));
 			
 			// Add the L2Object spawn in the _allobjects of L2World
 			L2World.getInstance().storeObject(this);
@@ -327,7 +327,7 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 			}
 			
 			setXYZ(x, y, z);
-			setWorldRegion(L2World.getInstance().getRegion(getLocation()));
+			setWorldRegion(L2World.getInstance().getRegion(getPosition()));
 			
 			// Add the L2Object spawn in the _allobjects of L2World
 		}
@@ -650,7 +650,7 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 		
 		try
 		{
-			if (L2World.getInstance().getRegion(getLocation()) != getWorldRegion())
+			if (L2World.getInstance().getRegion(getPosition()) != getWorldRegion())
 			{
 				updateWorldRegion();
 			}
@@ -710,7 +710,7 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 			return;
 		}
 		
-		L2WorldRegion newRegion = L2World.getInstance().getRegion(getLocation());
+		L2WorldRegion newRegion = L2World.getInstance().getRegion(getPosition());
 		if (newRegion != getWorldRegion())
 		{
 			getWorldRegion().removeVisibleObject(this);
@@ -812,6 +812,26 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	{
 		return getLocation();
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public final ILocational getPosition()
+	{
+if (com.l2jserver.Config.FIX_GETLOCATION) {{
+		return this;
+}} else {{
+		return getLocation();
+}}
+	}
+	
+	public final void setPosition(ILocational loc)
+	{
+		_x.set(loc.getX());
+		_y.set(loc.getY());
+		_z.set(loc.getZ());
+		_heading.set(loc.getHeading());
+		_instanceId.set(loc.getInstanceId());
+	}
+	//-------------------------------------------------------
 	
 	@Override
 	public void setX(int x)

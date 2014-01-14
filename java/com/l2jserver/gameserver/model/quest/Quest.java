@@ -66,7 +66,7 @@ import com.l2jserver.gameserver.model.entity.Instance;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
 import com.l2jserver.gameserver.model.interfaces.IL2Procedure;
-import com.l2jserver.gameserver.model.interfaces.IPositionable;
+import com.l2jserver.gameserver.model.interfaces.ILocational;
 import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
@@ -2769,10 +2769,10 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param npcId the ID of the NPC to spawn
 	 * @param pos the object containing the spawn location coordinates
 	 * @return the {@link L2Npc} object of the newly spawned NPC or {@code null} if the NPC doesn't exist
-	 * @see #addSpawn(int, IPositionable, boolean, long, boolean, int)
+	 * @see #addSpawn(int, ILocational, boolean, long, boolean, int)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean, int)
 	 */
-	public static L2Npc addSpawn(int npcId, IPositionable pos)
+	public static L2Npc addSpawn(int npcId, ILocational pos)	//[JOJO] -IPositionable
 	{
 		return addSpawn(npcId, pos.getX(), pos.getY(), pos.getZ(), pos.getHeading(), false, 0, false, 0);
 	}
@@ -2783,10 +2783,10 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param pos the object containing the spawn location coordinates
 	 * @param isSummonSpawn if {@code true}, displays a summon animation on NPC spawn
 	 * @return the {@link L2Npc} object of the newly spawned NPC or {@code null} if the NPC doesn't exist
-	 * @see #addSpawn(int, IPositionable, boolean, long, boolean, int)
+	 * @see #addSpawn(int, ILocational, boolean, long, boolean, int)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean, int)
 	 */
-	public static L2Npc addSpawn(int npcId, IPositionable pos, boolean isSummonSpawn)
+	public static L2Npc addSpawn(int npcId, ILocational pos, boolean isSummonSpawn)	//[JOJO] -IPositionable
 	{
 		return addSpawn(npcId, pos.getX(), pos.getY(), pos.getZ(), pos.getHeading(), false, 0, isSummonSpawn, 0);
 	}
@@ -2798,10 +2798,10 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param randomOffset if {@code true}, adds +/- 50~100 to X/Y coordinates of the spawn location
 	 * @param despawnDelay time in milliseconds till the NPC is despawned (0 - only despawned on server shutdown)
 	 * @return the {@link L2Npc} object of the newly spawned NPC or {@code null} if the NPC doesn't exist
-	 * @see #addSpawn(int, IPositionable, boolean, long, boolean, int)
+	 * @see #addSpawn(int, ILocational, boolean, long, boolean, int)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean, int)
 	 */
-	public static L2Npc addSpawn(int npcId, IPositionable pos, boolean randomOffset, long despawnDelay)
+	public static L2Npc addSpawn(int npcId, ILocational pos, boolean randomOffset, long despawnDelay)	//[JOJO] -IPositionable
 	{
 		return addSpawn(npcId, pos.getX(), pos.getY(), pos.getZ(), pos.getHeading(), randomOffset, despawnDelay, false, 0);
 	}
@@ -2814,10 +2814,10 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param despawnDelay time in milliseconds till the NPC is despawned (0 - only despawned on server shutdown)
 	 * @param isSummonSpawn if {@code true}, displays a summon animation on NPC spawn
 	 * @return the {@link L2Npc} object of the newly spawned NPC or {@code null} if the NPC doesn't exist
-	 * @see #addSpawn(int, IPositionable, boolean, long, boolean, int)
+	 * @see #addSpawn(int, ILocational, boolean, long, boolean, int)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean, int)
 	 */
-	public static L2Npc addSpawn(int npcId, IPositionable pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn)
+	public static L2Npc addSpawn(int npcId, ILocational pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn)	//[JOJO] -IPositionable
 	{
 		return addSpawn(npcId, pos.getX(), pos.getY(), pos.getZ(), pos.getHeading(), randomOffset, despawnDelay, isSummonSpawn, 0);
 	}
@@ -2831,13 +2831,13 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param isSummonSpawn if {@code true}, displays a summon animation on NPC spawn
 	 * @param instanceId the ID of the instance to spawn the NPC in (0 - the open world)
 	 * @return the {@link L2Npc} object of the newly spawned NPC or {@code null} if the NPC doesn't exist
-	 * @see #addSpawn(int, IPositionable)
-	 * @see #addSpawn(int, IPositionable, boolean)
-	 * @see #addSpawn(int, IPositionable, boolean, long)
-	 * @see #addSpawn(int, IPositionable, boolean, long, boolean)
+	 * @see #addSpawn(int, ILocational)
+	 * @see #addSpawn(int, ILocational, boolean)
+	 * @see #addSpawn(int, ILocational, boolean, long)
+	 * @see #addSpawn(int, ILocational, boolean, long, boolean)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean, int)
 	 */
-	public static L2Npc addSpawn(int npcId, IPositionable pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn, int instanceId)
+	public static L2Npc addSpawn(int npcId, ILocational pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn, int instanceId)	//[JOJO] -IPositionable
 	{
 		return addSpawn(npcId, pos.getX(), pos.getY(), pos.getZ(), pos.getHeading(), randomOffset, despawnDelay, isSummonSpawn, instanceId);
 	}
@@ -2852,7 +2852,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param randomOffset if {@code true}, adds +/- 50~100 to X/Y coordinates of the spawn location
 	 * @param despawnDelay time in milliseconds till the NPC is despawned (0 - only despawned on server shutdown)
 	 * @return the {@link L2Npc} object of the newly spawned NPC or {@code null} if the NPC doesn't exist
-	 * @see #addSpawn(int, IPositionable, boolean, long, boolean, int)
+	 * @see #addSpawn(int, ILocational, boolean, long, boolean, int)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean, int)
 	 */
 	public static L2Npc addSpawn(int npcId, int x, int y, int z, int heading, boolean randomOffset, long despawnDelay)
@@ -2871,7 +2871,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param despawnDelay time in milliseconds till the NPC is despawned (0 - only despawned on server shutdown)
 	 * @param isSummonSpawn if {@code true}, displays a summon animation on NPC spawn
 	 * @return the {@link L2Npc} object of the newly spawned NPC or {@code null} if the NPC doesn't exist
-	 * @see #addSpawn(int, IPositionable, boolean, long, boolean, int)
+	 * @see #addSpawn(int, ILocational, boolean, long, boolean, int)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean, int)
 	 */
 	public static L2Npc addSpawn(int npcId, int x, int y, int z, int heading, boolean randomOffset, long despawnDelay, boolean isSummonSpawn)
@@ -2891,7 +2891,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param isSummonSpawn if {@code true}, displays a summon animation on NPC spawn
 	 * @param instanceId the ID of the instance to spawn the NPC in (0 - the open world)
 	 * @return the {@link L2Npc} object of the newly spawned NPC or {@code null} if the NPC doesn't exist
-	 * @see #addSpawn(int, IPositionable, boolean, long, boolean, int)
+	 * @see #addSpawn(int, ILocational, boolean, long, boolean, int)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean)
 	 */

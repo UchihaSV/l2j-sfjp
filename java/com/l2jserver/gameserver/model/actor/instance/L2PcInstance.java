@@ -13662,7 +13662,7 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (isInBoat())
 		{
-			setXYZ(getBoat().getLocation());
+			setXYZ(getBoat().getPosition());
 			
 			activeChar.sendPacket(new CharInfo(this));
 			activeChar.sendPacket(new ExBrExtraUserInfo(this));
@@ -13690,7 +13690,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		else if (isInAirShip())
 		{
-			setXYZ(getAirShip().getLocation());
+			setXYZ(getAirShip().getPosition());
 			activeChar.sendPacket(new CharInfo(this));
 			activeChar.sendPacket(new ExBrExtraUserInfo(this));
 			int relation1 = getRelation(activeChar);
