@@ -19,7 +19,6 @@
 package com.l2jserver.gameserver.model;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javolution.util.FastMap;
 
@@ -63,11 +62,11 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	private InstanceType _instanceType = null;
 	private volatile Map<String, Object> _scripts;
 	
-	private final AtomicInteger _x = new AtomicInteger(0);
-	private final AtomicInteger _y = new AtomicInteger(0);
-	private final AtomicInteger _z = new AtomicInteger(0);
-	private final AtomicInteger _heading = new AtomicInteger(0);
-	private final AtomicInteger _instanceId = new AtomicInteger(0);
+	private int _x;
+	private int _y;
+	private int _z;
+	private int _heading;
+	private int _instanceId;
 	
 	public L2Object(int objectId)
 	{
@@ -188,7 +187,7 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 			}
 		}
 		
-		_instanceId.set(instanceId);
+		_instanceId = instanceId;
 		if (_isVisible && (_knownList != null))
 		{
 			// We don't want some ugly looking disappear/appear effects, so don't update
@@ -774,31 +773,31 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	@Override
 	public int getX()
 	{
-		return _x.get();
+		return _x;
 	}
 	
 	@Override
 	public int getY()
 	{
-		return _y.get();
+		return _y;
 	}
 	
 	@Override
 	public int getZ()
 	{
-		return _z.get();
+		return _z;
 	}
 	
 	@Override
 	public int getHeading()
 	{
-		return _heading.get();
+		return _heading;
 	}
 	
 	@Override
 	public int getInstanceId()
 	{
-		return _instanceId.get();
+		return _instanceId;
 	}
 	
 	@Override
@@ -825,53 +824,53 @@ if (com.l2jserver.Config.FIX_GETLOCATION) {{
 	
 	public final void setPosition(ILocational loc)
 	{
-		_x.set(loc.getX());
-		_y.set(loc.getY());
-		_z.set(loc.getZ());
-		_heading.set(loc.getHeading());
-		_instanceId.set(loc.getInstanceId());
+		_x = loc.getX();
+		_y = loc.getY();
+		_z = loc.getZ();
+		_heading = loc.getHeading();
+		_instanceId = loc.getInstanceId();
 	}
 	//-------------------------------------------------------
 	
 	@Override
 	public void setX(int x)
 	{
-		_x.set(x);
+		_x = x;
 	}
 	
 	@Override
 	public void setY(int y)
 	{
-		_y.set(y);
+		_y = y;
 	}
 	
 	@Override
 	public void setZ(int z)
 	{
-		_z.set(z);
+		_z = z;
 	}
 	
 	public void setXYZ(ILocational loc)
 	{
-		_x.set(loc.getX());
-		_y.set(loc.getY());
-		_z.set(loc.getZ());
+		_x = loc.getX();
+		_y = loc.getY();
+		_z = loc.getZ();
 	}
 	
 	@Override
 	public void setHeading(int heading)
 	{
-		_heading.set(heading);
+		_heading = heading;
 	}
 	
 	@Override
 	public void setLocation(Location loc)
 	{
-		_x.set(loc.getX());
-		_y.set(loc.getY());
-		_z.set(loc.getZ());
-		_heading.set(loc.getHeading());
-		_instanceId.set(loc.getInstanceId());
+		_x = loc.getX();
+		_y = loc.getY();
+		_z = loc.getZ();
+		_heading = loc.getHeading();
+		_instanceId = loc.getInstanceId();
 	}
 	
 	@Override
