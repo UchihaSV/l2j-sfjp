@@ -33,6 +33,7 @@ import com.l2jserver.gameserver.ai.L2CharacterAI;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.model.L2Object;
+import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
@@ -45,7 +46,6 @@ import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.network.serverpackets.SocialAction;
 import com.l2jserver.gameserver.network.serverpackets.ValidateLocation;
-import com.l2jserver.gameserver.util.Point3D;
 import com.l2jserver.util.Rnd;
 
 // While a tamed beast behaves a lot like a pet (ingame) and does have
@@ -153,9 +153,9 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		}
 	}
 	
-	public Point3D getHome()
+	public Location getHome()
 	{
-		return new Point3D(_homeX, _homeY, _homeZ);
+		return new Location(_homeX, _homeY, _homeZ);
 	}
 	
 	public void setHome(int x, int y, int z)

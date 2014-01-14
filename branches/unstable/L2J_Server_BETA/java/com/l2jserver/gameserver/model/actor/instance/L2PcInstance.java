@@ -329,7 +329,6 @@ import com.l2jserver.gameserver.scripting.scriptengine.listeners.player.Transfor
 import com.l2jserver.gameserver.taskmanager.AttackStanceTaskManager;
 import com.l2jserver.gameserver.util.Broadcast;
 import com.l2jserver.gameserver.util.FloodProtectors;
-import com.l2jserver.gameserver.util.Point3D;
 import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
 
@@ -547,7 +546,7 @@ public final class L2PcInstance extends L2Playable
 	
 	/** Boat and AirShip */
 	private L2Vehicle _vehicle = null;
-	private Point3D _inVehiclePosition;
+	private Location _inVehiclePosition;
 	
 	public ScheduledFuture<?> _taskforfish;
 	private MountType _mountType = MountType.NONE;
@@ -580,7 +579,7 @@ public final class L2PcInstance extends L2Playable
 	private boolean _observerMode = false;
 	
 	/** Stored from last ValidatePosition **/
-	private final Point3D _lastServerPosition = new Point3D(0, 0, 0);
+	private final Location _lastServerPosition = new Location(0, 0, 0);
 	
 	/** The number of recommendation obtained by the L2PcInstance */
 	private int _recomHave; // how much I was recommended by others
@@ -709,7 +708,7 @@ public final class L2PcInstance extends L2Playable
 	private ScheduledFuture<?> _soulTask = null;
 	
 	// WorldPosition used by TARGET_SIGNET_GROUND
-	private Point3D _currentSkillWorldPosition;
+	private Location _currentSkillWorldPosition;
 	
 	private L2AccessLevel _accessLevel;
 	
@@ -4342,12 +4341,12 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	public Point3D getCurrentSkillWorldPosition()
+	public Location getCurrentSkillWorldPosition()
 	{
 		return _currentSkillWorldPosition;
 	}
 	
-	public void setCurrentSkillWorldPosition(Point3D worldPosition)
+	public void setCurrentSkillWorldPosition(Location worldPosition)
 	{
 		_currentSkillWorldPosition = worldPosition;
 	}
@@ -8911,7 +8910,7 @@ public final class L2PcInstance extends L2Playable
 		// Create and set a L2Object containing the target of the skill
 		L2Object target = null;
 		L2TargetType sklTargetType = skill.getTargetType();
-		Point3D worldPosition = getCurrentSkillWorldPosition();
+		Location worldPosition = getCurrentSkillWorldPosition();
 		
 		if ((sklTargetType == L2TargetType.GROUND) && (worldPosition == null))
 		{
@@ -11287,23 +11286,14 @@ public final class L2PcInstance extends L2Playable
 		_lastServerPosition.setXYZ(x, y, z);
 	}
 	
-	public Point3D getLastServerPosition()
+	public Location getLastServerPosition()
 	{
 		return _lastServerPosition;
 	}
 	
-	public boolean checkLastServerPosition(int x, int y, int z)
-	{
-		return _lastServerPosition.equals(x, y, z);
-	}
-	
 	public int getLastServerDistance(int x, int y, int z)
 	{
-		double dx = (x - _lastServerPosition.getX());
-		double dy = (y - _lastServerPosition.getY());
-		double dz = (z - _lastServerPosition.getZ());
-		
-		return (int) Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
+		return (int) Util.calculateDistance(x, y, z, _lastServerPosition.getX(), _lastServerPosition.getY(), _lastServerPosition.getZ(), true, false);
 	}
 	
 	@Override
@@ -11588,12 +11578,12 @@ public final class L2PcInstance extends L2Playable
 	/**
 	 * @return
 	 */
-	public Point3D getInVehiclePosition()
+	public Location getInVehiclePosition()
 	{
 		return _inVehiclePosition;
 	}
 	
-	public void setInVehiclePosition(Point3D pt)
+	public void setInVehiclePosition(Location pt)
 	{
 		_inVehiclePosition = pt;
 	}
@@ -13672,7 +13662,7 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (isInBoat())
 		{
-			setWorldPosition(getBoat().getWorldPosition());
+			setXYZ(getBoat().getLocation());
 			
 			activeChar.sendPacket(new CharInfo(this));
 			activeChar.sendPacket(new ExBrExtraUserInfo(this));
@@ -13700,8 +13690,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		else if (isInAirShip())
 		{
-			setWorldPosition(getAirShip().getWorldPosition());
-			
+			setXYZ(getAirShip().getLocation());
 			activeChar.sendPacket(new CharInfo(this));
 			activeChar.sendPacket(new ExBrExtraUserInfo(this));
 			int relation1 = getRelation(activeChar);
