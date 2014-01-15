@@ -171,7 +171,8 @@ public class L2Spawn implements IPositionable, IIdentifiable
 	
 	public Location getLocation(L2Object obj)
 	{
-		return ((_lastSpawnPoints == null) || (obj == null) || !_lastSpawnPoints.containsKey(obj.getObjectId())) ? _location : _lastSpawnPoints.get(obj.getObjectId());
+		final Location p;
+		return _lastSpawnPoints != null && obj != null && (p = _lastSpawnPoints.get(obj.getObjectId())) != null ? p : _location;
 	}
 	
 	@Override
