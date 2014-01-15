@@ -37,6 +37,7 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
+import com.l2jserver.gameserver.model.interfaces.ILocational;
 import com.l2jserver.gameserver.model.interfaces.IPositionable;
 import com.l2jserver.gameserver.model.zone.type.NpcSpawnTerritory;
 import com.l2jserver.util.Rnd;
@@ -252,12 +253,25 @@ public class L2Spawn implements IPositionable, IIdentifiable
 	
 	/**
 	 * Set the x, y, z position of the spawn point.
-	 * @param z the z coordinate
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param z The z coordinate.
 	 */
 	@Override
 	public void setXYZ(int x, int y, int z)
 	{
 		_location.setXYZ(x, y, z);
+	}
+	
+	/**
+	 * Set the x, y, z position of the spawn point.
+	 * @param loc The location.
+	 */
+	@Override
+	public void setXYZ(ILocational loc)
+	{
+		setXYZ(loc.getX(), loc.getY(), loc.getZ());
+		
 	}
 	
 	/**

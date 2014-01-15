@@ -133,6 +133,16 @@ public class Location implements IPositionable
 	}
 	
 	/**
+	 * Set the x, y, z coordinates.
+	 * @param loc The location.
+	 */
+	@Override
+	public void setXYZ(ILocational loc)
+	{
+		setXYZ(loc.getX(), loc.getY(), loc.getZ());
+	}
+	
+	/**
 	 * Get the heading.
 	 * @return the heading
 	 */
