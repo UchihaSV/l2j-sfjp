@@ -270,7 +270,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	
 	protected static boolean isDeBuffSkill(L2Skill skill)
 	{
-		return skill.getSkillType() == L2SkillType.DEBUFF;
+		return skill.isDebuff();
 	}
 	
 	protected static boolean isHealSkill(L2Skill skill)

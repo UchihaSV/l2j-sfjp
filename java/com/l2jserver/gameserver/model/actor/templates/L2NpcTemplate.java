@@ -467,13 +467,14 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 					case BUFF:
 						addBuffSkill(skill);
 						break;
-					case DEBUFF:
-						addDebuffSkill(skill);
-						addCOTSkill(skill);
-						addRangeSkill(skill);
-						break;
 					case DUMMY:
-						if (skill.hasEffectType(L2EffectType.DISPEL))
+						if (skill.isDebuff())
+						{
+							addDebuffSkill(skill);
+							addCOTSkill(skill);
+							addRangeSkill(skill);
+						}
+						else if (skill.hasEffectType(L2EffectType.DISPEL))
 						{
 							addNegativeSkill(skill);
 							addRangeSkill(skill);
