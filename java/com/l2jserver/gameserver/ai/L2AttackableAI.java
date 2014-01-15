@@ -693,14 +693,13 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 			else
 			{
 				// New territory based spawn - obtain last spawn point
-				if ((npc.getSpawn().getX() == 0) && (npc.getSpawn().getY() == 0))
+				if (npc.getSpawn().getX() == 0 && npc.getSpawn().getY() == 0)
 				{
 					x1 = npc.getSpawn().getX(npc);
 					y1 = npc.getSpawn().getY(npc);
 					z1 = npc.getSpawn().getZ(npc);
 				}
-				else
-				// If NPC with fixed coord
+				else // If NPC with fixed coord
 				{
 					x1 = npc.getSpawn().getX();
 					y1 = npc.getSpawn().getY();
@@ -715,9 +714,9 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 				{
 					int deltaX = Rnd.nextInt(range * 2); // x
 					int deltaY = Rnd.get(deltaX, range * 2); // distance
-					deltaY = (int) Math.sqrt((deltaY * deltaY) - (deltaX * deltaX)); // y
-					x1 = (deltaX + x1) - range;
-					y1 = (deltaY + y1) - range;
+					deltaY = (int) Math.sqrt(deltaY * deltaY - deltaX * deltaX); // y
+					x1 = deltaX + x1 - range;
+					y1 = deltaY + y1 - range;
 					z1 = npc.getZ();
 				}
 			}
