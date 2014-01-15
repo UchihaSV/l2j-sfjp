@@ -844,11 +844,10 @@ if (com.l2jserver.Config.FIX_GETLOCATION) {{
 		_z = z;
 	}
 	
+	@Override
 	public void setXYZ(ILocational loc)
 	{
-		_x = loc.getX();
-		_y = loc.getY();
-		_z = loc.getZ();
+		setXYZ(loc.getX(), loc.getY(), loc.getZ());
 	}
 	
 	@Override
