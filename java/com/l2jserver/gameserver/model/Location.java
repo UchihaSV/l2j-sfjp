@@ -18,7 +18,6 @@
  */
 package com.l2jserver.gameserver.model;
 
-import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.interfaces.ILocational;
 import com.l2jserver.gameserver.model.interfaces.IPositionable;
 
@@ -179,13 +178,6 @@ public class Location implements IPositionable
 		return this;
 	}
 	
-	@Override
-	public IPositionable getLocation(L2Object obj)
-	{
-		return this;
-	}
-
-
 	@Override
 	public void setLocation(Location loc)
 	{
