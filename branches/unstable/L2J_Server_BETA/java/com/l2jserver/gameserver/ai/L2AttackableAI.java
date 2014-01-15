@@ -350,9 +350,9 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 					{
 						int x, y, z;
 						
- 						// Territory based spawn
- 						if ((npc.getSpawn().getX() == 0) && (npc.getSpawn().getY() == 0))
- 						{
+						// Territory based spawn
+						if ((npc.getSpawn().getX() == 0) && (npc.getSpawn().getY() == 0))
+						{
 							x = npc.getSpawn().getX(npc);
 							y = npc.getSpawn().getY(npc);
 							z = npc.getSpawn().getZ(npc);
@@ -693,18 +693,19 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 			else
 			{
 				// New territory based spawn - obtain last spawn point
-				if (npc.getSpawn().getX() == 0 && npc.getSpawn().getY() == 0)
+				if ((npc.getSpawn().getX() == 0) && (npc.getSpawn().getY() == 0))
 				{
 					x1 = npc.getSpawn().getX(npc);
 					y1 = npc.getSpawn().getY(npc);
 					z1 = npc.getSpawn().getZ(npc);
 				}
-				else // If NPC with fixed coord
+				else
+				// If NPC with fixed coord
 				{
 					x1 = npc.getSpawn().getX();
 					y1 = npc.getSpawn().getY();
 					z1 = npc.getSpawn().getZ();
-				}				
+				}
 				
 				if (!npc.isInsideRadius(x1, y1, 0, range, false, false))
 				{
@@ -714,9 +715,9 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 				{
 					int deltaX = Rnd.nextInt(range * 2); // x
 					int deltaY = Rnd.get(deltaX, range * 2); // distance
-					deltaY = (int) Math.sqrt(deltaY * deltaY - deltaX * deltaX); // y
-					x1 = deltaX + x1 - range;
-					y1 = deltaY + y1 - range;
+					deltaY = (int) Math.sqrt((deltaY * deltaY) - (deltaX * deltaX)); // y
+					x1 = (deltaX + x1) - range;
+					y1 = (deltaY + y1) - range;
 					z1 = npc.getZ();
 				}
 			}
@@ -1451,46 +1452,46 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				break;
 			}
-			case DEBUFF:
-			{
-				if (GeoData.getInstance().canSeeTarget(caster, attackTarget) && !canAOE(sk) && !attackTarget.isDead() && (dist2 <= srange))
-				{
-					if (!attackTarget.isAffectedBySkill(sk.getId()))
-					{
-						clientStopMoving(null);
-						caster.doCast(sk);
-						return true;
-					}
-				}
-				else if (canAOE(sk))
-				{
-					if ((sk.getTargetType() == L2TargetType.AURA) || (sk.getTargetType() == L2TargetType.BEHIND_AURA) || (sk.getTargetType() == L2TargetType.FRONT_AURA) || (sk.getTargetType() == L2TargetType.AURA_CORPSE_MOB))
-					{
-						clientStopMoving(null);
-						caster.doCast(sk);
-						return true;
-					}
-					if (((sk.getTargetType() == L2TargetType.AREA) || (sk.getTargetType() == L2TargetType.BEHIND_AREA) || (sk.getTargetType() == L2TargetType.FRONT_AREA)) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && (dist2 <= srange))
-					{
-						clientStopMoving(null);
-						caster.doCast(sk);
-						return true;
-					}
-				}
-				else if (sk.getTargetType() == L2TargetType.ONE)
-				{
-					L2Character target = effectTargetReconsider(sk, false);
-					if (target != null)
-					{
-						clientStopMoving(null);
-						caster.doCast(sk);
-						return true;
-					}
-				}
-				break;
-			}
 			default:
 			{
+				if (sk.isDebuff())
+				{
+					if (GeoData.getInstance().canSeeTarget(caster, attackTarget) && !canAOE(sk) && !attackTarget.isDead() && (dist2 <= srange))
+					{
+						if (!attackTarget.isAffectedBySkill(sk.getId()))
+						{
+							clientStopMoving(null);
+							caster.doCast(sk);
+							return true;
+						}
+					}
+					else if (canAOE(sk))
+					{
+						if ((sk.getTargetType() == L2TargetType.AURA) || (sk.getTargetType() == L2TargetType.BEHIND_AURA) || (sk.getTargetType() == L2TargetType.FRONT_AURA) || (sk.getTargetType() == L2TargetType.AURA_CORPSE_MOB))
+						{
+							clientStopMoving(null);
+							caster.doCast(sk);
+							return true;
+						}
+						if (((sk.getTargetType() == L2TargetType.AREA) || (sk.getTargetType() == L2TargetType.BEHIND_AREA) || (sk.getTargetType() == L2TargetType.FRONT_AREA)) && GeoData.getInstance().canSeeTarget(caster, attackTarget) && !attackTarget.isDead() && (dist2 <= srange))
+						{
+							clientStopMoving(null);
+							caster.doCast(sk);
+							return true;
+						}
+					}
+					else if (sk.getTargetType() == L2TargetType.ONE)
+					{
+						L2Character target = effectTargetReconsider(sk, false);
+						if (target != null)
+						{
+							clientStopMoving(null);
+							caster.doCast(sk);
+							return true;
+						}
+					}
+				}
+				
 				if (sk.hasEffectType(L2EffectType.DISPEL))
 				{
 					if (sk.getTargetType() == L2TargetType.ONE)

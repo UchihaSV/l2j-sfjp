@@ -57,7 +57,6 @@ public enum L2SkillType
 	FEED_PET,
 	
 	BUFF,
-	DEBUFF,
 	BEAST_FEED,			//[JOJO]
 	BEAST_RELEASE,		//[JOJO]
 	BEAST_RELEASE_ALL,	//[JOJO]
