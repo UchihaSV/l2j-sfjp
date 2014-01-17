@@ -38,7 +38,6 @@ import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.skills.L2Skill;
-import com.l2jserver.gameserver.model.skills.L2SkillType;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
@@ -265,7 +264,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	
 	protected static boolean isBuffSkill(L2Skill skill)
 	{
-		return skill.getSkillType() == L2SkillType.BUFF;
+		return skill.isBuff();
 	}
 	
 	protected static boolean isDeBuffSkill(L2Skill skill)

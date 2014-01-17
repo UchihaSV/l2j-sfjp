@@ -606,6 +606,12 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	{
 		return _isDebuff;
 	}
+	//[JOJO]-------------------------------------------------
+	public final boolean isBuff()
+	{
+		return isContinuous() && !isDebuff();
+	}
+	//-------------------------------------------------------
 	
 	public int getDisplayId()
 	{
