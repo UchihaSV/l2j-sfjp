@@ -56,7 +56,6 @@ public enum L2SkillType
 	SUMMON(L2SkillSummon.class),
 	FEED_PET,
 	
-	BUFF,
 	BEAST_FEED,			//[JOJO]
 	BEAST_RELEASE,		//[JOJO]
 	BEAST_RELEASE_ALL,	//[JOJO]
