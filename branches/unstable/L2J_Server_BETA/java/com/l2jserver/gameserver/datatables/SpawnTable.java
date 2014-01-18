@@ -33,6 +33,9 @@ import java.util.logging.Logger;
 import javolution.util.FastSet;
 import jp.sf.l2j.troja.FastIntObjectMap;
 
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.engines.DocumentParser;
@@ -45,9 +48,6 @@ import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.interfaces.IL2Procedure;
 import com.l2jserver.util.Util;
-
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 
 /**
  * Spawn data retriever.
@@ -130,10 +130,10 @@ public final class SpawnTable extends DocumentParser
 						String territoryName = null;
 						
 						// Check, if spawn territory specified and exists
-						if (attrs.getNamedItem("zone") != null && ZoneManager.getInstance().getSpawnTerritory(attrs.getNamedItem("zone").getNodeValue()) != null)
+						if ((attrs.getNamedItem("zone") != null) && (ZoneManager.getInstance().getSpawnTerritory(attrs.getNamedItem("zone").getNodeValue()) != null))
 						{
 							territoryName = parseString(attrs, "zone");
-						} 
+						}
 						
 						for (Node npctag = param.getFirstChild(); npctag != null; npctag = npctag.getNextSibling())
 						{
@@ -149,13 +149,13 @@ public final class SpawnTable extends DocumentParser
 								
 								try
 								{
-									 x = parseInt(attrs, "x");
-									 y = parseInt(attrs, "y");
-									 z = parseInt(attrs, "z");
+									x = parseInt(attrs, "x");
+									y = parseInt(attrs, "y");
+									z = parseInt(attrs, "z");
 								}
 								catch (NullPointerException npe)
 								{
-									// x, y, z  can be unspecified, if this spawn is territory based, do nothing
+									// x, y, z can be unspecified, if this spawn is territory based, do nothing
 								}
 								
 								if ((x == 0) && (y == 0) && (territoryName == null)) // Both coordinates and zone are unspecified
@@ -186,7 +186,7 @@ public final class SpawnTable extends DocumentParser
 								{
 									spawnInfo.set("respawnDelay", parseInt(attrs, "respawnDelay"));
 								}
-      					
+								
 								if (attrs.getNamedItem("respawnRandom") != null)
 								{
 									spawnInfo.set("respawnRandom", parseInt(attrs, "respawnRandom"));
@@ -203,7 +203,7 @@ public final class SpawnTable extends DocumentParser
 								
 								_xmlSpawnCount += addSpawn(spawnInfo);
 							}
-						}									
+						}
 					}
 				}
 			}
@@ -225,7 +225,7 @@ public final class SpawnTable extends DocumentParser
 			while (rs.next())
 			{
 				StatsSet spawnInfo = new StatsSet();
-				int npcId = rs.getInt("npc_templateid");				
+				int npcId = rs.getInt("npc_templateid");
 				
 				// Check basic requirements first
 				if (!checkTemplate(npcId))

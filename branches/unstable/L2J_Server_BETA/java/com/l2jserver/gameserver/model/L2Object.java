@@ -664,7 +664,7 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	{
 		if (isCharacter())
 		{
-			this.decayMe();
+			decayMe();
 		}
 		else if (isPlayer())
 		{
@@ -694,7 +694,7 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 		}
 		
 		setXYZ(x, y, z);
-		this.setIsVisible(false);
+		setIsVisible(false);
 	}
 	
 	public final void setLocationInvisible(ILocational loc)
@@ -704,7 +704,7 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	
 	public void updateWorldRegion()
 	{
-		if (!this.isVisible())
+		if (!isVisible())
 		{
 			return;
 		}
