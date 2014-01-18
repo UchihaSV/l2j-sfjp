@@ -1210,15 +1210,12 @@ public final class CharEffectList
 	 */
 	public void updateEffectIcons(boolean partyOnly)
 	{
-		if (!isEmpty())
+		if (partyOnly)
 		{
-			if (partyOnly)
-			{
-				_partyOnly = true;
-			}
-			// Update effect flags and icons.
-			updateEffectList(true);
+			_partyOnly = true;
 		}
+		// Update effect flags and icons.
+		updateEffectList(true);
 	}
 	
 	/**
@@ -1528,9 +1525,10 @@ public final class CharEffectList
 			return;
 		}
 		
+		updateEffectFlags();
+		
 		if (!_owner.isPlayable())
 		{
-			updateEffectFlags();
 			return;
 		}
 		
