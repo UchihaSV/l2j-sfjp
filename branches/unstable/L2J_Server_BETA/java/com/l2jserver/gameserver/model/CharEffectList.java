@@ -1073,9 +1073,9 @@ public final class CharEffectList
 	 */
 	public boolean stopSkillEffects(boolean removed, AbnormalType type)
 	{
-		if ((_stackedEffects != null) && _stackedEffects.containsKey(type))
+		final BuffInfo old;
+		if (_stackedEffects != null && (old = _stackedEffects.remove(type)) != null)
 		{
-			final BuffInfo old = _stackedEffects.remove(type);
 			stopSkillEffects(removed, old.getSkill());
 			return true;
 		}
