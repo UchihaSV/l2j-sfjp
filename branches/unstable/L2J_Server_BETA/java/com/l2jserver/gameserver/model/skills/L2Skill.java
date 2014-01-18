@@ -1266,6 +1266,16 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	{
 		applyEffects(effector, null, effected, false, false, true, 0);
 	}
+	//[JOJO]-------------------------------------------------
+	public void applyEffects(L2Character character)
+	{
+		applyEffects(character, null, character, false, false, true, 0);
+	}
+	@Deprecated public final void getEffects(L2Character effector, L2Character effected)
+	{
+		applyEffects(effector, effected);
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * Method overload for {@link L2Skill#applyEffects(L2Character, L2CubicInstance, L2Character, boolean, boolean, boolean, int)}.<br>
@@ -1440,16 +1450,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 				applyEffects(effector, effected.getSummon(), false, 0);
 			}
 		}
-	}
-	//[JOJO] L2J_Server_BETA r6249 / L2J_DataPack_BETA r9994 移行用
-	/*@Deprecated*/ public final void getEffects(L2Character effector, L2Character effected)
-	{
-		applyEffects(effector, null, effected, null, false, false);
-	}
-	//[JOJO] L2J_Server_BETA r6249 / L2J_DataPack_BETA r9994 移行用
-	/*@Deprecated*/ public final void getEffects(L2Character effector, L2Character effected, Env env)
-	{
-		applyEffects(effector, null, effected, null, false, false);
 	}
 	
 	public final void attach(FuncTemplate f)
