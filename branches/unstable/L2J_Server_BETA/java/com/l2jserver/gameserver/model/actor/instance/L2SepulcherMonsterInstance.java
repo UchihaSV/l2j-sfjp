@@ -718,7 +718,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 		public void run()
 		{
 			// Invulnerable by petrification
-			getSkill(FAKE_PETRIFICATION).applyEffects(activeChar, null, activeChar, null, false, false);
+			getSkill(FAKE_PETRIFICATION).applyEffects(activeChar, activeChar);
 		}
 	}
 	

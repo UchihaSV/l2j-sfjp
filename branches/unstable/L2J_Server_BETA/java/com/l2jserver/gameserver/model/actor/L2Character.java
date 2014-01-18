@@ -1891,9 +1891,9 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		// to the L2Character AND to all L2PcInstance in the _KnownPlayers of the L2Character
 		broadcastPacket(new MagicSkillUse(this, target, skill.getDisplayId(), skill.getDisplayLevel(), skillTime, reuseDelay));
 		
-		// Send a system message USE_S1 to the L2Character
+		// Send a system message to the player.
 	//	if (!skill.isPotion() && isPlayer() && magicId != 1312) //[L2J_JP EDIT - TSL]	//[JOJO]r5394îpé~
-		if (isPlayer())
+		if (isPlayer() && !skill.isAbnormalInstant())
 		{
 			SystemMessage sm = null;
 			switch (magicId)
@@ -5039,7 +5039,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 					abortAttack();
 					abortCast();
 					getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
-					skill.applyEffects(target, null, this, null, false, false);
+					skill.applyEffects(target, this);
 				}
 				else
 				{
@@ -5503,7 +5503,11 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			{
 				addChanceTrigger(newSkill);
 			}
-			newSkill.applyEffects(this, null, this, null, false, true);
+			
+			if (newSkill.isPassive())
+			{
+				newSkill.applyEffects(this, null, this, false, true, false, 0);
+			}
 		}
 		return oldSkill;
 	}
@@ -6240,7 +6244,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 								abortAttack();
 								abortCast();
 								getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
-								tempSkill.applyEffects(target, null, this, null, false, false);
+								tempSkill.applyEffects(target, this);
 							}
 							else if (_log.isLoggable(Level.WARNING))
 							{
@@ -6255,7 +6259,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 								abortAttack();
 								abortCast();
 								getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
-								tempSkill.applyEffects(target, null, this, null, false, false);
+								tempSkill.applyEffects(target, this);
 							}
 							else if (_log.isLoggable(Level.WARNING))
 							{
