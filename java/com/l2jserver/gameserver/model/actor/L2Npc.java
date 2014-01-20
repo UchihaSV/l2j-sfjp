@@ -904,8 +904,8 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	{
 		if (player.isClanLeader())
 		{
-			final int castleId = getCastle() != null ? getCastle().getCastleId() : -1;
-			final int fortId = getFort() != null ? getFort().getFortId() : -1;
+			final int castleId = getCastle() != null ? getCastle().getResidenceId() : -1;
+			final int fortId = getFort() != null ? getFort().getResidenceId() : -1;
 			return (player.getClan().getCastleId() == castleId) || (player.getClan().getFortId() == fortId);
 		}
 		return false;
@@ -944,7 +944,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 			Fort fort = FortManager.getInstance().getFort(getX(), getY(), getZ());
 			if (fort != null)
 			{
-				_fortIndex = FortManager.getInstance().getFortIndex(fort.getFortId());
+				_fortIndex = FortManager.getInstance().getFortIndex(fort.getResidenceId());
 			}
 			
 			if (_fortIndex < 0)

@@ -260,13 +260,13 @@ public class EnterWorld extends L2GameClientPacket
 				if (siege.checkIsAttacker(activeChar.getClan()))
 				{
 					activeChar.setSiegeState((byte) 1);
-					activeChar.setSiegeSide(siege.getCastle().getCastleId());
+					activeChar.setSiegeSide(siege.getCastle().getResidenceId());
 				}
 				
 				else if (siege.checkIsDefender(activeChar.getClan()))
 				{
 					activeChar.setSiegeState((byte) 2);
-					activeChar.setSiegeSide(siege.getCastle().getCastleId());
+					activeChar.setSiegeSide(siege.getCastle().getResidenceId());
 				}
 			}
 			
@@ -280,13 +280,13 @@ public class EnterWorld extends L2GameClientPacket
 				if (siege.checkIsAttacker(activeChar.getClan()))
 				{
 					activeChar.setSiegeState((byte) 1);
-					activeChar.setSiegeSide(siege.getFort().getFortId());
+					activeChar.setSiegeSide(siege.getFort().getResidenceId());
 				}
 				
 				else if (siege.checkIsDefender(activeChar.getClan()))
 				{
 					activeChar.setSiegeState((byte) 2);
-					activeChar.setSiegeSide(siege.getFort().getFortId());
+					activeChar.setSiegeSide(siege.getFort().getResidenceId());
 				}
 			}
 			
@@ -567,7 +567,7 @@ if (ClanBBSManager.L2J_JP_CLAN_BBS) {{
 			
 			if (fort != null)
 			{
-				FortSiegeManager.getInstance().dropCombatFlag(activeChar, fort.getFortId());
+				FortSiegeManager.getInstance().dropCombatFlag(activeChar, fort.getResidenceId());
 			}
 			else
 			{
