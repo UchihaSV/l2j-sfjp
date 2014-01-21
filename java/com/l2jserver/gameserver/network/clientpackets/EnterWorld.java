@@ -53,6 +53,7 @@ import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.TeleportWhereType;
 import com.l2jserver.gameserver.model.actor.instance.L2ClassMasterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.entity.Castle;
 import com.l2jserver.gameserver.model.entity.Couple;
 import com.l2jserver.gameserver.model.entity.Fort;
 import com.l2jserver.gameserver.model.entity.FortSiege;
@@ -311,12 +312,20 @@ public class EnterWorld extends L2GameClientPacket
 			// Residential skills support
 			if (activeChar.getClan().getCastleId() > 0)
 			{
-				CastleManager.getInstance().getCastleByOwner(activeChar.getClan()).giveResidentialSkills(activeChar);
+				Castle castle = CastleManager.getInstance().getCastleByOwner(activeChar.getClan());
+				if (castle == null)
+					_log.warning("EnterWorld warning! " + activeChar.getName() + ".getCastleId() is " + activeChar.getClan().getCastleId() + ", getCastleByOwner(" + activeChar.getClan().getName() + ") returned NULL");
+				else
+					castle.giveResidentialSkills(activeChar);
 			}
 			
 			if (activeChar.getClan().getFortId() > 0)
 			{
-				FortManager.getInstance().getFortByOwner(activeChar.getClan()).giveResidentialSkills(activeChar);
+				Fort fort = FortManager.getInstance().getFortByOwner(activeChar.getClan());
+				if (fort == null)
+					_log.warning("EnterWorld warning! " + activeChar.getName() + ".getFortId() is " + activeChar.getClan().getCastleId() + ", getFortByOwner(" + activeChar.getClan().getName() + ") returned NULL");
+				else
+					fort.giveResidentialSkills(activeChar);
 			}
 			
 			showClanNotice = activeChar.getClan().isNoticeEnabled();
