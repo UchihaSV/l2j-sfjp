@@ -63,11 +63,19 @@ public abstract class AbstractResidence implements INamable
 		return _residenceId;
 	}
 	
+	/** return "Aden" [英語]*/
 	@Override
 	public final String getName()
 	{
 		return _name;
 	}
+	//[JOJO]-------------------------------------------------
+	/** return "&%5;" (アデン城) [クライアント]*/
+	public final String getNameHtm()
+	{
+		return "&%" + getResidenceId() + ";";
+	}
+	//-------------------------------------------------------
 	
 	// TODO: Remove it later when both castles and forts are loaded from same table.
 	public final void setName(String name)

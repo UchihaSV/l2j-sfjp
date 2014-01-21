@@ -912,6 +912,13 @@ public final class Fort extends AbstractResidence
 		}
 	}
 	
+	//[JOJO]-------------------------------------------------
+	/*@Deprecated*/ public final int getFortId()
+	{
+		return getResidenceId();
+	}
+	//-------------------------------------------------------
+	
 	public final L2Clan getOwnerClan()
 	{
 		return _fortOwner;
@@ -1010,7 +1017,7 @@ public final class Fort extends AbstractResidence
 	/** return "&%101;" (露営地要塞) [クライアント]*/
 	public final String getFortNameHtm()
 	{
-		return "&%" + getResidenceId() + ";";
+		return getNameHtm();
 	}
 	//-------------------------------------------------------
 	
