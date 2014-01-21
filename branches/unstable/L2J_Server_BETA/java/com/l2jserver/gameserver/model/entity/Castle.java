@@ -919,6 +919,13 @@ public final class Castle extends AbstractResidence
 		}
 	}
 	
+	//[JOJO]-------------------------------------------------
+	/*@Deprecated*/ public final int getCastleId()
+	{
+		return getResidenceId();
+	}
+	//-------------------------------------------------------
+	
 	public final L2DoorInstance getDoor(int doorId)
 	{
 		if (doorId <= 0)
@@ -958,7 +965,7 @@ public final class Castle extends AbstractResidence
 	/** return "&%5;" (アデン城) [クライアント]*/
 	public final String getCastleNameHtm()
 	{
-		return "&%" + getResidenceId() + ";";
+		return getNameHtm();
 	}
 	/** return "&^5;" (アデン) [クライアント]*/
 	public final String getLocNameHtm()
