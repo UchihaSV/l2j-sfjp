@@ -76,7 +76,7 @@ public class Siege implements Siegable
 	public static final byte OWNER = -1;
 	public static final byte DEFENDER = 0;
 	public static final byte ATTACKER = 1;
-	public static final byte DEFENDER_NOT_APPROWED = 2;
+	public static final byte DEFENDER_NOT_APPROVED = 2;
 	
 	private int _controlTowerCount;
 	
@@ -930,16 +930,29 @@ public class Siege implements Siegable
 				return;
 			}
 		}
-		if (force || checkIfCanRegister(player, ATTACKER))
+		
+		if (force)
+		{
+			if (SiegeManager.getInstance().checkIsRegistered(player.getClan(), getCastle().getResidenceId()))
+			{
+				player.sendPacket(SystemMessageId.ALREADY_REQUESTED_SIEGE_BATTLE);
+			}
+			else
+			{
+				saveSiegeClan(player.getClan(), ATTACKER, false); // Save to database
+			}
+			return;
+		}
+		
+		if (checkIfCanRegister(player, ATTACKER))
 		{
 			saveSiegeClan(player.getClan(), ATTACKER, false); // Save to database
 		}
 	}
 	
 	/**
-	 * Register clan as defender<BR>
-	 * <BR>
-	 * @param player The L2PcInstance of the player trying to register
+	 * Register a clan as defender.
+	 * @param player the player to register
 	 */
 	public void registerDefender(L2PcInstance player)
 	{
@@ -952,10 +965,25 @@ public class Siege implements Siegable
 		{
 			player.sendMessage(getCastle().getCastleName() + "‚ÍNPC‚ªŠ—L‚µ‚Ä‚¢‚é‚Ì‚ÅŽç”õ‘¤‚É‚Í“o˜^‚Å‚«‚Ü‚¹‚ñB");
 		//	player.sendMessage("You cannot register as a defender because " + getCastle().getName() + " is owned by NPC.");
+			return;
 		}
-		else if (force || checkIfCanRegister(player, DEFENDER_NOT_APPROWED))
+		
+		if (force)
 		{
-			saveSiegeClan(player.getClan(), DEFENDER_NOT_APPROWED, false); // Save to database
+			if (SiegeManager.getInstance().checkIsRegistered(player.getClan(), getCastle().getResidenceId()))
+			{
+				player.sendPacket(SystemMessageId.ALREADY_REQUESTED_SIEGE_BATTLE);
+			}
+			else
+			{
+				saveSiegeClan(player.getClan(), DEFENDER_NOT_APPROVED, false); // Save to database
+			}
+			return;
+		}
+		
+		if (checkIfCanRegister(player, DEFENDER_NOT_APPROVED))
+		{
+			saveSiegeClan(player.getClan(), DEFENDER_NOT_APPROVED, false); // Save to database
 		}
 	}
 	
@@ -1169,7 +1197,7 @@ public class Siege implements Siegable
 		{
 			player.sendPacket(SystemMessageId.ATTACKER_SIDE_FULL);
 		}
-		else if (((typeId == DEFENDER) || (typeId == DEFENDER_NOT_APPROWED) || (typeId == OWNER)) && ((getDefenderClans().size() + getDefenderWaitingClans().size()) >= SiegeManager.getInstance().getDefenderMaxClans()))
+		else if (((typeId == DEFENDER) || (typeId == DEFENDER_NOT_APPROVED) || (typeId == OWNER)) && ((getDefenderClans().size() + getDefenderWaitingClans().size()) >= SiegeManager.getInstance().getDefenderMaxClans()))
 		{
 			player.sendPacket(SystemMessageId.DEFENDER_SIDE_FULL);
 		}
@@ -1274,7 +1302,7 @@ public class Siege implements Siegable
 					{
 						addAttacker(rs.getInt("clan_id"));
 					}
-					else if (typeId == DEFENDER_NOT_APPROWED)
+					else if (typeId == DEFENDER_NOT_APPROVED)
 					{
 						addDefenderWaiting(rs.getInt("clan_id"));
 					}
@@ -1388,7 +1416,7 @@ public class Siege implements Siegable
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			if ((typeId == DEFENDER) || (typeId == DEFENDER_NOT_APPROWED) || (typeId == OWNER))
+			if ((typeId == DEFENDER) || (typeId == DEFENDER_NOT_APPROVED) || (typeId == OWNER))
 			{
 				if ((getDefenderClans().size() + getDefenderWaitingClans().size()) >= SiegeManager.getInstance().getDefenderMaxClans())
 				{
@@ -1432,7 +1460,7 @@ public class Siege implements Siegable
 			{
 				addAttacker(clan.getId());
 			}
-			else if (typeId == DEFENDER_NOT_APPROWED)
+			else if (typeId == DEFENDER_NOT_APPROVED)
 			{
 				addDefenderWaiting(clan.getId());
 			}
