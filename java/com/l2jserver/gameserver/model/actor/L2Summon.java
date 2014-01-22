@@ -1112,7 +1112,7 @@ public abstract class L2Summon extends L2Playable
 		
 		// TODO: Unhardcode it.
 		// Siege golems AI doesn't support attacking other than doors/walls at the moment.
-		if (!target.isDoor() && ((npcId == L2SiegeSummonInstance.SWOOP_CANNON_ID) || (npcId == L2SiegeSummonInstance.SIEGE_GOLEM_ID)))
+		if (!target.isDoor() && (npcId == L2SiegeSummonInstance.SWOOP_CANNON_ID || npcId == L2SiegeSummonInstance.SIEGE_GOLEM_ID))
 		{
 			return false;
 		}
