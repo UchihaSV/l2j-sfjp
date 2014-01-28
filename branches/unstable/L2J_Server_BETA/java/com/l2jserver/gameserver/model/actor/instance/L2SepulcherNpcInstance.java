@@ -266,13 +266,13 @@ public class L2SepulcherNpcInstance extends L2Npc
 	{
 		BoxAction()
 		{
-			startAbnormalEffect(AbnormalVisualEffect.STUN);
+			startAbnormalVisualEffect(true, AbnormalVisualEffect.STUN);
 			ThreadPoolManager.getInstance().scheduleEffect(this, 3000);
 		}
 		@Override
 		public void run()
 		{
-			stopAbnormalEffect(AbnormalVisualEffect.STUN);
+			stopAbnormalVisualEffect(true, AbnormalVisualEffect.STUN);
 		}
 	}
 	
