@@ -245,7 +245,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	
 	/**
 	 * Verify if this character is under debug.
-	 * @return {@code true} if this character is under debug. {@code false} otherwise
+	 * @return {@code true} if this character is under debug, {@code false} otherwise
 	 */
 	public boolean isDebug()
 	{
@@ -2885,7 +2885,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 * Gets the abnormal visual effects affecting this character.
 	 * @return a map of 32 bits containing all abnormal visual effects in progress for this character
 	 */
-	public int getAbnormaVisualEffect()
+	public int getAbnormalVisualEffects()
 	{
 		return _abnormalVisualEffects;
 	}
@@ -2925,7 +2925,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			return (getAbnormalVisualEffectSpecial() & ave.getMask()) == ave.getMask();
 		}
 		
-		return (getAbnormaVisualEffect() & ave.getMask()) == ave.getMask();
+		return (getAbnormalVisualEffects() & ave.getMask()) == ave.getMask();
 	}
 	
 	/**
