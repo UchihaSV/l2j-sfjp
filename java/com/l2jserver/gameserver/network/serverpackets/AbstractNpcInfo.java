@@ -187,7 +187,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeD(0x00); // pvp flag
 			writeD(0x00); // karma
 			
-			writeD(_npc.getAbnormalEffect()); // C2
+			writeD(_npc.getAbnormaVisualEffect()); // C2
 			writeD(_clanId); // clan id
 			writeD(_clanCrest); // crest id
 			writeD(_allyId); // ally id
@@ -204,7 +204,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeD(_npc.getColorEffect()); // CT1.5 Pet form and skills, Color effect
 			writeC(_npc.isTargetable() ? 0x01 : 0x00);
 			writeC(_npc.isShowName() ? 0x01 : 0x00);
-			writeD(_npc.getSpecialEffect());
+			writeD(_npc.getAbnormalVisualEffectSpecial());
 			writeD(_displayEffect);
 		}
 	}
@@ -274,7 +274,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeD(_trap.getPvpFlag());
 			writeD(_trap.getKarma());
 			
-			writeD(_trap.getAbnormalEffect()); // C2
+			writeD(_trap.getAbnormaVisualEffect()); // C2
 			writeD(0x00); // clan id
 			writeD(0x00); // crest id
 			writeD(0000); // C2
@@ -414,7 +414,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeD(_summon.getPvpFlag());
 			writeD(_summon.getKarma());
 			
-			writeD(gmSeeInvis ? _summon.getAbnormalEffect() | AbnormalVisualEffect.STEALTH.getMask() : _summon.getAbnormalEffect());
+			writeD(gmSeeInvis ? _summon.getAbnormaVisualEffect() | AbnormalVisualEffect.STEALTH.getMask() : _summon.getAbnormaVisualEffect());
 			
 			writeD(0x00); // clan id
 			writeD(0x00); // crest id
@@ -432,7 +432,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeD(_form); // CT1.5 Pet form and skills
 			writeC(0x01);
 			writeC(0x01);
-			writeD(_summon.getSpecialEffect());
+			writeD(_summon.getAbnormalVisualEffectSpecial());
 		}
 	}
 }
