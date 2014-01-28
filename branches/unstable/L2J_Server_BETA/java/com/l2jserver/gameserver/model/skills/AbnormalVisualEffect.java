@@ -108,6 +108,17 @@ public enum AbnormalVisualEffect
 		return _mask;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	/**
+	 * Verify if it's a abnormal visual effect.
+	 * @return {@code true} it's a abnormal visual effect, {@code false} otherwise
+	 */
+	public final boolean isNormal()
+	{
+		return _type == 0;
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * Verify if it's a special abnormal visual effect.
 	 * @return {@code true} it's a special abnormal visual effect, {@code false} otherwise
