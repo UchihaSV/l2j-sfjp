@@ -13378,7 +13378,7 @@ public final class L2PcInstance extends L2Playable
 	
 	public void teleportBookmarkModify(int ix, int icon, String tag, String name)
 	{
-		TeleportBookmark bookmark = _tpbookmarks.get(ix);
+		final TeleportBookmark bookmark = _tpbookmarks.get(ix);
 		if (bookmark != null)
 		{
 			final int id = bookmark.getId();
