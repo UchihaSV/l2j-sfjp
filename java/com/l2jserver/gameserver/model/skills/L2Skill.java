@@ -1471,7 +1471,8 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			effector.getEffectList().add(info);
 			
 			// Support for buff sharing feature.
-			if (addContinuousEffects && effected.isPlayer() && effected.hasSummon() && isContinuous() && !isDebuff())
+			// Avoiding Servitor Share since it's implementation already "shares" the effect.
+			if (addContinuousEffects && effected.isPlayer() && effected.hasServitor() && isContinuous() && !isDebuff() && (getId() != SKILL_SERVITOR_SHARE))
 			{
 				applyEffects(effector, effected.getSummon(), false, 0);
 			}
@@ -1526,7 +1527,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			effector.getEffectList().add(info);
 			
 			// Support for buff sharing feature.
-			if (addContinuousEffects && effected.isPlayer() && effected.hasSummon() && isContinuous() && !isDebuff())
+			if (addContinuousEffects && effected.isPlayer() && effected.hasServitor() && isContinuous() && !isDebuff())
 			{
 				applyEffects(effector, effected.getSummon(), false, 0);
 			}
