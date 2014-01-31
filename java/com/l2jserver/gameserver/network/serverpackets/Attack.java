@@ -19,11 +19,8 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import com.l2jserver.gameserver.model.Hit;
-import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Character;
 
 public class Attack extends L2GameServerPacket
@@ -31,9 +28,13 @@ public class Attack extends L2GameServerPacket
 	private final int _attackerObjId;
 	private final boolean _soulshot;
 	private final int _ssGrade;
-	private final Location _attackerLoc;
-	private final Location _targetLoc;
-	private final List<Hit> _hits = new ArrayList<>();
+	private final int _x;
+	private final int _y;
+	private final int _z;
+	private final int _tx;
+	private final int _ty;
+	private final int _tz;
+	private ArrayList<Hit> _hits;
 	
 	/**
 	 * @param attacker
@@ -46,8 +47,12 @@ public class Attack extends L2GameServerPacket
 		_attackerObjId = attacker.getObjectId();
 		_soulshot = useShots;
 		_ssGrade = ssGrade;
-		_attackerLoc = new Location(attacker);
-		_targetLoc = new Location(target);
+		_x = attacker.getX();
+		_y = attacker.getY();
+		_z = attacker.getZ();
+		_tx = target.getX();
+		_ty = target.getY();
+		_tz = target.getZ();
 	}
 	
 	/**
@@ -60,6 +65,8 @@ public class Attack extends L2GameServerPacket
 	 */
 	public void addHit(L2Character target, int damage, boolean miss, boolean crit, byte shld)
 	{
+		if (_hits == null)
+			_hits = new ArrayList<>();
 		_hits.add(new Hit(target, damage, miss, crit, shld, _soulshot, _ssGrade));
 	}
 	
@@ -68,7 +75,7 @@ public class Attack extends L2GameServerPacket
 	 */
 	public boolean hasHits()
 	{
-		return !_hits.isEmpty();
+		return _hits != null;
 	}
 	
 	/**
@@ -93,19 +100,22 @@ public class Attack extends L2GameServerPacket
 	@Override
 	protected final void writeImpl()
 	{
-		final Iterator<Hit> it = _hits.iterator();
 		writeC(0x33);
 		
 		writeD(_attackerObjId);
-		writeHit(it.next());
-		writeLoc(_attackerLoc);
+		writeHit(_hits.get(0));
+		writeD(_x);
+		writeD(_y);
+		writeD(_z);
 		
 		writeH(_hits.size() - 1);
-		while (it.hasNext())
+		for (int i = 1; i < _hits.size(); i++)
 		{
-			writeHit(it.next());
+			writeHit(_hits.get(i));
 		}
 		
-		writeLoc(_targetLoc);
+		writeD(_tx);
+		writeD(_ty);
+		writeD(_tz);
 	}
 }

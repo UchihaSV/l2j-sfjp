@@ -19,25 +19,30 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 import com.l2jserver.gameserver.model.L2Object;
-import com.l2jserver.gameserver.model.Location;
 
 public class ValidateLocation extends L2GameServerPacket
 {
 	private final int _charObjId;
-	private final Location _loc;
+	private final int _x, _y, _z, _heading;
 	
 	public ValidateLocation(L2Object obj)
 	{
 		_charObjId = obj.getObjectId();
-		_loc = obj.getLocation();
+		_x = obj.getX();
+		_y = obj.getY();
+		_z = obj.getZ();
+		_heading = obj.getHeading();
 	}
 	
 	@Override
 	protected final void writeImpl()
 	{
 		writeC(0x79);
+		
 		writeD(_charObjId);
-		writeLoc(_loc);
-		writeD(_loc.getHeading());
+		writeD(_x);
+		writeD(_y);
+		writeD(_z);
+		writeD(_heading);
 	}
 }
