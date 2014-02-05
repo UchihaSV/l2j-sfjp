@@ -180,7 +180,7 @@ if (CHECK_HASH_COLLISION) {{
 			content = new String(raw, UTF_8);
 		/*	if (! TIMED_CACHE) */
 				content = removeBlank(content);
-			content = content.replaceAll("(?s)<!--.*?-->", ""); // Remove html comments
+			content = content.replaceAll("<!--.*?-->", ""); // Remove html comments
 			
 			String oldContent = checked ? null : _cache_get(relpath);
 			if (oldContent == null)
