@@ -1828,42 +1828,71 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return _npcId;
 	}
 	
+	private byte[] effectTypes()
+	{
+		if (_effectTypes == null)
+		{
+			final byte[] effectTypes = new byte[_effects.size()];
+			
+			final Env env = new Env();
+			env.setSkill(this);
+			
+			int i = 0;
+			for (AbstractEffect effect : _effects)
+			{
+				if (effect == null)
+				{
+					continue;
+				}
+				effectTypes[i++] = (byte) effect.getEffectType().ordinal();
+			}
+			Arrays.sort(effectTypes);
+			_effectTypes = effectTypes;
+		}
+		return _effectTypes;
+	}
 	/**
 	 * @param types
 	 * @return {@code true} if at least one of specified {@link L2EffectType} types present on the current skill's effects, {@code false} otherwise.
 	 */
-	public boolean hasEffectType(L2EffectType... types)
+	@Deprecated public boolean hasEffectType(L2EffectType... types)
 	{
 		if (hasEffects() && (types != null) && (types.length > 0))
 		{
-			if (_effectTypes == null)
-			{
-				_effectTypes = new byte[_effects.size()];
-				
-				final Env env = new Env();
-				env.setSkill(this);
-				
-				int i = 0;
-				for (AbstractEffect effect : _effects)
-				{
-					if (effect == null)
-					{
-						continue;
-					}
-					_effectTypes[i++] = (byte) effect.getEffectType().ordinal();
-				}
-				Arrays.sort(_effectTypes);
-			}
-			
+			final byte[] effectTypes = effectTypes();
 			for (L2EffectType type : types)
 			{
-				if (Arrays.binarySearch(_effectTypes, (byte) type.ordinal()) >= 0)
+				if (Arrays.binarySearch(effectTypes, (byte) type.ordinal()) >= 0)
 				{
 					return true;
 				}
 			}
 		}
 		return false;
+	}
+	public boolean hasEffectType(L2EffectType type)
+	{
+		return Arrays.binarySearch(effectTypes(), (byte) type.ordinal()) >= 0;
+	}
+	public boolean hasEffectType(L2EffectType type1, L2EffectType type2)
+	{
+		return hasEffectType(type1) || hasEffectType(type2);
+	}
+	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3)
+	{
+		return hasEffectType(type1) || hasEffectType(type2) || hasEffectType(type3);
+	}
+	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4)
+	{
+		return hasEffectType(type1) || hasEffectType(type2) || hasEffectType(type3) || hasEffectType(type4);
+	}
+	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4, L2EffectType type5)
+	{
+		return hasEffectType(type1) || hasEffectType(type2) || hasEffectType(type3) || hasEffectType(type4) || hasEffectType(type5);
+	}
+	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4, L2EffectType type5, L2EffectType type6, L2EffectType type7, L2EffectType type8)
+	{
+		return hasEffectType(type1) || hasEffectType(type2) || hasEffectType(type3) || hasEffectType(type4) || hasEffectType(type5) || hasEffectType(type6) || hasEffectType(type7) || hasEffectType(type8);
 	}
 	
 	/**
