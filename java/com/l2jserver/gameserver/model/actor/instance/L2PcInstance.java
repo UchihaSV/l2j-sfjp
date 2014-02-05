@@ -9288,8 +9288,7 @@ public final class L2PcInstance extends L2Playable
 	public boolean checkPvpSkill(L2Object target, L2Skill skill, boolean srcIsSummon)
 	{
 		final L2PcInstance targetPlayer = target != null ? target.getActingPlayer() : null;
-		final boolean bannedEffects = skill.hasEffectType(L2EffectType.DISPEL, L2EffectType.STEAL_ABNORMAL);
-		if (skill.isDebuff() || bannedEffects)
+		if (skill.isDebuff() || skill.hasEffectType(L2EffectType.DISPEL, L2EffectType.STEAL_ABNORMAL))
 		{
 			if (this == targetPlayer)
 			{
