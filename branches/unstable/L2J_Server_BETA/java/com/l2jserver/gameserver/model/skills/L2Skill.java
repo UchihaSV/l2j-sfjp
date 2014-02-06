@@ -1870,29 +1870,33 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		}
 		return false;
 	}
-	public boolean hasEffectType(L2EffectType type)
+	private boolean hasEffect(L2EffectType type)
 	{
 		return Arrays.binarySearch(effectTypes(), (byte) type.ordinal()) >= 0;
 	}
+	public boolean hasEffectType(L2EffectType type1)
+	{
+		return hasEffects() && (hasEffect(type1));
+	}
 	public boolean hasEffectType(L2EffectType type1, L2EffectType type2)
 	{
-		return hasEffectType(type1) || hasEffectType(type2);
+		return hasEffects() && (hasEffect(type1) || hasEffect(type2));
 	}
 	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3)
 	{
-		return hasEffectType(type1) || hasEffectType(type2) || hasEffectType(type3);
+		return hasEffects() && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3));
 	}
 	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4)
 	{
-		return hasEffectType(type1) || hasEffectType(type2) || hasEffectType(type3) || hasEffectType(type4);
+		return hasEffects() && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4));
 	}
 	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4, L2EffectType type5)
 	{
-		return hasEffectType(type1) || hasEffectType(type2) || hasEffectType(type3) || hasEffectType(type4) || hasEffectType(type5);
+		return hasEffects() && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4) || hasEffect(type5));
 	}
 	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4, L2EffectType type5, L2EffectType type6, L2EffectType type7, L2EffectType type8)
 	{
-		return hasEffectType(type1) || hasEffectType(type2) || hasEffectType(type3) || hasEffectType(type4) || hasEffectType(type5) || hasEffectType(type6) || hasEffectType(type7) || hasEffectType(type8);
+		return hasEffects() && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4) || hasEffect(type5) || hasEffect(type6) || hasEffect(type7) || hasEffect(type8));
 	}
 	
 	/**
