@@ -18,7 +18,7 @@
  */
 package com.l2jserver.gameserver.model.actor;
 
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ACTIVE;
+import static com.l2jserver.gameserver.ai.CtrlIntention.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -2056,8 +2056,8 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		for (int i = 0; i < itemCount; i++)
 		{
 			// Randomize drop position.
-			final int newX = (getX() + Rnd.get((RANDOM_ITEM_DROP_LIMIT * 2) + 1)) - RANDOM_ITEM_DROP_LIMIT;
-			final int newY = (getY() + Rnd.get((RANDOM_ITEM_DROP_LIMIT * 2) + 1)) - RANDOM_ITEM_DROP_LIMIT;
+			final int newX = getX() + Rnd.get(-RANDOM_ITEM_DROP_LIMIT, RANDOM_ITEM_DROP_LIMIT);
+			final int newY = getY() + Rnd.get(-RANDOM_ITEM_DROP_LIMIT, RANDOM_ITEM_DROP_LIMIT);
 			final int newZ = getZ() + 20;
 			
 			if (ItemTable.getInstance().getTemplate(itemId) == null)
