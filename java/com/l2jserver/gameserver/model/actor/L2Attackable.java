@@ -28,7 +28,6 @@ import java.util.logging.Level;
 import javolution.util.FastMap;
 
 import com.l2jserver.Config;
-import com.l2jserver.gameserver.ItemsAutoDestroy;
 import com.l2jserver.gameserver.SevenSigns;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlEvent;
@@ -68,7 +67,6 @@ import com.l2jserver.gameserver.model.holders.ItemHolder;
 import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
-import com.l2jserver.gameserver.model.items.type.L2EtcItemType;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.stats.Stats;
@@ -1702,67 +1700,6 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Drops an item.
-	 * @param player the last attacker or main damage dealer
-	 * @param itemId the item ID
-	 * @param itemCount the item count
-	 * @return the dropped item
-	 */
-	public L2ItemInstance dropItem(L2PcInstance player, int itemId, long itemCount)
-	{
-		final int randDropLim = 70;
-		
-		L2ItemInstance ditem = null;
-		for (int i = 0; i < itemCount; i++)
-		{
-			// Randomize drop position
-			int newX = getX() + Rnd.get(-randDropLim, randDropLim);
-			int newY = getY() + Rnd.get(-randDropLim, randDropLim);
-			int newZ = Math.max(getZ(), player.getZ()) + 20; // TODO: temp hack, do something nicer when we have geodatas
-			
-			if (ItemTable.getInstance().getTemplate(itemId) != null)
-			{
-				// Init the dropped L2ItemInstance and add it in the world as a visible object at the position where mob was last
-				ditem = ItemTable.getInstance().createItem("Loot", itemId, itemCount, player, this);
-				ditem.getDropProtection().protect(player);
-				ditem.dropMe(this, newX, newY, newZ);
-				
-				// Add drop to auto destroy item task
-				if (!Config.LIST_PROTECTED_ITEMS.contains(itemId))
-				{
-					if (((Config.AUTODESTROY_ITEM_AFTER > 0) && (ditem.getItemType() != L2EtcItemType.HERB)) || ((Config.HERB_AUTO_DESTROY_TIME > 0) && (ditem.getItemType() == L2EtcItemType.HERB)))
-					{
-						ItemsAutoDestroy.getInstance().addItem(ditem);
-					}
-				}
-				ditem.setProtected(false);
-				
-				// If stackable, end loop as entire count is included in 1 instance of item
-				if (ditem.isStackable() || !Config.MULTIPLE_ITEM_DROP)
-				{
-					break;
-				}
-			}
-			else
-			{
-				_log.log(Level.SEVERE, "Item doesn't exist so cannot be dropped. Item ID: " + itemId);
-			}
-		}
-		return ditem;
-	}
-	
-	/**
-	 * Method overload for {@link L2Attackable#dropItem(L2PcInstance, int, long)}
-	 * @param player the last attacker or main damage dealer
-	 * @param item the item holder
-	 * @return the dropped item
-	 */
-	public L2ItemInstance dropItem(L2PcInstance player, ItemHolder item)
-	{
-		return dropItem(player, item.getId(), item.getCount());
 	}
 	
 	/**
