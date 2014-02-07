@@ -1166,7 +1166,7 @@ public final class SystemMessageId
 	 * ID: 144<br>
 	 * Message: ターゲットが正しくありません。<br>
 	 * Message: &#30446;&#27161;&#37679;&#35492;&#12290;<br>
-	 * Message: That is the incorrect target.
+	 * Message: That is an incorrect target.
 	 */
 	public static final SystemMessageId TARGET_IS_INCORRECT;
 	
