@@ -1788,9 +1788,9 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		return itemLootShedule;
 	}
 	
-	public void setProtected(boolean is_protected)
+	public void setProtected(boolean isProtected)
 	{
-		_protected = is_protected;
+		_protected = isProtected;
 	}
 	
 	public boolean isProtected()
