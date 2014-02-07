@@ -479,7 +479,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 				}
 				else if (skill.getSkillType() == L2SkillType.DUMMY)
 				{
-					if (skill.hasEffectType(L2EffectType.DISPEL))
+					if (skill.hasEffectType(L2EffectType.DISPEL, L2EffectType.DISPEL_BY_SLOT))
 					{
 						addNegativeSkill(skill);
 						addRangeSkill(skill);

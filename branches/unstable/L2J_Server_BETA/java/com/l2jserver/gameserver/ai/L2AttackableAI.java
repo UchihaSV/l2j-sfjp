@@ -1464,7 +1464,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			}
 		}
 		
-		if (sk.hasEffectType(L2EffectType.DISPEL))
+		if (sk.hasEffectType(L2EffectType.DISPEL, L2EffectType.DISPEL_BY_SLOT))
 		{
 			if (sk.getTargetType() == L2TargetType.ONE)
 			{
@@ -2079,7 +2079,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			return null;
 		}
 		L2Attackable actor = getActiveChar();
-		if (!sk.hasEffectType(L2EffectType.DISPEL))
+		if (!sk.hasEffectType(L2EffectType.DISPEL, L2EffectType.DISPEL_BY_SLOT))
 		{
 			if (!positive)
 			{

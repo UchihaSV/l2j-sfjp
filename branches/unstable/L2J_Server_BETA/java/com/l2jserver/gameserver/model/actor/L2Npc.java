@@ -1952,7 +1952,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	/**
 	 * Short wrapper for backward compatibility.
 	 * @param val value to store
-	 * @return {@code true} if stored script value equals given value, {@code false} otherwise 	 
+	 * @return {@code true} if stored script value equals given value, {@code false} otherwise
 	 */
 	public boolean isScriptValue(int val)
 	{
@@ -1994,7 +1994,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		return ((getSpawn() != null) && (getSpawn().getX(this) == getX()) && (getSpawn().getY(this) == getY()));
 	}
 	
- 	/**
+	/**
 	 * @return {@code true} if {@link NpcVariables} instance is attached to current player's scripts, {@code false} otherwise.
 	 */
 	public boolean hasVariables()
