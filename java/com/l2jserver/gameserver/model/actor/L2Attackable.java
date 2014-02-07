@@ -1573,21 +1573,19 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 					// Broadcast message if RaidBoss was defeated
 					if (isRaid() && !isRaidMinion())
 					{
-					 if (item.getId() == 57)	//[JOJO]
-					 {
-						SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_DIED_DROPPED_S2_ADENA);
-						sm.addCharName(this);
-						sm.addItemNumber(item.getCount());
-						broadcastPacket(sm);
-					 }
-					 else
-					 {
-						final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_DIED_DROPPED_S3_S2);
-						sm.addCharName(this);
-						sm.addItemName(item.getId());
-						sm.addItemNumber(item.getCount());
-						broadcastPacket(sm);
-					 }
+						if (item.getId() == 57)	//[JOJO]
+						{
+							broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.C1_DIED_DROPPED_S2_ADENA)
+								.addCharName(this)
+								.addItemNumber(item.getCount()));
+						}
+						else
+						{
+							broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.C1_DIED_DROPPED_S3_S2)
+								.addCharName(this)
+								.addItemName(item.getId())
+								.addItemNumber(item.getCount()));
+						}
 					}
 				}
 			}
