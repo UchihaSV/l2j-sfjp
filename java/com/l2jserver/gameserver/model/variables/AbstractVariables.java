@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.model.variables;
 
+import javolution.util.FastMap;
+
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.interfaces.IRestorable;
 import com.l2jserver.gameserver.model.interfaces.IStorable;
@@ -28,6 +30,11 @@ import com.l2jserver.gameserver.model.interfaces.IStorable;
 public abstract class AbstractVariables extends StatsSet implements IRestorable, IStorable
 {
 	private volatile boolean _changes = false;	//[JOJO] AtomicBoolean --> volatile boolean
+	
+	public AbstractVariables()
+	{
+		super(new FastMap<String, Object>().shared());
+	}
 	
 	/**
 	 * Overriding following methods to prevent from doing useless database operations if there is no changes since player's login.
