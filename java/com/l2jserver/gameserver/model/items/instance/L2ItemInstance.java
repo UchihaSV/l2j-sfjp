@@ -46,6 +46,7 @@ import com.l2jserver.gameserver.datatables.OptionsData;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.ItemLocation;
 import com.l2jserver.gameserver.enums.ShotType;
+import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.ItemsOnGroundManager;
 import com.l2jserver.gameserver.instancemanager.MercTicketManager;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
@@ -231,6 +232,16 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		_enchantOptions = new ArrayList<>();
 }}
+	}
+	
+	/**
+	 * Constructor overload.<br>
+	 * Sets the next free object ID in the ID factory.
+	 * @param itemId the item template ID
+	 */
+	public L2ItemInstance(int itemId)
+	{
+		this(IdFactory.getInstance().getNextId(), itemId);
 	}
 	
 	@Override
