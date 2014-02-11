@@ -1073,11 +1073,14 @@ public final class CharEffectList
 	 */
 	public boolean stopSkillEffects(boolean removed, AbnormalType type)
 	{
-		final BuffInfo old;
-		if (_stackedEffects != null && (old = _stackedEffects.remove(type)) != null)
+		if (_stackedEffects != null)
 		{
-			stopSkillEffects(removed, old.getSkill());
-			return true;
+			final BuffInfo old = _stackedEffects.remove(type);
+			if (old != null)
+			{
+				stopSkillEffects(removed, old.getSkill());
+				return true;
+			}
 		}
 		return false;
 	}
