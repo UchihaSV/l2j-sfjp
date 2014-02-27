@@ -173,7 +173,7 @@ public class QuestTimer
 	{
 		return _instanceId;
 	}
-	public final long geRemainDelay()
+	public final long getRemainDelay()
 	{
 		return _schedular == null ? 0 : _schedular.getDelay(TimeUnit.MILLISECONDS);
 	}
