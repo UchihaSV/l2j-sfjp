@@ -531,13 +531,13 @@ if (ClanBBSManager.L2J_JP_CLAN_BBS) {{
 			sendPacket(new Die(activeChar));
 		}
 		
-		activeChar.onPlayerEnter();
-		
 		sendPacket(new SkillCoolTime(activeChar));
 		sendPacket(new ExVoteSystemInfo(activeChar));
 		sendPacket(new ExNevitAdventPointInfoPacket(0));
 		sendPacket(new ExNevitAdventTimeChange(-1)); // only set pause state...
 		sendPacket(new ExShowContactList(activeChar));
+		
+		activeChar.onPlayerEnter();
 		
 		for (L2ItemInstance i : activeChar.getInventory().getItems())
 		{
