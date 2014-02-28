@@ -1183,6 +1183,7 @@ public final class Config
 	//--------------------------------------------------
 	public static final String SCRIPT_ENCODING = null; /*"MS932"*/		//[JOJO] *.py,*.javaスクリプトの文字エンコード.
 																		//       "MS932":サーバ起動時に(スクリプトをMS932とみなして)Native2Asciiする. null:何もしない.
+	public static final boolean FIX_DISTANCE_TO_WATCH_OBJECT = true;	//[JOJO]体の大きいモンスターは遠くからも見える、小さい物体は遠くからは見えないように.
 	public static final boolean FIX_GETLOCATION = true;					//[JOJO]過剰な new Location() の抑止.
 	public static final boolean CHECK_DYNAMIC_IP_ADDRESS_TASK = true;	//[JOJO]IPアドレスを定期的に検査して変化していればログインサーバに接続しなおす.
 	public static final boolean ADMIN_MENU_AUTO_RETURN = true;			//[JOJO]adminメニューを開いたままにする.

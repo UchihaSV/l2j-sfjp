@@ -134,6 +134,24 @@ public class PcKnownList extends PlayableKnownList
 		return (L2PcInstance) super.getActiveChar();
 	}
 	
+	private double proportion(L2Object object)
+	{
+if (com.l2jserver.Config.FIX_DISTANCE_TO_WATCH_OBJECT) {{
+		if (object.isL2Attackable())
+		{
+			// ëÃÇÃëÂÇ´Ç»ÉÇÉìÉXÉ^Å[ÇÕâìÇ≠Ç©ÇÁÇ‡å©Ç¶ÇÈ
+			final com.l2jserver.gameserver.model.actor.L2Attackable a = (com.l2jserver.gameserver.model.actor.L2Attackable) object;
+			return 1.0 + (a.getCollisionRadius() + a.getCollisionHeight()) / 600.0;
+		}
+		else if (object.isItem())
+		{
+			// è¨Ç≥Ç¢Ç‡ÇÃÇÕâìÇ≠Ç©ÇÁå©Ç¶Ç…Ç≠Ç¢
+			return 0.8;
+		}
+}}
+		return 1.0;
+	}
+	
 	@Override
 	public int getDistanceToForgetObject(L2Object object)
 	{
@@ -146,6 +164,9 @@ public class PcKnownList extends PlayableKnownList
 		// the same as the previous watch range, or it becomes possible that
 		// extra charinfo packets are being sent (watch-forget-watch-forget)
 		final int knownlistSize = getKnownObjects().size();
+if (com.l2jserver.Config.FIX_DISTANCE_TO_WATCH_OBJECT) {{
+		return (int)(proportion(object) * (knownlistSize <= 25 ? 4000 : knownlistSize <= 35 ? 3500 : knownlistSize <= 70 ? 2910 : 2310));
+}} else {{
 		if (knownlistSize <= 25)
 		{
 			return 4000;
@@ -159,6 +180,7 @@ public class PcKnownList extends PlayableKnownList
 			return 2910;
 		}
 		return 2310;
+}}
 	}
 	
 	@Override
@@ -170,6 +192,9 @@ public class PcKnownList extends PlayableKnownList
 		}
 		
 		final int knownlistSize = getKnownObjects().size();
+if (com.l2jserver.Config.FIX_DISTANCE_TO_WATCH_OBJECT) {{
+		return (int)(proportion(object) * (knownlistSize <= 25 ? 3400 : knownlistSize <= 35 ? 2900 : knownlistSize <= 70 ? 2300 : 1700));
+}} else {{
 		if (knownlistSize <= 25)
 		{
 			return 3400; // empty field
@@ -183,5 +208,6 @@ public class PcKnownList extends PlayableKnownList
 			return 2300;
 		}
 		return 1700; // Siege, TOI, city
+}}
 	}
 }
