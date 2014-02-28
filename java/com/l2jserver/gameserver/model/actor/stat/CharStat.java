@@ -399,7 +399,8 @@ public class CharStat
 			return 1f;
 		}
 		//-------------------------------------------------------
-		return (float) (getMoveSpeed() * (1. / baseSpeed));
+		return getMoveSpeed() / baseSpeed;
+	//	return (float) (getMoveSpeed() * (1. / baseSpeed));
 	}
 	
 	/**
