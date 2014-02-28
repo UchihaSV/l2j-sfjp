@@ -382,16 +382,24 @@ public class CharStat
 		return (int) calcStat(Stats.STAT_MEN, _activeChar.getTemplate().getBaseMEN());
 	}
 	
-	public float getMovementSpeedMultiplier()
+	public final float getMovementSpeedMultiplier()
 	{
-		final float baseSpeed = getBaseMoveSpeed(MoveType.RUN);
+		float baseSpeed;
+		if (_activeChar.isInsideZone(ZoneId.WATER))
+		{
+			baseSpeed = getBaseMoveSpeed(_activeChar.isRunning() ? MoveType.FAST_SWIM : MoveType.SLOW_SWIM);
+		}
+		else
+		{
+			baseSpeed = getBaseMoveSpeed(_activeChar.isRunning() ? MoveType.RUN : MoveType.WALK);
+		}
 		//[JOJO]-------------------------------------------------
 		if (baseSpeed == 0)
 		{
 			return 1f;
 		}
 		//-------------------------------------------------------
-		return (getRunSpeed() / baseSpeed);
+		return (float) (getMoveSpeed() * (1. / baseSpeed));
 	}
 	
 	/**
@@ -408,6 +416,10 @@ public class CharStat
 	 */
 	public float getMoveSpeed()
 	{
+		if (_activeChar.isInsideZone(ZoneId.WATER))
+		{
+			return _activeChar.isRunning() ? getSwimRunSpeed() : getSwimWalkSpeed();
+		}
 		return _activeChar.isRunning() ? getRunSpeed() : getWalkSpeed();
 	}
 	
