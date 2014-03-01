@@ -352,7 +352,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param name the name of the quest timer to get
 	 * @param npc the NPC associated with the quest timer to get
 	 * @param player the player associated with the quest timer to get
-	 * @return the quest timer that matches the parameters of this function or {@code null} if nothing was found
+	 * @return the quest timer that matches the specified parameters or {@code null} if nothing was found
 	 */
 	public QuestTimer getQuestTimer(String name, L2Npc npc, L2PcInstance player)
 	{
@@ -1522,7 +1522,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 			{
 				while (rs.next())
 				{
-					// Get the ID of the quest and Id of its state
+					// Get the ID of the quest and its state
 					String questId = rs.getString("name");
 					String statename = rs.getString("value");
 					
@@ -1786,14 +1786,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Update informations regarding quest in database.<br>
-	 * Actions:<br>
-	 * <ul>
-	 * <li>Get ID state of the quest recorded in object qs</li>
-	 * <li>Test if quest is completed. If true, add a star (*) before the ID state</li>
-	 * <li>Save in database the ID state (with or without the star) for the variable called "&lt;state&gt;" of the quest</li>
-	 * </ul>
-	 * @param qs the quest state
+	 * Update a quest state record of the specified quest state in database.
+	 * @param qs the {@link QuestState} object whose data to update in the database
 	 */
 	public static void updateQuestInDb(QuestState qs)
 	{
@@ -1831,7 +1825,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	/**
 	 * Add this quest to the list of quests that the passed mob will respond to for the specified Event type.
 	 * @param eventType type of event being registered
-	 * @param npcId NPC ID to register
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addEventId(QuestEventType eventType, int npcId)
 	{
@@ -1856,7 +1850,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	/**
 	 * Add this quest to the list of quests that the passed mob will respond to for the specified Event type.
 	 * @param eventType type of event being registered
-	 * @param npcIds NPC IDs to register
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addEventId(QuestEventType eventType, int... npcIds)
 	{
@@ -1869,7 +1863,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	/**
 	 * Add this quest to the list of quests that the passed mob will respond to for the specified Event type.
 	 * @param eventType type of event being registered
-	 * @param npcIds NPC IDs to register
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addEventId(QuestEventType eventType, Collection<Integer> npcIds)
 	{
@@ -1880,8 +1874,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add the quest to the NPC's startQuest..
-	 * @param npcId
+	 * Add the quest to the NPC's startQuest
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addStartNpc(int npcId)
 	{
@@ -1890,7 +1884,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Add the quest to the NPC's startQuest
-	 * @param npcIds
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addStartNpc(int... npcIds)
 	{
@@ -1899,7 +1893,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Add the quest to the NPC's startQuest
-	 * @param npcIds
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addStartNpc(Collection<Integer> npcIds)
 	{
@@ -1907,8 +1901,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add the quest to the NPC's first-talk (default action dialog)..
-	 * @param npcId
+	 * Add the quest to the NPC's first-talk (default action dialog).
+	 * @param npcId the IDs of the NPC to register
 	 */
 	public void addFirstTalkId(int npcId)
 	{
@@ -1916,8 +1910,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add the quest to the NPC's first-talk (default action dialog)
-	 * @param npcIds
+	 * Add the quest to the NPC's first-talk (default action dialog).
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addFirstTalkId(int... npcIds)
 	{
@@ -1925,8 +1919,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add the quest to the NPC's first-talk (default action dialog)
-	 * @param npcIds
+	 * Add the quest to the NPC's first-talk (default action dialog).
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addFirstTalkId(Collection<Integer> npcIds)
 	{
@@ -1934,8 +1928,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add the NPC to the AcquireSkill dialog..
-	 * @param npcId
+	 * Add the NPC to the AcquireSkill dialog.
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addAcquireSkillId(int npcId)
 	{
@@ -1943,8 +1937,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add the NPC to the AcquireSkill dialog
-	 * @param npcIds
+	 * Add the NPC to the AcquireSkill dialog.
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addAcquireSkillId(int... npcIds)
 	{
@@ -1953,7 +1947,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Add the NPC to the AcquireSkill dialog
-	 * @param npcIds
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addAcquireSkillId(Collection<Integer> npcIds)
 	{
@@ -1961,8 +1955,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed mob will respond to for Attack Events..
-	 * @param npcId
+	 * Add this quest to the list of quests that the passed mob will respond to for attack events.
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addAttackId(int npcId)
 	{
@@ -1970,8 +1964,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed mob will respond to for Attack Events.
-	 * @param npcIds
+	 * Add this quest to the list of quests that the passed mob will respond to for attack events.
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addAttackId(int... npcIds)
 	{
@@ -1979,8 +1973,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed mob will respond to for Attack Events.
-	 * @param npcIds
+	 * Add this quest to the list of quests that the passed mob will respond to for attack events.
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addAttackId(Collection<Integer> npcIds)
 	{
@@ -1988,7 +1982,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed mob will respond to for Kill Events..
+	 * Add this quest to the list of quests that the passed mob will respond to for kill events.
 	 * @param killId
 	 */
 	public void addKillId(int killId)
@@ -1997,7 +1991,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed mob will respond to for Kill Events.
+	 * Add this quest to the list of quests that the passed mob will respond to for kill events.
 	 * @param killIds
 	 */
 	public void addKillId(int... killIds)
@@ -2015,7 +2009,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Talk Events..
+	 * Add this quest to the list of quests that the passed npc will respond to for Talk Events.
 	 * @param npcId Id of the NPC
 	 */
 	public void addTalkId(int npcId)
@@ -2025,7 +2019,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Add this quest to the list of quests that the passed npc will respond to for Talk Events.
-	 * @param npcIds Id of the NPC
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addTalkId(int... npcIds)
 	{
@@ -2038,8 +2032,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Spawn Events..
-	 * @param npcId Id of the NPC
+	 * Add this quest to the list of quests that the passed npc will respond to for spawn events.
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addSpawnId(int npcId)
 	{
@@ -2047,8 +2041,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Spawn Events.
-	 * @param npcIds Id of the NPC
+	 * Add this quest to the list of quests that the passed npc will respond to for spawn events.
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addSpawnId(int... npcIds)
 	{
@@ -2056,8 +2050,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Spawn Events.
-	 * @param npcIds ID of the NPC
+	 * Add this quest to the list of quests that the passed npc will respond to for spawn events.
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addSpawnId(Collection<Integer> npcIds)
 	{
@@ -2065,8 +2059,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Skill-See Events..
-	 * @param npcId Id of the NPC
+	 * Add this quest to the list of quests that the passed npc will respond to for skill see events.
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addSkillSeeId(int npcId)
 	{
@@ -2074,8 +2068,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Skill-See Events.
-	 * @param npcIds ID of the NPC
+	 * Add this quest to the list of quests that the passed npc will respond to for skill see events.
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addSkillSeeId(int... npcIds)
 	{
@@ -2083,8 +2077,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Skill-See Events.
-	 * @param npcIds ID of the NPC
+	 * Add this quest to the list of quests that the passed npc will respond to for skillsee events.
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addSkillSeeId(Collection<Integer> npcIds)
 	{
@@ -2092,7 +2086,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * @param npcId
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addSpellFinishedId(int npcId)
 	{
@@ -2100,7 +2094,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * @param npcIds
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addSpellFinishedId(int... npcIds)
 	{
@@ -2108,7 +2102,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * @param npcIds
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addSpellFinishedId(Collection<Integer> npcIds)
 	{
@@ -2116,7 +2110,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * @param npcId
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addTrapActionId(int npcId)
 	{
@@ -2124,7 +2118,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * @param npcIds
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addTrapActionId(int... npcIds)
 	{
@@ -2132,7 +2126,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * @param npcIds
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addTrapActionId(Collection<Integer> npcIds)
 	{
@@ -2140,8 +2134,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Faction Call Events..
-	 * @param npcId Id of the NPC
+	 * Add this quest to the list of quests that the passed npc will respond to for faction call events.
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addFactionCallId(int npcId)
 	{
@@ -2149,8 +2143,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Faction Call Events.
-	 * @param npcIds ID of the NPC
+	 * Add this quest to the list of quests that the passed npc will respond to for faction call events.
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addFactionCallId(int... npcIds)
 	{
@@ -2158,8 +2152,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Faction Call Events.
-	 * @param npcIds ID of the NPC
+	 * Add this quest to the list of quests that the passed npc will respond to for faction call events.
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addFactionCallId(Collection<Integer> npcIds)
 	{
@@ -2167,8 +2161,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Character See Events..
-	 * @param npcId Id of the NPC
+	 * Add this quest to the list of quests that the passed npc will respond to for character see events.
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addAggroRangeEnterId(int npcId)
 	{
@@ -2176,8 +2170,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Character See Events.
-	 * @param npcIds ID of the NPC
+	 * Add this quest to the list of quests that the passed npc will respond to for character see events.
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addAggroRangeEnterId(int... npcIds)
 	{
@@ -2185,8 +2179,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Add this quest to the list of quests that the passed npc will respond to for Character See Events.
-	 * @param npcIds ID of the NPC
+	 * Add this quest to the list of quests that the passed npc will respond to for character see events.
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addAggroRangeEnterId(Collection<Integer> npcIds)
 	{
@@ -2194,7 +2188,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * @param npcId NPC Ids to register to on see creature event..
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addSeeCreatureId(int npcId)	//[JOJO]
 	{
@@ -2202,7 +2196,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * @param npcIds NPC IDs to register to on see creature event
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addSeeCreatureId(int... npcIds)
 	{
@@ -2210,7 +2204,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * @param npcIds NPC IDs to register to on see creature event
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addSeeCreatureId(Collection<Integer> npcIds)
 	{
@@ -2218,8 +2212,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Register onEnterZone trigger for Zone
-	 * @param zoneId
+	 * Register onEnterZone trigger for zone
+	 * @param zoneId the ID of the zone to register
 	 */
 	public void addEnterZoneId(int zoneId)
 	{
@@ -2231,8 +2225,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Register onEnterZone trigger for Zones
-	 * @param zoneIds
+	 * Register onEnterZone trigger for zones
+	 * @param zoneIds the IDs of the zones to register
 	 */
 	public void addEnterZoneId(int... zoneIds)
 	{
@@ -2243,8 +2237,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Register onEnterZone trigger for Zones
-	 * @param zoneIds
+	 * Register onEnterZone trigger for zones
+	 * @param zoneIds the IDs of the zones to register
 	 */
 	public void addEnterZoneId(Collection<Integer> zoneIds)
 	{
@@ -2255,8 +2249,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Register onExitZone trigger for Zone
-	 * @param zoneId
+	 * Register onExitZone trigger for zone
+	 * @param zoneId the ID of the zone to register
 	 */
 	public void addExitZoneId(int zoneId)
 	{
@@ -2268,8 +2262,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Register onExitZone trigger for Zones
-	 * @param zoneIds
+	 * Register onExitZone trigger for zones
+	 * @param zoneIds the IDs of the zones to register
 	 */
 	public void addExitZoneId(int... zoneIds)
 	{
@@ -2280,8 +2274,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Register onExitZone trigger for Zones
-	 * @param zoneIds
+	 * Register onExitZone trigger for zones
+	 * @param zoneIds the IDs of the zones to register
 	 */
 	public void addExitZoneId(Collection<Integer> zoneIds)
 	{
@@ -2292,8 +2286,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Register onEventReceived trigger for NPC..
-	 * @param npcId
+	 * Register onEventReceived trigger for NPC.
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addEventReceivedId(int npcId)
 	{
@@ -2302,7 +2296,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Register onEventReceived trigger for NPC
-	 * @param npcIds
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addEventReceivedId(int... npcIds)
 	{
@@ -2311,7 +2305,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Register onEventReceived trigger for NPC
-	 * @param npcIds
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addEventReceivedId(Collection<Integer> npcIds)
 	{
@@ -2319,8 +2313,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Register onMoveFinished trigger for NPC..
-	 * @param npcId
+	 * Register onMoveFinished trigger for NPC.
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addMoveFinishedId(int npcId)
 	{
@@ -2329,7 +2323,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Register onMoveFinished trigger for NPC
-	 * @param npcIds
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addMoveFinishedId(int... npcIds)
 	{
@@ -2338,7 +2332,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Register onMoveFinished trigger for NPC
-	 * @param npcIds
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addMoveFinishedId(Collection<Integer> npcIds)
 	{
@@ -2346,8 +2340,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Register onNodeArrived trigger for NPC..
-	 * @param npcId id of NPC to register
+	 * Register onNodeArrived trigger for NPC.
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addNodeArrivedId(int npcId)
 	{
@@ -2356,7 +2350,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Register onNodeArrived trigger for NPC
-	 * @param npcIds ID of NPC to register
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addNodeArrivedId(int... npcIds)
 	{
@@ -2365,7 +2359,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Register onNodeArrived trigger for NPC
-	 * @param npcIds ID of NPC to register
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addNodeArrivedId(Collection<Integer> npcIds)
 	{
@@ -2373,8 +2367,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
-	 * Register onRouteFinished trigger for NPC..
-	 * @param npcId id of NPC to register
+	 * Register onRouteFinished trigger for NPC.
+	 * @param npcId the ID of the NPC to register
 	 */
 	public void addRouteFinishedId(int npcId)
 	{
@@ -2383,7 +2377,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Register onRouteFinished trigger for NPC
-	 * @param npcIds ID of NPC to register
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addRouteFinishedId(int... npcIds)
 	{
@@ -2392,7 +2386,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Register onRouteFinished trigger for NPC
-	 * @param npcIds ID of NPC to register
+	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addRouteFinishedId(Collection<Integer> npcIds)
 	{
@@ -2425,10 +2419,16 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param cond the value of the "cond" variable that must be matched
 	 * @return a random party member that matches the specified condition, or {@code null} if no match was found
 	 */
-	public L2PcInstance getRandomPartyMember(L2PcInstance player, String value)
+	public L2PcInstance getRandomPartyMember(L2PcInstance player, String cond)
 	{
-		return getRandomPartyMember(player, "cond", value);
+		return getRandomPartyMember(player, "cond", cond);
 	}
+	/**
+	 * Get a random party member with required cond value.
+	 * @param player the instance of a player whose party is to be searched
+	 * @param cond the value of the "cond" variable that must be matched
+	 * @return a random party member that matches the specified condition, or {@code null} if no match was found
+	 */
 	public L2PcInstance getRandomPartyMember(L2PcInstance player, int cond)
 	{
 		return getRandomPartyMember(player, cond >= 0 && cond <= 20 ? COND_CHACHE[cond] : String.valueOf(cond));
@@ -2569,6 +2569,64 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
+	 * Get a random party member from the specified player's party.<br>
+	 * If the player is not in a party, only the player himself is checked.<br>
+	 * The lucky member is chosen by standard loot roll rules -<br>
+	 * each member rolls a random number, the one with the highest roll wins.
+	 * @param player the player whose party to check
+	 * @param npc the NPC used for distance and other checks (if {@link #checkPartyMember(L2PcInstance, L2Npc)} is overriden)
+	 * @return the random party member or {@code null}
+	 */
+	public L2PcInstance getRandomPartyMember(L2PcInstance player, L2Npc npc)
+	{
+		if ((player == null) || !checkDistanceToTarget(player, npc))
+		{
+			return null;
+		}
+		final L2Party party = player.getParty();
+		L2PcInstance luckyPlayer = null;
+		if (party == null)
+		{
+			if (checkPartyMember(player, npc))
+			{
+				luckyPlayer = player;
+			}
+		}
+		else
+		{
+			int highestRoll = 0;
+			
+			for (L2PcInstance member : party.getMembers())
+			{
+				final int rnd = getRandom(1000);
+				
+				if ((rnd > highestRoll) && checkPartyMember(member, npc))
+				{
+					highestRoll = rnd;
+					luckyPlayer = member;
+				}
+			}
+		}
+		if ((luckyPlayer != null) && checkDistanceToTarget(luckyPlayer, npc))
+		{
+			return luckyPlayer;
+		}
+		return null;
+	}
+	
+	/**
+	 * This method is called for every party member in {@link #getRandomPartyMember(L2PcInstance, L2Npc)}.<br>
+	 * It is intended to be overriden by the specific quest implementations.
+	 * @param player the player to check
+	 * @param npc the NPC that was passed to {@link #getRandomPartyMember(L2PcInstance, L2Npc)}
+	 * @return {@code true} if this party member passes the check, {@code false} otherwise
+	 */
+	public boolean checkPartyMember(L2PcInstance player, L2Npc npc)
+	{
+		return true;
+	}
+	
+	/**
 	 * Get a random party member from the player's party who has this quest at the specified quest progress.<br>
 	 * If the player is not in a party, only the player himself is checked.
 	 * @param player the player whose random party member state to get
@@ -2661,9 +2719,9 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Show an on screen message to the player.
-	 * @param player the player to display the message
-	 * @param text the message
-	 * @param time the display time
+	 * @param player the player to display the message to
+	 * @param text the message to display
+	 * @param time the duration of the message in milliseconds
 	 */
 	public static void showOnScreenMsg(L2PcInstance player, String text, int time)
 	{
@@ -2672,11 +2730,11 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Show an on screen message to the player.
-	 * @param player the player to display the message
-	 * @param npcString the NPC String to display
-	 * @param position the position in the screen
-	 * @param time the display time
-	 * @param params parameters values to replace in the NPC String
+	 * @param player the player to display the message to
+	 * @param npcString the NPC string to display
+	 * @param position the position of the message on the screen
+	 * @param time the duration of the message in milliseconds
+	 * @param params values of parameters to replace in the NPC String (like S1, C1 etc.)
 	 */
 	public static void showOnScreenMsg(L2PcInstance player, NpcStringId npcString, int position, int time, String... params)
 	{
@@ -2685,11 +2743,11 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Show an on screen message to the player.
-	 * @param player the player to display the message
-	 * @param systemMsg the System Message to display
-	 * @param position the position in the screen
-	 * @param time the display time
-	 * @param params parameters values to replace in the System Message
+	 * @param player the player to display the message to
+	 * @param systemMsg the system message to display
+	 * @param position the position of the message on the screen
+	 * @param time the duration of the message in milliseconds
+	 * @param params values of parameters to replace in the system message (like S1, C1 etc.)
 	 */
 	public static void showOnScreenMsg(L2PcInstance player, SystemMessageId systemMsg, int position, int time, String... params)
 	{
@@ -2710,7 +2768,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	/**
 	 * Send an HTML file to the specified player.
-	 * @param player the player to send the HTML to
+	 * @param player the player to send the HTML file to
 	 * @param filename the name of the HTML file to show
 	 * @param npc the NPC that is showing the HTML file
 	 * @return the contents of the HTML file that was sent to the player
@@ -3114,7 +3172,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 		return true;
 	}
 	
-	public int[] getQuestInvolvedNpcs()	//[JOJO] Map --> int[]
+	public int[] getQuestInvolvedNpcs()	//[JOJO] Set --> int[]
 	{
 		return _questInvolvedNpcs.toArray();
 	}
@@ -3263,7 +3321,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 */
 	public static boolean hasQuestItems(L2PcInstance player, int itemId)
 	{
-		return player.getInventory().getItemByItemId(itemId) != null;
+		return (player.getInventory().getItemByItemId(itemId) != null);
 	}
 	
 	/**
@@ -3274,6 +3332,10 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 */
 	public static boolean hasQuestItems(L2PcInstance player, int... itemIds)
 	{
+		if ((itemIds == null) || (itemIds.length == 0))
+		{
+			return false;
+		}
 		final PcInventory inv = player.getInventory();
 		for (int itemId : itemIds)
 		{
@@ -3835,7 +3897,8 @@ if (CHECK_TAKEITEMS) {{
 	}
 	
 	/**
-	 * Get a random boolean.
+	 * Get a random boolean.<br>
+	 * Use this method instead of importing {@link com.l2jserver.util.Rnd} utility.
 	 * @return {@code true} or {@code false} randomly
 	 */
 	public static boolean getRandomBoolean()
@@ -3863,12 +3926,12 @@ if (CHECK_TAKEITEMS) {{
 	}
 	
 	/**
-	 * Executes a procedure for each player, depending on the parameters.
-	 * @param player the player were the procedure will be executed
-	 * @param npc the related Npc
-	 * @param isSummon {@code true} if the event that call this method was originated by the player's summon
-	 * @param includeParty if {@code true} #actionForEachPlayer(L2PcInstance, L2Npc, boolean) will be called with the player's party members
-	 * @param includeCommandChannel if {@code true} {@link #actionForEachPlayer(L2PcInstance, L2Npc, boolean)} will be called with the player's command channel members
+	 * Execute a procedure for each player depending on the parameters.
+	 * @param player the player on which the procedure will be executed
+	 * @param npc the related NPC
+	 * @param isSummon {@code true} if the event that called this method was originated by the player's summon, {@code false} otherwise
+	 * @param includeParty if {@code true}, #actionForEachPlayer(L2PcInstance, L2Npc, boolean) will be called with the player's party members
+	 * @param includeCommandChannel if {@code true}, {@link #actionForEachPlayer(L2PcInstance, L2Npc, boolean)} will be called with the player's command channel members
 	 * @see #actionForEachPlayer(L2PcInstance, L2Npc, boolean)
 	 */
 	public final void executeForEachPlayer(L2PcInstance player, final L2Npc npc, final boolean isSummon, boolean includeParty, boolean includeCommandChannel)
@@ -3908,9 +3971,9 @@ if (CHECK_TAKEITEMS) {{
 	
 	/**
 	 * Overridable method called from {@link #executeForEachPlayer(L2PcInstance, L2Npc, boolean, boolean, boolean)}
-	 * @param player the player where the action will be run
-	 * @param npc the Npc related to this action
-	 * @param isSummon {@code true} if the event that call this method was originated by the player's summon
+	 * @param player the player on which the action will be run
+	 * @param npc the NPC related to this action
+	 * @param isSummon {@code true} if the event that called this method was originated by the player's summon
 	 */
 	public void actionForEachPlayer(L2PcInstance player, L2Npc npc, boolean isSummon)
 	{
@@ -3918,9 +3981,9 @@ if (CHECK_TAKEITEMS) {{
 	}
 	
 	/**
-	 * Opens the door if presents on the instance and its not open.
-	 * @param doorId
-	 * @param instanceId
+	 * Open a door if it is present on the instance and its not open.
+	 * @param doorId the ID of the door to open
+	 * @param instanceId the ID of the instance the door is in (0 if the door is not not inside an instance)
 	 */
 	public void openDoor(int doorId, int instanceId)
 	{
@@ -3936,9 +3999,9 @@ if (CHECK_TAKEITEMS) {{
 	}
 	
 	/**
-	 * Closes the door if presents on the instance and its open
-	 * @param doorId
-	 * @param instanceId
+	 * Close a door if it is present in a specified the instance and its open.
+	 * @param doorId the ID of the door to close
+	 * @param instanceId the ID of the instance the door is in (0 if the door is not not inside an instance)
 	 */
 	public void closeDoor(int doorId, int instanceId)
 	{
@@ -3954,10 +4017,10 @@ if (CHECK_TAKEITEMS) {{
 	}
 	
 	/**
-	 * Retriving Door from instances or from the real world.
-	 * @param doorId
-	 * @param instanceId
-	 * @return {@link L2DoorInstance}
+	 * Retrieve a door from an instance or the real world.
+	 * @param doorId the ID of the door to get
+	 * @param instanceId the ID of the instance the door is in (0 if the door is not not inside an instance)
+	 * @return the found door or {@code null} if no door with that ID and instance ID was found
 	 */
 	public L2DoorInstance getDoor(int doorId, int instanceId)
 	{
@@ -3978,10 +4041,10 @@ if (CHECK_TAKEITEMS) {{
 	}
 	
 	/**
-	 * Teleport player to/from instance
-	 * @param player
-	 * @param loc
-	 * @param instanceId
+	 * Teleport a player into/out of an instance.
+	 * @param player the player to teleport
+	 * @param loc the {@link Location} object containing the destination coordinates
+	 * @param instanceId the ID of the instance to teleport the player to (0 to teleport out of an instance)
 	 */
 	public void teleportPlayer(L2PcInstance player, Location loc, int instanceId)
 	{
@@ -3989,11 +4052,11 @@ if (CHECK_TAKEITEMS) {{
 	}
 	
 	/**
-	 * Teleport player to/from instance
-	 * @param player
-	 * @param loc
-	 * @param instanceId
-	 * @param allowRandomOffset
+	 * Teleport a player into/out of an instance.
+	 * @param player the player to teleport
+	 * @param loc the {@link Location} object containing the destination coordinates
+	 * @param instanceId the ID of the instance to teleport the player to (0 to teleport out of an instance)
+	 * @param allowRandomOffset if {@code true}, will randomize the teleport coordinates by +/-Config.MAX_OFFSET_ON_TELEPORT
 	 */
 	public void teleportPlayer(L2PcInstance player, Location loc, int instanceId, boolean allowRandomOffset)
 	{
