@@ -18,11 +18,10 @@
  */
 package com.l2jserver.gameserver.model.zone.type;
 
-import java.util.Map;
-
 import javolution.util.FastList;
 import javolution.util.FastMap;
 import javolution.util.FastSet;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.GameServer;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -453,7 +452,7 @@ public class L2BossZone extends L2ZoneType
 			return;
 		}
 		
-		Map<Integer, L2PcInstance> npcKnownPlayers = npc.getKnownList().getKnownPlayers();
+		FastIntObjectMap<L2PcInstance> npcKnownPlayers = npc.getKnownList().getKnownPlayers();
 		for (L2Character character : getCharactersInside())
 		{
 			if ((character != null) && character.isPlayer())
