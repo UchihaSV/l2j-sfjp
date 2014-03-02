@@ -20,9 +20,8 @@ package com.l2jserver.gameserver.model.actor.knownlist;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
 
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2WorldRegion;
@@ -33,7 +32,7 @@ import com.l2jserver.gameserver.util.Util;
 public class ObjectKnownList
 {
 	private final L2Object _activeObject;
-	private FastMap<Integer, L2Object> _knownObjects;
+	private FastIntObjectMap<L2Object> _knownObjects;
 	
 	public ObjectKnownList(L2Object activeObject)
 	{
@@ -211,11 +210,11 @@ public class ObjectKnownList
 	/**
 	 * @return the _knownObjects containing all L2Object known by the L2Character.
 	 */
-	public final Map<Integer, L2Object> getKnownObjects()
+	public final FastIntObjectMap<L2Object> getKnownObjects()
 	{
 		if (_knownObjects == null)
 		{
-			_knownObjects = new FastMap/*L2FastMap*/<Integer, L2Object>().shared();
+			_knownObjects = new FastIntObjectMap/*L2FastMap*/<L2Object>().shared();
 		}
 		return _knownObjects;
 	}

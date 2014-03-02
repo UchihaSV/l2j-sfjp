@@ -23,10 +23,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -36,9 +35,9 @@ import com.l2jserver.gameserver.util.Util;
 
 public class CharKnownList extends ObjectKnownList
 {
-	private FastMap<Integer, L2PcInstance> _knownPlayers;
-	private FastMap<Integer, L2Summon> _knownSummons;
-	private FastMap<Integer, Integer> _knownRelations;
+	private FastIntObjectMap<L2PcInstance> _knownPlayers;
+	private FastIntObjectMap<L2Summon> _knownSummons;
+	private FastIntObjectMap<Integer> _knownRelations;
 	
 	public CharKnownList(L2Character activeChar)
 	{
@@ -248,29 +247,29 @@ public class CharKnownList extends ObjectKnownList
 		return result != null ? result : Collections.<L2Character>emptyList();
 	}
 	
-	public final Map<Integer, L2PcInstance> getKnownPlayers()
+	public final FastIntObjectMap<L2PcInstance> getKnownPlayers()
 	{
 		if (_knownPlayers == null)
 		{
-			_knownPlayers = new FastMap/*L2FastMap*/<Integer, L2PcInstance>().shared();
+			_knownPlayers = new FastIntObjectMap/*L2FastMap*/<L2PcInstance>().shared();
 		}
 		return _knownPlayers;
 	}
 	
-	public final Map<Integer, Integer> getKnownRelations()
+	public final FastIntObjectMap<Integer> getKnownRelations()
 	{
 		if (_knownRelations == null)
 		{
-			_knownRelations = new FastMap/*L2FastMap*/<Integer, Integer>().shared();
+			_knownRelations = new FastIntObjectMap/*L2FastMap*/<Integer>().shared();
 		}
 		return _knownRelations;
 	}
 	
-	public final Map<Integer, L2Summon> getKnownSummons()
+	public final FastIntObjectMap<L2Summon> getKnownSummons()
 	{
 		if (_knownSummons == null)
 		{
-			_knownSummons = new FastMap/*L2FastMap*/<Integer, L2Summon>().shared();
+			_knownSummons = new FastIntObjectMap/*L2FastMap*/<L2Summon>().shared();
 		}
 		return _knownSummons;
 	}
