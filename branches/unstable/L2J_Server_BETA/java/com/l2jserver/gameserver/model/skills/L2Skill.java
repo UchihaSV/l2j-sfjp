@@ -23,6 +23,7 @@ import static com.l2jserver.gameserver.datatables.StringIntern.intern;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -196,11 +197,8 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	private List<Condition> _itemPreCondition;
 	// Function lists
 	private List<FuncTemplate> _funcTemplates;
-	// Effect lists
-	private List<AbstractEffect> _effects;
-	private List<AbstractEffect> _effectSelf;
-	private List<AbstractEffect> _effectPassive;
-	private List<AbstractEffect> _effectChanneling;
+	
+	private final EnumMap<EffectScope, List<AbstractEffect>> _effectLists = new EnumMap<>(EffectScope.class);
 	
 	protected ChanceCondition _chanceCondition = null;
 	
@@ -1303,39 +1301,42 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return funcs;
 	}
 	
-	public boolean hasEffects()
+	public List<AbstractEffect> getEffects(EffectScope effectScope)
 	{
-		return (_effects != null) && !_effects.isEmpty();
+		return _effectLists.get(effectScope);
 	}
 	
-	public List<AbstractEffect> getEffectTemplates()
+	public boolean hasEffects(EffectScope effectScope)
 	{
-		return _effects;
+		List<AbstractEffect> effects = _effectLists.get(effectScope);
+		return (effects != null) && !effects.isEmpty();
 	}
 	
-	public boolean hasPassiveEffects()
+	public void applyEffectScope(EffectScope effectScope, BuffInfo info, boolean applyInstantEffects, boolean addContinuousEffects)
 	{
-		return (_effectPassive != null) && !_effectPassive.isEmpty();
-	}
-	
-	public List<AbstractEffect> getEffectTemplatesPassive()
-	{
-		return _effectPassive;
-	}
-	
-	public List<AbstractEffect> getEffectTemplateChanneling()
-	{
-		return _effectChanneling;
-	}
-	
-	public boolean hasSelfEffects()
-	{
-		return (_effectSelf != null) && !_effectSelf.isEmpty();
-	}
-	
-	public boolean hasChannelingEffects()
-	{
-		return (_effectChanneling != null) && !_effectChanneling.isEmpty();
+		if ((effectScope != null) && hasEffects(effectScope))
+		{
+			for (AbstractEffect effect : getEffects(effectScope))
+			{
+				if (effect != null)
+				{
+					if (effect.isInstant())
+					{
+						if (applyInstantEffects && effect.calcSuccess(info))
+						{
+							effect.onStart(info);
+						}
+					}
+					else if (addContinuousEffects)
+					{
+						if (effect.canStart(info))
+						{
+							info.addEffect(effect);
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	/**
@@ -1403,7 +1404,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		env.setTarget(effected);
 		env.setSkill(this);
 		final boolean addContinuousEffects = !passive && (_operateType.isToggle() || (_operateType.isContinuous() && Formulas.calcEffectSuccess(env)));
-		if (!self && !passive && hasEffects())
+		if (!self && !passive)
 		{
 			final BuffInfo info = new BuffInfo(env);
 			if (addContinuousEffects && (abnormalTime > 0))
@@ -1411,27 +1412,17 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 				info.setAbnormalTime(abnormalTime);
 			}
 			
-			for (AbstractEffect effect : _effects)
+			applyEffectScope(EffectScope.GENERAL, info, instant, addContinuousEffects);
+			
+			EffectScope pvpOrPveEffectScope = effector.isPlayable() && effected.isL2Attackable() ? EffectScope.PVE : effector.isPlayable() && effected.isPlayable() ? EffectScope.PVP : null;
+			applyEffectScope(pvpOrPveEffectScope, info, instant, addContinuousEffects);
+			
+			applyEffectScope(EffectScope.CHANNELING, info, instant, addContinuousEffects);
+			
+			if (addContinuousEffects)
 			{
-				if (effect != null)
-				{
-					if (effect.isInstant())
-					{
-						if (instant && effect.calcSuccess(info))
-						{
-							effect.onStart(info);
-						}
-					}
-					else if (addContinuousEffects)
-					{
-						if (effect.canStart(info))
-						{
-							info.addEffect(effect);
-						}
-					}
-				}
+				effected.getEffectList().add(info);
 			}
-			effected.getEffectList().add(info);
 			
 			// Support for buff sharing feature.
 			if (addContinuousEffects && effected.isPlayer() && effected.hasServitor() && isContinuous() && !isDebuff())
@@ -1440,7 +1431,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			}
 		}
 		
-		if (self && hasSelfEffects())
+		if (self)
 		{
 			env.setTarget(effector);
 			final BuffInfo info = new BuffInfo(env);
@@ -1449,27 +1440,12 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 				info.setAbnormalTime(abnormalTime);
 			}
 			
-			for (AbstractEffect effect : _effectSelf)
+			applyEffectScope(EffectScope.SELF, info, instant, addContinuousEffects);
+			
+			if (addContinuousEffects)
 			{
-				if (effect != null)
-				{
-					if (effect.isInstant())
-					{
-						if (instant && effect.calcSuccess(info))
-						{
-							effect.onStart(info);
-						}
-					}
-					else if (addContinuousEffects)
-					{
-						if (effect.canStart(info))
-						{
-							info.addEffect(effect);
-						}
-					}
-				}
+				effector.getEffectList().add(info);
 			}
-			effector.getEffectList().add(info);
 			
 			// Support for buff sharing feature.
 			// Avoiding Servitor Share since it's implementation already "shares" the effect.
@@ -1479,59 +1455,12 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			}
 		}
 		
-		if (passive && hasPassiveEffects())
+		if (passive)
 		{
 			env.setTarget(effector);
 			final BuffInfo info = new BuffInfo(env);
-			for (AbstractEffect effect : _effectPassive)
-			{
-				if (effect != null)
-				{
-					if (effect.canStart(info))
-					{
-						info.addEffect(effect);
-					}
-				}
-			}
+			applyEffectScope(EffectScope.PASSIVE, info, false, true);
 			effector.getEffectList().add(info);
-		}
-		
-		if (!self && !passive && hasChannelingEffects())
-		{
-			env.setTarget(effected);
-			final BuffInfo info = new BuffInfo(env);
-			if (addContinuousEffects && (abnormalTime > 0))
-			{
-				info.setAbnormalTime(abnormalTime);
-			}
-			
-			for (AbstractEffect effect : _effectChanneling)
-			{
-				if (effect != null)
-				{
-					if (effect.isInstant())
-					{
-						if (instant && effect.calcSuccess(info))
-						{
-							effect.onStart(info);
-						}
-					}
-					else if (addContinuousEffects)
-					{
-						if (effect.canStart(info))
-						{
-							info.addEffect(effect);
-						}
-					}
-				}
-			}
-			effector.getEffectList().add(info);
-			
-			// Support for buff sharing feature.
-			if (addContinuousEffects && effected.isPlayer() && effected.hasServitor() && isContinuous() && !isDebuff())
-			{
-				applyEffects(effector, effected.getSummon(), false, 0);
-			}
 		}
 	}
 	
@@ -1544,40 +1473,15 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		_funcTemplates.add(f);
 	}
 	
-	public final void attach(AbstractEffect effect)
+	public final void addEffect(EffectScope effectScope, AbstractEffect effect)
 	{
-		if (_effects == null)
+		List<AbstractEffect> effects = _effectLists.get(effectScope);
+		if (effects == null)
 		{
-			_effects = new ArrayList<>(1);
+			effects = new ArrayList<>(1);
+			_effectLists.put(effectScope, effects);
 		}
-		_effects.add(effect);
-	}
-	
-	public final void attachSelf(AbstractEffect effect)
-	{
-		if (_effectSelf == null)
-		{
-			_effectSelf = new ArrayList<>(1);
-		}
-		_effectSelf.add(effect);
-	}
-	
-	public final void attachPassive(AbstractEffect effect)
-	{
-		if (_effectPassive == null)
-		{
-			_effectPassive = new ArrayList<>(1);
-		}
-		_effectPassive.add(effect);
-	}
-	
-	public final void attachChanneling(AbstractEffect effectTemplate)
-	{
-		if (_effectChanneling == null)
-		{
-			_effectChanneling = new ArrayList<>(1);
-		}
-		_effectChanneling.add(effectTemplate);
+		effects.add(effect);
 	}
 	
 	public final void attach(Condition c, boolean itemOrWeapon)
@@ -1832,6 +1736,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	{
 		if (_effectTypes == null)
 		{
+			final List<AbstractEffect> _effects = getEffects(EffectScope.GENERAL);
 			final byte[] effectTypes = new byte[_effects.size()];
 			
 			final Env env = new Env();
@@ -1857,7 +1762,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	 */
 	@Deprecated public boolean hasEffectType(L2EffectType... types)
 	{
-		if (hasEffects() && (types != null) && (types.length > 0))
+		if (hasEffects(EffectScope.GENERAL) && (types != null) && (types.length > 0))
 		{
 			final byte[] effectTypes = effectTypes();
 			for (L2EffectType type : types)
@@ -1876,27 +1781,27 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	}
 	public boolean hasEffectType(L2EffectType type1)
 	{
-		return hasEffects() && (hasEffect(type1));
+		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1));
 	}
 	public boolean hasEffectType(L2EffectType type1, L2EffectType type2)
 	{
-		return hasEffects() && (hasEffect(type1) || hasEffect(type2));
+		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2));
 	}
 	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3)
 	{
-		return hasEffects() && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3));
+		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3));
 	}
 	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4)
 	{
-		return hasEffects() && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4));
+		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4));
 	}
 	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4, L2EffectType type5)
 	{
-		return hasEffects() && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4) || hasEffect(type5));
+		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4) || hasEffect(type5));
 	}
 	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4, L2EffectType type5, L2EffectType type6, L2EffectType type7, L2EffectType type8)
 	{
-		return hasEffects() && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4) || hasEffect(type5) || hasEffect(type6) || hasEffect(type7) || hasEffect(type8));
+		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4) || hasEffect(type5) || hasEffect(type6) || hasEffect(type7) || hasEffect(type8));
 	}
 	
 	/**
