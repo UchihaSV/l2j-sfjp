@@ -660,7 +660,7 @@ public final class CharEffectList
 					// Sets the buff in use again.
 					buff.setInUse(true);
 					// Adds the stats.
-					info.addStats();
+					buff.addStats();
 					// Adds the buff to the stack.
 					if (_stackedEffects != null)
 					{
@@ -1444,7 +1444,7 @@ public final class CharEffectList
 			
 			if (_stackedEffects.containsKey(skill.getAbnormalType()))
 			{
-				final BuffInfo stackedInfo = _stackedEffects.get(skill.getAbnormalType());
+				BuffInfo stackedInfo = _stackedEffects.get(skill.getAbnormalType());
 				// Skills are only replaced if the incoming buff has greater or equal abnormal level.
 				if ((stackedInfo != null) && (skill.getAbnormalLvl() >= stackedInfo.getSkill().getAbnormalLvl()))
 				{
@@ -1454,10 +1454,19 @@ public final class CharEffectList
 					// But finish task continues to run, and ticks as well.
 					if (skill.isAbnormalInstant())
 					{
-						stackedInfo.setInUse(false);
-						// Remove stats
-						stackedInfo.removeStats();
-						_hiddenBuffs.incrementAndGet();
+						if (stackedInfo.getSkill().isAbnormalInstant())
+						{
+							stopSkillEffects(false, skill.getAbnormalType());
+							stackedInfo = _stackedEffects.get(skill.getAbnormalType());
+						}
+						
+						if (stackedInfo != null)
+						{
+							stackedInfo.setInUse(false);
+							// Remove stats
+							stackedInfo.removeStats();
+							_hiddenBuffs.incrementAndGet();
+						}
 					}
 					// Remove buff that will stack with the abnormal type.
 					else
