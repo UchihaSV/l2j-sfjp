@@ -4301,7 +4301,19 @@ public final class Config
 				URL autoIp = new URL("http://api.externalip.net/ip/");
 				try (BufferedReader in = new BufferedReader(new InputStreamReader(autoIp.openStream())))
 				{
-					externalIp = in.readLine();
+					String line = in.readLine();
+					if (line.matches("\\d+\\.\\d+\\.\\d+\\.\\d+"))	//+[JOJO]
+					{
+						externalIp = line;
+					}
+					else
+					{
+						System.out.println("Network Config:");
+						do
+							System.out.println("|" + line);
+						while ((line = in.readLine()) != null);
+						throw new IOException();
+					}
 				}
 			}
 			catch (IOException e)
