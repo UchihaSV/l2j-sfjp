@@ -292,12 +292,13 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 	{
 		if (_routes.containsKey(routeName) && (npc != null) && !npc.isDead()) // check, if these route and NPC present
 		{
-			if (!_activeRoutes.containsKey(npc.getObjectId())) // new walk task
+			WalkInfo walk;
+			if ((walk = _activeRoutes.get(npc.getObjectId())) == null) // new walk task
 			{
 				// only if not already moved / not engaged in battle... should not happens if called on spawn
 				if ((npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE) || (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE))
 				{
-					final WalkInfo walk = new WalkInfo(routeName);
+					walk = new WalkInfo(routeName);
 					
 					if (npc.isDebug())
 					{
@@ -342,12 +343,6 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 			{
 				if ((npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE) || (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE))
 				{
-					final WalkInfo walk = _activeRoutes.get(npc.getObjectId());
-					if (walk == null)
-					{
-						return;
-					}
-					
 					// Prevent call simultaneously from scheduled task and onArrived() or temporarily stop walking for resuming in future
 					if (walk.isBlocked() || walk.isSuspended())
 					{
