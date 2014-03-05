@@ -26,7 +26,7 @@ public class CheckDynamicIpAddressTask implements Runnable
 	static final long CHECK_DYNAMIC_IP_ADDRESS_INITIAL = 1800_000L;
 	static final long CHECK_DYNAMIC_IP_ADDRESS_DELAY = 900_000L;
 	private static String[] WHAT_IS_MY_IP_URL = {
-		"http://api.externalip.net/ip/",
+	//	"http://api.externalip.net/ip/",	// "Website suspended. This website has been suspended as of March 1st 2014."
 		"http://bot.whatismyipaddress.com",
 		"http://checkip.dyndns.org/",
 		"http://ipaddress.com/",
@@ -34,6 +34,7 @@ public class CheckDynamicIpAddressTask implements Runnable
 		"http://myip.dnsomatic.com",
 		"http://myip.nt0.biz/",
 		"http://taruo.net/ip/?",
+		"http://whatismyipaddress.com/",
 		"http://whatsmyip.net/",
 		"http://www.cybersyndrome.net/evc.html",
 		"http://www.howtofindmyipaddress.com/",
