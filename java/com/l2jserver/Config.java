@@ -4298,7 +4298,7 @@ public final class Config
 		//	String externalIp = "127.0.0.1";	//-[JOJO]
 			try
 			{
-				URL autoIp = new URL("http://api.externalip.net/ip/");
+				URL autoIp = new URL("http://ip1.dynupdate.no-ip.com:8245/");	//SYNC: CORE r6441
 				try (BufferedReader in = new BufferedReader(new InputStreamReader(autoIp.openStream())))
 				{
 					String line = in.readLine();
