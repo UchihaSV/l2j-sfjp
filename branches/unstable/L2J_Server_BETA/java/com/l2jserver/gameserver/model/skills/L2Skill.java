@@ -226,7 +226,7 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	
 	private final String _icon;
 	
-	private byte[] _effectTypes;
+	private Byte[] _effectTypes;
 	
 	// Channeling data
 	private final int _channelingSkillId;
@@ -1736,29 +1736,36 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	{
 		if (_effectTypes == null)
 		{
-			final List<AbstractEffect> _effects = getEffects(EffectScope.GENERAL);
-			final byte[] effectTypes = new byte[_effects.size()];
-			
-			final Env env = new Env();
-			env.setSkill(this);
-			
-			int i = 0;
-			for (AbstractEffect effect : _effects)
+			synchronized (this)
 			{
-				if (effect == null)
+				if (_effectTypes == null)
 				{
-					continue;
+					final List<AbstractEffect> _effects = getEffects(EffectScope.GENERAL);
+					final byte[] effectTypes = new byte[_effects.size()];
+					
+					final Env env = new Env();
+					env.setSkill(this);
+					
+					int i = 0;
+					for (AbstractEffect effect : _effects)
+					{
+						if (effect == null)
+						{
+							continue;
+						}
+						effectTypes[i++] = (byte) effect.getEffectType().ordinal();
+					}
+					Arrays.sort(effectTypes);
+					_effectTypes = effectTypes;
 				}
-				effectTypes[i++] = (byte) effect.getEffectType().ordinal();
 			}
-			Arrays.sort(effectTypes);
-			_effectTypes = effectTypes;
 		}
 		return _effectTypes;
 	}
 	/**
-	 * @param types
-	 * @return {@code true} if at least one of specified {@link L2EffectType} types present on the current skill's effects, {@code false} otherwise.
+	 * @param effectType Effect type to check if its present on this skill effects.
+	 * @param effectTypes Effect types to check if are present on this skill effects.
+	 * @return {@code true} if at least one of specified {@link L2EffectType} types is present on this skill effects, {@code false} otherwise.
 	 */
 	@Deprecated public boolean hasEffectType(L2EffectType... types)
 	{
