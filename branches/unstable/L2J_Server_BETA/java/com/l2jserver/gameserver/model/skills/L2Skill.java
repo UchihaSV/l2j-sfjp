@@ -18,7 +18,7 @@
  */
 package com.l2jserver.gameserver.model.skills;
 
-import static com.l2jserver.gameserver.datatables.StringIntern.intern;
+import static com.l2jserver.gameserver.datatables.StringIntern.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -226,7 +226,7 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	
 	private final String _icon;
 	
-	private Byte[] _effectTypes;
+	private byte[] _effectTypes;
 	
 	// Channeling data
 	private final int _channelingSkillId;
@@ -1741,7 +1741,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 				if (_effectTypes == null)
 				{
 					final List<AbstractEffect> _effects = getEffects(EffectScope.GENERAL);
-					final byte[] effectTypes = new byte[_effects.size()];
+					byte[] effectTypes = new byte[_effects.size()];
 					
 					final Env env = new Env();
 					env.setSkill(this);
@@ -1755,6 +1755,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 						}
 						effectTypes[i++] = (byte) effect.getEffectType().ordinal();
 					}
+					if (i != effectTypes.length) effectTypes = Arrays.copyOf(effectTypes, i);
 					Arrays.sort(effectTypes);
 					_effectTypes = effectTypes;
 				}
