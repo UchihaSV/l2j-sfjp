@@ -29,6 +29,7 @@ public class CheckDynamicIpAddressTask implements Runnable
 	//	"http://api.externalip.net/ip/",	// "Website suspended. This website has been suspended as of March 1st 2014."
 		"http://bot.whatismyipaddress.com",
 		"http://checkip.dyndns.org/",
+		"http://ip1.dynupdate.no-ip.com:8245/",
 		"http://ipaddress.com/",
 		"http://ipecho.net/plain",
 		"http://myip.dnsomatic.com",
