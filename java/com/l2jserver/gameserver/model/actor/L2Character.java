@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 import javolution.util.WeakFastSet;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
@@ -3444,7 +3445,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	}
 	
 	/** Table containing all skillId that are disabled */
-	protected Map<Integer, Long> _disabledSkills;
+	volatile protected FastIntObjectMap<Long> _disabledSkills;
 	private boolean _allSkillsDisabled;
 	
 	// private int _flyingRunSpeed;
@@ -6047,7 +6048,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		
 	}
 	
-	public Map<Integer, Long> getDisabledSkills()
+	public FastIntObjectMap<Long> getDisabledSkills()
 	{
 		return _disabledSkills;
 	}
@@ -6086,7 +6087,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			{
 				if (_disabledSkills == null)
 				{
-					_disabledSkills = new ConcurrentHashMap<>();
+					_disabledSkills = new FastIntObjectMap<Long>().shared();	//[JOJO] -ConcurrentHashMap
 				}
 			}
 		}
