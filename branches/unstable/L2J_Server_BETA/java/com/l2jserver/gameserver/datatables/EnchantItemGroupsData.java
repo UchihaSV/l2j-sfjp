@@ -102,7 +102,7 @@ public final class EnchantItemGroupsData extends DocumentParser
 					}
 					else if ("enchantScrollGroup".equals(d.getNodeName()))
 					{
-						int id = parseInt(d.getAttributes(), "id");
+						int id = parseInteger(d.getAttributes(), "id");
 						final EnchantScrollGroup group = new EnchantScrollGroup(id);
 						for (Node cd = d.getFirstChild(); cd != null; cd = cd.getNextSibling())
 						{
@@ -124,7 +124,7 @@ public final class EnchantItemGroupsData extends DocumentParser
 										}
 										if (attrs.getNamedItem("id") != null)
 										{
-											rateGroup.setItemId(parseInt(attrs, "id"));
+											rateGroup.setItemId(parseInteger(attrs, "id"));
 										}
 									}
 								}

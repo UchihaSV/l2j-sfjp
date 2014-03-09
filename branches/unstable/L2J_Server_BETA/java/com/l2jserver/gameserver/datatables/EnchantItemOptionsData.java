@@ -62,7 +62,7 @@ public class EnchantItemOptionsData extends DocumentParser
 				{
 					if ("item".equalsIgnoreCase(d.getNodeName()))
 					{
-						int itemId = parseInt(d.getAttributes(), "id");
+						int itemId = parseInteger(d.getAttributes(), "id");
 						HashMap<Integer, EnchantOptions> options = _data.get(itemId);
 						if (options == null)
 						{
@@ -73,7 +73,7 @@ public class EnchantItemOptionsData extends DocumentParser
 						{
 							if ("options".equalsIgnoreCase(cd.getNodeName()))
 							{
-								EnchantOptions op = new EnchantOptions(parseInt(cd.getAttributes(), "level"));
+								EnchantOptions op = new EnchantOptions(parseInteger(cd.getAttributes(), "level"));
 								options.put(op.getLevel(), op);
 								
 								for (byte i = 0; i < 3; i++)
@@ -81,7 +81,7 @@ public class EnchantItemOptionsData extends DocumentParser
 									att = cd.getAttributes().getNamedItem("option" + (i + 1));
 									if ((att != null) && Util.isDigit(att.getNodeValue()))
 									{
-										op.setOption(i, parseInt(att));
+										op.setOption(i, parseInteger(att));
 									}
 								}
 								counter++;

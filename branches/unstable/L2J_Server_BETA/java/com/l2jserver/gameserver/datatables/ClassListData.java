@@ -67,13 +67,13 @@ public final class ClassListData extends DocumentParser
 					{
 						Node attr;
 						attr = attrs.getNamedItem("classId");
-						ClassId classId = ClassId.getClassId(parseInt(attr));
+						ClassId classId = ClassId.getClassId(parseInteger(attr));
 						attr = attrs.getNamedItem("name");
 						String className = attr.getNodeValue();
 						attr = attrs.getNamedItem("serverName");
 						String classServName = attr.getNodeValue();
 						attr = attrs.getNamedItem("parentClassId");
-						ClassId parentClassId = (attr != null) ? ClassId.getClassId(parseInt(attr)) : null;
+						ClassId parentClassId = (attr != null) ? ClassId.getClassId(parseInteger(attr)) : null;
 						_classData.put(classId.getId(), new ClassInfo(classId, className, classServName, parentClassId));
 					}
 				}
