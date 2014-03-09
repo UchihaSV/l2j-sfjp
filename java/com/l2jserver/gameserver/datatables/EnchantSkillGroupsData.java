@@ -88,7 +88,7 @@ public class EnchantSkillGroupsData extends DocumentParser
 					if ("group".equalsIgnoreCase(d.getNodeName()))
 					{
 						attrs = d.getAttributes();
-						int id = parseInt(attrs, "id");
+						int id = parseInteger(attrs, "id");
 						
 						L2EnchantSkillGroup group = _enchantSkillGroups.get(id);
 						if (group == null)

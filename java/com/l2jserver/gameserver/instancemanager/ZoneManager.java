@@ -194,8 +194,8 @@ public final class ZoneManager extends DocumentParser
 							}
 						}
 						
-						int minZ = parseInt(attrs, "minZ");
-						int maxZ = parseInt(attrs, "maxZ");
+						int minZ = parseInteger(attrs, "minZ");
+						int maxZ = parseInteger(attrs, "maxZ");
 						
 						zoneType = attrs.getNamedItem("type").getNodeValue();
 						String zoneShape = attrs.getNamedItem("shape").getNodeValue();
@@ -213,8 +213,8 @@ public final class ZoneManager extends DocumentParser
 								{
 									attrs = cd.getAttributes();
 									int[] point = new int[2];
-									point[0] = parseInt(attrs, "X");
-									point[1] = parseInt(attrs, "Y");
+									point[0] = parseInteger(attrs, "X");
+									point[1] = parseInteger(attrs, "Y");
 									rs.add(point);
 								}
 							}
