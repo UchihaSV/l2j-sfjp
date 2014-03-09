@@ -69,7 +69,7 @@ public class EnchantItemHPBonusData extends DocumentParser
 								bonuses.add(Integer.valueOf(e.getTextContent()));
 							}
 						}
-						_armorHPBonuses.put(parseInt(d.getAttributes(), "grade"), bonuses);
+						_armorHPBonuses.put(parseInteger(d.getAttributes(), "grade"), bonuses);
 					}
 				}
 			}
