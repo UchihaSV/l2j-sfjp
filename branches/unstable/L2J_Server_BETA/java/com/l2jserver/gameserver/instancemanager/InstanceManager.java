@@ -200,7 +200,7 @@ public final class InstanceManager extends DocumentParser
 					if ("instance".equals(d.getNodeName()))
 					{
 						attrs = d.getAttributes();
-						final int id = parseInt(attrs, "id");
+						final int id = parseInteger(attrs, "id");
 						final String name = attrs.getNamedItem("name").getNodeValue();
 						if (_instanceIdNames.length <= id)
 							_instanceIdNames = Arrays.copyOf(_instanceIdNames, id + 1);
