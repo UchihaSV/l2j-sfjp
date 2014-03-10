@@ -10981,7 +10981,7 @@ public final class L2PcInstance extends L2Playable
 			if (isAffected(EffectFlag.CHARM_OF_COURAGE))
 			{
 				ConfirmDlg dlg = new ConfirmDlg(SystemMessageId.RESURRECT_USING_CHARM_OF_COURAGE.getId());
-				dlg.addTime(60000);
+				dlg.setTime(60000);
 				sendPacket(dlg);
 				return;
 			}
