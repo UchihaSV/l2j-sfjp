@@ -188,16 +188,24 @@ public class ConfirmDlg extends L2GameServerPacket
 		return this;
 	}
 	
-	public ConfirmDlg addTime(int time)
+	public ConfirmDlg setTime(int time)	//[JOJO] addTime --> setTime
 	{
 		_time = time;
 		return this;
 	}
+	@Deprecated public ConfirmDlg addTime(int time)
+	{
+		return setTime(time);
+	}
 	
-	public ConfirmDlg addRequesterId(int id)
+	public ConfirmDlg setRequesterId(int id)	//[JOJO] addRequesterId --> setRequesterId 
 	{
 		_requesterId = id;
 		return this;
+	}
+	@Deprecated public ConfirmDlg addRequesterId(int id)
+	{
+		return setRequesterId(id);
 	}
 	
 	@Override
