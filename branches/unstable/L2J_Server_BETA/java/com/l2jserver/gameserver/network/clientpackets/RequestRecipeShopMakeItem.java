@@ -19,6 +19,7 @@
 package com.l2jserver.gameserver.network.clientpackets;
 
 import com.l2jserver.gameserver.RecipeController;
+import com.l2jserver.gameserver.enums.PrivateStoreType;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
@@ -71,13 +72,13 @@ public final class RequestRecipeShopMakeItem extends L2GameClientPacket
 		}
 		
 		//[JOJO]-------------------------------------------------
-		if (activeChar.getPrivateStoreType() != L2PcInstance.STORE_PRIVATE_NONE || activeChar.isInCraftMode())
+		if (activeChar.getPrivateStoreType() != PrivateStoreType.NONE || activeChar.isInCraftMode())
 		{
 			activeChar.sendPacket(SystemMessageId.CLOSE_STORE_WINDOW_AND_TRY_AGAIN);
 			// activeChar.sendMessage("You cannot create items while trading.");
 			return;
 		}
-		if (manufacturer.getPrivateStoreType() != L2PcInstance.STORE_PRIVATE_MANUFACTURE || manufacturer.isInCraftMode())
+		if (manufacturer.getPrivateStoreType() != PrivateStoreType.MANUFACTURE || manufacturer.isInCraftMode())
 		{
 			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.C1_IS_BUSY_TRY_LATER).addPcName(manufacturer));
 			return;
