@@ -19,6 +19,7 @@
 package com.l2jserver.gameserver.network.clientpackets;
 
 import com.l2jserver.gameserver.RecipeController;
+import com.l2jserver.gameserver.enums.PrivateStoreType;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
 
@@ -51,13 +52,12 @@ public final class RequestRecipeItemMakeSelf extends L2GameClientPacket
 			return;
 		}
 		
-		//[JOJO]-------------------------------------------------
-		if (activeChar.getPrivateStoreType() != L2PcInstance.STORE_PRIVATE_NONE)
+		if (activeChar.getPrivateStoreType() != PrivateStoreType.NONE)
 		{
-			activeChar.sendPacket(SystemMessageId.CLOSE_STORE_WINDOW_AND_TRY_AGAIN);
+			activeChar.sendPacket(SystemMessageId.CLOSE_STORE_WINDOW_AND_TRY_AGAIN);	//[JOJO]
+			// activeChar.sendMessage("You cannot create items while trading.");
 			return;
 		}
-		//-------------------------------------------------------
 		
 		if (activeChar.isInCraftMode())
 		{
