@@ -592,11 +592,7 @@ public abstract class L2Summon extends L2Playable
 	@Override
 	public boolean isInParty()
 	{
-		if (_owner == null)
-		{
-			return false;
-		}
-		return _owner.getParty() != null;
+		return (_owner != null) && _owner.isInParty();
 	}
 	
 	/**
