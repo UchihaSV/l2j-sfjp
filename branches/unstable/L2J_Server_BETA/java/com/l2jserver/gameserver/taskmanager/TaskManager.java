@@ -18,9 +18,7 @@
  */
 package com.l2jserver.gameserver.taskmanager;
 
-import static com.l2jserver.gameserver.taskmanager.TaskTypes.TYPE_NONE;
-import static com.l2jserver.gameserver.taskmanager.TaskTypes.TYPE_SHEDULED;
-import static com.l2jserver.gameserver.taskmanager.TaskTypes.TYPE_TIME;
+import static com.l2jserver.gameserver.taskmanager.TaskTypes.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -59,16 +57,14 @@ public final class TaskManager
 {
 	protected static final Logger _log = Logger.getLogger(TaskManager.class.getName());
 	
-	private final FastMap<Integer, Task> _tasks = new FastMap/*L2FastMap*/<Integer, Task>().shared();
+	private final FastIntObjectMap<Task> _tasks = new FastIntObjectMap/*L2FastMap*/<Task>().shared(); 
 	protected final FastList<ExecutedTask> _currentTasks = new FastList/*L2FastList*/<ExecutedTask>().shared();
 	
-	protected static final String[] SQL_STATEMENTS =
-	{
-		"SELECT id,task,type,last_activation,param1,param2,param3 FROM global_tasks",
-		"UPDATE global_tasks SET last_activation=? WHERE id=?",
-		"SELECT id FROM global_tasks WHERE task=?",
-		"INSERT INTO global_tasks (task,type,last_activation,param1,param2,param3) VALUES(?,?,?,?,?,?)"
-	};
+	private static final String
+		SQL_STATEMENT_0 = "SELECT id,task,type,last_activation,param1,param2,param3 FROM global_tasks",
+		SQL_STATEMENT_1 = "UPDATE global_tasks SET last_activation=? WHERE id=?",
+		SQL_STATEMENT_2 = "SELECT id FROM global_tasks WHERE task=?",
+		SQL_STATEMENT_3 = "INSERT INTO global_tasks (task,type,last_activation,param1,param2,param3) VALUES(?,?,?,?,?,?)";
 	
 	protected TaskManager()
 	{
@@ -106,7 +102,7 @@ public final class TaskManager
 			task.onTimeElapsed(this);
 			lastActivation = System.currentTimeMillis();
 			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-				PreparedStatement statement = con.prepareStatement(SQL_STATEMENTS[1]))
+				PreparedStatement statement = con.prepareStatement(SQL_STATEMENT_1))
 			{
 				statement.setLong(1, lastActivation);
 				statement.setInt(2, id);
@@ -202,7 +198,15 @@ public final class TaskManager
 	public void registerTask(Task task)
 	{
 		int key = task.getName().hashCode();
-		if (!_tasks.containsKey(key))
+		Task z = _tasks.get(key);
+		if (z != null)
+		{
+			System.err.printf("TaskManager#registerTask(%X %s) >>WARINING<< key conflict with %s\n"
+				, key
+				, task.getName()
+				, z.getName());
+		}
+		else
 		{
 			_tasks.put(key, task);
 			task.initializate();
@@ -212,7 +216,7 @@ public final class TaskManager
 	private void startAllTasks()
 	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement(SQL_STATEMENTS[0]);
+			PreparedStatement statement = con.prepareStatement(SQL_STATEMENT_0);
 			ResultSet rset = statement.executeQuery())
 		{
 			while (rset.next())
@@ -331,14 +335,14 @@ public final class TaskManager
 	public static boolean addUniqueTask(String task, TaskTypes type, String param1, String param2, String param3, long lastActivation)
 	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement ps1 = con.prepareStatement(SQL_STATEMENTS[2]))
+			PreparedStatement ps1 = con.prepareStatement(SQL_STATEMENT_2))
 		{
 			ps1.setString(1, task);
 			try (ResultSet rs = ps1.executeQuery())
 			{
 				if (!rs.next())
 				{
-					try (PreparedStatement ps2 = con.prepareStatement(SQL_STATEMENTS[3]))
+					try (PreparedStatement ps2 = con.prepareStatement(SQL_STATEMENT_3))
 					{
 						ps2.setString(1, task);
 						ps2.setString(2, type.toString());
@@ -367,7 +371,7 @@ public final class TaskManager
 	public static boolean addTask(String task, TaskTypes type, String param1, String param2, String param3, long lastActivation)
 	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement(SQL_STATEMENTS[3]))
+			PreparedStatement statement = con.prepareStatement(SQL_STATEMENT_3))
 		{
 			statement.setString(1, task);
 			statement.setString(2, type.toString());
