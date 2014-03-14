@@ -77,6 +77,7 @@ import com.l2jserver.gameserver.datatables.OptionsData;
 import com.l2jserver.gameserver.datatables.PetDataTable;
 import com.l2jserver.gameserver.datatables.RecipeData;
 import com.l2jserver.gameserver.datatables.SecondaryAuthData;
+import com.l2jserver.gameserver.datatables.SiegeScheduleData;
 import com.l2jserver.gameserver.datatables.SkillLearnData;
 import com.l2jserver.gameserver.datatables.SkillTable;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
@@ -298,6 +299,7 @@ public class GameServer
 		EventDroplist.getInstance();
 		
 		printSection("Siege");
+		SiegeScheduleData.getInstance();
 		SiegeManager.getInstance().getSieges();
 		FortSiegeManager.getInstance();
 		TerritoryWarManager.getInstance();
@@ -308,6 +310,9 @@ public class GameServer
 		printSection("Olympiad");
 		Olympiad.getInstance();
 		Hero.getInstance();
+		
+		printSection("Seven Signs");
+		SevenSigns.getInstance();
 		
 		// Call to load caches
 		printSection("Cache");
