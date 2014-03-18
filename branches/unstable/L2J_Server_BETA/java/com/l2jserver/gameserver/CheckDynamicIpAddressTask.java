@@ -4,6 +4,7 @@ package com.l2jserver.gameserver;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
@@ -98,9 +99,11 @@ if (com.l2jserver.Config.CHECK_DYNAMIC_IP_ADDRESS_TASK) {{
 						return match.group();
 				}
 			}
+			catch (IOException e) {
+				_log.warning("<!>Network Config: " + e.getMessage());
+			}
 		}
-		catch (IOException e)
-		{
+		catch (MalformedURLException e) {
 			_log.log(Level.WARNING, "", e);
 		}
 }}
