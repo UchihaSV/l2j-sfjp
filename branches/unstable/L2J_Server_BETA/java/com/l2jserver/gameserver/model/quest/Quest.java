@@ -1430,6 +1430,23 @@ public class Quest extends ManagedScript implements IIdentifiable
 		
 	}
 	
+	//[JOJO]-------------------------------------------------
+	/**
+	 * event ON_REGENERATE
+	 */
+	public void addRegenerateId(int npcId) { addEventId(QuestEventType.ON_REGENERATE, npcId); }
+	public void addRegenerateId(int... npcIds) { addEventId(QuestEventType.ON_REGENERATE, npcIds); }
+	public void addRegenerateId(Collection<Integer> npcIds) { addEventId(QuestEventType.ON_REGENERATE, npcIds); }
+	/**
+	 * event ON_REGENERATE
+	 */
+	public final void notifyRegenerate(L2Npc npc) { onRegenerate(npc); }
+	/**
+	 * event ON_REGENERATE
+	 */
+	public String onRegenerate(L2Npc npc) { return null; }
+	//-------------------------------------------------------
+	
 	/**
 	 * Show an error message to the specified player.
 	 * @param player the player to whom to send the error (must be a GM)
