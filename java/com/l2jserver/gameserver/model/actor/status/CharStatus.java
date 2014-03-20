@@ -18,6 +18,7 @@
  */
 package com.l2jserver.gameserver.model.actor.status;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
@@ -27,9 +28,12 @@ import javolution.util.FastSet;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
+import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.model.actor.L2Character;
+import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.stat.CharStat;
+import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.stats.Formulas;
 import com.l2jserver.util.Rnd;
 
@@ -48,6 +52,7 @@ public class CharStatus
 	private Future<?> _regTask;
 	
 	protected byte _flagsRegenActive = 0;
+	private boolean _hpReduced;	//[JOJO]
 	
 	protected static final byte REGEN_FLAG_CP = 4;
 	private static final byte REGEN_FLAG_HP = 1;
@@ -167,6 +172,7 @@ public class CharStatus
 		
 		if (value > 0)
 		{
+			_hpReduced = true;	//[JOJO]
 			setCurrentHp(Math.max(getCurrentHp() - value, 0));
 		}
 		
@@ -237,6 +243,22 @@ public class CharStatus
 			
 			// Set the RegenActive flag to false
 			_flagsRegenActive = 0;
+			
+			//[JOJO]-------------------------------------------------
+			boolean hpReduced = _hpReduced; _hpReduced = false;
+			if (hpReduced && getActiveChar().isNpc()) {
+				final L2Npc npc = (L2Npc) getActiveChar();
+				final List<Quest> eventQuests;
+				if ((eventQuests = npc.getTemplate().getEventQuests(QuestEventType.ON_REGENERATE)) != null) {
+					ThreadPoolManager.getInstance().executeTask(new Runnable() {
+						@Override public void run() {
+							for (Quest quest : eventQuests)
+								quest.notifyRegenerate(npc);
+						}
+					});
+				}
+			}
+			//-------------------------------------------------------
 		}
 	}
 	

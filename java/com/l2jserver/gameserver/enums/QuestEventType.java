@@ -27,6 +27,7 @@ public enum QuestEventType
 	QUEST_START(true), // onTalk action from start npcs
 	ON_TALK(true), // onTalk action from npcs participating in a quest
 	ON_ATTACK(true), // onAttack action triggered when a mob gets attacked by someone
+	ON_REGENERATE(true),	//+[JOJO] when HP regenerated in 100%
 	ON_KILL(true), // onKill action triggered when a mob gets killed.
 	ON_SPAWN(true), // onSpawn action triggered when an NPC is spawned or respawned.
 	ON_SKILL_SEE(true), // NPC or Mob saw a person casting a skill (regardless what the target is).
@@ -42,6 +43,7 @@ public enum QuestEventType
 	ON_MOVE_FINISHED(true), // onMoveFinished action, triggered when NPC stops after moving
 	ON_NODE_ARRIVED(true), // onNodeArrived action, triggered when NPC, controlled by Walking Manager, arrives to next node
 	ON_SEE_CREATURE(true), // onSeeCreature action, triggered when NPC's known list include the character
+	//-------------------------------------------------------
 	ON_ROUTE_FINISHED(true); // onRouteFinished action, triggered when NPC, controlled by Walking Manager, arrives to last node
 	
 	// control whether this event type is allowed for the same npc template in multiple quests
