@@ -32,13 +32,16 @@ import javolution.util.FastMap;
 import javolution.util.FastSet;
 
 import com.l2jserver.L2DatabaseFactory;
+import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.instancemanager.tasks.GrandBossManagerStoreTask;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2GrandBossInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.interfaces.IStorable;
 import com.l2jserver.gameserver.model.zone.type.L2BossZone;
 
 import gnu.trove.map.hash.TIntIntHashMap;
@@ -47,7 +50,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 /**
  * @author DaRkRaGe Revised by Emperorc
  */
-public final class GrandBossManager
+public final class GrandBossManager implements IStorable
 {
 	/* =========================================================
 	 * This class handles all Grand Bosses:
@@ -152,6 +155,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		{
 			_log.log(Level.WARNING, "Error while initializing GrandBossManager: " + e.getMessage(), e);
 		}
+		ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new GrandBossManagerStoreTask(), 5 * 60 * 1000, 5 * 60 * 1000);
 	}
 	
 	/**
@@ -334,7 +338,8 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		updateDb(bossId, false);
 	}
 	
-	private void storeToDb()
+	@Override
+	public boolean storeMe()
 	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
@@ -425,7 +430,9 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		{
 			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't store grandbosses to database:" + e.getMessage(), e);
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 	
 	private void updateDb(int bossId, boolean statusOnly)
@@ -495,7 +502,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	 */
 	public void cleanUp()
 	{
-		storeToDb();
+		storeMe();
 		
 		_bosses.clear();
 		_storedInfo.clear();
