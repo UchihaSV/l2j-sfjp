@@ -255,12 +255,12 @@ public final class TaskManager
 				task.run();
 				return false;
 			case TYPE_SHEDULED:
-				delay = Long.valueOf(task.getParams()[0]);
+				delay = Long.parseLong(task.getParams()[0]);
 				task.scheduled = scheduler.scheduleGeneral(task, delay);
 				return true;
 			case TYPE_FIXED_SHEDULED:
-				delay = Long.valueOf(task.getParams()[0]);
-				interval = Long.valueOf(task.getParams()[1]);
+				delay = Long.parseLong(task.getParams()[0]);
+				interval = Long.parseLong(task.getParams()[1]);
 				task.scheduled = scheduler.scheduleGeneralAtFixedRate(task, delay, interval);
 				return true;
 			case TYPE_TIME:
@@ -288,7 +288,7 @@ public final class TaskManager
 				}
 				break;
 			case TYPE_GLOBAL_TASK:
-				interval = Long.valueOf(task.getParams()[0]) * 86400000L;
+				interval = Long.parseLong(task.getParams()[0]) * 86400000L;
 				String[] hour = task.getParams()[1].split(":");
 				
 				if (hour.length != 3)

@@ -1028,7 +1028,7 @@ public class SevenSignsFestival implements SpawnListener
 					String cabal = festivalDat.getString("cabal");
 					
 					// Try to update an existing record.
-					psUpdate.setLong(1, Long.valueOf(festivalDat.getString("date")));
+					psUpdate.setLong(1, Long.parseLong(festivalDat.getString("date")));
 					psUpdate.setInt(2, festivalDat.getInt("score"));
 					psUpdate.setString(3, festivalDat.getString("members"));
 					psUpdate.setInt(4, festivalCycle);
@@ -1045,7 +1045,7 @@ public class SevenSignsFestival implements SpawnListener
 					psInsert.setInt(1, festivalId);
 					psInsert.setString(2, cabal);
 					psInsert.setInt(3, festivalCycle);
-					psInsert.setLong(4, Long.valueOf(festivalDat.getString("date")));
+					psInsert.setLong(4, Long.parseLong(festivalDat.getString("date")));
 					psInsert.setInt(5, festivalDat.getInt("score"));
 					psInsert.setString(6, festivalDat.getString("members"));
 					psInsert.execute();
