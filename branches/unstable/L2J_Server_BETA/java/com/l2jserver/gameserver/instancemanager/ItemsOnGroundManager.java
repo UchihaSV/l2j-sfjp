@@ -34,7 +34,6 @@ import com.l2jserver.gameserver.ItemsAutoDestroy;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
-import com.l2jserver.gameserver.model.items.type.L2EtcItemType;
 
 /**
  * This class manage all items on ground.
@@ -132,7 +131,7 @@ public final class ItemsOnGroundManager implements Runnable
 					{
 						if (dropTime > -1)
 						{
-							if (((Config.AUTODESTROY_ITEM_AFTER > 0) && (item.getItemType() != L2EtcItemType.HERB)) || ((Config.HERB_AUTO_DESTROY_TIME > 0) && (item.getItemType() == L2EtcItemType.HERB)))
+							if (((Config.AUTODESTROY_ITEM_AFTER > 0) && !item.getItem().hasExImmediateEffect()) || ((Config.HERB_AUTO_DESTROY_TIME > 0) && item.getItem().hasExImmediateEffect()))
 							{
 								ItemsAutoDestroy.getInstance().addItem(item);
 							}
