@@ -835,15 +835,6 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		return true;
 	}
 	
-	/**
-	 * Returns if item is consumable
-	 * @return boolean
-	 */
-	public boolean isConsumable()
-	{
-		return _item.isConsumable();
-	}
-	
 	public boolean isPotion()
 	{
 		return _item.isPotion();
