@@ -48,7 +48,7 @@ public class GrandBossRespawnTEST extends BaseFavoriteManager
 		add(tb, isGM, 29001, new String[]{ "ALIVE", "DEAD"});							//QueenAnt.java
 		add(tb, isGM, 29006, new String[]{ "ALIVE", "DEAD"});							//Core.java
 		add(tb, isGM, 29014, new String[]{ "ALIVE", "DEAD"});							//Orfen.java
-		add(tb, isGM, 29019, new String[]{ "DORMANT", "WAITING", "FIGHTING", "DEAD"});	//Antharas.java
+		add(tb, isGM, 29068, new String[]{ "ALIVE", "WAITING", "IN_FIGHT", "DEAD"});	//Antharas.java
 		add(tb, isGM, 29020, new String[]{ "ASLEEP", "AWAKE", "DEAD"});					//Baium.java
 		add(tb, isGM, 29022, new String[]{ "ALIVE", "DEAD"});							//Zaken.java
 		add(tb, isGM, 29028, new String[]{ "DORMANT", "WAITING", "FIGHTING", "DEAD"});	//Valakas.java
@@ -70,11 +70,7 @@ public class GrandBossRespawnTEST extends BaseFavoriteManager
 			tb.append("<td><font color=\"F9F999\">")
 			  .append(statusString[GrandBossManager.getInstance().getBossStatus(bossId)])
 			  .append("</font></td>");
-		final long respawnTime;
-		if (bossId == 29019)
-			respawnTime = getAntharasRespawnTime();
-		else
-			respawnTime = GrandBossManager.getInstance().getStatsSet(bossId).getLong("respawn_time");
+		final long respawnTime = GrandBossManager.getInstance().getStatsSet(bossId).getLong("respawn_time");
 		tb.append("<td width=270>");
 		if (System.currentTimeMillis() < respawnTime)
 			tb.append("<font color=\"9CC300\">")
@@ -88,22 +84,5 @@ public class GrandBossRespawnTEST extends BaseFavoriteManager
 	@Override
 	public void parsewrite(String ar1, String ar2, String ar3, String ar4, String ar5, L2PcInstance activeChar)
 	{
-	}
-
-	private long getAntharasRespawnTime()
-	{
-		int[] ANTHARAS = {
-			29066, // アンタラス 弱
-			29067, // アンタラス 中
-			29068, // アンタラス 強
-			29019, // アンタラス 旧
-		};
-
-		for (int antharasId : ANTHARAS)
-		{
-			if (GrandBossManager.getInstance().getBossStatus(antharasId) != 0)
-				return GrandBossManager.getInstance().getStatsSet(antharasId).getLong("respawn_time");
-		}
-		return 0;
 	}
 }
