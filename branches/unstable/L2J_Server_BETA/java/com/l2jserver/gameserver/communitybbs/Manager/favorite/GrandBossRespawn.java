@@ -49,7 +49,7 @@ public class GrandBossRespawn extends BaseFavoriteManager
 			29001,	// クイーン アント
 			29006,	// コア
 			29014,	// オルフェン
-			29019,	// アンタラス *
+			29068,	// アンタラス
 			29020,	// バイウム
 			29022,	// ザケン
 			29028,	// ヴァラカス
@@ -64,11 +64,7 @@ public class GrandBossRespawn extends BaseFavoriteManager
 				continue;
 			tb.append("<tr><td width=300 align=right><font color=\"00C3FF\">").append(NpcTable.getInstance().getTemplate(bossId).getName()).append("</font></td>"
 					+ "<td width=300>");
-			final long respawnTime;
-			if (bossId == 29019)
-				respawnTime = getAntharasRespawnTime();
-			else
-				respawnTime = GrandBossManager.getInstance().getStatsSet(bossId).getLong("respawn_time");
+			final long respawnTime = GrandBossManager.getInstance().getStatsSet(bossId).getLong("respawn_time");
 			if (respawnTime <= System.currentTimeMillis())
 				tb.append("<font color=\"32C332\">Alive");
 			else
@@ -83,22 +79,5 @@ public class GrandBossRespawn extends BaseFavoriteManager
 	@Override
 	public void parsewrite(String ar1, String ar2, String ar3, String ar4, String ar5, L2PcInstance activeChar)
 	{
-	}
-
-	private long getAntharasRespawnTime()
-	{
-		int[] ANTHARAS = {
-			29066, // アンタラス 弱
-			29067, // アンタラス 中
-			29068, // アンタラス 強
-			29019, // アンタラス 旧
-		};
-
-		for (int antharasId : ANTHARAS)
-		{
-			if (GrandBossManager.getInstance().getBossStatus(antharasId) != 0)
-				return GrandBossManager.getInstance().getStatsSet(antharasId).getLong("respawn_time");
-		}
-		return 0;
 	}
 }
