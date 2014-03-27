@@ -3122,8 +3122,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	{
 		// cancel all pending timers before reloading.
 		// if timers ought to be restarted, the quest can take care of it
-		// with its code (example: save global data indicating what timer must
-		// be restarted).
+		// with its code (example: save global data indicating what timer must be restarted).
 		for (List<QuestTimer> timers : _allEventTimers.values())
 		{
 			_readLock.lock();
