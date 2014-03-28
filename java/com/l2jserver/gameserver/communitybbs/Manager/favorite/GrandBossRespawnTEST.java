@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.communitybbs.Manager.favorite;
 
 import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.handler.AdminCommandHandler;
 import com.l2jserver.gameserver.instancemanager.GrandBossManager;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
@@ -40,24 +41,43 @@ public class GrandBossRespawnTEST extends BaseFavoriteManager
 	public void parsecmd(String command, L2PcInstance activeChar)
 	{
 		// _bbsgetfav;grand_boss_respawn
+		// _bbsgetfav;grand_boss_respawn;admin_grandboss
 
-		String html = HtmCache.getInstance().getHtm(activeChar.getHtmlPrefix(), "data/html/CommunityBoard/grand_boss_respawn/grandBossRespawnList.htm");
-
-		StringBuilder tb = new StringBuilder();
-		boolean isGM = activeChar.isGM();
-		add(tb, isGM, 29001, new String[]{ "ALIVE", "DEAD"});							//QueenAnt.java
-		add(tb, isGM, 29006, new String[]{ "ALIVE", "DEAD"});							//Core.java
-		add(tb, isGM, 29014, new String[]{ "ALIVE", "DEAD"});							//Orfen.java
-		add(tb, isGM, 29068, new String[]{ "ALIVE", "WAITING", "IN_FIGHT", "DEAD"});	//Antharas.java
-		add(tb, isGM, 29020, new String[]{ "ASLEEP", "AWAKE", "DEAD"});					//Baium.java
-		add(tb, isGM, 29022, new String[]{ "ALIVE", "DEAD"});							//Zaken.java
-		add(tb, isGM, 29028, new String[]{ "DORMANT", "WAITING", "FIGHTING", "DEAD"});	//Valakas.java
-		add(tb, isGM, 29045, new String[]{ "DORMANT", "WAITING", "FIGHTING", "DEAD"});	//Frintezza.java
-		add(tb, isGM, 29062, new String[]{ "DORMANT", "FIGHTING", "DEAD", "INTERVAL"});	//Vanhalter.java
-		add(tb, isGM, 29065, new String[]{ "DORMANT", "WAITING", "FIGHTING", "DEAD"});	//Sailren.java
-
-		html = html.replace("%bossList%", tb.toString());
-		separateAndSend(html, activeChar);
+		String[] args = command.split(";", 3);
+		String arg = args.length < 3 ? "" : args[2];
+		switch (arg)
+		{
+			case "":
+			{
+				String html = HtmCache.getInstance().getHtm(activeChar.getHtmlPrefix(), "data/html/CommunityBoard/grand_boss_respawn/grandBossRespawnList.htm");
+				
+				StringBuilder tb = new StringBuilder();
+				boolean isGM = activeChar.isGM();
+				add(tb, isGM, 29001, new String[]{ "ALIVE", "DEAD"});							//QueenAnt.java
+				add(tb, isGM, 29006, new String[]{ "ALIVE", "DEAD"});							//Core.java
+				add(tb, isGM, 29014, new String[]{ "ALIVE", "DEAD"});							//Orfen.java
+				add(tb, isGM, 29068, new String[]{ "ALIVE", "WAITING", "IN_FIGHT", "DEAD"});	//Antharas.java
+				add(tb, isGM, 29020, new String[]{ "ASLEEP", "AWAKE", "DEAD"});					//Baium.java
+				add(tb, isGM, 29022, new String[]{ "ALIVE", "DEAD"});							//Zaken.java
+				add(tb, isGM, 29028, new String[]{ "DORMANT", "WAITING", "FIGHTING", "DEAD"});	//Valakas.java
+				add(tb, isGM, 29045, new String[]{ "DORMANT", "WAITING", "FIGHTING", "DEAD"});	//Frintezza.java
+				add(tb, isGM, 29062, new String[]{ "DORMANT", "FIGHTING", "DEAD", "INTERVAL"});	//Vanhalter.java
+				add(tb, isGM, 29065, new String[]{ "DORMANT", "WAITING", "FIGHTING", "DEAD"});	//Sailren.java
+				
+				html = html.replace("%bossList%", tb.toString());
+				
+				html = html.replaceFirst("(?=<table><tr><td height=60></td><tr></table>)",
+					isGM ? "<table><tr><td height=20></td><tr></table>\n<button value=\"GrandBoss admin menu\" action=\"bypass _bbsgetfav;grand_boss_respawn;admin_grandboss\" width=160 height=21 back=L2UI_ct1.button_df fore=L2UI_ct1.button_df>\n"
+						: "");
+				separateAndSend(html, activeChar);
+				break;
+			}
+			case "admin_grandboss":
+			{
+				AdminCommandHandler.getInstance().getHandler(arg).useAdminCommand(arg, activeChar);
+				break;
+			}
+		}
 	}
 	private void add(StringBuilder tb, boolean isGM, int bossId, String[] statusString)
 	{
