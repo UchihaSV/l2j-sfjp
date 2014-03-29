@@ -2423,6 +2423,15 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
+	 * Register onNpcHate trigger for NPC.
+	 * @param npcId the ID of the NPC to register
+	 */
+	public void addNpcHateId(int npcId)
+	{
+		addEventId(QuestEventType.ON_NPC_HATE, npcId);
+	}
+	
+	/**
 	 * Register onNpcHate trigger for NPC
 	 * @param npcIds
 	 */
