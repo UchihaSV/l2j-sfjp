@@ -489,6 +489,26 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 					}
 				}
 				
+				if (obj.isPlayable())
+				{
+					final List<Quest> quests = getActiveChar().getTemplate().getEventQuests(QuestEventType.ON_NPC_HATE);
+					if (quests != null)
+					{
+						boolean breaking = false;
+						for (Quest q : quests)
+						{
+							if (!q.onNpcHate(getActiveChar(), (L2Playable) obj))
+							{
+								breaking = true;
+							}
+						}
+						if (breaking)
+						{
+							continue;
+						}
+					}
+				}
+				
 				// TODO: The AI Script ought to handle aggro behaviors in onSee. Once implemented, aggro behaviors ought
 				// to be removed from here. (Fulminus)
 				// For each L2Character check if the target is autoattackable
