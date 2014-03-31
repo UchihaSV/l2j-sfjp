@@ -2379,12 +2379,12 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	
 	public void setAI(L2CharacterAI newAI)
 	{
-		L2CharacterAI oldAI = getAI();
+		L2CharacterAI oldAI = _ai;		//[JOJO] SYNC:L2Character.java@6473 getAI() --> _ai
+		_ai = newAI;
 		if ((oldAI != null) && (oldAI != newAI) && (oldAI instanceof L2AttackableAI))
 		{
 			((L2AttackableAI) oldAI).stopAITask();
 		}
-		_ai = newAI;
 	}
 	
 	/**
@@ -3407,7 +3407,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				return;
 			}
 			
-			_ai = null;
+			setAI(null);		//[JOJO] SYNC:L2Character.java@6473 null --> setAI(null)
 		}
 	}
 	
