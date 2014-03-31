@@ -153,7 +153,8 @@ public class L2DoorInstance extends L2Character
 	@Override
 	public L2CharacterAI getAI()
 	{
-		if (_ai == null)
+		L2CharacterAI ai = _ai; // copy handle
+		if (ai == null)
 		{
 			synchronized (this)
 			{
@@ -164,7 +165,7 @@ public class L2DoorInstance extends L2Character
 				return _ai;
 			}
 		}
-		return _ai;
+		return ai;
 	}
 	
 	private void startTimerOpen()

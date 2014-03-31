@@ -175,25 +175,19 @@ public class L2Attackable extends L2Npc
 	@Override
 	public L2CharacterAI getAI()
 	{
-		if (_ai == null)
+		L2CharacterAI ai = _ai; // copy handle
+		if (ai == null)
 		{
 			synchronized (this)
 			{
-if (com.l2jserver.Config.TEST_GET_AI) {{
-				if ((ai = _ai) == null)
-				{
-					_ai = ai = new L2AttackableAI(new AIAccessor());
-				}
-}} else {{
 				if (_ai == null)
 				{
 					_ai = new L2AttackableAI(new AIAccessor());
 				}
 				return _ai;
-}}
 			}
 		}
-		return _ai;
+		return ai;
 	}
 	
 	public final Map<L2Character, AggroInfo> getAggroList()
