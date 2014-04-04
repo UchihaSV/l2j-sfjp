@@ -18,11 +18,9 @@
  */
 package com.l2jserver.gameserver.instancemanager;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import jp.sf.l2j.arrayMaps.SortedIntBooleanArrayMap;
+import jp.sf.l2j.arrayMaps.SortedIntIntArrayMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -48,16 +46,16 @@ public final class HandysBlockCheckerManager
 {
 	
 	// All the participants and their team classified by arena
-	private static final ArenaParticipantsHolder[] _arenaPlayers = new ArenaParticipantsHolder[4];
+	private static final ArenaParticipantsHolder[] _arenaPlayers = new ArenaParticipantsHolder[4];	// 0..3
 	
 	// Arena votes to start the game
-	private static final Map<Integer, Integer> _arenaVotes = new HashMap<>();
+	private static final SortedIntIntArrayMap _arenaVotes = new SortedIntIntArrayMap();	// 0..3
 	
 	// Arena Status, True = is being used, otherwise, False
-	private static final Map<Integer, Boolean> _arenaStatus = new HashMap<>();
+	private static final SortedIntBooleanArrayMap _arenaStatus = new SortedIntBooleanArrayMap();	// 0..3
 	
 	// Registration request penalty (10 seconds)
-	protected static Set<Integer> _registrationPenalty = Collections.synchronizedSet(new HashSet<Integer>());
+	protected static FastIntObjectMap<Object> _registrationPenalty = new FastIntObjectMap<>().shared();
 	
 	/**
 	 * Return the number of event-start votes for the specified arena id
@@ -196,7 +194,7 @@ public final class HandysBlockCheckerManager
 			// player.sendPacket(SystemMessageId.COLISEUM_OLYMPIAD_KRATEIS_APPLICANTS_CANNOT_PARTICIPATE));
 			// }
 			
-			if (_registrationPenalty.contains(player.getObjectId()))
+			if (_registrationPenalty.containsKey(player.getObjectId()))
 			{
 				player.sendPacket(SystemMessageId.CANNOT_REQUEST_REGISTRATION_10_SECS_AFTER);
 				return false;
@@ -240,7 +238,7 @@ public final class HandysBlockCheckerManager
 				holder.getEvent().endEventAbnormally();
 			}
 			
-			_registrationPenalty.add(player.getObjectId());
+			_registrationPenalty.put(player.getObjectId(), Boolean.TRUE);
 			schedulePenaltyRemoval(player.getObjectId());
 		}
 	}
