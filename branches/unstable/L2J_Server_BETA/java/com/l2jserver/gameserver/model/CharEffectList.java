@@ -632,13 +632,14 @@ public final class CharEffectList
 	
 	/**
 	 * Auxiliary method to stop all effects from a buff info and remove it from an effect list and stacked effects.
+	 * @param removed {@code true} if the effect is removed, {@code false} otherwise
 	 * @param info the buff info
 	 * @param effects the effect list
 	 */
-	private void stopAndRemove(BuffInfo info, Map<Integer, BuffInfo> effects)
+	private void stopAndRemove(boolean removed, BuffInfo info, Map<Integer, BuffInfo> effects)
 	{
 		// Stop the buff effects.
-		info.stopAllEffects(false);
+		info.stopAllEffects(removed);
 		
 		// If it's a hidden buff that ends, then decrease hidden buff count.
 		if (!info.isInUse())
@@ -677,7 +678,20 @@ public final class CharEffectList
 			}
 		}
 		
-		info.getSkill().applyEffectScope(EffectScope.END, info, true, false);
+		if (!removed)
+		{
+			info.getSkill().applyEffectScope(EffectScope.END, info, true, false);
+		}
+	}
+	
+	/**
+	 * Auxiliary method to stop all effects from a buff info and remove it from an effect list and stacked effects.
+	 * @param info the buff info
+	 * @param effects the effect list
+	 */
+	private void stopAndRemove(BuffInfo info, Map<Integer, BuffInfo> effects)
+	{
+		stopAndRemove(true, info, effects);
 	}
 	
 	/**
@@ -1064,7 +1078,7 @@ public final class CharEffectList
 		final Map<Integer, BuffInfo> effects = getEffectList(skill);
 		if (effects != null)
 		{
-			remove(effects.get(skill.getId()));
+			remove(removed, effects.get(skill.getId()));
 		}
 	}
 	
@@ -1369,9 +1383,10 @@ public final class CharEffectList
 	
 	/**
 	 * Removes a set of effects from this effect list.
+	 * @param removed {@code true} if the effect is removed, {@code false} otherwise
 	 * @param info the effects to remove
 	 */
-	public void remove(BuffInfo info)
+	public void remove(boolean removed, BuffInfo info)
 	{
 		if ((info == null) || !isAffectedBySkill(info.getSkill().getId()))
 		{
@@ -1379,7 +1394,7 @@ public final class CharEffectList
 		}
 		
 		// Remove the effect from character effects.
-		stopAndRemove(info, getEffectList(info.getSkill()));
+		stopAndRemove(removed, info, getEffectList(info.getSkill()));
 		// Update effect flags and icons.
 		updateEffectList(true);
 	}
