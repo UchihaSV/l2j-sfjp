@@ -1966,6 +1966,25 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		return getVariables().getInt("SCRIPT_VAL") == val;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	public boolean compareAndSetScriptValue(int expect, int update)
+	{
+		final NpcVariables npcVariables = getVariables();
+//TODO//synchronized (npcVariables.getSet()) // atomic
+		{
+			if (npcVariables.getInt("SCRIPT_VAL") == expect)
+			{
+				npcVariables.set("SCRIPT_VAL", update);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * @param paramName the parameter name to check
 	 * @return given AI parameter value
