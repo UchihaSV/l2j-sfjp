@@ -321,12 +321,17 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 */
 	public void startQuestTimer(String name, long time, L2Npc npc, L2PcInstance player, boolean repeating)
 	{
+		startQuestTimer(name, time, npc, player, repeating, false);
+	}
+	
+	private void startQuestTimer(String name, long time, L2Npc npc, L2PcInstance player, boolean repeating, boolean withFixedDelay)
+	{
 		List<QuestTimer> timers = _allEventTimers.get(name);
 		// Add quest timer if timer doesn't already exist
 		if (timers == null)
 		{
 			timers = new ArrayList<>();
-			timers.add(new QuestTimer(this, name, time, npc, player, repeating));
+			timers.add(new QuestTimer(this, name, time, npc, player, repeating, withFixedDelay));
 			_allEventTimers.put(name, timers);
 		}
 		// a timer with this name exists, but may not be for the same set of npc and player
@@ -339,7 +344,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 				_writeLock.lock();
 				try
 				{
-					timers.add(new QuestTimer(this, name, time, npc, player, repeating));
+					timers.add(new QuestTimer(this, name, time, npc, player, repeating, withFixedDelay));
 				}
 				finally
 				{
@@ -348,6 +353,30 @@ public class Quest extends ManagedScript implements IIdentifiable
 			}
 		}
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public static enum Repeating
+	{
+		None, AtFixedRate, WithFixedDelay
+	}
+	
+	public void startQuestTimer(String name, long time, L2Npc npc, L2PcInstance player, Repeating repeating)
+	{
+		switch (repeating)
+		{
+			default: // null
+			case None:
+				startQuestTimer(name, time, npc, player, false, false);
+				break;
+			case AtFixedRate:
+				startQuestTimer(name, time, npc, player, true, false);
+				break;
+			case WithFixedDelay:
+				startQuestTimer(name, time, npc, player, true, true);
+				break;
+		}
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * Get a quest timer that matches the provided name and parameters.
