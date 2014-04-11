@@ -65,7 +65,7 @@ public class QuestTimer
 	private ScheduledFuture<?> _schedular;
 	private int _instanceId;	//+[JOJO]
 	
-	public QuestTimer(Quest quest, String name, long time, L2Npc npc, L2PcInstance player, boolean repeating)
+	public QuestTimer(Quest quest, String name, long time, L2Npc npc, L2PcInstance player, boolean repeating, boolean withFixedDelay)
 	{
 		_name = name;
 		_quest = quest;
@@ -78,7 +78,10 @@ public class QuestTimer
 		//-------------------------------------------------------
 		if (repeating)
 		{
-			_schedular = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new ScheduleTimerTask(), time, time); // Prepare auto end task
+			if (withFixedDelay)
+				_schedular = ThreadPoolManager.getInstance().scheduleGeneralWithFixedDelay(new ScheduleTimerTask(), time, time); //+[JOJO]
+			else
+				_schedular = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new ScheduleTimerTask(), time, time); // Prepare auto end task
 		}
 		else
 		{
@@ -88,12 +91,12 @@ public class QuestTimer
 	
 	public QuestTimer(Quest quest, String name, long time, L2Npc npc, L2PcInstance player)
 	{
-		this(quest, name, time, npc, player, false);
+		this(quest, name, time, npc, player, false, false);
 	}
 	
 	public QuestTimer(QuestState qs, String name, long time)
 	{
-		this(qs.getQuest(), name, time, null, qs.getPlayer(), false);
+		this(qs.getQuest(), name, time, null, qs.getPlayer(), false, false);
 	}
 	
 	/**
