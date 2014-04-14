@@ -410,11 +410,14 @@ public final class Instance
 			for (List<QuestTimer> timers : quest.getQuestTimers().values())
 			{
 				if (timers == null || timers.isEmpty()) continue;
-				for (QuestTimer timer : timers.toArray(new QuestTimer[timers.size()]))
+				for (QuestTimer timer : timers)
 				{
 					if (timer == null) continue;
 					if (timer.getInstanceId() == instanceId)
-						timer.cancel();
+					{
+						quest.cancelQuestTimers(timer.getName(), instanceId);
+						break;
+					}
 				}
 			}
 		}
