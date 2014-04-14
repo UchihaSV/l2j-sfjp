@@ -36,7 +36,7 @@ public class CheckDynamicIpAddressTask implements Runnable
 		"http://myip.dnsomatic.com",
 		"http://myip.nt0.biz/",
 		"http://taruo.net/ip/?",
-		"http://whatismyipaddress.com/",
+		"http://whatismyipaddress.com/ip-lookup",
 		"http://whatsmyip.net/",
 		"http://www.cybersyndrome.net/evc.html",
 		"http://www.howtofindmyipaddress.com/",
