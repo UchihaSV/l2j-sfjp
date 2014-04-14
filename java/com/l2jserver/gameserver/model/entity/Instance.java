@@ -432,9 +432,9 @@ public final class Instance
 	public List<L2Npc> spawnGroup(String groupName)
 	{
 		List<L2Npc> ret = null;
-		if (_manualSpawn.containsKey(groupName))
+		final List<L2Spawn> manualSpawn = _manualSpawn.get(groupName);
+		if (manualSpawn != null)
 		{
-			final List<L2Spawn> manualSpawn = _manualSpawn.get(groupName);
 			ret = new ArrayList<>(manualSpawn.size());
 			
 			for (L2Spawn spawnDat : manualSpawn)
