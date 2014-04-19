@@ -57,7 +57,7 @@ public class GrandBossRespawnTEST extends BaseFavoriteManager
 				add(tb, isGM, 29006, new String[]{ "ALIVE", "DEAD"});							//Core.java
 				add(tb, isGM, 29014, new String[]{ "ALIVE", "DEAD"});							//Orfen.java
 				add(tb, isGM, 29068, new String[]{ "ALIVE", "WAITING", "IN_FIGHT", "DEAD"});	//Antharas.java
-				add(tb, isGM, 29020, new String[]{ "ASLEEP", "AWAKE", "DEAD"});					//Baium.java
+				add(tb, isGM, 29020, new String[]{ "ALIVE", "WAITING", "IN_FIGHT", "DEAD"});	//Baium.java
 				add(tb, isGM, 29022, new String[]{ "ALIVE", "DEAD"});							//Zaken.java
 				add(tb, isGM, 29028, new String[]{ "DORMANT", "WAITING", "FIGHTING", "DEAD"});	//Valakas.java
 				add(tb, isGM, 29045, new String[]{ "DORMANT", "WAITING", "FIGHTING", "DEAD"});	//Frintezza.java
