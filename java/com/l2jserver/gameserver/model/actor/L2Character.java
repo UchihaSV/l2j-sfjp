@@ -2178,11 +2178,12 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public synchronized final long getItemRemainingReuseTime(int itemObjId)
 	{
-		if ((_reuseTimeStampsItems == null) || !_reuseTimeStampsItems.containsKey(itemObjId))
+		final TimeStamp timeStamp;
+		if (_reuseTimeStampsItems == null || (timeStamp = _reuseTimeStampsItems.get(itemObjId)) == null)
 		{
 			return -1;
 		}
-		return _reuseTimeStampsItems.get(itemObjId).getRemaining();
+		return timeStamp.getRemaining();
 	}
 	
 	/**
@@ -2276,11 +2277,12 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public synchronized final long getSkillRemainingReuseTime(int hashCode)
 	{
-		if ((_reuseTimeStampsSkills == null) || !_reuseTimeStampsSkills.containsKey(hashCode))
+		final TimeStamp timeStamp;
+		if (_reuseTimeStampsSkills == null || (timeStamp = _reuseTimeStampsSkills.get(hashCode)) == null)
 		{
 			return -1;
 		}
-		return _reuseTimeStampsSkills.get(hashCode).getRemaining();
+		return timeStamp.getRemaining();
 	}
 	
 	/**
@@ -2290,11 +2292,12 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public synchronized final boolean hasSkillReuse(int hashCode)
 	{
-		if ((_reuseTimeStampsSkills == null) || !_reuseTimeStampsSkills.containsKey(hashCode))
+		final TimeStamp timeStamp;
+		if (_reuseTimeStampsSkills == null || (timeStamp = _reuseTimeStampsSkills.get(hashCode)) == null)
 		{
 			return false;
 		}
-		return _reuseTimeStampsSkills.get(hashCode).hasNotPassed();
+		return timeStamp.hasNotPassed();
 	}
 	
 	/**
@@ -2390,12 +2393,13 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			return true;
 		}
 		
-		if ((_disabledSkills == null) || !_disabledSkills.containsKey(hashCode))
+		final Long time;
+		if (_disabledSkills == null || (time = _disabledSkills.get(hashCode)) == null)
 		{
 			return false;
 		}
 		
-		if (_disabledSkills.get(hashCode) < System.currentTimeMillis())
+		if (time < System.currentTimeMillis())
 		{
 			_disabledSkills.remove(hashCode);
 			return false;
