@@ -101,7 +101,8 @@ public class L2NoRestartZone extends L2ZoneType
 			return;
 		}
 		
-		if (((System.currentTimeMillis() - player.getLastAccess()) > getRestartTime()) && ((System.currentTimeMillis() - GameServer.gameServer.serverLoadEnd) > getRestartAllowedTime()))	//[JOJO] -GameServer.dateTimeServerStarted.getTimeInMillis()
+		final long now = System.currentTimeMillis();
+		if (now - player.getLastAccess() > getRestartTime() && now - GameServer.gameServer.serverLoadEnd > getRestartAllowedTime())	//[JOJO] -GameServer.dateTimeServerStarted.getTimeInMillis()
 		{
 			player.teleToLocation(TeleportWhereType.TOWN);
 		}
