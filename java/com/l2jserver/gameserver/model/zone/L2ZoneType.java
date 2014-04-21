@@ -212,7 +212,7 @@ public abstract class L2ZoneType
 		}
 		
 		// check obj class
-		if (!character.isInstanceType(_target))
+		if (!character.isInstanceTypes(_target))
 		{
 			return false;
 		}

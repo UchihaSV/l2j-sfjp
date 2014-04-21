@@ -54,19 +54,27 @@ import com.l2jserver.gameserver.util.Util;
  */
 public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, IUniqueId, IDecayable, IPositionable
 {
-	private boolean _isVisible;
-	private ObjectKnownList _knownList;
+	/** Name */
 	private String _name;
+	/** Object ID */
 	private int _objectId;
+	/** World Region */
 	private L2WorldRegion _worldRegion;
+	/** Instance type */
 	private InstanceType _instanceType = null;
 	private volatile Map<String, Object> _scripts;
-	
+	/** X coordinate */
 	private int _x;
+	/** Y coordinate */
 	private int _y;
+	/** Z coordinate */
 	private int _z;
+	/** Orientation */
 	private int _heading;
+	/** Instance id of object. 0 - Global */
 	private int _instanceId;
+	private boolean _isVisible;
+	private ObjectKnownList _knownList;
 	
 	public L2Object(int objectId)
 	{
@@ -75,24 +83,32 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 		initKnownList();
 	}
 	
-	protected final void setInstanceType(InstanceType instanceType)
-	{
-		_instanceType = instanceType;
-	}
-	
+	/**
+	 * Gets the instance type of object.
+	 * @return the instance type
+	 */
 	public final InstanceType getInstanceType()
 	{
 		return _instanceType;
 	}
 	
-	public final boolean isInstanceType(InstanceType instanceType)
+	/**
+	 * Sets the instance type.
+	 * @param newInstanceType the instance type to set
+	 */
+	protected final void setInstanceType(InstanceType newInstanceType)
 	{
-		return _instanceType.isType(instanceType);
+		_instanceType = newInstanceType;
 	}
 	
-	public final boolean isInstanceTypes(InstanceType... instanceType)
+	/**
+	 * Verifies if object is of any given instance types.
+	 * @param instanceTypes the instance types to verify
+	 * @return {@code true} if object is of any given instance types, {@code false} otherwise
+	 */
+	public final boolean isInstanceTypes(InstanceType... instanceTypes)
 	{
-		return _instanceType.isTypes(instanceType);
+		return _instanceType.isTypes(instanceTypes);
 	}
 	
 	public final void onAction(L2PcInstance player)
@@ -130,118 +146,6 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	public void onSpawn()
 	{
 	}
-	
-	/**
-	 * UnAfraid: TODO: Add listener here.
-	 * @param instanceId The id of the instance zone the object is in - id 0 is global
-	 */
-	@Override
-	public void setInstanceId(int instanceId)
-	{
-		if ((instanceId < 0) || (getInstanceId() == instanceId))
-		{
-			return;
-		}
-		
-		Instance oldI = InstanceManager.getInstance().getInstance(getInstanceId());
-		Instance newI = InstanceManager.getInstance().getInstance(instanceId);
-		if (newI == null)
-		{
-			return;
-		}
-		
-		if (isPlayer())
-		{
-			final L2PcInstance player = getActingPlayer();
-			if ((getInstanceId() > 0) && (oldI != null))
-			{
-				oldI.removePlayer(getObjectId());
-				if (oldI.isShowTimer())
-				{
-					hideInstanceTimer();	//[JOJO]
-				}
-			}
-			if (instanceId > 0)
-			{
-				newI.addPlayer(getObjectId());
-				if (newI.isShowTimer())
-				{
-					showInstanceTimer(newI);	//[JOJO]
-				}
-			}
-			if (player.hasSummon())
-			{
-				player.getSummon().setInstanceId(instanceId);
-			}
-		}
-		else if (isNpc())
-		{
-			final L2Npc npc = (L2Npc) this;
-			if ((getInstanceId() > 0) && (oldI != null))
-			{
-				oldI.removeNpc(npc);
-			}
-			if (instanceId > 0)
-			{
-				newI.addNpc(npc);
-			}
-		}
-		
-		_instanceId = instanceId;
-		if (_isVisible && (_knownList != null))
-		{
-			// We don't want some ugly looking disappear/appear effects, so don't update
-			// the knownlist here, but players usually enter instancezones through teleporting
-			// and the teleport will do the revalidation for us.
-			if (!isPlayer())
-			{
-				decayMe();
-				spawnMe();
-			}
-		}
-	}
-	
-	//[JOJO]-------------------------------------------------
-	public void showInstanceTimer(Instance instance)
-	{
-		final int npcString;
-		String timerText = instance.getTimerText();
-		if (timerText != null && timerText.startsWith("#"))	// ex: <showTimer val="true" increase="true" text="#1911119" />
-		{
-			npcString = 
-				  timerText.equals("#1911119") ? 1911119	// "経過時間："
-				: timerText.equals("#1911120") ? 1911120	// "残り時間："
-				: Integer.parseInt(timerText.substring(1));
-			timerText = null;
-		}
-		else
-		{
-			npcString = -1;
-		}
-		final int start, end;
-		if (instance.isTimerIncrease()) // count up
-		{
-			start = (int) ((System.currentTimeMillis() - instance.getInstanceStartTime()) / 1000);
-			end = (int) ((instance.getInstanceEndTime() - instance.getInstanceStartTime()) / 1000);
-			assert start <= end;
-			assert start >= 0;
-			assert end >= 0;
-		}
-		else // count down
-		{
-			end = 0;
-			start = (int) ((instance.getInstanceEndTime() - System.currentTimeMillis()) / 1000);
-			assert end <= start;
-			assert start >= 0;
-		}
-		sendPacket(new ExSendUIEvent(getActingPlayer(), false, instance.isTimerIncrease(), start, end, timerText, npcString, null));
-	}
-	
-	public void hideInstanceTimer()
-	{
-		sendPacket(new ExSendUIEvent(getActingPlayer(), true, true, 0, 0, -1));
-	}
-	//-------------------------------------------------------
 	
 	@Override
 	public boolean decayMe()
@@ -345,7 +249,11 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 		onSpawn();
 	}
 	
-	public boolean isAttackable()
+	/**
+	 * Verify if object can be attacked.
+	 * @return {@code true} if object can be attacked, {@code false} otherwise
+	 */
+	public boolean canBeAttacked()
 	{
 		return false;
 	}
@@ -432,47 +340,17 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of L2PcInstance
+	 * Verify if object is instance of L2Attackable.
+	 * @return {@code true} if object is instance of L2Attackable, {@code false} otherwise
 	 */
-	public boolean isPlayer()
+	public boolean isAttackable()
 	{
 		return false;
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of L2Playable
-	 */
-	public boolean isPlayable()
-	{
-		return false;
-	}
-	
-	/**
-	 * @return {@code true} if object is instance of L2Summon
-	 */
-	public boolean isSummon()
-	{
-		return false;
-	}
-	
-	/**
-	 * @return {@code true} if object is instance of L2PetInstance
-	 */
-	public boolean isPet()
-	{
-		return false;
-	}
-	
-	/**
-	 * @return {@code true} if object is instance of L2ServitorInstance
-	 */
-	public boolean isServitor()
-	{
-		return false;
-	}
-	
-	/**
-	 * @return {@code true} if object is instance of L2Character
+	 * Verify if object is instance of L2Character.
+	 * @return {@code true} if object is instance of L2Character, {@code false} otherwise
 	 */
 	public boolean isCharacter()
 	{
@@ -480,7 +358,8 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of L2DoorInstance
+	 * Verify if object is instance of L2DoorInstance.
+	 * @return {@code true} if object is instance of L2DoorInstance, {@code false} otherwise
 	 */
 	public boolean isDoor()
 	{
@@ -488,23 +367,8 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of L2Npc
-	 */
-	public boolean isNpc()
-	{
-		return false;
-	}
-	
-	/**
-	 * @return {@code true} if object is instance of L2Attackable
-	 */
-	public boolean isL2Attackable()
-	{
-		return false;
-	}
-	
-	/**
-	 * @return {@code true} if object is instance of L2MonsterInstance
+	 * Verify if object is instance of L2MonsterInstance.
+	 * @return {@code true} if object is instance of L2MonsterInstance, {@code false} otherwise
 	 */
 	public boolean isMonster()
 	{
@@ -512,7 +376,62 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of L2TrapInstance
+	 * Verify if object is instance of L2Npc.
+	 * @return {@code true} if object is instance of L2Npc, {@code false} otherwise
+	 */
+	public boolean isNpc()
+	{
+		return false;
+	}
+	
+	/**
+	 * Verify if object is instance of L2PetInstance.
+	 * @return {@code true} if object is instance of L2PetInstance, {@code false} otherwise
+	 */
+	public boolean isPet()
+	{
+		return false;
+	}
+	
+	/**
+	 * Verify if object is instance of L2PcInstance.
+	 * @return {@code true} if object is instance of L2PcInstance, {@code false} otherwise
+	 */
+	public boolean isPlayer()
+	{
+		return false;
+	}
+	
+	/**
+	 * Verify if object is instance of L2Playable.
+	 * @return {@code true} if object is instance of L2Playable, {@code false} otherwise
+	 */
+	public boolean isPlayable()
+	{
+		return false;
+	}
+	
+	/**
+	 * Verify if object is instance of L2ServitorInstance.
+	 * @return {@code true} if object is instance of L2ServitorInstance, {@code false} otherwise
+	 */
+	public boolean isServitor()
+	{
+		return false;
+	}
+	
+	/**
+	 * Verify if object is instance of L2Summon.
+	 * @return {@code true} if object is instance of L2Summon, {@code false} otherwise
+	 */
+	public boolean isSummon()
+	{
+		return false;
+	}
+	
+	/**
+	 * Verify if object is instance of L2TrapInstance.
+	 * @return {@code true} if object is instance of L2TrapInstance, {@code false} otherwise
 	 */
 	public boolean isTrap()
 	{
@@ -520,7 +439,8 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	}
 	
 	/**
-	 * @return {@code true} if object is instance of L2ItemInstance
+	 * Verify if object is instance of L2ItemInstance.
+	 * @return {@code true} if object is instance of L2ItemInstance, {@code false} otherwise
 	 */
 	public boolean isItem()
 	{
@@ -638,28 +558,6 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 		
 	}
 	
-	@Override
-	public final void setXYZ(int x, int y, int z)
-	{
-		assert getWorldRegion() != null;
-		
-		setX(x);
-		setY(y);
-		setZ(z);
-		
-		try
-		{
-			if (L2World.getInstance().getRegion(getPosition()) != getWorldRegion())
-			{
-				updateWorldRegion();
-			}
-		}
-		catch (Exception e)
-		{
-			badCoords();
-		}
-	}
-	
 	protected void badCoords()
 	{
 		if (isCharacter())
@@ -744,75 +642,59 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	}
 	
 	/**
-	 * Calculates distance between this L2Object and given x, y , z.
-	 * @param x - X coordinate.
-	 * @param y - Y coordinate.
-	 * @param z - Z coordinate.
-	 * @param includeZAxis - If set to true, Z coordinate will be included.
-	 * @param squared - If set to true, distance returned will be squared.
-	 * @return {@code double} - Distance between object and given x, y , z.
+	 * Gets the X coordinate.
+	 * @return the X coordinate
 	 */
-	public double calculateDistance(int x, int y, int z, boolean includeZAxis, boolean squared)
-	{
-		final double distance = Math.pow(x - getX(), 2) + Math.pow(y - getY(), 2) + (includeZAxis ? Math.pow(z - getZ(), 2) : 0);
-		return (squared) ? distance : Math.sqrt(distance);
-	}
-	
-	/**
-	 * Calculates distance between this L2Object and given location.
-	 * @param loc - Location on map.
-	 * @param includeZAxis - If set to true, Z coordinate will be included.
-	 * @param squared - If set to true, distance returned will be squared.
-	 * @return {@code double} - Distance between object and given location.
-	 */
-	public double calculateDistance(ILocational loc, boolean includeZAxis, boolean squared)
-	{
-		return calculateDistance(loc.getX(), loc.getY(), loc.getZ(), includeZAxis, squared);
-	}
-	
-	/**
-	 * Calculates the angle in degrees from this object to the given object.<br>
-	 * The return value can be described as how much this object has to turn<br>
-	 * to have the given object directly in front of it.
-	 * @param target the object to which to calculate the angle
-	 * @return the angle this object has to turn to have the given object in front of it
-	 */
-	public double calculateDirectionTo(ILocational target)
-	{
-		int heading = (Util.calculateHeadingFrom(this, target) - this.getHeading()) & 0x0000FFFF;
-		return Util.convertHeadingToDegree(heading);
-	}
-	
 	@Override
 	public int getX()
 	{
 		return _x;
 	}
 	
+	/**
+	 * Gets the Y coordinate.
+	 * @return the Y coordinate
+	 */
 	@Override
 	public int getY()
 	{
 		return _y;
 	}
 	
+	/**
+	 * Gets the Z coordinate.
+	 * @return the Z coordinate
+	 */
 	@Override
 	public int getZ()
 	{
 		return _z;
 	}
 	
+	/**
+	 * Gets the heading.
+	 * @return the heading
+	 */
 	@Override
 	public int getHeading()
 	{
 		return _heading;
 	}
 	
+	/**
+	 * Gets the instance ID.
+	 * @return the instance ID
+	 */
 	@Override
 	public int getInstanceId()
 	{
 		return _instanceId;
 	}
 	
+	/**
+	 * Gets the location object.
+	 * @return the location object
+	 */
 	@Override
 	public Location getLocation()
 	{
@@ -839,36 +721,160 @@ if (com.l2jserver.Config.FIX_GETLOCATION) {{
 	}
 	//-------------------------------------------------------
 	
+	/**
+	 * Sets the X coordinate
+	 * @param newX the X coordinate
+	 */
 	@Override
-	public void setX(int x)
+	public void setX(int newX)
 	{
-		_x = x;
+		_x = newX;
 	}
 	
+	/**
+	 * Sets the Y coordinate
+	 * @param newY the Y coordinate
+	 */
 	@Override
-	public void setY(int y)
+	public void setY(int newY)
 	{
-		_y = y;
+		_y = newY;
 	}
 	
+	/**
+	 * Sets the Z coordinate
+	 * @param newZ the Z coordinate
+	 */
 	@Override
-	public void setZ(int z)
+	public void setZ(int newZ)
 	{
-		_z = z;
+		_z = newZ;
 	}
 	
+	/**
+	 * Sets the x, y, z coordinate.
+	 * @param newX the X coordinate
+	 * @param newY the Y coordinate
+	 * @param newZ the Z coordinate
+	 */
+	@Override
+	public final void setXYZ(int newX, int newY, int newZ)
+	{
+		assert getWorldRegion() != null;
+		
+		setX(newX);
+		setY(newY);
+		setZ(newZ);
+		
+		try
+		{
+			if (L2World.getInstance().getRegion(getPosition()) != getWorldRegion())
+			{
+				updateWorldRegion();
+			}
+		}
+		catch (Exception e)
+		{
+			badCoords();
+		}
+	}
+	
+	/**
+	 * Sets the x, y, z coordinate.
+	 * @param loc the location object
+	 */
 	@Override
 	public void setXYZ(ILocational loc)
 	{
 		setXYZ(loc.getX(), loc.getY(), loc.getZ());
 	}
 	
+	/**
+	 * Sets heading of object.
+	 * @param newHeading the new heading
+	 */
 	@Override
-	public void setHeading(int heading)
+	public void setHeading(int newHeading)
 	{
-		_heading = heading;
+		_heading = newHeading;
 	}
 	
+	/**
+	 * Sets the instance ID of object.<br>
+	 * 0 - Global<br>
+	 * TODO: Add listener here.
+	 * @param instanceId the ID of the instance
+	 */
+	@Override
+	public void setInstanceId(int instanceId)
+	{
+		if ((instanceId < 0) || (getInstanceId() == instanceId))
+		{
+			return;
+		}
+		
+		Instance oldI = InstanceManager.getInstance().getInstance(getInstanceId());
+		Instance newI = InstanceManager.getInstance().getInstance(instanceId);
+		if (newI == null)
+		{
+			return;
+		}
+		
+		if (isPlayer())
+		{
+			final L2PcInstance player = getActingPlayer();
+			if ((getInstanceId() > 0) && (oldI != null))
+			{
+				oldI.removePlayer(getObjectId());
+				if (oldI.isShowTimer())
+				{
+					hideInstanceTimer();	//[JOJO]
+				}
+			}
+			if (instanceId > 0)
+			{
+				newI.addPlayer(getObjectId());
+				if (newI.isShowTimer())
+				{
+					showInstanceTimer(newI);	//[JOJO]
+				}
+			}
+			if (player.hasSummon())
+			{
+				player.getSummon().setInstanceId(instanceId);
+			}
+		}
+		else if (isNpc())
+		{
+			final L2Npc npc = (L2Npc) this;
+			if ((getInstanceId() > 0) && (oldI != null))
+			{
+				oldI.removeNpc(npc);
+			}
+			if (instanceId > 0)
+			{
+				newI.addNpc(npc);
+			}
+		}
+		
+		_instanceId = instanceId;
+		if (_isVisible && (_knownList != null))
+		{
+			// We don't want some ugly looking disappear/appear effects, so don't update
+			// the knownlist here, but players usually enter instancezones through teleporting
+			// and the teleport will do the revalidation for us.
+			if (!isPlayer())
+			{
+				decayMe();
+				spawnMe();
+			}
+		}
+	}
+	
+	/**
+	 * Sets location of object.
+	 * @param loc the location object
+	 */
 	@Override
 	public void setLocation(Location loc)
 	{
@@ -878,6 +884,92 @@ if (com.l2jserver.Config.FIX_GETLOCATION) {{
 		_heading = loc.getHeading();
 		_instanceId = loc.getInstanceId();
 	}
+	
+	/**
+	 * Calculates distance between this L2Object and given x, y , z.
+	 * @param x the X coordinate
+	 * @param y the Y coordinate
+	 * @param z the Z coordinate
+	 * @param includeZAxis if {@code true} Z axis will be included
+	 * @param squared if {@code true} return will be squared
+	 * @return distance between object and given x, y, z.
+	 */
+	public final double calculateDistance(int x, int y, int z, boolean includeZAxis, boolean squared)
+	{
+		final double distance = Math.pow(x - getX(), 2) + Math.pow(y - getY(), 2) + (includeZAxis ? Math.pow(z - getZ(), 2) : 0);
+		return (squared) ? distance : Math.sqrt(distance);
+	}
+	
+	/**
+	 * Calculates distance between this L2Object and given location.
+	 * @param loc the location object
+	 * @param includeZAxis if {@code true} Z axis will be included
+	 * @param squared if {@code true} return will be squared
+	 * @return distance between object and given location.
+	 */
+	public final double calculateDistance(ILocational loc, boolean includeZAxis, boolean squared)
+	{
+		return calculateDistance(loc.getX(), loc.getY(), loc.getZ(), includeZAxis, squared);
+	}
+	
+	/**
+	 * Calculates the angle in degrees from this object to the given object.<br>
+	 * The return value can be described as how much this object has to turn<br>
+	 * to have the given object directly in front of it.
+	 * @param target the object to which to calculate the angle
+	 * @return the angle this object has to turn to have the given object in front of it
+	 */
+	public final double calculateDirectionTo(ILocational target)
+	{
+		int heading = (Util.calculateHeadingFrom(this, target) - this.getHeading()) & 0x0000FFFF;
+		return Util.convertHeadingToDegree(heading);
+	}
+	
+	//[JOJO]-------------------------------------------------
+	/**
+	 * Sends an instance update for player.
+	 * @param instance the instance to update
+	 */
+	public void showInstanceTimer(Instance instance)
+	{
+		final int npcString;
+		String timerText = instance.getTimerText();
+		if (timerText != null && timerText.startsWith("#"))	// ex: <showTimer val="true" increase="true" text="#1911119" />
+		{
+			npcString = 
+				  timerText.equals("#1911119") ? 1911119	// "経過時間："
+				: timerText.equals("#1911120") ? 1911120	// "残り時間："
+				: Integer.parseInt(timerText.substring(1));
+			timerText = null;
+		}
+		else
+		{
+			npcString = -1;
+		}
+		final int start, end;
+		if (instance.isTimerIncrease()) // count up
+		{
+			start = (int) ((System.currentTimeMillis() - instance.getInstanceStartTime()) / 1000);
+			end = (int) ((instance.getInstanceEndTime() - instance.getInstanceStartTime()) / 1000);
+			assert start <= end;
+			assert start >= 0;
+			assert end >= 0;
+		}
+		else // count down
+		{
+			end = 0;
+			start = (int) ((instance.getInstanceEndTime() - System.currentTimeMillis()) / 1000);
+			assert end <= start;
+			assert start >= 0;
+		}
+		sendPacket(new ExSendUIEvent(getActingPlayer(), false, instance.isTimerIncrease(), start, end, timerText, npcString, null));
+	}
+	
+	public void hideInstanceTimer()
+	{
+		sendPacket(new ExSendUIEvent(getActingPlayer(), true, true, 0, 0, -1));
+	}
+	//-------------------------------------------------------
 	
 	@Override
 	public boolean equals(Object obj)
