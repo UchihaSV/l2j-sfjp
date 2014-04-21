@@ -8899,9 +8899,9 @@ public final class L2PcInstance extends L2Playable
 		if (isSkillDisabled(skill))
 		{
 			final SystemMessage sm;
-			if (hasSkillReuse(skill.getReuseHashCode()))
+			long remainingTime = getSkillRemainingReuseTime(skill.getReuseHashCode());
+			if (remainingTime > 0)
 			{
-				long remainingTime = getSkillRemainingReuseTime(skill.getReuseHashCode());
 				remainingTime += 999;
 				int hours = (int) (remainingTime / 3600000);
 				int minutes = (int) (remainingTime / 60000 % 60);
