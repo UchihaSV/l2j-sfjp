@@ -7791,8 +7791,13 @@ public final class L2PcInstance extends L2Playable
 					statement.setInt(4, info.getTime());
 					
 					final TimeStamp t = getSkillReuseTimeStamp(skill.getReuseHashCode());
-					statement.setLong(5, (t != null) && t.hasNotPassed() ? t.getReuse() : 0);
-					statement.setDouble(6, (t != null) && t.hasNotPassed() ? t.getStamp() : 0);
+					if (t != null && t.hasNotPassed()) {
+						statement.setLong(5, t.getReuse());
+						statement.setDouble(6, t.getStamp());
+					} else {
+						statement.setLong(5, 0);
+						statement.setDouble(6, 0);
+					}
 					
 					statement.setInt(7, 0); // Store type 0, active buffs/debuffs.
 					statement.setInt(8, getClassIndex());
