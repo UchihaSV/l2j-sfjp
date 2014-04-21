@@ -2337,7 +2337,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	
 	/**
 	 * Disables a skill for a given time.<br>
-	 * If delay is lesser or equal than zero, skill will be disabled "forever".
+	 * If delay is lesser <DEL>or equal</DEL> than zero, skill will be disabled "forever".
 	 * @param skill the skill to disable
 	 * @param delay delay in milliseconds
 	 */
