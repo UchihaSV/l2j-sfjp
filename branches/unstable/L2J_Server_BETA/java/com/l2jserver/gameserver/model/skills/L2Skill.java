@@ -1431,7 +1431,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			
 			applyEffectScope(EffectScope.GENERAL, info, instant, addContinuousEffects);
 			
-			EffectScope pvpOrPveEffectScope = effector.isPlayable() && effected.isL2Attackable() ? EffectScope.PVE : effector.isPlayable() && effected.isPlayable() ? EffectScope.PVP : null;
+			EffectScope pvpOrPveEffectScope = effector.isPlayable() && effected.isAttackable() ? EffectScope.PVE : effector.isPlayable() && effected.isPlayable() ? EffectScope.PVP : null;
 			applyEffectScope(pvpOrPveEffectScope, info, instant, addContinuousEffects);
 			
 			applyEffectScope(EffectScope.CHANNELING, info, instant, addContinuousEffects);

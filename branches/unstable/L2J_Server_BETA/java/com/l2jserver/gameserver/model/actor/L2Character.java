@@ -1458,17 +1458,17 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 					continue;
 				}
 				
-				if (isL2Attackable() && obj.isPlayer() && getTarget().isL2Attackable())
+				if (isAttackable() && obj.isPlayer() && getTarget().isAttackable())
 				{
 					continue;
 				}
 				
-				if (isL2Attackable() && obj.isL2Attackable() && (((L2Attackable) this).getEnemyClan() == null) && (((L2Attackable) this).getIsChaos() == 0))
+				if (isAttackable() && obj.isAttackable() && (((L2Attackable) this).getEnemyClan() == null) && (((L2Attackable) this).getIsChaos() == 0))
 				{
 					continue;
 				}
 				
-				if (isL2Attackable() && obj.isL2Attackable() && !((L2Attackable) this).getEnemyClan().equals(((L2Attackable) obj).getClan()) && (((L2Attackable) this).getIsChaos() == 0))
+				if (isAttackable() && obj.isAttackable() && !((L2Attackable) this).getEnemyClan().equals(((L2Attackable) obj).getClan()) && (((L2Attackable) this).getIsChaos() == 0))
 				{
 					continue;
 				}
@@ -3715,9 +3715,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	/** Movement data of this L2Character */
 	protected MoveData _move;
 	
-	/** Orientation of the L2Character */
-	private int _heading;
-	
 	/** This creature's target. */
 	private L2Object _target;
 	
@@ -4060,25 +4057,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				broadcastPacket(su);
 			}
 		}
-	}
-	
-	/**
-	 * @return the orientation of the L2Character.
-	 */
-	@Override
-	public final int getHeading()
-	{
-		return _heading;
-	}
-	
-	/**
-	 * Set the orientation of the L2Character.
-	 * @param heading
-	 */
-	@Override
-	public final void setHeading(int heading)
-	{
-		_heading = heading;
 	}
 	
 	public final int getXdestination()
@@ -4667,7 +4645,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			// Movement checks:
 			// when geodata == 2, for all characters except mobs returning home (could be changed later to teleport if pathfinding fails)
 			// when geodata == 1, for L2Playable and L2RiftInvaderInstance only
-			if (((Config.GEODATA == 2) && !(isL2Attackable() && ((L2Attackable) this).isReturningToSpawnPoint())) || (isPlayer() && !(isInVehicle && (distance > 1500))) || (isSummon() && !(getAI().getIntention() == AI_INTENTION_FOLLOW)) // assuming intention_follow only when following owner
+			if (((Config.GEODATA == 2) && !(isAttackable() && ((L2Attackable) this).isReturningToSpawnPoint())) || (isPlayer() && !(isInVehicle && (distance > 1500))) || (isSummon() && !(getAI().getIntention() == AI_INTENTION_FOLLOW)) // assuming intention_follow only when following owner
 				|| isAfraid() || (this instanceof L2RiftInvaderInstance))
 			{
 				if (isOnGeodataPath())
@@ -5508,7 +5486,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				return;
 			}
 		}
-		if ((player.getTarget() != null) && !player.getTarget().isAttackable() && !player.getAccessLevel().allowPeaceAttack())
+		if ((player.getTarget() != null) && !player.getTarget().canBeAttacked() && !player.getAccessLevel().allowPeaceAttack())
 		{
 			// If target is not attackable, send a Server->Client packet ActionFailed
 			player.sendPacket(ActionFailed.STATIC_PACKET);
@@ -6102,7 +6080,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 						((L2Summon) tgt).updateAndBroadcastStatus(1);
 					}
 				}
-				else if (isPlayable() && tgt.isL2Attackable())
+				else if (isPlayable() && tgt.isAttackable())
 				{
 					L2Character target = (L2Character) tgt;
 					if (skill.getEffectPoint() > 0)
@@ -6248,7 +6226,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		final L2Object target = mut.getTargets().length > 0 ? mut.getTargets()[0] : null;
 		
 		// Attack target after skill use
-		if ((skill.nextActionIsAttack()) && (getTarget() instanceof L2Character) && (getTarget() != this) && (target != null) && (getTarget() == target) && target.isAttackable())
+		if ((skill.nextActionIsAttack()) && (getTarget() instanceof L2Character) && (getTarget() != this) && (target != null) && (getTarget() == target) && target.canBeAttacked())
 		{
 			if ((getAI() == null) || (getAI().getNextIntention() == null) || (getAI().getNextIntention().getCtrlIntention() != CtrlIntention.AI_INTENTION_MOVE_TO))
 			{
@@ -6387,7 +6365,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 					// Check if over-hit is possible
 					if (skill.isOverhit())
 					{
-						if (target.isL2Attackable())
+						if (target.isAttackable())
 						{
 							((L2Attackable) target).overhitEnabled(true);
 						}
@@ -6485,7 +6463,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 									}
 								}
 							}
-							else if (target.isL2Attackable())
+							else if (target.isAttackable())
 							{
 								switch (skill.getId())
 								{
@@ -6513,7 +6491,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 									player.updatePvPStatus();
 								}
 							}
-							else if (target.isL2Attackable())
+							else if (target.isAttackable())
 							{
 								player.updatePvPStatus();
 							}

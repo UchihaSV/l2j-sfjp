@@ -1996,7 +1996,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 	 * Return True.
 	 */
 	@Override
-	public boolean isAttackable()
+	public boolean canBeAttacked()
 	{
 		return true;
 	}
@@ -2325,7 +2325,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 	}
 	
 	@Override
-	public boolean isL2Attackable()
+	public boolean isAttackable()
 	{
 		return true;
 	}

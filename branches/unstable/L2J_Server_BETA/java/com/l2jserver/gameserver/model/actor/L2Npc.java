@@ -592,7 +592,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	}
 	
 	@Override
-	public boolean isAttackable()
+	public boolean canBeAttacked()
 	{
 		return Config.ALT_ATTACKABLE_NPCS;
 	}
