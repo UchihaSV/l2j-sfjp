@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 import javolution.util.WeakFastSet;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
@@ -211,7 +212,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	/** Map containing the item reuse time stamps. */
 	private volatile Map<Integer, TimeStamp> _reuseTimeStampsItems = null;
 	/** Map containing all the disabled skills. */
-	private volatile Map<Integer, Long> _disabledSkills = null;
+	private volatile FastIntObjectMap<Long> _disabledSkills = null;
+	private static final Long SKILL_DISABLED_FOREVER = Long.valueOf(Long.MAX_VALUE);	//+[JOJO]
 	private boolean _allSkillsDisabled;
 	/** Map containing the active chance skills on this character */
 	private volatile ChanceSkillList _chanceSkills;
@@ -2314,7 +2316,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 * Gets the disabled skills map.
 	 * @return the disabled skills map
 	 */
-	public Map<Integer, Long> getDisabledSkills()
+	@Deprecated public FastIntObjectMap<Long> getDisabledSkills()
 	{
 		return _disabledSkills;
 	}
@@ -2352,12 +2354,12 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			{
 				if (_disabledSkills == null)
 				{
-					_disabledSkills = new ConcurrentHashMap<>();
+					_disabledSkills = new FastIntObjectMap<Long>().shared();	//[JOJO] -ConcurrentHashMap
 				}
 			}
 		}
 		
-		_disabledSkills.put(skill.getReuseHashCode(), delay > 0 ? System.currentTimeMillis() + delay : Long.MAX_VALUE);
+		_disabledSkills.put(skill.getReuseHashCode(), delay > 0 ? System.currentTimeMillis() + delay : SKILL_DISABLED_FOREVER);	//[JOJO] -Long.MAX_VALUE
 	}
 	
 	/**
