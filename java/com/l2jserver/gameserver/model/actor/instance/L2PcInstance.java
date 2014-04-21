@@ -7807,10 +7807,10 @@ public final class L2PcInstance extends L2Playable
 			}
 			
 			// Skills under reuse.
-			final Map<Integer, TimeStamp> reuseTimeStamps = getSkillReuseTimeStamps();
+			final FastIntObjectMap<TimeStamp> reuseTimeStamps = getSkillReuseTimeStamps();
 			if (reuseTimeStamps != null)
 			{
-				for (Entry<Integer, TimeStamp> ts : reuseTimeStamps.entrySet())
+				for (jp.sf.l2j.troja.IntObjectMap.Entry<TimeStamp> ts : reuseTimeStamps.entrySet())
 				{
 					final int hash = ts.getKey();
 					if (storedSkills.contains(hash))
@@ -7852,7 +7852,7 @@ public final class L2PcInstance extends L2Playable
 			ps1.setInt(1, getObjectId());
 			ps1.execute();
 			
-			final Map<Integer, TimeStamp> itemReuseTimeStamps = getItemReuseTimeStamps();
+			final FastIntObjectMap<TimeStamp> itemReuseTimeStamps = getItemReuseTimeStamps();
 			if (itemReuseTimeStamps != null)
 			{
 				for (TimeStamp ts : itemReuseTimeStamps.values())

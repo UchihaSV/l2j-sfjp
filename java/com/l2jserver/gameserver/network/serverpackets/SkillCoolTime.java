@@ -20,7 +20,8 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.model.TimeStamp;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -35,7 +36,7 @@ public class SkillCoolTime extends L2GameServerPacket
 	
 	public SkillCoolTime(L2PcInstance player)
 	{
-		final Map<Integer, TimeStamp> skillReuseTimeStamps = player.getSkillReuseTimeStamps();
+		final FastIntObjectMap<TimeStamp> skillReuseTimeStamps = player.getSkillReuseTimeStamps();
 		if (skillReuseTimeStamps != null)
 		{
 			for (TimeStamp ts : skillReuseTimeStamps.values())
