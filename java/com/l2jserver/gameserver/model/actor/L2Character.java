@@ -2365,7 +2365,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	/**
 	 * Removes all the disabled skills.
 	 */
-	public synchronized final void resetDisabledSkills()
+	public /*synchronized*/ final void resetDisabledSkills()	//[JOJO] -synchronized
 	{
 		if (_disabledSkills != null)
 		{
