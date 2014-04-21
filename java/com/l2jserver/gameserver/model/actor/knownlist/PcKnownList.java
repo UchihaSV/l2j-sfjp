@@ -137,7 +137,7 @@ public class PcKnownList extends PlayableKnownList
 	private double proportion(L2Object object)
 	{
 if (com.l2jserver.Config.FIX_DISTANCE_TO_WATCH_OBJECT) {{
-		if (object.isL2Attackable())
+		if (object.isAttackable())
 		{
 			// ‘Ì‚Ì‘å‚«‚Èƒ‚ƒ“ƒXƒ^[‚Í‰“‚­‚©‚ç‚àŒ©‚¦‚é
 			final com.l2jserver.gameserver.model.actor.L2Attackable a = (com.l2jserver.gameserver.model.actor.L2Attackable) object;
