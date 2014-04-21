@@ -110,6 +110,14 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	{
 		return _instanceType.isTypes(instanceTypes);
 	}
+	public final boolean isInstanceTypes(InstanceType instanceType)
+	{
+		return _instanceType.isType(instanceType);
+	}
+	public final boolean isInstanceType(InstanceType instanceType)
+	{
+		return _instanceType.isType(instanceType);
+	}
 	
 	public final void onAction(L2PcInstance player)
 	{
