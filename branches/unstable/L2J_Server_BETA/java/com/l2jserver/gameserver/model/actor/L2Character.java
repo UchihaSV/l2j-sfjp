@@ -208,9 +208,9 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	/** Map containing all skills of this character. */
 	private final Map<Integer, L2Skill> _skills;// = new FastMap<Integer, L2Skill>().shared();
 	/** Map containing the skill reuse time stamps. */
-	private volatile Map<Integer, TimeStamp> _reuseTimeStampsSkills = null;
+	private volatile FastIntObjectMap<TimeStamp> _reuseTimeStampsSkills = null;
 	/** Map containing the item reuse time stamps. */
-	private volatile Map<Integer, TimeStamp> _reuseTimeStampsItems = null;
+	private volatile FastIntObjectMap<TimeStamp> _reuseTimeStampsItems = null;
 	/** Map containing all the disabled skills. */
 	private volatile FastIntObjectMap<Long> _disabledSkills = null;
 	private static final Long SKILL_DISABLED_FOREVER = Long.valueOf(Long.MAX_VALUE);	//+[JOJO]
@@ -2136,7 +2136,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 * Gets the item reuse time stamps map.
 	 * @return the item reuse time stamps map
 	 */
-	public final Map<Integer, TimeStamp> getItemReuseTimeStamps()
+	public final FastIntObjectMap<TimeStamp> getItemReuseTimeStamps()
 	{
 		return _reuseTimeStampsItems;
 	}
@@ -2166,7 +2166,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			{
 				if (_reuseTimeStampsItems == null)
 				{
-					_reuseTimeStampsItems = new ConcurrentHashMap<>();
+					_reuseTimeStampsItems = new FastIntObjectMap<TimeStamp>().shared();	//[JOJO] -ConcurrentHashMap
 				}
 			}
 		}
@@ -2212,7 +2212,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 * Gets the skill reuse time stamps map.
 	 * @return the skill reuse time stamps map
 	 */
-	public final Map<Integer, TimeStamp> getSkillReuseTimeStamps()
+	public final FastIntObjectMap<TimeStamp> getSkillReuseTimeStamps()
 	{
 		return _reuseTimeStampsSkills;
 	}
@@ -2242,7 +2242,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			{
 				if (_reuseTimeStampsSkills == null)
 				{
-					_reuseTimeStampsSkills = new ConcurrentHashMap<>();
+					_reuseTimeStampsSkills = new FastIntObjectMap<TimeStamp>().shared();	//[JOJO] -ConcurrentHashMap
 				}
 			}
 		}
