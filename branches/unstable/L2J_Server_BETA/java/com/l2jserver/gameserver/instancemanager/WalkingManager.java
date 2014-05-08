@@ -45,6 +45,7 @@ import com.l2jserver.gameserver.model.L2NpcWalkerNode;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.L2WalkRoute;
 import com.l2jserver.gameserver.model.L2World;
+import com.l2jserver.gameserver.model.L2WorldRegion;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.WalkInfo;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -104,6 +105,7 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 		parseDatapackFile("data/Routes.xml");
 }}
 		_log.info(getClass().getSimpleName() + ": Loaded " + _routes.size() + " walking routes.");
+	//	dump();
 	}
 	
 	@Override
@@ -296,7 +298,7 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 			if ((walk = _activeRoutes.get(npc.getObjectId())) == null) // new walk task
 			{
 				// only if not already moved / not engaged in battle... should not happens if called on spawn
-				if ((npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE) || (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE))
+				if (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE || npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE)
 				{
 					walk = new WalkInfo(routeName);
 					
@@ -341,7 +343,7 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 			else
 			// walk was stopped due to some reason (arrived to node, script action, fight or something else), resume it
 			{
-				if ((npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE) || (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE))
+				if (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE || npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE)
 				{
 					// Prevent call simultaneously from scheduled task and onArrived() or temporarily stop walking for resuming in future
 					if (walk.isBlocked() || walk.isSuspended())
@@ -498,6 +500,18 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 						walk.setLastAction(System.currentTimeMillis());
 					}
 					
+if (com.l2jserver.Config.NEVER_WALKER_AI_onArrived) {{
+					if (node.getDelay() == 0)
+					{
+					//	if (walk.isSuspended()) return false;	//TODO:Check
+						final L2NpcWalkerNode nextNode = walk.getCurrentNode();
+						npc.setIsRunning(nextNode.runToLocation());
+						npc.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, nextNode);
+						walk.setBlocked(false);
+						return true;
+					}
+					/*else...*/
+}}
 					npc.getAI().setIntention(AI_INTENTION_ACTIVE);
 					ThreadPoolManager.getInstance().scheduleGeneral(new ArrivedTask(npc, walk), node.getDelay() * 1000L);
 					return true;
@@ -607,6 +621,49 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void dump()
+	{
+		for (L2WalkRoute route : _routes.values()) {
+			final String repeatStyle;
+			switch (route.getRepeatType()) {
+				case REPEAT_GO_BACK: repeatStyle = "back"; break;
+				case REPEAT_GO_FIRST: repeatStyle = "cycle"; break;
+				case REPEAT_TELE_FIRST: repeatStyle = "conveyor"; break;
+				case REPEAT_RANDOM: repeatStyle = "random"; break;
+				default: repeatStyle = "?";
+			}
+			System.out.println("<route name=\"" + route.getName() + "\" repeat=" + route.repeatWalk() + " repeatStyle=" + repeatStyle + ">");
+			for (jp.sf.l2j.troja.IntObjectMap.Entry<NpcRoutesHolder> a : _routesToAttach.entrySet()) {
+				final NpcRoutesHolder nr = a.getValue();
+				for (java.util.Map.Entry<String, String> c : nr.getCorrespondences().entrySet()) {
+					final String uniqueKey = c.getKey();
+					final String routeName = c.getValue();
+					if (routeName.equals(route.getName())) {
+						String[] spawn = uniqueKey.split(",");
+						final int npcId = a.getKey();
+						final L2NpcTemplate t = NpcTable.getInstance().getTemplate(npcId);
+						System.out.println("\t<target id=" + npcId + " spawnX=" + spawn[0] + " spawnY=" + spawn[1] + " spawnZ=" + spawn[2] + " /> <!-- " + (t.getTitle() + " " + t.getName()).trim() + " -->");
+					}
+				}
+			}
+			L2WorldRegion nodeWorldRegion0 = null;
+			for (L2NpcWalkerNode node : route.getNodeList()) {
+				L2WorldRegion nodeWorldRegion1 = L2World.getInstance().getRegion(node.getX(), node.getY());
+				final String region = nodeWorldRegion0 == null             ? "<!-- Grid" + nodeWorldRegion1.getName() + " -->"
+				                    : nodeWorldRegion0 != nodeWorldRegion1 ? "<!-- Grid" + nodeWorldRegion1.getName() + "#-->"
+				                    : "";
+				nodeWorldRegion0 = nodeWorldRegion1;
+				if (node.getNpcString() != null)
+					System.out.println("\t<point npcStringId=" + node.getNpcString().getId() + " X=" + node.getX() + " Y=" + node.getY() + " Z=" + node.getZ() + " delay=" + node.getDelay() + " run=" + node.runToLocation() + " />" + region);
+				else if (node.getChatText() != null && node.getChatText().length() > 0)
+					System.out.println("\t<point string=\"" + node.getChatText() + "\" X=" + node.getX() + " Y=" + node.getY() + " Z=" + node.getZ() + " delay=" + node.getDelay() + " run=" + node.runToLocation() + " />" + region);
+				else
+					System.out.println("\t<point X=" + node.getX() + " Y=" + node.getY() + " Z=" + node.getZ() + " delay=" + node.getDelay() + " run=" + node.runToLocation() + " />" + region);
+			}
+			System.out.println("</route>");
 		}
 	}
 	//-------------------------------------------------------

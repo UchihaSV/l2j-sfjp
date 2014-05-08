@@ -661,11 +661,17 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 			int x1, y1, z1;
 			final int range = Config.MAX_DRIFT_RANGE;
 			
-			for (L2Skill sk : _skillrender.getBuffSkills())
-			{
-				if (cast(sk))
+			RANDOM_BUF: {
+if (com.l2jserver.Config.NEVER_RandomBuf_UNLESS_InActiveRegion) {
+				if (!npc.isInActiveRegion())
+					break RANDOM_BUF;
+}
+				for (L2Skill sk : _skillrender.getBuffSkills())
 				{
-					return;
+					if (cast(sk))
+					{
+						return;
+					}
 				}
 			}
 			
@@ -707,6 +713,10 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 				}
 				else
 				{
+if (com.l2jserver.Config.NEVER_RandomWalk_UNLESS_InActiveRegion) {
+					if (!npc.isInActiveRegion())
+						return;
+}
 					int deltaX = Rnd.nextInt(range * 2); // x
 					int deltaY = Rnd.get(deltaX, range * 2); // distance
 					deltaY = (int) Math.sqrt(deltaY * deltaY - deltaX * deltaX); // y

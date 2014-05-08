@@ -1188,6 +1188,10 @@ public final class Config
 	public static final boolean ADMIN_MENU_AUTO_RETURN = true;			//[JOJO]adminメニューを開いたままにする.
 	public static final boolean NEVER_EVT_AGGRESSION_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体にはEVT_AGGRESSIONを発行しない.
 	public static final boolean NEVER_RandomAnimation_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体はあくびしない.
+	public static final boolean NEVER_RandomAnimation_UNLESS_InActiveRegion = true;	//[JOJO]WalkingManager対策 - 非ActiveRegionでのAI動作省略
+	public static final boolean NEVER_RandomWalk_UNLESS_InActiveRegion = true;		//[JOJO]WalkingManager対策 - 非ActiveRegionでのAI動作省略
+	public static final boolean NEVER_RandomBuf_UNLESS_InActiveRegion = true;		//[JOJO]WalkingManager対策 - 非ActiveRegionでのAI動作省略
+	public static final boolean NEVER_WALKER_AI_onArrived = true;					//[JOJO]WalkingManager対策 - 歩行ルートのノードポイントでの無駄なAI動作省略
 	public static final boolean FIX_ATTACKABLE_AI_FACTION_CALL = true;	//[JOJO]同族モンスターをリンクさせる.
 	public static final boolean STRING_INTERN = true;					//[JOJO]
 	public static final boolean MOD_AURA = true;						//[JOJO]英雄とは無関係に英雄オーラを発する.
@@ -1205,7 +1209,7 @@ public final class Config
 	public static final boolean FIX_onSpawn_for_SpawnTable = true;		//[JOJO]spawnlist.sqlをロードしたあとにAIスクリプトがロードされるため、onSpawnによるNPCの初期化がなされていない不具合の修正.
 	public static final int NPC_SPAWN_Z_MARGIN = 0;						//[JOJO]l2jserver.com rev.5425 '20' --> '0'
 	public static final boolean FIX_CoupleSocial_AI_INTENTION = true;	//[JOJO]相手が追従モードのときカップル アクションが行えない.
-	public static final boolean FIX_WALKER_ATTACK = true;				//[JOJO]WalkerManager 歩行中のモンスターを攻撃すると無反応のまま停止する不具合の修正.
+	public static final boolean FIX_WALKER_ATTACK = true;				//[JOJO]WalkingManager 歩行中のモンスターを攻撃すると無反応のまま停止する不具合の修正.
 	public static final boolean PC_PROTECT = true;						//[JOJO]「今後、アクティブ モンスターを刺激するおそれがあります。」
 	public static final boolean SILENT_MOVE_PROTECT = true;				//[JOJO]サイレントムーブ
 	public static final boolean NEVER_TARGET_TAMED = true;				//[JOJO]槍・範囲攻撃をするとテイミングモンスターが巻き添えになる不具合の修正.

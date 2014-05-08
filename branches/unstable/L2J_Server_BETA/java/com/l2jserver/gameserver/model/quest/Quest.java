@@ -53,6 +53,7 @@ import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Party;
 import com.l2jserver.gameserver.model.L2Spawn;
+import com.l2jserver.gameserver.model.L2WorldRegion;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -941,6 +942,32 @@ public class Quest extends ManagedScript implements IIdentifiable
 			_log.log(Level.WARNING, "Exception on onEventReceived() in notifyEventReceived(): " + e.getMessage(), e);
 		}
 	}
+	//[JOJO]-------------------------------------------------
+	/**
+	 * Send an "event" to all NPC's within given radius
+	 * @param eventName - name of event
+	 * @param sender - NPC, who sent event
+	 * @param radius - radius to send event
+	 * @param reference - L2Object to pass, if needed
+	 */
+	public void broadcastEvent(String eventName, L2Npc sender, int radius, L2Object reference)
+	{
+		final int sqRadius = radius * radius;
+		for (L2WorldRegion regi : sender.getWorldRegion().getSurroundingRegions())
+			for (L2Object obj : regi.getVisibleObjects().values())
+			{
+				final List<Quest> eventQuests;
+				if (obj != null
+					&& obj.isNpc()
+					&& !obj.equals(sender)
+					&& sender.calculateDistance(obj, false, true) <= sqRadius
+					&& (eventQuests = ((L2Npc) obj).getTemplate().getEventQuests(QuestEventType.ON_EVENT_RECEIVED)) != null)
+					for (Quest quest : eventQuests)
+						if (quest == this)
+							notifyEventReceived(eventName, sender, (L2Npc) obj, reference);
+			}
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * @param character
