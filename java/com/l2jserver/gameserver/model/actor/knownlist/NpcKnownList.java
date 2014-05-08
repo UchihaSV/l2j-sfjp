@@ -125,7 +125,7 @@ public class NpcKnownList extends CharKnownList
 		@Override
 		public void run()
 		{
-			if (getActiveChar() instanceof L2Attackable)
+		//	if (getActiveChar() instanceof L2Attackable)	//-[JOJO]
 			{
 				final L2Attackable monster = (L2Attackable) getActiveChar();
 				if (monster.getAI().getIntention() == CtrlIntention.AI_INTENTION_MOVE_TO)

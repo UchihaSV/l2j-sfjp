@@ -69,6 +69,13 @@ public final class NpcRoutesHolder
 	 */
 	private String getUniqueKey(ILocational loc)
 	{
-		return (loc.getX() + "-" + loc.getY() + "-" + loc.getZ());
+		return (loc.getX() + "," + loc.getY() + "," + loc.getZ());	//[JOJO] "-" --> "," セパレータ変更
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public Map<String, String> getCorrespondences()
+	{
+		return _correspondences;
+	}
+	//-------------------------------------------------------
 }

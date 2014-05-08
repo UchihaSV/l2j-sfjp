@@ -1969,12 +1969,30 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	//[JOJO]-------------------------------------------------
 	public boolean compareAndSetScriptValue(int expect, int update)
 	{
+		assert expect != update;
 		final NpcVariables npcVariables = getVariables();
 //TODO//synchronized (npcVariables.getSet()) // atomic
 		{
 			if (npcVariables.getInt("SCRIPT_VAL") == expect)
 			{
 				npcVariables.set("SCRIPT_VAL", update);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+	public boolean compareAndSetScriptValue(String key, boolean expect, boolean update)
+	{
+		assert expect != update;
+		final NpcVariables npcVariables = getVariables();
+//TODO//synchronized (npcVariables.getSet()) // atomic
+		{
+			if (npcVariables.getBoolean(key, false) == expect)
+			{
+				npcVariables.set(key, update);
 				return true;
 			}
 			else
