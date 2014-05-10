@@ -1188,7 +1188,6 @@ public final class Config
 	public static final boolean ADMIN_MENU_AUTO_RETURN = true;			//[JOJO]adminメニューを開いたままにする.
 	public static final boolean NEVER_EVT_AGGRESSION_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体にはEVT_AGGRESSIONを発行しない.
 	public static final boolean NEVER_RandomAnimation_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体はあくびしない.
-	public static final boolean NEVER_RandomAnimation_UNLESS_InActiveRegion = true;	//[JOJO]WalkingManager対策 - 非ActiveRegionでのAI動作省略
 	public static final boolean NEVER_RandomWalk_UNLESS_InActiveRegion = true;		//[JOJO]WalkingManager対策 - 非ActiveRegionでのAI動作省略
 	public static final boolean NEVER_RandomBuf_UNLESS_InActiveRegion = true;		//[JOJO]WalkingManager対策 - 非ActiveRegionでのAI動作省略
 	public static final boolean NEVER_WALKER_AI_onArrived = true;					//[JOJO]WalkingManager対策 - 歩行ルートのノードポイントでの無駄なAI動作省略
