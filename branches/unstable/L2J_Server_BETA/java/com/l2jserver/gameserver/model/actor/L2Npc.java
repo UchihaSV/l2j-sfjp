@@ -373,47 +373,29 @@ public class L2Npc extends L2Character
 				{
 					return; // Shouldn't happen, but who knows... just to make sure every active npc has only one timer.
 				}
-if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
+				if (!isInActiveRegion())	//+[JOJO]
+					return;
 				if (isDead() || !isVisible())	//+[JOJO]
 					return;
-}
+				if (!isRandomAnimationEnabled())	//+[JOJO]
+					return;
 				if (isMob())
 				{
 					// Cancel further animation timers until intention is changed to ACTIVE again.
-if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
-					if (!hasAI())		//+[JOJO]
+					if (!hasAI())	//+[JOJO]
 						return;
-}
 					if (getAI().getIntention() != AI_INTENTION_ACTIVE)
 					{
 						return;
 					}
 				}
-				else
-				{
-					if (!isInActiveRegion())
-					{
-						return;
-					}
-				}
 				
-if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
-				if (!(getKnownList().getKnownPlayers().isEmpty() || isStunned() || isSleeping() || isParalyzed()))
+				if (!(getKnownList().getKnownPlayers().isEmpty() || isMoving() || isStunned() || isSleeping() || isParalyzed()))
 				{
 					onRandomAnimation(Rnd.get(2, 3));
 				}
-} else {
-				if (!(isDead() || isStunned() || isSleeping() || isParalyzed()))
-				{
-					onRandomAnimation(Rnd.get(2, 3));
-				}
-}
 				
-if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
-				startRandomAnimationTimer(this);
-} else {
-				startRandomAnimationTimer();
-}
+				startRandomAnimationTimer(this);	// schedule myself
 			}
 			catch (Exception e)
 			{
@@ -430,7 +412,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	{
 		// Send a packet SocialAction to all L2PcInstance in the _KnownPlayers of the L2NpcInstance
 		long now = System.currentTimeMillis();
-		if ((now - _lastSocialBroadcast) > _minimalSocialInterval)
+		if (now - _lastSocialBroadcast > _minimalSocialInterval)
 		{
 			_lastSocialBroadcast = now;
 			broadcastPacket(new SocialAction(getObjectId(), animationId));
@@ -444,12 +426,12 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 	{
 		startRandomAnimationTimer(null);
 	}
-	void startRandomAnimationTimer(RandomAnimationTask r)
+	void startRandomAnimationTimer(RandomAnimationTask task)
 	{
-if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
+		if (!isInActiveRegion())	//+[JOJO]
+			return;
 		if (isDead() || !isVisible())	//+[JOJO]
 			return;
-}
 		if (!hasRandomAnimation())
 		{
 			return;
@@ -462,12 +444,9 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
 		int interval = Rnd.get(minWait, maxWait) * 1000;
 		
 		// Create a RandomAnimation Task that will be launched after the calculated delay
-if (com.l2jserver.Config.NEVER_RandomAnimation_IF_DEAD) {
-		_rAniTask = r != null ? r : new RandomAnimationTask();
-} else {
-		_rAniTask = new RandomAnimationTask();
-}
-		ThreadPoolManager.getInstance().scheduleGeneral(_rAniTask, interval);
+		if (task == null) task = new RandomAnimationTask();
+		_rAniTask = task;
+		ThreadPoolManager.getInstance().scheduleGeneral(task, interval);
 	}
 	
 	/**

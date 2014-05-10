@@ -48,6 +48,7 @@ import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.L2WorldRegion;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.WalkInfo;
+import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -298,7 +299,8 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 			if ((walk = _activeRoutes.get(npc.getObjectId())) == null) // new walk task
 			{
 				// only if not already moved / not engaged in battle... should not happens if called on spawn
-				if (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE || npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE)
+				final CtrlIntention intention;
+				if ((intention = npc.getAI().getIntention()) == CtrlIntention.AI_INTENTION_ACTIVE || intention == CtrlIntention.AI_INTENTION_IDLE)
 				{
 					walk = new WalkInfo(routeName);
 					
@@ -333,6 +335,15 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 					npc.getKnownList().startTrackingTask();
 					
 					_activeRoutes.put(npc.getObjectId(), walk); // register route
+if (com.l2jserver.Config.NEVER_WALKER_AI_onArrived) {{
+					if (npc instanceof L2Attackable)
+					{
+						L2Attackable mob = (L2Attackable) npc;
+						mob.setIsNoRndWalk(true);
+						mob.setCanReturnToSpawnPoint(false);
+						mob.setRandomAnimationEnabled(false);
+					}
+}}
 				}
 				else
 				{
@@ -343,7 +354,8 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 			else
 			// walk was stopped due to some reason (arrived to node, script action, fight or something else), resume it
 			{
-				if (npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE || npc.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE)
+				final CtrlIntention intention;
+				if ((intention = npc.getAI().getIntention()) == CtrlIntention.AI_INTENTION_ACTIVE || intention == CtrlIntention.AI_INTENTION_IDLE)
 				{
 					// Prevent call simultaneously from scheduled task and onArrived() or temporarily stop walking for resuming in future
 					if (walk.isBlocked() || walk.isSuspended())
