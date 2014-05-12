@@ -18,9 +18,7 @@
  */
 package com.l2jserver.gameserver.ai;
 
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ACTIVE;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ATTACK;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_IDLE;
+import static com.l2jserver.gameserver.ai.CtrlIntention.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -661,17 +659,11 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 			int x1, y1, z1;
 			final int range = Config.MAX_DRIFT_RANGE;
 			
-			RANDOM_BUF: {
-if (com.l2jserver.Config.NEVER_RandomBuf_UNLESS_InActiveRegion) {
-				if (!npc.isInActiveRegion())
-					break RANDOM_BUF;
-}
-				for (L2Skill sk : _skillrender.getBuffSkills())
+			for (L2Skill sk : _skillrender.getBuffSkills())
+			{
+				if (cast(sk))
 				{
-					if (cast(sk))
-					{
-						return;
-					}
+					return;
 				}
 			}
 			
@@ -713,10 +705,6 @@ if (com.l2jserver.Config.NEVER_RandomBuf_UNLESS_InActiveRegion) {
 				}
 				else
 				{
-if (com.l2jserver.Config.NEVER_RandomWalk_UNLESS_InActiveRegion) {
-					if (!npc.isInActiveRegion())
-						return;
-}
 					int deltaX = Rnd.nextInt(range * 2); // x
 					int deltaY = Rnd.get(deltaX, range * 2); // distance
 					deltaY = (int) Math.sqrt(deltaY * deltaY - deltaX * deltaX); // y

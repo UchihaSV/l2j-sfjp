@@ -335,13 +335,13 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 					npc.getKnownList().startTrackingTask();
 					
 					_activeRoutes.put(npc.getObjectId(), walk); // register route
-if (com.l2jserver.Config.NEVER_WALKER_AI_onArrived) {{
+if (com.l2jserver.Config.NEVER_WALKER_RndWalk | com.l2jserver.Config.NEVER_WALKER_ReturnToSpawnPoint | com.l2jserver.Config.NEVER_WALKER_RandomAnimation) {{
 					if (npc instanceof L2Attackable)
 					{
 						L2Attackable mob = (L2Attackable) npc;
-						mob.setIsNoRndWalk(true);
-						mob.setCanReturnToSpawnPoint(false);
-						mob.setRandomAnimationEnabled(false);
+						if (com.l2jserver.Config.NEVER_WALKER_RndWalk) mob.setIsNoRndWalk(true);
+						if (com.l2jserver.Config.NEVER_WALKER_ReturnToSpawnPoint) mob.setCanReturnToSpawnPoint(false);
+						if (com.l2jserver.Config.NEVER_WALKER_RandomAnimation) mob.setRandomAnimationEnabled(false);
 					}
 }}
 				}
