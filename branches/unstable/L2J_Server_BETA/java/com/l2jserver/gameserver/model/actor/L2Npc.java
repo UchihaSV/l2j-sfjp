@@ -2040,7 +2040,7 @@ public class L2Npc extends L2Character
 	 * @param radius - radius to send event
 	 * @param reference - L2Object to pass, if needed
 	 */
-	public void broadcastEvent(String eventName, int radius, L2Object reference)
+	@Deprecated public void broadcastEvent(String eventName, int radius, L2Object reference)	//-[JOJO]
 	{
 		for (L2Object obj : L2World.getInstance().getVisibleObjects(this, radius))
 		{
