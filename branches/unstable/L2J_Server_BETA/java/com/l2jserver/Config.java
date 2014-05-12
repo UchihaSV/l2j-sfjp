@@ -1188,9 +1188,10 @@ public final class Config
 	public static final boolean ADMIN_MENU_AUTO_RETURN = true;			//[JOJO]adminメニューを開いたままにする.
 	public static final boolean NEVER_EVT_AGGRESSION_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体にはEVT_AGGRESSIONを発行しない.
 	public static final boolean NEVER_RandomAnimation_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体はあくびしない.
-	public static final boolean NEVER_RandomWalk_UNLESS_InActiveRegion = true;		//[JOJO]WalkingManager対策 - 非ActiveRegionでのAI動作省略
-	public static final boolean NEVER_RandomBuf_UNLESS_InActiveRegion = true;		//[JOJO]WalkingManager対策 - 非ActiveRegionでのAI動作省略
-	public static final boolean NEVER_WALKER_AI_onArrived = true;					//[JOJO]WalkingManager対策 - 歩行ルートのノードポイントでの無駄なAI動作省略
+	public static final boolean NEVER_WALKER_RndWalk = true;			//[JOJO]WalkingManager対策 - 散歩させない.
+	public static final boolean NEVER_WALKER_ReturnToSpawnPoint = true;	//[JOJO]WalkingManager対策 - 帰巣させない.
+	public static final boolean NEVER_WALKER_RandomAnimation = true;	//[JOJO]WalkingManager対策 - あくびさせない.
+	public static final boolean NEVER_WALKER_AI_onArrived = true;		//[JOJO]WalkingManager対策 - 歩行ルートのノードポイントでの無駄なAI動作省略.
 	public static final boolean FIX_ATTACKABLE_AI_FACTION_CALL = true;	//[JOJO]同族モンスターをリンクさせる.
 	public static final boolean STRING_INTERN = true;					//[JOJO]
 	public static final boolean MOD_AURA = true;						//[JOJO]英雄とは無関係に英雄オーラを発する.
