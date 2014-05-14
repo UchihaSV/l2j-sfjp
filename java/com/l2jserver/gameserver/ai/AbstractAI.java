@@ -18,9 +18,7 @@
  */
 package com.l2jserver.gameserver.ai;
 
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ATTACK;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_FOLLOW;
-import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_IDLE;
+import static com.l2jserver.gameserver.ai.CtrlIntention.*;
 
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
