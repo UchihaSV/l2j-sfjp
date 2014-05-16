@@ -1920,6 +1920,12 @@ public class Quest extends ManagedScript implements IIdentifiable
 			final L2NpcTemplate t = NpcTable.getInstance().getTemplate(npcId);
 			if (t != null)
 			{
+if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
+				if (eventType == QuestEventType.ON_AGGRO_RANGE_ENTER && t.getAIDataStatic().getAggroRange() == 0) {
+					//_log.log(Level.WARNING, getName() + ".addEventId(ON_AGGRO_RANGE_ENTER," + npcId + ") - " + t.getName() + " aggro range is 0");
+					return;
+				}
+}}
 				t.addQuestEvent(eventType, this);
 				_questInvolvedNpcs.add(npcId);
 			}
