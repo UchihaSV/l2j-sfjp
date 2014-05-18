@@ -68,8 +68,8 @@ import com.l2jserver.gameserver.model.base.AcquireSkillType;
 import com.l2jserver.gameserver.model.entity.Instance;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
-import com.l2jserver.gameserver.model.interfaces.IL2Procedure;
 import com.l2jserver.gameserver.model.interfaces.ILocational;
+import com.l2jserver.gameserver.model.interfaces.IProcedure;
 import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
@@ -4057,10 +4057,10 @@ if (CHECK_TAKEITEMS) {{
 		{
 			if (includeCommandChannel && player.getParty().isInCommandChannel())
 			{
-				player.getParty().getCommandChannel().forEachMember(new IL2Procedure<L2PcInstance>()
+				player.getParty().getCommandChannel().forEachMember(new IProcedure<L2PcInstance, Boolean>()
 				{
 					@Override
-					public boolean execute(L2PcInstance member)
+					public Boolean execute(L2PcInstance member)
 					{
 						actionForEachPlayer(member, npc, isSummon);
 						return true;
@@ -4069,10 +4069,10 @@ if (CHECK_TAKEITEMS) {{
 			}
 			else if (includeParty)
 			{
-				player.getParty().forEachMember(new IL2Procedure<L2PcInstance>()
+				player.getParty().forEachMember(new IProcedure<L2PcInstance, Boolean>()
 				{
 					@Override
-					public boolean execute(L2PcInstance member)
+					public Boolean execute(L2PcInstance member)
 					{
 						actionForEachPlayer(member, npc, isSummon);
 						return true;
