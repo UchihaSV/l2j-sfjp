@@ -496,7 +496,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 					player.sendPacket(_packet);
 				}
 			}
-			return true;
+			return Boolean.TRUE;
 		}
 	}
 	//-------------------------------------------------------

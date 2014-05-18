@@ -51,7 +51,7 @@ public abstract class AbstractPlayerGroup
 			public Boolean execute(L2PcInstance member)
 			{
 				ids.add(member.getObjectId());
-				return true;
+				return Boolean.TRUE;
 			}
 		});
 		return ids;
@@ -114,7 +114,7 @@ public abstract class AbstractPlayerGroup
 				{
 					member.sendPacket(packet);
 				}
-				return true;
+				return Boolean.TRUE;
 			}
 		});
 	}
@@ -148,7 +148,7 @@ public abstract class AbstractPlayerGroup
 				{
 					member.sendPacket(msg);
 				}
-				return true;
+				return Boolean.TRUE;
 			}
 		});
 	}

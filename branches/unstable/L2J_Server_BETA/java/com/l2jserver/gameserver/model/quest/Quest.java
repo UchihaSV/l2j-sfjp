@@ -4063,7 +4063,7 @@ if (CHECK_TAKEITEMS) {{
 					public Boolean execute(L2PcInstance member)
 					{
 						actionForEachPlayer(member, npc, isSummon);
-						return true;
+						return Boolean.TRUE;
 					}
 				});
 			}
@@ -4075,7 +4075,7 @@ if (CHECK_TAKEITEMS) {{
 					public Boolean execute(L2PcInstance member)
 					{
 						actionForEachPlayer(member, npc, isSummon);
-						return true;
+						return Boolean.TRUE;
 					}
 				});
 			}

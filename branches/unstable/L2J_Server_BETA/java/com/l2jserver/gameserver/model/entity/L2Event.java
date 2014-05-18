@@ -219,7 +219,7 @@ public class L2Event
 					spawn.stopRespawn();
 					SpawnTable.getInstance().deleteSpawn(spawn, false);
 				}
-				return true;
+				return Boolean.TRUE;
 			}
 		});
 	}

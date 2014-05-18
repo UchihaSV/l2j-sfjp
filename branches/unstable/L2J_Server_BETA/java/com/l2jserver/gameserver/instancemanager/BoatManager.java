@@ -219,7 +219,7 @@ public class BoatManager
 				}
 			}
 			
-			return true;
+			return Boolean.TRUE;
 		}
 	}
 	

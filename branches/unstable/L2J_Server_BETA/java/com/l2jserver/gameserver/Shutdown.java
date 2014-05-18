@@ -622,7 +622,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 					_log.log(Level.WARNING, "Failed logout char " + player, t);
 				}
 			}
-			return true;
+			return Boolean.TRUE;
 		}
 	}
 	
