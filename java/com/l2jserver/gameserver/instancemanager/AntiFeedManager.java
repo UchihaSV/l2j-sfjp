@@ -332,7 +332,7 @@ public final class AntiFeedManager
 					}
 				}
 			}
-			return true;
+			return Boolean.TRUE;
 		}
 	}
 	

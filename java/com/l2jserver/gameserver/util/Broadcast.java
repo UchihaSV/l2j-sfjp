@@ -233,7 +233,7 @@ public final class Broadcast
 			{
 				onlinePlayer.sendPacket(_packet);
 			}
-			return true;
+			return Boolean.TRUE;
 		}
 	}
 	
@@ -255,7 +255,7 @@ public final class Broadcast
 			{
 				onlinePlayer.sendPacket(_packet);
 			}
-			return true;
+			return Boolean.TRUE;
 		}
 	}
 }

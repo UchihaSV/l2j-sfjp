@@ -2485,7 +2485,7 @@ public class SevenSignsFestival implements SpawnListener
 			catch (NullPointerException e)
 			{
 			}
-			return true;
+			return Boolean.TRUE;
 		}
 	}
 	

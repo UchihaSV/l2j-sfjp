@@ -163,7 +163,7 @@ public final class RequestStartPledgeWar extends L2GameClientPacket
 			{
 				cha.broadcastUserInfo();
 			}
-			return true;
+			return Boolean.TRUE;
 		}
 	}
 	

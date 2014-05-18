@@ -131,7 +131,7 @@ public final class RequestStopPledgeWar extends L2GameClientPacket
 			{
 				cha.broadcastUserInfo();
 			}
-			return true;
+			return Boolean.TRUE;
 		}
 	}
 	

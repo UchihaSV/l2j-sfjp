@@ -1487,7 +1487,7 @@ public class SevenSigns
 				}
 			}
 			
-			return true;
+			return Boolean.TRUE;
 		}
 	}
 	
@@ -1706,7 +1706,7 @@ public class SevenSigns
 					}
 				}
 			}
-			return true;
+			return Boolean.TRUE;
 		}
 	}
 	
@@ -1726,7 +1726,7 @@ public class SevenSigns
 				character.removeSkill(SkillTable.FrequentSkill.THE_VICTOR_OF_WAR.getSkill());
 				character.removeSkill(SkillTable.FrequentSkill.THE_VANQUISHED_OF_WAR.getSkill());
 			}
-			return true;
+			return Boolean.TRUE;
 		}
 	}
 	
