@@ -1461,7 +1461,7 @@ public class SevenSigns
 		}
 		
 		@Override
-		public final Boolean execute(final L2PcInstance onlinePlayer)
+		public final boolean execute(final L2PcInstance onlinePlayer)
 		{
 			if (onlinePlayer != null)
 			{
@@ -1487,7 +1487,7 @@ public class SevenSigns
 				}
 			}
 			
-			return Boolean.TRUE;
+			return true;
 		}
 	}
 	
@@ -1687,7 +1687,7 @@ public class SevenSigns
 		}
 		
 		@Override
-		public final Boolean execute(final L2PcInstance character)
+		public final boolean execute(final L2PcInstance character)
 		{
 			if (character != null)
 			{
@@ -1706,7 +1706,7 @@ public class SevenSigns
 					}
 				}
 			}
-			return Boolean.TRUE;
+			return true;
 		}
 	}
 	
@@ -1718,7 +1718,7 @@ public class SevenSigns
 	protected final class RemoveCPMult implements IProcedure<L2PcInstance, Boolean>
 	{
 		@Override
-		public final Boolean execute(final L2PcInstance character)
+		public final boolean execute(final L2PcInstance character)
 		{
 			if (character != null)
 			{
@@ -1726,7 +1726,7 @@ public class SevenSigns
 				character.removeSkill(SkillTable.FrequentSkill.THE_VICTOR_OF_WAR.getSkill());
 				character.removeSkill(SkillTable.FrequentSkill.THE_VANQUISHED_OF_WAR.getSkill());
 			}
-			return Boolean.TRUE;
+			return true;
 		}
 	}
 	

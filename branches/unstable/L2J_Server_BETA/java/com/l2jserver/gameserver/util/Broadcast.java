@@ -227,13 +227,13 @@ public final class Broadcast
 		}
 		
 		@Override
-		public final Boolean execute(final L2PcInstance onlinePlayer)
+		public final boolean execute(final L2PcInstance onlinePlayer)
 		{
 			if ((onlinePlayer != null) && onlinePlayer.isOnline())
 			{
 				onlinePlayer.sendPacket(_packet);
 			}
-			return Boolean.TRUE;
+			return true;
 		}
 	}
 	
@@ -249,13 +249,13 @@ public final class Broadcast
 		}
 		
 		@Override
-		public final Boolean execute(final L2PcInstance onlinePlayer)
+		public final boolean execute(final L2PcInstance onlinePlayer)
 		{
 			if ((onlinePlayer != null) && onlinePlayer.isOnline() && (onlinePlayer.getInstanceId() == _instanceId))
 			{
 				onlinePlayer.sendPacket(_packet);
 			}
-			return Boolean.TRUE;
+			return true;
 		}
 	}
 }

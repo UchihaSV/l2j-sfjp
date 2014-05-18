@@ -20,16 +20,16 @@ package com.l2jserver.gameserver.model.interfaces;
 
 /**
  * Interface for procedures with one Object parameter.
- * @author Battlecruiser
+ * @author <DEL>Battlecruiser</DEL> Eric D. Friedman
  * @param <T> the type of object on which the procedure will be executed
- * @param <R> the return type
+ * <DEL>@param <R> the return type</DEL>
  */
-public interface IProcedure<T, R>
+public interface IProcedure<T, R> extends gnu.trove.procedure.TObjectProcedure<T>
 {
 	/**
 	 * Executes this procedure. A false return value indicates that the application executing this procedure should not invoke this procedure again.
 	 * @param arg the object on which the procedure will be executed
 	 * @return {@code true} if additional invocations of the procedure are allowed.
 	 */
-	public R execute(T arg);
+ //	public R execute(T arg);	//-[JOJO]
 }

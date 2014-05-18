@@ -4060,10 +4060,10 @@ if (CHECK_TAKEITEMS) {{
 				player.getParty().getCommandChannel().forEachMember(new IProcedure<L2PcInstance, Boolean>()
 				{
 					@Override
-					public Boolean execute(L2PcInstance member)
+					public boolean execute(L2PcInstance member)
 					{
 						actionForEachPlayer(member, npc, isSummon);
-						return Boolean.TRUE;
+						return true;
 					}
 				});
 			}
@@ -4072,10 +4072,10 @@ if (CHECK_TAKEITEMS) {{
 				player.getParty().forEachMember(new IProcedure<L2PcInstance, Boolean>()
 				{
 					@Override
-					public Boolean execute(L2PcInstance member)
+					public boolean execute(L2PcInstance member)
 					{
 						actionForEachPlayer(member, npc, isSummon);
-						return Boolean.TRUE;
+						return true;
 					}
 				});
 			}
