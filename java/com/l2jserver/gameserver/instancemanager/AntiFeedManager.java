@@ -319,7 +319,7 @@ public final class AntiFeedManager
 		}
 		
 		@Override
-		public final Boolean execute(FastMap<Integer, Connections> event)
+		public final boolean execute(FastMap<Integer, Connections> event)
 		{
 			final Connections conns = event.get(_addrHash);
 			if (conns != null)
@@ -332,7 +332,7 @@ public final class AntiFeedManager
 					}
 				}
 			}
-			return Boolean.TRUE;
+			return true;
 		}
 	}
 	

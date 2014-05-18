@@ -487,7 +487,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 		}
 		
 		@Override
-		public final Boolean execute(final L2PcInstance player)
+		public final boolean execute(final L2PcInstance player)
 		{
 			if (player != null)
 			{
@@ -496,7 +496,7 @@ public class L2SepulcherNpcInstance extends L2Npc
 					player.sendPacket(_packet);
 				}
 			}
-			return Boolean.TRUE;
+			return true;
 		}
 	}
 	//-------------------------------------------------------

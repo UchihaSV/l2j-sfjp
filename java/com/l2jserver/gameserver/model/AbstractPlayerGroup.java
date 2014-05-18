@@ -48,10 +48,10 @@ public abstract class AbstractPlayerGroup
 		forEachMember(new IProcedure<L2PcInstance, Boolean>()
 		{
 			@Override
-			public Boolean execute(L2PcInstance member)
+			public boolean execute(L2PcInstance member)
 			{
 				ids.add(member.getObjectId());
-				return Boolean.TRUE;
+				return true;
 			}
 		});
 		return ids;
@@ -108,13 +108,13 @@ public abstract class AbstractPlayerGroup
 		forEachMember(new IProcedure<L2PcInstance, Boolean>()
 		{
 			@Override
-			public Boolean execute(L2PcInstance member)
+			public boolean execute(L2PcInstance member)
 			{
 				if (member != null)
 				{
 					member.sendPacket(packet);
 				}
-				return Boolean.TRUE;
+				return true;
 			}
 		});
 	}
@@ -142,13 +142,13 @@ public abstract class AbstractPlayerGroup
 		forEachMember(new IProcedure<L2PcInstance, Boolean>()
 		{
 			@Override
-			public Boolean execute(L2PcInstance member)
+			public boolean execute(L2PcInstance member)
 			{
 				if ((member != null) && !BlockList.isBlocked(member, broadcaster))
 				{
 					member.sendPacket(msg);
 				}
-				return Boolean.TRUE;
+				return true;
 			}
 		});
 	}

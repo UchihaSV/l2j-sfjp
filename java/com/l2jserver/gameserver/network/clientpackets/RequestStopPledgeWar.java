@@ -125,13 +125,13 @@ public final class RequestStopPledgeWar extends L2GameClientPacket
 		}
 		
 		@Override
-		public final Boolean execute(final L2PcInstance cha)
+		public final boolean execute(final L2PcInstance cha)
 		{
 			if ((cha.getClan() == _player.getClan()) || (cha.getClan() == _cln))
 			{
 				cha.broadcastUserInfo();
 			}
-			return Boolean.TRUE;
+			return true;
 		}
 	}
 	

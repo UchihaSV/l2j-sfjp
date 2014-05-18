@@ -2471,7 +2471,7 @@ public class SevenSignsFestival implements SpawnListener
 	protected final class ForEachPlayerRemoveUnusedBloodOfferings implements IProcedure<L2PcInstance, Boolean>
 	{
 		@Override
-		public final Boolean execute(final L2PcInstance onlinePlayer)
+		public final boolean execute(final L2PcInstance onlinePlayer)
 		{
 			try
 			{
@@ -2485,7 +2485,7 @@ public class SevenSignsFestival implements SpawnListener
 			catch (NullPointerException e)
 			{
 			}
-			return Boolean.TRUE;
+			return true;
 		}
 	}
 	

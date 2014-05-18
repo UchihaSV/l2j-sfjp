@@ -1401,10 +1401,10 @@ public final class Fort extends AbstractResidence
 		}
 		
 		@Override
-		public final Boolean execute(final L2PcInstance character)
+		public final boolean execute(final L2PcInstance character)
 		{
 			character.sendPacket(_sm);
-			return Boolean.TRUE;
+			return true;
 		}
 	}
 	

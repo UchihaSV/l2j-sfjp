@@ -210,7 +210,7 @@ public class L2Event
 		SpawnTable.getInstance().forEachSpawn(new IProcedure<L2Spawn, Boolean>()
 		{
 			@Override
-			public Boolean execute(L2Spawn spawn)
+			public boolean execute(L2Spawn spawn)
 			{
 				L2Npc npc = spawn.getLastSpawn();
 				if ((npc != null) && npc.isEventMob())
@@ -219,7 +219,7 @@ public class L2Event
 					spawn.stopRespawn();
 					SpawnTable.getInstance().deleteSpawn(spawn, false);
 				}
-				return Boolean.TRUE;
+				return true;
 			}
 		});
 	}

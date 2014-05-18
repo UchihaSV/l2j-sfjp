@@ -601,7 +601,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 		private final Logger _log = Logger.getLogger(DisconnectAllCharacters.class.getName());
 		
 		@Override
-		public final Boolean execute(final L2PcInstance player)
+		public final boolean execute(final L2PcInstance player)
 		{
 			if (player != null)
 			{
@@ -622,7 +622,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 					_log.log(Level.WARNING, "Failed logout char " + player, t);
 				}
 			}
-			return Boolean.TRUE;
+			return true;
 		}
 	}
 	

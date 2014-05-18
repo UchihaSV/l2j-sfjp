@@ -192,7 +192,7 @@ public class BoatManager
 		}
 		
 		@Override
-		public final Boolean execute(final L2PcInstance player)
+		public final boolean execute(final L2PcInstance player)
 		{
 			if (player != null)
 			{
@@ -219,7 +219,7 @@ public class BoatManager
 				}
 			}
 			
-			return Boolean.TRUE;
+			return true;
 		}
 	}
 	
