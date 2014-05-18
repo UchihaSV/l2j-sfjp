@@ -720,7 +720,7 @@ public final class Instance
 		else if (_players.isEmpty() && (_emptyDestroyTime > 0))
 		{
 			
-			Long emptyTimeLeft = (_lastLeft + _emptyDestroyTime) - System.currentTimeMillis();
+			long emptyTimeLeft = (_lastLeft + _emptyDestroyTime) - System.currentTimeMillis();
 			if (emptyTimeLeft <= 0)
 			{
 				interval = 0;
