@@ -2180,8 +2180,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public synchronized final long getItemRemainingReuseTime(int itemObjId)
 	{
-		final TimeStamp reuseStamp = (_reuseTimeStampsItems != null) ? _reuseTimeStampsItems.get(itemObjId) : null;
-		return reuseStamp != null ? reuseStamp.getRemaining() : -1;
+		final TimeStamp reuseStamp;
+		return _reuseTimeStampsItems != null && (reuseStamp = _reuseTimeStampsItems.get(itemObjId)) != null ? reuseStamp.getRemaining() : -1;
 	}
 	
 	/**
@@ -2275,8 +2275,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public synchronized final long getSkillRemainingReuseTime(int hashCode)
 	{
-		final TimeStamp reuseStamp = (_reuseTimeStampsSkills != null) ? _reuseTimeStampsSkills.get(hashCode) : null;
-		return reuseStamp != null ? reuseStamp.getRemaining() : -1;
+		final TimeStamp reuseStamp;
+		return _reuseTimeStampsSkills != null && (reuseStamp = _reuseTimeStampsSkills.get(hashCode)) != null ? reuseStamp.getRemaining() : -1;
 	}
 	
 	/**
@@ -2286,8 +2286,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public synchronized final boolean hasSkillReuse(int hashCode)
 	{
-		final TimeStamp reuseStamp = (_reuseTimeStampsSkills != null) ? _reuseTimeStampsSkills.get(hashCode) : null;
-		return (reuseStamp != null) && reuseStamp.hasNotPassed();
+		final TimeStamp reuseStamp;
+		return _reuseTimeStampsSkills != null && (reuseStamp = _reuseTimeStampsSkills.get(hashCode)) != null ? reuseStamp.hasNotPassed() : false;
 	}
 	
 	/**
