@@ -2180,12 +2180,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public synchronized final long getItemRemainingReuseTime(int itemObjId)
 	{
-		final TimeStamp timeStamp;
-		if (_reuseTimeStampsItems == null || (timeStamp = _reuseTimeStampsItems.get(itemObjId)) == null)
-		{
-			return -1;
-		}
-		return timeStamp.getRemaining();
+		final TimeStamp reuseStamp = (_reuseTimeStampsItems != null) ? _reuseTimeStampsItems.get(itemObjId) : null;
+		return reuseStamp != null ? reuseStamp.getRemaining() : -1;
 	}
 	
 	/**
@@ -2195,7 +2191,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public final long getReuseDelayOnGroup(int group)
 	{
-		if (group > 0)
+		if ((group > 0) && (_reuseTimeStampsItems != null))
 		{
 			for (TimeStamp ts : _reuseTimeStampsItems.values())
 			{
@@ -2279,12 +2275,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public synchronized final long getSkillRemainingReuseTime(int hashCode)
 	{
-		final TimeStamp timeStamp;
-		if (_reuseTimeStampsSkills == null || (timeStamp = _reuseTimeStampsSkills.get(hashCode)) == null)
-		{
-			return -1;
-		}
-		return timeStamp.getRemaining();
+		final TimeStamp reuseStamp = (_reuseTimeStampsSkills != null) ? _reuseTimeStampsSkills.get(hashCode) : null;
+		return reuseStamp != null ? reuseStamp.getRemaining() : -1;
 	}
 	
 	/**
@@ -2294,12 +2286,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public synchronized final boolean hasSkillReuse(int hashCode)
 	{
-		final TimeStamp timeStamp;
-		if (_reuseTimeStampsSkills == null || (timeStamp = _reuseTimeStampsSkills.get(hashCode)) == null)
-		{
-			return false;
-		}
-		return timeStamp.hasNotPassed();
+		final TimeStamp reuseStamp = (_reuseTimeStampsSkills != null) ? _reuseTimeStampsSkills.get(hashCode) : null;
+		return (reuseStamp != null) && reuseStamp.hasNotPassed();
 	}
 	
 	/**
@@ -2331,7 +2319,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		{
 			return;
 		}
-		
 		_disabledSkills.remove(skill.getReuseHashCode());
 	}
 	
