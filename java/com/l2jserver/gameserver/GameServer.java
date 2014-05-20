@@ -185,25 +185,26 @@ public class GameServer
 	
 	public GameServer() throws Exception
 	{
-		long serverLoadStart = System.currentTimeMillis();
+		final String GAME_SERVER = "GameServer"; //= getClass().getSimpleName();
+		final long serverLoadStart = System.currentTimeMillis();
 		
 		gameServer = this;
-		_log.finest(getClass().getSimpleName() + ": used mem:" + getUsedMemoryMB() + "MB");
+		_log.finest(GAME_SERVER + ": used mem:" + getUsedMemoryMB() + "MB");
 		
 		if (Config.SERVER_VERSION != null)
 		{
-			_log.info(getClass().getSimpleName() + ": L2J Server Version:    " + Config.SERVER_VERSION);
+			_log.info(GAME_SERVER + ": L2J Server Version:    " + Config.SERVER_VERSION);
 		}
 		if (Config.DATAPACK_VERSION != null)
 		{
-			_log.info(getClass().getSimpleName() + ": L2J Datapack Version:  " + Config.DATAPACK_VERSION);
+			_log.info(GAME_SERVER + ": L2J Datapack Version:  " + Config.DATAPACK_VERSION);
 		}
 		
 		_idFactory = IdFactory.getInstance();
 		
 		if (!_idFactory.isInitialized())
 		{
-			_log.severe(getClass().getSimpleName() + ": Could not read object IDs from DB. Please Check Your Data.");
+			_log.severe(GAME_SERVER + ": Could not read object IDs from DB. Please Check Your Data.");
 			throw new Exception("Could not initialize the ID factory");
 		}
 		
@@ -350,7 +351,7 @@ public class GameServer
 		
 		try
 		{
-			_log.info(getClass().getSimpleName() + ": Loading server scripts:");
+			_log.info(GAME_SERVER + ": Loading server scripts:");
 			final File scripts = new File(Config.DATAPACK_ROOT, "data/scripts.cfg");
 			if (!Config.ALT_DEV_NO_HANDLERS || !Config.ALT_DEV_NO_QUESTS)
 			{
@@ -359,7 +360,7 @@ public class GameServer
 		}
 		catch (IOException ioe)
 		{
-			_log.severe(getClass().getSimpleName() + ": Failed loading scripts.cfg, scripts are not going to be loaded!");
+			_log.severe(GAME_SERVER + ": Failed loading scripts.cfg, scripts are not going to be loaded!");
 		}
 		//[JOJO]-------------------------------------------------
 		// data/scripts/handlers/* スクリプトのロードが１つでも失敗するとコマンドが全滅して
@@ -451,7 +452,7 @@ public class GameServer
 		// the current allocation pool, freeMemory the unused memory in the allocation pool
 		long freeMem = ((Runtime.getRuntime().maxMemory() - Runtime.getRuntime().totalMemory()) + Runtime.getRuntime().freeMemory()) / 1048576;
 		long totalMem = Runtime.getRuntime().maxMemory() / 1048576;
-		_log.info(getClass().getSimpleName() + ": Started, free memory " + freeMem + " Mb of " + totalMem + " Mb");
+		_log.info(GAME_SERVER + ": Started, free memory " + freeMem + " Mb of " + totalMem + " Mb");
 		Toolkit.getDefaultToolkit().beep();
 		
 		_loginThread = LoginServerThread.getInstance();
@@ -478,7 +479,7 @@ public class GameServer
 			}
 			catch (UnknownHostException e1)
 			{
-				_log.log(Level.SEVERE, getClass().getSimpleName() + ": WARNING: The GameServer bind address is invalid, using all avaliable IPs. Reason: " + e1.getMessage(), e1);
+				_log.log(Level.SEVERE, GAME_SERVER + ": WARNING: The GameServer bind address is invalid, using all avaliable IPs. Reason: " + e1.getMessage(), e1);
 			}
 		}
 		
@@ -486,16 +487,16 @@ public class GameServer
 		{
 			_selectorThread.openServerSocket(bindAddress, Config.PORT_GAME);
 			_selectorThread.start();
-			_log.log(Level.INFO, getClass().getSimpleName() + ": is now listening on: " + Config.GAMESERVER_HOSTNAME + ":" + Config.PORT_GAME);
+			_log.info(GAME_SERVER + ": is now listening on: " + Config.GAMESERVER_HOSTNAME + ":" + Config.PORT_GAME);
 		}
 		catch (IOException e)
 		{
-			_log.log(Level.SEVERE, getClass().getSimpleName() + ": FATAL: Failed to open server socket. Reason: " + e.getMessage(), e);
+			_log.log(Level.SEVERE, GAME_SERVER + ": FATAL: Failed to open server socket. Reason: " + e.getMessage(), e);
 			System.exit(1);
 		}
-		_log.log(Level.INFO, getClass().getSimpleName() + ": Maximum numbers of connected players: " + Config.MAXIMUM_ONLINE_USERS);
+		_log.info(GAME_SERVER + ": Maximum numbers of connected players: " + Config.MAXIMUM_ONLINE_USERS);
 		//[JOJO]-------------------------------------------------
-		StringBuilder sb = new StringBuilder(256).append("AllowedProtocolRevisions: ");
+		StringBuilder sb = new StringBuilder(256).append(GAME_SERVER + ": AllowedProtocolRevisions: ");
 		for (int protocol : Config.PROTOCOL_LIST)
 			sb.append(protocol).append(';');
 		sb.setLength(sb.length() - 1);
@@ -503,7 +504,7 @@ public class GameServer
 		sb = null;
 		//-------------------------------------------------------
 		/*long*/ serverLoadEnd = System.currentTimeMillis();	//[JOJO] public final long
-		_log.log(Level.INFO, getClass().getSimpleName() + ": Server loaded in " + ((serverLoadEnd - serverLoadStart) / 1000) + " seconds.");
+		_log.info(GAME_SERVER + ": Server loaded in " + ((serverLoadEnd - serverLoadStart) / 1000) + " seconds.");
 		
 		printSection("UPnP");
 		UPnPService.getInstance();
