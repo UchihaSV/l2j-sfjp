@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import com.l2jserver.gameserver.model.PageResult;
-import com.l2jserver.gameserver.model.interfaces.IProcedure;
+import com.l2jserver.gameserver.model.interfaces.IFunction;
 
 /**
  * A class containing useful methods for constructing HTML
@@ -223,17 +223,17 @@ public class HtmlUtil
 		return sb.toString();
 	}
 	
-	public static <T> PageResult createPage(Collection<T> elements, int page, int elementsPerPage, IProcedure<Integer, String> pagerProcedure, IProcedure<T, String> bodyProcedure)
+	public static <T> PageResult createPage(Collection<T> elements, int page, int elementsPerPage, IFunction<Integer, String> pagerProcedure, IFunction<T, String> bodyProcedure)
 	{
 		return createPage(elements, elements.size(), page, elementsPerPage, pagerProcedure, bodyProcedure);
 	}
 	
-	public static <T> PageResult createPage(T[] elements, int page, int elementsPerPage, IProcedure<Integer, String> pagerProcedure, IProcedure<T, String> bodyProcedure)
+	public static <T> PageResult createPage(T[] elements, int page, int elementsPerPage, IFunction<Integer, String> pagerProcedure, IFunction<T, String> bodyProcedure)
 	{
 		return createPage(Arrays.asList(elements), elements.length, page, elementsPerPage, pagerProcedure, bodyProcedure);
 	}
 	
-	public static <T> PageResult createPage(Iterable<T> elements, int size, int page, int elementsPerPage, IProcedure<Integer, String> pagerProcedure, IProcedure<T, String> bodyProcedure)
+	public static <T> PageResult createPage(Iterable<T> elements, int size, int page, int elementsPerPage, IFunction<Integer, String> pagerProcedure, IFunction<T, String> bodyProcedure)
 	{
 		int pages = size / elementsPerPage;
 		if ((elementsPerPage * pages) < size)
