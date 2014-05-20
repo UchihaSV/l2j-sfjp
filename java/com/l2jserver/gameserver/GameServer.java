@@ -487,7 +487,7 @@ public class GameServer
 		{
 			_selectorThread.openServerSocket(bindAddress, Config.PORT_GAME);
 			_selectorThread.start();
-			_log.info(GAME_SERVER + ": is now listening on: " + Config.GAMESERVER_HOSTNAME + ":" + Config.PORT_GAME);
+			_log.info(GAME_SERVER + ": now listening on: " + Config.GAMESERVER_HOSTNAME + ":" + Config.PORT_GAME);
 		}
 		catch (IOException e)
 		{
@@ -509,6 +509,7 @@ public class GameServer
 		printSection("UPnP");
 		UPnPService.getInstance();
 		
+		printSection("");
 		AutoAnnounceTaskManager.getInstance();
 	}
 	
