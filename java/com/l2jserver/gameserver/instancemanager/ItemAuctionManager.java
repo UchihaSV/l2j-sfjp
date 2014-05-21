@@ -24,13 +24,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -47,7 +47,7 @@ public final class ItemAuctionManager
 {
 	private static final Logger _log = Logger.getLogger(ItemAuctionManager.class.getName());
 	
-	private final Map<Integer, ItemAuctionInstance> _managerInstances = new HashMap<>();
+	private final FastIntObjectMap<ItemAuctionInstance> _managerInstances = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	private final AtomicInteger _auctionIds;
 	
 	protected ItemAuctionManager()
