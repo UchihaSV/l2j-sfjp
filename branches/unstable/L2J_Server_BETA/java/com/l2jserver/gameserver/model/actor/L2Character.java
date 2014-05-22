@@ -2382,18 +2382,17 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			return true;
 		}
 		
-		final Long time;
-		if (_disabledSkills == null || (time = _disabledSkills.get(hashCode)) == null)
+		if (_disabledSkills == null)
 		{
 			return false;
 		}
 		
-		if (time < System.currentTimeMillis())
+		final Long stamp = _disabledSkills.get(hashCode);
+		if ((stamp != null) && (stamp < System.currentTimeMillis()))
 		{
 			_disabledSkills.remove(hashCode);
 			return false;
 		}
-		
 		return true;
 	}
 	
