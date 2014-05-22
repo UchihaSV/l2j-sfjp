@@ -38,6 +38,7 @@ public class CheckDynamicIpAddressTask implements Runnable
 		"http://taruo.net/ip/?",
 		"http://whatismyipaddress.com/ip-lookup",
 		"http://whatsmyip.net/",
+		"http://www.canyouseeme.org/",
 		"http://www.cybersyndrome.net/evc.html",
 		"http://www.howtofindmyipaddress.com/",
 		"http://www.ipchicken.com/",
