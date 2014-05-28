@@ -29,21 +29,28 @@ public class CheckDynamicIpAddressTask implements Runnable
 	private static String[] WHAT_IS_MY_IP_URL = {
 	//	"http://api.externalip.net/ip/",	// "Website suspended. This website has been suspended as of March 1st 2014."
 		"http://bot.whatismyipaddress.com",
+		"http://checkip.dyndns.com/",
 		"http://checkip.dyndns.org/",
+		"http://checkmyip.com/",
 		"http://ip1.dynupdate.no-ip.com:8245/",
 		"http://ipaddress.com/",
 		"http://ipecho.net/plain",
 		"http://myip.dnsomatic.com",
+		"http://myip.is/",
 		"http://myip.nt0.biz/",
 		"http://taruo.net/ip/?",
 		"http://whatismyipaddress.com/ip-lookup",
 		"http://whatsmyip.net/",
+		"http://www.akakagemaru.info/cgi-bin/index.cgi",
 		"http://www.canyouseeme.org/",
 		"http://www.cybersyndrome.net/evc.html",
+		"http://www.findmyipaddress.com/",
 		"http://www.howtofindmyipaddress.com/",
 		"http://www.ipchicken.com/",
 		"http://www.iprivacytools.com/my-ip-address/",
+		"http://www.my-ip-address.net/",
 		"http://www.show-ip-addr.com/en/",
+		"http://www.showmyip.gr/",
 		"http://www.tracemyip.org/",
 		"http://www.whereisip.net/",
 	//	"http://www.ugtop.com/spill.shtml",
@@ -65,7 +72,7 @@ if (com.l2jserver.Config.CHECK_DYNAMIC_IP_ADDRESS_TASK) {{
 			if (ip.equals(IPConfigData.externalIp)) {
 				_log.fine("Network Config: Current external IP address is '" + ip + "'");
 			}
-			else {
+			else CHANGE: {
 				_log.warning("Network Config: External IP address was changed '" + ip + "' from '" + IPConfigData.externalIp + "'. Trying to reconnect the Login Server.");
 				List<String> hosts = Config.GAME_SERVER_HOSTS;
 				List<String> subnets = Config.GAME_SERVER_SUBNETS;
@@ -75,7 +82,7 @@ if (com.l2jserver.Config.CHECK_DYNAMIC_IP_ADDRESS_TASK) {{
 						IPConfigData.externalIp = ip;
 						System.out.println(toIpConfigXml());
 						LoginServerThread.getInstance().disconnect();
-						break;
+						break CHANGE;
 					}
 				}
 			}
@@ -113,17 +120,18 @@ if (com.l2jserver.Config.CHECK_DYNAMIC_IP_ADDRESS_TASK) {{
 	
 	public static String toIpConfigXml()
 	{
+		final String T = "\t|";	// indent
 		StringBuilder a = new StringBuilder(), b = new StringBuilder();
 		List<String> hosts = Config.GAME_SERVER_HOSTS;
 		List<String> subnets = Config.GAME_SERVER_SUBNETS;
 		for (int i = 0; i < hosts.size(); ++i) {
 			String subnet = subnets.get(i), host = hosts.get(i);
 			if (subnet.equals("0.0.0.0/0"))
-				a.append("<gameserver address=\"").append(host).append("\">\n");
+				a.append(T + "<gameserver address=\"").append(host).append("\">\n");
 			else
-				b.append("\t<define subnet=\"").append(subnet).append(" address=\"").append(host).append("\" />\n");
+				b.append(T + "\t<define subnet=\"").append(subnet).append(" address=\"").append(host).append("\" />\n");
 		}
-		return a.append(b).append("</gameserver>").toString();
+		return a.append(b).append(T + "</gameserver>").toString();
 	}
 	
 	public static void start()
