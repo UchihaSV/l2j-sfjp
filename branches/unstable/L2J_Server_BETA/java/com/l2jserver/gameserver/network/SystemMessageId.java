@@ -17114,7 +17114,7 @@ public final class SystemMessageId
 	 * Message: &#30446;&#27161;&#22312;&#28961;&#27861;&#31361;&#25802;&#30340;&#20301;&#32622;&#12290;<br>
 	 * Message: The target is located where you cannot charge.
 	 */
-	public static final SystemMessageId CANT_REACH_TARGET_TO_CHARGE;
+	public static final SystemMessageId THE_TARGET_IS_LOCATED_WHERE_YOU_CANNOT_CHARGE;
 	
 	/**
 	 * ID: 2188<br>
@@ -22370,7 +22370,7 @@ public final class SystemMessageId
 		S1_CLAN_IS_VICTORIOUS_IN_THE_FORTRESS_BATTLE_OF_S2 = new SystemMessageId(2184);
 		ONLY_PARTY_LEADER_CAN_ENTER = new SystemMessageId(2185);
 		SOUL_CANNOT_BE_ABSORBED_ANYMORE = new SystemMessageId(2186);
-		CANT_REACH_TARGET_TO_CHARGE = new SystemMessageId(2187);
+		THE_TARGET_IS_LOCATED_WHERE_YOU_CANNOT_CHARGE = new SystemMessageId(2187);
 		ENCHANTMENT_ALREADY_IN_PROGRESS = new SystemMessageId(2188);
 		LOC_KAMAEL_VILLAGE_S1_S2_S3 = new SystemMessageId(2189);
 		LOC_WASTELANDS_CAMP_S1_S2_S3 = new SystemMessageId(2190);
