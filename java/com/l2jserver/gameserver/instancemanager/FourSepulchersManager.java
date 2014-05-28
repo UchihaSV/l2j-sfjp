@@ -21,7 +21,6 @@ package com.l2jserver.gameserver.instancemanager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -331,7 +330,6 @@ public final class FourSepulchersManager
 	
 	private void initKeyBoxSpawns() //[modify JOJO]
 	{
-		// Zoey76: TODO: Replace iteration over keys with iteration over entries to avoid calling get method inside the loop.
 		for (int spawnNpcId : _keyBoxNpc.values())
 		{
 			try
@@ -825,7 +823,7 @@ public final class FourSepulchersManager
 		
 		if (Config.FS_PARTY_MEMBER_COUNT > 1)
 		{
-			List<L2PcInstance> members = new FastList<>();
+			FastList<L2PcInstance> members = new FastList<>();
 			for (L2PcInstance mem : player.getParty().getMembers())
 			{
 				if (!mem.isDead() && Util.checkIfInRange(700, player, mem, true))
@@ -853,15 +851,13 @@ public final class FourSepulchersManager
 				}
 			}
 			
-		//	_challengers.remove(npcId);
 		//	_challengers.put(npcId, player);
 			
-		//	_hallInUse.remove(npcId);
 			_hallInUse.put(npcId, true);
 		}
 		if ((Config.FS_PARTY_MEMBER_COUNT <= 1) && player.isInParty())
 		{
-			List<L2PcInstance> members = new FastList<>();
+			FastList<L2PcInstance> members = new FastList<>();
 			for (L2PcInstance mem : player.getParty().getMembers())
 			{
 				if (!mem.isDead() && Util.checkIfInRange(700, player, mem, true))
@@ -889,10 +885,8 @@ public final class FourSepulchersManager
 				}
 			}
 			
-		//	_challengers.remove(npcId);
 		//	_challengers.put(npcId, player);
 			
-		//	_hallInUse.remove(npcId);
 			_hallInUse.put(npcId, true);
 		}
 		else
@@ -913,10 +907,8 @@ public final class FourSepulchersManager
 				player.destroyItemByItemId("Quest", CHAPEL_KEY, hallsKey.getCount(), player, true);
 			}
 			
-		//	_challengers.remove(npcId);
 		//	_challengers.put(npcId, player);
 			
-		//	_hallInUse.remove(npcId);
 			_hallInUse.put(npcId, true);
 		}
 	}
@@ -977,8 +969,6 @@ public final class FourSepulchersManager
 							if (Rnd.get(48) == 0)
 							{
 								spawnKeyBoxMob = true;
-								// _log.info("FourSepulchersManager.SpawnMonster:
-								// Set to spawn Church of Viscount Key Mob.");
 							}
 							break;
 						default:
@@ -1062,7 +1052,6 @@ public final class FourSepulchersManager
 	public synchronized boolean isViscountMobsAnnihilated(int npcId)
 	{
 		FastList<L2SepulcherMonsterInstance> mobs = _viscountMobs.get(npcId);
-		
 		if (mobs == null)
 		{
 			return true;
@@ -1082,7 +1071,6 @@ public final class FourSepulchersManager
 	public synchronized boolean isDukeMobsAnnihilated(int npcId)
 	{
 		FastList<L2SepulcherMonsterInstance> mobs = _dukeMobs.get(npcId);
-		
 		if (mobs == null)
 		{
 			return true;
@@ -1168,7 +1156,6 @@ public final class FourSepulchersManager
 		}
 		
 		FastList<L2Spawn> monsterList = _dukeFinalMobs.get(npcId);
-		
 		if (monsterList != null)
 		{
 			for (L2Spawn spawnDat : monsterList)
@@ -1194,7 +1181,6 @@ public final class FourSepulchersManager
 		}
 		
 		FastList<L2Spawn> monsterList = _emperorsGraveNpcs.get(npcId);
-		
 		if (monsterList != null)
 		{
 			for (L2Spawn spawnDat : monsterList)
@@ -1314,8 +1300,7 @@ public final class FourSepulchersManager
 					_log.warning(getClass().getSimpleName() + ": managerSay(): manager is not Sepulcher instance");
 					continue;
 				}
-				// hall not used right now, so its manager will not tell you
-				// anything :)
+				// hall not used right now, so its manager will not tell you anything :)
 				// if you don't need this - delete next two lines.
 				if (!_hallInUse.get(temp.getId()))
 				{
