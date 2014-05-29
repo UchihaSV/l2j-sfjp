@@ -36,6 +36,8 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.DoorTable;
 import com.l2jserver.gameserver.datatables.NpcTable;
 import com.l2jserver.gameserver.datatables.SpawnTable;
+import com.l2jserver.gameserver.handler.AdminCommandHandler;
+import com.l2jserver.gameserver.handler.IAdminCommandHandler;
 import com.l2jserver.gameserver.instancemanager.tasks.FourSepulchersChangeCoolDownTimeTask;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.Location;
@@ -59,7 +61,7 @@ import com.l2jserver.util.Rnd;
  * Zoey76: TODO: Use Location DTO instead of array of int.
  * @author sandman
  */
-public final class FourSepulchersManager
+public final class FourSepulchersManager implements IAdminCommandHandler
 {
 	private static final Logger _log = Logger.getLogger(FourSepulchersManager.class.getName());
 	
@@ -170,6 +172,7 @@ public final class FourSepulchersManager
 	//	timeSelector();
 		_changePeriodTask = ThreadPoolManager.getInstance().scheduleGeneral(new FourSepulchersChangeCoolDownTimeTask(), 0);	//+[JOJO]
 		_log.info(getClass().getSimpleName() + ": Beginning in Cooldown time");	//+[JOJO]
+		AdminCommandHandler.getInstance().registerHandler(this);
 	}
 	
 	public void clean()
@@ -1348,6 +1351,47 @@ public final class FourSepulchersManager
 		}
 		player.sendPacket(html);
 	}
+	
+	//[JOJO]-------------------------------------------------
+	// IAdminCommandHandler implementation.
+	@Override
+	public boolean useAdminCommand(String command, L2PcInstance activeChar)
+	{
+		if (command.equals("admin_FourSepulchers")) {
+			ScheduledFuture<?> task;
+			if (isWarmUpTime()) {
+				activeChar.sendMessage("FourSepulchersManager: In Warm-Up Time");
+				if ((task = _changePeriodTask) != null)
+					task.cancel(false);
+				setAttackTime();
+				//	new com.l2jserver.gameserver.instancemanager.tasks.FourSepulchersChangeAttackTimeTask().run();
+			}
+			if (isAttackTime()) {
+				activeChar.sendMessage("FourSepulchersManager: In Attack Time");
+				if ((task = _changePeriodTask) != null)
+					task.cancel(false);
+				new com.l2jserver.gameserver.instancemanager.tasks.FourSepulchersChangeCoolDownTimeTask().run();
+			}
+			if (isCoolDownTime()) {
+				activeChar.sendMessage("FourSepulchersManager: In Cool-Down Time");
+				if ((task = _changePeriodTask) != null)
+					task.cancel(false);
+				new com.l2jserver.gameserver.instancemanager.tasks.FourSepulchersChangeEntryTimeTask().run();
+			}
+			if (isEntryTime()) {
+				activeChar.sendMessage("FourSepulchersManager: In Entry Time");
+			}
+		}
+		return true;
+	}
+	
+	@Override
+	public String[] getAdminCommandList()
+	{
+		_log.info("__BASENAME__: Implements admin command //FourSepulchers");
+		return new String[]{ "admin_FourSepulchers" };
+	}
+	//-------------------------------------------------------
 	
 	public static final FourSepulchersManager getInstance()
 	{

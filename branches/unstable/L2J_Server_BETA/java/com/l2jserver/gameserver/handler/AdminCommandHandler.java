@@ -56,12 +56,8 @@ public class AdminCommandHandler implements IHandler<IAdminCommandHandler, Strin
 	@Override
 	public IAdminCommandHandler getHandler(String adminCommand)
 	{
-		String command = adminCommand;
-		if (adminCommand.contains(" "))
-		{
-			command = adminCommand.substring(0, adminCommand.indexOf(" "));
-		}
-		return _datatable.get(command);
+		final int i;
+		return _datatable.get((i = adminCommand.indexOf(' ')) >= 0 ? adminCommand.substring(0, i) : adminCommand);
 	}
 	
 	@Override
