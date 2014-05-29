@@ -121,6 +121,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			case 18155:
 			case 18156:
 			case 18157:
+				setRandomAnimationEnabled(false);
 				setRunning();
 				if (_victimSpawnKeyBoxTask != null)
 				{
@@ -554,6 +555,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				FourSepulchersManager.getInstance().spawnKeyBox(activeChar);
 				broadcastPacket(new NpcSay(getObjectId(), 0, getId(), 1000503/*"Many thanks for rescue me."*/));
 				setWalking();
+				setRandomAnimationEnabled(true);
 			}
 			
 			if (System.currentTimeMillis() > _effectPeriod)
