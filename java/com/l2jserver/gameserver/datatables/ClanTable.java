@@ -23,13 +23,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -74,7 +73,7 @@ public class ClanTable
 	
 	private static FastList<ClanWarListener> clanWarListeners = new FastList/*L2FastList*/<ClanWarListener>().shared();
 	
-	private final Map<Integer, L2Clan> _clans = new HashMap<>();
+	private final FastIntObjectMap<L2Clan> _clans = new FastIntObjectMap<>();
 	
 	public L2Clan[] getClans()
 	{
@@ -201,7 +200,7 @@ public class ClanTable
 		player.setPledgeClass(L2ClanMember.calculatePledgeClass(player));
 		player.setClanPrivileges(new EnumIntBitmask<>(ClanPrivilege.class, true));
 		
-		_clans.put(Integer.valueOf(clan.getId()), clan);
+		_clans.put(clan.getId(), clan);
 		
 		// should be update packet only
 		player.sendPacket(new PledgeShowInfoUpdate(clan));
