@@ -24,13 +24,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -120,7 +119,7 @@ public class L2Clan implements IIdentifiable, INamable
 	private String _name;
 	private int _clanId;
 	private L2ClanMember _leader;
-	private final Map<Integer, L2ClanMember> _members = new FastMap<>();
+	private final FastIntObjectMap<L2ClanMember> _members = new FastIntObjectMap<>();
 	
 	private String _allyName;
 	private int _allyId;
@@ -147,10 +146,10 @@ public class L2Clan implements IIdentifiable, INamable
 	private Forum _forum;
 	
 	/** FastMap(Integer, L2Skill) containing all skills of the L2Clan */
-	private final Map<Integer, L2Skill> _skills = new FastMap<>();
-	private final Map<Integer, RankPrivs> _privs = new FastMap<>();
-	private final Map<Integer, SubPledge> _subPledges = new FastMap<>();
-	private final Map<Integer, L2Skill> _subPledgeSkills = new FastMap<>();
+	private final FastIntObjectMap<L2Skill> _skills = new FastIntObjectMap<>();
+	private final FastIntObjectMap<RankPrivs> _privs = new FastIntObjectMap<>();
+	private final FastIntObjectMap<SubPledge> _subPledges = new FastIntObjectMap<>();
+	private final FastIntObjectMap<L2Skill> _subPledgeSkills = new FastIntObjectMap<>();
 	
 	private int _reputationScore = 0;
 	private int _rank = 0;
@@ -1302,7 +1301,7 @@ public class L2Clan implements IIdentifiable, INamable
 	/**
 	 * @return the map containing this clan skills.
 	 */
-	public Map<Integer, L2Skill> getSkills()
+	public FastIntObjectMap<L2Skill> getSkills()
 	{
 		return _skills;
 	}
@@ -1748,7 +1747,7 @@ public class L2Clan implements IIdentifiable, INamable
 		private final int _id;
 		private String _subPledgeName;
 		private int _leaderId;
-		private final Map<Integer, L2Skill> _subPledgeSkills = new FastMap<>();
+		private final FastIntObjectMap<L2Skill> _subPledgeSkills = new FastIntObjectMap<>();
 		
 		public SubPledge(int id, String name, int leaderId)
 		{
