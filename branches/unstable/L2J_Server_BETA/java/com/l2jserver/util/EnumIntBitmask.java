@@ -78,6 +78,11 @@ public final class EnumIntBitmask<E extends Enum<E>> implements Cloneable
 		_bitmask = 0;
 	}
 	
+	public final void set(E one)	//+[JOJO]
+	{
+		_bitmask = 1 << one.ordinal();
+	}
+	
 	@SafeVarargs
 	public final void set(E... many)
 	{
@@ -100,6 +105,11 @@ public final class EnumIntBitmask<E extends Enum<E>> implements Cloneable
 		_bitmask = bitmask;
 	}
 	
+	public final void add(E one)	//+[JOJO]
+	{
+		_bitmask |= 1 << one.ordinal();
+	}
+	
 	@SafeVarargs
 	public final void add(E first, E... more)
 	{
@@ -113,6 +123,11 @@ public final class EnumIntBitmask<E extends Enum<E>> implements Cloneable
 		}
 	}
 	
+	public final void remove(E one)	//+[JOJO]
+	{
+		_bitmask &= ~(1 << one.ordinal());
+	}
+	
 	@SafeVarargs
 	public final void remove(E first, E... more)
 	{
@@ -124,6 +139,11 @@ public final class EnumIntBitmask<E extends Enum<E>> implements Cloneable
 				_bitmask &= ~(1 << one.ordinal());
 			}
 		}
+	}
+	
+	public final boolean has(E one)	//+[JOJO]
+	{
+		return (_bitmask & 1 << one.ordinal()) != 0;
 	}
 	
 	@SafeVarargs
