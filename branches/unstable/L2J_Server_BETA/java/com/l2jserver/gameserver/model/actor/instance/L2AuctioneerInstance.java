@@ -34,7 +34,7 @@ import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.instancemanager.AuctionManager;
 import com.l2jserver.gameserver.instancemanager.ClanHallManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
-import com.l2jserver.gameserver.model.L2Clan;
+import com.l2jserver.gameserver.model.ClanPrivilege;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.entity.Auction;
@@ -556,7 +556,7 @@ public final class L2AuctioneerInstance extends L2Npc
 			}
 			else if (actualCommand.equalsIgnoreCase("cancelAuction"))
 			{
-				if (!player.hasClanPrivilege(L2Clan.CP_CH_AUCTION))
+				if (!player.hasClanPrivilege(ClanPrivilege.CH_AUCTION))
 				{
 					String filename = "data/html/auction/not_authorized.htm";
 					final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
@@ -596,7 +596,7 @@ public final class L2AuctioneerInstance extends L2Npc
 			}
 			else if (actualCommand.equalsIgnoreCase("sale"))
 			{
-				if (!player.hasClanPrivilege(L2Clan.CP_CH_AUCTION))
+				if (!player.hasClanPrivilege(ClanPrivilege.CH_AUCTION))
 				{
 					String filename = "data/html/auction/not_authorized.htm";
 					final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
@@ -618,7 +618,7 @@ public final class L2AuctioneerInstance extends L2Npc
 			else if (actualCommand.equalsIgnoreCase("rebid"))
 			{
 				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-				if (!player.hasClanPrivilege(L2Clan.CP_CH_AUCTION))
+				if (!player.hasClanPrivilege(ClanPrivilege.CH_AUCTION))
 				{
 					String filename = "data/html/auction/not_authorized.htm";
 					final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
