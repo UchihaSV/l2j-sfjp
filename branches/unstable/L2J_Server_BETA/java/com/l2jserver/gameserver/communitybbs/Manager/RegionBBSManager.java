@@ -38,7 +38,7 @@ import com.l2jserver.gameserver.datatables.ExperienceTable;
 import com.l2jserver.gameserver.model.BlockList;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
+import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
@@ -385,11 +385,11 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 					+ trClose
 			
 					+ trOpen
-					+ tdOpen, "ドロップ倍率: ", String.valueOf(Config.RATE_DROP_ITEMS), tdClose
+					+ tdOpen, "ドロップ倍率: ", String.valueOf(Config.RATE_DEATH_DROP_CHANCE_MULTIPLIER), tdClose
 					+ colSpacer
-					+ tdOpen, "スポイル倍率: ", String.valueOf(Config.RATE_DROP_SPOIL), tdClose
+					+ tdOpen, "スポイル倍率: ", String.valueOf(Config.RATE_CORPSE_DROP_CHANCE_MULTIPLIER), tdClose
 					+ colSpacer
-					+ tdOpen, "アデナ倍率: ", String.valueOf(Config.RATE_DROP_ITEMS_ID.get(PcInventory.ADENA_ID)), tdClose
+					+ tdOpen, "アデナ倍率: ", String.valueOf(Config.RATE_DROP_AMOUNT_MULTIPLIER.containsKey(Inventory.ADENA_ID) ? Config.RATE_DROP_AMOUNT_MULTIPLIER.get(Inventory.ADENA_ID) : 1), tdClose
 					+ trClose
 			
 					+ "</table>"

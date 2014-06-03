@@ -1233,7 +1233,7 @@ public class L2CharacterAI extends AbstractAI
 		
 		public void init()
 		{
-			switch (((L2NpcTemplate) _actor.getTemplate()).getAIDataStatic().getAiType())
+			switch (((L2NpcTemplate) _actor.getTemplate()).getAIType())
 			{
 				case FIGHTER:
 					isFighter = true;
@@ -1497,7 +1497,7 @@ public class L2CharacterAI extends AbstractAI
 						L2Npc targets = ((L2Npc) target);
 						L2Npc actors = ((L2Npc) _actor);
 						
-						if ((targets.getEnemyClan() == null) || (actors.getClan() == null) || !targets.getEnemyClan().equals(actors.getClan()) || ((actors.getClan() == null) && (actors.getIsChaos() == 0)))
+						if (!targets.isInEnemyClan(actors) && !actors.isChaos())
 						{
 							continue;
 						}
@@ -1526,7 +1526,8 @@ public class L2CharacterAI extends AbstractAI
 					{
 						L2Npc targets = ((L2Npc) target);
 						L2Npc actors = ((L2Npc) _actor);
-						if ((targets.getEnemyClan() == null) || (actors.getClan() == null) || !targets.getEnemyClan().equals(actors.getClan()) || ((actors.getClan() == null) && (actors.getIsChaos() == 0)))
+						
+						if (!targets.isInEnemyClan(actors) && !actors.isChaos())
 						{
 							continue;
 						}
@@ -1558,7 +1559,8 @@ public class L2CharacterAI extends AbstractAI
 					{
 						L2Npc targets = ((L2Npc) target);
 						L2Npc actors = ((L2Npc) _actor);
-						if ((targets.getEnemyClan() == null) || (actors.getClan() == null) || !targets.getEnemyClan().equals(actors.getClan()) || ((actors.getClan() == null) && (actors.getIsChaos() == 0)))
+						
+						if (!targets.isInEnemyClan(actors) && !actors.isChaos())
 						{
 							continue;
 						}
@@ -1588,7 +1590,7 @@ public class L2CharacterAI extends AbstractAI
 					{
 						L2Npc targets = ((L2Npc) target);
 						L2Npc actors = ((L2Npc) _actor);
-						if ((targets.getEnemyClan() == null) || (actors.getClan() == null) || !targets.getEnemyClan().equals(actors.getClan()) || ((actors.getClan() == null) && (actors.getIsChaos() == 0)))
+						if (!targets.isInEnemyClan(actors) && !actors.isChaos())
 						{
 							continue;
 						}
@@ -1622,7 +1624,7 @@ public class L2CharacterAI extends AbstractAI
 				}
 				L2Npc targets = ((L2Npc) target);
 				L2Npc actors = ((L2Npc) _actor);
-				if ((actors.getFactionId() != null) && targets.getFactionId().equals(actors.getFactionId()))
+				if (targets.isInMyClan(actors))
 				{
 					count++;
 					if (target.isAffectedBySkill(sk.getId()))

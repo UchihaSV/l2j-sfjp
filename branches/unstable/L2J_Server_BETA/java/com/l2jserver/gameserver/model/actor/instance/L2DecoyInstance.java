@@ -41,7 +41,7 @@ public class L2DecoyInstance extends L2Decoy
 	{
 		super(objectId, template, owner);
 		setInstanceType(InstanceType.L2DecoyInstance);
-		int skillLevel = getTemplate().getIdTemplate() - 13070;
+		int skillLevel = getTemplate().getDisplayId() - 13070;
 		_hateSpamSkill = SkillTable.getInstance().getInfo(5272, skillLevel);
 		_despawnTask = ThreadPoolManager.getInstance().scheduleGeneral(new DespawnTask(), despawnDelay);
 		_hateSpamTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new HateSpam(), 2000, 5000);

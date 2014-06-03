@@ -22,13 +22,14 @@ import static com.l2jserver.gameserver.ai.CtrlIntention.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Future;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.GeoData;
 import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.datatables.TerritoryTable;
 import com.l2jserver.gameserver.enums.AIType;
 import com.l2jserver.gameserver.enums.QuestEventType;
@@ -97,7 +98,7 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 	public L2AttackableAI(L2Character.AIAccessor accessor)
 	{
 		super(accessor);
-		_skillrender = NpcTable.getInstance().getTemplate(getActiveChar().getTemplate().getId());
+		_skillrender = NpcData.getInstance().getTemplate(getActiveChar().getTemplate().getId());
 		_attackTimeout = Integer.MAX_VALUE;
 		_globalAggro = -10; // 10 seconds timeout of ATTACK after respawn
 	}
@@ -250,27 +251,22 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 		{
 			if (target instanceof L2Attackable)
 			{
-				if ((me.getEnemyClan() == null) || (((L2Attackable) target).getClan() == null))
-				{
-					return false;
-				}
-				
 				if (!target.isAutoAttackable(me))
 				{
 					return false;
 				}
 				
-				if (me.getEnemyClan().equals(((L2Attackable) target).getClan()))
+				if (me.isInEnemyClan((L2Attackable) target))
 				{
-					if (me.isInsideRadius(target, me.getEnemyRange(), false, false))
+					if (me.isInsideRadius(target, me.getAggroRange(), false, false))
 					{
 						return GeoData.getInstance().canSeeTarget(me, target);
 					}
 					return false;
 				}
-				if ((me.getIsChaos() > 0) && me.isInsideRadius(target, me.getIsChaos(), false, false))
+				if (me.isChaos() && me.isInsideRadius(target, me.getAggroRange(), false, false))
 				{
-					if ((me.getFactionId() != null) && me.getFactionId().equals(((L2Attackable) target).getFactionId()))
+					if (((L2Attackable) target).isInMyClan(me))
 					{
 						return false;
 					}
@@ -759,10 +755,10 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 		
 		// Handle all L2Object of its Faction inside the Faction Range
 		
-		String faction_id = getActiveChar().getFactionId();
-		if ((faction_id != null) && !faction_id.isEmpty())
+		Set<Integer> clans = getActiveChar().getTemplate().getClans();
+		if ((clans != null) && !clans.isEmpty())
 		{
-			int factionRange = npc.getClanRange() + collision;
+			int factionRange = npc.getTemplate().getClanHelpRange() + collision;
 			// Go through all L2Object that belong to its faction
 			Collection<L2Object> objs;
 if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
@@ -779,43 +775,26 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					{
 						L2Npc called = (L2Npc) obj;
 						
-						// Handle SevenSigns mob Factions
-						final String npcfaction = called.getFactionId();
-						if ((npcfaction == null) || npcfaction.isEmpty())
-						{
-							continue;
-						}
 if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						if (npc == called)
 							continue;
-						if (!Util.checkIfInShortRadius(npc.getFactionRange(), npc, called, false))
+						if (!Util.checkIfInShortRadius(factionRange, npc, called, false))
 							continue;
 					/*	if (!Util.checkIfInRange(npc.getFactionRange(), npc, called, false))
 							continue;	*/
 					/*	if (Math.abs(originalAttackTarget.getZ() - called.getZ()) >= 600)
 							continue;	*/
 }}
-
 						boolean sevenSignFaction = false;
 						
 						// TODO: Unhardcode this by AI scripts (DrHouse)
 						// Catacomb mobs should assist lilim and nephilim other than dungeon
-						if ("c_dungeon_clan".equals(faction_id) && ("c_dungeon_lilim".equals(npcfaction) || "c_dungeon_nephi".equals(npcfaction)))
-						{
-							sevenSignFaction = true;
-						}
-						// Lilim mobs should assist other Lilim and catacomb mobs
-						else if ("c_dungeon_lilim".equals(faction_id) && "c_dungeon_clan".equals(npcfaction))
-						{
-							sevenSignFaction = true;
-						}
-						// Nephilim mobs should assist other Nephilim and catacomb mobs
-						else if ("c_dungeon_nephi".equals(faction_id) && "c_dungeon_clan".equals(npcfaction))
+						if (getActiveChar().getTemplate().isClan("c_dungeon_clan", "c_dungeon_lilim", "c_dungeon_nephi") && called.getTemplate().isClan("c_dungeon_clan", "c_dungeon_lilim", "c_dungeon_nephi"))
 						{
 							sevenSignFaction = true;
 						}
 						
-						if (!faction_id.equals(npcfaction) && !sevenSignFaction)
+						if (!sevenSignFaction)
 						{
 							continue;
 						}
@@ -937,9 +916,9 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			}
 		}
 		// Dodge if its needed
-		if (!npc.isMovementDisabled() && (npc.getCanDodge() > 0))
+		if (!npc.isMovementDisabled() && (npc.getDodge() > 0))
 		{
-			if (Rnd.get(100) <= npc.getCanDodge())
+			if (Rnd.get(100) <= npc.getDodge())
 			{
 				// Micht: kepping this one otherwise we should do 2 sqrt
 				double distance2 = npc.calculateDistance(mostHate, false, true);
@@ -1103,7 +1082,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 							}
 							
 							L2Attackable targets = ((L2Attackable) obj);
-							if ((npc.getFactionId() != null) && !npc.getFactionId().equals(targets.getFactionId()))
+							if (!((L2Attackable) obj).isInMyClan(npc))
 							{
 								continue;
 							}
@@ -1178,7 +1157,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 							}
 							
 							L2Attackable targets = ((L2Attackable) obj);
-							if ((npc.getFactionId() != null) && !npc.getFactionId().equals(targets.getFactionId()))
+							if (!npc.isInMyClan(targets))
 							{
 								continue;
 							}
@@ -1560,10 +1539,11 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					}
 					
 					L2Attackable targets = ((L2Attackable) obj);
-					if ((caster.getFactionId() != null) && !caster.getFactionId().equals(targets.getFactionId()))
+					if (!caster.isInMyClan(targets))
 					{
 						continue;
 					}
+					
 					percentage = (targets.getCurrentHp() / targets.getMaxHp()) * 100;
 					if (Rnd.get(100) < ((100 - percentage) / 10))
 					{
@@ -1586,7 +1566,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						continue;
 					}
 					L2Npc targets = ((L2Npc) obj);
-					if ((caster.getFactionId() != null) && targets.getFactionId().equals(caster.getFactionId()))
+					if (targets.isInMyClan(caster))
 					{
 						if ((obj.getCurrentHp() < obj.getMaxHp()) && (Rnd.get(100) <= 20))
 						{
@@ -1779,7 +1759,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					}
 					
 					L2Attackable targets = ((L2Attackable) obj);
-					if ((caster.getFactionId() != null) && !caster.getFactionId().equals(targets.getFactionId()))
+					if (!caster.isInMyClan(targets))
 					{
 						continue;
 					}
@@ -1804,7 +1784,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						continue;
 					}
 					L2Npc targets = ((L2Npc) obj);
-					if ((caster.getFactionId() != null) && caster.getFactionId().equals(targets.getFactionId()))
+					if (caster.isInMyClan(targets))
 					{
 						if ((obj.getCurrentHp() < obj.getMaxHp()) && (Rnd.get(100) <= 20))
 						{
@@ -2160,7 +2140,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					}
 					if (obj instanceof L2Attackable)
 					{
-						if ((actor.getEnemyClan() != null) && actor.getEnemyClan().equals(((L2Attackable) obj).getClan()))
+						if (actor.isInEnemyClan((L2Attackable) obj))
 						{
 							if (dist2 <= range)
 							{
@@ -2196,7 +2176,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					}
 					
 					L2Attackable targets = ((L2Attackable) obj);
-					if ((actor.getFactionId() != null) && !actor.getFactionId().equals(targets.getFactionId()))
+					if (targets.isInMyClan(actor))
 					{
 						continue;
 					}
@@ -2255,7 +2235,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				if (obj instanceof L2Attackable)
 				{
-					if ((actor.getEnemyClan() != null) && actor.getEnemyClan().equals(((L2Attackable) obj).getClan()))
+					if (actor.isInEnemyClan((L2Attackable) obj))
 					{
 						if (dist2 <= range)
 						{
@@ -2350,13 +2330,13 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				if (obj instanceof L2Attackable)
 				{
-					if ((actor.getEnemyClan() != null) && actor.getEnemyClan().equals(((L2Attackable) obj).getClan()))
+					if (actor.isInEnemyClan((L2Attackable) obj))
 					{
 						return obj;
 					}
-					if (actor.getIsChaos() != 0)
+					if (actor.isChaos())
 					{
-						if ((((L2Attackable) obj).getFactionId() != null) && ((L2Attackable) obj).getFactionId().equals(actor.getFactionId()))
+						if (((L2Attackable) obj).isInMyClan(actor))
 						{
 							continue;
 						}
@@ -2450,14 +2430,14 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				else if (obj instanceof L2Attackable)
 				{
-					if ((actor.getEnemyClan() != null) && actor.getEnemyClan().equals(((L2Attackable) obj).getClan()))
+					if (actor.isInEnemyClan((L2Attackable) obj))
 					{
 						actor.addDamageHate(obj, 0, actor.getHating(MostHate));
 						actor.setTarget(obj);
 					}
-					if (actor.getIsChaos() != 0)
+					if (actor.isChaos())
 					{
-						if ((((L2Attackable) obj).getFactionId() != null) && ((L2Attackable) obj).getFactionId().equals(actor.getFactionId()))
+						if (((L2Attackable) obj).isInMyClan(actor))
 						{
 							continue;
 						}
@@ -2569,7 +2549,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				else if (obj instanceof L2Attackable)
 				{
-					if ((actor.getEnemyClan() != null) && actor.getEnemyClan().equals(((L2Attackable) obj).getClan()))
+					if (actor.isInEnemyClan((L2Attackable) obj))
 					{
 						if (MostHate != null)
 						{
@@ -2581,9 +2561,9 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						}
 						actor.setTarget(obj);
 					}
-					if (actor.getIsChaos() != 0)
+					if (actor.isChaos())
 					{
-						if ((((L2Attackable) obj).getFactionId() != null) && ((L2Attackable) obj).getFactionId().equals(actor.getFactionId()))
+						if (((L2Attackable) obj).isInMyClan(actor))
 						{
 							continue;
 						}

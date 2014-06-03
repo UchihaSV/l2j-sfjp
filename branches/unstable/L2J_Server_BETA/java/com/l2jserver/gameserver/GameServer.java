@@ -63,7 +63,6 @@ import com.l2jserver.gameserver.datatables.FishData;
 import com.l2jserver.gameserver.datatables.FishingMonstersData;
 import com.l2jserver.gameserver.datatables.FishingRodsData;
 import com.l2jserver.gameserver.datatables.HennaData;
-import com.l2jserver.gameserver.datatables.HerbDropTable;
 import com.l2jserver.gameserver.datatables.HitConditionBonus;
 import com.l2jserver.gameserver.datatables.InitialEquipmentData;
 import com.l2jserver.gameserver.datatables.ItemTable;
@@ -72,7 +71,7 @@ import com.l2jserver.gameserver.datatables.ManorData;
 import com.l2jserver.gameserver.datatables.MerchantPriceConfigTable;
 import com.l2jserver.gameserver.datatables.MultisellData;
 import com.l2jserver.gameserver.datatables.NpcBufferTable;
-import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.datatables.OfflineTradersTable;
 import com.l2jserver.gameserver.datatables.OptionsData;
 import com.l2jserver.gameserver.datatables.PetDataTable;
@@ -280,9 +279,8 @@ public class GameServer
 		}
 		
 		printSection("NPCs");
-		HerbDropTable.getInstance();
 		SkillLearnData.getInstance();
-		NpcTable.getInstance();
+		NpcData.getInstance();
 		WalkingManager.getInstance();
 		StaticObjects.getInstance();
 		ZoneManager.getInstance();

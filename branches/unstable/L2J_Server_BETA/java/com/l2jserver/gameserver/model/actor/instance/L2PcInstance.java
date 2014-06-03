@@ -81,7 +81,7 @@ import com.l2jserver.gameserver.datatables.ExperienceTable;
 import com.l2jserver.gameserver.datatables.FishData;
 import com.l2jserver.gameserver.datatables.HennaData;
 import com.l2jserver.gameserver.datatables.ItemTable;
-import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.datatables.PetDataTable;
 import com.l2jserver.gameserver.datatables.RecipeData;
 import com.l2jserver.gameserver.datatables.SkillTable;
@@ -510,7 +510,7 @@ public final class L2PcInstance extends L2Playable
 	private int _bookmarkslot = 0; // The Teleport Bookmark Slot
 	
 	@SuppressWarnings("serial")
-	private final ArrayList<TeleportBookmark> _tpbookmarks = new ArrayList<TeleportBookmark>(0){
+	private final ArrayList<TeleportBookmark> _tpbookmarks = new ArrayList<TeleportBookmark>(){
 		@Override public TeleportBookmark get(int index) { --index; return index < 0 || index >= size() ? null : super.get(index); }
 		@Override public TeleportBookmark remove(int index) { --index; return index < 0 || index >= size() ? null : super.remove(index); }
 		@Override public TeleportBookmark set(int index, TeleportBookmark element) { --index; return super.set(index, element); }
@@ -1618,7 +1618,7 @@ public final class L2PcInstance extends L2Playable
 		QuestState[] states = null;
 		
 		// Go through the QuestState of the L2PcInstance quests
-		List<Quest> quests = NpcTable.getInstance().getTemplate(npcId).getEventQuests(QuestEventType.ON_TALK);
+		List<Quest> quests = NpcData.getInstance().getTemplate(npcId).getEventQuests(QuestEventType.ON_TALK);
 		if (quests != null)
 		{
 			for (Quest quest : quests)
@@ -3314,7 +3314,7 @@ public final class L2PcInstance extends L2Playable
 		if (sendMessage)
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S2_S1_S);
-			sm.addItemName(PcInventory.ANCIENT_ADENA_ID);
+			sm.addItemName(Inventory.ANCIENT_ADENA_ID);
 			sm.addItemNumber(count);
 			sendPacket(sm);
 		}
@@ -3380,14 +3380,14 @@ public final class L2PcInstance extends L2Playable
 				if (count > 1)
 				{
 					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
-					sm.addItemName(PcInventory.ANCIENT_ADENA_ID);
+					sm.addItemName(Inventory.ANCIENT_ADENA_ID);
 					sm.addItemNumber(count);
 					sendPacket(sm);
 				}
 				else
 				{
 					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_DISAPPEARED);
-					sm.addItemName(PcInventory.ANCIENT_ADENA_ID);
+					sm.addItemName(Inventory.ANCIENT_ADENA_ID);
 					sendPacket(sm);
 				}
 			}
@@ -3745,7 +3745,7 @@ public final class L2PcInstance extends L2Playable
 	@Override
 	public boolean destroyItemByItemId(String process, int itemId, long count, L2Object reference, boolean sendMessage)
 	{
-		if (itemId == PcInventory.ADENA_ID)
+		if (itemId == Inventory.ADENA_ID)
 		{
 			return reduceAdena(process, count, reference, sendMessage);
 		}
@@ -4632,7 +4632,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			getParty().distributeItem(this, itemId, itemCount, false, target);
 		}
-		else if (itemId == PcInventory.ADENA_ID)
+		else if (itemId == Inventory.ADENA_ID)
 		{
 			addAdena("Loot", itemCount, target, true);
 		}
@@ -4723,7 +4723,7 @@ public final class L2PcInstance extends L2Playable
 			if ((target.getOwnerId() != 0) && (target.getOwnerId() != getObjectId()) && !isInLooterParty(target.getOwnerId()))
 			{
 				final SystemMessage smsg;
-				if (target.getId() == PcInventory.ADENA_ID)
+				if (target.getId() == Inventory.ADENA_ID)
 				{
 					smsg = SystemMessage.getSystemMessage(SystemMessageId.FAILED_TO_PICKUP_S1_ADENA);
 					smsg.addItemNumber(target.getCount());
@@ -4816,7 +4816,7 @@ public final class L2PcInstance extends L2Playable
 			{
 				getParty().distributeItem(this, target);
 			}
-			else if ((target.getId() == PcInventory.ADENA_ID) && (getInventory().getAdenaInstance() != null))
+			else if ((target.getId() == Inventory.ADENA_ID) && (getInventory().getAdenaInstance() != null))
 			{
 				addAdena("Pickup", target.getCount(), null, true);
 				ItemTable.getInstance().destroyItem("Pickup", target, this, null);
@@ -5591,7 +5591,7 @@ public final class L2PcInstance extends L2Playable
 					// Don't drop
 					if (itemDrop.isShadowItem() || // Dont drop Shadow Items
 					itemDrop.isTimeLimitedItem() || // Dont drop Time Limited Items
-					!itemDrop.isDropable() || (itemDrop.getId() == PcInventory.ADENA_ID) || // Adena
+					!itemDrop.isDropable() || (itemDrop.getId() == Inventory.ADENA_ID) || // Adena
 					(itemDrop.getItem().getType2() == L2Item.TYPE2_QUEST) || // Quest Items
 					(hasSummon() && (getSummon().getControlObjectId() == itemDrop.getId())) || // Control Item of active pet
 					(Arrays.binarySearch(Config.KARMA_LIST_NONDROPPABLE_ITEMS, itemDrop.getId()) >= 0) || // Item listed in the non droppable item list
@@ -13815,7 +13815,7 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (isMounted() && (getMountNpcId() > 0))
 		{
-			return NpcTable.getInstance().getTemplate(getMountNpcId()).getfCollisionRadius();
+			return NpcData.getInstance().getTemplate(getMountNpcId()).getfCollisionRadius();
 		}
 		else if (isTransformed())
 		{
@@ -13828,7 +13828,7 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (isMounted() && (getMountNpcId() > 0))
 		{
-			return NpcTable.getInstance().getTemplate(getMountNpcId()).getfCollisionHeight();
+			return NpcData.getInstance().getTemplate(getMountNpcId()).getfCollisionHeight();
 		}
 		else if (isTransformed())
 		{
