@@ -18,7 +18,7 @@
  */
 package com.l2jserver.gameserver.model.event;
 
-import static com.l2jserver.util.Util.dateFormat;
+import static com.l2jserver.util.Util.*;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -37,8 +37,7 @@ import com.l2jserver.gameserver.Announcements;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.EventDroplist;
 import com.l2jserver.gameserver.datatables.ItemTable;
-import com.l2jserver.gameserver.datatables.NpcTable;
-import com.l2jserver.gameserver.model.L2DropData;
+import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -185,7 +184,7 @@ public class LongTimeEvent extends Quest
 									
 									if (!chance.isEmpty() && chance.endsWith("%"))
 									{
-										finalChance = (int) (com.l2jserver.gameserver.script.faenor.FaenorParser.getPercent(chance) * L2DropData.MAX_CHANCE);
+										finalChance = (int) (com.l2jserver.gameserver.script.faenor.FaenorParser.getPercent(chance) * 1000000);
 									}
 									
 									boolean err = false;
@@ -205,7 +204,7 @@ public class LongTimeEvent extends Quest
 										err = true;
 									}
 									
-									if ((finalChance < 10000) || (finalChance > L2DropData.MAX_CHANCE))
+									if ((finalChance < 10000) || (finalChance > 1000000))
 									{
 										_log.warning(getScriptName() + " event: item " + itemId + " - incorrect drop chance, item was not added in droplist");
 										err = true;
@@ -234,7 +233,7 @@ public class LongTimeEvent extends Quest
 								try
 								{
 									int npcId = Integer.parseInt(d.getAttributes().getNamedItem("npc").getNodeValue());
-									if (NpcTable.getInstance().getTemplate(npcId) == null)
+									if (NpcData.getInstance().getTemplate(npcId) == null)
 									{
 										_log.warning(getScriptName() + " event: " + npcId + " is wrong NPC id, NPC was not added in spawnlist");
 										continue;

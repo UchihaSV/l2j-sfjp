@@ -34,7 +34,7 @@ import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.DoorTable;
-import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.handler.AdminCommandHandler;
 import com.l2jserver.gameserver.handler.IAdminCommandHandler;
@@ -302,7 +302,7 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 			{
 				while (rs.next())
 				{
-					L2NpcTemplate template1 = NpcTable.getInstance().getTemplate(rs.getInt("npc_templateid"));
+					L2NpcTemplate template1 = NpcData.getInstance().getTemplate(rs.getInt("npc_templateid"));
 					if (template1 != null)
 					{
 						L2Spawn spawnDat = new L2Spawn(template1);
@@ -337,7 +337,7 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 		{
 			try
 			{
-				L2NpcTemplate template = NpcTable.getInstance().getTemplate(spawnNpcId);
+				L2NpcTemplate template = NpcData.getInstance().getTemplate(spawnNpcId);
 				if (template == null) throw new AssertionError();
 				new L2Spawn(template); /*Test only.*/
 			}
@@ -371,7 +371,7 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 					{
 						while (rs2.next())
 						{
-							L2NpcTemplate template1 = NpcTable.getInstance().getTemplate(rs2.getInt("npc_templateid"));
+							L2NpcTemplate template1 = NpcData.getInstance().getTemplate(rs2.getInt("npc_templateid"));
 							if (template1 != null)
 							{
 								L2Spawn spawnDat = new L2Spawn(template1);
@@ -426,7 +426,7 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 					{
 						while (rset2.next())
 						{
-							L2NpcTemplate template1 = NpcTable.getInstance().getTemplate(rset2.getInt("npc_templateid"));
+							L2NpcTemplate template1 = NpcData.getInstance().getTemplate(rset2.getInt("npc_templateid"));
 							if (template1 != null)
 							{
 								L2Spawn spawnDat = new L2Spawn(template1);
@@ -484,7 +484,7 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 						
 						while (rset2.next())
 						{
-							L2NpcTemplate template1 = NpcTable.getInstance().getTemplate(rset2.getInt("npc_templateid"));
+							L2NpcTemplate template1 = NpcData.getInstance().getTemplate(rset2.getInt("npc_templateid"));
 							if (template1 != null)
 							{
 								L2Spawn spawnDat = new L2Spawn(template1);
@@ -540,7 +540,7 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 					{
 						while (rs2.next())
 						{
-							L2NpcTemplate template1 = NpcTable.getInstance().getTemplate(rs2.getInt("npc_templateid"));
+							L2NpcTemplate template1 = NpcData.getInstance().getTemplate(rs2.getInt("npc_templateid"));
 							if (template1 != null)
 							{
 								L2Spawn spawnDat = new L2Spawn(template1);
@@ -594,7 +594,7 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 			int keyNpcId = DUKES_HALL_GATEKEEPER[i];
 			int spawnNpcId = SHADOW_OF_HALISHA[i];
 			Location loc = SHADOW_SPAWN[i];
-			L2NpcTemplate template = NpcTable.getInstance().getTemplate(spawnNpcId);
+			L2NpcTemplate template = NpcData.getInstance().getTemplate(spawnNpcId);
 			if (template != null)
 			{
 				try
@@ -625,7 +625,7 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 		{
 			try
 			{
-				L2NpcTemplate template = NpcTable.getInstance().getTemplate(spawnNpcId);
+				L2NpcTemplate template = NpcData.getInstance().getTemplate(spawnNpcId);
 				if (template == null) throw new AssertionError();
 				new L2Spawn(template); /*Test only.*/
 			}
@@ -985,7 +985,7 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 				{
 					try
 					{
-						L2NpcTemplate template = NpcTable.getInstance().getTemplate(18149);
+						L2NpcTemplate template = NpcData.getInstance().getTemplate(18149);
 						if (template != null)
 						{
 							L2Spawn keyBoxMobSpawn = new L2Spawn(template);
@@ -1101,7 +1101,7 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 		int spawnNpcId = _keyBoxNpc.get(keyNpcId);
 		try
 		{
-			L2NpcTemplate template = NpcTable.getInstance().getTemplate(spawnNpcId);
+			L2NpcTemplate template = NpcData.getInstance().getTemplate(spawnNpcId);
 			if (template == null) throw new AssertionError();
 
 			L2Spawn spawnDat = new L2Spawn(template);
@@ -1129,7 +1129,7 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 		int spawnNpcId = _victim.get(keyNpcId);
 		try
 		{
-			L2NpcTemplate template = NpcTable.getInstance().getTemplate(spawnNpcId);
+			L2NpcTemplate template = NpcData.getInstance().getTemplate(spawnNpcId);
 			if (template == null) throw new AssertionError();
 			
 			L2Spawn spawnDat = new L2Spawn(template);

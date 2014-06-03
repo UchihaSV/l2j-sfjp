@@ -35,7 +35,7 @@ import javolution.util.FastMap;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.Announcements;
 import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -480,7 +480,7 @@ if (TEST1) {{
 				final int heading = locationList[locationIndex].getHeading();
 				
 				// Fetch the template for this NPC ID and create a new spawn.
-				L2NpcTemplate npcTemp = NpcTable.getInstance().getTemplate(spawnInst.getId());
+				L2NpcTemplate npcTemp = NpcData.getInstance().getTemplate(spawnInst.getId());
 				if (npcTemp == null)
 				{
 					_log.warning("Couldnt find NPC id" + spawnInst.getId() + " Try to update your DP");

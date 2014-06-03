@@ -23,7 +23,7 @@ import java.util.concurrent.Future;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.FishingMonstersData;
-import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -387,7 +387,7 @@ public class L2Fishing implements Runnable
 		L2Spawn spawn;
 		try
 		{
-			spawn = new L2Spawn(NpcTable.getInstance().getTemplate(npcId));
+			spawn = new L2Spawn(NpcData.getInstance().getTemplate(npcId));
 		}
 		catch (Exception e)
 		{
