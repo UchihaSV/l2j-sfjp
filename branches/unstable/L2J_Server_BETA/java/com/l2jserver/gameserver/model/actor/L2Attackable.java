@@ -47,6 +47,7 @@ import com.l2jserver.gameserver.model.AbsorberInfo;
 import com.l2jserver.gameserver.model.AggroInfo;
 import com.l2jserver.gameserver.model.DamageDoneInfo;
 import com.l2jserver.gameserver.model.L2CommandChannel;
+import com.l2jserver.gameserver.model.L2DropData;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Party;
 import com.l2jserver.gameserver.model.actor.events.AttackableEvents;
@@ -1132,7 +1133,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		// Go through DateDrop of EventDroplist allNpcDateDrops within the date range
 		for (DateDrop drop : EventDroplist.getInstance().getAllDrops())
 		{
-			if (Rnd.get(1000000) < drop.getEventDrop().getDropChance())
+			if (Rnd.get(L2DropData.MAX_CHANCE) < drop.getEventDrop().getDropChance())
 			{
 				final int itemId = drop.getEventDrop().getItemIdList()[Rnd.get(drop.getEventDrop().getItemIdList().length)];
 				final long itemCount = Rnd.get(drop.getEventDrop().getMinCount(), drop.getEventDrop().getMaxCount());

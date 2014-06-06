@@ -1931,11 +1931,11 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 				_questInvolvedNpcs.add(npcId);
 			}
 			else
-				throw new UnsupportedOperationException("Unknown NPC");	//+[JOJO]
+				_log.warning(getName() + ": Exception on addEventId(" + npcId + "," + eventType.name() + "): Unknown NPC");	//+[JOJO]
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Exception on addEventId(" + npcId + "," + eventType.name() + "): " + e.getMessage(), e);
+			_log.log(Level.WARNING, getName() + ": Exception on addEventId(" + npcId + "," + eventType.name() + "): " + e.getMessage(), e);
 		}
 	}
 	

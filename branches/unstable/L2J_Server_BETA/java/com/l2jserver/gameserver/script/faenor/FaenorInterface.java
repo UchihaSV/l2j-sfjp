@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 
 import com.l2jserver.gameserver.Announcements;
 import com.l2jserver.gameserver.datatables.EventDroplist;
+import com.l2jserver.gameserver.model.L2DropData;
 import com.l2jserver.gameserver.script.DateRange;
 import com.l2jserver.gameserver.script.EngineInterface;
 
@@ -46,7 +47,7 @@ public class FaenorInterface implements EngineInterface
 	@Override
 	public void addEventDrop(int[] items, int[] count, double chance, DateRange range)
 	{
-		EventDroplist.getInstance().addGlobalDrop(items, count, (int) (chance * 1000000), range);
+		EventDroplist.getInstance().addGlobalDrop(items, count, (int) (chance * L2DropData.MAX_CHANCE), range);
 	}
 	
 	@Override

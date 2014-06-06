@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 import com.l2jserver.gameserver.Announcements;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.L2ControllableMobAI;
-import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.model.MobGroup;
 import com.l2jserver.gameserver.model.MobGroupTable;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
@@ -82,7 +82,7 @@ public class BvBManager
 
     	if (_group1 == null) {
 	        _group1Id = MobGroupTable.getInstance().getGroupCount() + 1;
-			L2NpcTemplate template1 = NpcTable.getInstance().getTemplate(_bossIds[Rnd.get(_bossIds.length)]);
+			L2NpcTemplate template1 = NpcData.getInstance().getTemplate(_bossIds[Rnd.get(_bossIds.length)]);
 			_group1 = new MobGroup(_group1Id, template1, 1);
 			MobGroupTable.getInstance().addGroup(_group1Id, _group1);	//Åyíçà”Åz
 			_group1.spawnGroup(_spawnLocation1[0], _spawnLocation1[1], _spawnLocation1[2]);
@@ -92,7 +92,7 @@ public class BvBManager
 
     	if (_group2 == null) {
 	    	_group2Id = MobGroupTable.getInstance().getGroupCount() + 1;
-			L2NpcTemplate template2 = NpcTable.getInstance().getTemplate(_bossIds[Rnd.get(_bossIds.length)]);
+			L2NpcTemplate template2 = NpcData.getInstance().getTemplate(_bossIds[Rnd.get(_bossIds.length)]);
 			_group2 = new MobGroup(_group2Id, template2, 1);
 			MobGroupTable.getInstance().addGroup(_group2Id, _group2);	//Åyíçà”Åz
 			_group2.spawnGroup(_spawnLocation2[0], _spawnLocation2[1], _spawnLocation2[2]);

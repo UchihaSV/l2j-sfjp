@@ -30,6 +30,7 @@ import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
+import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.network.SystemMessageId;
@@ -145,7 +146,7 @@ public class L2NpcBufferInstance extends L2Npc
 					if (itemInstance.isStackable())
 					{
 						//[JOJO]-------------------------------------------------
-						if (npcBuffGroupInfo.getFee().getId() == com.l2jserver.gameserver.model.itemcontainer.PcInventory.ADENA_ID)
+						if (npcBuffGroupInfo.getFee().getId() == Inventory.ADENA_ID)
 						{
 							if (! player.reduceAdena("Npc Buffer", npcBuffGroupInfo.getFee().getCount(), player.getTarget(), true))
 							{

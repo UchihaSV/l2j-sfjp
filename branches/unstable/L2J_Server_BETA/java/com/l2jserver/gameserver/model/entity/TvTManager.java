@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.Announcements;
 import com.l2jserver.gameserver.ThreadPoolManager;
+import com.l2jserver.gameserver.datatables.NpcData;
 
 /**
  * @author FBIagent
@@ -43,6 +44,16 @@ public class TvTManager
 	{
 		if (Config.TVT_EVENT_ENABLED)
 		{
+			//[JOJO]-------------------------------------------------
+			// from TvTEvent#startParticipation()
+			if (NpcData.getInstance().getTemplate(Config.TVT_EVENT_PARTICIPATION_NPC_ID) == null)
+			{
+				Config.TVT_EVENT_ENABLED = false;
+				_log.warning("TvTEventEngine[TvTManager.TvTManager()]: L2NpcTemplate is a NullPointer -> Invalid npc id(" + Config.TVT_EVENT_PARTICIPATION_NPC_ID + ") in configs?");
+				_log.info("TvTEventEngine[TvTManager.TvTManager()]: Engine is disabled.");
+				return;
+			}
+			//-------------------------------------------------------
 			TvTEvent.init();
 			
 			scheduleEventStart();
@@ -71,17 +82,18 @@ public class TvTManager
 	{
 		try
 		{
-			Calendar currentTime = Calendar.getInstance();
+			final Calendar currentTime = Calendar.getInstance();
 			Calendar nextStartTime = null;
-			Calendar testStartTime = null;
 			for (String timeOfDay : Config.TVT_EVENT_INTERVAL)
 			{
 				// Creating a Calendar object from the specified interval value
-				testStartTime = Calendar.getInstance();
+				Calendar testStartTime = (Calendar) currentTime.clone();	//[JOJO]
 				testStartTime.setLenient(true);
 				String[] splitTimeOfDay = timeOfDay.split(":");
 				testStartTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(splitTimeOfDay[0]));
 				testStartTime.set(Calendar.MINUTE, Integer.parseInt(splitTimeOfDay[1]));
+				testStartTime.set(Calendar.SECOND, 0);		//+[JOJO] infinite loop
+				testStartTime.set(Calendar.MILLISECOND, 0);	//+[JOJO] infinite loop
 				// If the date is in the past, make it the next day (Example: Checking for "1:00", when the time is 23:57.)
 				if (testStartTime.getTimeInMillis() < currentTime.getTimeInMillis())
 				{
