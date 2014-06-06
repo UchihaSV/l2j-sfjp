@@ -20,7 +20,7 @@ package com.l2jserver.gameserver.communitybbs.Manager.favorite;
 /*package custom.BossRespawn;*/
 
 import com.l2jserver.gameserver.cache.HtmCache;
-import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.instancemanager.GrandBossManager;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
@@ -62,7 +62,7 @@ public class GrandBossRespawn extends BaseFavoriteManager
 		{
 			if (GrandBossManager.getInstance().getStatsSet(bossId) == null)
 				continue;
-			tb.append("<tr><td width=300 align=right><font color=\"00C3FF\">").append(NpcTable.getInstance().getTemplate(bossId).getName()).append("</font></td>"
+			tb.append("<tr><td width=300 align=right><font color=\"00C3FF\">").append(NpcData.getInstance().getTemplate(bossId).getName()).append("</font></td>"
 					+ "<td width=300>");
 			final long respawnTime = GrandBossManager.getInstance().getStatsSet(bossId).getLong("respawn_time");
 			if (respawnTime <= System.currentTimeMillis())

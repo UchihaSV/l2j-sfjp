@@ -103,7 +103,7 @@ public class NpcKnownList extends CharKnownList
 	// Support for Walking monsters aggro
 	public void startTrackingTask()
 	{
-		if ((_trackingTask == null) && (getActiveChar().getAggroRange() > 0))
+		if (_trackingTask == null && getActiveChar().getAggroRange() > 0/*+[JOJO]*/ && getActiveChar() instanceof L2Attackable/**/)
 		{
 			_trackingTask = ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new TrackingTask(), 2000, 2000);
 		}

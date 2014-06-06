@@ -20,7 +20,7 @@ package com.l2jserver.gameserver.communitybbs.Manager.favorite;
 /*package custom.BossRespawn;*/
 
 import com.l2jserver.gameserver.cache.HtmCache;
-import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.handler.AdminCommandHandler;
 import com.l2jserver.gameserver.instancemanager.GrandBossManager;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -84,7 +84,7 @@ public class GrandBossRespawnTEST extends BaseFavoriteManager
 		if (GrandBossManager.getInstance().getStatsSet(bossId) == null)
 			return;
 		tb.append("<tr><td width=270 align=right><font color=\"00C3FF\">")
-		  .append(NpcTable.getInstance().getTemplate(bossId).getName())
+		  .append(NpcData.getInstance().getTemplate(bossId).getName())
 		  .append("</font></td>");
 		if (isGM)
 			tb.append("<td><font color=\"F9F999\">")

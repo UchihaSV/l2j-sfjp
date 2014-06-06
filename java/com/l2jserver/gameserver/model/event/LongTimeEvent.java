@@ -38,6 +38,7 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.EventDroplist;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.NpcData;
+import com.l2jserver.gameserver.model.L2DropData;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -184,7 +185,7 @@ public class LongTimeEvent extends Quest
 									
 									if (!chance.isEmpty() && chance.endsWith("%"))
 									{
-										finalChance = (int) (com.l2jserver.gameserver.script.faenor.FaenorParser.getPercent(chance) * 1000000);
+										finalChance = (int) (com.l2jserver.gameserver.script.faenor.FaenorParser.getPercent(chance) * L2DropData.MAX_CHANCE);
 									}
 									
 									boolean err = false;
@@ -204,7 +205,7 @@ public class LongTimeEvent extends Quest
 										err = true;
 									}
 									
-									if ((finalChance < 10000) || (finalChance > 1000000))
+									if (finalChance < 0 || finalChance > L2DropData.MAX_CHANCE)
 									{
 										_log.warning(getScriptName() + " event: item " + itemId + " - incorrect drop chance, item was not added in droplist");
 										err = true;

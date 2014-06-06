@@ -98,11 +98,12 @@ public abstract class DocumentParser
 		}
 		catch (SAXParseException e)
 		{
-			_log.warning(getClass().getSimpleName() + ": Could not parse file " + f.getName() + " at line " + e.getLineNumber() + ", column " + e.getColumnNumber() + ": " + e.getMessage());
+	//		_log.warning(getClass().getSimpleName() + ": Could not parse file " + f.getName() + " at line " + e.getLineNumber() + ", column " + e.getColumnNumber() + ": " + e.getMessage());
 			return;
 		}
 		catch (Exception e)
 		{
+			_log.warning(getClass().getSimpleName() + ": Could not parse file " + f.getPath() + ": " + e.getMessage());
 			return;
 		}
 		parseDocument();
@@ -683,8 +684,8 @@ public abstract class DocumentParser
 		private void log(SAXParseException e, String kind)
 		{
 			_log.warning(DocumentParser.this.getClass().getSimpleName() + ": "
-				+ kind + " in " + getCurrentFile().getPath() + " (at line " + e.getLineNumber() + " column " + e.getColumnNumber() +")"
-				+ " - " + e.getMessage());
+				+ kind + " in " + getCurrentFile().getPath() + " at line " + e.getLineNumber() + ", column " + e.getColumnNumber()
+				+ ": " + e.getMessage());
 		}
 		//-------------------------------------------------------
 	}

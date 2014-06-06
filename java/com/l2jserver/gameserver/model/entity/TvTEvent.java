@@ -123,12 +123,12 @@ public class TvTEvent
 	{
 		L2NpcTemplate tmpl = NpcData.getInstance().getTemplate(Config.TVT_EVENT_PARTICIPATION_NPC_ID);
 		
-		if (tmpl == null)
-		{
-			_log.warning("TvTEventEngine[TvTEvent.startParticipation()]: L2NpcTemplate is a NullPointer -> Invalid npc id(" + Config.TVT_EVENT_PARTICIPATION_NPC_ID + ") in configs?");
-			Config.TVT_EVENT_ENABLED = false;	//[JOJO]
-			return false;
-		}
+	//	if (tmpl == null)	// [JOJO] move to TvTManager#<init>
+	//	{
+	//		_log.warning("TvTEventEngine[TvTEvent.startParticipation()]: L2NpcTemplate is a NullPointer -> Invalid npc id(" + Config.TVT_EVENT_PARTICIPATION_NPC_ID + ") in configs?");
+	//		Config.TVT_EVENT_ENABLED = false;	//[JOJO]
+	//		return false;
+	//	}
 		
 		try
 		{

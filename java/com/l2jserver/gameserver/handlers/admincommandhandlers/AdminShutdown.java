@@ -1,6 +1,7 @@
 /**
  * [JOJO] This file is copy of:
  *   L2J_DataPack_BETA/dist/game/data/scripts/handlers/admincommandhandlers/AdminShutdown.java
+ *   sync revesion 10172, timestamp 2014/02/11 21:26
  *   sync revesion 9922, timestamp 2013/08/25 08:08
  *   sync revesion 9040, timestamp 2012/08/01 21:48
  *   sync revesion 7150, timestamp 2010/03/08 21:16
@@ -30,7 +31,6 @@ package com.l2jserver.gameserver.handlers.admincommandhandlers;		//[JOJO]
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.Shutdown;
 import com.l2jserver.gameserver.handler.IAdminCommandHandler;
@@ -109,10 +109,6 @@ public class AdminShutdown implements IAdminCommandHandler
 		adminReply.setFile(activeChar.getHtmlPrefix(), "data/html/admin/shutdown.htm");
 		adminReply.replace("%count%", L2World.getInstance().getAllPlayersCount());
 		adminReply.replace("%used%", String.format("%,3d", Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) );
-		adminReply.replace("%xp%", Config.RATE_XP);
-		adminReply.replace("%sp%", Config.RATE_SP);
-		adminReply.replace("%adena%", Config.RATE_DROP_ITEMS_ID.get(57));
-		adminReply.replace("%drop%", Config.RATE_DROP_ITEMS);
 		adminReply.replace("%time%", format.format(cal.getTime()));
 		activeChar.sendPacket(adminReply);
 	}

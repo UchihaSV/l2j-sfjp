@@ -191,7 +191,7 @@ public final class BuyListData extends DocumentParser
 					if (npcIds != null) {
 						for (int npcId : npcIds)
 						{
-							npcName.append(',').append(npcId).append("-").append(NpcTable.getInstance().getTemplate(npcId).getName());
+							npcName.append(',').append(npcId).append("-").append(NpcData.getInstance().getTemplate(npcId).getName());
 						}
 					}
 					if (npcName.length() > 0) npcName.deleteCharAt(0);

@@ -45,8 +45,8 @@ import com.l2jserver.gameserver.instancemanager.DayNightSpawnManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.L2Spawn;
-import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.StatsSet;
+import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.interfaces.IProcedure;
 import com.l2jserver.util.Util;
@@ -97,6 +97,13 @@ public final class SpawnTable extends DocumentParser
 			_log.info(getClass().getSimpleName() + ": Loaded " + _xmlSpawnCount + " npc spawns from XML. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		}
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public void load(String file)
+	{
+		parseDatapackFile(file);	// Call this.parseDocument()
+	}
+	//-------------------------------------------------------
 	
 	private boolean checkTemplate(int npcId)
 	{

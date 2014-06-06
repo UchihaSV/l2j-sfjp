@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import static com.l2jserver.util.Util.*;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -67,19 +69,33 @@ public class NpcData extends DocumentParser
 	@Override
 	public synchronized void load()
 	{
+		StringIntern.begin(getClass().getSimpleName());
+		long started;
+		started = System.currentTimeMillis();
 		parseDatapackDirectory("data/stats/npcs", false);
-		_log.info(getClass().getSimpleName() + ": Loaded " + _npcs.size() + " NPCs.");
+		_log.info(getClass().getSimpleName() + ": Loaded " + _npcs.size() + " NPCs. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		
 		if (Config.CUSTOM_NPC_DATA)
 		{
 			final int npcCount = _npcs.size();
+			started = System.currentTimeMillis();
 			parseDatapackDirectory("data/stats/npcs/custom", true);
-			_log.info(getClass().getSimpleName() + ": Loaded " + (_npcs.size() - npcCount) + " Custom NPCs.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + (_npcs.size() - npcCount) + " Custom NPCs. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		}
+		StringIntern.end();
 		
 		loadMinions();
 		loadNpcsSkillLearn();
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public void load(String file)
+	{
+		StringIntern.begin(getClass().getSimpleName());
+		parseDatapackFile(file);	// Call this.parseDocument()
+		StringIntern.end();
+	}
+	//-------------------------------------------------------
 	
 	@Override
 	protected void parseDocument()
@@ -108,6 +124,36 @@ public class NpcData extends DocumentParser
 						set.set("usingServerSideName", parseBoolean(attrs, "usingServerSideName"));
 						set.set("title", parseString(attrs, "title"));
 						set.set("usingServerSideTitle", parseBoolean(attrs, "usingServerSideTitle"));
+						
+						//[JOJO]-------------------------------------------------
+						final int displayId = set.getInt("displayId", npcId);
+						if (displayId != npcId) {
+							final L2NpcTemplate v = _npcs.get(displayId);
+							if (v != null) {
+								// Clone the visual data.
+								set.set("collision_radius",     v.getCollisionRadius());
+								set.set("collisionRadiusGrown", v.getCollisionRadiusGrown());
+								set.set("collision_height",     v.getCollisionHeight());
+								set.set("collisionHeightGrown", v.getCollisionHeightGrown());
+								set.set("canMove", v.canMove());
+								set.set("chestId", v.getChestId());
+								set.set("rhandId", v.getRHandId());
+								set.set("lhandId", v.getLHandId());
+								if (set.getString("name", null) == null)
+									set.set("name", v.getName());
+								else
+									set.set("usingServerSideName", true);
+								if (set.getString("title", null) == null)
+									set.set("title", v.getTitle());
+								else
+									set.set("usingServerSideTitle", true);
+							}
+							else {
+								_log.warning("NpcData: Undefined displayId in " + getCurrentFile().getName() + " <npc id=" + npcId + " displayId=" + displayId + " ...>");
+							}
+						}
+						//-------------------------------------------------------
+						
 						for (Node npc_node = list_node.getFirstChild(); npc_node != null; npc_node = npc_node.getNextSibling())
 						{
 							attrs = npc_node.getAttributes();
@@ -697,13 +743,14 @@ public class NpcData extends DocumentParser
 			final List<ClassId> teachInfo = SkillLearnData.getInstance().getSkillLearnData(template.getId());
 			if (teachInfo != null)
 			{
-				template.addTeachInfo(teachInfo);
+				template.setTeachInfo(teachInfo);
 			}
 		}
 	}
 	
 	public void loadMinions()
 	{
+		long started = System.currentTimeMillis();
 		final String query = SELECT_MINION_ALL;
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			Statement statement = con.createStatement())
@@ -733,7 +780,7 @@ public class NpcData extends DocumentParser
 					count++;
 				}
 			}
-			_log.info(getClass().getSimpleName() + ": Loaded " + count + " Minions.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + count + " Minions. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		}
 		catch (Exception e)
 		{

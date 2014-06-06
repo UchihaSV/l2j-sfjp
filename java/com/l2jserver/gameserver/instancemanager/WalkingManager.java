@@ -36,7 +36,7 @@ import org.w3c.dom.Node;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlIntention;
-import com.l2jserver.gameserver.datatables.NpcTable;
+import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.engines.DocumentParser;
 import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.idfactory.IdFactory;
@@ -203,8 +203,12 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 							NpcRoutesHolder holder = _routesToAttach.get(npcId); if (holder == null) holder = new NpcRoutesHolder();
 							holder.addRoute(routeName, new Location(x, y, z));
 							_routesToAttach.put(npcId, holder);
-							if (NpcTable.getInstance().getTemplate(npcId).getAIDataStatic().getCanMove() == 0)
-								_log.log(Level.WARNING, "WARNING: __BASENAME__:__LINE__: " + npcId + NpcTable.getInstance().getTemplate(npcId).getName() + " canMove is 0");	//+[JOJO]
+							
+							final L2NpcTemplate t = NpcData.getInstance().getTemplate(npcId);
+							if (t == null)
+								_log.log(Level.WARNING, "__BASENAME__: Unknown npc. " + getCurrentFile().getName() + " <target id=" + npcId + " spawnX=" + x + " spawnY=" + y + " spawnZ=" + z + " />");	//+[JOJO]
+							else if (!t.canMove())
+								_log.log(Level.WARNING, "__BASENAME__: Not canMove npc. " + getCurrentFile().getName() + " <target id=" + npcId + " spawnX=" + x + " spawnY=" + y + " spawnZ=" + z + " />");	//+[JOJO]
 						}
 						catch (Exception e)
 						{
@@ -502,7 +506,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 					}
 					else if ((chatText = node.getChatText()) != null && !chatText.isEmpty())
 					{
-						Broadcast.toKnownPlayers(npc, npc.getTemplate().isServerSideName()
+						Broadcast.toKnownPlayers(npc, npc.getTemplate().isUsingServerSideName()
 							? new CreatureSay(npc, Say2.NPC_ALL, chatText)
 							: new NpcSay(npc, Say2.NPC_ALL, chatText));
 					}
@@ -589,7 +593,7 @@ if (com.l2jserver.Config.NEVER_WALKER_AI_onArrived) {{
 			final String name = route.getName();
 			final List<L2NpcWalkerNode> WALKS = route.getNodeList();
 			assert WALKS instanceof ArrayList;
-			final L2NpcTemplate markerNpcTemplate = NpcTable.getInstance().getTemplate(MARKER_NPC);
+			final L2NpcTemplate markerNpcTemplate = NpcData.getInstance().getTemplate(MARKER_NPC);
 			int length = WALKS.size();
 			for (int index = 0; index < length; ++index) {
 				L2NpcWalkerNode node = WALKS.get(index);
@@ -656,7 +660,7 @@ if (com.l2jserver.Config.NEVER_WALKER_AI_onArrived) {{
 					if (routeName.equals(route.getName())) {
 						String[] spawn = uniqueKey.split(",");
 						final int npcId = a.getKey();
-						final L2NpcTemplate t = NpcTable.getInstance().getTemplate(npcId);
+						final L2NpcTemplate t = NpcData.getInstance().getTemplate(npcId);
 						System.out.println("\t<target id=" + npcId + " spawnX=" + spawn[0] + " spawnY=" + spawn[1] + " spawnZ=" + spawn[2] + " /> <!-- " + (t.getTitle() + " " + t.getName()).trim() + " -->");
 					}
 				}
