@@ -38,6 +38,7 @@ public class StringIntern
 			if (_stringSet != null)
 				throw new RuntimeException();
 			_stringSet = new FastMap<>();
+			_stringSet.put("", "");
 		}
 	}
 	
@@ -58,7 +59,7 @@ public class StringIntern
 	public static void end()
 	{
 		if (Config.STRING_INTERN) {
-			if (_stringSet == null || _stringSet.size() == 0)
+			if (_stringSet == null)
 				throw new RuntimeException();
 			_stringSet = null;
 			_name = null;

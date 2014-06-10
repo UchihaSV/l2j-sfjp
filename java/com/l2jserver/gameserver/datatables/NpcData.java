@@ -70,6 +70,7 @@ public class NpcData extends DocumentParser
 	public synchronized void load()
 	{
 		StringIntern.begin(getClass().getSimpleName());
+		StringIntern.intern("L2Npc");
 		long started;
 		started = System.currentTimeMillis();
 		parseDatapackDirectory("data/stats/npcs", false);
@@ -652,6 +653,13 @@ public class NpcData extends DocumentParser
 		}
 		return null;
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public ArrayList<L2NpcTemplate> toArrayList()
+	{
+		return new ArrayList<>(_npcs.values());
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * Gets the all of level.
