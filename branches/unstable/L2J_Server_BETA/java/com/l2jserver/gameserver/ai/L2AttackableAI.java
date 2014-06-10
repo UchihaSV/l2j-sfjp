@@ -760,12 +760,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 		{
 			int factionRange = npc.getTemplate().getClanHelpRange() + collision;
 			// Go through all L2Object that belong to its faction
-			Collection<L2Object> objs;
-if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
-			objs = npc.getWorldRegion().getVisibleObjects().values();
-}} else {{
-			objs = npc.getKnownList().getKnownObjects().values();
-}}
+			Collection<L2Object> objs = npc.getKnownList().getKnownObjects().values();
 			
 			try
 			{
@@ -775,16 +770,6 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					{
 						L2Npc called = (L2Npc) obj;
 						
-if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
-						if (npc == called)
-							continue;
-						if (!Util.checkIfInShortRadius(factionRange, npc, called, false))
-							continue;
-					/*	if (!Util.checkIfInRange(npc.getFactionRange(), npc, called, false))
-							continue;	*/
-					/*	if (Math.abs(originalAttackTarget.getZ() - called.getZ()) >= 600)
-							continue;	*/
-}}
 						boolean sevenSignFaction = false;
 						
 						// TODO: Unhardcode this by AI scripts (DrHouse)

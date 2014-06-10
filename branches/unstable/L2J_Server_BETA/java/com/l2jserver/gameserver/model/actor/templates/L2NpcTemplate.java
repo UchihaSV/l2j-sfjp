@@ -95,6 +95,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	private AIType _aiType;
 	private int _aggroRange;
 	private int _clanHelpRange;
+	private int _knownRange;	//+[JOJO]
 	private int _dodge;
 	private boolean _isChaos;
 	private boolean _isAggressive;
@@ -190,6 +191,15 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		
 		_collisionRadiusGrown = set.getDouble("collisionRadiusGrown", 0);
 		_collisionHeightGrown = set.getDouble("collisionHeightGrown", 0);
+		
+		//[JOJO]-------------------------------------------------
+		// AttackableKnownList.getDistanceToWatchObject(L2Object)
+		// int max = Math.max(300, Math.max(getActiveChar().getAggroRange(), getActiveChar().getTemplate().getClanHelpRange()));
+		_knownRange = 300;
+		if (_knownRange < _aggroRange) _knownRange = _aggroRange;
+		if (_knownRange < _clanHelpRange) _knownRange = _clanHelpRange;
+		if (!_isAggressive) _aggroRange = 0;
+		//-------------------------------------------------------
 	}
 	
 	@Override
@@ -373,6 +383,13 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		return _clanHelpRange;
 	}
 	
+	//[JOJO]-------------------------------------------------
+	public int getKnownRange()
+	{
+		return _knownRange;
+	}
+	//-------------------------------------------------------
+	
 	public int getDodge()
 	{
 		return _dodge;
@@ -461,7 +478,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	 * @param clanNames clan names to check if they belong to this NPC template clans.
 	 * @return {@code true} if at least one of the clan names belong to this NPC template clans, {@code false} otherwise.
 	 */
-	public boolean isClan(String clanName, String... clanNames)
+	public boolean isClan(String... clanNames)
 	{
 		// Using local variable for the sake of reloading since it can be turned to null.
 		final Set<Integer> clans = _clans;
@@ -472,12 +489,6 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		}
 		
 		int clanId = NpcData.getInstance().getClanId("ALL");
-		if (clans.contains(clanId))
-		{
-			return true;
-		}
-		
-		clanId = NpcData.getInstance().getClanId(clanName);
 		if (clans.contains(clanId))
 		{
 			return true;
@@ -542,7 +553,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	 * @param clanNames clan names to check if they belong to this NPC template enemy clans.
 	 * @return {@code true} if at least one of the clan names belong to this NPC template enemy clans, {@code false} otherwise.
 	 */
-	public boolean isEnemyClan(String clanName, String... clanNames)
+	public boolean isEnemyClan(String... clanNames)
 	{
 		// Using local variable for the sake of reloading since it can be turned to null.
 		final Set<Integer> enemyClans = _enemyClans;
@@ -553,12 +564,6 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		}
 		
 		int clanId = NpcData.getInstance().getClanId("ALL");
-		if (enemyClans.contains(clanId))
-		{
-			return true;
-		}
-		
-		clanId = NpcData.getInstance().getClanId(clanName);
 		if (enemyClans.contains(clanId))
 		{
 			return true;

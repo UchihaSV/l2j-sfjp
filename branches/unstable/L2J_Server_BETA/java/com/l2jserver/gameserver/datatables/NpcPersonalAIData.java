@@ -21,9 +21,9 @@ package com.l2jserver.gameserver.datatables;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.actor.L2Npc;
-import com.l2jserver.util.Rnd;
 
 /**
  * This class holds parameter, specific to certain NPCs.<br>
@@ -33,6 +33,7 @@ import com.l2jserver.util.Rnd;
 public class NpcPersonalAIData
 {
 	private final Map<String, Map<String, Integer>> _AIData = new HashMap<>();
+	private long randomName;
 	
 	/**
 	 * Instantiates a new table.
@@ -48,12 +49,16 @@ public class NpcPersonalAIData
 	 */
 	public void storeData(L2Spawn spawnDat, Map<String, Integer> data)
 	{
-		if ((data != null) && !data.isEmpty())
+		if (data != null && !data.isEmpty())
 		{
 			// check for spawn name. Since spawn name is key for AI Data, generate random name, if spawn name isn't specified
 			if (spawnDat.getName() == null)
 			{
-				spawnDat.setName(Long.toString(Rnd.nextLong()));
+				String spawnName;
+				do
+					spawnName = Long.toString(++randomName);
+				while (_AIData.containsKey(spawnName));
+				spawnDat.setName(spawnName);
 			}
 			
 			_AIData.put(spawnDat.getName(), data);
@@ -68,7 +73,16 @@ public class NpcPersonalAIData
 	 */
 	public int getAIValue(String spawnName, String paramName)
 	{
-		return hasAIValue(spawnName, paramName) ? _AIData.get(spawnName).get(paramName) : -1;
+		return getAIValue(spawnName, paramName, -1);
+	}
+	public int getAIValue(String spawnName, String paramName, int defaultValue)
+	{
+		if (spawnName == null) return defaultValue;
+		final Map<String, Integer> map = _AIData.get(spawnName);
+		if (map == null) return defaultValue;
+		final Integer val = map.get(paramName);
+		if (val == null) return defaultValue;
+		return val;
 	}
 	
 	/**
@@ -79,7 +93,8 @@ public class NpcPersonalAIData
 	 */
 	public boolean hasAIValue(String spawnName, String paramName)
 	{
-		return (spawnName != null) && _AIData.containsKey(spawnName) && _AIData.get(spawnName).containsKey(paramName);
+		final Map<String, Integer> map;
+		return spawnName != null && (map = _AIData.get(spawnName)) != null && map.get(paramName) != null;
 	}
 	
 	/**
@@ -90,22 +105,24 @@ public class NpcPersonalAIData
 	 */
 	public void initializeNpcParameters(L2Npc npc, L2Spawn spawn, String spawnName)
 	{
-		if (_AIData.containsKey(spawnName))
+		final Map<String, Integer> map;
+		if ((map = _AIData.get(spawnName)) != null)
 		{
-			Map<String, Integer> map = _AIData.get(spawnName);
-			
 			try
 			{
 				for (String key : map.keySet())
 				{
+					final int val;
 					switch (key)
 					{
 						case "disableRandomAnimation":
-							npc.setRandomAnimationEnabled((map.get(key) == 0));
+							val = map.get(key);
+							npc.setRandomAnimationEnabled(val == 0);
 							break;
 						case "disableRandomWalk":
-							npc.setIsNoRndWalk((map.get(key) == 1));
-							spawn.setIsNoRndWalk((map.get(key) == 1));
+							val = map.get(key);
+							npc.setIsNoRndWalk(val == 1);
+							spawn.setIsNoRndWalk(val == 1);
 							break;
 					}
 				}

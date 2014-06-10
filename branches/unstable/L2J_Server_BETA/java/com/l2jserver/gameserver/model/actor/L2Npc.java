@@ -561,25 +561,9 @@ public class L2Npc extends L2Character
 	 */
 	public int getAggroRange()
 	{
-		return (hasAIValue("aggroRange") ? getAIValue("aggroRange") : getTemplate().getAggroRange()) & _aggroMask;	//+[JOJO]
+		return getAIValue("aggroRange", getTemplate().getAggroRange());								//+[JOJO]
 	//	return hasAIValue("aggroRange") ? getAIValue("aggroRange") : getTemplate().getAggroRange();	//-[JOJO]
 	}
-	
-	//[JOJO]-------------------------------------------------
-	int _aggroMask = -1;	//[JOJO]
-	public void aggroDisable()	//[JOJO]
-	{
-		_aggroMask = 0;
-	}
-	public void setAggroEnable()	//[JOJO]
-	{
-		_aggroMask = -1;
-	}
-	public void setAggroEnable(long delay)	//[JOJO]
-	{
-		ThreadPoolManager.getInstance().scheduleGeneral(new Runnable(){ @Override public void run(){ _aggroMask = -1; }}, delay);
-	}
-	//-------------------------------------------------------
 	
 	public boolean isInMyClan(L2Npc npc)
 	{
@@ -1945,7 +1929,17 @@ public class L2Npc extends L2Character
 	 */
 	public int getAIValue(final String paramName)
 	{
-		return hasAIValue(paramName) ? NpcPersonalAIData.getInstance().getAIValue(getSpawn().getName(), paramName) : -1;
+		return getAIValue(paramName, -1);
+	}
+	public int getAIValue(final String paramName, int defaultValue)
+	{
+		final L2Spawn spawn = getSpawn();
+		if (spawn == null)
+			return defaultValue;
+		final String name = spawn.getName();
+		if (name == null)
+			return defaultValue;
+		return NpcPersonalAIData.getInstance().getAIValue(name, paramName, defaultValue);
 	}
 	
 	/**
@@ -1954,7 +1948,9 @@ public class L2Npc extends L2Character
 	 */
 	public boolean hasAIValue(final String paramName)
 	{
-		return (getSpawn() != null) && (getSpawn().getName() != null) && NpcPersonalAIData.getInstance().hasAIValue(getSpawn().getName(), paramName);
+		final L2Spawn spawn;
+		final String name;
+		return (spawn = getSpawn()) != null && (name = spawn.getName()) != null && NpcPersonalAIData.getInstance().hasAIValue(name, paramName);
 	}
 	
 	/**
@@ -1963,7 +1959,8 @@ public class L2Npc extends L2Character
 	 */
 	public boolean isInMySpawnGroup(L2Npc npc)
 	{
-		return ((getSpawn() != null) && (npc.getSpawn() != null) && (getSpawn().getName() != null) && (getSpawn().getName().equals(npc.getSpawn().getName())));
+		final L2Spawn mySpawn, npcSpawn;
+		return (mySpawn = getSpawn()) != null && (npcSpawn = npc.getSpawn()) != null && mySpawn.getName() != null && mySpawn.getName().equals(npcSpawn.getName());
 	}
 	
 	/**
@@ -1971,7 +1968,8 @@ public class L2Npc extends L2Character
 	 */
 	public boolean staysInSpawnLoc()
 	{
-		return ((getSpawn() != null) && (getSpawn().getX(this) == getX()) && (getSpawn().getY(this) == getY()));
+		final L2Spawn spawn;
+		return (spawn = getSpawn()) != null && spawn.getX(this) == getX() && spawn.getY(this) == getY();
 	}
 	
 	/**

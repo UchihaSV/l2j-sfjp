@@ -77,10 +77,6 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 	{
 		_isInSocialAction = value;
 		setIsInvul(value);
-		if (value)
-			aggroDisable();
-		else
-			setAggroEnable(Rnd.get(30000, 60000));
 	}
 	// L2J_JP ADD SANDMAN END
 	//-------------------------------------------------------
