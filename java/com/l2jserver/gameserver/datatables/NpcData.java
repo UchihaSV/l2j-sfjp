@@ -34,6 +34,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jp.sf.l2j.troja.FastIntObjectMap;
+
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -57,6 +59,7 @@ public class NpcData extends DocumentParser
 	
 	private final Map<Integer, L2NpcTemplate> _npcs = new ConcurrentHashMap<>();
 	private final Map<String, Integer> _clans = new ConcurrentHashMap<>();
+	private final FastIntObjectMap<String> _clanNames = new FastIntObjectMap<>();	//+[JOJO]
 	
 	// SQL Queries
 	private static final String SELECT_MINION_ALL = "SELECT * FROM minions ORDER BY boss_id";
@@ -611,7 +614,9 @@ public class NpcData extends DocumentParser
 		if (id == null)
 		{
 			id = _clans.size();
-			_clans.put(clanName.toUpperCase(), id);
+			String name = clanName.toUpperCase();
+			_clans.put(name, id);
+			_clanNames.put(id, name);
 		}
 		return id;
 	}
@@ -626,6 +631,24 @@ public class NpcData extends DocumentParser
 		Integer id = _clans.get(clanName.toUpperCase());
 		return id != null ? id : -1;
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public String clansToString(Set<Integer> clans)
+	{
+		if (clans == null || clans.size() == 0)
+			return "null";
+		else if (clans.size() == 1)
+			return _clanNames.get(clans.iterator().next());
+		else {
+			StringBuilder sb = new StringBuilder();
+			for (Integer id : clans)
+				sb.append(_clanNames.get(id)).append(';');
+			int length = sb.length();
+			sb.delete(length - 1, length);
+			return sb.toString();
+		}
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * Gets the template.
