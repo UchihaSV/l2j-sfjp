@@ -30,6 +30,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
+import javolution.util.FastMap;
+
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.datatables.SpawnTable;
@@ -41,6 +43,7 @@ import com.l2jserver.gameserver.enums.Sex;
 import com.l2jserver.gameserver.model.L2MinionData;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.StatsSet;
+import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
@@ -174,7 +177,8 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		_clanHelpRange = set.getInt("clanHelpRange", 0);
 		_dodge = set.getInt("dodge", 0);
 		_isChaos = set.getBoolean("isChaos", false);
-		_isAggressive = set.getBoolean("isAggressive", true);
+		_isAggressive = set.getBoolean("isAggressive", instanceofL2Attackable(_type));
+	//	_isAggressive = set.getBoolean("isAggressive", true);
 		
 		_soulShot = set.getInt("soulShot", 0);
 		_spiritShot = set.getInt("spiritShot", 0);
@@ -193,13 +197,38 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		_collisionHeightGrown = set.getDouble("collisionHeightGrown", 0);
 		
 		//[JOJO]-------------------------------------------------
+		// L2J_Server_BETA rev.6388 L2J_DataPack_BETA rev.10173
+		// npc.sql の `aggro` フィールドが XML に正しくコンバートされていない不具合の補正.
 		// AttackableKnownList.getDistanceToWatchObject(L2Object)
 		// int max = Math.max(300, Math.max(getActiveChar().getAggroRange(), getActiveChar().getTemplate().getClanHelpRange()));
 		_knownRange = 300;
 		if (_knownRange < _aggroRange) _knownRange = _aggroRange;
 		if (_knownRange < _clanHelpRange) _knownRange = _clanHelpRange;
+		switch (_type) {
+			case "L2ControllableMob":
+			case "L2FestivalMonster":
+			case "L2FriendlyMob":
+				// @Override public boolean isAggressive()
+				_isAggressive = true;
+		}
 		if (!_isAggressive) _aggroRange = 0;
 		//-------------------------------------------------------
+	}
+	
+	private static FastMap<String, Boolean> _instanceofL2AttackableCache;
+	private boolean instanceofL2Attackable(String type)
+	{
+		if (type == null) return false;
+		if (_instanceofL2AttackableCache == null)
+			_instanceofL2AttackableCache = new FastMap<>();
+		final Boolean b;
+		if ((b = _instanceofL2AttackableCache.get(type)) != null)
+			return b;
+		try {
+			final boolean a = L2Attackable.class.isAssignableFrom(Class.forName("com.l2jserver.gameserver.model.actor.instance." + type + "Instance"));
+			_instanceofL2AttackableCache.put(type, a);
+			return a;
+		} catch (ClassNotFoundException e) {return false;}
 	}
 	
 	@Override
@@ -478,7 +507,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	 * @param clanNames clan names to check if they belong to this NPC template clans.
 	 * @return {@code true} if at least one of the clan names belong to this NPC template clans, {@code false} otherwise.
 	 */
-	public boolean isClan(String... clanNames)
+	@Deprecated public boolean isClan(String clanName, String... clanNames)	//[JOJO] +@Deprecated
 	{
 		// Using local variable for the sake of reloading since it can be turned to null.
 		final Set<Integer> clans = _clans;
@@ -489,6 +518,12 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		}
 		
 		int clanId = NpcData.getInstance().getClanId("ALL");
+		if (clans.contains(clanId))
+		{
+			return true;
+		}
+		
+		clanId = NpcData.getInstance().getClanId(clanName);
 		if (clans.contains(clanId))
 		{
 			return true;
@@ -553,7 +588,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	 * @param clanNames clan names to check if they belong to this NPC template enemy clans.
 	 * @return {@code true} if at least one of the clan names belong to this NPC template enemy clans, {@code false} otherwise.
 	 */
-	public boolean isEnemyClan(String... clanNames)
+	@Deprecated public boolean isEnemyClan(String clanName, String... clanNames)
 	{
 		// Using local variable for the sake of reloading since it can be turned to null.
 		final Set<Integer> enemyClans = _enemyClans;
@@ -564,6 +599,12 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		}
 		
 		int clanId = NpcData.getInstance().getClanId("ALL");
+		if (enemyClans.contains(clanId))
+		{
+			return true;
+		}
+		
+		clanId = NpcData.getInstance().getClanId(clanName);
 		if (enemyClans.contains(clanId))
 		{
 			return true;

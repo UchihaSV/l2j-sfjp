@@ -770,6 +770,10 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 					{
 						L2Npc called = (L2Npc) obj;
 						
+if (com.l2jserver.Config.FIX_C_DUNGEON_FACTION_CALL) {{
+						if (!getActiveChar().isInMyClan(called))
+							continue;
+}} else {{
 						boolean sevenSignFaction = false;
 						
 						// TODO: Unhardcode this by AI scripts (DrHouse)
@@ -783,6 +787,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 						{
 							continue;
 						}
+}}
 						
 						// Check if the L2Object is inside the Faction Range of the actor
 						if (npc.isInsideRadius(called, factionRange, true, false) && called.hasAI())
