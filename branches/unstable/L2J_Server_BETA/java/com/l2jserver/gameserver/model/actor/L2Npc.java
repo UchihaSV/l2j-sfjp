@@ -473,6 +473,12 @@ public class L2Npc extends L2Character
 		// initialize the "current" collisions
 		_currentCollisionHeight = getTemplate().getfCollisionHeight();
 		_currentCollisionRadius = getTemplate().getfCollisionRadius();
+		
+if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
+		// Set the name of the L2Character
+		setName(template.getName());	//[JOJO] revert r6367
+		setTitle(template.getTitle());	//[JOJO]+
+}}
 	}
 	
 	@Override
@@ -2104,7 +2110,11 @@ public class L2Npc extends L2Character
 	@Override
 	public final String getName()
 	{
+if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
+		return super.getName();
+}} else {{
 		return getTemplate().getName();
+}}
 	}
 }
 
