@@ -215,6 +215,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		//-------------------------------------------------------
 	}
 	
+	//[JOJO]-------------------------------------------------
 	private static FastMap<String, Boolean> _instanceofL2AttackableCache;
 	private boolean instanceofL2Attackable(String type)
 	{
@@ -230,6 +231,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 			return a;
 		} catch (ClassNotFoundException e) {return false;}
 	}
+	//-------------------------------------------------------
 	
 	@Override
 	public int getId()

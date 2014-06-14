@@ -258,4 +258,32 @@ public class Util
 			return false;
 		}
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public static CharSequence concat_ws(String separator, String a, String b)
+	{
+		if (a != null && a.length() > 0) {
+			if (b != null && b.length() > 0)
+				return a + separator + b;
+			else
+				return a;
+		}
+		if (b != null) {
+			return b;
+		}
+		return "";
+	}
+	public static CharSequence concat_ws(String separator, String[] strings)
+	{
+		StringBuilder result = new StringBuilder();
+		for (String s : strings)
+		{
+			if (s != null && !s.isEmpty()) {
+				if (result.length() > 0) result.append(separator);
+				result.append(s);
+			}
+		}
+		return result;
+	}
+	//-------------------------------------------------------
 }

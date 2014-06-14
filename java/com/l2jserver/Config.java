@@ -1219,6 +1219,7 @@ public final class Config
 	public static final boolean FIX_FAKEDEATH_EXIT = true;				//[JOJO]フェイク デス中断・終了処理
 	public static final boolean NEVER_addAggroRangeEnterId_IF_0 = true;	//[JOJO]aggro値が0のモンスターはaddAggroRangeEnterIdを無視.
 	public static final boolean FIX_C_DUNGEON_FACTION_CALL = true;		//[JOJO]npc.sql --> xml化時の不具合.
+	public static final boolean FIX_NPC_NAME_AND_TITLE = true;			//[JOJO]NPCのsetName(),setTitle()が反映されない不具合の修正.
 	
 
 	//

@@ -96,10 +96,36 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			_collisionHeight = cha.getCollisionHeight();// On every subclass
 			_collisionRadius = cha.getCollisionRadius();// On every subclass
 			_isAttackable = cha.isAutoAttackable(attacker);
+if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
+			_name = cha.getName() != cha.getTemplate().getName() || cha.getTemplate().isUsingServerSideName() ? cha.getName() : null;
+			      
+			if (Config.L2JMOD_CHAMPION_ENABLE && cha.isChampion())
+			{
+				_title = (Config.L2JMOD_CHAMP_TITLE); // On every subclass
+			}
+			else
+			{
+				_title = cha.getTitle() != cha.getTemplate().getTitle() || cha.getTemplate().isUsingServerSideTitle() ? cha.getTitle() : null;
+			}
+}} else {{
 			if (cha.getTemplate().isUsingServerSideName())
 			{
 				_name = cha.getName();// On every subclass
 			}
+			
+			if (Config.L2JMOD_CHAMPION_ENABLE && cha.isChampion())
+			{
+				_title = (Config.L2JMOD_CHAMP_TITLE); // On every subclass
+			}
+			else if (cha.getTemplate().isUsingServerSideTitle())
+			{
+				_title = cha.getTemplate().getTitle(); // On every subclass
+			}
+			else
+			{
+				_title = cha.getTitle(); // On every subclass
+			}
+}}
 			//[JOJO]-------------------------------------------------
 			L2TamedBeastInstance tamedBeast;
 			if (cha instanceof L2TamedBeastInstance && (tamedBeast = (L2TamedBeastInstance) cha).nameId > 0)
@@ -109,23 +135,27 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			}
 			//-------------------------------------------------------
 			
-			if (Config.L2JMOD_CHAMPION_ENABLE && cha.isChampion())
-			{
-				_title = (Config.L2JMOD_CHAMP_TITLE); // On every subclass
-			}
-			else if ((_title = cha.getTitle()) == null && cha.getTemplate().isUsingServerSideTitle())	//[JOJO] Title can change L2Character#setTitle()
-			{
-				_title = cha.getTemplate().getTitle(); // On every subclass
-			}
-			
 			if (Config.SHOW_NPC_LVL && (_npc instanceof L2MonsterInstance))
 			{
+if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 				StringBuilder t = new StringBuilder(32).append("Lv ").append(cha.getLevel());
 				if (cha.getAggroRange() > 0)
 					t.append('*');
 				if (_title != null)
 					t.append(' ').append(_title);
+				else if (cha.getTitle().length()> 0)
+					t.append(' ').append(cha.getTitle());
+				
 				_title = t.toString();
+}} else {{
+				String t = "Lv " + cha.getLevel() + (cha.getAggroRange() > 0 ? "*" : "");
+				if (_title != null)
+				{
+					t += " " + _title;
+				}
+				
+				_title = t;
+}}
 			}
 			
 			// npc crest of owning clan/ally of castle
