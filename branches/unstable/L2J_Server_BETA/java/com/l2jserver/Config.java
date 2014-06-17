@@ -1194,6 +1194,7 @@ public final class Config
 	public static final boolean NEVER_WALKER_ReturnToSpawnPoint = true;	//[JOJO]WalkingManager対策 - 帰巣させない.
 	public static final boolean NEVER_WALKER_RandomAnimation = true;	//[JOJO]WalkingManager対策 - あくびさせない.
 	public static final boolean NEVER_WALKER_AI_onArrived = true;		//[JOJO]WalkingManager対策 - 歩行ルートのノードポイントでの無駄なAI動作省略.
+	public static final boolean FIX_ATTACKABLE_AI_FACTION_CALL = true;	//[JOJO]同族モンスターをリンクさせる.
 	public static final boolean STRING_INTERN = true;					//[JOJO]
 	public static final boolean MOD_AURA = true;						//[JOJO]英雄とは無関係に英雄オーラを発する.
 	public static final boolean ADMIN_VIEW_NPC_STATUS = true;			//[JOJO]NPCをSHIFTクリックしたときNPCの状態を詳細表示する.
