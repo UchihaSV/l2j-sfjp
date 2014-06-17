@@ -756,7 +756,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 		// Handle all L2Object of its Faction inside the Faction Range
 		
 		Set<Integer> clans = getActiveChar().getTemplate().getClans();
-		if ((clans != null) && !clans.isEmpty())
+		if ((clans != null) && !clans.isEmpty() && npc.getAttackByList().contains(originalAttackTarget))
 		{
 			int factionRange = npc.getTemplate().getClanHelpRange() + collision;
 			// Go through all L2Object that belong to its faction
@@ -797,7 +797,7 @@ if (com.l2jserver.Config.FIX_C_DUNGEON_FACTION_CALL) {{
 						// Check if the L2Object is inside the Faction Range of the actor
 						if (npc.isInsideRadius(called, factionRange, true, false) && called.hasAI())
 						{
-							if ((Math.abs(originalAttackTarget.getZ() - called.getZ()) < 600) && npc.getAttackByList().contains(originalAttackTarget) && ((called.getAI()._intention == CtrlIntention.AI_INTENTION_IDLE) || (called.getAI()._intention == CtrlIntention.AI_INTENTION_ACTIVE)) && (called.getInstanceId() == npc.getInstanceId()))
+							if ((Math.abs(originalAttackTarget.getZ() - called.getZ()) < 600) && ((called.getAI()._intention == CtrlIntention.AI_INTENTION_IDLE) || (called.getAI()._intention == CtrlIntention.AI_INTENTION_ACTIVE)) && (called.getInstanceId() == npc.getInstanceId()))	/*[JOJO] && npc.getAttackByList().contains(originalAttackTarget) --> ÉãÅ[ÉvÇÃäOÇ…à⁄ìÆ*/
 							// && GeoData.getInstance().canSeeTarget(called, npc))
 							{
 								if (originalAttackTarget.isPlayable())
