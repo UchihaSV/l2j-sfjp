@@ -1227,7 +1227,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			// target is mob
 			if ((targetPlayer == null) && (target instanceof L2Attackable) && (caster instanceof L2Attackable))
 			{
-				if (((L2Attackable) caster).isInEnemyClan((L2Attackable) target))
+				if (!((L2Attackable) caster).isInEnemyClan((L2Attackable) target))
 				{
 					return false;
 				}
