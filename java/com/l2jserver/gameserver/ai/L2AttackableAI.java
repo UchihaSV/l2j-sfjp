@@ -760,7 +760,12 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 		{
 			int factionRange = npc.getTemplate().getClanHelpRange() + collision;
 			// Go through all L2Object that belong to its faction
-			Collection<L2Object> objs = npc.getKnownList().getKnownObjects().values();
+			Collection<L2Object> objs;
+if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
+			objs = originalAttackTarget.getKnownList().getKnownObjects().values();
+}} else {{
+			objs = npc.getKnownList().getKnownObjects().values();
+}}
 			
 			try
 			{
