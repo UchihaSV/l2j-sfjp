@@ -19,8 +19,11 @@
 package com.l2jserver.gameserver.model.actor.knownlist;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
+import javolution.util.FastList;
 import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.model.L2Object;
@@ -218,4 +221,29 @@ public class ObjectKnownList
 		}
 		return _knownObjects;
 	}
+	
+	//[JOJO]-------------------------------------------------
+	@SuppressWarnings("unchecked")
+	public <T extends L2Object> Collection<T> getKnowns(Class<T> type)
+	{
+		FastList<T> result = null;
+		
+		for (L2Object obj : getKnownObjects().values())
+			if (type.isInstance(obj))
+			{
+				if (result == null)
+					result = new FastList<>();
+				result.add((T) obj);
+			}
+		return (Collection<T>) (result != null ? result : Collections.emptyList());
+	}
+	
+	public <T extends L2Object> boolean hasKnowns(Class<T> type)
+	{
+		for (L2Object obj : getKnownObjects().values())
+			if (type.isInstance(obj))
+				return true;
+		return false;
+	}
+	//-------------------------------------------------------
 }
