@@ -3119,7 +3119,7 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 				spawn.setHeading(heading);
 				spawn.setX(x);
 				spawn.setY(y);
-				spawn.setZ(z + com.l2jserver.Config.NPC_SPAWN_Z_MARGIN);
+				spawn.setZ(z);
 				spawn.stopRespawn();
 				L2Npc result = spawn.spawnOne(isSummonSpawn);
 				

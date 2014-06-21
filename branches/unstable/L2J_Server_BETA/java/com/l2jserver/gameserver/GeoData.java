@@ -182,7 +182,7 @@ public class GeoData implements IGeoDriver
 	public int getSpawnHeight(int x, int y, int zmin, int zmax)
 	{
 		// + 30, defend against defective geodata and invalid spawn z :(
-		return getNextLowerZ(getGeoX(x), getGeoY(y), zmax + 30);
+		return getNextLowerZ(getGeoX(x), getGeoY(y), zmax + com.l2jserver.Config.NPC_SPAWN_Z_MARGIN);
 	}
 	
 	/**
