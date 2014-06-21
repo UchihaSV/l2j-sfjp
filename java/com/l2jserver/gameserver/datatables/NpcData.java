@@ -18,6 +18,7 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import static com.l2jserver.gameserver.datatables.StringIntern.*;
 import static com.l2jserver.util.Util.*;
 
 import java.sql.Connection;
@@ -30,11 +31,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -57,9 +58,7 @@ public class NpcData extends DocumentParser
 {
 	private static final Logger _log = Logger.getLogger(NpcData.class.getName());
 	
-	private final Map<Integer, L2NpcTemplate> _npcs = new ConcurrentHashMap<>();
-	private final Map<String, Integer> _clans = new ConcurrentHashMap<>();
-	private final FastIntObjectMap<String> _clanNames = new FastIntObjectMap<>();	//+[JOJO]
+	private final FastIntObjectMap<L2NpcTemplate> _npcs = new FastIntObjectMap<>();	//[JOJO] -ConcurrentHashMap
 	
 	// SQL Queries
 	private static final String SELECT_MINION_ALL = "SELECT * FROM minions ORDER BY boss_id";
@@ -74,6 +73,7 @@ public class NpcData extends DocumentParser
 	{
 		StringIntern.begin(getClass().getSimpleName());
 		StringIntern.intern("L2Npc");
+		StringIntern.intern("ALL");
 		long started;
 		started = System.currentTimeMillis();
 		parseDatapackDirectory("data/stats/npcs", false);
@@ -117,8 +117,8 @@ public class NpcData extends DocumentParser
 						final int npcId = parseInteger(attrs, "id");
 						Map<String, Object> parameters = null;
 						List<L2Skill> skills = null;
-						Set<Integer> clans = null;
-						Set<Integer> enemyClans = null;
+						Set<String> clans = null;
+						Set<String> enemyClans = null;
 						Map<DropListScope, List<IDropItem>> dropLists = null;
 						set.set("id", npcId);
 						set.set("displayId", parseInteger(attrs, "displayId"));
@@ -430,7 +430,7 @@ public class NpcData extends DocumentParser
 															{
 																clans = new HashSet<>(1);
 															}
-															clans.add(getOrCreateClanId(clan_list_node.getTextContent()));
+															clans.add(intern(clan_list_node.getTextContent()));
 															break;
 														}
 														case "enemy_clan":
@@ -439,7 +439,7 @@ public class NpcData extends DocumentParser
 															{
 																enemyClans = new HashSet<>(1);
 															}
-															enemyClans.add(getOrCreateClanId(clan_list_node.getTextContent()));
+															enemyClans.add(intern(clan_list_node.getTextContent()));
 															break;
 														}
 													}
@@ -534,8 +534,8 @@ public class NpcData extends DocumentParser
 							}
 						}
 						
-						template.setClans(clans);
-						template.setEnemyClans(enemyClans);
+						template.setClans(findClanSet(clans));
+						template.setEnemyClans(findClanSet(enemyClans));
 						
 						template.setDropLists(dropLists);
 					}
@@ -603,50 +603,26 @@ public class NpcData extends DocumentParser
 		}
 	}
 	
-	/**
-	 * Gets or creates a clan id if it doesnt exists.
-	 * @param clanName the clan name to get or create its id
-	 * @return the clan id for the given clan name
-	 */
-	private int getOrCreateClanId(String clanName)
-	{
-		Integer id = _clans.get(clanName.toUpperCase());
-		if (id == null)
-		{
-			id = _clans.size();
-			String name = clanName.toUpperCase();
-			_clans.put(name, id);
-			_clanNames.put(id, name);
-		}
-		return id;
-	}
-	
-	/**
-	 * Gets the clan id
-	 * @param clanName the clan name to get its id
-	 * @return the clan id for the given clan name if it exists, -1 otherwise
-	 */
-	public int getClanId(String clanName)
-	{
-		Integer id = _clans.get(clanName.toUpperCase());
-		return id != null ? id : -1;
-	}
-	
 	//[JOJO]-------------------------------------------------
-	public String clansToString(Set<Integer> clans)
+	private Set<String> findClanSet(Set<String> clans)
+	{
+		if (clans == null)
+			return null;
+		Set<String> result;
+		for (L2NpcTemplate t : _npcs.values())
+			if (clans.equals(result = t.getClans()) || clans.equals(result = t.getEnemyClans()))
+				return result;
+		return Collections.unmodifiableSet(clans);
+	}
+	
+	public String clansToString(Set<String> clans)
 	{
 		if (clans == null || clans.size() == 0)
 			return "null";
 		else if (clans.size() == 1)
-			return _clanNames.get(clans.iterator().next());
-		else {
-			StringBuilder sb = new StringBuilder();
-			for (Integer id : clans)
-				sb.append(_clanNames.get(id)).append(';');
-			int length = sb.length();
-			sb.delete(length - 1, length);
-			return sb.toString();
-		}
+			return clans.iterator().next();
+		else
+			return com.l2jserver.util.Util.concat_ws(";", clans).toString();
 	}
 	//-------------------------------------------------------
 	
@@ -681,6 +657,11 @@ public class NpcData extends DocumentParser
 	public ArrayList<L2NpcTemplate> toArrayList()
 	{
 		return new ArrayList<>(_npcs.values());
+	}
+	
+	public IntObjectMap<L2NpcTemplate> getAll()
+	{
+		return _npcs.unmodifiable();
 	}
 	//-------------------------------------------------------
 	

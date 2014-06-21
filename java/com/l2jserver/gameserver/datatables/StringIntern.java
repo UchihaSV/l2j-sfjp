@@ -28,8 +28,8 @@ import com.l2jserver.Config;
  */
 public class StringIntern
 {
-	static String _name;
-	static private FastMap<String, String> _stringSet;
+	private static String _name;
+	private static FastMap<String, String> _stringSet;
 	
 	public static void begin(String name)
 	{

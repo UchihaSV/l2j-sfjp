@@ -34,6 +34,7 @@ import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.util.Collection;
 import java.util.logging.Logger;
 
 /**
@@ -274,6 +275,18 @@ public class Util
 		return "";
 	}
 	public static CharSequence concat_ws(String separator, String[] strings)
+	{
+		StringBuilder result = new StringBuilder();
+		for (String s : strings)
+		{
+			if (s != null && !s.isEmpty()) {
+				if (result.length() > 0) result.append(separator);
+				result.append(s);
+			}
+		}
+		return result;
+	}
+	public static CharSequence concat_ws(String separator, Collection<String> strings)
 	{
 		StringBuilder result = new StringBuilder();
 		for (String s : strings)
