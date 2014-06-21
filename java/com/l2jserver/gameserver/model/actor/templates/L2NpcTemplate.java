@@ -373,6 +373,12 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	{
 		return _canMove;
 	}
+	//[JOJO]-------------------------------------------------
+	public void setCanMove(boolean value)
+	{
+		_canMove = value;
+	}
+	//-------------------------------------------------------
 	
 	public boolean isNoSleepMode()
 	{
