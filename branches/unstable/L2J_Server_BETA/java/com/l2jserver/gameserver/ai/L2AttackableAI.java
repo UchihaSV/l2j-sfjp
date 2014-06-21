@@ -755,7 +755,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 		
 		// Handle all L2Object of its Faction inside the Faction Range
 		
-		Set<Integer> clans = getActiveChar().getTemplate().getClans();
+		Set<String> clans = getActiveChar().getTemplate().getClans();
 		if ((clans != null) && !clans.isEmpty() && npc.getAttackByList().contains(originalAttackTarget))
 		{
 			int factionRange = npc.getTemplate().getClanHelpRange() + collision;

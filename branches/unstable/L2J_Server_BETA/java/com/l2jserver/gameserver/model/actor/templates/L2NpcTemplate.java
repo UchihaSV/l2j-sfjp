@@ -33,7 +33,6 @@ import java.util.logging.Logger;
 import javolution.util.FastMap;
 
 import com.l2jserver.Config;
-import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.enums.AISkillType;
 import com.l2jserver.gameserver.enums.AIType;
@@ -113,8 +112,8 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	private int _shortRangeSkillChance;
 	private int _longRangeSkillId;
 	private int _longRangeSkillChance;
-	private Set<Integer> _clans;
-	private Set<Integer> _enemyClans;
+	private Set<String> _clans;
+	private Set<String> _enemyClans;
 	private Map<DropListScope, List<IDropItem>> _dropLists;
 	private double _collisionRadiusGrown;
 	private double _collisionHeightGrown;
@@ -497,7 +496,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		return _longRangeSkillChance;
 	}
 	
-	public Set<Integer> getClans()
+	public Set<String> getClans()
 	{
 		return _clans;
 	}
@@ -505,9 +504,9 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	/**
 	 * @param clans A sorted array of clan ids
 	 */
-	public void setClans(Set<Integer> clans)
+	public void setClans(Set<String> clans)
 	{
-		_clans = clans != null ? Collections.unmodifiableSet(clans) : null;
+		_clans = clans;
 	}
 	
 	/**
@@ -515,62 +514,57 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	 * @param clanNames clan names to check if they belong to this NPC template clans.
 	 * @return {@code true} if at least one of the clan names belong to this NPC template clans, {@code false} otherwise.
 	 */
-	@Deprecated public boolean isClan(String clanName, String... clanNames)	//[JOJO] +@Deprecated
+	@Deprecated public boolean isClan(String... clanNames)	//[JOJO] +@Deprecated
 	{
+if (com.l2jserver.Config.FIX_C_DUNGEON_FACTION_CALL) {{
+		throw new UnsupportedOperationException(com.l2jserver.util.Util.concat_ws(";", clanNames).toString());
+}} else {{
 		// Using local variable for the sake of reloading since it can be turned to null.
-		final Set<Integer> clans = _clans;
+		final Set<String> clans = _clans;
 		
 		if (clans == null)
 		{
 			return false;
 		}
 		
-		int clanId = NpcData.getInstance().getClanId("ALL");
-		if (clans.contains(clanId))
-		{
-			return true;
-		}
-		
-		clanId = NpcData.getInstance().getClanId(clanName);
-		if (clans.contains(clanId))
+		if (clans.contains("ALL"))
 		{
 			return true;
 		}
 		
 		for (String name : clanNames)
 		{
-			clanId = NpcData.getInstance().getClanId(name);
-			if (clans.contains(clanId))
+			if (clans.contains(name))
 			{
 				return true;
 			}
 		}
 		return false;
+}}
 	}
 	
 	/**
 	 * @param clans A set of clan names to check if they belong to this NPC template clans.
 	 * @return {@code true} if at least one of the clan names belong to this NPC template clans, {@code false} otherwise.
 	 */
-	public boolean isClan(Set<Integer> clans)
+	public boolean isClan(Set<String> clans)
 	{
 		// Using local variable for the sake of reloading since it can be turned to null.
-		final Set<Integer> clanSet = _clans;
+		final Set<String> clanSet = _clans;
 		
-		if ((clanSet == null) || (clans == null))
+		if (clanSet == null || clans == null)
 		{
 			return false;
 		}
 		
-		int clanId = NpcData.getInstance().getClanId("ALL");
-		if (clanSet.contains(clanId))
+		if (clanSet.contains("ALL"))
 		{
 			return true;
 		}
 		
-		for (Integer id : clans)
+		for (String name : clans)
 		{
-			if (clanSet.contains(id))
+			if (clanSet.contains(name))
 			{
 				return true;
 			}
@@ -578,7 +572,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		return false;
 	}
 	
-	public Set<Integer> getEnemyClans()
+	public Set<String> getEnemyClans()
 	{
 		return _enemyClans;
 	}
@@ -586,9 +580,9 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	/**
 	 * @param enemyClans A sorted array of enemy clan ids
 	 */
-	public void setEnemyClans(Set<Integer> enemyClans)
+	public void setEnemyClans(Set<String> enemyClans)
 	{
-		_enemyClans = enemyClans != null ? Collections.unmodifiableSet(enemyClans) : null;
+		_enemyClans = enemyClans;
 	}
 	
 	/**
@@ -596,62 +590,57 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	 * @param clanNames clan names to check if they belong to this NPC template enemy clans.
 	 * @return {@code true} if at least one of the clan names belong to this NPC template enemy clans, {@code false} otherwise.
 	 */
-	@Deprecated public boolean isEnemyClan(String clanName, String... clanNames)
+	@Deprecated public boolean isEnemyClan(String... clanNames)
 	{
+if (com.l2jserver.Config.FIX_C_DUNGEON_FACTION_CALL) {{
+		throw new UnsupportedOperationException(com.l2jserver.util.Util.concat_ws(";", clanNames).toString());
+}} else {{
 		// Using local variable for the sake of reloading since it can be turned to null.
-		final Set<Integer> enemyClans = _enemyClans;
+		final Set<String> enemyClans = _enemyClans;
 		
-		if (enemyClans == null)
+		if (enemyClans == null || enemyClans.size() == 0)
 		{
 			return false;
 		}
 		
-		int clanId = NpcData.getInstance().getClanId("ALL");
-		if (enemyClans.contains(clanId))
-		{
-			return true;
-		}
-		
-		clanId = NpcData.getInstance().getClanId(clanName);
-		if (enemyClans.contains(clanId))
+		if (enemyClans.contains("ALL"))
 		{
 			return true;
 		}
 		
 		for (String name : clanNames)
 		{
-			clanId = NpcData.getInstance().getClanId(name);
-			if (enemyClans.contains(clanId))
+			if (enemyClans.contains(name))
 			{
 				return true;
 			}
 		}
 		return false;
+}}
 	}
 	
 	/**
 	 * @param clans A set of clan names to check if they belong to this NPC template enemy clans.
 	 * @return {@code true} if at least one of the clan names belong to this NPC template enemy clans, {@code false} otherwise.
 	 */
-	public boolean isEnemyClan(Set<Integer> clans)
+	public boolean isEnemyClan(Set<String> clans)
 	{
 		// Using local variable for the sake of reloading since it can be turned to null.
-		final Set<Integer> enemyClans = _enemyClans;
+		final Set<String> enemyClans = _enemyClans;
 		
-		if ((enemyClans == null) || (clans == null))
+		if (enemyClans == null || clans == null)
 		{
 			return false;
 		}
 		
-		int clanId = NpcData.getInstance().getClanId("ALL");
-		if (enemyClans.contains(clanId))
+		if (enemyClans.contains("ALL"))
 		{
 			return true;
 		}
 		
-		for (Integer id : clans)
+		for (String name : clans)
 		{
-			if (enemyClans.contains(id))
+			if (enemyClans.contains(name))
 			{
 				return true;
 			}
