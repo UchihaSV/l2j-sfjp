@@ -21,7 +21,6 @@ package com.l2jserver.gameserver.model.actor.knownlist;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 
 import javolution.util.FastList;
 import jp.sf.l2j.troja.FastIntObjectMap;

@@ -610,7 +610,7 @@ if (com.l2jserver.Config.NEVER_WALKER_AI_onArrived) {{
 					L2Spawn spawn = new L2Spawn(markerNpcTemplate);
 					spawn.setX(x1);
 					spawn.setY(y1);
-					spawn.setZ(z1 + com.l2jserver.Config.NPC_SPAWN_Z_MARGIN);
+					spawn.setZ(z1);
 					spawn.setHeading(com.l2jserver.gameserver.util.Util.calculateHeadingFrom(x1, y1, x2, y2));
 					spawn.stopRespawn();
 					L2Npc n = spawn.spawnOne(false);
