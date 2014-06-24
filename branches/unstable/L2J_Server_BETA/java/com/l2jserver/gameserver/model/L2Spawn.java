@@ -691,6 +691,12 @@ public class L2Spawn implements IPositionable, IIdentifiable, INamable
 	{
 		synchronized (_spawnListeners)
 		{
+if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
+			for (L2Object o :  L2World.getInstance().getVisibleObjects())
+				if (o instanceof L2Npc)
+					listener.npcSpawned((L2Npc) o);
+}}
+
 			_spawnListeners.add(listener);
 		}
 	}
