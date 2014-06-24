@@ -40,12 +40,13 @@ import com.l2jserver.gameserver.enums.NpcRace;
 import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.enums.Sex;
 import com.l2jserver.gameserver.model.L2MinionData;
+import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Spawn;
+import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
-import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.base.ClassId;
 import com.l2jserver.gameserver.model.drops.DropListScope;
 import com.l2jserver.gameserver.model.drops.IDropItem;
@@ -889,23 +890,20 @@ if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 			catch (NoSuchMethodException | SecurityException e) {
 				hasOnSpawn = false;
 			}
-			if (hasOnSpawn)
-			  for (Set<L2Spawn> t : SpawnTable.getInstance().getSpawnTable().values())
-				for (L2Spawn spawn : t) {
+			if (hasOnSpawn) {
+				boolean done = false;
+				for (L2Spawn spawn : SpawnTable.getInstance().getSpawns(_id)) {
 					L2Npc npc;
-					if (spawn != null && (npc = spawn.getLastSpawn()) != null) {
-						if (npc.getId() == _id && npc.isVisible()) {
-							q.onSpawn(npc);
-						}
-						L2MonsterInstance leader;
-						if (npc.isMonster() && (leader = (L2MonsterInstance)npc).hasMinions()) {
-							for (L2MonsterInstance minion : leader.getMinionList().getSpawnedMinions())
-								if (minion.getId() == _id && minion.isVisible()) {
-									q.onSpawn(minion);
-								}
-						}
+					if ((npc = spawn.getLastSpawn()) != null && npc.isVisible()) {
+						done = true;
+						q.onSpawn(npc);
 					}
 				}
+				if (!done)
+					for (L2Object o :  L2World.getInstance().getVisibleObjects())
+						if (o.isNpc() && o.getId() == _id)
+							q.onSpawn((L2Npc) o);
+			}
 		}
 }}
 	}
