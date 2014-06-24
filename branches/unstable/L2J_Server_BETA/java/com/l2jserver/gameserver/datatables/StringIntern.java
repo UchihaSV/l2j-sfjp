@@ -28,6 +28,7 @@ import com.l2jserver.Config;
  */
 public class StringIntern
 {
+	@SuppressWarnings("unused")
 	private static String _name;
 	private static FastMap<String, String> _stringSet;
 	

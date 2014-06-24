@@ -22,7 +22,6 @@ import static com.l2jserver.gameserver.ai.CtrlIntention.*;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Future;
 
 import com.l2jserver.Config;
@@ -755,8 +754,8 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 		
 		// Handle all L2Object of its Faction inside the Faction Range
 		
-		Set<String> clans = getActiveChar().getTemplate().getClans();
-		if ((clans != null) && !clans.isEmpty() && npc.getAttackByList().contains(originalAttackTarget))
+		int[] clans = getActiveChar().getTemplate().getClans();
+		if (clans != null && clans.length > 0 && npc.getAttackByList().contains(originalAttackTarget))
 		{
 			int factionRange = npc.getTemplate().getClanHelpRange() + collision;
 			// Go through all L2Object that belong to its faction
@@ -774,25 +773,8 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					if (obj instanceof L2Npc)
 					{
 						L2Npc called = (L2Npc) obj;
-						
-if (com.l2jserver.Config.FIX_C_DUNGEON_FACTION_CALL) {{
 						if (!getActiveChar().isInMyClan(called))
 							continue;
-}} else {{
-						boolean sevenSignFaction = false;
-						
-						// TODO: Unhardcode this by AI scripts (DrHouse)
-						// Catacomb mobs should assist lilim and nephilim other than dungeon
-						if (getActiveChar().getTemplate().isClan("c_dungeon_clan", "c_dungeon_lilim", "c_dungeon_nephi") && called.getTemplate().isClan("c_dungeon_clan", "c_dungeon_lilim", "c_dungeon_nephi"))
-						{
-							sevenSignFaction = true;
-						}
-						
-						if (!sevenSignFaction)
-						{
-							continue;
-						}
-}}
 						
 						// Check if the L2Object is inside the Faction Range of the actor
 						if (npc.isInsideRadius(called, factionRange, true, false) && called.hasAI())
