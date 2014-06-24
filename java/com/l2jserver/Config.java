@@ -1195,6 +1195,7 @@ public final class Config
 	public static final boolean NEVER_WALKER_RandomAnimation = true;	//[JOJO]WalkingManager対策 - あくびさせない.
 	public static final boolean NEVER_WALKER_AI_onArrived = true;		//[JOJO]WalkingManager対策 - 歩行ルートのノードポイントでの無駄なAI動作省略.
 	public static final boolean FIX_ATTACKABLE_AI_FACTION_CALL = true;	//[JOJO]同族モンスターをリンクさせる.
+	public static final boolean NPCDATA_CLAN_ALL = false;				//[JOJO]<clan>ALL</clan> ???
 	public static final boolean STRING_INTERN = true;					//[JOJO]
 	public static final boolean MOD_AURA = true;						//[JOJO]英雄とは無関係に英雄オーラを発する.
 	public static final boolean ADMIN_VIEW_NPC_STATUS = true;			//[JOJO]NPCをSHIFTクリックしたときNPCの状態を詳細表示する.
@@ -1219,7 +1220,6 @@ public final class Config
 	public static final boolean TAMED_BEAST_FOLLOW_RANDOM = true;		//[JOJO]テイミングモンスターの位置を分散
 	public static final boolean FIX_FAKEDEATH_EXIT = true;				//[JOJO]フェイク デス中断・終了処理
 	public static final boolean NEVER_addAggroRangeEnterId_IF_0 = true;	//[JOJO]aggro値が0のモンスターはaddAggroRangeEnterIdを無視.
-	public static final boolean FIX_C_DUNGEON_FACTION_CALL = true;		//[JOJO]npc.sql --> xml化時の不具合.
 	public static final boolean FIX_NPC_NAME_AND_TITLE = true;			//[JOJO]NPCのsetName(),setTitle()が反映されない不具合の修正.
 	
 

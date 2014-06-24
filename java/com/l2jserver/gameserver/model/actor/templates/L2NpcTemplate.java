@@ -26,13 +26,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 import javolution.util.FastMap;
 
 import com.l2jserver.Config;
+import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.enums.AISkillType;
 import com.l2jserver.gameserver.enums.AIType;
@@ -113,8 +113,8 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	private int _shortRangeSkillChance;
 	private int _longRangeSkillId;
 	private int _longRangeSkillChance;
-	private Set<String> _clans;
-	private Set<String> _enemyClans;
+	private int[] _clans;		//[JOJO] -Set<Integer>
+	private int[] _enemyClans;	//[JOJO] -Set<Integer>
 	private Map<DropListScope, List<IDropItem>> _dropLists;
 	private double _collisionRadiusGrown;
 	private double _collisionHeightGrown;
@@ -497,7 +497,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		return _longRangeSkillChance;
 	}
 	
-	public Set<String> getClans()
+	public int[] getClans()
 	{
 		return _clans;
 	}
@@ -505,75 +505,39 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	/**
 	 * @param clans A sorted array of clan ids
 	 */
-	public void setClans(Set<String> clans)
+	public void setClans(int[] clans)
 	{
 		_clans = clans;
-	}
-	
-	/**
-	 * @param clanName clan name to check if it belongs to this NPC template clans.
-	 * @param clanNames clan names to check if they belong to this NPC template clans.
-	 * @return {@code true} if at least one of the clan names belong to this NPC template clans, {@code false} otherwise.
-	 */
-	@Deprecated public boolean isClan(String... clanNames)	//[JOJO] +@Deprecated
-	{
-if (com.l2jserver.Config.FIX_C_DUNGEON_FACTION_CALL) {{
-		throw new UnsupportedOperationException(com.l2jserver.util.Util.concat_ws(";", clanNames).toString());
-}} else {{
-		// Using local variable for the sake of reloading since it can be turned to null.
-		final Set<String> clans = _clans;
-		
-		if (clans == null)
-		{
-			return false;
-		}
-		
-		if (clans.contains("ALL"))
-		{
-			return true;
-		}
-		
-		for (String name : clanNames)
-		{
-			if (clans.contains(name))
-			{
-				return true;
-			}
-		}
-		return false;
-}}
 	}
 	
 	/**
 	 * @param clans A set of clan names to check if they belong to this NPC template clans.
 	 * @return {@code true} if at least one of the clan names belong to this NPC template clans, {@code false} otherwise.
 	 */
-	public boolean isClan(Set<String> clans)
+	public boolean isClan(int[] clans)
 	{
 		// Using local variable for the sake of reloading since it can be turned to null.
-		final Set<String> clanSet = _clans;
+		final int[] clanSet = _clans;
 		
 		if (clanSet == null || clans == null)
-		{
 			return false;
-		}
 		
-		if (clanSet.contains("ALL"))
-		{
+		if (clanSet == clans)
 			return true;
-		}
 		
-		for (String name : clans)
-		{
-			if (clanSet.contains(name))
-			{
+if (com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
+		if (clanSet[0] == NpcData.CLAN_ALL)	// <clan>ALL</clan>
+			return true;
+}}
+		
+		for (int clanId : clans)
+			if (com.l2jserver.gameserver.util.Util.contains(clanSet, clanId))
 				return true;
-			}
-		}
+		
 		return false;
 	}
 	
-	public Set<String> getEnemyClans()
+	public int[] getEnemyClans()
 	{
 		return _enemyClans;
 	}
@@ -581,73 +545,49 @@ if (com.l2jserver.Config.FIX_C_DUNGEON_FACTION_CALL) {{
 	/**
 	 * @param enemyClans A sorted array of enemy clan ids
 	 */
-	public void setEnemyClans(Set<String> enemyClans)
+	public void setEnemyClans(int[] enemyClans)
 	{
 		_enemyClans = enemyClans;
-	}
-	
-	/**
-	 * @param clanName clan name to check if it belongs to this NPC template enemy clans.
-	 * @param clanNames clan names to check if they belong to this NPC template enemy clans.
-	 * @return {@code true} if at least one of the clan names belong to this NPC template enemy clans, {@code false} otherwise.
-	 */
-	@Deprecated public boolean isEnemyClan(String... clanNames)
-	{
-if (com.l2jserver.Config.FIX_C_DUNGEON_FACTION_CALL) {{
-		throw new UnsupportedOperationException(com.l2jserver.util.Util.concat_ws(";", clanNames).toString());
-}} else {{
-		// Using local variable for the sake of reloading since it can be turned to null.
-		final Set<String> enemyClans = _enemyClans;
-		
-		if (enemyClans == null || enemyClans.size() == 0)
-		{
-			return false;
-		}
-		
-		if (enemyClans.contains("ALL"))
-		{
-			return true;
-		}
-		
-		for (String name : clanNames)
-		{
-			if (enemyClans.contains(name))
-			{
-				return true;
-			}
-		}
-		return false;
-}}
 	}
 	
 	/**
 	 * @param clans A set of clan names to check if they belong to this NPC template enemy clans.
 	 * @return {@code true} if at least one of the clan names belong to this NPC template enemy clans, {@code false} otherwise.
 	 */
-	public boolean isEnemyClan(Set<String> clans)
+	public boolean isEnemyClan(int[] clans)
 	{
 		// Using local variable for the sake of reloading since it can be turned to null.
-		final Set<String> enemyClans = _enemyClans;
+		final int[] enemyClans = _enemyClans;
 		
 		if (enemyClans == null || clans == null)
-		{
 			return false;
-		}
 		
-		if (enemyClans.contains("ALL"))
-		{
+		if (enemyClans == clans)
 			return true;
-		}
 		
-		for (String name : clans)
-		{
-			if (enemyClans.contains(name))
-			{
+if (com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
+		if (enemyClans[0] == NpcData.CLAN_ALL)	// <clan>ALL</clan>
+			return true;
+}}
+		
+		for (int clanId : clans)
+			if (com.l2jserver.gameserver.util.Util.contains(enemyClans, clanId))
 				return true;
-			}
-		}
+		
 		return false;
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public String getClanNames()
+	{
+		return NpcData.getInstance().toClanNames(_clans);
+	}
+	
+	public String getEnemyClanNames()
+	{
+		return NpcData.getInstance().toClanNames(_enemyClans);
+	}
+	//-------------------------------------------------------
 	
 	public Map<DropListScope, List<IDropItem>> getDropLists()
 	{
