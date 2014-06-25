@@ -394,6 +394,29 @@ public abstract class DocumentParser
 		return parseInteger(attrs.getNamedItem(name), defaultValue);
 	}
 	
+	//[JOJO]-------------------------------------------------
+	protected int parseInt(Node node, int defaultValue)
+	{
+		return node != null ? Integer.parseInt(node.getNodeValue()) : defaultValue;
+	}
+	
+	protected int parseInt(Node node)
+	{
+		if (node == null) throw new NullPointerException();
+		return Integer.parseInt(node.getNodeValue());
+	}
+	
+	protected int parseInt(NamedNodeMap attrs, String name)
+	{
+		return parseInt(attrs.getNamedItem(name));
+	}
+	
+	protected int parseInt(NamedNodeMap attrs, String name, int defaultValue)
+	{
+		return parseInt(attrs.getNamedItem(name), defaultValue);
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * Parses a long value.
 	 * @param node the node to parse
