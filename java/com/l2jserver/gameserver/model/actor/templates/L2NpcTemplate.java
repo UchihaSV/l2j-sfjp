@@ -217,7 +217,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	
 	//[JOJO]-------------------------------------------------
 	private static FastMap<String, Boolean> _instanceofL2AttackableCache;
-	private boolean instanceofL2Attackable(String type)
+	public static boolean instanceofL2Attackable(String type)
 	{
 		if (type == null) return false;
 		if (_instanceofL2AttackableCache == null)
