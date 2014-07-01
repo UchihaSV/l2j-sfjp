@@ -24,6 +24,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import javolution.lang.MathLib;
+
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.GeoData;
@@ -57,6 +59,7 @@ import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.skills.targets.L2TargetType;
 import com.l2jserver.gameserver.model.zone.ZoneId;
+import com.l2jserver.gameserver.network.serverpackets.ValidateLocation;
 import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
 
@@ -611,28 +614,11 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 			
 			if (npc.calculateDistance(leader, false, true) > (offset * offset))
 			{
-				int x1, y1, z1;
-				x1 = Rnd.get(minRadius * 2, offset * 2); // x
-				y1 = Rnd.get(x1, offset * 2); // distance
-				y1 = (int) Math.sqrt((y1 * y1) - (x1 * x1)); // y
-				if (x1 > (offset + minRadius))
-				{
-					x1 = (leader.getX() + x1) - offset;
-				}
-				else
-				{
-					x1 = (leader.getX() - x1) + minRadius;
-				}
-				if (y1 > (offset + minRadius))
-				{
-					y1 = (leader.getY() + y1) - offset;
-				}
-				else
-				{
-					y1 = (leader.getY() - y1) + minRadius;
-				}
-				
-				z1 = leader.getZ();
+				final double distance = Rnd.get(minRadius, offset);
+				final double angle = Rnd.nextDouble() * MathLib.TWO_PI;
+				int x1 = leader.getX() + (int) (distance * Math.cos(angle));
+				int y1 = leader.getY() + (int) (distance * Math.sin(angle));
+				int z1 = leader.getZ();
 				// Move the actor to Location (x,y,z) server side AND client side by sending Server->Client packet CharMoveToLocation (broadcast)
 				moveTo(x1, y1, z1);
 				return;
@@ -649,7 +635,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 			}
 		}
 		// Order to the L2MonsterInstance to random walk (1/100)
-		else if ((npc.getSpawn() != null) && (Rnd.nextInt(RANDOM_WALK_RATE) == 0) && !npc.isNoRndWalk())
+		else if ((npc.getSpawn() != null) && (Rnd.nextInt(RANDOM_WALK_RATE) == 0) /*&& !npc.isNoRndWalk()*/)
 		{
 			int x1, y1, z1;
 			final int range = Config.MAX_DRIFT_RANGE;
@@ -694,17 +680,31 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 				y1 = npc.getSpawn().getY(npc);
 				z1 = npc.getSpawn().getZ(npc);
 				
-				if (!npc.isInsideRadius(x1, y1, 0, range, false, false))
+				if (npc.isNoRndWalk())	//[JOJO]
+				{
+					if (npc.getX() != x1 || npc.getY() != y1)
+					{
+						npc.setisReturningToSpawnPoint(true);
+					}
+					else
+					{
+						if (npc.getHeading() != npc.getSpawn().getHeading()) {
+							npc.setHeading(npc.getSpawn().getHeading());
+							npc.broadcastPacket(new ValidateLocation(npc));
+						}
+						return;
+					}
+				}
+				else if (!npc.isInsideRadius(x1, y1, 0, range, false, false))
 				{
 					npc.setisReturningToSpawnPoint(true);
 				}
 				else
 				{
-					int deltaX = Rnd.nextInt(range * 2); // x
-					int deltaY = Rnd.get(deltaX, range * 2); // distance
-					deltaY = (int) Math.sqrt(deltaY * deltaY - deltaX * deltaX); // y
-					x1 = deltaX + x1 - range;
-					y1 = deltaY + y1 - range;
+					final double distance = Rnd.get(range);
+					final double angle = Rnd.nextDouble() * MathLib.TWO_PI;
+					x1 += (int) (distance * Math.cos(angle));
+					y1 += (int) (distance * Math.sin(angle));
 					z1 = npc.getZ();
 				}
 			}
