@@ -30,7 +30,6 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
-import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 
 /**
@@ -41,8 +40,6 @@ public class DecayTaskManager
 	protected static final Logger _log = Logger.getLogger(DecayTaskManager.class.getName());
 	
 	protected final Map<L2Character, Long> _decayTasks = new FastMap<L2Character, Long>().shared();
-	
-	private static final boolean GRAND_BOSS_DECAY_TIME_L2J_JP = true;
 	
 	protected DecayTaskManager()
 	{
@@ -93,39 +90,6 @@ public class DecayTaskManager
 					else
 					{
 						delay = Config.DEFAULT_CORPSE_TIME * 1000;
-					}
-					if (GRAND_BOSS_DECAY_TIME_L2J_JP)	//TODO:[JOJO] 〓チェック中〓
-					{
-						// [L2J_JP ADD SANDMAN][MODIFY JOJO]
-						// [L2J_JP ADD START]
-						if (actor instanceof L2Npc)
-						{
-							L2Npc npc = (L2Npc) actor;
-							switch (npc.getId())
-							{
-//								case 29028: // Varakas
-//									delay = 18000;
-//									break;
-//								case 29019: // Antharas
-//								case 29066: // Antharas
-//								case 29067: // Antharas
-//								case 29068: // Antharas
-//									delay = 12000;
-//									break;
-//								case 29045: // frintezza
-//									delay = 15000;
-//									break;
-								case 29014: // Orfen
-									delay = 150000;
-									break;
-								case 29001: // Queen Ant
-									delay = 150000;
-								case 29006: // Core
-									delay = 15000;
-									break;
-							}
-						}
-						// [L2J_JP ADD END]
 					}
 					
 					if ((actor instanceof L2Attackable) && (((L2Attackable) actor).isSpoil() || ((L2Attackable) actor).isSeeded()))
