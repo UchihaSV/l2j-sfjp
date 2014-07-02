@@ -55,6 +55,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2RiftInvaderInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2StaticObjectInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
+import com.l2jserver.gameserver.model.interfaces.ILocational;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.skills.targets.L2TargetType;
@@ -676,10 +677,10 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 			}
 			else
 			{
-				x1 = npc.getSpawn().getX(npc);
-				y1 = npc.getSpawn().getY(npc);
-				z1 = npc.getSpawn().getZ(npc);
-				
+				ILocational p = npc.getSpawnPoint();
+				x1 = p.getX();
+				y1 = p.getY();
+				z1 = p.getZ();
 				if (npc.isNoRndWalk())	//[JOJO]
 				{
 					if (npc.getX() != x1 || npc.getY() != y1)
@@ -859,37 +860,58 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 		{
 			for (L2Object nearby : npc.getKnownList().getKnownObjects().values())
 			{
-				if ((nearby instanceof L2Attackable) && npc.isInsideRadius(nearby, collision, false, false) && (nearby != mostHate))
+				//[JOJO]-------------------------------------------------
+				if (nearby != mostHate && nearby instanceof L2Character && Math.hypot(npc.getX() - nearby.getX(), npc.getY() - nearby.getY()) < collision)
 				{
-					int newX = combinedCollision + Rnd.get(40);
-					if (Rnd.nextBoolean())
-					{
-						newX = mostHate.getX() + newX;
-					}
-					else
-					{
-						newX = mostHate.getX() - newX;
-					}
-					int newY = combinedCollision + Rnd.get(40);
-					if (Rnd.nextBoolean())
-					{
-						newY = mostHate.getY() + newY;
-					}
-					else
-					{
-						newY = mostHate.getY() - newY;
-					}
+					final double distance = Util.calculateDistance(npc, mostHate, false) + Rnd.get(40);
+					final double F = 150 * Math.PI / 180.0;
+					double angle = Rnd.nextDouble() * (F + F) - F;	// = Rnd.get(-F, +F)
+					angle += Util.convertHeadingToRadian(mostHate.getHeading());
+					int newX = mostHate.getX() + (int) (distance * Math.cos(angle));
+					int newY = mostHate.getY() + (int) (distance * Math.sin(angle));
 					
-					if (!npc.isInsideRadius(newX, newY, 0, collision, false, false))
+					if (Math.hypot(newX - nearby.getX(), newY - nearby.getY()) > collision)
 					{
 						int newZ = npc.getZ() + 30;
-						if ((Config.GEODATA == 0) || GeoData.getInstance().canMove(npc.getX(), npc.getY(), npc.getZ(), newX, newY, newZ, npc.getInstanceId()))
+						if (Config.GEODATA == 0 || GeoData.getInstance().canMove(npc.getX(), npc.getY(), npc.getZ(), newX, newY, newZ, npc.getInstanceId()))
 						{
 							moveTo(newX, newY, newZ);
+							return;
 						}
 					}
-					return;
 				}
+				//-------------------------------------------------------
+			//	if ((nearby instanceof L2Attackable) && npc.isInsideRadius(nearby, collision, false, false) && (nearby != mostHate))
+			//	{
+			//		int newX = combinedCollision + Rnd.get(40);
+			//		if (Rnd.nextBoolean())
+			//		{
+			//			newX = mostHate.getX() + newX;
+			//		}
+			//		else
+			//		{
+			//			newX = mostHate.getX() - newX;
+			//		}
+			//		int newY = combinedCollision + Rnd.get(40);
+			//		if (Rnd.nextBoolean())
+			//		{
+			//			newY = mostHate.getY() + newY;
+			//		}
+			//		else
+			//		{
+			//			newY = mostHate.getY() - newY;
+			//		}
+			//		
+			//		if (!npc.isInsideRadius(newX, newY, 0, collision, false, false))
+			//		{
+			//			int newZ = npc.getZ() + 30;
+			//			if ((Config.GEODATA == 0) || GeoData.getInstance().canMove(npc.getX(), npc.getY(), npc.getZ(), newX, newY, newZ, npc.getInstanceId()))
+			//			{
+			//				moveTo(newX, newY, newZ);
+			//			}
+			//		}
+			//		return;
+			//	}
 			}
 		}
 		// Dodge if its needed
@@ -897,31 +919,17 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 		{
 			if (Rnd.get(100) <= npc.getDodge())
 			{
+				//[JOJO]-------------------------------------------------
 				// Micht: kepping this one otherwise we should do 2 sqrt
-				double distance2 = npc.calculateDistance(mostHate, false, true);
-				if (Math.sqrt(distance2) <= (60 + combinedCollision))
+				if (npc.calculateDistance(mostHate, false, false) <= 60 + combinedCollision)
 				{
-					int posX = npc.getX();
-					int posY = npc.getY();
+					final double distance = 300.0;
+					final double F = 30 * Math.PI / 180.0;
+					double angle = Rnd.nextDouble() * (F + F) - F;	// = Rnd.get(-F, +F)
+					angle += Math.atan2(npc.getY() - mostHate.getY(), npc.getX() - mostHate.getX());
+					int posX = npc.getX() + (int)(distance * Math.cos(angle));
+					int posY = npc.getY() + (int)(distance * Math.sin(angle));
 					int posZ = npc.getZ() + 30;
-					
-					if (originalAttackTarget.getX() < posX)
-					{
-						posX = posX + 300;
-					}
-					else
-					{
-						posX = posX - 300;
-					}
-					
-					if (originalAttackTarget.getY() < posY)
-					{
-						posY = posY + 300;
-					}
-					else
-					{
-						posY = posY - 300;
-					}
 					
 					if ((Config.GEODATA == 0) || GeoData.getInstance().canMove(npc.getX(), npc.getY(), npc.getZ(), posX, posY, posZ, npc.getInstanceId()))
 					{
@@ -929,6 +937,39 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					}
 					return;
 				}
+				//-------------------------------------------------------
+			//	// Micht: kepping this one otherwise we should do 2 sqrt
+			//	double distance2 = npc.calculateDistance(mostHate, false, true);
+			//	if (Math.sqrt(distance2) <= (60 + combinedCollision))
+			//	{
+			//		int posX = npc.getX();
+			//		int posY = npc.getY();
+			//		int posZ = npc.getZ() + 30;
+			//		
+			//		if (originalAttackTarget.getX() < posX)
+			//		{
+			//			posX = posX + 300;
+			//		}
+			//		else
+			//		{
+			//			posX = posX - 300;
+			//		}
+			//		
+			//		if (originalAttackTarget.getY() < posY)
+			//		{
+			//			posY = posY + 300;
+			//		}
+			//		else
+			//		{
+			//			posY = posY - 300;
+			//		}
+			//		
+			//		if ((Config.GEODATA == 0) || GeoData.getInstance().canMove(npc.getX(), npc.getY(), npc.getZ(), posX, posY, posZ, npc.getInstanceId()))
+			//		{
+			//			setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, new Location(posX, posY, posZ, 0));
+			//		}
+			//		return;
+			//	}
 			}
 		}
 		
