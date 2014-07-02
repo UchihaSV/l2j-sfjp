@@ -72,6 +72,7 @@ import com.l2jserver.gameserver.model.entity.Castle;
 import com.l2jserver.gameserver.model.entity.Fort;
 import com.l2jserver.gameserver.model.entity.clanhall.SiegableHall;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
+import com.l2jserver.gameserver.model.interfaces.ILocational;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.L2Weapon;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
@@ -1570,6 +1571,12 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 	{
 		return _spawn;
 	}
+	//[JOJO]-------------------------------------------------
+	public final ILocational getSpawnPoint()
+	{
+		return getSpawn().getLocation(this);
+	}
+	//-------------------------------------------------------
 	
 	@Override
 	public String toString()
