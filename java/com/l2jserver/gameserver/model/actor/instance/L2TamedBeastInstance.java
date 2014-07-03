@@ -21,9 +21,7 @@ package com.l2jserver.gameserver.model.actor.instance;
 import static com.l2jserver.gameserver.ai.CtrlIntention.*;
 import static com.l2jserver.gameserver.util.Util.*;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Future;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -292,13 +290,9 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	
 	public void removeBuffSkills()
 	{
-		for (Iterator<Map.Entry<Integer, L2Skill>> it = getSkills().entrySet().iterator(); it.hasNext(); )
-		{
-			Map.Entry<Integer, L2Skill> e = it.next();
-			L2Skill skill = e.getValue();
+		for (L2Skill skill : getSkills().values())
 			if (isBuffSkill(skill))
-				it.remove();
-		}
+				removeSkill(skill.getId());
 	}
 	
 	//-------------------------------------------------------

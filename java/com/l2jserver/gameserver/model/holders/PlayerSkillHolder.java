@@ -18,8 +18,8 @@
  */
 package com.l2jserver.gameserver.model.holders;
 
-import java.util.HashMap;
-import java.util.Map;
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -31,7 +31,7 @@ import com.l2jserver.gameserver.model.skills.L2Skill;
  */
 public class PlayerSkillHolder implements ISkillsHolder
 {
-	private final Map<Integer, L2Skill> _skills = new HashMap<>();
+	private final IntObjectMap<L2Skill> _skills = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	public PlayerSkillHolder(L2PcInstance player)
 	{
@@ -49,7 +49,7 @@ public class PlayerSkillHolder implements ISkillsHolder
 	 * @return the map containing this character skills.
 	 */
 	@Override
-	public Map<Integer, L2Skill> getSkills()
+	public IntObjectMap<L2Skill> getSkills()
 	{
 		return _skills;
 	}

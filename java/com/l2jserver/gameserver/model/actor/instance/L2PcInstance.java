@@ -36,7 +36,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
@@ -14055,15 +14054,15 @@ public final class L2PcInstance extends L2Playable
 	public void checkPlayerSkills()
 	{
 		L2SkillLearn learn;
-		for (Entry<Integer, L2Skill> e : getSkills().entrySet())
+		for (L2Skill skill : getSkills().values())	//[JOJO] -entrySet()
 		{
-			learn = SkillTreesData.getInstance().getClassSkill(e.getKey(), e.getValue().getLevel() % 100, getClassId());
+			learn = SkillTreesData.getInstance().getClassSkill(skill.getId(), skill.getLevel() % 100, getClassId());
 			if (learn != null)
 			{
-				int lvlDiff = e.getKey() == L2Skill.SKILL_EXPERTISE ? 0 : 9;
+				int lvlDiff = skill.getId() == L2Skill.SKILL_EXPERTISE ? 0 : 9;
 				if (getLevel() < (learn.getGetLevel() - lvlDiff))
 				{
-					deacreaseSkillLevel(e.getValue(), lvlDiff);
+					deacreaseSkillLevel(skill, lvlDiff);
 				}
 			}
 		}
