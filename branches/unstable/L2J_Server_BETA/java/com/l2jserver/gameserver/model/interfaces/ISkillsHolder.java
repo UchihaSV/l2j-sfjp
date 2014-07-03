@@ -18,7 +18,7 @@
  */
 package com.l2jserver.gameserver.model.interfaces;
 
-import java.util.Map;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.gameserver.model.skills.L2Skill;
 
@@ -27,7 +27,7 @@ import com.l2jserver.gameserver.model.skills.L2Skill;
  */
 public interface ISkillsHolder
 {
-	public Map<Integer, L2Skill> getSkills();
+	public IntObjectMap<L2Skill> getSkills();	//[JOJO] -Map
 	
 	public L2Skill addSkill(L2Skill skill);
 	

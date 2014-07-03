@@ -19,8 +19,9 @@
 package com.l2jserver.gameserver.model.actor.templates;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.items.type.L2WeaponType;
@@ -625,8 +626,8 @@ public class L2CharTemplate
 	 * Overridden in L2NpcTemplate
 	 * @return the characters skills
 	 */
-	public Map<Integer, L2Skill> getSkills()
+	public IntObjectMap<L2Skill> getSkills()
 	{
-		return Collections.emptyMap();
+		return FastIntObjectMap.emptyMap();
 	}
 }

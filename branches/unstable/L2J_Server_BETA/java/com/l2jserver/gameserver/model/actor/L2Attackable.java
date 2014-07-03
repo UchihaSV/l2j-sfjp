@@ -21,7 +21,6 @@ package com.l2jserver.gameserver.model.actor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
@@ -1547,13 +1546,9 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		_seedType = id;
 		int count = 1;
 		
-		Set<Integer> skillIds = getTemplate().getSkills().keySet();
-		
-		if (skillIds != null)
+		for (L2Skill skill : getTemplate().getSkills().values())
 		{
-			for (int skillId : skillIds)
-			{
-				switch (skillId)
+				switch (skill.getId())
 				{
 					case 4303: // Strong type x2
 						count *= 2;
@@ -1580,7 +1575,6 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 						count *= 9;
 						break;
 				}
-			}
 		}
 		
 		int diff = (getLevel() - (ManorData.getInstance().getSeedLevel(_seedType) - 5));

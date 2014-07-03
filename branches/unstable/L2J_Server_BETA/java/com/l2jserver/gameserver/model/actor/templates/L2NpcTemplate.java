@@ -30,6 +30,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.NpcData;
@@ -120,7 +122,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	private double _collisionHeightGrown;
 	
 	private final ConcurrentHashMap<AISkillType, List<L2Skill>> _aiSkills = new ConcurrentHashMap<>();
-	private final ConcurrentHashMap<Integer, L2Skill> _skills = new ConcurrentHashMap<>();
+	private IntObjectMap<L2Skill> _skills = emptyIntMap();	//[JOJO] -ConcurrentHashMap
 	private List<L2MinionData> _minions = emptyArrayList();
 	private List<ClassId> _teachInfo = emptyArrayList();
 	private final ConcurrentHashMap<QuestEventType, List<Quest>> _questEvents = new ConcurrentHashMap<>();
@@ -723,6 +725,14 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		skills.add(skill);
 }}
 	}
+	private static final <T> IntObjectMap<L2Skill> emptyIntMap()
+	{
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+		return FastIntObjectMap.emptyMap();	// return FastIntObjectMap.EMPTY_MAP
+}} else {{
+		return new FastIntObjectMap<>();
+}}
+	}
 	//-------------------------------------------------------
 	
 	private void addAtkSkill(L2Skill skill)
@@ -986,6 +996,10 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			}
 		}
 		
+if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
+		if (_skills == FastIntObjectMap.EMPTY_MAP)
+			_skills = new FastIntObjectMap<>();
+}}
 		_skills.put(skill.getId(), skill);
 	}
 	
@@ -1148,7 +1162,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	}
 	
 	@Override
-	public Map<Integer, L2Skill> getSkills()
+	public IntObjectMap<L2Skill> getSkills()
 	{
 		return _skills;
 	}

@@ -33,9 +33,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
 import javolution.util.WeakFastSet;
 import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
@@ -206,7 +206,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	/** Table of Calculators containing all used calculator */
 	private Calculator[] _calculators;
 	/** Map containing all skills of this character. */
-	private final Map<Integer, L2Skill> _skills;// = new FastMap<Integer, L2Skill>().shared();
+	private final IntObjectMap<L2Skill> _skills;	//[JOJO] -FastMap<Integer, L2Skill>().shared()
 	/** Map containing the skill reuse time stamps. */
 	private volatile FastIntObjectMap<TimeStamp> _reuseTimeStampsSkills = null;
 	/** Map containing the item reuse time stamps. */
@@ -444,13 +444,13 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		if (isDoor())
 		{
 			_calculators = Formulas.getStdDoorCalculators();
-			_skills = Collections.emptyMap();
+			_skills = FastIntObjectMap.emptyMap();
 		}
 		else if (isNpc())
 		{
 			// Copy the Standard Calculators of the L2NPCInstance in _calculators
 			_calculators = NPC_STD_CALCULATOR;
-			_skills = new FastMap<Integer, L2Skill>().shared();
+			_skills = new FastIntObjectMap<L2Skill>().shared();
 			
 			// Copy the skills of the L2NPCInstance from its template to the L2Character Instance
 			// The skills list can be affected by spell effects so it's necessary to make a copy
@@ -465,7 +465,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			// If L2Character is a L2PcInstance or a L2Summon, create the basic calculator set
 			//    or a L2StaticObjectInstance or a L2BoatInstance or a L2AirShipInstance +[JOJO]
 			_calculators = new Calculator[Stats.NUM_STATS];
-			_skills = new FastMap<Integer, L2Skill>().shared();
+			_skills = new FastIntObjectMap<L2Skill>().shared();
 			
 			if (isSummon())
 			{
@@ -5853,7 +5853,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 * @return the map containing this character skills.
 	 */
 	@Override
-	public Map<Integer, L2Skill> getSkills()
+	public IntObjectMap<L2Skill> getSkills()
 	{
 		return _skills;
 	}
