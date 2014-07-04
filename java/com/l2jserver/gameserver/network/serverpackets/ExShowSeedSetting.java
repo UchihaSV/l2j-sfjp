@@ -18,8 +18,6 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import com.l2jserver.gameserver.datatables.ManorData;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.CastleManorManager;
@@ -39,43 +37,43 @@ public class ExShowSeedSetting extends L2GameServerPacket
 	{
 		_manorId = manorId;
 		Castle c = CastleManager.getInstance().getCastleById(_manorId);
-		List<Integer> seeds = ManorData.getInstance().getSeedsForCastle(_manorId);
-		_count = seeds.size();
+		int[] seeds = ManorData.getInstance().getSeedsForCastle(_manorId);
+		_count = seeds.length;
 		_seedData = new long[_count * 12];
-		int i = 0;
-		for (int s : seeds)
+		for (int i = 0; i < _count; ++i)
 		{
-			_seedData[(i * 12) + 0] = s;
-			_seedData[(i * 12) + 1] = ManorData.getInstance().getSeedLevel(s);
-			_seedData[(i * 12) + 2] = ManorData.getInstance().getRewardItemBySeed(s, 1);
-			_seedData[(i * 12) + 3] = ManorData.getInstance().getRewardItemBySeed(s, 2);
-			_seedData[(i * 12) + 4] = ManorData.getInstance().getSeedSaleLimit(s);
-			_seedData[(i * 12) + 5] = ManorData.getInstance().getSeedBuyPrice(s);
-			_seedData[(i * 12) + 6] = (ManorData.getInstance().getSeedBasicPrice(s) * 60) / 100;
-			_seedData[(i * 12) + 7] = ManorData.getInstance().getSeedBasicPrice(s) * 10;
+			int s = seeds[i];
+			final int dx = i * 12;
+			_seedData[dx + 0] = s;
+			_seedData[dx + 1] = ManorData.getInstance().getSeedLevel(s);
+			_seedData[dx + 2] = ManorData.getInstance().getRewardItemBySeed(s, 1);
+			_seedData[dx + 3] = ManorData.getInstance().getRewardItemBySeed(s, 2);
+			_seedData[dx + 4] = ManorData.getInstance().getSeedSaleLimit(s);
+			_seedData[dx + 5] = ManorData.getInstance().getSeedBuyPrice(s);
+			_seedData[dx + 6] = ManorData.getInstance().getSeedBasicPrice(s) * 60 / 100;
+			_seedData[dx + 7] = ManorData.getInstance().getSeedBasicPrice(s) * 10;
 			SeedProduction seedPr = c.getSeed(s, CastleManorManager.PERIOD_CURRENT);
 			if (seedPr != null)
 			{
-				_seedData[(i * 12) + 8] = seedPr.getStartProduce();
-				_seedData[(i * 12) + 9] = seedPr.getPrice();
+				_seedData[dx + 8] = seedPr.getStartProduce();
+				_seedData[dx + 9] = seedPr.getPrice();
 			}
-			else
-			{
-				_seedData[(i * 12) + 8] = 0;
-				_seedData[(i * 12) + 9] = 0;
-			}
+		//	else
+		//	{
+		//		_seedData[dx + 8] = 0;
+		//		_seedData[dx + 9] = 0;
+		//	}
 			seedPr = c.getSeed(s, CastleManorManager.PERIOD_NEXT);
 			if (seedPr != null)
 			{
-				_seedData[(i * 12) + 10] = seedPr.getStartProduce();
-				_seedData[(i * 12) + 11] = seedPr.getPrice();
+				_seedData[dx + 10] = seedPr.getStartProduce();
+				_seedData[dx + 11] = seedPr.getPrice();
 			}
-			else
-			{
-				_seedData[(i * 12) + 10] = 0;
-				_seedData[(i * 12) + 11] = 0;
-			}
-			i++;
+		//	else
+		//	{
+		//		_seedData[dx + 10] = 0;
+		//		_seedData[dx + 11] = 0;
+		//	}
 		}
 	}
 	
@@ -90,22 +88,23 @@ public class ExShowSeedSetting extends L2GameServerPacket
 		
 		for (int i = 0; i < _count; i++)
 		{
-			writeD((int) _seedData[(i * 12) + 0]); // seed id
-			writeD((int) _seedData[(i * 12) + 1]); // level
+			final int dx = i * 12;
+			writeD((int) _seedData[dx + 0]); // seed id
+			writeD((int) _seedData[dx + 1]); // level
 			writeC(1);
-			writeD((int) _seedData[(i * 12) + 2]); // reward 1 id
+			writeD((int) _seedData[dx + 2]); // reward 1 id
 			writeC(1);
-			writeD((int) _seedData[(i * 12) + 3]); // reward 2 id
+			writeD((int) _seedData[dx + 3]); // reward 2 id
 			
-			writeD((int) _seedData[(i * 12) + 4]); // next sale limit
-			writeD((int) _seedData[(i * 12) + 5]); // price for castle to produce 1
-			writeD((int) _seedData[(i * 12) + 6]); // min seed price
-			writeD((int) _seedData[(i * 12) + 7]); // max seed price
+			writeD((int) _seedData[dx + 4]); // next sale limit
+			writeD((int) _seedData[dx + 5]); // price for castle to produce 1
+			writeD((int) _seedData[dx + 6]); // min seed price
+			writeD((int) _seedData[dx + 7]); // max seed price
 			
-			writeQ(_seedData[(i * 12) + 8]); // today sales
-			writeQ(_seedData[(i * 12) + 9]); // today price
-			writeQ(_seedData[(i * 12) + 10]); // next sales
-			writeQ(_seedData[(i * 12) + 11]); // next price
+			writeQ(_seedData[dx + 8]); // today sales
+			writeQ(_seedData[dx + 9]); // today price
+			writeQ(_seedData[dx + 10]); // next sales
+			writeQ(_seedData[dx + 11]); // next price
 		}
 	}
 }

@@ -458,7 +458,7 @@ public final class CastleManorManager
 	private List<SeedProduction> getNewSeedsList(int castleId)
 	{
 		List<SeedProduction> seeds = new ArrayList<>();
-		List<Integer> seedsIds = ManorData.getInstance().getSeedsForCastle(castleId);
+		int[] seedsIds = ManorData.getInstance().getSeedsForCastle(castleId);
 		for (int sd : seedsIds)
 		{
 			seeds.add(new SeedProduction(sd));
@@ -469,7 +469,7 @@ public final class CastleManorManager
 	private List<CropProcure> getNewCropsList(int castleId)
 	{
 		List<CropProcure> crops = new ArrayList<>();
-		List<Integer> cropsIds = ManorData.getInstance().getCropsForCastle(castleId);
+		int[] cropsIds = ManorData.getInstance().getCropsForCastle(castleId);
 		for (int cr : cropsIds)
 		{
 			crops.add(new CropProcure(cr));

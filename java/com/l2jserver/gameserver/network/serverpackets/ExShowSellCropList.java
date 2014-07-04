@@ -20,7 +20,7 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 import java.util.List;
 
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.datatables.ManorData;
 import com.l2jserver.gameserver.model.CropProcure;
@@ -34,16 +34,16 @@ import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 public class ExShowSellCropList extends L2GameServerPacket
 {
 	private int _manorId = 1;
-	private final FastMap<Integer, L2ItemInstance> _cropsItems;
-	private final FastMap<Integer, CropProcure> _castleCrops;
+	private final FastIntObjectMap<L2ItemInstance> _cropsItems;	//[JOJO] -FastMap
+	private final FastIntObjectMap<CropProcure> _castleCrops;	//[JOJO] -FastMap
 	
 	public ExShowSellCropList(L2PcInstance player, int manorId, List<CropProcure> crops)
 	{
 		_manorId = manorId;
-		_castleCrops = new FastMap<>();
-		_cropsItems = new FastMap<>();
+		_castleCrops = new FastIntObjectMap<>();
+		_cropsItems = new FastIntObjectMap<>();
 		
-		List<Integer> allCrops = ManorData.getInstance().getAllCrops();
+		int[] allCrops = ManorData.getInstance().getAllCrops();
 		for (int cropId : allCrops)
 		{
 			L2ItemInstance item = player.getInventory().getItemByItemId(cropId);
@@ -81,9 +81,9 @@ public class ExShowSellCropList extends L2GameServerPacket
 			writeC(0x01);
 			writeD(ManorData.getInstance().getRewardItem(item.getId(), 2)); // reward 2 id
 			
-			if (_castleCrops.containsKey(item.getId()))
+			CropProcure crop = _castleCrops.get(item.getId());
+			if (crop != null)
 			{
-				CropProcure crop = _castleCrops.get(item.getId());
 				writeD(_manorId); // manor
 				writeQ(crop.getAmount()); // buy residual
 				writeQ(crop.getPrice()); // buy price

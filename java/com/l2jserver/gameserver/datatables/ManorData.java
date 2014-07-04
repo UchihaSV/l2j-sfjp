@@ -18,11 +18,10 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -32,6 +31,8 @@ import com.l2jserver.gameserver.model.L2Seed;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.items.L2Item;
 
+import gnu.trove.list.array.TIntArrayList;
+
 /**
  * Service class for manor
  * @author l3x, UnAfraid
@@ -40,7 +41,7 @@ public class ManorData extends DocumentParser
 {
 	private static Logger _log = Logger.getLogger(ManorData.class.getName());
 	
-	private static final HashMap<Integer, L2Seed> _seeds = new HashMap<>();
+	private static final FastIntObjectMap<L2Seed> _seeds = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	protected ManorData()
 	{
@@ -70,7 +71,7 @@ public class ManorData extends DocumentParser
 				{
 					if ("castle".equalsIgnoreCase(d.getNodeName()))
 					{
-						castleId = parseInteger(d.getAttributes(), "id");
+						castleId = parseInt(d.getAttributes(), "id");
 						for (Node c = d.getFirstChild(); c != null; c = c.getNextSibling())
 						{
 							if ("crop".equalsIgnoreCase(c.getNodeName()))
@@ -95,19 +96,19 @@ public class ManorData extends DocumentParser
 		}
 	}
 	
-	public List<Integer> getAllCrops()
+	public int[] getAllCrops()	//[JOJO] -ArrayList
 	{
-		List<Integer> crops = new ArrayList<>();
+		TIntArrayList crops = new TIntArrayList();
 		
 		for (L2Seed seed : _seeds.values())
 		{
-			if (!crops.contains(seed.getCropId()) && (seed.getCropId() != 0) && !crops.contains(seed.getCropId()))
+			if (seed.getCropId() != 0 && !crops.contains(seed.getCropId()))
 			{
 				crops.add(seed.getCropId());
 			}
 		}
 		
-		return crops;
+		return crops.toArray();
 	}
 	
 	public int getSeedBasicPrice(int seedId)
@@ -260,9 +261,9 @@ public class ManorData extends DocumentParser
 	 * @param castleId
 	 * @return
 	 */
-	public List<Integer> getCropsForCastle(int castleId)
+	public int[] getCropsForCastle(int castleId)	//[JOJO] -ArrayList
 	{
-		List<Integer> crops = new ArrayList<>();
+		TIntArrayList crops = new TIntArrayList();
 		
 		for (L2Seed seed : _seeds.values())
 		{
@@ -272,7 +273,7 @@ public class ManorData extends DocumentParser
 			}
 		}
 		
-		return crops;
+		return crops.toArray();
 	}
 	
 	/**
@@ -280,9 +281,9 @@ public class ManorData extends DocumentParser
 	 * @param castleId - id of the castle
 	 * @return seedIds - list of seed ids
 	 */
-	public List<Integer> getSeedsForCastle(int castleId)
+	public int[] getSeedsForCastle(int castleId)	//[JOJO] -ArrayList
 	{
-		List<Integer> seedsID = new ArrayList<>();
+		TIntArrayList seedsID = new TIntArrayList();
 		
 		for (L2Seed seed : _seeds.values())
 		{
@@ -292,7 +293,7 @@ public class ManorData extends DocumentParser
 			}
 		}
 		
-		return seedsID;
+		return seedsID.toArray();
 	}
 	
 	/**
