@@ -85,7 +85,7 @@ public class L2Attackable extends L2Npc
 	private boolean _canReturnToSpawnPoint = true;
 	private boolean _seeThroughSilentMove = false;
 	private ItemHolder[] _sweepItems;
-	private ItemHolder[] _harvestItems;
+	private ItemHolder _harvestItem;	//[JOJO] -[]
 	private boolean _seeded;
 	private int _seedType = 0;
 	private int _seederObjId = 0;
@@ -1216,10 +1216,10 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 	/**
 	 * @return table containing all L2ItemInstance that can be harvested.
 	 */
-	public synchronized ItemHolder[] takeHarvest()
+	public synchronized ItemHolder takeHarvest()
 	{
-		ItemHolder[] harvest = _harvestItems;
-		_harvestItems = null;
+		ItemHolder harvest = _harvestItem;
+		_harvestItem = null;
 		return harvest;
 	}
 	
@@ -1464,7 +1464,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		// Clear all aggro char from list
 		clearAggroList();
 		// Clear Harvester Rewrard List
-		_harvestItems = null;
+		_harvestItem = null;
 		// Clear mod Seeded stat
 		_seeded = false;
 		_seedType = 0;
@@ -1546,34 +1546,93 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		_seedType = id;
 		int count = 1;
 		
+		for_skiils:
 		for (L2Skill skill : getTemplate().getSkills().values())
 		{
 				switch (skill.getId())
 				{
 					case 4303: // Strong type x2
 						count *= 2;
-						break;
+						break for_skiils;
 					case 4304: // Strong type x3
 						count *= 3;
-						break;
+						break for_skiils;
 					case 4305: // Strong type x4
 						count *= 4;
-						break;
+						break for_skiils;
 					case 4306: // Strong type x5
 						count *= 5;
-						break;
+						break for_skiils;
 					case 4307: // Strong type x6
 						count *= 6;
-						break;
+						break for_skiils;
 					case 4308: // Strong type x7
 						count *= 7;
-						break;
+						break for_skiils;
 					case 4309: // Strong type x8
 						count *= 8;
-						break;
+						break for_skiils;
 					case 4310: // Strong type x9
 						count *= 9;
-						break;
+						break for_skiils;
+					//[JOJO]-------------------------------------------------
+					case 4408:
+						switch (skill.getLevel())
+						{
+						//	case  2:	// HPÇ‚Ç‚çÇÇﬂ
+						//		count *= TODO;
+						//		break for_skiils;
+						//	case  3:	// HPÇ‚Ç‚çÇÇﬂ
+						//		count *= TODO;
+						//		break for_skiils;
+						//	case  4:	// HPçÇÇﬂ
+						//		count *= TODO;
+						//		break for_skiils;
+						//	case  5:	// HPçÇÇﬂ
+						//		count *= TODO;
+						//		break for_skiils;
+						//	case  6:	// HPÇ©Ç»ÇËçÇÇﬂ
+						//		count *= TODO;
+						//		break for_skiils;
+						//	case  7:	// HPÇ©Ç»ÇËçÇÇﬂ
+						//		count *= TODO;
+						//		break for_skiils;
+							case 10:	// x2
+								count *= 2;
+								break for_skiils;
+							case 11:	// x3
+								count *= 3;
+								break for_skiils;
+							case 12:	// x4
+								count *= 4;
+								break for_skiils;
+							case 13:	// x5
+								count *= 5;
+								break for_skiils;
+							case 14:	// x6
+								count *= 6;
+								break for_skiils;
+							case 15:	// x7
+								count *= 7;
+								break for_skiils;
+							case 16:	// x8
+								count *= 8;
+								break for_skiils;
+							case 17:	// x9
+								count *= 9;
+								break for_skiils;
+							case 18:	// x10
+								count *= 10;
+								break for_skiils;
+							case 19:	// x11
+								count *= 11;
+								break for_skiils;
+							case 20:	// x12
+								count *= 12;
+								break for_skiils;
+						}
+						break for_skiils;
+					//-------------------------------------------------------
 				}
 		}
 		
@@ -1585,10 +1644,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 			count += diff;
 		}
 		
-		_harvestItems = new ItemHolder[]
-		{
-			new ItemHolder(ManorData.getInstance().getCropType(_seedType), count * Config.RATE_DROP_MANOR)
-		};
+		_harvestItem = new ItemHolder(ManorData.getInstance().getCropType(_seedType), count * Config.RATE_DROP_MANOR);
 	}
 	
 	public int getSeederId()

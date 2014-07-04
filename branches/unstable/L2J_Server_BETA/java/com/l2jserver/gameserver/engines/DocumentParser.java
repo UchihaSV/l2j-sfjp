@@ -402,7 +402,6 @@ public abstract class DocumentParser
 	
 	protected int parseInt(Node node)
 	{
-		if (node == null) throw new NullPointerException();
 		return Integer.parseInt(node.getNodeValue());
 	}
 	

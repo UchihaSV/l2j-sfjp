@@ -18,8 +18,6 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import com.l2jserver.gameserver.datatables.ManorData;
 
 /**
@@ -27,7 +25,7 @@ import com.l2jserver.gameserver.datatables.ManorData;
  */
 public class ExShowManorDefaultInfo extends L2GameServerPacket
 {
-	private List<Integer> _crops = null;
+	private final int[] _crops;
 	
 	public ExShowManorDefaultInfo()
 	{
@@ -40,7 +38,7 @@ public class ExShowManorDefaultInfo extends L2GameServerPacket
 		writeC(0xFE);
 		writeH(0x25);
 		writeC(1/*[JOJO]í≤êÆíÜ*/);
-		writeD(_crops.size());
+		writeD(_crops.length);
 		for (int cropId : _crops)
 		{
 			writeD(cropId); // crop Id
