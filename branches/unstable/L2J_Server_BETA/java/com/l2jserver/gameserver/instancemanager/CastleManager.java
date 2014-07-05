@@ -22,13 +22,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javolution.util.FastList;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.InstanceListManager;
@@ -44,9 +42,9 @@ public final class CastleManager implements InstanceListManager
 {
 	private static final Logger _log = Logger.getLogger(CastleManager.class.getName());
 	
-	private List<Castle> _castles;
+	private final ArrayList<Castle> _castles = new ArrayList<>(9);	//[JOJO] -FastList
 	
-	private final Map<Integer, Long> _castleSiegeDate = new ConcurrentHashMap<>();
+	private final FastIntObjectMap<Long> _castleSiegeDate = new FastIntObjectMap<Long>(9).shared();	//[JOJO] -ConcurrentHashMap<>();
 	
 	private static final int _castleCirclets[] =
 	{
@@ -179,27 +177,21 @@ public final class CastleManager implements InstanceListManager
 		return -1;
 	}
 	
-	public final List<Castle> getCastles()
+	public final ArrayList<Castle> getCastles()
 	{
-		if (_castles == null)
-		{
-			_castles = new FastList<>();
-		}
 		return _castles;
 	}
 	
 	public boolean hasOwnedCastle()
 	{
-		boolean hasOwnedCastle = false;
 		for (Castle castle : getCastles())
 		{
 			if (castle.getOwnerId() > 0)
 			{
-				hasOwnedCastle = true;
-				break;
+				return true;
 			}
 		}
-		return hasOwnedCastle;
+		return false;
 	}
 	
 	public final void validateTaxes(int sealStrifeOwner)
