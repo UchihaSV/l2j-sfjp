@@ -18,8 +18,6 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
-import static com.l2jserver.gameserver.datatables.SkillTable.*;
-
 import java.util.Collection;
 import java.util.concurrent.Future;
 
@@ -46,7 +44,6 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 {
 	@Deprecated static final boolean DEBUG = false;
 	static final long TIME_VICTIM_SPAWN_KEYBOX = 300000;
-	protected static final int FAKE_PETRIFICATION = getSkillHashCode(4616, 1);
 	
 	public int mysteriousBoxId = 0;
 	boolean victimKeyBoxSpawned;
@@ -54,7 +51,6 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 	
 	protected Future<?> _victimSpawnKeyBoxTask = null;
 	protected Future<?> _victimShout = null;
-	protected Future<?> _changeImmortalTask = null;
 	protected Future<?> _onDeadEventTask = null;
 	
 	public L2SepulcherMonsterInstance(int objectId, L2NpcTemplate template)
@@ -69,6 +65,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			case 25346:
 			case 25349:
 				setIsRaid(true);
+				setIsNoRndWalk(true);
 		}
 	}
 	
@@ -165,13 +162,9 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			case 18241:
 			case 18242:
 			case 18243:
-				if (_changeImmortalTask != null)
-				{
-					_changeImmortalTask.cancel(true);
-				}
-				_changeImmortalTask = ThreadPoolManager.getInstance().scheduleEffect(new ChangeImmortal(this), 1600);
-				
+				SkillTable.getInstance().getInfo(4616, 1).applyEffects(this, this);	// Fake Petrification
 				break;
+			
 			case 18256:
 				break;
 			case 25339:
@@ -704,23 +697,6 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 					FourSepulchersManager.getInstance().spawnEmperorsGraveNpc(_activeChar.mysteriousBoxId);
 					break;
 			}
-		}
-	}
-	
-	private static class ChangeImmortal implements Runnable
-	{
-		L2SepulcherMonsterInstance activeChar;
-		
-		public ChangeImmortal(L2SepulcherMonsterInstance mob)
-		{
-			activeChar = mob;
-		}
-		
-		@Override
-		public void run()
-		{
-			// Invulnerable by petrification
-			getSkill(FAKE_PETRIFICATION).applyEffects(activeChar, activeChar);
 		}
 	}
 	
