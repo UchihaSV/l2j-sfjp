@@ -1189,7 +1189,6 @@ public final class Config
 	public static final boolean CHECK_DYNAMIC_IP_ADDRESS_TASK = true;	//[JOJO]IPアドレスを定期的に検査して変化していればログインサーバに接続しなおす.
 	public static final boolean ADMIN_MENU_AUTO_RETURN = true;			//[JOJO]adminメニューを開いたままにする.
 	public static final boolean NEVER_EVT_AGGRESSION_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体にはEVT_AGGRESSIONを発行しない.
-	public static final boolean NEVER_RandomAnimation_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体はあくびしない.
 	public static final boolean NEVER_WALKER_RndWalk = true;			//[JOJO]WalkingManager対策 - 散歩させない.
 	public static final boolean NEVER_WALKER_ReturnToSpawnPoint = true;	//[JOJO]WalkingManager対策 - 帰巣させない.
 	public static final boolean NEVER_WALKER_RandomAnimation = true;	//[JOJO]WalkingManager対策 - あくびさせない.
@@ -1221,6 +1220,12 @@ public final class Config
 	public static final boolean FIX_FAKEDEATH_EXIT = true;				//[JOJO]フェイク デス中断・終了処理
 	public static final boolean NEVER_addAggroRangeEnterId_IF_0 = true;	//[JOJO]aggro値が0のモンスターはaddAggroRangeEnterIdを無視.
 	public static final boolean FIX_NPC_NAME_AND_TITLE = true;			//[JOJO]NPCのsetName(),setTitle()が反映されない不具合の修正.
+	public static final boolean FIX_NPC_XML_CANMOVE = true;				//[JOJO]npcs/*.xml補正:移動速度1以下もしくは死体はcanMove=falseとする.
+	public static final boolean FIX_NPC_XML_CANMOVE_LOG = false;			//[JOJO](同上のログを出力する)
+	public static final boolean NEVER_RandomWalk_IF_CORPSE = true;			//[JOJO]npcs/*.xml補正:移動できないモンスターや死体は散歩しない.
+	public static final boolean NEVER_RandomWalk_IF_CORPSE_LOG = false;		//[JOJO](同上のログを出力する)
+	public static final boolean NEVER_RandomAnimation_IF_CORPSE = true;		//[JOJO]死体はあくびしない.
+	public static final boolean NEVER_RandomAnimation_IF_CORPSE_LOG = false;	//[JOJO](同上のログを出力する)
 	
 
 	//

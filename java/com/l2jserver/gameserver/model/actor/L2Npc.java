@@ -80,6 +80,7 @@ import com.l2jserver.gameserver.model.olympiad.Olympiad;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.skills.targets.L2TargetType;
+import com.l2jserver.gameserver.model.stats.MoveType;
 import com.l2jserver.gameserver.model.variables.NpcVariables;
 import com.l2jserver.gameserver.model.zone.type.L2TownZone;
 import com.l2jserver.gameserver.network.SystemMessageId;
@@ -479,6 +480,12 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 		// Set the name of the L2Character
 		setName(template.getName());	//[JOJO] revert r6367
 		setTitle(template.getTitle());	//[JOJO]+
+}}
+if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
+		if (template.getAIType() == AIType.CORPSE || template.getType().equals("L2GrandBoss")) {
+			if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE_LOG) if (isRandomAnimationEnabled()) System.out.println("__BASENAME__:__LINE__:(NonRandomAnimationNpcs) canMove=" + template.canMove() + " baseWalkSpd=" + template.getBaseMoveSpeed(MoveType.WALK) + " baseRunSpd=" + template.getBaseMoveSpeed(MoveType.RUN) + " " + template.getRace().name() + " " + template.getAIType().name() + " " + template.getType() + " " + template.getNpcId() + " " + com.l2jserver.util.Util.concat_ws(" ", template.getTitle(), template.getName()));
+			setRandomAnimationEnabled(false);
+		}
 }}
 	}
 	
