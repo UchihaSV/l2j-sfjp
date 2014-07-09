@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import javolution.lang.MathLib;
 import javolution.util.FastList;
 import javolution.util.FastSet;
 
@@ -247,25 +248,10 @@ public class MinionList
 		{
 			if ((minion != null) && !minion.isDead() && !minion.isMovementDisabled())
 			{
-				int newX = Rnd.get(minRadius * 2, offset * 2); // x
-				int newY = Rnd.get(newX, offset * 2); // distance
-				newY = (int) Math.sqrt((newY * newY) - (newX * newX)); // y
-				if (newX > (offset + minRadius))
-				{
-					newX = (_master.getX() + newX) - offset;
-				}
-				else
-				{
-					newX = (_master.getX() - newX) + minRadius;
-				}
-				if (newY > (offset + minRadius))
-				{
-					newY = (_master.getY() + newY) - offset;
-				}
-				else
-				{
-					newY = (_master.getY() - newY) + minRadius;
-				}
+				final double distance = Rnd.get(minRadius, offset);
+				final double angle = Rnd.nextDouble() * MathLib.TWO_PI;
+				int newX = _master.getX() + (int) (distance * Math.cos(angle));
+				int newY = _master.getY() + (int) (distance * Math.sin(angle));
 				
 				minion.teleToLocation(newX, newY, _master.getZ());
 			}
@@ -374,25 +360,10 @@ public class MinionList
 		final int offset = 200;
 		final int minRadius = (int) master.getCollisionRadius() + 30;
 		
-		int newX = Rnd.get(minRadius * 2, offset * 2); // x
-		int newY = Rnd.get(newX, offset * 2); // distance
-		newY = (int) Math.sqrt((newY * newY) - (newX * newX)); // y
-		if (newX > (offset + minRadius))
-		{
-			newX = (master.getX() + newX) - offset;
-		}
-		else
-		{
-			newX = (master.getX() - newX) + minRadius;
-		}
-		if (newY > (offset + minRadius))
-		{
-			newY = (master.getY() + newY) - offset;
-		}
-		else
-		{
-			newY = (master.getY() - newY) + minRadius;
-		}
+		final double distance = Rnd.get(minRadius, offset);
+		final double angle = Rnd.nextDouble() * MathLib.TWO_PI;
+		int newX = master.getX() + (int) (distance * Math.cos(angle));
+		int newY = master.getY() + (int) (distance * Math.sin(angle));
 		
 		minion.spawnMe(newX, newY, master.getZ());
 		
