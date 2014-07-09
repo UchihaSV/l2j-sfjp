@@ -58,6 +58,7 @@ import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.skills.L2SkillType;
+import com.l2jserver.gameserver.model.stats.MoveType;
 
 /**
  * NPC template.
@@ -215,6 +216,14 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		}
 		if (!_isAggressive) _aggroRange = 0;
 		//-------------------------------------------------------
+if (com.l2jserver.Config.FIX_NPC_XML_CANMOVE) {{
+		if (instanceofL2Attackable(_type))
+			if (_aiType == AIType.CORPSE
+			 || getBaseMoveSpeed(MoveType.WALK) <= 1f && getBaseMoveSpeed(MoveType.RUN) <= 1f) {
+				if (com.l2jserver.Config.FIX_NPC_XML_CANMOVE_LOG) if (_canMove) System.out.println("__BASENAME__:__LINE__:(NonMoveMonsters) canMove=" + _canMove + " baseWalkSpd=" + getBaseMoveSpeed(MoveType.WALK) + " baseRunSpd=" + getBaseMoveSpeed(MoveType.RUN) + " " + _race.name() + " " + _aiType.name() + " " + _type + " " + _id + " " + com.l2jserver.util.Util.concat_ws(" ", _title, _name));
+				_canMove = false;
+			}
+}}
 	}
 	
 	//[JOJO]-------------------------------------------------
