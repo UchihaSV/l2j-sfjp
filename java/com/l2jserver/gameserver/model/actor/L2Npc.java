@@ -428,7 +428,11 @@ public class L2Npc extends L2Character
 	 */
 	public boolean hasRandomAnimation()
 	{
+if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
+		return Config.MAX_NPC_ANIMATION > 0 && _isRandomAnimationEnabled;
+}} else {{
 		return ((Config.MAX_NPC_ANIMATION > 0) && _isRandomAnimationEnabled && getAiType() != AIType.CORPSE);
+}}
 	}
 	
 	/**
@@ -482,9 +486,9 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 		setTitle(template.getTitle());	//[JOJO]+
 }}
 if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
-		if (template.getAIType() == AIType.CORPSE || template.getType().equals("L2GrandBoss")) {
-			if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE_LOG) if (isRandomAnimationEnabled()) System.out.println("__BASENAME__:__LINE__:(NonRandomAnimationNpcs) canMove=" + template.canMove() + " baseWalkSpd=" + template.getBaseMoveSpeed(MoveType.WALK) + " baseRunSpd=" + template.getBaseMoveSpeed(MoveType.RUN) + " " + template.getRace().name() + " " + template.getAIType().name() + " " + template.getType() + " " + template.getNpcId() + " " + com.l2jserver.util.Util.concat_ws(" ", template.getTitle(), template.getName()));
-			setRandomAnimationEnabled(false);
+		if (template.getAIType() == AIType.CORPSE) {
+			if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE_LOG) System.out.println("__BASENAME__:__LINE__:(NonRandomAnimationNpcs) canMove=" + template.canMove() + " baseWalkSpd=" + template.getBaseMoveSpeed(MoveType.WALK) + " baseRunSpd=" + template.getBaseMoveSpeed(MoveType.RUN) + " " + template.getRace().name() + " " + template.getAIType().name() + " " + template.getType() + " " + template.getNpcId() + " " + com.l2jserver.util.Util.concat_ws(" ", template.getTitle(), template.getName()));
+			_isRandomAnimationEnabled = false;
 		}
 }}
 	}

@@ -51,7 +51,6 @@ import com.l2jserver.gameserver.model.L2DropData;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Party;
 import com.l2jserver.gameserver.model.actor.events.AttackableEvents;
-import com.l2jserver.gameserver.model.actor.instance.L2GrandBossInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2ServitorInstance;
@@ -1693,7 +1692,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 	@Override
 	public boolean hasRandomAnimation()
 	{
-		return ((Config.MAX_MONSTER_ANIMATION > 0) && isRandomAnimationEnabled() && !(this instanceof L2GrandBossInstance));
+		return Config.MAX_MONSTER_ANIMATION > 0 && isRandomAnimationEnabled();	//[JOJO] -&& !(instanceof L2GrandBossInstance) ==> L2GrandBossInstance#hasRandomAnimation
 	}
 	
 	@Override
