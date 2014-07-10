@@ -155,4 +155,10 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 	{
 		return _useRaidCurse;
 	}
+	
+	@Override
+	public boolean hasRandomAnimation()	//[JOJO] L2Attackable#hasRandomAnimation ‚©‚ç
+	{
+		return false;
+	}
 }
