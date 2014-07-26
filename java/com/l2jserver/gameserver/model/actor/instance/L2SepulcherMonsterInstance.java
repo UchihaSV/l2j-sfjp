@@ -35,6 +35,7 @@ import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo.NpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillUse;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
+import com.l2jserver.gameserver.network.serverpackets.SocialAction;
 import com.l2jserver.util.Rnd;
 
 /**
@@ -65,7 +66,6 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			case 25346:
 			case 25349:
 				setIsRaid(true);
-				setIsNoRndWalk(true);
 		}
 	}
 	
@@ -131,6 +131,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				}
 				_victimShout = ThreadPoolManager.getInstance().scheduleEffect(new VictimShout(System.currentTimeMillis() + TIME_VICTIM_SPAWN_KEYBOX), 5000);
 				break;
+			
 			case 18196:
 			case 18197:
 			case 18198:
@@ -162,11 +163,16 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			case 18241:
 			case 18242:
 			case 18243:
+				getSpawn().setIsNoRndWalk(true);
+				setIsNoRndWalk(true);
 				SkillTable.getInstance().getInfo(4616, 1).applyEffects(this, this);	// Fake Petrification
 				break;
 			
 			case 18256:
+				getSpawn().setIsNoRndWalk(true);
+				setIsNoRndWalk(true);
 				break;
+			
 			case 25339:
 			case 25342:
 			case 25346:
@@ -439,10 +445,12 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				else if ((player = getRandomPlayer(true)) != null)
 				{
 					broadcastPacket(new NpcSay(getObjectId(), 0, getId(), 1010483/*"$s1! Help me!!"*/).addPcName(player));
+/*TODO:確認*/		if (!isMoving()) broadcastPacket(new SocialAction(getObjectId(), 1));
 				}
 				else
 				{
 					broadcastPacket(new NpcSay(getObjectId(), 0, getId(), 1010484/*"forgive me!!"*/));
+/*TODO:確認*/		if (!isMoving()) broadcastPacket(new SocialAction(getObjectId(), 1));
 				}
 			}
 
@@ -547,6 +555,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				victimKeyBoxSpawned = true;
 				FourSepulchersManager.getInstance().spawnKeyBox(activeChar);
 				broadcastPacket(new NpcSay(getObjectId(), 0, getId(), 1000503/*"Many thanks for rescue me."*/));
+/*TODO:確認*/	broadcastPacket(new SocialAction(getObjectId(), 1));
 				setWalking();
 				setRandomAnimationEnabled(true);
 			}

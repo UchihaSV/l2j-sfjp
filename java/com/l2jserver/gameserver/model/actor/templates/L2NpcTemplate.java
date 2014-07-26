@@ -29,7 +29,6 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
-import javolution.util.FastMap;
 import jp.sf.l2j.troja.FastIntObjectMap;
 import jp.sf.l2j.troja.IntObjectMap;
 
@@ -38,6 +37,7 @@ import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.enums.AISkillType;
 import com.l2jserver.gameserver.enums.AIType;
+import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.NpcRace;
 import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.enums.Sex;
@@ -46,7 +46,6 @@ import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.StatsSet;
-import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.base.ClassId;
@@ -180,7 +179,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		_clanHelpRange = set.getInt("clanHelpRange", 0);
 		_dodge = set.getInt("dodge", 0);
 		_isChaos = set.getBoolean("isChaos", false);
-		_isAggressive = set.getBoolean("isAggressive", instanceofL2Attackable(_type));
+		_isAggressive = isAggressiveType(_type, set.getBoolean("isAggressive", true));
 	//	_isAggressive = set.getBoolean("isAggressive", true);
 		
 		_soulShot = set.getInt("soulShot", 0);
@@ -207,40 +206,49 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		_knownRange = 300;
 		if (_knownRange < _aggroRange) _knownRange = _aggroRange;
 		if (_knownRange < _clanHelpRange) _knownRange = _clanHelpRange;
-		switch (_type) {
-			case "L2ControllableMob":
-			case "L2FestivalMonster":
-			case "L2FriendlyMob":
-				// @Override public boolean isAggressive()
-				_isAggressive = true;
-		}
+		_isAggressive = isAggressiveType(_type, _isAggressive);
+		if (_aggroRange == 0) _isAggressive = false;
 		if (!_isAggressive) _aggroRange = 0;
 		//-------------------------------------------------------
 if (com.l2jserver.Config.FIX_NPC_XML_CANMOVE) {{
-		if (instanceofL2Attackable(_type))
-			if (_aiType == AIType.CORPSE
-			 || getBaseMoveSpeed(MoveType.WALK) <= 1f && getBaseMoveSpeed(MoveType.RUN) <= 1f) {
-				if (com.l2jserver.Config.FIX_NPC_XML_CANMOVE_LOG) if (_canMove) System.out.println("__BASENAME__:__LINE__:(NonMoveMonsters) canMove=" + _canMove + " baseWalkSpd=" + getBaseMoveSpeed(MoveType.WALK) + " baseRunSpd=" + getBaseMoveSpeed(MoveType.RUN) + " " + _race.name() + " " + _aiType.name() + " " + _type + " " + _id + " " + com.l2jserver.util.Util.concat_ws(" ", _title, _name));
-				_canMove = false;
-			}
+		if (InstanceType.isType(_type, InstanceType.L2Attackable) && !canMove(this)) {
+			if (com.l2jserver.Config.FIX_NPC_XML_CANMOVE_LOG) if (_canMove) System.out.println("__BASENAME__:__LINE__:(NonMoveMonsters) canMove=" + _canMove + " baseWalkSpd=" + getBaseMoveSpeed(MoveType.WALK) + " baseRunSpd=" + getBaseMoveSpeed(MoveType.RUN) + " " + _race.name() + " " + _aiType.name() + " " + _type + " " + _id + " " + com.l2jserver.util.Util.concat_ws(" ", _title, _name));
+			_canMove = false;
+		}
 }}
 	}
 	
 	//[JOJO]-------------------------------------------------
-	private static FastMap<String, Boolean> _instanceofL2AttackableCache;
-	public static boolean instanceofL2Attackable(String type)
+	public static boolean isAggressiveType(String type, boolean isAggressive)
 	{
-		if (type == null) return false;
-		if (_instanceofL2AttackableCache == null)
-			_instanceofL2AttackableCache = new FastMap<>();
-		final Boolean b;
-		if ((b = _instanceofL2AttackableCache.get(type)) != null)
-			return b;
-		try {
-			final boolean a = L2Attackable.class.isAssignableFrom(Class.forName("com.l2jserver.gameserver.model.actor.instance." + type + "Instance"));
-			_instanceofL2AttackableCache.put(type, a);
-			return a;
-		} catch (ClassNotFoundException e) {return false;}
+		return
+		  // @Override public boolean isAggressive() { return true; }
+		  InstanceType.isTypes(type, InstanceType.L2ControllableMobInstance, InstanceType.L2FestivalMonsterInstance, InstanceType.L2FriendlyMobInstance) ? true
+		  // @Override public boolean isAggressive() { return getTemplate().isAggressive() && !isEventMob(); }
+		: InstanceType.isTypes(type, InstanceType.L2MonsterInstance, InstanceType.L2GuardInstance) ? isAggressive
+		  // L2NpcInstance ...
+		: false;
+
+	}
+	
+	public static final boolean canMove(L2NpcTemplate template)
+	{
+if (com.l2jserver.Config.FIX_NPC_XML_CANMOVE) {{
+		return !(template._aiType == AIType.CORPSE
+			|| template.getBaseMoveSpeed(MoveType.WALK) <= 1f && template.getBaseMoveSpeed(MoveType.RUN) <= 1f);
+}} else {{
+		return true;
+}}
+	}
+	public static final boolean isNoRndWalk(L2NpcTemplate template)
+	{
+if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
+		return !template.canMove()
+			|| template.getAIType() == AIType.CORPSE
+			|| template.getBaseMoveSpeed(MoveType.WALK) <= 1f;
+}} else {{
+		return false;
+}}
 	}
 	//-------------------------------------------------------
 	

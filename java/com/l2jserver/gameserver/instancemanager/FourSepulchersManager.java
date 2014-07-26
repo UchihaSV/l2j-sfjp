@@ -333,19 +333,6 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 	
 	private void initKeyBoxSpawns() //[modify JOJO]
 	{
-		for (int spawnNpcId : _keyBoxNpc.values())
-		{
-			try
-			{
-				L2NpcTemplate template = NpcData.getInstance().getTemplate(spawnNpcId);
-				if (template == null) throw new AssertionError();
-				new L2Spawn(template); /*Test only.*/
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.WARNING, "FourSepulchersManager.InitKeyBoxSpawns: Spawn could not be initialized: " + e.getMessage(), e);
-			}
-		}
 	}
 	
 	private void loadPhysicalMonsters()
@@ -599,11 +586,11 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 			{
 				try
 				{
-					L2Spawn spawnDat;
-					spawnDat = new L2Spawn(template);
+					L2Spawn spawnDat = new L2Spawn(template);
 					spawnDat.setAmount(1);
 					spawnDat.setXYZ(loc.getX(), loc.getY(), loc.getZ());
 					spawnDat.setHeading(loc.getHeading());
+					spawnDat.setIsNoRndWalk(true);
 				//	SpawnTable.getInstance().addNewSpawn(spawnDat, false);	//[JOJO] ’n—‹“P‹Ž
 					_shadowSpawns.put(keyNpcId, spawnDat);
 				}
@@ -621,19 +608,6 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 	
 	protected void initExecutionerSpawns() //[modify JOJO]
 	{
-		for (int spawnNpcId : _victim.values())
-		{
-			try
-			{
-				L2NpcTemplate template = NpcData.getInstance().getTemplate(spawnNpcId);
-				if (template == null) throw new AssertionError();
-				new L2Spawn(template); /*Test only.*/
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.WARNING, "FourSepulchersManager.InitExecutionerSpawns: Spawn could not be initialized: " + e.getMessage(), e);
-			}
-		}
 	}
 	
 	public void setChangePeriodTask(ScheduledFuture<?> task)

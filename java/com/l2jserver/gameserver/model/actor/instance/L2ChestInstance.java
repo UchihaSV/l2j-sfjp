@@ -40,7 +40,7 @@ public final class L2ChestInstance extends L2MonsterInstance
 	{
 		super(objectId, template);
 		setInstanceType(InstanceType.L2ChestInstance);
-		setIsNoRndWalk(true);
+	//	setIsNoRndWalk(true);	//-[JOJO] --> onSpawn()
 		_isInteracted = false;
 		_specialDrop = false;
 	}
@@ -52,6 +52,8 @@ public final class L2ChestInstance extends L2MonsterInstance
 		_isInteracted = false;
 		_specialDrop = false;
 		setMustRewardExpSp(true);
+		getSpawn().setIsNoRndWalk(true);	//+[JOJO]
+		setIsNoRndWalk(true);	//+[JOJO]
 	}
 	
 	public synchronized boolean isInteracted()
