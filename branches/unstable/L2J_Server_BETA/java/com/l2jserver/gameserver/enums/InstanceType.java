@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.enums;
 
+import javolution.util.FastMap;
+
 /**
  * @author unknown
  */
@@ -132,19 +134,18 @@ public enum InstanceType
 	{
 		_parent = parent;
 		
-		final int high = ordinal() - (Long.SIZE - 1);
-		if (high < 0)
+		final int ordinal = ordinal();
+		if (ordinal < Long.SIZE)
 		{
-			_typeL = 1L << ordinal();
+			_typeL = 1L << ordinal;
 			_typeH = 0;
 		}
-		else
+		else if (ordinal < Long.SIZE * 2)
 		{
 			_typeL = 0;
-			_typeH = 1L << high;
+			_typeH = 1L << ordinal;
 		}
-		
-		if ((_typeL < 0) || (_typeH < 0))
+		else
 		{
 			throw new Error("Too many instance types, failed to load " + name());
 		}
@@ -168,7 +169,7 @@ public enum InstanceType
 	
 	public final boolean isType(InstanceType it)
 	{
-		return ((_maskL & it._typeL) > 0) || ((_maskH & it._typeH) > 0);
+		return (it._typeL & _maskL) != 0 || (it._typeH & _maskH) != 0;
 	}
 	
 	public final boolean isTypes(InstanceType... it)
@@ -182,4 +183,39 @@ public enum InstanceType
 		}
 		return false;
 	}
+	
+	//[JOJO]-------------------------------------------------
+	private static final FastMap<String, InstanceType> _templateTypes = new FastMap<>();
+	static {
+		for (InstanceType it : InstanceType.values()) {
+			final String name = it.name();
+			if (name.endsWith("Instance"))
+				_templateTypes.put(name.substring(0, name.length() - 8/*"Instance".length()*/), it);
+		}
+	}
+	
+	public static final boolean isType(String type, InstanceType it)
+	{
+		final InstanceType me;
+		return (me = _templateTypes.get(type)) != null && me.isType(it);
+	}
+	
+	public static final boolean isTypes(String type, InstanceType it1, InstanceType it2)
+	{
+		final InstanceType me;
+		return (me = _templateTypes.get(type)) != null && (me.isType(it1) || me.isType(it2));
+	}
+	
+	public static final boolean isTypes(String type, InstanceType it1, InstanceType it2, InstanceType it3)
+	{
+		final InstanceType me;
+		return (me = _templateTypes.get(type)) != null && (me.isType(it1) || me.isType(it2) || me.isType(it3));
+	}
+	
+	public static final boolean isTypes(String type, InstanceType... it)
+	{
+		final InstanceType me;
+		return (me = _templateTypes.get(type)) != null && me.isTypes(it);
+	}
+	//-------------------------------------------------------
 }

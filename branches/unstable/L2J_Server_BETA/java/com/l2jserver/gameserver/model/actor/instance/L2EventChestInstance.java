@@ -93,11 +93,19 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 	{
 		super(objectId, template);
 		
-		setIsNoRndWalk(true);
+	//	setIsNoRndWalk(true);	//-[JOJO] --> onSpawn()
 		disableCoreAI(true);
 		
 		eventSetDropOnGround(true);
 		eventSetBlockOffensiveSkills(true);
+	}
+	
+	@Override
+	public void onSpawn()
+	{
+		super.onSpawn();
+		getSpawn().setIsNoRndWalk(true);	//+[JOJO]
+		setIsNoRndWalk(true);	//+[JOJO]
 	}
 	
 	public boolean canSee(L2Character cha)

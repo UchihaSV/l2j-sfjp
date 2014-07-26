@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.model.actor;
 import static com.l2jserver.gameserver.ai.CtrlIntention.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
@@ -127,7 +128,9 @@ public class L2Npc extends L2Character
 	/** Minimum interval between social packets */
 	private final int _minimalSocialInterval = 6000;
 	/** Support for random animation switching */
-	private boolean _isRandomAnimationEnabled = true;
+	private boolean _isRandomAnimationEnabled = Arrays.binarySearch(NON_RANDOM_ANIMATION_NPCS, getNpcId()) < 0;
+	/** Non random animation npc list */
+	public static int[] NON_RANDOM_ANIMATION_NPCS = new int[0];	//[JOJO]
 	
 	protected RandomAnimationTask _rAniTask = null;
 	private int _currentLHandId; // normally this shouldn't change from the template, but there exist exceptions
@@ -343,23 +346,17 @@ public class L2Npc extends L2Character
 		{
 			try
 			{
-				if (this != _rAniTask)
+				if (this != _rAniTask || !isInActiveRegion() || isDead() || !isVisible() || !isRandomAnimationEnabled())
 				{
+					_rAniTask = null;	//+[JOJO]
 					return; // Shouldn't happen, but who knows... just to make sure every active npc has only one timer.
 				}
-				if (!isInActiveRegion())	//+[JOJO]
-					return;
-				if (isDead() || !isVisible())	//+[JOJO]
-					return;
-				if (!isRandomAnimationEnabled())	//+[JOJO]
-					return;
 				if (isMob())
 				{
 					// Cancel further animation timers until intention is changed to ACTIVE again.
-					if (!hasAI())	//+[JOJO]
-						return;
-					if (getAI().getIntention() != AI_INTENTION_ACTIVE)
+					if (!hasAI() || getAI().getIntention() != AI_INTENTION_ACTIVE)
 					{
+						_rAniTask = null;	//+[JOJO]
 						return;
 					}
 				}
@@ -402,12 +399,9 @@ public class L2Npc extends L2Character
 	}
 	void startRandomAnimationTimer(RandomAnimationTask task)
 	{
-		if (!isInActiveRegion())	//+[JOJO]
-			return;
-		if (isDead() || !isVisible())	//+[JOJO]
-			return;
-		if (!hasRandomAnimation())
+		if (!isInActiveRegion() || isDead() || !isVisible() || !hasRandomAnimation())
 		{
+			_rAniTask = null;	//+[JOJO]
 			return;
 		}
 		
@@ -439,7 +433,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 	 * Switches random Animation state into val.
 	 * @param val needed state of random animation
 	 */
-	public void setRandomAnimationEnabled(boolean val)
+	public final void setRandomAnimationEnabled(boolean val)	//[JOJO] +final
 	{
 		_isRandomAnimationEnabled = val;
 	}
@@ -447,7 +441,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 	/**
 	 * @return {@code true}, if random animation is enabled, {@code false} otherwise.
 	 */
-	public boolean isRandomAnimationEnabled()
+	public final boolean isRandomAnimationEnabled()	//[JOJO] +final
 	{
 		return _isRandomAnimationEnabled;
 	}

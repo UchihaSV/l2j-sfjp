@@ -38,7 +38,6 @@ import com.l2jserver.gameserver.datatables.EventDroplist;
 import com.l2jserver.gameserver.datatables.EventDroplist.DateDrop;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.ManorData;
-import com.l2jserver.gameserver.enums.AIType;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.instancemanager.CursedWeaponsManager;
@@ -66,7 +65,6 @@ import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.skills.L2Skill;
-import com.l2jserver.gameserver.model.stats.MoveType;
 import com.l2jserver.gameserver.model.stats.Stats;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
@@ -129,14 +127,6 @@ public class L2Attackable extends L2Npc
 		setInstanceType(InstanceType.L2Attackable);
 		setIsInvul(false);
 		_mustGiveExpSp = true;
-if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
-		if (!template.canMove()
-		 || template.getAIType() == AIType.CORPSE
-		 || template.getBaseMoveSpeed(MoveType.WALK) <= 1f) {
-			if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE_LOG) if (!isNoRndWalk()) System.out.println("__BASENAME__:__LINE__:(NonRandomWalkMonsters) canMove=" + template.canMove() + " baseWalkSpd=" + template.getBaseMoveSpeed(MoveType.WALK) + " baseRunSpd=" + template.getBaseMoveSpeed(MoveType.RUN) + " " + template.getRace().name() + " " + template.getAIType().name() + " " + template.getType() + " " + template.getNpcId() + " " + com.l2jserver.util.Util.concat_ws(" ", template.getTitle(), template.getName()));
-			setIsNoRndWalk(true);
-		}
-}}
 	}
 	
 	@Override
