@@ -18,8 +18,6 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
-import static com.l2jserver.gameserver.ai.CtrlIntention.*;
-
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -29,13 +27,11 @@ import com.l2jserver.gameserver.ai.L2AttackableAI;
 import com.l2jserver.gameserver.ai.L2CharacterAI;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.QuestEventType;
-import com.l2jserver.gameserver.model.L2Object;
-import com.l2jserver.gameserver.model.L2World;
-import com.l2jserver.gameserver.model.L2WorldRegion;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.knownlist.GuardKnownList;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
+import com.l2jserver.gameserver.model.interfaces.ILocational;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.SocialAction;
@@ -88,34 +84,50 @@ public class L2GuardInstance extends L2Attackable
 	}
 	
 	//[JOJO]-------------------------------------------------
-	private static class L2GuardAI extends L2AttackableAI
+	@Override
+	public boolean isMob() // rather delete this check
+	{
+		return false; // This means we use MAX_NPC_ANIMATION instead of MAX_MONSTER_ANIMATION
+	}
+	
+	public static class L2GuardAI extends L2AttackableAI
 	{
 		public L2GuardAI(AIAccessor accessor)
 		{
 			super(accessor);
 		}
 		
-		@Override
-		protected void onIntentionIdle()
+		public void returnHome()	// <-- L2AttackableAI#thinkActive
 		{
-			super.onIntentionIdle();
-			if (!getActor().isWalker())
-				getActor().home();
+			// ※ setIntention(AI_INTENTION_****) 使用禁止
+			final L2GuardInstance npc = (L2GuardInstance) getActor();
+			final ILocational p = npc.getSpawnPoint();
+			final int x1 = p.getX();
+			final int y1 = p.getY();
+			final int z1 = p.getZ();
+			
+			if (npc.getX() != x1 || npc.getY() != y1)
+			{
+				if (npc.isReturningToSpawnPoint() && npc.isRunning() && npc.isMoving() && npc.getXdestination() == x1 && npc.getYdestination() == y1)
+					return;
+				npc.setisReturningToSpawnPoint(true);
+				npc.setRunning();
+				moveTo(x1, y1, z1);
+			}
+			else
+			{
+				final int h1 = npc.getSpawn().getHeading();
+				if (npc.getHeading() != h1) {
+					for (L2PcInstance pc : npc.getKnownList().getKnownPlayers().values())
+						if (pc.getKarma() > 0) {
+							return;
+						}
+					npc.setHeading(h1);
+					npc.broadcastPacket(new ValidateLocation(npc));
+					npc.setAI(null);
+				}
+			}
 		}
-		
-		@Override
-		public L2GuardInstance getActor()
-		{
-			return (L2GuardInstance) super.getActor();
-		}
-	}
-	
-	@Override
-	public void setAI(L2CharacterAI newAI)
-	{
-		super.setAI(newAI);
-		if (newAI == null && !isWalker())
-			home();
 	}
 	
 	@Override
@@ -135,70 +147,6 @@ public class L2GuardInstance extends L2Attackable
 		}
 		return ai;
 	}
-	
-	protected boolean home()
-	{
-		assert !isWalker();
-		
-		if (isDead() || !isVisible())
-			return false;
-		
-		if (!isInsideRadius(getSpawn(), 150, false, false))
-		{
-			clearAggroList();
-			
-			setRunning();	//+[JOJO]
-			getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, getSpawn().getLocation());
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-	/**
-	 * Notify the L2GuardInstance to return to its home location (AI_INTENTION_MOVE_TO) and clear its _aggroList.
-	 */
-	@Override
-	public void returnHome()
-	{
-		if (home())
-		{
-			// 警備兵の向き調整
-			if (getX() == getSpawn().getX() && getY() == getSpawn().getY() && getHeading() != getSpawn().getHeading())
-			{
-				setHeading(getSpawn().getHeading());
-				broadcastPacket(new ValidateLocation(this));
-			}
-			
-			// AIの矛盾を調整
-			if (hasAI() && getAI().getIntention() != AI_INTENTION_IDLE)
-			{
-				if (getKnownList().getKnownPlayers().isEmpty())
-					super.setAI(null);
-				else if (getAggroList().isEmpty() && getAI().getIntention() == AI_INTENTION_ACTIVE && !autoAttackCondition())
-					super.setAI(null);
-			}
-		}
-	}
-	// L2AttackableAI#autoAttackCondition(L2Character)
-	private boolean autoAttackCondition()
-	{
-		for (L2Object target : getKnownList().getKnownObjects().values())
-		{
-			// Check if the L2PcInstance target has karma (=PK)
-			if (target instanceof L2PcInstance)
-			{
-				if (((L2PcInstance) target).getKarma() > 0) return true;
-			}
-			// Check if the L2MonsterInstance target is aggressive
-			else if (target instanceof L2MonsterInstance && Config.GUARD_ATTACK_AGGRO_MOB)
-			{
-				if ((((L2MonsterInstance) target).isAggressive())) return true;
-			}
-		}
-		return false;
-	}
 	//-------------------------------------------------------
 	
 	/**
@@ -208,14 +156,7 @@ public class L2GuardInstance extends L2Attackable
 	public void onSpawn()
 	{
 		setIsNoRndWalk(true);
-		super.onSpawn();	// [L2J_JP DEL - TSL] --> [JOJO]復活 TODO:要確認
-		
-		// check the region where this mob is, do not activate the AI if region is inactive.
-		L2WorldRegion region = L2World.getInstance().getRegion(getX(), getY());
-		if ((region != null) && (!region.isActive()))
-		{
-			((L2AttackableAI) getAI()).stopAITask();
-		}
+		super.onSpawn();
 	}
 	
 	/**

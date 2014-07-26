@@ -569,21 +569,29 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 			}
 		}
 		
-		// Check if the actor is a L2GuardInstance
-		if ((npc instanceof L2GuardInstance) && !npc.isWalker())
-		{
-			// Order to the L2GuardInstance to return to its home location because there's no target to attack
-			((L2GuardInstance) npc).returnHome();
-		}
-		
-		// If this is a festival monster, then it remains in the same location.
-		if (npc instanceof L2FestivalMonsterInstance)
+		// Check if the mob should not return to spawn point
+		if (!npc.canReturnToSpawnPoint())
 		{
 			return;
 		}
 		
-		// Check if the mob should not return to spawn point
-		if (!npc.canReturnToSpawnPoint())
+		// Check if the actor is a L2GuardInstance
+		//[JOJO]-------------------------------------------------
+		if (this instanceof L2GuardInstance.L2GuardAI && !npc.isWalker())
+		{
+			// Order to the L2GuardInstance to return to its home location because there's no target to attack
+			((L2GuardInstance.L2GuardAI) this).returnHome();
+			return;
+		}
+	//	if ((npc instanceof L2GuardInstance) && !npc.isWalker())
+	//	{
+	//		// Order to the L2GuardInstance to return to its home location because there's no target to attack
+	//		npc.returnHome();
+	//	}
+		//-------------------------------------------------------
+		
+		// If this is a festival monster, then it remains in the same location.
+		if (npc instanceof L2FestivalMonsterInstance)
 		{
 			return;
 		}
@@ -685,12 +693,15 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 				{
 					if (npc.getX() != x1 || npc.getY() != y1)
 					{
+						if (npc.isReturningToSpawnPoint() && npc.isMoving() && npc.getXdestination() == x1 && npc.getYdestination() == y1)
+							return;
 						npc.setisReturningToSpawnPoint(true);
 					}
 					else
 					{
-						if (npc.getHeading() != npc.getSpawn().getHeading()) {
-							npc.setHeading(npc.getSpawn().getHeading());
+						final int h1 = npc.getSpawn().getHeading();
+						if (npc.getHeading() != h1) {
+							npc.setHeading(h1);
 							npc.broadcastPacket(new ValidateLocation(npc));
 						}
 						return;
@@ -698,6 +709,8 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 				}
 				else if (!npc.isInsideRadius(x1, y1, 0, range, false, false))
 				{
+					if (npc.isReturningToSpawnPoint() && npc.isMoving() && npc.getXdestination() == x1 && npc.getYdestination() == y1)
+						return;
 					npc.setisReturningToSpawnPoint(true);
 				}
 				else
