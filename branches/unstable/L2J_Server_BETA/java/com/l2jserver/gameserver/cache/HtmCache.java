@@ -18,6 +18,7 @@
  */
 package com.l2jserver.gameserver.cache;
 
+import static com.l2jserver.util.Util.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.File;
@@ -351,8 +352,11 @@ if (CHECK_HASH_COLLISION) {{
 	private void checkHashCollision()
 	{
 if (CHECK_HASH_COLLISION) {{
+		long started = System.currentTimeMillis();
+		_log.info("HtmCache: Check hashcode collision...");
 		FastIntObjectMap<String> map = new FastIntObjectMap<>();
 		checkHashCollision_parseDir(map, Config.DATAPACK_ROOT);
+		_log.info("HtmCache: Check hashcode collision done. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 }}
 	}
 	private void checkHashCollision_parseDir(FastIntObjectMap<String> map, File dir)
@@ -364,7 +368,7 @@ if (CHECK_HASH_COLLISION) {{
 			{
 				checkHashCollision_parseDir(map, file);
 			}
-			else
+			else if (htmlFilter.accept(file))
 			{
 				final String relpath = Util.getRelativePath(Config.DATAPACK_ROOT, file);
 				final int hashcode = relpath.hashCode();
