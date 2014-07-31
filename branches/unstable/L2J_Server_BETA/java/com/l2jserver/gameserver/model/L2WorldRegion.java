@@ -39,6 +39,7 @@ import com.l2jserver.gameserver.model.actor.L2Vehicle;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.zone.L2ZoneType;
 import com.l2jserver.gameserver.model.zone.type.L2PeaceZone;
+import com.l2jserver.gameserver.taskmanager.KnownListUpdateTaskManager;
 
 public final class L2WorldRegion
 {
@@ -299,6 +300,9 @@ public final class L2WorldRegion
 			
 			_log.fine(c + " mobs were turned on");
 			
+if (com.l2jserver.Config.KNOWN_FULL_UPDATE_IF_REGION_ACTIVATE) {{
+			KnownListUpdateTaskManager.getInstance().updateRegion(this, true, false);	//+[JOJO]
+}}
 		}
 		
 	}

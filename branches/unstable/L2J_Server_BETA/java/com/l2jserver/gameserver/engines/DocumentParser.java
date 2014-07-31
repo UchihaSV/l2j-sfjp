@@ -262,6 +262,28 @@ public abstract class DocumentParser
 		return parseBoolean(attrs.getNamedItem(name), defaultValue);
 	}
 	
+	//[JOJO]-------------------------------------------------
+	protected boolean parseBool(Node node, boolean defaultValue)
+	{
+		return node != null ? Boolean.parseBoolean(node.getNodeValue()) : defaultValue;
+	}
+	
+	protected boolean parseBool(Node node)
+	{
+		return Boolean.parseBoolean(node.getNodeValue());
+	}
+	
+	protected boolean parseBool(NamedNodeMap attrs, String name)
+	{
+		return parseBool(attrs.getNamedItem(name));
+	}
+	
+	protected boolean parseBool(NamedNodeMap attrs, String name, boolean defaultValue)
+	{
+		return parseBool(attrs.getNamedItem(name), defaultValue);
+	}
+	//-------------------------------------------------------
+	
 	/**
 	 * Parses a byte value.
 	 * @param node the node to parse
