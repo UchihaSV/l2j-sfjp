@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +36,8 @@ import com.l2jserver.gameserver.datatables.CharNameTable;
 import com.l2jserver.gameserver.model.actor.L2Playable;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
-import com.l2jserver.gameserver.model.interfaces.IProcedure;
 import com.l2jserver.gameserver.model.interfaces.ILocational;
+import com.l2jserver.gameserver.model.interfaces.IProcedure;
 import com.l2jserver.util.StringUtil;
 
 public final class L2World
@@ -319,6 +320,30 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 		{
 			return;
 		}
+if (com.l2jserver.Config.FIX_KNOWN_RANGE_LIMIT) {{
+		for (L2WorldRegion regi : object.getWorldRegion().getSurroundingRegions())
+		{
+			for (L2Object visible : regi.getVisibleObjects().values())
+			{
+				if (visible == null || visible.equals(object))
+				{
+					continue; // skip our own character
+				}
+			//	if (object.calculateDistance(visible, false, true) < 2000 * 2000) continue;
+				
+				// Add the object in L2ObjectHashSet(L2Object) _knownObjects of the visible L2Character according to conditions :
+				// - L2Character is visible
+				// - object is not already known
+				// - object is in the watch distance
+				// If L2Object is a L2PcInstance, add L2Object in L2ObjectHashSet(L2PcInstance) _knownPlayer of the visible L2Character
+				visible.getKnownList().addKnownObject(object);
+				
+				// Add the visible L2Object in L2ObjectHashSet(L2Object) _knownObjects of the object according to conditions
+				// If visible L2Object is a L2PcInstance, add visible L2Object in L2ObjectHashSet(L2PcInstance) _knownPlayer of the object
+				object.getKnownList().addKnownObject(visible);
+			}
+		}
+}} else {{
 		// Get all visible objects contained in the _visibleObjects of L2WorldRegions
 		// in a circular area of 2000 units
 		List<L2Object> visibles = getVisibleObjects(object, 2000);
@@ -347,6 +372,7 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 			// If visible L2Object is a L2PcInstance, add visible L2Object in L2ObjectHashSet(L2PcInstance) _knownPlayer of the object
 			object.getKnownList().addKnownObject(visible);
 		}
+}}
 	}
 	
 	/**
@@ -471,13 +497,13 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 	{
 		if ((object == null) || !object.isVisible())
 		{
-			return new ArrayList<>();
+			return Collections.<L2Object>emptyList();	//[JOJO] -new ArrayList<>()
 		}
 		
 		final int sqRadius = radius * radius;
 		
 		// Create an FastList in order to contain all visible L2Object
-		List<L2Object> result = new ArrayList<>();
+		List<L2Object> result = null;	//[JOJO] -new ArrayList<>()
 		
 		// Go through the FastList of region
 		for (L2WorldRegion regi : object.getWorldRegion().getSurroundingRegions())
@@ -493,12 +519,13 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 				
 				if (sqRadius > object.calculateDistance(_object, false, true))
 				{
+					if (result == null) result = new ArrayList<>();	//+[JOJO]
 					result.add(_object);
 				}
 			}
 		}
 		
-		return result;
+		return result != null ? result : Collections.<L2Object>emptyList();
 	}
 	
 	/**

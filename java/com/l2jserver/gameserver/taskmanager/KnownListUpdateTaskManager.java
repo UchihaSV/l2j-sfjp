@@ -42,7 +42,7 @@ public class KnownListUpdateTaskManager
 	public static boolean updatePass = true;
 	
 	// Do full update every FULL_UPDATE_TIMER * KNOWNLIST_UPDATE_INTERVAL
-	public static int _fullUpdateTimer = FULL_UPDATE_TIMER;
+	public static int _fullUpdateTimer = 0;
 	
 	protected static final FastSet<L2WorldRegion> _failedRegions = new FastSet<>(1);
 	
@@ -62,7 +62,6 @@ public class KnownListUpdateTaskManager
 		{
 			try
 			{
-				boolean failed;
 				for (L2WorldRegion regions[] : L2World.getInstance().getWorldRegions())
 				{
 					for (L2WorldRegion r : regions) // go through all world regions
@@ -70,10 +69,10 @@ public class KnownListUpdateTaskManager
 						// avoid stopping update if something went wrong in updateRegion()
 						try
 						{
-							failed = _failedRegions.contains(r); // failed on last pass
+							boolean failed = _failedRegions.contains(r); // failed on last pass
 							if (r.isActive()) // and check only if the region is active
 							{
-								updateRegion(r, ((_fullUpdateTimer == FULL_UPDATE_TIMER) || failed), updatePass);
+								updateRegion(r, _fullUpdateTimer == 0 || failed, updatePass);
 							}
 							if (failed)
 							{
@@ -88,15 +87,7 @@ public class KnownListUpdateTaskManager
 					}
 				}
 				updatePass = !updatePass;
-				
-				if (_fullUpdateTimer > 0)
-				{
-					_fullUpdateTimer--;
-				}
-				else
-				{
-					_fullUpdateTimer = FULL_UPDATE_TIMER;
-				}
+				_fullUpdateTimer = (_fullUpdateTimer + 1) % FULL_UPDATE_TIMER;
 			}
 			catch (Exception e)
 			{

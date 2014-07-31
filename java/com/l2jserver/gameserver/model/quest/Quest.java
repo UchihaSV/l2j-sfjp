@@ -1073,16 +1073,17 @@ public class Quest extends ManagedScript implements IIdentifiable
 	/**
 	 * @param npc
 	 */
-	public final void notifyNodeArrived(L2Npc npc)
+	public final /*[JOJO]*/boolean notifyNodeArrived(L2Npc npc)
 	{
 		try
 		{
-			onNodeArrived(npc);
+			return onNodeArrived(npc);
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Exception on onNodeArrived() in notifyNodeArrived(): " + e.getMessage(), e);
 		}
+		return false;
 	}
 	
 	/**
@@ -1475,9 +1476,9 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * This function is called whenever a walker NPC (controlled by WalkingManager) arrive a walking node
 	 * @param npc registered NPC
 	 */
-	public void onNodeArrived(L2Npc npc)
+	public /*[JOJO]*/boolean onNodeArrived(L2Npc npc)
 	{
-		
+		return false;
 	}
 	
 	/**

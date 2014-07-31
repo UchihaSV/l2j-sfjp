@@ -18,29 +18,4 @@
  */
 package com.l2jserver.gameserver.model.actor.tasks.npc.walker;
 
-import com.l2jserver.gameserver.instancemanager.WalkingManager;
-import com.l2jserver.gameserver.model.WalkInfo;
-import com.l2jserver.gameserver.model.actor.L2Npc;
-
-/**
- * Walker arrive task.
- * @author GKR
- */
-public class ArrivedTask implements Runnable
-{
-	private final WalkInfo _walk;
-	private final L2Npc _npc;
-	
-	public ArrivedTask(L2Npc npc, WalkInfo walk)
-	{
-		_npc = npc;
-		_walk = walk;
-	}
-	
-	@Override
-	public void run()
-	{
-		_walk.setBlocked(false);
-		WalkingManager.getInstance().startMoving(_npc, _walk.getRoute().getName());
-	}
-}
+class ArrivedTask {/*empty*/}

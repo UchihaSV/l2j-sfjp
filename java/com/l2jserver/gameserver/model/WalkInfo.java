@@ -33,27 +33,39 @@ import com.l2jserver.util.Rnd;
  */
 public class WalkInfo
 {
-	private final String _routeName;
+	private final L2WalkRoute _walkRoute;
 	
 	private ScheduledFuture<?> _walkCheckTask;
 	private boolean _blocked = false;
 	private boolean _suspended = false;
 	private boolean _stoppedByAttack = false;
 	private int _currentNode = 0;
-	private boolean _forward = true; // Determines first --> last or first <-- last direction
+	private int _direction = 1; // Determines first --> last or first <-- last direction
 	private long _lastActionTime; // Debug field
 	
 	public WalkInfo(String routeName)
 	{
-		_routeName = routeName;
+		_walkRoute = WalkingManager.getInstance().getRoute(routeName);
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public String getRouteName()
+	{
+		return _walkRoute.getName();
+	}
+	
+	public void setNodeId(int nodeId)
+	{
+		_currentNode = nodeId;
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * @return name of route of this WalkInfo.
 	 */
 	public L2WalkRoute getRoute()
 	{
-		return WalkingManager.getInstance().getRoute(_routeName);
+		return _walkRoute;
 	}
 	
 	/**
@@ -71,30 +83,24 @@ public class WalkInfo
 	public void calculateNextNode(L2Npc npc)
 	{
 		// Check this first, within the bounds of random moving, we have no conception of "first" or "last" node
-		if (getRoute().getRepeatType() == WalkingManager.REPEAT_RANDOM)
+		if (_walkRoute.getRepeatType() == WalkingManager.REPEAT_RANDOM)
 		{
-			int newNode = _currentNode;
-			
-			while (newNode == _currentNode)
-			{
-				newNode = Rnd.get(getRoute().getNodesCount());
+			int newNode;
+			do {
+				newNode = Rnd.get(_walkRoute.getNodesCount());
+			//	L2NpcWalkerNode n = _walkRoute.getNodeList().get(newNode);
+			//	if (npc.getX() == n.getX() && npc.getY() == n.getY()) continue;
 			}
+			while (newNode == _currentNode);
 			
 			_currentNode = newNode;
-			npc.sendDebugMessage("Route: " + getRoute().getName() + ", next random node is " + _currentNode);
+			npc.sendDebugMessage("Route: " + getRouteName() + ", next random node is " + _currentNode);
 		}
 		else
 		{
-			if (_forward)
-			{
-				_currentNode++;
-			}
-			else
-			{
-				_currentNode--;
-			}
+			_currentNode += _direction;
 			
-			if (_currentNode == getRoute().getNodesCount()) // Last node arrived
+			if (_currentNode == _walkRoute.getNodesCount()) // Last node arrived
 			{
 				// Notify quest
 				List<Quest> eventQuests;
@@ -105,19 +111,19 @@ public class WalkInfo
 						quest.notifyRouteFinished(npc);
 					}
 				}
-				npc.sendDebugMessage("Route: " + getRoute().getName() + ", last node arrived");
+				npc.sendDebugMessage("Route: " + getRouteName() + ", last node arrived");
 				
-				if (!getRoute().repeatWalk())
+				if (!_walkRoute.repeatWalk())
 				{
 					WalkingManager.getInstance().cancelMoving(npc);
 					return;
 				}
 				
-				switch (getRoute().getRepeatType())
+				switch (_walkRoute.getRepeatType())
 				{
 					case WalkingManager.REPEAT_GO_BACK:
 					{
-						_forward = false;
+						_direction = -1;	// back
 						_currentNode -= 2;
 						break;
 					}
@@ -137,8 +143,8 @@ public class WalkInfo
 			
 			else if (_currentNode == -1) // First node arrived, when direction is first <-- last
 			{
-				_currentNode = 1;
-				_forward = true;
+				_currentNode = 1;	// fo
+				_direction = 1;
 			}
 		}
 	}

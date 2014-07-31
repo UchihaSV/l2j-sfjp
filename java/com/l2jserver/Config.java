@@ -1184,6 +1184,7 @@ public final class Config
 	//--------------------------------------------------
 	public static final String SCRIPT_ENCODING = null; /*"MS932"*/		//[JOJO] *.py,*.javaスクリプトの文字エンコード.
 																		//       "MS932":サーバ起動時に(スクリプトをMS932とみなして)Native2Asciiする. null:何もしない.
+	public static final boolean FIX_KNOWN_RANGE_LIMIT = true;			//[JOJO]knownの範囲が最大が2000に制限される不具合.
 	public static final boolean FIX_DISTANCE_TO_WATCH_OBJECT = true;	//[JOJO]体の大きいモンスターは遠くからも見える、小さい物体は遠くからは見えないように.
 	public static final boolean FIX_GETLOCATION = true;					//[JOJO]過剰な new Location() の抑止.
 	public static final boolean CHECK_DYNAMIC_IP_ADDRESS_TASK = true;	//[JOJO]IPアドレスを定期的に検査して変化していればログインサーバに接続しなおす.
@@ -1226,6 +1227,7 @@ public final class Config
 	public static final boolean NEVER_RandomWalk_IF_CORPSE_LOG = false;		//[JOJO](同上のログを出力する)
 	public static final boolean NEVER_RandomAnimation_IF_CORPSE = true;		//[JOJO]死体はあくびしない.
 	public static final boolean NEVER_RandomAnimation_IF_CORPSE_LOG = false;	//[JOJO](同上のログを出力する)
+	public static final boolean KNOWN_FULL_UPDATE_IF_REGION_ACTIVATE = true;	//[JOJO]L2WorldRegionがactiveになったらKnownListをフルアップデートする.
 	
 
 	//
