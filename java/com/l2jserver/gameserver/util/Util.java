@@ -201,7 +201,9 @@ public final class Util
 	 */
 	public static double calculateDistance(int x1, int y1, int z1, int x2, int y2, int z2, boolean includeZAxis, boolean squared)
 	{
-		final double distance = Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) + (includeZAxis ? Math.pow(z1 - z2, 2) : 0);
+		double dx;
+		double distance = (dx = (x1 - x2)) * dx + (dx = (y1 - y2)) * dx;
+		if (includeZAxis) distance += (dx = (z1 - z2)) * dx;
 		return (squared) ? distance : Math.sqrt(distance);
 	}
 	

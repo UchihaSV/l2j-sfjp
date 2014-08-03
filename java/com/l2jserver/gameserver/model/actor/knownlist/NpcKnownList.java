@@ -103,7 +103,7 @@ public class NpcKnownList extends CharKnownList
 	// Support for Walking monsters aggro
 	public void startTrackingTask()
 	{
-		if (_trackingTask == null && getActiveChar().getAggroRange() > 0/*+[JOJO]*/ && getActiveChar() instanceof L2Attackable/**/)
+		if (_trackingTask == null && getActiveChar().getAggroRange() > 0/*+[JOJO]*/ && getActiveObject().isAttackable()/**/)
 		{
 			_trackingTask = ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new TrackingTask(), 2000, 2000);
 		}
@@ -127,7 +127,7 @@ public class NpcKnownList extends CharKnownList
 		{
 		//	if (getActiveChar() instanceof L2Attackable)	//-[JOJO]
 			{
-				final L2Attackable monster = (L2Attackable) getActiveChar();
+				final L2Attackable monster = (L2Attackable) getActiveObject();
 				if (monster.getAI().getIntention() == CtrlIntention.AI_INTENTION_MOVE_TO)
 				{
 					final Collection<L2PcInstance> players = getKnownPlayers().values();
@@ -147,7 +147,7 @@ public class NpcKnownList extends CharKnownList
 								// Skip attack for other targets, if one is already chosen for attack
 								if ((monster.getAI().getIntention() != CtrlIntention.AI_INTENTION_ATTACK) && !monster.isCoreAIDisabled())
 								{
-									WalkingManager.getInstance().stopMoving(getActiveChar(), false, true);
+									WalkingManager.getInstance().stopMoving(monster, false, true);
 									monster.addDamageHate(pl, 0, 100);
 									monster.getAI().setIntention(CtrlIntention.AI_INTENTION_ATTACK, pl, null);
 								}
@@ -166,7 +166,7 @@ if (com.l2jserver.Config.PC_PROTECT) {{
 }}
 if (com.l2jserver.Config.SILENT_MOVE_PROTECT) {{
 			// Check if the AI isn't a Raid Boss, can See Silent Moving players and the target isn't in silent move mode
-			final L2Attackable me = (L2Attackable) getActiveChar();
+			final L2Attackable me = (L2Attackable) getActiveObject();
 			if (!me.isRaid() && !me.canSeeThroughSilentMove() && target.isSilentMoving()) return false;
 }}
 			return true;
