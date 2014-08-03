@@ -1193,7 +1193,6 @@ public final class Config
 	public static final boolean NEVER_WALKER_RndWalk = true;			//[JOJO]WalkingManager対策 - 散歩させない.
 	public static final boolean NEVER_WALKER_ReturnToSpawnPoint = true;	//[JOJO]WalkingManager対策 - 帰巣させない.
 	public static final boolean NEVER_WALKER_RandomAnimation = true;	//[JOJO]WalkingManager対策 - あくびさせない.
-	public static final boolean NEVER_WALKER_AI_onArrived = true;		//[JOJO]WalkingManager対策 - 歩行ルートのノードポイントでの無駄なAI動作省略.
 	public static final boolean FIX_ATTACKABLE_AI_FACTION_CALL = true;	//[JOJO]同族モンスターをリンクさせる.
 	public static final boolean NPCDATA_CLAN_ALL = false;				//[JOJO]<clan>ALL</clan> ???
 	public static final boolean STRING_INTERN = true;					//[JOJO]
