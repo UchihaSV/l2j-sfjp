@@ -4566,9 +4566,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		// X ---------->
 		// (curx,cury)
 		
-		double cos;
-		double sin;
-		
 		// Check if a movement offset is defined or no distance to go through
 		if ((offset > 0) || (distance < 1))
 		{
@@ -4589,20 +4586,14 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				return;
 			}
 			// Calculate movement angles needed
-			sin = dy / distance;
-			cos = dx / distance;
+			double sin = dy / distance;
+			double cos = dx / distance;
 			
 			distance -= (offset - 5); // due to rounding error, we have to move a bit closer to be in range
 			
 			// Calculate the new destination with offset included
 			x = curX + (int) (distance * cos);
 			y = curY + (int) (distance * sin);
-		}
-		else
-		{
-			// Calculate movement angles needed
-			sin = dy / distance;
-			cos = dx / distance;
 		}
 		
 		// Create and Init a MoveData object
@@ -4744,8 +4735,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 						dy = y - curY;
 						dz = z - curZ;
 						distance = verticalMovementOnly ? Math.abs(dz * dz) : Math.sqrt((dx * dx) + (dy * dy));
-						sin = dy / distance;
-						cos = dx / distance;
 					}
 				}
 			}
@@ -4779,7 +4768,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		// Does not broke heading on vertical movements
 		if (!verticalMovementOnly)
 		{
-			setHeading(Util.calculateHeadingFrom(cos, sin));
+			setHeading(Util.calculateHeadingFrom(curX, curY, x, y));
 		}
 		
 		m._moveStartTime = GameTimeController.getInstance().getGameTicks();
