@@ -56,11 +56,9 @@ public final class NpcRoutesHolder
 	{
 		if (npc.getSpawn() != null)
 		{
-			String key = getUniqueKey(npc.getSpawn().getLocation());
-			String result;
-			return (result = _correspondences.get(key)) != null ? result : "";
+			return _correspondences.get(getUniqueKey(npc.getSpawn().getLocation()));
 		}
-		return "";
+		return null;
 	}
 	
 	/**

@@ -61,6 +61,7 @@ import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.util.Broadcast;
+import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
 
 /**
@@ -296,7 +297,7 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 	 */
 	public void startMoving(final L2Npc npc, final String routeName)
 	{
-		if (_routes.containsKey(routeName) && (npc != null) && !npc.isDead()) // check, if these route and NPC present
+		if (_routes.containsKey(routeName)/* && (npc != null)*/ && !npc.isDead()) // check, if these route and NPC present
 		{
 			WalkInfo walk;
 			if ((walk = _activeRoutes.get(npc.getObjectId())) == null) // new walk task
@@ -480,60 +481,68 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 		final WalkInfo walk;
 		if ((walk = _activeRoutes.get(npc.getObjectId())) != null)
 		{
-			boolean override = false;	//+[JOJO]
-			// Notify quest
-			List<Quest> eventQuests;
-			if ((eventQuests = npc.getTemplate().getEventQuests(QuestEventType.ON_NODE_ARRIVED)) != null)
-			{
-				for (Quest quest : eventQuests)
-					override |= quest.notifyNodeArrived(npc);
-			}
-			
 			final L2NpcWalkerNode node = walk.getCurrentNode();
 			if (npc.getX() == node.getX() && npc.getY() == node.getY())
 			{
-					walk.calculateNextNode(npc);
-					final L2NpcWalkerNode nextNode = walk.getCurrentNode();
-					
-					if (override)
-						return true;
-					
-					npc.sendDebugMessage("Route '" + walk.getRouteName() + "', arrived to node " + walk.getCurrentNodeId());
-					npc.sendDebugMessage("Done in " + ((System.currentTimeMillis() - walk.getLastAction()) / 1000) + " s");
-					
-					NpcStringId npcString;
-					String chatText;
-					if ((npcString = node.getNpcString()) != null)
+				walk.setBlocked(true); // prevents to be ran from walk check task, if there is delay in this node.
+				
+				npc.sendDebugMessage("Route '" + walk.getRouteName() + "', arrived to node " + walk.getCurrentNodeId());
+				npc.sendDebugMessage("Done in " + ((System.currentTimeMillis() - walk.getLastAction()) / 1000) + " s");
+				
+				walk.calculateNextNode(npc);
+				final L2NpcWalkerNode nextNode = walk.getCurrentNode();
+				
+				// Notify quest
+				boolean override = false;	//+[JOJO]
+				List<Quest> eventQuests;
+				if ((eventQuests = npc.getTemplate().getEventQuests(QuestEventType.ON_NODE_ARRIVED)) != null)
+				{
+					for (Quest quest : eventQuests)
+						override |= quest.notifyNodeArrived(npc);
+				}
+				if (override)
+				{
+					walk.setBlocked(false);
+					return true;
+				}
+				
+				NpcStringId npcString;
+				String chatText;
+				if ((npcString = node.getNpcString()) != null)
+				{
+					Broadcast.toKnownPlayers(npc, new NpcSay(npc, Say2.NPC_ALL, npcString));
+				}
+				else if ((chatText = node.getChatText()) != null && !chatText.isEmpty())
+				{
+					Broadcast.toKnownPlayers(npc, npc.getTemplate().isUsingServerSideName()
+						? new CreatureSay(npc, Say2.NPC_ALL, chatText)
+					: new NpcSay(npc, Say2.NPC_ALL, chatText));
+				}
+				
+				if (npc.isDebug())
+				{
+					walk.setLastAction(System.currentTimeMillis());
+				}
+				
+				if (node.getDelay() == 0)
+				{
+					if (walk.isSuspended())	//TODO:Check
 					{
-						Broadcast.toKnownPlayers(npc, new NpcSay(npc, Say2.NPC_ALL, npcString));
-					}
-					else if ((chatText = node.getChatText()) != null && !chatText.isEmpty())
-					{
-						Broadcast.toKnownPlayers(npc, npc.getTemplate().isUsingServerSideName()
-							? new CreatureSay(npc, Say2.NPC_ALL, chatText)
-							: new NpcSay(npc, Say2.NPC_ALL, chatText));
-					}
-					
-					if (npc.isDebug())
-					{
-						walk.setLastAction(System.currentTimeMillis());
-					}
-					
-if (com.l2jserver.Config.NEVER_WALKER_AI_onArrived) {{
-					if (node.getDelay() == 0)
-					{
-						if (walk.isSuspended()) { walk.setBlocked(false); return false; }	//TODO:Check
-						npc.setIsRunning(nextNode.runToLocation());
-						npc.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, nextNode);
 						walk.setBlocked(false);
-						return true;
+						return false;
 					}
-					/*else...*/
-}}
+					npc.setIsRunning(nextNode.runToLocation());
+					npc.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, nextNode);
+					walk.setBlocked(false);
+					return true;
+				}
+				else
+				{
 					assert walk.isBlocked();
 					npc.getAI().setIntention(AI_INTENTION_ACTIVE);
 					ThreadPoolManager.getInstance().scheduleGeneral(new ArrivedTask(npc, walk), node.getDelay() * 1000L);
-					return true;
+					return false;
+				}
 			}
 		}
 		return false;
@@ -601,7 +610,7 @@ if (com.l2jserver.Config.NEVER_WALKER_AI_onArrived) {{
 		if ((root = _routesToAttach.get(npc.getId())) != null)
 		{
 			final String routeName = root.getRouteName(npc);
-			if (!routeName.isEmpty())
+			if (routeName != null)
 			{
 				startMoving(npc, routeName);
 			}
