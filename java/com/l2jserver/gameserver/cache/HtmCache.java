@@ -364,11 +364,12 @@ if (CHECK_HASH_COLLISION) {{
 if (CHECK_HASH_COLLISION) {{
 		for (File file : dir.listFiles())
 		{
+			String path;
 			if (file.isDirectory())
 			{
 				checkHashCollision_parseDir(map, file);
 			}
-			else if (htmlFilter.accept(file))
+			else if ((path = file.getPath()).endsWith(".htm") || path.endsWith(".html"))
 			{
 				final String relpath = Util.getRelativePath(Config.DATAPACK_ROOT, file);
 				final int hashcode = relpath.hashCode();
