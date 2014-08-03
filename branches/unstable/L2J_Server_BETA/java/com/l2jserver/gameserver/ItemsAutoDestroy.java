@@ -72,33 +72,11 @@ public class ItemsAutoDestroy
 			}
 			else
 			{
-				if (item.getItem().getAutoDestroyTime() > 0)
-				{
-					if ((curtime - item.getDropTime()) > item.getItem().getAutoDestroyTime())
-					{
-						L2World.getInstance().removeVisibleObject(item, item.getWorldRegion());
-						L2World.getInstance().removeObject(item);
-						_items.remove(item);
-						if (Config.SAVE_DROPPED_ITEM)
-						{
-							ItemsOnGroundManager.getInstance().removeObject(item);
-						}
-					}
-				}
-				else if (item.getItem().hasExImmediateEffect())
-				{
-					if ((curtime - item.getDropTime()) > Config.HERB_AUTO_DESTROY_TIME)
-					{
-						L2World.getInstance().removeVisibleObject(item, item.getWorldRegion());
-						L2World.getInstance().removeObject(item);
-						it.remove();	//[JOJO]
-						if (Config.SAVE_DROPPED_ITEM)
-						{
-							ItemsOnGroundManager.getInstance().removeObject(item);
-						}
-					}
-				}
-				else if ((curtime - item.getDropTime()) > _sleep)
+				final long autoDestroyTime =
+					  item.getItem().getAutoDestroyTime() > 0 ? item.getItem().getAutoDestroyTime()
+					: item.getItem().hasExImmediateEffect() ? Config.HERB_AUTO_DESTROY_TIME
+					: _sleep;
+				if (curtime - item.getDropTime() > autoDestroyTime)
 				{
 					L2World.getInstance().removeVisibleObject(item, item.getWorldRegion());
 					L2World.getInstance().removeObject(item);
