@@ -507,7 +507,7 @@ public class GameServer
 		printSection("UPnP");
 		UPnPService.getInstance();
 		
-		printSection("");
+		printSection("RUN");
 		AutoAnnounceTaskManager.getInstance();
 	}
 	

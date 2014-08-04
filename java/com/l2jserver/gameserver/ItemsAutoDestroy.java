@@ -28,7 +28,7 @@ import com.l2jserver.gameserver.instancemanager.ItemsOnGroundManager;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 
-public class ItemsAutoDestroy
+public final class ItemsAutoDestroy implements Runnable
 {
 	protected FastList<L2ItemInstance> _items = null;
 	protected static long _sleep;
@@ -41,7 +41,7 @@ public class ItemsAutoDestroy
 		{
 			_sleep = 3600000;
 		}
-		ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new CheckItemsForDestroy(), 5000, 5000);
+		ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(this, 5000, 5000);
 	}
 	
 	public static ItemsAutoDestroy getInstance()
@@ -55,7 +55,8 @@ public class ItemsAutoDestroy
 		_items.add(item);
 	}
 	
-	public synchronized void removeItems()
+	@Override
+	public synchronized void run()
 	{
 		if (_items.isEmpty())
 		{
@@ -87,15 +88,6 @@ public class ItemsAutoDestroy
 					}
 				}
 			}
-		}
-	}
-	
-	protected class CheckItemsForDestroy extends Thread
-	{
-		@Override
-		public void run()
-		{
-			removeItems();
 		}
 	}
 	
