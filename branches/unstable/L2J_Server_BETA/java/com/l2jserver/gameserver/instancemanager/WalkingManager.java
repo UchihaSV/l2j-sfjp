@@ -321,12 +321,13 @@ if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 						npc.sendDebugMessage(message);
 						return;
 					}
-					if (route.repeatWalk())
+					if (npc.isMonster()/*!(npc instanceof L2GuardInstance)*/ && route.getRepeatType() != WalkingManager.REPEAT_RANDOM && route.repeatWalk())
 					{
 						do {
 							walk.setNodeId(Rnd.get(route.getNodesCount()));
 							node = walk.getCurrentNode();
 						} while (npc.getX() == node.getX() && npc.getY() == node.getY());
+						npc.setXYZ(node.getX() + 10, node.getY() + 10, node.getZ());	// Don't teleToLocation()
 					}
 					else
 					{
