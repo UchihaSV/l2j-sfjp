@@ -39,44 +39,6 @@ public class SpecialCamera extends L2GameServerPacket
 	private final int _unk;
 	
 	/**
-	 * Special Camera packet constructor.
-	 * @param creature the creature
-	 * @param force
-	 * @param angle1
-	 * @param angle2
-	 * @param time
-	 * @param range
-	 * @param duration
-	 * @param relYaw
-	 * @param relPitch
-	 * @param isWide
-	 * @param relAngle
-	 */
-	public SpecialCamera(L2Character creature, int force, int angle1, int angle2, int time, int range, int duration, int relYaw, int relPitch, int isWide, int relAngle)
-	{
-		this(creature, force, angle1, angle2, time, duration, range, relYaw, relPitch, isWide, relAngle, 0);
-	}
-	
-	/**
-	 * Special Camera Ex packet constructor.
-	 * @param creature the creature
-	 * @param talker
-	 * @param force
-	 * @param angle1
-	 * @param angle2
-	 * @param time
-	 * @param duration
-	 * @param relYaw
-	 * @param relPitch
-	 * @param isWide
-	 * @param relAngle
-	 */
-	public SpecialCamera(L2Character creature, L2Character talker, int force, int angle1, int angle2, int time, int duration, int relYaw, int relPitch, int isWide, int relAngle)
-	{
-		this(creature, force, angle1, angle2, time, duration, 0, relYaw, relPitch, isWide, relAngle, 0);
-	}
-	
-	/**
 	 * Special Camera 3 packet constructor.
 	 * @param creature the creature
 	 * @param force
