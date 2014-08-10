@@ -54,9 +54,9 @@ public class NpcKnownList extends CharKnownList
 			return false;
 		}
 		
-		if (getActiveObject().isNpc() && (object instanceof L2Character))
+		if (object instanceof L2Character)
 		{
-			final L2Npc npc = (L2Npc) getActiveObject();
+			final L2Npc npc = getActiveChar();
 			final List<Quest> quests = npc.getTemplate().getEventQuests(QuestEventType.ON_SEE_CREATURE);
 			if (quests != null)
 			{
