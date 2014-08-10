@@ -21,12 +21,11 @@ package com.l2jserver.gameserver.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -46,10 +45,10 @@ public final class L2WorldRegion
 	private static final Logger _log = Logger.getLogger(L2WorldRegion.class.getName());
 	
 	/** Map containing all playable characters in game in this world region. */
-	private final Map<Integer, L2Playable> _allPlayable;
+	private final FastIntObjectMap<L2Playable> _allPlayable;	//[JOJO] -FastMap
 	
 	/** Map containing visible objects in this world region. */
-	private final Map<Integer, L2Object> _visibleObjects;
+	private final FastIntObjectMap<L2Object> _visibleObjects;	//[JOJO] -FastMap
 	
 	private final List<L2WorldRegion> _surroundingRegions;
 	private final int _tileX, _tileY;
@@ -59,8 +58,8 @@ public final class L2WorldRegion
 	
 	public L2WorldRegion(int pTileX, int pTileY)
 	{
-		_allPlayable = new FastMap<Integer, L2Playable>().shared();
-		_visibleObjects = new FastMap<Integer, L2Object>().shared();
+		_allPlayable = new FastIntObjectMap<L2Playable>().shared();
+		_visibleObjects = new FastIntObjectMap<L2Object>().shared();
 		_surroundingRegions = new ArrayList<>();
 		
 		_tileX = pTileX;
@@ -474,12 +473,12 @@ if (com.l2jserver.Config.KNOWN_FULL_UPDATE_IF_REGION_ACTIVATE) {{
 		return _surroundingRegions;
 	}
 	
-	public Map<Integer, L2Playable> getVisiblePlayable()
+	public FastIntObjectMap<L2Playable> getVisiblePlayable()
 	{
 		return _allPlayable;
 	}
 	
-	public Map<Integer, L2Object> getVisibleObjects()
+	public FastIntObjectMap<L2Object> getVisibleObjects()
 	{
 		return _visibleObjects;
 	}

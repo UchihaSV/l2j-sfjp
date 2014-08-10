@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -589,10 +588,8 @@ if (com.l2jserver.Config.FIX_KNOWN_RANGE_LIMIT) {{
 		for (L2WorldRegion regi : reg.getSurroundingRegions())
 		{
 			// Create an Iterator to go through the visible L2Object of the L2WorldRegion
-			Map<Integer, L2Playable> _allpls = regi.getVisiblePlayable();
-			Collection<L2Playable> _playables = _allpls.values();
 			// Go through visible object of the selected region
-			for (L2Playable _object : _playables)
+			for (L2Playable _object : regi.getVisiblePlayable().values())
 			{
 				if ((_object == null) || _object.equals(object))
 				{
