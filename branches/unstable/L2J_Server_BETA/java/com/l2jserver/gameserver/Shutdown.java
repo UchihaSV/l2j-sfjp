@@ -296,6 +296,8 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 				
 			}
 			
+			_log.info("The server has been successfully shut down in " + (tc1.getEstimatedTime() / 1000) + "seconds.");
+			
 			// server will quit, when this function ends.
 			if (getInstance()._shutdownMode == GM_RESTART)
 			{
@@ -305,8 +307,6 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 			{
 				Runtime.getRuntime().halt(0);
 			}
-			
-			_log.info("The server has been successfully shut down in " + (tc1.getEstimatedTime() / 1000) + "seconds.");
 		}
 		else
 		{

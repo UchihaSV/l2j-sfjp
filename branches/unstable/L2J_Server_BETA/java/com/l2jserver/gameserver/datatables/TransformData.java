@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import static com.l2jserver.util.Util.*;
+
 import java.util.logging.Level;
 
 import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
@@ -51,9 +53,10 @@ public final class TransformData extends DocumentParser
 	@Override
 	public synchronized void load()
 	{
+		long started = System.currentTimeMillis();
 		_transformData.clear();
 		parseDatapackDirectory("data/stats/transformations", false);
-		_log.log(Level.INFO, getClass().getSimpleName() + ": Loaded: " + _transformData.size() + " transform templates.");
+		_log.log(Level.INFO, getClass().getSimpleName() + ": Loaded: " + _transformData.size() + " transform templates. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 	}
 	
 	@Override
@@ -128,8 +131,8 @@ public final class TransformData extends DocumentParser
 												if ("skill".equals(s.getNodeName()))
 												{
 													attrs = s.getAttributes();
-													int skillId = parseInteger(attrs, "id");
-													int skillLevel = parseInteger(attrs, "level");
+													int skillId = parseInt(attrs, "id");
+													int skillLevel = parseInt(attrs, "level");
 													templateData.addSkill(new SkillHolder(skillId, skillLevel));
 												}
 											}
@@ -159,9 +162,9 @@ public final class TransformData extends DocumentParser
 												if ("skill".equals(s.getNodeName()))
 												{
 													attrs = s.getAttributes();
-													int skillId = parseInteger(attrs, "id");
-													int skillLevel = parseInteger(attrs, "level");
-													int minLevel = parseInteger(attrs, "minLevel");
+													int skillId = parseInt(attrs, "id");
+													int skillLevel = parseInt(attrs, "level");
+													int minLevel = parseInt(attrs, "minLevel");
 													templateData.addAdditionalSkill(new AdditionalSkillHolder(skillId, skillLevel, minLevel));
 												}
 											}
@@ -179,8 +182,8 @@ public final class TransformData extends DocumentParser
 												if ("item".equals(s.getNodeName()))
 												{
 													attrs = s.getAttributes();
-													int itemId = parseInteger(attrs, "id");
-													boolean allowed = parseBoolean(attrs, "allowed");
+													int itemId = parseInt(attrs, "id");
+													boolean allowed = parseBool(attrs, "allowed");
 													templateData.addAdditionalItem(new AdditionalItemHolder(itemId, allowed));
 												}
 											}
