@@ -155,6 +155,10 @@ if (com.l2jserver.Config.FIX_DISTANCE_TO_WATCH_OBJECT) {{
 	@Override
 	public int getDistanceToForgetObject(L2Object object)
 	{
+		int distance;
+		if (object.isNpc() && (distance = ((L2Npc) object).getKnownList().distanceToForgetObject) > 0)
+			return distance;
+		
 		if (object.isWalker())
 		{
 			return 10000;
@@ -186,6 +190,10 @@ if (com.l2jserver.Config.FIX_DISTANCE_TO_WATCH_OBJECT) {{
 	@Override
 	public int getDistanceToWatchObject(L2Object object)
 	{
+		int distance;
+		if (object.isNpc() && (distance = ((L2Npc) object).getKnownList().distanceToWatchObject) > 0)
+			return distance;
+		
 		if (object.isWalker())
 		{
 			return 9000;

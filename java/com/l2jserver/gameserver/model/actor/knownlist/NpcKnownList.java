@@ -39,6 +39,7 @@ import com.l2jserver.gameserver.model.quest.Quest;
 public class NpcKnownList extends CharKnownList
 {
 	private ScheduledFuture<?> _trackingTask = null;
+	public int distanceToWatchObject, distanceToForgetObject;	//+[JOJO] Custom distance for A.I. scripts (TODO:—v®—)
 	
 	public NpcKnownList(L2Npc activeChar)
 	{
@@ -77,6 +78,9 @@ public class NpcKnownList extends CharKnownList
 	@Override
 	public int getDistanceToForgetObject(L2Object object)
 	{
+		if (distanceToForgetObject > 0)
+			return distanceToForgetObject;
+		
 		return 2 * getDistanceToWatchObject(object);
 	}
 	
@@ -95,6 +99,9 @@ public class NpcKnownList extends CharKnownList
 		
 		if (object.isPlayable())
 		{
+			if (distanceToWatchObject > 0)
+				return distanceToWatchObject;
+			
 			return 1500;
 		}
 		
