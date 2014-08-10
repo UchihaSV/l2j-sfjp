@@ -61,7 +61,6 @@ import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.util.Broadcast;
-import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
 
 /**
