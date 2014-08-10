@@ -23,13 +23,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
-import javolution.util.FastSet;
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -87,7 +86,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	 */
 	
 	// SQL queries
-	private static final String DELETE_GRAND_BOSS_LIST = "DELETE FROM grandboss_list";
+	private static final String DELETE_GRAND_BOSS_LIST = "TRUNCATE TABLE grandboss_list";	//[JOJO] -DELETE FROM
 	private static final String INSERT_GRAND_BOSS_LIST = "INSERT INTO grandboss_list (player_id,zone) VALUES (?,?)";
 	private static final String UPDATE_GRAND_BOSS_DATA = "UPDATE grandboss_data set loc_x = ?, loc_y = ?, loc_z = ?, heading = ?, respawn_time = ?, currentHP = ?, currentMP = ?, status = ? where boss_id = ?";
 	private static final String UPDATE_GRAND_BOSS_DATA2 = "UPDATE grandboss_data set status = ? where boss_id = ?";
@@ -95,7 +94,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	protected static Logger _log = Logger.getLogger(GrandBossManager.class.getName());
 	
-	protected static Map<Integer, L2GrandBossInstance> _bosses;
+	protected static FastIntObjectMap<L2GrandBossInstance> _bosses;
 	
 	protected static TIntObjectHashMap<StatsSet> _storedInfo;
 	
@@ -112,7 +111,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	{
 		_zones = new FastList/*L2FastList*/<>();
 		
-		_bosses = new FastMap<>();
+		_bosses = new FastIntObjectMap<>();
 		_storedInfo = new TIntObjectHashMap<>();
 		_bossStatus = new TIntIntHashMap();
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
@@ -163,7 +162,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	 */
 	public void initZones()
 	{
-		FastMap<Integer, FastSet/*L2FastList*/<Integer>> zones = new FastMap<>();
+		FastIntObjectMap<FastIntObjectMap<Object>/*L2FastList*/> zones = new FastIntObjectMap<>();
 		
 		if (_zones == null)
 		{
@@ -177,18 +176,18 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			{
 				continue;
 			}
-			zones.put(zone.getId(), new FastSet/*L2FastList*/<Integer>());
+			zones.put(zone.getId(), new FastIntObjectMap<>/*L2FastList*/());
 		}
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			Statement s = con.createStatement();
-			ResultSet rs = s.executeQuery("SELECT * from grandboss_list ORDER BY player_id"))
+			ResultSet rs = s.executeQuery("SELECT * from grandboss_list"))	//[JOJO] -ORDER BY player_id
 		{
 			while (rs.next())
 			{
 				int id = rs.getInt("player_id");
 				int zone_id = rs.getInt("zone");
-				zones.get(zone_id).add(id);
+				zones.get(zone_id).put(id, Boolean.TRUE);
 			}
 			_log.info(getClass().getSimpleName() + ": Initialized " + _zones.size() + " Grand Boss Zones");
 		}
@@ -356,16 +355,16 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 					{
 						continue;
 					}
-					int/*Integer*/ id = zone.getId();
-					FastSet/*L2FastList*/<Integer> list = zone.getAllowedPlayers();
+					int id = zone.getId();
+					FastIntObjectMap<Object> list = zone.getAllowedPlayers();
 					if ((list == null) || list.isEmpty())
 					{
 						continue;
 					}
-					for (Integer player : list)
+					for (IntObjectMap.Entry<Object> e : list.entrySet())
 					{
-						insert.setInt(1, player);
-						insert.setInt(2, id);
+						insert.setInt(1, e.getKey());	// player object ID
+						insert.setInt(2, id);			// zone ID
 						insert.executeUpdate();
 						insert.clearParameters();
 					}
@@ -375,7 +374,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			     PreparedStatement update_grand_boss_data3 = con.prepareStatement(UPDATE_GRAND_BOSS_DATA3);
 			     PreparedStatement update_grand_boss_data1 = con.prepareStatement(UPDATE_GRAND_BOSS_DATA) )
 			{
-				for (Integer bossId : _storedInfo.keys())
+				for (int bossId : _storedInfo.keys())
 				{
 					final L2GrandBossInstance boss = _bosses.get(bossId);
 					StatsSet info = _storedInfo.get(bossId);
