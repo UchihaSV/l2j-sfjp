@@ -19,8 +19,6 @@
 package com.l2jserver.gameserver.model.zone.type;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
-import javolution.util.FastSet;
 import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.GameServer;
@@ -59,27 +57,27 @@ public class L2BossZone extends L2ZoneType
 		// track the times that players got disconnected. Players are allowed
 		// to log back into the zone as long as their log-out was within _timeInvade time...
 		// <player objectId, expiration time in milliseconds>
-		private final FastMap<Integer, Long> _playerAllowedReEntryTimes;
+		private final FastIntObjectMap<Long> _playerAllowedReEntryTimes;
 		
 		// track the players admitted to the zone who should be allowed back in
 		// after reboot/server downtime (outside of their control), within 30 of server restart
-		private final FastSet<Integer> _playersAllowed;		//[JOJO] L2FastList --> FastSet
+		private final FastIntObjectMap<Object> _playersAllowed;		//[JOJO] L2FastList --> FastSet
 		
 		private final FastList/*L2FastList*/<L2Character> _raidList;
 		
 		public Settings()
 		{
-			_playerAllowedReEntryTimes = new FastMap<>();
-			_playersAllowed = new FastSet<>();
+			_playerAllowedReEntryTimes = new FastIntObjectMap<>();
+			_playersAllowed = new FastIntObjectMap<>();
 			_raidList = new FastList/*L2FastList*/<>();
 		}
 		
-		public FastMap<Integer, Long> getPlayerAllowedReEntryTimes()
+		public FastIntObjectMap<Long> getPlayerAllowedReEntryTimes()
 		{
 			return _playerAllowedReEntryTimes;
 		}
 		
-		public FastSet<Integer> getPlayersAllowed()
+		public FastIntObjectMap<Object> getPlayersAllowed()
 		{
 			return _playersAllowed;
 		}
@@ -176,7 +174,7 @@ public class L2BossZone extends L2ZoneType
 				}
 				// if player has been (previously) cleared by npc/ai for entry and the zone is
 				// set to receive players (aka not waiting for boss to respawn)
-				if (getSettings().getPlayersAllowed().contains(player.getObjectId()))
+				if (getSettings().getPlayersAllowed().containsKey(player.getObjectId()))
 				{
 					// Get the information about this player's last logout-exit from
 					// this zone.
@@ -217,7 +215,7 @@ public class L2BossZone extends L2ZoneType
 				final L2PcInstance player = character.getActingPlayer();
 				if (player != null)
 				{
-					if (getSettings().getPlayersAllowed().contains(player.getObjectId()) || player.canOverrideCond(PcCondOverride.ZONE_CONDITIONS))
+					if (getSettings().getPlayersAllowed().containsKey(player.getObjectId()) || player.canOverrideCond(PcCondOverride.ZONE_CONDITIONS))
 					{
 						return;
 					}
@@ -255,7 +253,7 @@ public class L2BossZone extends L2ZoneType
 				// time so that
 				// decisions can be made later about allowing or not the player
 				// to log into the zone
-				if (!player.isOnline() && getSettings().getPlayersAllowed().contains(player.getObjectId()))
+				if (!player.isOnline() && getSettings().getPlayersAllowed().containsKey(player.getObjectId()))
 				{
 					// mark the time that the player left the zone
 					getSettings().getPlayerAllowedReEntryTimes().put(player.getObjectId(), System.currentTimeMillis() + _timeClientDown/*_timeInvade*/);
@@ -325,16 +323,16 @@ public class L2BossZone extends L2ZoneType
 		super.setEnabled(flag);
 	}
 	
-	public void setAllowedPlayers(FastSet<Integer> players)
+	public void setAllowedPlayers(FastIntObjectMap<Object> players)
 	{
 		if (players != null)
 		{
 			getSettings().getPlayersAllowed().clear();
-			getSettings().getPlayersAllowed().addAll(players);
+			getSettings().getPlayersAllowed().putAll(players);
 		}
 	}
 	
-	public FastSet<Integer> getAllowedPlayers()
+	public FastIntObjectMap<Object> getAllowedPlayers()
 	{
 		return getSettings().getPlayersAllowed();
 	}
@@ -345,7 +343,7 @@ public class L2BossZone extends L2ZoneType
 		{
 			return true;
 		}
-		else if (getSettings().getPlayersAllowed().contains(player.getObjectId()))
+		else if (getSettings().getPlayersAllowed().containsKey(player.getObjectId()))
 		{
 			return true;
 		}
@@ -429,8 +427,8 @@ public class L2BossZone extends L2ZoneType
 	{
 		if (!player.canOverrideCond(PcCondOverride.ZONE_CONDITIONS))
 		{
-			Integer id = player.getObjectId();
-			getSettings().getPlayersAllowed().add(id);
+			int id = player.getObjectId();
+			getSettings().getPlayersAllowed().put(id, Boolean.TRUE);
 			getSettings().getPlayerAllowedReEntryTimes().put(id, System.currentTimeMillis() + durationInSec * 1000);
 		}
 	}
@@ -439,7 +437,7 @@ public class L2BossZone extends L2ZoneType
 	{
 		if (!player.canOverrideCond(PcCondOverride.ZONE_CONDITIONS))
 		{
-			Integer id = player.getObjectId();
+			int id = player.getObjectId();
 			getSettings().getPlayersAllowed().remove(id);
 			getSettings().getPlayerAllowedReEntryTimes().remove(id);
 		}
