@@ -32,6 +32,7 @@ import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2FestivalGuideInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
 
@@ -135,8 +136,7 @@ public class NpcKnownList extends CharKnownList
 					{
 						for (L2PcInstance pl : players)
 						{
-							if (!pl.isDead() && !pl.isInvul() && pl.isInsideRadius(monster, monster.getAggroRange(), true, false) && (monster.isMonster() || (monster.isInstanceTypes(InstanceType.L2GuardInstance) && (pl.getKarma() > 0)))
-							 && autoAttackCondition(pl))	//[JOJO]
+							if (!pl.isDead() && !pl.isInvul() && pl.isInsideRadius(monster, monster.getAggroRange(), true, false) && (monster.isMonster() && autoAttackCondition(pl) || monster.isInstanceTypes(InstanceType.L2GuardInstance) && pl.getKarma() > 0))	//[JOJO]
 							{
 								// Send aggroRangeEnter
 								if (monster.getHating(pl) == 0)
@@ -166,7 +166,7 @@ if (com.l2jserver.Config.PC_PROTECT) {{
 }}
 if (com.l2jserver.Config.SILENT_MOVE_PROTECT) {{
 			// Check if the AI isn't a Raid Boss, can See Silent Moving players and the target isn't in silent move mode
-			final L2Attackable me = (L2Attackable) getActiveObject();
+			final L2MonsterInstance me = (L2MonsterInstance) getActiveObject();
 			if (!me.isRaid() && !me.canSeeThroughSilentMove() && target.isSilentMoving()) return false;
 }}
 			return true;
