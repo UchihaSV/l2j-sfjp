@@ -34,65 +34,58 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Playable;
 import com.l2jserver.gameserver.model.actor.instance.L2GuardInstance;
 
-public class KnownListUpdateTaskManager
+public final class KnownListUpdateTaskManager implements Runnable
 {
 	protected static final Logger _log = Logger.getLogger(KnownListUpdateTaskManager.class.getName());
 	
 	private static final int FULL_UPDATE_TIMER = 100;
-	public static boolean updatePass = true;
+	private static boolean updatePass = true;	// true:forgetObjects false:addKnownObject
 	
-	// Do full update every FULL_UPDATE_TIMER * KNOWNLIST_UPDATE_INTERVAL
-	public static int _fullUpdateTimer = 0;
+	// Do full update every FULL_UPDATE_TIMER * KNOWNLIST_UPDATE_INTERVAL (100 * 1250ms = 125s)
+	private static int _fullUpdateTimer = 0;
 	
-	protected static final FastSet<L2WorldRegion> _failedRegions = new FastSet<>(1);
+	private static final FastSet<L2WorldRegion> _failedRegions = new FastSet<>(1);
 	
 	protected KnownListUpdateTaskManager()
 	{
-		ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new KnownListUpdate(), 1000, Config.KNOWNLIST_UPDATE_INTERVAL);
+		ThreadPoolManager.getInstance().scheduleAiAtFixedRate(this, 1000, Config.KNOWNLIST_UPDATE_INTERVAL);
 	}
 	
-	private class KnownListUpdate implements Runnable
+	@Override
+	public void run()
 	{
-		public KnownListUpdate()
+		try
 		{
-		}
-		
-		@Override
-		public void run()
-		{
-			try
+			for (L2WorldRegion regions[] : L2World.getInstance().getWorldRegions())
 			{
-				for (L2WorldRegion regions[] : L2World.getInstance().getWorldRegions())
+				for (L2WorldRegion r : regions) // go through all world regions
 				{
-					for (L2WorldRegion r : regions) // go through all world regions
+					// avoid stopping update if something went wrong in updateRegion()
+					try
 					{
-						// avoid stopping update if something went wrong in updateRegion()
-						try
+						boolean failed = _failedRegions.contains(r); // failed on last pass
+						if (r.isActive()) // and check only if the region is active
 						{
-							boolean failed = _failedRegions.contains(r); // failed on last pass
-							if (r.isActive()) // and check only if the region is active
-							{
-								updateRegion(r, _fullUpdateTimer == 0 || failed, updatePass);
-							}
-							if (failed)
-							{
-								_failedRegions.remove(r); // if all ok, remove
-							}
+							updateRegion(r, _fullUpdateTimer == 0 || failed, updatePass);
 						}
-						catch (Exception e)
+						if (failed)
 						{
-							_log.log(Level.WARNING, "KnownListUpdateTaskManager: updateRegion(" + _fullUpdateTimer + "," + updatePass + ") failed for region " + r.getName() + ". Full update scheduled. " + e.getMessage(), e);
-							_failedRegions.add(r);
+							_failedRegions.remove(r); // if all ok, remove
 						}
 					}
+					catch (Exception e)
+					{
+						_log.log(Level.WARNING, "KnownListUpdateTaskManager: updateRegion(" + _fullUpdateTimer + "," + updatePass + ") failed for region " + r.getName() + ". Full update scheduled. " + e.getMessage(), e);
+						_failedRegions.add(r);
+					}
 				}
-				updatePass = !updatePass;
-				_fullUpdateTimer = (_fullUpdateTimer + 1) % FULL_UPDATE_TIMER;
 			}
-			catch (Exception e)
-			{
-				_log.log(Level.WARNING, "", e);
-			}
+			updatePass = !updatePass;
+			_fullUpdateTimer = (_fullUpdateTimer + 1) % FULL_UPDATE_TIMER;
+		}
+		catch (Exception e)
+		{
+			_log.log(Level.WARNING, "", e);
 		}
 	}
 	
@@ -112,32 +105,34 @@ public class KnownListUpdateTaskManager
 			if (forgetObjects)
 			{
 				object.getKnownList().forgetObjects(aggro || fullUpdate);
-				continue;
 			}
-			for (L2WorldRegion regi : region.getSurroundingRegions())
+			else
 			{
-				if ((object instanceof L2Playable) || (aggro && regi.isActive()) || fullUpdate)
+				for (L2WorldRegion regi : region.getSurroundingRegions())
 				{
-					Collection<L2Object> inrObj = regi.getVisibleObjects().values();
-					for (L2Object obj : inrObj)
+					if ((object instanceof L2Playable) || (aggro && regi.isActive()) || fullUpdate)
 					{
-						if (obj != object)
-						{
-							object.getKnownList().addKnownObject(obj);
-						}
-					}
-				}
-				else if (object instanceof L2Character)
-				{
-					if (regi.isActive())
-					{
-						Collection<L2Playable> inrPls = regi.getVisiblePlayable().values();
-						
-						for (L2Object obj : inrPls)
+						Collection<L2Object> inrObj = regi.getVisibleObjects().values();
+						for (L2Object obj : inrObj)
 						{
 							if (obj != object)
 							{
 								object.getKnownList().addKnownObject(obj);
+							}
+						}
+					}
+					else if (object instanceof L2Character)
+					{
+						if (regi.isActive())
+						{
+							Collection<L2Playable> inrPls = regi.getVisiblePlayable().values();
+							
+							for (L2Object obj : inrPls)
+							{
+								if (obj != object)
+								{
+									object.getKnownList().addKnownObject(obj);
+								}
 							}
 						}
 					}
