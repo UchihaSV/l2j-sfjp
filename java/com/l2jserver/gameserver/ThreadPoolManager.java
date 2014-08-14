@@ -272,7 +272,7 @@ public class ThreadPoolManager
 			" |- PoolSize:        " + _effectsScheduledThreadPool.getPoolSize(),
 			" |- MaximumPoolSize: " + _effectsScheduledThreadPool.getMaximumPoolSize(),
 			" |- CompletedTasks:  " + _effectsScheduledThreadPool.getCompletedTaskCount(),
-			" |- ScheduledTasks:  " + (_effectsScheduledThreadPool.getTaskCount() - _effectsScheduledThreadPool.getCompletedTaskCount()),
+			" |- ScheduledTasks:  " + _effectsScheduledThreadPool.getQueue().size(),
 			" | -------",
 			" + General:",
 			" |- ActiveThreads:   " + _generalScheduledThreadPool.getActiveCount(),
@@ -280,7 +280,7 @@ public class ThreadPoolManager
 			" |- PoolSize:        " + _generalScheduledThreadPool.getPoolSize(),
 			" |- MaximumPoolSize: " + _generalScheduledThreadPool.getMaximumPoolSize(),
 			" |- CompletedTasks:  " + _generalScheduledThreadPool.getCompletedTaskCount(),
-			" |- ScheduledTasks:  " + (_generalScheduledThreadPool.getTaskCount() - _generalScheduledThreadPool.getCompletedTaskCount()),
+			" |- ScheduledTasks:  " + _generalScheduledThreadPool.getQueue().size(),
 			" | -------",
 			" + AI:",
 			" |- ActiveThreads:   " + _aiScheduledThreadPool.getActiveCount(),
@@ -288,7 +288,7 @@ public class ThreadPoolManager
 			" |- PoolSize:        " + _aiScheduledThreadPool.getPoolSize(),
 			" |- MaximumPoolSize: " + _aiScheduledThreadPool.getMaximumPoolSize(),
 			" |- CompletedTasks:  " + _aiScheduledThreadPool.getCompletedTaskCount(),
-			" |- ScheduledTasks:  " + (_aiScheduledThreadPool.getTaskCount() - _aiScheduledThreadPool.getCompletedTaskCount()),
+			" |- ScheduledTasks:  " + _aiScheduledThreadPool.getQueue().size(),
 			"TP:",
 			" + Packets:",
 			" |- ActiveThreads:   " + _generalPacketsThreadPool.getActiveCount(),
@@ -319,8 +319,8 @@ public class ThreadPoolManager
 			" | -------",
 			" + Javolution stats:",
 			" |- FastList:        " + FastList.report(),
-			" |- FastMap:        " + FastMap.report(),
-			" |- FastSet:        " + FastSet.report(),
+			" |- FastMap:         " + FastMap.report(),
+			" |- FastSet:         " + FastSet.report(),
 			" | -------"
 		};
 	}
@@ -369,7 +369,6 @@ public class ThreadPoolManager
 			_ioPacketsThreadPool.shutdown();
 			_generalThreadPool.shutdown();
 			_log.info("All ThreadPools are now stopped");
-			
 		}
 		catch (InterruptedException e)
 		{
