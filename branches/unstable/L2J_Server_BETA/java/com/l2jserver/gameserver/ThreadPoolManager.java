@@ -111,9 +111,6 @@ public class ThreadPoolManager
 	private final ThreadPoolExecutor _ioPacketsThreadPool;
 	private final ThreadPoolExecutor _generalThreadPool;
 	
-	/** temp workaround for VM issue */
-	private static final long MAX_DELAY = Long.MAX_VALUE / 1000000 / 2;
-	
 	private boolean _shutdown;
 	
 	public static ThreadPoolManager getInstance()
@@ -133,24 +130,11 @@ public class ThreadPoolManager
 		scheduleGeneralAtFixedRate(new PurgeTask(), 600000L, 300000L);
 	}
 	
-	public static long validateDelay(long delay)
-	{
-		if (delay < 0)
-		{
-			delay = 0;
-		}
-		else if (delay > MAX_DELAY)
-		{
-			delay = MAX_DELAY;
-		}
-		return delay;
-	}
 	
 	public ScheduledFuture<?> scheduleEffect(Runnable r, long delay)
 	{
 		try
 		{
-			delay = ThreadPoolManager.validateDelay(delay);
 			return _effectsScheduledThreadPool.schedule(new RunnableWrapper(r), delay, TimeUnit.MILLISECONDS);
 		}
 		catch (RejectedExecutionException e)
@@ -170,8 +154,6 @@ public class ThreadPoolManager
 	{
 		try
 		{
-			period = ThreadPoolManager.validateDelay(period);
-			initialDelay = ThreadPoolManager.validateDelay(initialDelay);
 			return _effectsScheduledThreadPool.scheduleAtFixedRate(new RunnableWrapper(task), initialDelay, period, TimeUnit.MILLISECONDS);
 		}
 		catch (RejectedExecutionException e)
@@ -190,7 +172,6 @@ public class ThreadPoolManager
 	{
 		try
 		{
-			delay = ThreadPoolManager.validateDelay(delay);
 			return _generalScheduledThreadPool.schedule(new RunnableWrapper(r), delay, TimeUnit.MILLISECONDS);
 		}
 		catch (RejectedExecutionException e)
@@ -203,8 +184,6 @@ public class ThreadPoolManager
 	{
 		try
 		{
-			delay = ThreadPoolManager.validateDelay(delay);
-			initial = ThreadPoolManager.validateDelay(initial);
 			return _generalScheduledThreadPool.scheduleAtFixedRate(new RunnableWrapper(r), initial, delay, TimeUnit.MILLISECONDS);
 		}
 		catch (RejectedExecutionException e)
@@ -218,8 +197,6 @@ public class ThreadPoolManager
 	{
 		try
 		{
-			delay = ThreadPoolManager.validateDelay(delay);
-			initial = ThreadPoolManager.validateDelay(initial);
 			return _generalScheduledThreadPool.scheduleWithFixedDelay(new RunnableWrapper(r), initial, delay, TimeUnit.MILLISECONDS);
 		}
 		catch (RejectedExecutionException e)
@@ -239,7 +216,6 @@ public class ThreadPoolManager
 	{
 		try
 		{
-			delay = ThreadPoolManager.validateDelay(delay);
 			return _aiScheduledThreadPool.schedule(new RunnableWrapper(r), delay, TimeUnit.MILLISECONDS);
 		}
 		catch (RejectedExecutionException e)
@@ -252,8 +228,6 @@ public class ThreadPoolManager
 	{
 		try
 		{
-			delay = ThreadPoolManager.validateDelay(delay);
-			initial = ThreadPoolManager.validateDelay(initial);
 			return _aiScheduledThreadPool.scheduleAtFixedRate(new RunnableWrapper(r), initial, delay, TimeUnit.MILLISECONDS);
 		}
 		catch (RejectedExecutionException e)
