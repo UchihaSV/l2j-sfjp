@@ -31,7 +31,7 @@ public class SummonKnownList extends PlayableKnownList
 	@Override
 	public final L2Summon getActiveChar()
 	{
-		return (L2Summon) super.getActiveChar();
+		return (L2Summon) _activeObject;
 	}
 	
 	@Override

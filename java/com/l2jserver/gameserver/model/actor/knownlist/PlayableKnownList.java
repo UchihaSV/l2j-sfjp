@@ -30,6 +30,6 @@ public class PlayableKnownList extends CharKnownList
 	@Override
 	public L2Playable getActiveChar()
 	{
-		return (L2Playable) super.getActiveChar();
+		return (L2Playable) _activeObject;
 	}
 }

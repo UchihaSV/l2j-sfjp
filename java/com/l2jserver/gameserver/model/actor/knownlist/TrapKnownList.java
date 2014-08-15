@@ -31,7 +31,7 @@ public class TrapKnownList extends NpcKnownList
 	@Override
 	public final L2TrapInstance getActiveChar()
 	{
-		return (L2TrapInstance) super.getActiveChar();
+		return (L2TrapInstance) _activeObject;
 	}
 	
 	@Override

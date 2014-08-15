@@ -56,6 +56,6 @@ public class FolkStatus extends NpcStatus
 	@Override
 	public L2NpcInstance getActiveChar()
 	{
-		return (L2NpcInstance) super.getActiveChar();
+		return (L2NpcInstance) _activeChar;
 	}
 }

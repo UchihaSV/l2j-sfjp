@@ -75,6 +75,6 @@ public class PetStatus extends SummonStatus
 	@Override
 	public L2PetInstance getActiveChar()
 	{
-		return (L2PetInstance) super.getActiveChar();
+		return (L2PetInstance) _activeChar;
 	}
 }

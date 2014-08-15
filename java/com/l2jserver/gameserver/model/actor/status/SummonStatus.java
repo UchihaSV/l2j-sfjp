@@ -123,6 +123,6 @@ public class SummonStatus extends PlayableStatus
 	@Override
 	public L2Summon getActiveChar()
 	{
-		return (L2Summon) super.getActiveChar();
+		return (L2Summon) _activeChar;
 	}
 }

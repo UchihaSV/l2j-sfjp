@@ -131,7 +131,7 @@ public class PcKnownList extends PlayableKnownList
 	@Override
 	public final L2PcInstance getActiveChar()
 	{
-		return (L2PcInstance) super.getActiveChar();
+		return (L2PcInstance) _activeObject;
 	}
 	
 	private double proportion(L2Object object)

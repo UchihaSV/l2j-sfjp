@@ -52,6 +52,6 @@ public class RaceManagerKnownList extends NpcKnownList
 	@Override
 	public L2RaceManagerInstance getActiveChar()
 	{
-		return (L2RaceManagerInstance) super.getActiveChar();
+		return (L2RaceManagerInstance) _activeObject;
 	}
 }

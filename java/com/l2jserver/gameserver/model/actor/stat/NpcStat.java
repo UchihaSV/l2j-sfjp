@@ -36,6 +36,6 @@ public class NpcStat extends CharStat
 	@Override
 	public L2Npc getActiveChar()
 	{
-		return (L2Npc) super.getActiveChar();
+		return (L2Npc) _activeChar;
 	}
 }

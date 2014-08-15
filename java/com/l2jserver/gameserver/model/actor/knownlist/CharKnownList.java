@@ -208,7 +208,7 @@ public class CharKnownList extends ObjectKnownList
 	
 	public L2Character getActiveChar()
 	{
-		return (L2Character) super.getActiveObject();
+		return (L2Character) _activeObject;
 	}
 	
 	public Collection<L2Character> getKnownCharacters()

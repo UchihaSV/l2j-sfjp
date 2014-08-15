@@ -37,7 +37,7 @@ import com.l2jserver.gameserver.model.zone.ZoneId;
 
 public class CharStat
 {
-	private final L2Character _activeChar;
+	protected final L2Character _activeChar;
 	private long _exp = 0;
 	private int _sp = 0;
 	private byte _level = 1;

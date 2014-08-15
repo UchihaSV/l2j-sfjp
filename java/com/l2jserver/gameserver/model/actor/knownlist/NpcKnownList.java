@@ -72,7 +72,7 @@ public class NpcKnownList extends CharKnownList
 	@Override
 	public L2Npc getActiveChar()
 	{
-		return (L2Npc) super.getActiveChar();
+		return (L2Npc) _activeObject;
 	}
 	
 	@Override

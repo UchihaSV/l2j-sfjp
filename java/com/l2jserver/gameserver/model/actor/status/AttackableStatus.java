@@ -70,6 +70,6 @@ public class AttackableStatus extends NpcStatus
 	@Override
 	public L2Attackable getActiveChar()
 	{
-		return (L2Attackable) super.getActiveChar();
+		return (L2Attackable) _activeChar;
 	}
 }

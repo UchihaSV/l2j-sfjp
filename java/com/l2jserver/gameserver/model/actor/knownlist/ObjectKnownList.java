@@ -33,7 +33,7 @@ import com.l2jserver.gameserver.util.Util;
 
 public class ObjectKnownList
 {
-	private final L2Object _activeObject;
+	protected final L2Object _activeObject;
 	private FastIntObjectMap<L2Object> _knownObjects;
 	
 	public ObjectKnownList(L2Object activeObject)
