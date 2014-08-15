@@ -30,6 +30,6 @@ public class SummonStat extends PlayableStat
 	@Override
 	public L2Summon getActiveChar()
 	{
-		return (L2Summon) super.getActiveChar();
+		return (L2Summon) _activeChar;
 	}
 }

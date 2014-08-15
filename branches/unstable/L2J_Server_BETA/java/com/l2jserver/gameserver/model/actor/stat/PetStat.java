@@ -120,7 +120,7 @@ public class PetStat extends SummonStat
 	@Override
 	public L2PetInstance getActiveChar()
 	{
-		return (L2PetInstance) super.getActiveChar();
+		return (L2PetInstance) _activeChar;
 	}
 	
 	public final int getFeedBattle()

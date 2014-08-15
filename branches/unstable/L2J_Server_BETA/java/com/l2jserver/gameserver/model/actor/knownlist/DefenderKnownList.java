@@ -70,6 +70,6 @@ public class DefenderKnownList extends AttackableKnownList
 	@Override
 	public final L2DefenderInstance getActiveChar()
 	{
-		return (L2DefenderInstance) super.getActiveChar();
+		return (L2DefenderInstance) _activeObject;
 	}
 }

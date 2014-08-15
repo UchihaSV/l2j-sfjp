@@ -48,6 +48,6 @@ public class SiegeFlagStatus extends NpcStatus
 	@Override
 	public L2SiegeFlagInstance getActiveChar()
 	{
-		return (L2SiegeFlagInstance) super.getActiveChar();
+		return (L2SiegeFlagInstance) _activeChar;
 	}
 }

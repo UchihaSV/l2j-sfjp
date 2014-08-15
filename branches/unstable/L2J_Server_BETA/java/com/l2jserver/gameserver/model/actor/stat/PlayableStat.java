@@ -262,7 +262,7 @@ public class PlayableStat extends CharStat
 	@Override
 	public L2Playable getActiveChar()
 	{
-		return (L2Playable) super.getActiveChar();
+		return (L2Playable) _activeChar;
 	}
 	
 	public int getMaxLevel()

@@ -30,6 +30,6 @@ public class StaticObjStatus extends CharStatus
 	@Override
 	public L2StaticObjectInstance getActiveChar()
 	{
-		return (L2StaticObjectInstance) super.getActiveChar();
+		return (L2StaticObjectInstance) _activeChar;
 	}
 }
