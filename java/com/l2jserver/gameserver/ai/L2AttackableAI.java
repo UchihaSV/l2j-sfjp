@@ -30,7 +30,6 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.GeoData;
 import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.datatables.TerritoryTable;
 import com.l2jserver.gameserver.enums.AIType;
 import com.l2jserver.gameserver.enums.QuestEventType;
@@ -101,7 +100,7 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 	public L2AttackableAI(L2Character.AIAccessor accessor)
 	{
 		super(accessor);
-		_skillrender = NpcData.getInstance().getTemplate(getActiveChar().getTemplate().getId());
+		_skillrender = getActiveChar().getTemplate();
 		_attackTimeout = Integer.MAX_VALUE;
 		_globalAggro = -10; // 10 seconds timeout of ATTACK after respawn
 	}
