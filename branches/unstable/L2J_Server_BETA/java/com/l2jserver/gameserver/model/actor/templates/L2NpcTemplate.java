@@ -26,9 +26,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
+import javolution.util.FastMap;
 import jp.sf.l2j.troja.FastIntObjectMap;
 import jp.sf.l2j.troja.IntObjectMap;
 
@@ -121,11 +121,11 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	private double _collisionRadiusGrown;
 	private double _collisionHeightGrown;
 	
-	private final ConcurrentHashMap<AISkillType, List<L2Skill>> _aiSkills = new ConcurrentHashMap<>();
+	private final FastMap<AISkillType, List<L2Skill>> _aiSkills = new FastMap<>();	//[JOJO] -ConcurrentHashMap
 	private IntObjectMap<L2Skill> _skills = emptyIntMap();	//[JOJO] -ConcurrentHashMap
 	private List<L2MinionData> _minions = emptyArrayList();
 	private List<ClassId> _teachInfo = emptyArrayList();
-	private final ConcurrentHashMap<QuestEventType, List<Quest>> _questEvents = new ConcurrentHashMap<>();
+	private final FastMap<QuestEventType, List<Quest>> _questEvents = new FastMap<>();	//[JOJO] -ConcurrentHashMap
 	
 	/**
 	 * Constructor of L2Character.
