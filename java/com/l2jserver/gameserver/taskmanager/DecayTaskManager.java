@@ -124,7 +124,7 @@ public class DecayTaskManager
 		   .append("Tasks dump:")
 		   .append(Config.EOL);
 		
-		Long current = System.currentTimeMillis();
+		long current = System.currentTimeMillis();
 		for (L2Character actor : _decayTasks.keySet())
 		{
 			ret.append("Class/Name: ")
