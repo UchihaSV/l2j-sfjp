@@ -54,6 +54,9 @@ import com.l2jserver.gameserver.model.skills.L2Skill;
 
 import gnu.trove.list.array.TIntArrayList;
 
+/**
+ * @author Nos
+ */
 public class NpcData extends DocumentParser
 {
 	private static final Logger _log = Logger.getLogger(NpcData.class.getName());
