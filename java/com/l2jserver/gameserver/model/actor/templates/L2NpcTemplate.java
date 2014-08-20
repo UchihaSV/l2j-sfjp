@@ -35,7 +35,7 @@ import jp.sf.l2j.troja.IntObjectMap;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.datatables.SpawnTable;
-import com.l2jserver.gameserver.enums.AISkillType;
+import com.l2jserver.gameserver.enums.AISkillScope;
 import com.l2jserver.gameserver.enums.AIType;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.NpcRace;
@@ -51,12 +51,10 @@ import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.base.ClassId;
 import com.l2jserver.gameserver.model.drops.DropListScope;
 import com.l2jserver.gameserver.model.drops.IDropItem;
-import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.skills.L2Skill;
-import com.l2jserver.gameserver.model.skills.L2SkillType;
 import com.l2jserver.gameserver.model.stats.MoveType;
 
 /**
@@ -115,14 +113,14 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	private int _shortRangeSkillChance;
 	private int _longRangeSkillId;
 	private int _longRangeSkillChance;
+	private IntObjectMap<L2Skill> _skills;	//[JOJO] -Map<Integer, L2Skill>
+	private Map<AISkillScope, List<L2Skill>> _aiSkillLists;
 	private int[] _clans;		//[JOJO] -Set<Integer>
 	private int[] _enemyClans;	//[JOJO] -Set<Integer>
 	private Map<DropListScope, List<IDropItem>> _dropLists;
 	private double _collisionRadiusGrown;
 	private double _collisionHeightGrown;
 	
-	private final FastMap<AISkillType, List<L2Skill>> _aiSkills = new FastMap<>();	//[JOJO] -ConcurrentHashMap
-	private IntObjectMap<L2Skill> _skills = emptyIntMap();	//[JOJO] -ConcurrentHashMap
 	private List<L2MinionData> _minions = emptyArrayList();
 	private List<ClassId> _teachInfo = emptyArrayList();
 	private final FastMap<QuestEventType, List<Quest>> _questEvents = new FastMap<>();	//[JOJO] -ConcurrentHashMap
@@ -516,6 +514,28 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 		return _longRangeSkillChance;
 	}
 	
+	@Override
+	public IntObjectMap<L2Skill> getSkills()
+	{
+		return _skills;
+	}
+	
+	public void setSkills(Map<Integer, L2Skill> skills)
+	{
+		_skills = skills != null ? new FastIntObjectMap<>(skills).unmodifiable() : FastIntObjectMap.<L2Skill>emptyMap();
+	}
+	
+	public List<L2Skill> getAISkills(AISkillScope aiSkillScope)
+	{
+		final List<L2Skill> aiSkills = _aiSkillLists.get(aiSkillScope);
+		return aiSkills != null ? aiSkills : Collections.<L2Skill> emptyList();
+	}
+	
+	public void setAISkillLists(Map<AISkillScope, List<L2Skill>> aiSkillLists)
+	{
+		_aiSkillLists = aiSkillLists != null ? Collections.unmodifiableMap(aiSkillLists) : Collections.<AISkillScope, List<L2Skill>> emptyMap();
+	}
+	
 	public int[] getClans()
 	{
 		return _clans;
@@ -662,25 +682,6 @@ if (com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 		return _collisionHeightGrown;
 	}
 	
-	public void resetSkills()
-	{
-	//[JOJO]-------------------------------------------------
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		final List<L2Skill> EMPTY_LIST = Collections.<L2Skill> emptyList();
-		for (AISkillType type : AISkillType.values())
-		{
-			_aiSkills.put(type, EMPTY_LIST);
-		}
-}} else {{
-		for (AISkillType type : AISkillType.values())
-		{
-			_aiSkills.put(type, new ArrayList<L2Skill>());
-		}
-}}
-	//-------------------------------------------------------
-		_skills.clear();
-	}
-	
 	public static boolean isAssignableTo(Class<?> sub, Class<?> clazz)
 	{
 		// If clazz represents an interface
@@ -733,96 +734,7 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		return new ArrayList<>();
 }}
 	}
-	private void addAISkill(AISkillType aiSkillType, L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		List<L2Skill> skills;
-		if ((skills = _aiSkills.get(aiSkillType)) == Collections.EMPTY_LIST)
-			_aiSkills.put(aiSkillType, skills = new ArrayList<>());
-		skills.add(skill);
-}}
-	}
-	private static final <T> IntObjectMap<L2Skill> emptyIntMap()
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		return FastIntObjectMap.emptyMap();	// return FastIntObjectMap.EMPTY_MAP
-}} else {{
-		return new FastIntObjectMap<>();
-}}
-	}
 	//-------------------------------------------------------
-	
-	private void addAtkSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		addAISkill(AISkillType.ATTACK, skill);
-}} else {{
-		getAtkSkills().add(skill);
-}}
-	}
-	
-	private void addBuffSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		addAISkill(AISkillType.BUFF, skill);
-}} else {{
-		getBuffSkills().add(skill);
-}}
-	}
-	
-	private void addCOTSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		addAISkill(AISkillType.COT, skill);
-}} else {{
-		getCostOverTimeSkills().add(skill);
-}}
-	}
-	
-	private void addDebuffSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		addAISkill(AISkillType.DEBUFF, skill);
-}} else {{
-		getDebuffSkills().add(skill);
-}}
-	}
-	
-	private void addGeneralSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		addAISkill(AISkillType.GENERAL, skill);
-}} else {{
-		getGeneralskills().add(skill);
-}}
-	}
-	
-	private void addHealSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		addAISkill(AISkillType.HEAL, skill);
-}} else {{
-		getHealSkills().add(skill);
-}}
-	}
-	
-	private void addImmobiliseSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		addAISkill(AISkillType.IMMOBILIZE, skill);
-}} else {{
-		getImmobiliseSkills().add(skill);
-}}
-	}
-	
-	private void addNegativeSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		addAISkill(AISkillType.NEGATIVE, skill);
-}} else {{
-		getNegativeSkills().add(skill);
-}}
-	}
 	
 	public void addQuestEvent(QuestEventType eventType, Quest q)
 	{
@@ -907,142 +819,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		_minions.add(minion);
 	}
 	
-	private void addRangeSkill(L2Skill skill)
-	{
-		if (skill.getCastRange() > 150)
-		{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-			addAISkill(AISkillType.LONG_RANGE, skill);
-}} else {{
-			getLongRangeSkills().add(skill);
-}}
-		}
-		else if (skill.getCastRange() > 0)
-		{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-			addAISkill(AISkillType.SHORT_RANGE, skill);
-}} else {{
-			getShortRangeSkills().add(skill);
-}}
-		}
-	}
-	
-	private void addResSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		addAISkill(AISkillType.RES, skill);
-}} else {{
-		getResSkills().add(skill);
-}}
-	}
-	
-	public void addSkill(L2Skill skill)
-	{
-		if (!skill.isPassive())
-		{
-			if (skill.isSuicideAttack())
-			{
-				addSuicideSkill(skill);
-			}
-			else
-			{
-				addGeneralSkill(skill);
-				
-				if (skill.isContinuous())
-				{
-					if (!skill.isDebuff())
-					{
-						addBuffSkill(skill);
-					}
-					else
-					{
-						addDebuffSkill(skill);
-						addCOTSkill(skill);
-						addRangeSkill(skill);
-					}
-				}
-				else if (skill.getSkillType() == L2SkillType.DUMMY)
-				{
-					if (skill.hasEffectType(L2EffectType.DISPEL, L2EffectType.DISPEL_BY_SLOT))
-					{
-						addNegativeSkill(skill);
-						addRangeSkill(skill);
-					}
-					else if (skill.hasEffectType(L2EffectType.HEAL, L2EffectType.HEAL_PERCENT))
-					{
-						addHealSkill(skill);
-					}
-					else if (skill.hasEffectType(L2EffectType.PHYSICAL_ATTACK, L2EffectType.PHYSICAL_ATTACK_HP_LINK, L2EffectType.FATAL_BLOW, L2EffectType.ENERGY_ATTACK, L2EffectType.MAGICAL_ATTACK_MP, L2EffectType.MAGICAL_ATTACK, L2EffectType.DEATH_LINK, L2EffectType.HP_DRAIN))
-					{
-						addAtkSkill(skill);
-						addUniversalSkill(skill);
-						addRangeSkill(skill);
-					}
-					else if (skill.hasEffectType(L2EffectType.SLEEP))
-					{
-						addImmobiliseSkill(skill);
-					}
-					else if (skill.hasEffectType(L2EffectType.STUN, L2EffectType.ROOT))
-					{
-						addImmobiliseSkill(skill);
-						addRangeSkill(skill);
-					}
-					else if (skill.hasEffectType(L2EffectType.MUTE, L2EffectType.FEAR))
-					{
-						addCOTSkill(skill);
-						addRangeSkill(skill);
-					}
-					else if (skill.hasEffectType(L2EffectType.PARALYZE))
-					{
-						addImmobiliseSkill(skill);
-						addRangeSkill(skill);
-					}
-					else if (skill.hasEffectType(L2EffectType.DMG_OVER_TIME, L2EffectType.DMG_OVER_TIME_PERCENT))
-					{
-						addRangeSkill(skill);
-					}
-					else if (skill.hasEffectType(L2EffectType.RESURRECTION))
-					{
-						addResSkill(skill);
-					}
-					else
-					{
-						addUniversalSkill(skill);
-					}
-				}
-			}
-		}
-		
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_skills == FastIntObjectMap.EMPTY_MAP)
-			_skills = new FastIntObjectMap<>();
-}}
-		_skills.put(skill.getId(), skill);
-	}
-	
-	private void addSuicideSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		addAISkill(AISkillType.SUICIDE, skill);
-}} else {{
-		getSuicideSkills().add(skill);
-}}
-	}
-	
-	public void setTeachInfo(List<ClassId> teachInfo)	// skillLearn.xml
-	{
-		_teachInfo = teachInfo;
-	}
-	
-	private void addUniversalSkill(L2Skill skill)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		addAISkill(AISkillType.UNIVERSAL, skill);
-}} else {{
-		getUniversalSkills().add(skill);
-}}
-	}
-	
 	public boolean canTeach(ClassId classId)
 	{
 		// If the player is on a third class, fetch the class teacher
@@ -1052,38 +828,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			return _teachInfo.contains(classId.getParent());
 		}
 		return _teachInfo.contains(classId);
-	}
-	
-	/**
-	 * @return the attack skills.
-	 */
-	public List<L2Skill> getAtkSkills()
-	{
-		return _aiSkills.get(AISkillType.ATTACK);
-	}
-	
-	/**
-	 * @return the buff skills.
-	 */
-	public List<L2Skill> getBuffSkills()
-	{
-		return _aiSkills.get(AISkillType.BUFF);
-	}
-	
-	/**
-	 * @return the cost over time skills.
-	 */
-	public List<L2Skill> getCostOverTimeSkills()
-	{
-		return _aiSkills.get(AISkillType.COT);
-	}
-	
-	/**
-	 * @return the debuff skills.
-	 */
-	public List<L2Skill> getDebuffSkills()
-	{
-		return _aiSkills.get(AISkillType.DEBUFF);
 	}
 	
 	public Map<QuestEventType, List<Quest>> getEventQuests()
@@ -1097,38 +841,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	}
 	
 	/**
-	 * @return the general skills.
-	 */
-	public List<L2Skill> getGeneralskills()
-	{
-		return _aiSkills.get(AISkillType.GENERAL);
-	}
-	
-	/**
-	 * @return the heal skills.
-	 */
-	public List<L2Skill> getHealSkills()
-	{
-		return _aiSkills.get(AISkillType.HEAL);
-	}
-	
-	/**
-	 * @return the immobilize skills.
-	 */
-	public List<L2Skill> getImmobiliseSkills()
-	{
-		return _aiSkills.get(AISkillType.IMMOBILIZE);
-	}
-	
-	/**
-	 * @return the long range skills.
-	 */
-	public List<L2Skill> getLongRangeSkills()
-	{
-		return _aiSkills.get(AISkillType.LONG_RANGE);
-	}
-	
-	/**
 	 * @return the list of all Minions that must be spawn with the L2NpcInstance using this L2NpcTemplate.
 	 */
 	public List<L2MinionData> getMinionData()
@@ -1136,56 +848,18 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 		return _minions;
 	}
 	
-	/**
-	 * @return the negative skills.
-	 */
-	public List<L2Skill> getNegativeSkills()
-	{
-		return _aiSkills.get(AISkillType.NEGATIVE);
-	}
-	
 	public int getNpcId()
 	{
 		return getId();
 	}
 	
-	/**
-	 * @return the resurrection skills.
-	 */
-	public List<L2Skill> getResSkills()
-	{
-		return _aiSkills.get(AISkillType.RES);
-	}
-	
-	/**
-	 * @return the short range skills.
-	 */
-	public List<L2Skill> getShortRangeSkills()
-	{
-		return _aiSkills.get(AISkillType.SHORT_RANGE);
-	}
-	
-	/**
-	 * @return the universal skills.
-	 */
-	public List<L2Skill> getUniversalSkills()
-	{
-		return _aiSkills.get(AISkillType.UNIVERSAL);
-	}
-	
-	public List<L2Skill> getSuicideSkills()
-	{
-		return _aiSkills.get(AISkillType.SUICIDE);
-	}
-	
-	@Override
-	public IntObjectMap<L2Skill> getSkills()
-	{
-		return _skills;
-	}
-	
 	public List<ClassId> getTeachInfo()
 	{
 		return _teachInfo;
+	}
+	
+	public void setTeachInfo(List<ClassId> teachInfo)	// skillLearn.xml
+	{
+		_teachInfo = teachInfo;
 	}
 }

@@ -31,6 +31,7 @@ import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.GeoData;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.TerritoryTable;
+import com.l2jserver.gameserver.enums.AISkillScope;
 import com.l2jserver.gameserver.enums.AIType;
 import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
@@ -394,7 +395,7 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 		// self and buffs
 		if ((lastBuffTick + 30) < GameTimeController.getInstance().getGameTicks())
 		{
-			for (L2Skill sk : _skillrender.getBuffSkills())
+			for (L2Skill sk : _skillrender.getAISkills(AISkillScope.BUFF))
 			{
 				if (cast(sk))
 				{
@@ -633,7 +634,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 			}
 			else if (Rnd.nextInt(RANDOM_WALK_RATE) == 0)
 			{
-				for (L2Skill sk : _skillrender.getBuffSkills())
+				for (L2Skill sk : _skillrender.getAISkills(AISkillScope.BUFF))
 				{
 					if (cast(sk))
 					{
@@ -648,7 +649,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 			int x1, y1, z1;
 			final int range = Config.MAX_DRIFT_RANGE;
 			
-			for (L2Skill sk : _skillrender.getBuffSkills())
+			for (L2Skill sk : _skillrender.getAISkills(AISkillScope.BUFF))
 			{
 				if (cast(sk))
 				{
@@ -842,9 +843,10 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 		
 		final int combinedCollision = collision + mostHate.getTemplate().getCollisionRadius();
 		
-		if (!_skillrender.getSuicideSkills().isEmpty() && ((int) ((npc.getCurrentHp() / npc.getMaxHp()) * 100) < 30))
+		List<L2Skill> aiSuicideSkills = _skillrender.getAISkills(AISkillScope.SUICIDE);
+		if (!aiSuicideSkills.isEmpty() && ((int) ((npc.getCurrentHp() / npc.getMaxHp()) * 100) < 30))
 		{
-			final L2Skill skill = _skillrender.getSuicideSkills().get(Rnd.nextInt(_skillrender.getSuicideSkills().size()));
+			final L2Skill skill = aiSuicideSkills.get(Rnd.nextInt(aiSuicideSkills.size()));
 			if (Util.checkIfInRange(skill.getAffectRange(), getActiveChar(), mostHate, false) && (Rnd.get(100) < Rnd.get(npc.getMinSkillChance(), npc.getMaxSkillChance())))
 			{
 				if (cast(skill))
@@ -852,7 +854,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					return;
 				}
 				
-				for (L2Skill sk : _skillrender.getSuicideSkills())
+				for (L2Skill sk : aiSuicideSkills)
 				{
 					if (cast(sk))
 					{
@@ -1044,11 +1046,12 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			}
 		}
 		
-		if (!_skillrender.getGeneralskills().isEmpty())
+		if (!_skillrender.getAISkills(AISkillScope.GENERAL).isEmpty())
 		{
 			// -------------------------------------------------------------------------------
 			// Heal Condition
-			if (!_skillrender.getHealSkills().isEmpty())
+			List<L2Skill> aiHealSkills = _skillrender.getAISkills(AISkillScope.HEAL);
+			if (!aiHealSkills.isEmpty())
 			{
 				double percentage = (npc.getCurrentHp() / npc.getMaxHp()) * 100;
 				if (npc.isMinion())
@@ -1056,7 +1059,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					L2Character leader = npc.getLeader();
 					if ((leader != null) && !leader.isDead() && (Rnd.get(100) > ((leader.getCurrentHp() / leader.getMaxHp()) * 100)))
 					{
-						for (L2Skill sk : _skillrender.getHealSkills())
+						for (L2Skill sk : aiHealSkills)
 						{
 							if (sk.getTargetType() == L2TargetType.SELF)
 							{
@@ -1084,7 +1087,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				if (Rnd.get(100) < ((100 - percentage) / 3))
 				{
-					for (L2Skill sk : _skillrender.getHealSkills())
+					for (L2Skill sk : aiHealSkills)
 					{
 						if (!checkSkillCastConditions(sk))
 						{
@@ -1096,7 +1099,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						return;
 					}
 				}
-				for (L2Skill sk : _skillrender.getHealSkills())
+				for (L2Skill sk : aiHealSkills)
 				{
 					if (!checkSkillCastConditions(sk))
 					{
@@ -1139,14 +1142,15 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			}
 			// -------------------------------------------------------------------------------
 			// Res Skill Condition
-			if (!_skillrender.getResSkills().isEmpty())
+			List<L2Skill> aiResSkills = _skillrender.getAISkills(AISkillScope.HEAL);
+			if (!aiResSkills.isEmpty())
 			{
 				if (npc.isMinion())
 				{
 					L2Character leader = npc.getLeader();
 					if ((leader != null) && leader.isDead())
 					{
-						for (L2Skill sk : _skillrender.getResSkills())
+						for (L2Skill sk : aiResSkills)
 						{
 							if (sk.getTargetType() == L2TargetType.SELF)
 							{
@@ -1171,7 +1175,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 						}
 					}
 				}
-				for (L2Skill sk : _skillrender.getResSkills())
+				for (L2Skill sk : aiResSkills)
 				{
 					if (!checkSkillCastConditions(sk))
 					{
@@ -1239,16 +1243,17 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 		setTimepass(0);
 		// --------------------------------------------------------------------------------
 		// Skill Use
-		if (!_skillrender.getGeneralskills().isEmpty())
+		List<L2Skill> aiGeneralSkills = _skillrender.getAISkills(AISkillScope.GENERAL);
+		if (!aiGeneralSkills.isEmpty())
 		{
 			if (Rnd.get(100) < Rnd.get(npc.getMinSkillChance(), npc.getMaxSkillChance()))
 			{
-				L2Skill skills = _skillrender.getGeneralskills().get(Rnd.nextInt(_skillrender.getGeneralskills().size()));
+				L2Skill skills = aiGeneralSkills.get(Rnd.nextInt(aiGeneralSkills.size()));
 				if (cast(skills))
 				{
 					return;
 				}
-				for (L2Skill sk : _skillrender.getGeneralskills())
+				for (L2Skill sk : aiGeneralSkills)
 				{
 					if (cast(sk))
 					{
@@ -1331,7 +1336,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			{
 				case -1:
 				{
-					for (L2Skill sk : _skillrender.getGeneralskills())
+					for (L2Skill sk : _skillrender.getAISkills(AISkillScope.GENERAL))
 					{
 						if (cast(sk))
 						{
@@ -1342,7 +1347,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				case 1:
 				{
-					for (L2Skill sk : _skillrender.getAtkSkills())
+					for (L2Skill sk : _skillrender.getAISkills(AISkillScope.ATTACK))
 					{
 						if (cast(sk))
 						{
@@ -1353,7 +1358,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				default:
 				{
-					for (L2Skill sk : _skillrender.getGeneralskills())
+					for (L2Skill sk : _skillrender.getAISkills(AISkillScope.GENERAL))
 					{
 						if (sk.getId() == getActiveChar().getPrimarySkillId())
 						{
@@ -1886,14 +1891,14 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			}
 			
 			// Check if activeChar has any skill
-			if (!_skillrender.getGeneralskills().isEmpty())
+			if (!_skillrender.getAISkills(AISkillScope.GENERAL).isEmpty())
 			{
 				// -------------------------------------------------------------
 				// Try to stop the target or disable the target as priority
 				int random = Rnd.get(100);
-				if (!_skillrender.getImmobiliseSkills().isEmpty() && !getAttackTarget().isImmobilized() && (random < 2))
+				if (!getAttackTarget().isImmobilized() && (random < 2))
 				{
-					for (L2Skill sk : _skillrender.getImmobiliseSkills())
+					for (L2Skill sk : _skillrender.getAISkills(AISkillScope.IMMOBILIZE))
 					{
 						if (!checkSkillCastConditions(sk) || (((sk.getCastRange() + npc.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius()) <= dist2) && !canAura(sk)))
 						{
@@ -1916,9 +1921,9 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				// -------------------------------------------------------------
 				// Same as Above, but with Mute/FEAR etc....
-				if (!_skillrender.getCostOverTimeSkills().isEmpty() && (random < 5))
+				if (random < 5)
 				{
-					for (L2Skill sk : _skillrender.getCostOverTimeSkills())
+					for (L2Skill sk : _skillrender.getAISkills(AISkillScope.COT))
 					{
 						if (!checkSkillCastConditions(sk) || (((sk.getCastRange() + npc.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius()) <= dist2) && !canAura(sk)))
 						{
@@ -1940,9 +1945,9 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 					}
 				}
 				// -------------------------------------------------------------
-				if (!_skillrender.getDebuffSkills().isEmpty() && (random < 8))
+				if (random < 8)
 				{
-					for (L2Skill sk : _skillrender.getDebuffSkills())
+					for (L2Skill sk : _skillrender.getAISkills(AISkillScope.DEBUFF))
 					{
 						if (!checkSkillCastConditions(sk) || (((sk.getCastRange() + npc.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius()) <= dist2) && !canAura(sk)))
 						{
@@ -1965,9 +1970,9 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				// -------------------------------------------------------------
 				// Some side effect skill like CANCEL or NEGATE
-				if (!_skillrender.getNegativeSkills().isEmpty() && (random < 9))
+				if (random < 9)
 				{
-					for (L2Skill sk : _skillrender.getNegativeSkills())
+					for (L2Skill sk : _skillrender.getAISkills(AISkillScope.NEGATIVE))
 					{
 						if (!checkSkillCastConditions(sk) || (((sk.getCastRange() + npc.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius()) <= dist2) && !canAura(sk)))
 						{
@@ -1990,9 +1995,9 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 				}
 				// -------------------------------------------------------------
 				// Start ATK SKILL when nothing can be done
-				if (!_skillrender.getAtkSkills().isEmpty() && (npc.isMovementDisabled() || (npc.getAiType() == AIType.MAGE) || (npc.getAiType() == AIType.HEALER)))
+				if ((npc.isMovementDisabled() || (npc.getAiType() == AIType.MAGE) || (npc.getAiType() == AIType.HEALER)))
 				{
-					for (L2Skill sk : _skillrender.getAtkSkills())
+					for (L2Skill sk : _skillrender.getAISkills(AISkillScope.ATTACK))
 					{
 						if (!checkSkillCastConditions(sk) || (((sk.getCastRange() + npc.getTemplate().getCollisionRadius() + getAttackTarget().getTemplate().getCollisionRadius()) <= dist2) && !canAura(sk)))
 						{
@@ -2629,7 +2634,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 	
 	private List<L2Skill> longRangeSkillRender()
 	{
-		List<L2Skill> longRangeSkills = _skillrender.getLongRangeSkills();
+		List<L2Skill> longRangeSkills = _skillrender.getAISkills(AISkillScope.LONG_RANGE);
 		if (longRangeSkills.isEmpty())
 		{
 			longRangeSkills = getActiveChar().getLongRangeSkill();
@@ -2639,7 +2644,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 	
 	private List<L2Skill> shortRangeSkillRender()
 	{
-		List<L2Skill> shortRangeSkills = _skillrender.getShortRangeSkills();
+		List<L2Skill> shortRangeSkills = _skillrender.getAISkills(AISkillScope.SHORT_RANGE);
 		if (shortRangeSkills.isEmpty())
 		{
 			shortRangeSkills = getActiveChar().getShortRangeSkill();
