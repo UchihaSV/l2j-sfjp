@@ -1546,7 +1546,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		int count = 1;
 		
 		for_skiils:
-		for (L2Skill skill : getTemplate().getSkills().values())
+		for (L2Skill skill : getTemplate().getSkills())
 		{
 				switch (skill.getId())
 				{

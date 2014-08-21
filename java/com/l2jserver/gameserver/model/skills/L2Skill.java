@@ -72,6 +72,7 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 {
 	protected static final Logger _log = Logger.getLogger(L2Skill.class.getName());
 	
+	public static final L2Skill[] EMPTY_SKILL_LIST = new L2Skill[0];
 	private static final L2Object[] EMPTY_TARGET_LIST = new L2Object[0];
 	
 	public static final int SKILL_CUBIC_MASTERY = 143;
