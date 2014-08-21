@@ -19,12 +19,12 @@
 package com.l2jserver.gameserver.model.drops;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2RaidBossInstance;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
+import com.l2jserver.gameserver.util.UnmodifiableArrayList;
 import com.l2jserver.util.Rnd;
 
 /**
@@ -78,7 +78,7 @@ public class GroupedGeneralDropItem implements IDropItem
 	 */
 	public void setItems(List<GeneralDropItem> items)
 	{
-		_items = Collections.unmodifiableList(items);
+		_items = new UnmodifiableArrayList<>(items);	//[JOJO] -Collections.unmodifiableList
 	}
 	
 	/*
