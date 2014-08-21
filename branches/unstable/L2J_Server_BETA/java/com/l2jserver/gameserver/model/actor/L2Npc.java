@@ -208,20 +208,12 @@ public class L2Npc extends L2Character
 	
 	public boolean hasLSkill()
 	{
-		if (getTemplate().getLongRangeSkillId() == 0)
-		{
-			return false;
-		}
-		return true;
+		return getTemplate().getLongRangeSkillId() > 0;
 	}
 	
 	public boolean hasSSkill()
 	{
-		if (getTemplate().getShortRangeSkillId() == 0)
-		{
-			return false;
-		}
-		return true;
+		return getTemplate().getShortRangeSkillId() > 0;
 	}
 	
 	public List<L2Skill> getLongRangeSkill()
@@ -236,7 +228,7 @@ public class L2Npc extends L2Character
 		{
 			case -1:
 			{
-				Collection<L2Skill> skills = getAllSkills();
+				final Collection<L2Skill> skills = getAllSkills();
 				if (skills != null)
 				{
 					for (L2Skill sk : skills)
@@ -341,11 +333,6 @@ public class L2Npc extends L2Character
 		{
 			try
 			{
-				if (this != _rAniTask || !isInActiveRegion() || isDead() || !isVisible() || !isRandomAnimationEnabled())
-				{
-					_rAniTask = null;	//+[JOJO]
-					return; // Shouldn't happen, but who knows... just to make sure every active npc has only one timer.
-				}
 				if (isMob())
 				{
 					// Cancel further animation timers until intention is changed to ACTIVE again.
@@ -1038,9 +1025,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 	{
 		// Send a Server->Client packet NpcHtmlMessage to the L2PcInstance in order to display the message of the L2NpcInstance
 		content = content.replaceAll("%objectId%", String.valueOf(getObjectId()));
-		final NpcHtmlMessage npcReply = new NpcHtmlMessage(getObjectId());
-		npcReply.setHtml(content);
-		player.sendPacket(npcReply);
+		player.sendPacket(new NpcHtmlMessage(getObjectId(), content));
 	}
 	
 	/**
@@ -1124,17 +1109,13 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 	 */
 	private boolean showPkDenyChatWindow(L2PcInstance player, String type)
 	{
-		String html = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/" + type + "/" + getId() + "-pk.htm");
-		
+		final String html = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/" + type + "/" + getId() + "-pk.htm");
 		if (html != null)
 		{
-			final NpcHtmlMessage pkDenyMsg = new NpcHtmlMessage(getObjectId());
-			pkDenyMsg.setHtml(html);
-			player.sendPacket(pkDenyMsg);
+			insertObjectIdAndShowChatWindow(player, html);
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return true;
 		}
-		
 		return false;
 	}
 	
