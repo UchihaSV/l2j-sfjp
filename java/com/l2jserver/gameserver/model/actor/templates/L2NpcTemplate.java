@@ -534,15 +534,10 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 	public void setAISkillLists(EnumMap<AISkillScope, List<L2Skill>> aiSkillLists)
 	{
 		_aiSkillLists = aiSkillLists != null && !aiSkillLists.isEmpty() ? Collections.unmodifiableMap(aiSkillLists) : Collections.<AISkillScope, List<L2Skill>> emptyMap();
+		
 		if (aiSkillLists != null)
-		{
 			for (Entry<AISkillScope, List<L2Skill>> e : aiSkillLists.entrySet())
-			{
-				List<L2Skill> aiSkills = e.getValue();
-				if (aiSkills != null)
-					e.setValue(new UnmodifiableArrayList<>(aiSkills));
-			}
-		}
+				e.setValue(new UnmodifiableArrayList<>(e.getValue()));
 	}
 	
 	public int[] getClans()
