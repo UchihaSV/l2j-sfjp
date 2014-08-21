@@ -1,7 +1,6 @@
 //@formatter:off
 package com.l2jserver.gameserver.util;
 
-
 /*
  * @auther JOJO
  */
