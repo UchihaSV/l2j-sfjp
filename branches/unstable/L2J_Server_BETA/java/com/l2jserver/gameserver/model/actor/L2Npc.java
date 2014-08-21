@@ -333,6 +333,11 @@ public class L2Npc extends L2Character
 		{
 			try
 			{
+				if (this != _rAniTask || !isInActiveRegion() || isDead() || !isVisible() || !isRandomAnimationEnabled())
+				{
+					_rAniTask = null;	//+[JOJO]
+					return; // Shouldn't happen, but who knows... just to make sure every active npc has only one timer.
+				}
 				if (isMob())
 				{
 					// Cancel further animation timers until intention is changed to ACTIVE again.
