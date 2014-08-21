@@ -20,9 +20,6 @@ package com.l2jserver.gameserver.model.actor.templates;
 
 import java.util.Arrays;
 
-import jp.sf.l2j.troja.FastIntObjectMap;
-import jp.sf.l2j.troja.IntObjectMap;
-
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.items.type.L2WeaponType;
 import com.l2jserver.gameserver.model.skills.L2Skill;
@@ -626,8 +623,8 @@ public class L2CharTemplate
 	 * Overridden in L2NpcTemplate
 	 * @return the characters skills
 	 */
-	public IntObjectMap<L2Skill> getSkills()
+	public L2Skill[] getSkills()	//[JOJO] -Map<Integer, L2Skill>
 	{
-		return FastIntObjectMap.emptyMap();
+		return L2Skill.EMPTY_SKILL_LIST;
 	}
 }

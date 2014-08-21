@@ -55,6 +55,7 @@ import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.skills.L2Skill;
 import com.l2jserver.gameserver.model.skills.L2SkillType;
+import com.l2jserver.gameserver.util.UnmodifiableArrayList;
 
 import gnu.trove.list.array.TIntArrayList;
 
@@ -127,13 +128,16 @@ public class NpcData extends DocumentParser
 					if ("npc".equalsIgnoreCase(list_node.getNodeName()))
 					{
 						NamedNodeMap attrs = list_node.getAttributes();
+						
 						final StatsSet set = new StatsSet();
-						final int npcId = parseInteger(attrs, "id");
+						final int npcId = parseInt(attrs, "id");
 						Map<String, Object> parameters = null;
-						Map<Integer, L2Skill> skills = null;
+						ArrayList<L2Skill> skills = null;	//[JOJO] -Map<Integer, L2Skill>
+						EnumMap<AISkillScope, List<L2Skill>> aiSkillLists = null;
 						TIntArrayList clans = null;
 						TIntArrayList enemyClans = null;
-						Map<DropListScope, List<IDropItem>> dropLists = null;
+						EnumMap<DropListScope, List<IDropItem>> dropLists = null;
+						
 						set.set("id", npcId);
 						set.set("displayId", parseInteger(attrs, "displayId"));
 						set.set("level", parseByte(attrs, "level"));
@@ -196,7 +200,7 @@ public class NpcData extends DocumentParser
 											}
 											case "skill":
 											{
-												parameters.put(parseString(attrs, "name"), new SkillHolder(parseInteger(attrs, "id"), parseInteger(attrs, "level")));
+												parameters.put(parseString(attrs, "name"), new SkillHolder(parseInt(attrs, "id"), parseInt(attrs, "level")));
 												break;
 											}
 											case "minions":
@@ -369,18 +373,18 @@ public class NpcData extends DocumentParser
 								}
 								case "skill_list":
 								{
-									skills = new HashMap<>();
+									skills = new ArrayList<>();
 									for (Node skill_list_node = npc_node.getFirstChild(); skill_list_node != null; skill_list_node = skill_list_node.getNextSibling())
 									{
 										if ("skill".equalsIgnoreCase(skill_list_node.getNodeName()))
 										{
 											attrs = skill_list_node.getAttributes();
-											final int skillId = parseInteger(attrs, "id");
-											final int skillLevel = parseInteger(attrs, "level");
+											final int skillId = parseInt(attrs, "id");
+											final int skillLevel = parseInt(attrs, "level");
 											final L2Skill skill = SkillTable.getInstance().getInfo(skillId, skillLevel);
 											if (skill != null)
 											{
-												skills.put(skill.getId(), skill);
+												skills.add(skill);
 											}
 											else
 											{
@@ -495,7 +499,7 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 											
 											List<IDropItem> dropList = new ArrayList<>();
 											parseDropList(drop_lists_node, dropListScope, dropList);
-											dropLists.put(dropListScope, Collections.unmodifiableList(dropList));
+											dropLists.put(dropListScope, new UnmodifiableArrayList<>(dropList));
 										}
 									}
 									break;
@@ -549,18 +553,12 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 						
 						if (skills != null)
 						{
-							Map<AISkillScope, List<L2Skill>> aiSkillLists = null;
-							for (L2Skill skill : skills.values())
+							for (L2Skill skill : skills)
 							{
 								if (!skill.isPassive())
 								{
-									if (aiSkillLists == null)
-									{
-										aiSkillLists = new EnumMap<>(AISkillScope.class);
-									}
-									
 									List<AISkillScope> aiSkillScopes = new ArrayList<>();
-									final AISkillScope shortOrLongRangeScope = skill.getCastRange() <= 150 ? AISkillScope.SHORT_RANGE : AISkillScope.SHORT_RANGE;
+									final AISkillScope shortOrLongRangeScope = skill.getCastRange() <= 150 ? AISkillScope.SHORT_RANGE : AISkillScope.LONG_RANGE;
 									if (skill.isSuicideAttack())
 									{
 										aiSkillScopes.add(AISkillScope.SUICIDE);
@@ -635,6 +633,11 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 									
 									for (AISkillScope aiSkillScope : aiSkillScopes)
 									{
+										if (aiSkillLists == null)
+										{
+											aiSkillLists = new EnumMap<>(AISkillScope.class);
+										}
+										
 										List<L2Skill> aiSkills = aiSkillLists.get(aiSkillScope);
 										if (aiSkills == null)
 										{
@@ -646,15 +649,10 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 									}
 								}
 							}
-							
-							template.setSkills(skills);
-							template.setAISkillLists(aiSkillLists);
 						}
-						else
-						{
-							template.setSkills(null);
-							template.setAISkillLists(null);
-						}
+						
+						template.setSkills(skills);
+						template.setAISkillLists(aiSkillLists);
 						
 						template.setClans(clans == null ? null : findClans(clans.toArray()));
 						template.setEnemyClans(enemyClans == null ? null : findClans(enemyClans.toArray()));
@@ -715,7 +713,7 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 		{
 			case "item":
 			{
-				final IDropItem dropItem = dropListScope.newDropItem(parseInteger(attrs, "id"), parseLong(attrs, "min"), parseLong(attrs, "max"), parseDouble(attrs, "chance"));
+				final IDropItem dropItem = dropListScope.newDropItem(parseInt(attrs, "id"), parseLong(attrs, "min"), parseLong(attrs, "max"), parseDouble(attrs, "chance"));
 				if (dropItem != null)
 				{
 					drops.add(dropItem);
