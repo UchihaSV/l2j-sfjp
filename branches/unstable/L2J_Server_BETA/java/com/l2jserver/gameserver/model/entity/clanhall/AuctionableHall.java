@@ -207,8 +207,8 @@ public final class AuctionableHall extends ClanHall
 						//アジトの使用料金が支払われませんでした。明日$s1時までに使用料金を血盟倉庫にお納めください。
 						//Payment for your clan hall has not been made. Please make payment to your clan warehouse by $s1 tomorrow.
 						//[JOJO]-------------------------------------------------
-						sm.addNumber(getPaidTomorrow().get(java.util.Calendar.HOUR_OF_DAY));
-					//	sm.addNumber(getLease());
+						sm.addInt(getPaidTomorrow().get(java.util.Calendar.HOUR_OF_DAY));
+					//	sm.addInt(getLease());
 						//-------------------------------------------------------
 						Clan.broadcastToOnlineMembers(sm);
 						if ((_time + (3600000 * 24)) <= (_paidUntil + _chRate))

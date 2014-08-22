@@ -198,7 +198,7 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 							
 							final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
 							sm.addItemName(item.getId());
-							sm.addItemNumber(item.getCount());
+							sm.addLong(item.getCount());
 							activeChar.sendPacket(sm);
 						}
 					}
@@ -206,7 +206,7 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 					clan.takeReputationScore(repCost, true);
 					
 					final SystemMessage cr = SystemMessage.getSystemMessage(SystemMessageId.S1_DEDUCTED_FROM_CLAN_REP);
-					cr.addNumber(repCost);
+					cr.addInt(repCost);
 					activeChar.sendPacket(cr);
 					
 					clan.addNewSkill(skill);
@@ -264,7 +264,7 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 						
 						final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
 						sm.addItemName(item.getId());
-						sm.addItemNumber(item.getCount());
+						sm.addLong(item.getCount());
 						activeChar.sendPacket(sm);
 					}
 					
@@ -272,7 +272,7 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 					{
 						clan.takeReputationScore(rep, true);
 						final SystemMessage cr = SystemMessage.getSystemMessage(SystemMessageId.S1_DEDUCTED_FROM_CLAN_REP);
-						cr.addNumber(rep);
+						cr.addInt(rep);
 						activeChar.sendPacket(cr);
 					}
 					
