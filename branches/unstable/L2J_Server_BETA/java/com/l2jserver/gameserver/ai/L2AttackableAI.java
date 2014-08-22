@@ -1142,7 +1142,7 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 			}
 			// -------------------------------------------------------------------------------
 			// Res Skill Condition
-			List<L2Skill> aiResSkills = _skillrender.getAISkills(AISkillScope.HEAL);
+			List<L2Skill> aiResSkills = _skillrender.getAISkills(AISkillScope.RES);
 			if (!aiResSkills.isEmpty())
 			{
 				if (npc.isMinion())
