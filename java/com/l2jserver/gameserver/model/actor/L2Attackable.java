@@ -1050,14 +1050,14 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 						{
 							broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.C1_DIED_DROPPED_S2_ADENA)
 								.addCharName(this)
-								.addItemNumber(drop.getCount()));
+								.addLong(drop.getCount()));
 						}
 						else
 						{
 							broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.C1_DIED_DROPPED_S3_S2)
 								.addCharName(this)
 								.addItemName(item)
-								.addItemNumber(drop.getCount()));
+								.addLong(drop.getCount()));
 						}
 				}
 			}

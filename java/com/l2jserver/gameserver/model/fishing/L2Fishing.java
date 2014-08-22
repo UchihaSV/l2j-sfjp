@@ -253,12 +253,12 @@ public class L2Fishing implements Runnable
 			{
 				// Reeling is successful, Damage: $s1
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.REELING_SUCCESFUL_S1_DAMAGE);
-				sm.addNumber(dmg);
+				sm.addInt(dmg);
 				_fisher.sendPacket(sm);
 				if (pen > 0)
 				{
 					sm = SystemMessage.getSystemMessage(SystemMessageId.REELING_SUCCESSFUL_PENALTY_S1);
-					sm.addNumber(pen);
+					sm.addInt(pen);
 					_fisher.sendPacket(sm);
 				}
 				_goodUse = 1;
@@ -268,7 +268,7 @@ public class L2Fishing implements Runnable
 			{
 				// Reeling failed, Damage: $s1
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.FISH_RESISTED_REELING_S1_HP_REGAINED);
-				sm.addNumber(dmg);
+				sm.addInt(dmg);
 				_fisher.sendPacket(sm);
 				_goodUse = 2;
 				changeHp(-dmg, pen);
@@ -280,7 +280,7 @@ public class L2Fishing implements Runnable
 			{
 				// Reeling failed, Damage: $s1
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.FISH_RESISTED_REELING_S1_HP_REGAINED);
-				sm.addNumber(dmg);
+				sm.addInt(dmg);
 				_fisher.sendPacket(sm);
 				_goodUse = 2;
 				changeHp(-dmg, pen);
@@ -289,12 +289,12 @@ public class L2Fishing implements Runnable
 			{
 				// Reeling is successful, Damage: $s1
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.REELING_SUCCESFUL_S1_DAMAGE);
-				sm.addNumber(dmg);
+				sm.addInt(dmg);
 				_fisher.sendPacket(sm);
 				if (pen > 0)
 				{
 					sm = SystemMessage.getSystemMessage(SystemMessageId.REELING_SUCCESSFUL_PENALTY_S1);
-					sm.addNumber(pen);
+					sm.addInt(pen);
 					_fisher.sendPacket(sm);
 				}
 				_goodUse = 1;
@@ -323,12 +323,12 @@ public class L2Fishing implements Runnable
 			{
 				// Pumping is successful. Damage: $s1
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.PUMPING_SUCCESFUL_S1_DAMAGE);
-				sm.addNumber(dmg);
+				sm.addInt(dmg);
 				_fisher.sendPacket(sm);
 				if (pen > 0)
 				{
 					sm = SystemMessage.getSystemMessage(SystemMessageId.PUMPING_SUCCESSFUL_PENALTY_S1);
-					sm.addNumber(pen);
+					sm.addInt(pen);
 					_fisher.sendPacket(sm);
 				}
 				_goodUse = 1;
@@ -338,7 +338,7 @@ public class L2Fishing implements Runnable
 			{
 				// Pumping failed, Regained: $s1
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.FISH_RESISTED_PUMPING_S1_HP_REGAINED);
-				sm.addNumber(dmg);
+				sm.addInt(dmg);
 				_fisher.sendPacket(sm);
 				_goodUse = 2;
 				changeHp(-dmg, pen);
@@ -350,7 +350,7 @@ public class L2Fishing implements Runnable
 			{
 				// Pumping failed, Regained: $s1
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.FISH_RESISTED_PUMPING_S1_HP_REGAINED);
-				sm.addNumber(dmg);
+				sm.addInt(dmg);
 				_fisher.sendPacket(sm);
 				_goodUse = 2;
 				changeHp(-dmg, pen);
@@ -359,12 +359,12 @@ public class L2Fishing implements Runnable
 			{
 				// Pumping is successful. Damage: $s1
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.PUMPING_SUCCESFUL_S1_DAMAGE);
-				sm.addNumber(dmg);
+				sm.addInt(dmg);
 				_fisher.sendPacket(sm);
 				if (pen > 0)
 				{
 					sm = SystemMessage.getSystemMessage(SystemMessageId.PUMPING_SUCCESSFUL_PENALTY_S1);
-					sm.addNumber(pen);
+					sm.addInt(pen);
 					_fisher.sendPacket(sm);
 				}
 				_goodUse = 1;
