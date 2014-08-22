@@ -10672,6 +10672,8 @@ public final class L2PcInstance extends L2Playable
 			
 			restoreEffects();
 			
+			getInventory().reloadEquippedItems();
+			
 			sendPacket(new EtcStatusUpdate(this));
 			
 			// if player has quest 422: Repent Your Sins, remove it
