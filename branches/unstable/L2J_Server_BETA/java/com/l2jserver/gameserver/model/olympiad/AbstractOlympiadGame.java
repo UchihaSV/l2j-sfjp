@@ -469,7 +469,7 @@ public abstract class AbstractOlympiadGame
 				iu.addModifiedItem(item);
 				sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S2_S1_S);
 				sm.addItemName(it[0]);
-				sm.addInt(it[1]);
+				sm.addItemNumber(it[1]);
 				player.sendPacket(sm);
 			}
 			player.sendPacket(iu);

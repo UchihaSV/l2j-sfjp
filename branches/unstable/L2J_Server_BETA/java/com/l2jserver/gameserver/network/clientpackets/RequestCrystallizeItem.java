@@ -223,7 +223,7 @@ public final class RequestCrystallizeItem extends L2GameClientPacket
 		
 		sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S2_S1_S);
 		sm.addItemName(createditem);
-		sm.addLong(crystalAmount);
+		sm.addItemNumber(crystalAmount);
 		activeChar.sendPacket(sm);
 		
 		activeChar.broadcastUserInfo();

@@ -361,7 +361,7 @@ public final class RequestEnchantItem extends L2GameClientPacket
 								
 								SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S2_S1_S);
 								sm.addItemName(crystals);
-								sm.addLong(count);
+								sm.addItemNumber(count);
 								activeChar.sendPacket(sm);
 							}
 							
