@@ -6144,7 +6144,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 					}
 					else if (mut.getSkill().useSpiritShot())
 					{
-						setChargedShot(ShotType.SPIRITSHOTS, true);
+						setChargedShot(ShotType.BLESSED_SPIRITSHOTS, true);
 					}
 				}
 			}
