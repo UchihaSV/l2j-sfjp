@@ -3229,7 +3229,7 @@ public final class L2PcInstance extends L2Playable
 		if (sendMessage)
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S1_ADENA);
-			sm.addLong(count);
+			sm.addItemNumber(count);
 			sendPacket(sm);
 		}
 		
@@ -3293,7 +3293,7 @@ public final class L2PcInstance extends L2Playable
 			if (sendMessage)
 			{
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_DISAPPEARED_ADENA);
-				sm.addLong(count);
+				sm.addItemNumber(count);
 				sendPacket(sm);
 			}
 		}
@@ -3314,7 +3314,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S2_S1_S);
 			sm.addItemName(Inventory.ANCIENT_ADENA_ID);
-			sm.addLong(count);
+			sm.addItemNumber(count);
 			sendPacket(sm);
 		}
 		
@@ -3380,7 +3380,7 @@ public final class L2PcInstance extends L2Playable
 				{
 					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
 					sm.addItemName(Inventory.ANCIENT_ADENA_ID);
-					sm.addLong(count);
+					sm.addItemNumber(count);
 					sendPacket(sm);
 				}
 				else
@@ -3413,7 +3413,7 @@ public final class L2PcInstance extends L2Playable
 				{
 					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_PICKED_UP_S1_S2);
 					sm.addItemName(item);
-					sm.addLong(item.getCount());
+					sm.addItemNumber(item.getCount());
 					sendPacket(sm);
 				}
 				else if (item.getEnchantLevel() > 0)
@@ -3514,14 +3514,14 @@ public final class L2PcInstance extends L2Playable
 					{
 						SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S2_S1_S);
 						sm.addItemName(itemId);
-						sm.addLong(count);
+						sm.addItemNumber(count);
 						sendPacket(sm);
 					}
 					else
 					{
 						SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_PICKED_UP_S1_S2);
 						sm.addItemName(itemId);
-						sm.addLong(count);
+						sm.addItemNumber(count);
 						sendPacket(sm);
 					}
 				}
@@ -3666,7 +3666,7 @@ public final class L2PcInstance extends L2Playable
 			{
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
 				sm.addItemName(item);
-				sm.addLong(count);
+				sm.addItemNumber(count);
 				sendPacket(sm);
 			}
 			else
@@ -4725,13 +4725,13 @@ public final class L2PcInstance extends L2Playable
 				if (target.getId() == Inventory.ADENA_ID)
 				{
 					smsg = SystemMessage.getSystemMessage(SystemMessageId.FAILED_TO_PICKUP_S1_ADENA);
-					smsg.addLong(target.getCount());
+					smsg.addItemNumber(target.getCount());
 				}
 				else if (target.getCount() > 1)
 				{
 					smsg = SystemMessage.getSystemMessage(SystemMessageId.FAILED_TO_PICKUP_S2_S1_S);
 					smsg.addItemName(target);
-					smsg.addLong(target.getCount());
+					smsg.addItemNumber(target.getCount());
 				}
 				else
 				{
@@ -8336,7 +8336,7 @@ public final class L2PcInstance extends L2Playable
 		
 		final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S2_S1_S);
 		sm.addItemName(henna.getDyeItemId());
-		sm.addLong(henna.getCancelCount());
+		sm.addItemNumber(henna.getCancelCount());
 		sendPacket(sm);
 		sendPacket(SystemMessageId.SYMBOL_DELETED);
 		return true;

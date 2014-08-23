@@ -359,7 +359,7 @@ public class L2SignsPriestInstance extends L2Npc
 							contribStonesFound = true;
 							SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
 							msg.addItemName(SevenSigns.SEAL_STONE_RED_ID);
-							msg.addLong(redContrib);
+							msg.addItemNumber(redContrib);
 							player.sendPacket(msg);
 						}
 					}
@@ -370,7 +370,7 @@ public class L2SignsPriestInstance extends L2Npc
 							contribStonesFound = true;
 							SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
 							msg.addItemName(SevenSigns.SEAL_STONE_GREEN_ID);
-							msg.addLong(greenContrib);
+							msg.addItemNumber(greenContrib);
 							player.sendPacket(msg);
 						}
 					}
@@ -381,7 +381,7 @@ public class L2SignsPriestInstance extends L2Npc
 							contribStonesFound = true;
 							SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
 							msg.addItemName(SevenSigns.SEAL_STONE_BLUE_ID);
-							msg.addLong(blueContrib);
+							msg.addItemNumber(blueContrib);
 							player.sendPacket(msg);
 						}
 					}
@@ -499,7 +499,7 @@ public class L2SignsPriestInstance extends L2Npc
 										stonesFound = true;
 										SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
 										msg.addItemName(SevenSigns.SEAL_STONE_RED_ID);
-										msg.addLong(redContribCount);
+										msg.addItemNumber(redContribCount);
 										player.sendPacket(msg);
 									}
 								}
@@ -510,7 +510,7 @@ public class L2SignsPriestInstance extends L2Npc
 										stonesFound = true;
 										SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
 										msg.addItemName(SevenSigns.SEAL_STONE_GREEN_ID);
-										msg.addLong(greenContribCount);
+										msg.addItemNumber(greenContribCount);
 										player.sendPacket(msg);
 									}
 								}
@@ -521,7 +521,7 @@ public class L2SignsPriestInstance extends L2Npc
 										stonesFound = true;
 										SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
 										msg.addItemName(SevenSigns.SEAL_STONE_BLUE_ID);
-										msg.addLong(blueContribCount);
+										msg.addItemNumber(blueContribCount);
 										player.sendPacket(msg);
 									}
 								}

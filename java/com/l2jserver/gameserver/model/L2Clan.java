@@ -2760,7 +2760,7 @@ public class L2Clan implements IIdentifiable, INamable
 						cr = null;
 						SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
 						sm.addItemName(9910);
-						sm.addLong(150);
+						sm.addItemNumber(150);
 						player.sendPacket(sm);
 						increaseClanLevel = true;
 					}
@@ -2780,7 +2780,7 @@ public class L2Clan implements IIdentifiable, INamable
 						cr = null;
 						SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
 						sm.addItemName(9911);
-						sm.addLong(5);
+						sm.addItemNumber(5);
 						player.sendPacket(sm);
 						increaseClanLevel = true;
 					}

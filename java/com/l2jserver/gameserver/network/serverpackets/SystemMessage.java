@@ -239,14 +239,30 @@ public final class SystemMessage extends L2GameServerPacket
 	
 	public final SystemMessage addInt(final int number)
 	{
-		append(new SMParam(TYPE_INT_NUMBER, number));
-		return this;
+		return append(new SMParam(TYPE_INT_NUMBER, number));
 	}
-	
 	public final SystemMessage addLong(final long number)
 	{
-		append(new SMParam(TYPE_LONG_NUMBER, number));
-		return this;
+		return append(new SMParam(TYPE_LONG_NUMBER, number));
+	}
+	public final SystemMessage addNumber(final int number)
+	{
+		return addInt(number);
+	}
+	public SystemMessage addNumber(final long number)
+	{
+		if ((int) number == number)
+			return addInt((int) number); // int
+		else
+			return addLong(number); // long
+	}
+	public final SystemMessage addItemNumber(final int number)
+	{
+		return addNumber(number);
+	}
+	public final SystemMessage addItemNumber(final long number)
+	{
+		return addNumber(number);
 	}
 	
 	public final SystemMessage addCharName(final L2Character cha)
