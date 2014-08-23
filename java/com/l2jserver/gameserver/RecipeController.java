@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.ItemTable;
@@ -54,7 +54,7 @@ import com.l2jserver.util.Rnd;
 
 public class RecipeController
 {
-	protected static final FastMap<Integer, RecipeItemMaker> _activeMakers = new FastMap<>();
+	protected static final FastIntObjectMap<RecipeItemMaker> _activeMakers = new FastIntObjectMap<>();	//[JOJO] -FastMap
 	
 	protected RecipeController()
 	{
