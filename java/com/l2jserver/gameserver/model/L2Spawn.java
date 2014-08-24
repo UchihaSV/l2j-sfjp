@@ -147,9 +147,9 @@ public class L2Spawn extends Location implements IIdentifiable, INamable	//[JOJO
 		_constructor = Class.forName(className).asSubclass(L2Npc.class).getConstructor(int.class, L2NpcTemplate.class);
 		
 if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
-		if (InstanceType.isType(mobTemplate.getType(), InstanceType.L2Attackable)) {
-			if (L2NpcTemplate.isNoRndWalk(mobTemplate)) {
-				if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE_LOG) System.out.println("__BASENAME__:__LINE__:(NonRandomWalkMonsters) canMove=" + mobTemplate.canMove() + " baseWalkSpd=" + mobTemplate.getBaseMoveSpeed(MoveType.WALK) + " baseRunSpd=" + mobTemplate.getBaseMoveSpeed(MoveType.RUN) + " " + mobTemplate.getRace().name() + " " + mobTemplate.getAIType().name() + " " + mobTemplate.getType() + " " + mobTemplate.getNpcId() + " " + com.l2jserver.util.Util.concat_ws(" ", mobTemplate.getTitle(), mobTemplate.getName()));
+		if (InstanceType.isType(template.getType(), InstanceType.L2Attackable)) {
+			if (L2NpcTemplate.isNoRndWalk(template)) {
+				if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE_LOG) System.out.println("__BASENAME__:__LINE__:(NonRandomWalkMonsters) canMove=" + template.canMove() + " baseWalkSpd=" + template.getBaseMoveSpeed(MoveType.WALK) + " baseRunSpd=" + template.getBaseMoveSpeed(MoveType.RUN) + " " + template.getRace().name() + " " + template.getAIType().name() + " " + template.getType() + " " + template.getNpcId() + " " + com.l2jserver.util.Util.concat_ws(" ", template.getTitle(), template.getName()));
 				_isNoRndWalk = true;
 			}
 		}
