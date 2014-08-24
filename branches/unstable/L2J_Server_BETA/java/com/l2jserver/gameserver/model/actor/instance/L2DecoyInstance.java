@@ -69,7 +69,7 @@ public class L2DecoyInstance extends L2Decoy
 		{
 			return false;
 		}
-		DecayTaskManager.getInstance().addDecayTask(this);
+		DecayTaskManager.getInstance().add(this);
 		return true;
 	}
 	

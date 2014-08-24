@@ -1433,7 +1433,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 		_currentRHandId = getTemplate().getRHandId();
 		_currentCollisionHeight = getTemplate().getfCollisionHeight();
 		_currentCollisionRadius = getTemplate().getfCollisionRadius();
-		DecayTaskManager.getInstance().addDecayTask(this);
+		DecayTaskManager.getInstance().add(this);
 		return true;
 	}
 	
@@ -1588,7 +1588,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 	{
 		if (!isDecayed())
 		{
-			DecayTaskManager.getInstance().cancelDecayTask(this);
+			DecayTaskManager.getInstance().cancel(this);
 			onDecay();
 		}
 	}
