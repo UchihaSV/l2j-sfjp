@@ -374,7 +374,7 @@ public final class L2TrapInstance extends L2Npc
 	
 	public void stopDecay()
 	{
-		DecayTaskManager.getInstance().cancelDecayTask(this);
+		DecayTaskManager.getInstance().cancel(this);
 	}
 	
 	/**
