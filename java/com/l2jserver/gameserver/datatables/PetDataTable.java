@@ -18,8 +18,7 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Map;
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -36,7 +35,7 @@ import com.l2jserver.gameserver.model.StatsSet;
  */
 public final class PetDataTable extends DocumentParser
 {
-	private static final Map<Integer, L2PetData> _pets = new HashMap<>();
+	private static final SortedIntObjectArrayMap<L2PetData> _pets = new SortedIntObjectArrayMap<>();	//[JOJO] -HashMap
 	
 	/**
 	 * Instantiates a new pet data table.
@@ -63,8 +62,8 @@ public final class PetDataTable extends DocumentParser
 		{
 			if (d.getNodeName().equals("pet"))
 			{
-				int npcId = parseInteger(d.getAttributes(), "id");
-				int itemId = parseInteger(d.getAttributes(), "itemId");
+				int npcId = parseInt(d.getAttributes(), "id");
+				int itemId = parseInt(d.getAttributes(), "itemId");
 				// index ignored for now
 				L2PetData data = new L2PetData(npcId, itemId);
 				for (Node p = d.getFirstChild(); p != null; p = p.getNextSibling())
@@ -82,15 +81,15 @@ public final class PetDataTable extends DocumentParser
 						}
 						else if ("load".equals(type))
 						{
-							data.setLoad(parseInteger(attrs, "val"));
+							data.setLoad(parseInt(attrs, "val"));
 						}
 						else if ("hungry_limit".equals(type))
 						{
-							data.setHungryLimit(parseInteger(attrs, "val"));
+							data.setHungryLimit(parseInt(attrs, "val"));
 						}
 						else if ("sync_level".equals(type))
 						{
-							data.setSyncLevel(parseInteger(attrs, "val") == 1);
+							data.setSyncLevel(parseInt(attrs, "val") == 1);
 						}
 						// evolve ignored
 					}
@@ -101,7 +100,7 @@ public final class PetDataTable extends DocumentParser
 							if (s.getNodeName().equals("skill"))
 							{
 								attrs = s.getAttributes();
-								data.addNewSkill(parseInteger(attrs, "skillId"), parseInteger(attrs, "skillLvl"), parseInteger(attrs, "minLvl"));
+								data.addNewSkill(parseInt(attrs, "skillId"), parseInt(attrs, "skillLvl"), parseInt(attrs, "minLvl"));
 							}
 						}
 					}
@@ -144,7 +143,7 @@ public final class PetDataTable extends DocumentParser
 						}
 					}
 				}
-				_pets.put(npcId, data);
+				_pets.append(npcId, data);
 			}
 		}
 	}
@@ -188,11 +187,12 @@ public final class PetDataTable extends DocumentParser
 	 */
 	public L2PetData getPetData(int petId)
 	{
-		if (!_pets.containsKey(petId))
+		L2PetData data;
+		if ((data = _pets.get(petId)) == null)
 		{
 			_log.info(getClass().getSimpleName() + ": Missing pet data for npcid: " + petId);
 		}
-		return _pets.get(petId);
+		return data;
 	}
 	
 	/**

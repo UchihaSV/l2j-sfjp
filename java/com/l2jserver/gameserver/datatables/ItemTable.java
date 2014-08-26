@@ -18,13 +18,13 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import static com.l2jserver.gameserver.model.itemcontainer.PcInventory.ADENA_ID;
+import static com.l2jserver.gameserver.model.itemcontainer.Inventory.*;
 import static com.l2jserver.util.Util.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -74,9 +75,9 @@ public class ItemTable
 	public static final Map<String, L2ArmorType> _armorTypes = new FastMap<>();
 	
 	private L2Item[] _allTemplates;
-	private final Map<Integer, L2EtcItem> _etcItems;
-	private final Map<Integer, L2Armor> _armors;
-	private final Map<Integer, L2Weapon> _weapons;
+	private final FastIntObjectMap<L2EtcItem> _etcItems = new FastIntObjectMap<>();	//[JOJO] -FastMap
+	private final FastIntObjectMap<L2Armor> _armors = new FastIntObjectMap<>();	//[JOJO] -FastMap
+	private final FastIntObjectMap<L2Weapon> _weapons = new FastIntObjectMap<>();	//[JOJO] -FastMap
 	
 	static
 	{
@@ -192,9 +193,6 @@ public class ItemTable
 	 */
 	protected ItemTable()
 	{
-		_etcItems = new FastMap<>();
-		_armors = new FastMap<>();
-		_weapons = new FastMap<>();
 		load();
 	}
 	
@@ -499,19 +497,19 @@ public class ItemTable
 		}
 	}
 	
-	public Set<Integer> getAllEtcId()	//[JOJO]
+	public Collection<L2EtcItem> getAllEtcItems()	//+[JOJO]
 	{
-		return _etcItems.keySet();
+		return _etcItems.values();
 	}
 	
-	public Set<Integer> getAllArmorsId()
+	public Collection<L2Armor> getAllArmors()	//[JOJO] -Set getAllArmorsId()
 	{
-		return _armors.keySet();
+		return _armors.values();
 	}
 	
-	public Set<Integer> getAllWeaponsId()
+	public Collection<L2Weapon> getAllWeapons()	//[JOJO] -Set getAllWeaponsId()
 	{
-		return _weapons.keySet();
+		return _weapons.values();
 	}
 	
 	public int getArraySize()

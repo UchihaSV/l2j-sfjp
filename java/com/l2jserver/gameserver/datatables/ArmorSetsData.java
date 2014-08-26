@@ -18,8 +18,7 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Map;
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -33,7 +32,7 @@ import com.l2jserver.gameserver.model.holders.SkillHolder;
  */
 public final class ArmorSetsData extends DocumentParser
 {
-	private static final Map<Integer, L2ArmorSet> _armorSets = new HashMap<>();
+	private static final SortedIntObjectArrayMap<L2ArmorSet> _armorSets = new SortedIntObjectArrayMap<>();	//[JOJO] -HashMap
 	
 	/**
 	 * Instantiates a new armor sets data.
@@ -70,102 +69,92 @@ public final class ArmorSetsData extends DocumentParser
 							{
 								case "chest":
 								{
-									set.addChest(parseInteger(attrs, "id"));
+									set.addChest(parseInt(attrs, "id"));
 									break;
 								}
 								case "feet":
 								{
-									set.addFeet(parseInteger(attrs, "id"));
+									set.addFeet(parseInt(attrs, "id"));
 									break;
 								}
 								case "gloves":
 								{
-									set.addGloves(parseInteger(attrs, "id"));
+									set.addGloves(parseInt(attrs, "id"));
 									break;
 								}
 								case "head":
 								{
-									set.addHead(parseInteger(attrs, "id"));
+									set.addHead(parseInt(attrs, "id"));
 									break;
 								}
 								case "legs":
 								{
-									set.addLegs(parseInteger(attrs, "id"));
+									set.addLegs(parseInt(attrs, "id"));
 									break;
 								}
 								case "shield":
 								{
-									set.addShield(parseInteger(attrs, "id"));
+									set.addShield(parseInt(attrs, "id"));
 									break;
 								}
 								case "skill":
 								{
-									int skillId = parseInteger(attrs, "id");
-									int skillLevel = parseInteger(attrs, "level");
+									int skillId = parseInt(attrs, "id");
+									int skillLevel = parseInt(attrs, "level");
 									set.addSkill(new SkillHolder(skillId, skillLevel));
 									break;
 								}
 								case "shield_skill":
 								{
-									int skillId = parseInteger(attrs, "id");
-									int skillLevel = parseInteger(attrs, "level");
+									int skillId = parseInt(attrs, "id");
+									int skillLevel = parseInt(attrs, "level");
 									set.addShieldSkill(new SkillHolder(skillId, skillLevel));
 									break;
 								}
 								case "enchant6skill":
 								{
-									int skillId = parseInteger(attrs, "id");
-									int skillLevel = parseInteger(attrs, "level");
+									int skillId = parseInt(attrs, "id");
+									int skillLevel = parseInt(attrs, "level");
 									set.addEnchant6Skill(new SkillHolder(skillId, skillLevel));
 									break;
 								}
 								case "con":
 								{
-									set.addCon(parseInteger(attrs, "val"));
+									set.addCon(parseInt(attrs, "val"));
 									break;
 								}
 								case "dex":
 								{
-									set.addDex(parseInteger(attrs, "val"));
+									set.addDex(parseInt(attrs, "val"));
 									break;
 								}
 								case "str":
 								{
-									set.addStr(parseInteger(attrs, "val"));
+									set.addStr(parseInt(attrs, "val"));
 									break;
 								}
 								case "men":
 								{
-									set.addMen(parseInteger(attrs, "val"));
+									set.addMen(parseInt(attrs, "val"));
 									break;
 								}
 								case "wit":
 								{
-									set.addWit(parseInteger(attrs, "val"));
+									set.addWit(parseInt(attrs, "val"));
 									break;
 								}
 								case "int":
 								{
-									set.addInt(parseInteger(attrs, "val"));
+									set.addInt(parseInt(attrs, "val"));
 									break;
 								}
 							}
 						}
-						_armorSets.put(set.getChestId(), set);
+						_armorSets.append(set.getChestId(), set);
 					}
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Checks if is armor set.
-	 * @param chestId the chest Id to verify.
-	 * @return {@code true} if the chest Id belongs to a registered armor set, {@code false} otherwise.
-	 */
-	public boolean isArmorSet(int chestId)
-	{
-		return _armorSets.containsKey(chestId);
 	}
 	
 	/**

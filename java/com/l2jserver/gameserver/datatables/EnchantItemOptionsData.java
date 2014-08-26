@@ -18,9 +18,9 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
 import java.util.logging.Level;
 
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.Node;
@@ -35,7 +35,7 @@ import com.l2jserver.gameserver.util.Util;
  */
 public class EnchantItemOptionsData extends DocumentParser
 {
-	private final FastIntObjectMap<HashMap<Integer, EnchantOptions>> _data = new FastIntObjectMap<>();
+	private final FastIntObjectMap<SortedIntObjectArrayMap<EnchantOptions>> _data = new FastIntObjectMap<>();
 	
 	protected EnchantItemOptionsData()
 	{
@@ -62,26 +62,26 @@ public class EnchantItemOptionsData extends DocumentParser
 				{
 					if ("item".equalsIgnoreCase(d.getNodeName()))
 					{
-						int itemId = parseInteger(d.getAttributes(), "id");
-						HashMap<Integer, EnchantOptions> options = _data.get(itemId);
+						int itemId = parseInt(d.getAttributes(), "id");
+						SortedIntObjectArrayMap<EnchantOptions> options = _data.get(itemId);
 						if (options == null)
 						{
-							options = new HashMap<>();
+							options = new SortedIntObjectArrayMap<>();
 							_data.put(itemId, options);
 						}
 						for (Node cd = d.getFirstChild(); cd != null; cd = cd.getNextSibling())
 						{
 							if ("options".equalsIgnoreCase(cd.getNodeName()))
 							{
-								EnchantOptions op = new EnchantOptions(parseInteger(cd.getAttributes(), "level"));
-								options.put(op.getLevel(), op);
+								EnchantOptions op = new EnchantOptions(parseInt(cd.getAttributes(), "level"));
+								options.append(op.getLevel(), op);
 								
 								for (byte i = 0; i < 3; i++)
 								{
 									att = cd.getAttributes().getNamedItem("option" + (i + 1));
 									if ((att != null) && Util.isDigit(att.getNodeValue()))
 									{
-										op.setOption(i, parseInteger(att));
+										op.setOption(i, parseInt(att));
 									}
 								}
 								counter++;
@@ -101,7 +101,7 @@ public class EnchantItemOptionsData extends DocumentParser
 	 */
 	public EnchantOptions getOptions(int itemId, int enchantLevel)
 	{
-		HashMap<Integer, EnchantOptions> options = _data.get(itemId);
+		SortedIntObjectArrayMap<EnchantOptions> options = _data.get(itemId);
 		if (options == null) return null;
 		return options.get(enchantLevel);
 	}

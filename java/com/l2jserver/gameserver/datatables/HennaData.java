@@ -19,9 +19,9 @@
 package com.l2jserver.gameserver.datatables;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -40,7 +40,7 @@ import com.l2jserver.gameserver.model.items.L2Henna;
  */
 public final class HennaData extends DocumentParser
 {
-	private static final Map<Integer, L2Henna> _hennaList = new HashMap<>();
+	private static final SortedIntObjectArrayMap<L2Henna> _hennaList = new SortedIntObjectArrayMap<>();	//[JOJO] -HashMap
 	
 	/**
 	 * Instantiates a new henna data.
@@ -131,7 +131,7 @@ public final class HennaData extends DocumentParser
 		}
 		final L2Henna henna = new L2Henna(set);
 		henna.setWearClassIds(wearClassIds);
-		_hennaList.put(henna.getDyeId(), henna);
+		_hennaList.append(henna.getDyeId(), henna);
 	}
 	
 	/**

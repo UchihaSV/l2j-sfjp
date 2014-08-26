@@ -20,9 +20,7 @@ package com.l2jserver.gameserver.datatables;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +32,6 @@ import org.w3c.dom.Node;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.L2Augmentation;
-import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.L2Weapon;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
@@ -90,7 +87,7 @@ public class AugmentationData
 	private final List<AugmentationChance> _augmentationChances = new ArrayList<>();
 	private final List<augmentationChanceAcc> _augmentationChancesAcc = new ArrayList<>();
 	
-	private final Map<Integer, SkillHolder> _allSkills = new HashMap<>();
+ //	private final Map<Integer, SkillHolder> _allSkills = new HashMap<>();
 	
 	protected AugmentationData()
 	{
@@ -302,7 +299,7 @@ public class AugmentationData
 									_redSkills.get(k).add(augmentationId);
 								}
 								
-								_allSkills.put(augmentationId, new SkillHolder(skillId, skillLvL));
+ //								_allSkills.put(augmentationId, new SkillHolder(skillId, skillLvL));
 							}
 						}
 					}

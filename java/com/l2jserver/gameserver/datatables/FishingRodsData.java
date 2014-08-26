@@ -18,8 +18,7 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Map;
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -34,7 +33,7 @@ import com.l2jserver.gameserver.model.fishing.L2FishingRod;
  */
 public final class FishingRodsData extends DocumentParser
 {
-	private static final Map<Integer, L2FishingRod> _fishingRods = new HashMap<>();
+	private static final SortedIntObjectArrayMap<L2FishingRod> _fishingRods = new SortedIntObjectArrayMap<>();	//[JOJO] -HashMap
 	
 	/**
 	 * Instantiates a new fishing rods data.
@@ -73,7 +72,7 @@ public final class FishingRodsData extends DocumentParser
 							set.set(att.getNodeName(), att.getNodeValue());
 						}
 						L2FishingRod fishingRod = new L2FishingRod(set);
-						_fishingRods.put(fishingRod.getFishingRodItemId(), fishingRod);
+						_fishingRods.append(fishingRod.getFishingRodItemId(), fishingRod);
 					}
 				}
 			}

@@ -19,14 +19,15 @@
 package com.l2jserver.gameserver.datatables;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.Node;
 
 import com.l2jserver.gameserver.engines.DocumentParser;
+import com.l2jserver.gameserver.model.items.L2Armor;
 import com.l2jserver.gameserver.model.items.L2Item;
+import com.l2jserver.gameserver.model.items.L2Weapon;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.skills.funcs.FuncTemplate;
 import com.l2jserver.gameserver.model.skills.funcs.LambdaConst;
@@ -38,7 +39,7 @@ import com.l2jserver.gameserver.model.stats.Stats;
  */
 public class EnchantItemHPBonusData extends DocumentParser
 {
-	private final SortedIntObjectArrayMap<ArrayList<Integer>> _armorHPBonuses = new SortedIntObjectArrayMap<>();
+	@SuppressWarnings("unchecked") private final SortedIntObjectArrayMap<ArrayList<Integer>> _armorHPBonuses = new SortedIntObjectArrayMap<>();
 	
 	private static final float fullArmorModifier = 1.5f; // TODO: Move it to config!
 	
@@ -69,7 +70,7 @@ public class EnchantItemHPBonusData extends DocumentParser
 								bonuses.add(Integer.valueOf(e.getTextContent()));
 							}
 						}
-						_armorHPBonuses.put(parseInteger(d.getAttributes(), "grade"), bonuses);
+						_armorHPBonuses.put(parseInt(d.getAttributes(), "grade"), bonuses);
 					}
 				}
 			}
@@ -78,12 +79,9 @@ public class EnchantItemHPBonusData extends DocumentParser
 		if (!_armorHPBonuses.isEmpty())
 		{
 			final ItemTable it = ItemTable.getInstance();
-			L2Item item;
 			// Armors
-			final Collection<Integer> armorIds = it.getAllArmorsId();
-			for (Integer itemId : armorIds)
+			for (L2Armor item : it.getAllArmors())
 			{
-				item = it.getTemplate(itemId);
 				if ((item != null) && (item.getCrystalType() != L2Item.CRYSTAL_NONE))
 				{
 					switch (item.getBodyPart())
@@ -106,10 +104,8 @@ public class EnchantItemHPBonusData extends DocumentParser
 			}
 			
 			// Shields
-			final Collection<Integer> shieldIds = it.getAllWeaponsId();
-			for (Integer itemId : shieldIds)
+			for (L2Weapon item : it.getAllWeapons())
 			{
-				item = it.getTemplate(itemId);
 				if ((item != null) && (item.getCrystalType() != L2Item.CRYSTAL_NONE))
 				{
 					switch (item.getBodyPart())

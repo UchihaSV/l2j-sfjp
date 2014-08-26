@@ -20,14 +20,13 @@ package com.l2jserver.gameserver.datatables;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import javolution.util.FastMap;
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -53,7 +52,7 @@ public class MerchantPriceConfigTable implements InstanceListManager
 	
 	private static final String MPCS_FILE = "MerchantPriceConfig.xml";
 	
-	private final Map<Integer, MerchantPriceConfig> _mpcs = new FastMap<>();
+	private final SortedIntObjectArrayMap<MerchantPriceConfig> _mpcs = new SortedIntObjectArrayMap<>();	//[JOJO] -FastMap
 	private MerchantPriceConfig _defaultMpc;
 	
 	public MerchantPriceConfig getMerchantPriceConfig(L2MerchantInstance npc)
@@ -98,7 +97,7 @@ public class MerchantPriceConfigTable implements InstanceListManager
 				mpc = parseMerchantPriceConfig(n);
 				if (mpc != null)
 				{
-					_mpcs.put(mpc.getId(), mpc);
+					_mpcs.append(mpc.getId(), mpc);
 				}
 			}
 			

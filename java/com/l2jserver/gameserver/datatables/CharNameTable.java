@@ -23,13 +23,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -43,8 +41,8 @@ public class CharNameTable
 {
 	private static Logger _log = Logger.getLogger(CharNameTable.class.getName());
 	
-	private final FastMap<Integer, String> _chars = new FastMap/*L2FastMap*/<>();
-	private final FastMap<Integer, Integer> _accessLevels = new FastMap/*L2FastMap*/<>();
+	private final FastIntObjectMap<String> _chars = new FastIntObjectMap<>();	//[JOJO] -L2FastMap
+	private final FastIntObjectMap<Integer> _accessLevels = new FastIntObjectMap<>();	//[JOJO] -L2FastMap
 	
 	protected CharNameTable()
 	{
@@ -87,12 +85,8 @@ public class CharNameTable
 			return -1;
 		}
 		
-		Iterator<Entry<Integer, String>> it = _chars.entrySet().iterator();
-		
-		Map.Entry<Integer, String> pair;
-		while (it.hasNext())
+		for (IntObjectMap.Entry<String> pair : _chars.entrySet())
 		{
-			pair = it.next();
 			if (pair.getValue().equalsIgnoreCase(name))
 			{
 				return pair.getKey();
