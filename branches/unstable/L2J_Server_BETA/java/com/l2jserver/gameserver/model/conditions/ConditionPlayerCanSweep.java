@@ -51,9 +51,9 @@ public class ConditionPlayerCanSweep extends Condition
 	public boolean testImpl(Env env)
 	{
 		boolean canSweep = false;
-		if (env.getPlayer() != null)
+		final L2PcInstance sweeper = env.getPlayer();
+		if (sweeper != null)
 		{
-			final L2PcInstance sweeper = env.getPlayer();
 			final L2Skill sweep = env.getSkill();
 			if (sweep != null)
 			{
