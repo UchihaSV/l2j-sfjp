@@ -18,9 +18,9 @@
  */
 package com.l2jserver.gameserver.network.clientpackets;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.UIData;
@@ -37,8 +37,8 @@ public class RequestSaveKeyMapping extends L2GameClientPacket
 	private static String _C__D0_22_REQUESTSAVEKEYMAPPING = "[C] D0:22 RequestSaveKeyMapping";
 	
 	private int _tabNum;
-	private final Map<Integer, List<ActionKey>> _keyMap = new HashMap<>();
-	private final Map<Integer, List<Integer>> _catMap = new HashMap<>();
+	private final FastIntObjectMap<List<ActionKey>> _keyMap = new FastIntObjectMap<>();	//[JOJO] -HashMap
+	private final FastIntObjectMap<List<Integer>> _catMap = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	@Override
 	protected void readImpl()

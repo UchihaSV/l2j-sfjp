@@ -18,9 +18,7 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -37,7 +35,7 @@ import com.l2jserver.gameserver.model.actor.templates.L2CharTemplate;
  */
 public final class StaticObjects extends DocumentParser
 {
-	private static final Map<Integer, L2StaticObjectInstance> _staticObjects = new HashMap<>();
+	private static final SortedIntObjectArrayMap<L2StaticObjectInstance> _staticObjects = new SortedIntObjectArrayMap<>();	//[JOJO] -HashMap
 	
 	/**
 	 * Instantiates a new static objects.
@@ -94,14 +92,14 @@ public final class StaticObjects extends DocumentParser
 		obj.setName(set.getString("name"));
 		obj.setMap(set.getString("texture", "none"), set.getInt("map_x", 0), set.getInt("map_y", 0));
 		obj.spawnMe(set.getInt("x"), set.getInt("y"), set.getInt("z"));
-		_staticObjects.put(obj.getObjectId(), obj);
+		_staticObjects.append(obj.getObjectId(), obj);
 	}
 	
 	/**
 	 * Gets the static objects.
 	 * @return a collection of static objects.
 	 */
-	public Collection<L2StaticObjectInstance> getStaticObjects()
+	public L2StaticObjectInstance[] getStaticObjects()	//[JOJO] -Collection
 	{
 		return _staticObjects.values();
 	}

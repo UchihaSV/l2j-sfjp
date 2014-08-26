@@ -19,9 +19,9 @@
 package com.l2jserver.gameserver.datatables;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -36,9 +36,9 @@ import com.l2jserver.gameserver.model.fishing.L2Fish;
  */
 public final class FishData extends DocumentParser
 {
-	private static final Map<Integer, L2Fish> _fishNormal = new HashMap<>();
-	private static final Map<Integer, L2Fish> _fishEasy = new HashMap<>();
-	private static final Map<Integer, L2Fish> _fishHard = new HashMap<>();
+	private static final SortedIntObjectArrayMap<L2Fish> _fishNormal = new SortedIntObjectArrayMap<>();	//[JOJO] -HashMap
+	private static final SortedIntObjectArrayMap<L2Fish> _fishEasy = new SortedIntObjectArrayMap<>();	//[JOJO] -HashMap
+	private static final SortedIntObjectArrayMap<L2Fish> _fishHard = new SortedIntObjectArrayMap<>();	//[JOJO] -HashMap
 	
 	/**
 	 * Instantiates a new fish data.
@@ -82,17 +82,17 @@ public final class FishData extends DocumentParser
 						{
 							case 0:
 							{
-								_fishEasy.put(fish.getFishId(), fish);
+								_fishEasy.append(fish.getFishId(), fish);
 								break;
 							}
 							case 1:
 							{
-								_fishNormal.put(fish.getFishId(), fish);
+								_fishNormal.append(fish.getFishId(), fish);
 								break;
 							}
 							case 2:
 							{
-								_fishHard.put(fish.getFishId(), fish);
+								_fishHard.append(fish.getFishId(), fish);
 								break;
 							}
 						}
@@ -112,7 +112,7 @@ public final class FishData extends DocumentParser
 	public List<L2Fish> getFish(int level, int group, int grade)
 	{
 		final ArrayList<L2Fish> result = new ArrayList<>();
-		Map<Integer, L2Fish> fish = null;
+		final SortedIntObjectArrayMap<L2Fish> fish;
 		switch (grade)
 		{
 			case 0:

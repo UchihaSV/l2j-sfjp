@@ -25,19 +25,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2Crest;
 import com.l2jserver.gameserver.model.L2Crest.CrestType;
+import com.l2jserver.gameserver.util.FastIntSet;
 import com.l2jserver.util.file.filter.BMPFilter;
 
 /**
@@ -47,7 +46,7 @@ public final class CrestTable
 {
 	private static final Logger _log = Logger.getLogger(CrestTable.class.getName());
 	
-	private final Map<Integer, L2Crest> _crests = new ConcurrentHashMap<>();
+	private final FastIntObjectMap<L2Crest> _crests = new FastIntObjectMap<L2Crest>().shared();	//[JOJO] -ConcurrentHashMap
 	private final AtomicInteger _nextId = new AtomicInteger(1);
 	
 	protected CrestTable()
@@ -58,7 +57,7 @@ public final class CrestTable
 	public synchronized void load()
 	{
 		_crests.clear();
-		Set<Integer> crestsInUse = new HashSet<>();
+		FastIntSet crestsInUse = new FastIntSet();	//[JOJO] -HashSet
 		for (L2Clan clan : ClanTable.getInstance().getClans())
 		{
 			if (clan.getCrestId() != 0)
@@ -159,7 +158,7 @@ public final class CrestTable
 	 * <b>TODO:</b> remove it after some time
 	 * @param crestsInUse the set of crests in use
 	 */
-	private void moveOldCrestsToDb(Set<Integer> crestsInUse)
+	private void moveOldCrestsToDb(FastIntSet crestsInUse)
 	{
 		final File crestDir = new File(Config.DATAPACK_ROOT, "data/crests/");
 		if (crestDir.exists())

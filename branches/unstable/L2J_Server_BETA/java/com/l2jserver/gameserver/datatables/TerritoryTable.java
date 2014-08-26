@@ -22,10 +22,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.model.L2Territory;
@@ -37,7 +37,7 @@ public class TerritoryTable
 {
 	private static final Logger _log = Logger.getLogger(TerritoryTable.class.getName());
 	
-	private static final Map<Integer, L2Territory> _territory = new HashMap<>();
+	private static final FastIntObjectMap<L2Territory> _territory = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	/**
 	 * Instantiates a new territory.

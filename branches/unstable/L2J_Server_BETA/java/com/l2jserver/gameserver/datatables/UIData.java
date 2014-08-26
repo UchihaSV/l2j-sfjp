@@ -19,10 +19,10 @@
 package com.l2jserver.gameserver.datatables;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.Node;
 
@@ -37,8 +37,8 @@ public class UIData extends DocumentParser
 {
 	private static final Logger _log = Logger.getLogger(UIData.class.getName());
 	
-	private final Map<Integer, List<ActionKey>> _storedKeys = new HashMap<>();
-	private final Map<Integer, List<Integer>> _storedCategories = new HashMap<>();
+	private final FastIntObjectMap<List<ActionKey>> _storedKeys = new FastIntObjectMap<>();	//[JOJO] -HashMap
+	private final FastIntObjectMap<List<Integer>> _storedCategories = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	protected UIData()
 	{
@@ -74,7 +74,7 @@ public class UIData extends DocumentParser
 	
 	private void parseCategory(Node n)
 	{
-		final int cat = parseInteger(n.getAttributes(), "id");
+		final int cat = parseInt(n.getAttributes(), "id");
 		for (Node d = n.getFirstChild(); d != null; d = d.getNextSibling())
 		{
 			if ("commands".equalsIgnoreCase(d.getNodeName()))
@@ -150,13 +150,15 @@ public class UIData extends DocumentParser
 	 * @param cat the category
 	 * @param cmd the command
 	 */
-	public static void addCategory(Map<Integer, List<Integer>> map, int cat, int cmd)
+	public static void addCategory(FastIntObjectMap<List<Integer>> map, int cat, int cmd)
 	{
-		if (!map.containsKey(cat))
+		List<Integer> commands;
+		if ((commands = map.get(cat)) == null)
 		{
-			map.put(cat, new ArrayList<Integer>());
+			commands = new ArrayList<>();
+			map.put(cat, commands);
 		}
-		map.get(cat).add(cmd);
+		commands.add(cmd);
 	}
 	
 	/**
@@ -165,19 +167,21 @@ public class UIData extends DocumentParser
 	 * @param cat the category
 	 * @param akey the action key
 	 */
-	public static void addKey(Map<Integer, List<ActionKey>> map, int cat, ActionKey akey)
+	public static void addKey(FastIntObjectMap<List<ActionKey>> map, int cat, ActionKey akey)
 	{
-		if (!map.containsKey(cat))
+		List<ActionKey> actionKeys;
+		if ((actionKeys = map.get(cat)) == null)
 		{
-			map.put(cat, new ArrayList<ActionKey>());
+			actionKeys = new ArrayList<>();
+			map.put(cat, actionKeys);
 		}
-		map.get(cat).add(akey);
+		actionKeys.add(akey);
 	}
 	
 	/**
 	 * @return the categories
 	 */
-	public Map<Integer, List<Integer>> getCategories()
+	public FastIntObjectMap<List<Integer>> getCategories()
 	{
 		return _storedCategories;
 	}
@@ -185,7 +189,7 @@ public class UIData extends DocumentParser
 	/**
 	 * @return the keys
 	 */
-	public Map<Integer, List<ActionKey>> getKeys()
+	public FastIntObjectMap<List<ActionKey>> getKeys()
 	{
 		return _storedKeys;
 	}

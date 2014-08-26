@@ -25,11 +25,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.model.actor.L2Summon;
@@ -37,7 +37,7 @@ import com.l2jserver.gameserver.model.actor.L2Summon;
 public class SummonSkillsTable
 {
 	private static Logger _log = Logger.getLogger(SummonSkillsTable.class.getName());
-	private final Map<Integer, Map<Integer, L2PetSkillLearn>> _skillTrees = new HashMap<>();
+	private final FastIntObjectMap<FastIntObjectMap<L2PetSkillLearn>> _skillTrees = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	protected SummonSkillsTable()
 	{
@@ -56,10 +56,10 @@ public class SummonSkillsTable
 			while (rs.next())
 			{
 				final int npcId = rs.getInt("templateId");
-				Map<Integer, L2PetSkillLearn> skillTree = _skillTrees.get(npcId);
+				FastIntObjectMap<L2PetSkillLearn> skillTree = _skillTrees.get(npcId);
 				if (skillTree == null)
 				{
-					skillTree = new HashMap<>();
+					skillTree = new FastIntObjectMap<>();
 					_skillTrees.put(npcId, skillTree);
 				}
 				

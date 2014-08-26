@@ -21,10 +21,10 @@ package com.l2jserver.gameserver.datatables;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -34,7 +34,7 @@ public class TeleportLocationTable
 {
 	private static Logger _log = Logger.getLogger(TeleportLocationTable.class.getName());
 	
-	private final Map<Integer, L2TeleportLocation> _teleports = new HashMap<>();
+	private final SortedIntObjectArrayMap<L2TeleportLocation> _teleports = new SortedIntObjectArrayMap<>();	//[JOJO] -HashMap
 	
 	protected TeleportLocationTable()
 	{
@@ -61,7 +61,7 @@ public class TeleportLocationTable
 				teleport.setIsForNoble(rs.getInt("fornoble") == 1);
 				teleport.setItemId(rs.getInt("itemId"));
 				
-				_teleports.put(teleport.getTeleId(), teleport);
+				_teleports.append(teleport.getTeleId(), teleport);
 			}
 			_log.info(getClass().getSimpleName() + ": Loaded " + _teleports.size() + " Teleport Location Templates.");
 		}
@@ -89,7 +89,7 @@ public class TeleportLocationTable
 					teleport.setIsForNoble(rs.getInt("fornoble") == 1);
 					teleport.setItemId(rs.getInt("itemId"));
 					
-					_teleports.put(teleport.getTeleId(), teleport);
+					_teleports.append(teleport.getTeleId(), teleport);
 				}
 				_cTeleCount = _teleports.size() - _cTeleCount;
 				if (_cTeleCount > 0)

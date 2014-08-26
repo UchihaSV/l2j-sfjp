@@ -18,9 +18,9 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
+
+import jp.sf.l2j.arrayMaps.SortedIntDoubleArrayMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -32,7 +32,7 @@ import com.l2jserver.gameserver.engines.DocumentParser;
  */
 public class KarmaData extends DocumentParser
 {
-	private final Map<Integer, Double> _karmaTable = new HashMap<>();
+	private final SortedIntDoubleArrayMap _karmaTable = new SortedIntDoubleArrayMap(0.0);	//[JOJO] -HashMap
 	
 	public KarmaData()
 	{
@@ -60,7 +60,7 @@ public class KarmaData extends DocumentParser
 					if ("increase".equalsIgnoreCase(d.getNodeName()))
 					{
 						attrs = d.getAttributes();
-						_karmaTable.put(parseInteger(attrs, "lvl"), parseDouble(attrs, "val"));
+						_karmaTable.put(parseInt(attrs, "lvl"), parseDouble(attrs, "val"));
 					}
 				}
 			}

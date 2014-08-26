@@ -21,11 +21,11 @@ package com.l2jserver.gameserver.datatables;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -44,8 +44,8 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
  */
 public class AdminTable extends DocumentParser
 {
-	private static final Map<Integer, L2AccessLevel> _accessLevels = new HashMap<>();
-	private static final Map<String, L2AdminCommandAccessRight> _adminCommandAccessRights = new HashMap<>();
+	private static final FastIntObjectMap<L2AccessLevel> _accessLevels = new FastIntObjectMap<>();	//[JOJO] -HashMap
+	private static final HashMap<String, L2AdminCommandAccessRight> _adminCommandAccessRights = new HashMap<>();
 	private static final FastMap<L2PcInstance, Boolean> _gmList = new FastMap<L2PcInstance, Boolean>().shared();
 	private int _highestLevel = 0;
 	

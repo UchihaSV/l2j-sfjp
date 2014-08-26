@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import jp.sf.l2j.troja.FastIntObjectMap;
+
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -45,9 +47,9 @@ public class DoorTable extends DocumentParser
 {
 	private static final Map<String, Set<Integer>> _groups = new HashMap<>();
 	
-	private final Map<Integer, L2DoorInstance> _doors = new HashMap<>();
-	private final Map<Integer, StatsSet> _templates = new HashMap<>();
-	private final Map<Integer, List<L2DoorInstance>> _regions = new HashMap<>();
+	private final FastIntObjectMap<L2DoorInstance> _doors = new FastIntObjectMap<>();	//[JOJO] -HashMap
+	private final FastIntObjectMap<StatsSet> _templates = new FastIntObjectMap<>();	//[JOJO] -HashMap
+	private final FastIntObjectMap<List<L2DoorInstance>> _regions = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	protected DoorTable()
 	{

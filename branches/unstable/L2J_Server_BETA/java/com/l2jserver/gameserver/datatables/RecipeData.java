@@ -19,9 +19,9 @@
 package com.l2jserver.gameserver.datatables;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -39,7 +39,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
  */
 public class RecipeData extends DocumentParser
 {
-	private static final Map<Integer, L2RecipeList> _recipes = new HashMap<>();
+	private static final FastIntObjectMap<L2RecipeList> _recipes = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	/**
 	 * Instantiates a new recipe data.

@@ -21,11 +21,12 @@ package com.l2jserver.gameserver.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.datatables.UIData;
@@ -39,8 +40,8 @@ public class UIKeysSettings
 	private static final Logger _log = Logger.getLogger(UIKeysSettings.class.getName());
 	
 	private final int _playerObjId;
-	private Map<Integer, List<ActionKey>> _storedKeys;
-	private Map<Integer, List<Integer>> _storedCategories;
+	private FastIntObjectMap<List<ActionKey>> _storedKeys;	//[JOJO] -HashMap
+	private FastIntObjectMap<List<Integer>> _storedCategories;	//[JOJO] -HashMap
 	private boolean _saved = true;
 	
 	public UIKeysSettings(int playerObjId)
@@ -49,31 +50,31 @@ public class UIKeysSettings
 		loadFromDB();
 	}
 	
-	public void storeAll(Map<Integer, List<Integer>> catMap, Map<Integer, List<ActionKey>> keyMap)
+	public void storeAll(FastIntObjectMap<List<Integer>> _catMap, FastIntObjectMap<List<ActionKey>> _keyMap)
+	{
+		_saved = false;
+		_storedCategories = _catMap;
+		_storedKeys = _keyMap;
+	}
+	
+	public void storeCategories(FastIntObjectMap<List<Integer>> catMap)
 	{
 		_saved = false;
 		_storedCategories = catMap;
-		_storedKeys = keyMap;
 	}
 	
-	public void storeCategories(Map<Integer, List<Integer>> catMap)
-	{
-		_saved = false;
-		_storedCategories = catMap;
-	}
-	
-	public Map<Integer, List<Integer>> getCategories()
+	public FastIntObjectMap<List<Integer>> getCategories()
 	{
 		return _storedCategories;
 	}
 	
-	public void storeKeys(Map<Integer, List<ActionKey>> keyMap)
+	public void storeKeys(FastIntObjectMap<List<ActionKey>> keyMap)
 	{
 		_saved = false;
 		_storedKeys = keyMap;
 	}
 	
-	public Map<Integer, List<ActionKey>> getKeys()
+	public FastIntObjectMap<List<ActionKey>> getKeys()
 	{
 		return _storedKeys;
 	}
@@ -96,10 +97,11 @@ public class UIKeysSettings
 		}
 		
 		query = "REPLACE INTO character_ui_categories (`charId`, `catId`, `order`, `cmdId`) VALUES ";
-		for (int category : _storedCategories.keySet())
+		for (IntObjectMap.Entry<List<Integer>> e : _storedCategories.entrySet())
 		{
+			int category = e.getKey();
 			int order = 0;
-			for (int key : _storedCategories.get(category))
+			for (int key : e.getValue())
 			{
 				query += "(" + _playerObjId + ", " + category + ", " + (order++) + ", " + key + "),";
 			}
@@ -145,7 +147,7 @@ public class UIKeysSettings
 			return;
 		}
 		
-		_storedCategories = new HashMap<>();
+		_storedCategories = new FastIntObjectMap<>();
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM character_ui_categories WHERE `charId` = ? ORDER BY `catId`, `order`"))
@@ -177,7 +179,7 @@ public class UIKeysSettings
 			return;
 		}
 		
-		_storedKeys = new HashMap<>();
+		_storedKeys = new FastIntObjectMap<>();
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM character_ui_actions WHERE `charId` = ? ORDER BY `cat`, `order`"))

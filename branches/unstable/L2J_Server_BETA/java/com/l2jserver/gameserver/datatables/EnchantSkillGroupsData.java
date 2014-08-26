@@ -134,11 +134,12 @@ public class EnchantSkillGroupsData extends DocumentParser
 			enchantableSkill = new L2EnchantSkillLearn(skillId, maxLvL);
 			_enchantSkillTrees.put(skillId, enchantableSkill);
 		}
-		if (_enchantSkillGroups.containsKey(group))
+		L2EnchantSkillGroup enchantSkillGroup;
+		if ((enchantSkillGroup = _enchantSkillGroups.get(group)) != null)
 		{
 			enchantableSkill.addNewEnchantRoute(route, group);
 			
-			return _enchantSkillGroups.get(group).getEnchantGroupDetails().size();
+			return enchantSkillGroup.getEnchantGroupDetails().size();
 		}
 		_log.log(Level.SEVERE, getClass().getSimpleName() + ": Error while loading generating enchant skill id: " + skillId + "; route: " + route + "; missing group: " + group);
 		return 0;
