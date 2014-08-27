@@ -42,12 +42,16 @@ public class FastIntSet /*implements Set*/
 	
 	public boolean containsAll(int[]               a) { for (int key : a) if (!map.containsKey(key)) return false; return true; }
 	public boolean containsAll(Collection<Integer> c) { for (int key : c) if (!map.containsKey(key)) return false; return true; }
+	public boolean containsAll(IntIterator  i) { while (i.hasNext()) if (!map.containsKey(i.next())) return false; return true; }
 	public boolean addAll(int[]               a) { boolean changed = false; for (int key : a) changed |= map.put(key, VALUE) == null; return changed; }
 	public boolean addAll(Collection<Integer> c) { boolean changed = false; for (int key : c) changed |= map.put(key, VALUE) == null; return changed; }
+	public boolean addAll(IntIterator  i) { boolean changed = false; while (i.hasNext()) changed |= map.put(i.next(), VALUE) == null; return changed; }
  //	public boolean retainAll(int[]               a) { throw new UnsupportedOperationException(); }
  //	public boolean retainAll(Collection<Integer> c) { throw new UnsupportedOperationException(); }
+ //	public boolean retainAll(IntIterator         i) { throw new UnsupportedOperationException(); }
 	public boolean removeAll(int[]               a) { boolean changed = false; for (int key : a) changed |= map.remove(key) != null; return changed; }
 	public boolean removeAll(Collection<Integer> c) { boolean changed = false; for (int key : c) changed |= map.remove(key) != null; return changed; }
+	public boolean removeAll(IntIterator  i) { boolean changed = false; while (i.hasNext()) changed |= map.remove(i.next()) != null; return changed; }
 
 	@Override public boolean equals(Object o) { return map.equals(o); }
 	@Override public int hashCode() { return map.hashCode(); }

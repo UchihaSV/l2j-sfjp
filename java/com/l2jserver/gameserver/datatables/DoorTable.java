@@ -21,10 +21,6 @@ package com.l2jserver.gameserver.datatables;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import jp.sf.l2j.troja.FastIntObjectMap;
 
@@ -39,17 +35,18 @@ import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.instance.L2DoorInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2DoorTemplate;
 import com.l2jserver.gameserver.pathfinding.AbstractNodeLoc;
+import com.l2jserver.gameserver.util.FastIntSet;
 
 /**
  * @author JIV, GodKratos, UnAfraid
  */
 public class DoorTable extends DocumentParser
 {
-	private static final Map<String, Set<Integer>> _groups = new HashMap<>();
+	private static final HashMap<String, FastIntSet> _groups = new HashMap<>();	//[JOJO] -HashSet
 	
 	private final FastIntObjectMap<L2DoorInstance> _doors = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	private final FastIntObjectMap<StatsSet> _templates = new FastIntObjectMap<>();	//[JOJO] -HashMap
-	private final FastIntObjectMap<List<L2DoorInstance>> _regions = new FastIntObjectMap<>();	//[JOJO] -HashMap
+	private final FastIntObjectMap<ArrayList<L2DoorInstance>> _regions = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	protected DoorTable()
 	{
@@ -146,25 +143,27 @@ public class DoorTable extends DocumentParser
 	{
 		_doors.put(door.getId(), door);
 		
-		if (!_regions.containsKey(region))
+		ArrayList<L2DoorInstance> list = _regions.get(region);
+		if (list == null)
 		{
-			_regions.put(region, new ArrayList<L2DoorInstance>());
+			list = new ArrayList<>();
+			_regions.put(region, list);
 		}
-		_regions.get(region).add(door);
+		list.add(door);
 	}
 	
 	public static void addDoorGroup(String groupName, int doorId)
 	{
-		Set<Integer> set = _groups.get(groupName);
+		FastIntSet set = _groups.get(groupName);
 		if (set == null)
 		{
-			set = new HashSet<>();
+			set = new FastIntSet();
 			_groups.put(groupName, set);
 		}
 		set.add(doorId);
 	}
 	
-	public static Set<Integer> getDoorsByGroup(String groupName)
+	public static FastIntSet getDoorsByGroup(String groupName)
 	{
 		return _groups.get(groupName);
 	}

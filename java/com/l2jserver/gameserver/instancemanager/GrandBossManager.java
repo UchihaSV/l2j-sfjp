@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 
 import javolution.util.FastList;
 import jp.sf.l2j.troja.FastIntObjectMap;
-import jp.sf.l2j.troja.IntObjectMap;
+import jp.sf.l2j.troja.IntIterator;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -42,6 +42,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2GrandBossInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.interfaces.IStorable;
 import com.l2jserver.gameserver.model.zone.type.L2BossZone;
+import com.l2jserver.gameserver.util.FastIntSet;
 
 import gnu.trove.map.hash.TIntIntHashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
@@ -94,13 +95,13 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	protected static Logger _log = Logger.getLogger(GrandBossManager.class.getName());
 	
-	protected static FastIntObjectMap<L2GrandBossInstance> _bosses;
+	protected static FastIntObjectMap<L2GrandBossInstance> _bosses;	//[JOJO] -FastMap
 	
 	protected static TIntObjectHashMap<StatsSet> _storedInfo;
 	
 	private TIntIntHashMap _bossStatus;
 	
-	private FastList/*L2FastList*/<L2BossZone> _zones;
+	private FastList<L2BossZone> _zones;	//[JOJO] -L2FastList
 	
 	protected GrandBossManager()
 	{
@@ -109,7 +110,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	private void init()
 	{
-		_zones = new FastList/*L2FastList*/<>();
+		_zones = new FastList<>();
 		
 		_bosses = new FastIntObjectMap<>();
 		_storedInfo = new TIntObjectHashMap<>();
@@ -162,7 +163,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	 */
 	public void initZones()
 	{
-		FastIntObjectMap<FastIntObjectMap<Object>/*L2FastList*/> zones = new FastIntObjectMap<>();
+		FastIntObjectMap<FastIntSet> zones = new FastIntObjectMap<>();	//[JOJO] -L2FastList
 		
 		if (_zones == null)
 		{
@@ -176,7 +177,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			{
 				continue;
 			}
-			zones.put(zone.getId(), new FastIntObjectMap<>/*L2FastList*/());
+			zones.put(zone.getId(), new FastIntSet());	//[JOJO] -L2FastList
 		}
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
@@ -187,7 +188,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			{
 				int id = rs.getInt("player_id");
 				int zone_id = rs.getInt("zone");
-				zones.get(zone_id).put(id, Boolean.TRUE);
+				zones.get(zone_id).add(id);
 			}
 			_log.info(getClass().getSimpleName() + ": Initialized " + _zones.size() + " Grand Boss Zones");
 		}
@@ -356,14 +357,14 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 						continue;
 					}
 					int id = zone.getId();
-					FastIntObjectMap<Object> list = zone.getAllowedPlayers();
+					FastIntSet list = zone.getAllowedPlayers();
 					if ((list == null) || list.isEmpty())
 					{
 						continue;
 					}
-					for (IntObjectMap.Entry<Object> e : list.entrySet())
+					for (IntIterator iterator = list.iterator(); iterator.hasNext(); )
 					{
-						insert.setInt(1, e.getKey());	// player object ID
+						insert.setInt(1, iterator.next());	// player object ID
 						insert.setInt(2, id);			// zone ID
 						insert.executeUpdate();
 						insert.clearParameters();
@@ -509,7 +510,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		_zones.clear();
 	}
 	
-	public FastList/*L2FastList*/<L2BossZone> getZones()
+	public FastList<L2BossZone> getZones()	//[JOJO] -L2FastList
 	{
 		return _zones;
 	}
