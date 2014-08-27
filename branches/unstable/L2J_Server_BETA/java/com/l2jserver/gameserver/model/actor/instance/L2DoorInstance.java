@@ -19,11 +19,11 @@
 package com.l2jserver.gameserver.model.actor.instance;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 
 import javolution.util.FastList;
+import jp.sf.l2j.troja.IntIterator;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.L2CharacterAI;
@@ -557,10 +557,10 @@ public class L2DoorInstance extends L2Character
 	
 	private void manageGroupOpen(boolean open, String groupName)
 	{
-		Set<Integer> set = DoorTable.getDoorsByGroup(groupName);
 		L2DoorInstance first = null;
-		for (Integer id : set)
+		for (IntIterator iterator = DoorTable.getDoorsByGroup(groupName).iterator(); iterator.hasNext(); )
 		{
+			int id = iterator.next();
 			L2DoorInstance door = getSiblingDoor(id);
 			if (first == null)
 			{

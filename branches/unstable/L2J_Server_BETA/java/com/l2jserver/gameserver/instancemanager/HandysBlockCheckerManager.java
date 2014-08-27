@@ -20,7 +20,6 @@ package com.l2jserver.gameserver.instancemanager;
 
 import jp.sf.l2j.arrayMaps.SortedIntBooleanArrayMap;
 import jp.sf.l2j.arrayMaps.SortedIntIntArrayMap;
-import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -36,6 +35,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExCubeGameAddPlayer;
 import com.l2jserver.gameserver.network.serverpackets.ExCubeGameChangeTeam;
 import com.l2jserver.gameserver.network.serverpackets.ExCubeGameRemovePlayer;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+import com.l2jserver.gameserver.util.FastIntSet;
 
 /**
  * This class manage the player add/remove, team change and event arena status,<br>
@@ -49,13 +49,13 @@ public final class HandysBlockCheckerManager
 	private static final ArenaParticipantsHolder[] _arenaPlayers = new ArenaParticipantsHolder[4];	// 0..3
 	
 	// Arena votes to start the game
-	private static final SortedIntIntArrayMap _arenaVotes = new SortedIntIntArrayMap();	// 0..3
+	private static final SortedIntIntArrayMap _arenaVotes = new SortedIntIntArrayMap();	// 0..3	[JOJO] -HashMap
 	
 	// Arena Status, True = is being used, otherwise, False
-	private static final SortedIntBooleanArrayMap _arenaStatus = new SortedIntBooleanArrayMap();	// 0..3
+	private static final SortedIntBooleanArrayMap _arenaStatus = new SortedIntBooleanArrayMap();	// 0..3	[JOJO] -HashMap
 	
 	// Registration request penalty (10 seconds)
-	protected static FastIntObjectMap<Object> _registrationPenalty = new FastIntObjectMap<>().shared();
+	protected static FastIntSet _registrationPenalty = new FastIntSet().shared();	//[JOJO] -Collections.synchronizedSet(new HashSet<Integer>())
 	
 	/**
 	 * Return the number of event-start votes for the specified arena id
@@ -194,7 +194,7 @@ public final class HandysBlockCheckerManager
 			// player.sendPacket(SystemMessageId.COLISEUM_OLYMPIAD_KRATEIS_APPLICANTS_CANNOT_PARTICIPATE));
 			// }
 			
-			if (_registrationPenalty.containsKey(player.getObjectId()))
+			if (_registrationPenalty.contains(player.getObjectId()))
 			{
 				player.sendPacket(SystemMessageId.CANNOT_REQUEST_REGISTRATION_10_SECS_AFTER);
 				return false;
@@ -238,7 +238,7 @@ public final class HandysBlockCheckerManager
 				holder.getEvent().endEventAbnormally();
 			}
 			
-			_registrationPenalty.put(player.getObjectId(), Boolean.TRUE);
+			_registrationPenalty.add(player.getObjectId());
 			schedulePenaltyRemoval(player.getObjectId());
 		}
 	}
