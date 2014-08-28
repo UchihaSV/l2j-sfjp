@@ -29,6 +29,9 @@ import javolution.util.FastList;
 import jp.sf.l2j.arrayMaps.SortedIntBooleanArrayMap;
 import jp.sf.l2j.arrayMaps.SortedIntIntArrayMap;
 import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
+import jp.sf.l2j.boundArrays.BoundBooleanArray;
+import jp.sf.l2j.boundArrays.BoundIntArray;
+import jp.sf.l2j.boundArrays.BoundObjectArray;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -118,12 +121,12 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 	// @formatter:on
 	
 	protected SortedIntBooleanArrayMap _archonSpawned = new SortedIntBooleanArrayMap();
-	protected SortedIntBooleanArrayMap _hallInUse = new SortedIntBooleanArrayMap();
+	protected BoundBooleanArray _hallInUse = new BoundBooleanArray();
 //	protected FastMap<Integer, L2PcInstance> _challengers = new FastMap<>();
-	protected SortedIntObjectArrayMap<Location> _startHallSpawns = new SortedIntObjectArrayMap<>();
-	protected SortedIntIntArrayMap _hallGateKeepers = new SortedIntIntArrayMap();
+	protected BoundObjectArray<Location> _startHallSpawns = new BoundObjectArray<>();
+	protected BoundIntArray _hallGateKeepers = new BoundIntArray();
 	protected SortedIntIntArrayMap _keyBoxNpc = new SortedIntIntArrayMap();
-	protected SortedIntIntArrayMap _victim = new SortedIntIntArrayMap();
+	protected BoundIntArray _victim = new BoundIntArray();
  //	protected SortedIntObjectArrayMap<L2Spawn> _executionerSpawns = new SortedIntObjectArrayMap<>();	//-[JOJO]
  //	protected SortedIntObjectArrayMap<L2Spawn> _keyBoxSpawns = new SortedIntObjectArrayMap<>();		//-[JOJO]
 	protected SortedIntObjectArrayMap<L2Spawn> _mysteriousBoxSpawns = new SortedIntObjectArrayMap<>();
@@ -1310,7 +1313,7 @@ public final class FourSepulchersManager implements IAdminCommandHandler
 		}
 	}
 	
-	public SortedIntIntArrayMap getHallGateKeepers()
+	public BoundIntArray getHallGateKeepers()
 	{
 		return _hallGateKeepers;
 	}
