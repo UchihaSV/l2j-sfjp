@@ -19,6 +19,8 @@
 package com.l2jserver.gameserver.model;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,7 +81,7 @@ public class L2Spawn extends Location implements IIdentifiable, INamable	//[JOJO
 	/** If true then spawn is custom */
 	private boolean _customSpawn;
 	private static List<SpawnListener> _spawnListeners = new FastList<>();
-	private final FastList<L2Npc> _spawnedNpcs = new FastList<>();
+	private LinkedList<L2Npc> _spawnedNpcs;	//[JOJO] -final FastList
 	private FastIntObjectMap<Location> _lastSpawnPoints;	//[JOJO] -ConcurrentHashMap
 	private boolean _isNoRndWalk = false; // Is no random walk/*TODO:Arrays.binarySearch(Config.NON_RANDOM_WALK_NPCS, getNpcid()) >= 0;*/
 	
@@ -339,7 +341,7 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 		_currentCount--;
 		
 		// Remove this NPC from list of spawned
-		_spawnedNpcs.remove(oldNpc);
+		if (_spawnedNpcs != null) _spawnedNpcs.remove(oldNpc);
 		
 		// Remove spawn point for old NPC
 		if (_lastSpawnPoints != null)
@@ -567,7 +569,7 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 		
 		L2Spawn.notifyNpcSpawned(mob);
 		
-		_spawnedNpcs.add(mob);
+		if (_spawnedNpcs == null) _spawnedNpcs = new LinkedList<>(); _spawnedNpcs.add(mob);
 		if (_lastSpawnPoints != null)
 		{
 			_lastSpawnPoints.put(mob.getObjectId(), new Location(newlocx, newlocy, newlocz));
@@ -676,7 +678,7 @@ if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 	
 	public L2Npc getLastSpawn()
 	{
-		if (!_spawnedNpcs.isEmpty())
+		if (_spawnedNpcs != null && !_spawnedNpcs.isEmpty())
 		{
 			return _spawnedNpcs.getLast();
 		}
@@ -684,10 +686,10 @@ if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 		return null;
 	}
 	
-	public final FastList<L2Npc> getSpawnedNpcs()
-	{
-		return _spawnedNpcs;
-	}
+ //	public final List<L2Npc> getSpawnedNpcs()
+ //	{
+ //		return _spawnedNpcs != null ? _spawnedNpcs : Collections.<L2Npc>emptyList();
+ //	}
 	
 	/**
 	 * @param oldNpc
