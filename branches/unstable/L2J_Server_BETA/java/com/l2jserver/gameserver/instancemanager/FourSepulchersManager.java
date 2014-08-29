@@ -131,12 +131,12 @@ public final class FourSepulchersManager implements IAdminCommandHandler
  //	protected SortedIntObjectArrayMap<L2Spawn> _keyBoxSpawns = new SortedIntObjectArrayMap<>();		//-[JOJO]
 	protected SortedIntObjectArrayMap<L2Spawn> _mysteriousBoxSpawns = new SortedIntObjectArrayMap<>();
 	protected SortedIntObjectArrayMap<L2Spawn> _shadowSpawns = new SortedIntObjectArrayMap<>();
-	protected SortedIntObjectArrayMap<FastList<L2Spawn>> _dukeFinalMobs = new SortedIntObjectArrayMap<>();
-	protected SortedIntObjectArrayMap<FastList<L2SepulcherMonsterInstance>> _dukeMobs = new SortedIntObjectArrayMap<>();
-	protected SortedIntObjectArrayMap<FastList<L2Spawn>> _emperorsGraveNpcs = new SortedIntObjectArrayMap<>();
-	protected SortedIntObjectArrayMap<FastList<L2Spawn>> _magicalMonsters = new SortedIntObjectArrayMap<>();
-	protected SortedIntObjectArrayMap<FastList<L2Spawn>> _physicalMonsters = new SortedIntObjectArrayMap<>();
-	protected SortedIntObjectArrayMap<FastList<L2SepulcherMonsterInstance>> _viscountMobs = new SortedIntObjectArrayMap<>();
+	protected SortedIntObjectArrayMap<FastList<L2Spawn>> _dukeFinalMobs = new SortedIntObjectArrayMap<>(FastList.class);
+	protected SortedIntObjectArrayMap<FastList<L2SepulcherMonsterInstance>> _dukeMobs = new SortedIntObjectArrayMap<>(FastList.class);
+	protected SortedIntObjectArrayMap<FastList<L2Spawn>> _emperorsGraveNpcs = new SortedIntObjectArrayMap<>(FastList.class);
+	protected SortedIntObjectArrayMap<FastList<L2Spawn>> _magicalMonsters = new SortedIntObjectArrayMap<>(FastList.class);
+	protected SortedIntObjectArrayMap<FastList<L2Spawn>> _physicalMonsters = new SortedIntObjectArrayMap<>(FastList.class);
+	protected SortedIntObjectArrayMap<FastList<L2SepulcherMonsterInstance>> _viscountMobs = new SortedIntObjectArrayMap<>(FastList.class);
 	
  //	protected FastList<L2Spawn> _physicalSpawns;
  //	protected FastList<L2Spawn> _magicalSpawns;
