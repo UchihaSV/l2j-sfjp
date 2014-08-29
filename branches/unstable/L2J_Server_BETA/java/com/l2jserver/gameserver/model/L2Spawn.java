@@ -71,7 +71,7 @@ public class L2Spawn extends Location implements IIdentifiable, INamable	//[JOJO
 	private int _respawnMinDelay;
 	/** Maximum respawn delay */
 	private int _respawnMaxDelay;
-	private int _instanceId = 0;
+ //	private int _instanceId = 0;	//[JOJO] --> super.getInstanceId()
 	/** The generic constructor of L2NpcInstance managed by this L2Spawn */
 	private Constructor<? extends L2Npc> _constructor;
 	/** If True a L2NpcInstance is respawned each time that another is killed */
@@ -448,7 +448,7 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 			
 			// Call the constructor of the L2Npc
 			L2Npc npc = _constructor.newInstance(IdFactory.getInstance().getNextId(), _template);
-			npc.setInstanceId(_instanceId); // Must be done before object is spawned into visible world
+			npc.setInstanceId(getInstanceId()); // Must be done before object is spawned into visible world
 			if (isSummonSpawn)
 			{
 				npc.setShowSummonAnimation(isSummonSpawn);
@@ -704,18 +704,6 @@ if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 	public L2NpcTemplate getTemplate()
 	{
 		return _template;
-	}
-	
-	@Override
-	public int getInstanceId()
-	{
-		return _instanceId;
-	}
-	
-	@Override
-	public void setInstanceId(int instanceId)
-	{
-		_instanceId = instanceId;
 	}
 	
 	@Override
