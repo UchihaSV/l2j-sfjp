@@ -18,8 +18,7 @@
  */
 package com.l2jserver.gameserver.instancemanager;
 
-import jp.sf.l2j.arrayMaps.SortedIntBooleanArrayMap;
-import jp.sf.l2j.arrayMaps.SortedIntIntArrayMap;
+import java.util.Arrays;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -49,10 +48,10 @@ public final class HandysBlockCheckerManager
 	private static final ArenaParticipantsHolder[] _arenaPlayers = new ArenaParticipantsHolder[4];	// 0..3
 	
 	// Arena votes to start the game
-	private static final SortedIntIntArrayMap _arenaVotes = new SortedIntIntArrayMap();	// 0..3	[JOJO] -HashMap
+	private static final int[] _arenaVotes = new int[4];	// 0..3	[JOJO] -HashMap
 	
 	// Arena Status, True = is being used, otherwise, False
-	private static final SortedIntBooleanArrayMap _arenaStatus = new SortedIntBooleanArrayMap();	// 0..3	[JOJO] -HashMap
+	private static final boolean[] _arenaStatus = new boolean[4];	// 0..3	[JOJO] -HashMap
 	
 	// Registration request penalty (10 seconds)
 	protected static FastIntSet _registrationPenalty = new FastIntSet().shared();	//[JOJO] -Collections.synchronizedSet(new HashSet<Integer>())
@@ -64,7 +63,7 @@ public final class HandysBlockCheckerManager
 	 */
 	public synchronized int getArenaVotes(int arenaId)
 	{
-		return _arenaVotes.get(arenaId);
+		return _arenaVotes[arenaId];
 	}
 	
 	/**
@@ -73,7 +72,7 @@ public final class HandysBlockCheckerManager
 	 */
 	public synchronized void increaseArenaVotes(int arena)
 	{
-		int newVotes = _arenaVotes.get(arena) + 1;
+		int newVotes = _arenaVotes[arena] + 1;
 		ArenaParticipantsHolder holder = _arenaPlayers[arena];
 		
 		if ((newVotes > (holder.getAllPlayers().size() / 2)) && !holder.getEvent().isStarted())
@@ -91,7 +90,7 @@ public final class HandysBlockCheckerManager
 		}
 		else
 		{
-			_arenaVotes.put(arena, newVotes);
+			_arenaVotes[arena] = newVotes;
 		}
 	}
 	
@@ -101,22 +100,16 @@ public final class HandysBlockCheckerManager
 	 */
 	public synchronized void clearArenaVotes(int arena)
 	{
-		_arenaVotes.put(arena, 0);
+		_arenaVotes[arena] = 0;
 	}
 	
 	protected HandysBlockCheckerManager()
 	{
 		// Initialize arena status
-		_arenaStatus.put(0, false);
-		_arenaStatus.put(1, false);
-		_arenaStatus.put(2, false);
-		_arenaStatus.put(3, false);
+		Arrays.fill(_arenaStatus, false);
 		
 		// Initialize arena votes
-		_arenaVotes.put(0, 0);
-		_arenaVotes.put(1, 0);
-		_arenaVotes.put(2, 0);
-		_arenaVotes.put(3, 0);
+		Arrays.fill(_arenaVotes, 0);
 	}
 	
 	/**
@@ -305,7 +298,7 @@ public final class HandysBlockCheckerManager
 		{
 			return false;
 		}
-		return _arenaStatus.get(arenaId);
+		return _arenaStatus[arenaId];
 	}
 	
 	/**
@@ -314,7 +307,7 @@ public final class HandysBlockCheckerManager
 	 */
 	public void setArenaBeingUsed(int arenaId)
 	{
-		_arenaStatus.put(arenaId, true);
+		_arenaStatus[arenaId] = true;
 	}
 	
 	/**
@@ -323,7 +316,7 @@ public final class HandysBlockCheckerManager
 	 */
 	public void setArenaFree(int arenaId)
 	{
-		_arenaStatus.put(arenaId, false);
+		_arenaStatus[arenaId] = false;
 	}
 	
 	/**

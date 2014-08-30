@@ -35,8 +35,8 @@ public final class RequestExCubeGameReadyAnswer extends L2GameClientPacket
 	@Override
 	protected void readImpl()
 	{
-		// client sends -1,0,1,2 for arena parameter
-		_arena = readD() + 1;
+		// client sends 0,1,2,3 for arena parameter
+		_arena = readD();
 		// client sends 1 if clicked confirm on not clicked, 0 if clicked cancel
 		_answer = readD();
 	}

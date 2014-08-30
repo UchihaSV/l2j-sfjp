@@ -44,7 +44,7 @@ public class ExCubeGameTeamList extends L2GameServerPacket
 	{
 		_redPlayers = redPlayers;
 		_bluePlayers = bluePlayers;
-		_roomNumber = roomNumber - 1;
+		_roomNumber = roomNumber;
 	}
 	
 	@Override

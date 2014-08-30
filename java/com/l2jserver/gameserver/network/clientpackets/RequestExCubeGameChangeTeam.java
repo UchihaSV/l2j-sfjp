@@ -35,8 +35,8 @@ public final class RequestExCubeGameChangeTeam extends L2GameClientPacket
 	@Override
 	protected void readImpl()
 	{
-		// client sends -1,0,1,2 for arena parameter
-		_arena = readD() + 1;
+		// client sends 0,1,2,3 for arena parameter
+		_arena = readD();
 		_team = readD();
 	}
 	
@@ -63,7 +63,7 @@ public final class RequestExCubeGameChangeTeam extends L2GameClientPacket
 				int team = HandysBlockCheckerManager.getInstance().getHolder(_arena).getPlayerTeam(player);
 				// client sends two times this packet if click on exit
 				// client did not send this packet on restart
-				if (team > -1)
+				if (team >= 0)
 				{
 					HandysBlockCheckerManager.getInstance().removePlayer(player, _arena, team);
 				}
