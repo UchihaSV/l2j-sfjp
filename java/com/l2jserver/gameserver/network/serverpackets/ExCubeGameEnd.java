@@ -18,21 +18,23 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+
 /**
  * *
  * @author mrTJO
  */
 public class ExCubeGameEnd extends L2GameServerPacket
 {
-	boolean _isRedTeamWin;
+	int _winnerTeam;
 	
 	/**
 	 * Show Minigame Results
-	 * @param isRedTeamWin Is Red Team Winner?
+	 * @param winnerTeam Winner 0:Blue Team 1:Red Team -1:Tie
 	 */
-	public ExCubeGameEnd(boolean isRedTeamWin)
+	public ExCubeGameEnd(int winnerTeam)
 	{
-		_isRedTeamWin = isRedTeamWin;
+		assert winnerTeam == -1 || winnerTeam == 0 || winnerTeam == 1;
+		_winnerTeam = winnerTeam;
 	}
 	
 	@Override
@@ -42,6 +44,6 @@ public class ExCubeGameEnd extends L2GameServerPacket
 		writeH(0x98);
 		writeD(0x01);
 		
-		writeD(_isRedTeamWin ? 0x01 : 0x00);
+		writeD(_winnerTeam);
 	}
 }

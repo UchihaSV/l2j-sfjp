@@ -110,6 +110,7 @@ import com.l2jserver.gameserver.instancemanager.DuelManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.FortSiegeManager;
 import com.l2jserver.gameserver.instancemanager.GrandBossManager;
+import com.l2jserver.gameserver.instancemanager.HandysBlockChecker;
 import com.l2jserver.gameserver.instancemanager.HandysBlockCheckerManager;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.ItemsOnGroundManager;
@@ -767,7 +768,7 @@ public final class L2PcInstance extends L2Playable
 	/** Event parameters */
 	private PlayerEventHolder eventStatus = null;
 	
-	private byte _handysBlockCheckerEventArena = -1;
+	private byte _handysBlockCheckerEventArena = HandysBlockChecker.ARENA_NONE;
 	
 	/** new loto ticket **/
 	private final int _loto[] = new int[5];
@@ -1060,11 +1061,11 @@ public final class L2PcInstance extends L2Playable
 				}
 			}
 		}
-		if (getBlockCheckerArena() != -1)
+		if (getBlockCheckerArena() != HandysBlockChecker.ARENA_NONE)
 		{
 			result |= RelationChanged.RELATION_INSIEGE;
 			ArenaParticipantsHolder holder = HandysBlockCheckerManager.getInstance().getHolder(getBlockCheckerArena());
-			if (holder.getPlayerTeam(this) == 0)
+			if (holder.getPlayerTeam(this) == HandysBlockChecker.TEAM_RED)
 			{
 				result |= RelationChanged.RELATION_ENEMY;
 			}
@@ -10892,6 +10893,13 @@ public final class L2PcInstance extends L2Playable
 		{
 			_log.log(Level.SEVERE, "", e);
 		}
+		
+		//[JOJO]-------------------------------------------------
+		if (Config.ENABLE_BLOCK_CHECKER_EVENT)
+		{
+			HandysBlockCheckerManager.getInstance().onPlayerEnter(this);
+		}
+		//-------------------------------------------------------
 	}
 	
 	public long getLastAccess()
@@ -11561,7 +11569,7 @@ public final class L2PcInstance extends L2Playable
 		
 		try
 		{
-			if (Config.ENABLE_BLOCK_CHECKER_EVENT && (getBlockCheckerArena() != -1))
+			if (Config.ENABLE_BLOCK_CHECKER_EVENT && getBlockCheckerArena() != HandysBlockChecker.ARENA_NONE)
 			{
 				HandysBlockCheckerManager.getInstance().onDisconnect(this);
 			}

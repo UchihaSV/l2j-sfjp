@@ -16,39 +16,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.network.serverpackets;
-
-import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+package com.l2jserver.gameserver.instancemanager;	// TODO: --> com.l2jserver.gameserver.enums
 
 /**
- * @author mrTJO
+ * @author JOJO
  */
-public class ExCubeGameRemovePlayer extends L2GameServerPacket
+public class HandysBlockChecker
 {
-	L2PcInstance _player;
-	int _team;
-	
-	/**
-	 * Remove Player from Minigame Waiting List
-	 * @param player Player to Remove
-	 * @param isRedTeam Is Player from Red Team?
-	 */
-	public ExCubeGameRemovePlayer(L2PcInstance player, int team)
-	{
-		_player = player;
-		_team = team;
-	}
-	
-	@Override
-	protected void writeImpl()
-	{
-		writeC(0xfe);
-		writeH(0x97);
-		writeD(0x02);
-		
-		writeD(0xffffffff);
-		
-		writeD(_team);
-		writeD(_player.getObjectId());
-	}
+	public static final int ARENA_NONE = -1;
+	public static final int TEAM_NON = -1, TEAM_BLUE = 0, TEAM_RED = 1;
+	//TODO: public static final int COLOR_BLUE = 0x00;
+	//TODO: public static final int COLOR_RED = 0x53;
 }

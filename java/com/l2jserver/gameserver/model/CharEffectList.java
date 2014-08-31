@@ -108,11 +108,11 @@ public final class CharEffectList
 	/*@Deprecated*/ public final List<AbstractEffect/*L2Effect*/> getAllEffects()
 	{
 		if (hasBuffs() || hasDebuffs()) {
-			final List<AbstractEffect/*L2Effect*/> effects = new /*CopyOnWriteArrayList*/ArrayList<>(_buffs.size() + _debuffs.size());
+			final List<AbstractEffect/*L2Effect*/> effects = new /*CopyOnWriteArrayList*/ArrayList<>(getBuffs().size() + getDebuffs().size());
 			if (hasBuffs())
-				for (BuffInfo b : _buffs.values()) effects.addAll(b.getEffects());
+				for (BuffInfo b : getBuffs().values()) effects.addAll(b.getEffects());
 			if (hasDebuffs())
-				for (BuffInfo b : _debuffs.values()) effects.addAll(b.getEffects());
+				for (BuffInfo b : getDebuffs().values()) effects.addAll(b.getEffects());
 			return effects;
 		}
 		else {

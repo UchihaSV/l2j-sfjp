@@ -56,6 +56,7 @@ import com.l2jserver.gameserver.enums.Team;
 import com.l2jserver.gameserver.handler.ISkillHandler;
 import com.l2jserver.gameserver.handler.SkillHandler;
 import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
+import com.l2jserver.gameserver.instancemanager.HandysBlockChecker;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
@@ -5480,7 +5481,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}
-		if (player.getBlockCheckerArena() != -1)
+		if (player.getBlockCheckerArena() != HandysBlockChecker.ARENA_NONE)
 		{
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;

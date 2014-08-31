@@ -28,7 +28,7 @@ public class ExCubeGameExtendedChangePoints extends L2GameServerPacket
 	int _timeLeft;
 	int _bluePoints;
 	int _redPoints;
-	boolean _isRedTeam;
+	int _team;
 	L2PcInstance _player;
 	int _playerPoints;
 	
@@ -41,12 +41,12 @@ public class ExCubeGameExtendedChangePoints extends L2GameServerPacket
 	 * @param player Player Instance
 	 * @param playerPoints Current Player Points
 	 */
-	public ExCubeGameExtendedChangePoints(int timeLeft, int bluePoints, int redPoints, boolean isRedTeam, L2PcInstance player, int playerPoints)
+	public ExCubeGameExtendedChangePoints(int timeLeft, int bluePoints, int redPoints, int team, L2PcInstance player, int playerPoints)
 	{
 		_timeLeft = timeLeft;
 		_bluePoints = bluePoints;
 		_redPoints = redPoints;
-		_isRedTeam = isRedTeam;
+		_team = team;
 		_player = player;
 		_playerPoints = playerPoints;
 	}
@@ -62,7 +62,7 @@ public class ExCubeGameExtendedChangePoints extends L2GameServerPacket
 		writeD(_bluePoints);
 		writeD(_redPoints);
 		
-		writeD(_isRedTeam ? 0x01 : 0x00);
+		writeD(_team);
 		writeD(_player.getObjectId());
 		writeD(_playerPoints);
 	}
