@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
+import static com.l2jserver.gameserver.instancemanager.HandysBlockChecker.*;
+
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.model.ArenaParticipantsHolder;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -58,10 +60,10 @@ public class L2BlockInstance extends L2MonsterInstance
 		synchronized (this)
 		{
 			final BlockCheckerEngine event = holder.getEvent();
-			if (_colorEffect == 0x53)
+			if (_colorEffect == 0x53/*COLOR_RED*/)
 			{
 				// Change color
-				_colorEffect = 0x00;
+				_colorEffect = 0x00/*COLOR_BLUE*/;
 				// BroadCast to all known players
 				this.broadcastPacket(new AbstractNpcInfo.NpcInfo(this, attacker));
 				increaseTeamPointsAndSend(attacker, team, event);
@@ -69,7 +71,7 @@ public class L2BlockInstance extends L2MonsterInstance
 			else
 			{
 				// Change color
-				_colorEffect = 0x53;
+				_colorEffect = 0x53/*COLOR_RED*/;
 				// BroadCast to all known players
 				this.broadcastPacket(new AbstractNpcInfo.NpcInfo(this, attacker));
 				increaseTeamPointsAndSend(attacker, team, event);
@@ -77,13 +79,13 @@ public class L2BlockInstance extends L2MonsterInstance
 			// 30% chance to drop the event items
 			int random = Rnd.get(100);
 			// Bond
-			if ((random > 69) && (random <= 84))
-			{
-				dropItem(13787, event, attacker);
-			}
-			else if (random > 84)
+			if (random > 84)	// 99 - 84 = 15%
 			{
 				dropItem(13788, event, attacker);
+			}
+			else if (random > 69/* && random <= 84*/)	// 84 - 69 = 15%
+			{
+				dropItem(13787, event, attacker);
 			}
 		}
 	}
@@ -92,9 +94,13 @@ public class L2BlockInstance extends L2MonsterInstance
 	 * Sets if the block is red or blue. Mainly used in block spawn
 	 * @param isRed
 	 */
-	public void setRed(boolean isRed)
+	public void setRed()
 	{
-		_colorEffect = isRed ? 0x53 : 0x00;
+		_colorEffect = 0x53/*COLOR_RED*/;
+	}
+	public void setBlue()
+	{
+		_colorEffect = 0x00/*COLOR_BLUE*/;
 	}
 	
 	/**
@@ -111,7 +117,7 @@ public class L2BlockInstance extends L2MonsterInstance
 	{
 		if (attacker instanceof L2PcInstance)
 		{
-			return (attacker.getActingPlayer() != null) && (attacker.getActingPlayer().getBlockCheckerArena() > -1);
+			return (attacker.getActingPlayer() != null) && (attacker.getActingPlayer().getBlockCheckerArena() != ARENA_NONE);
 		}
 		return true;
 	}
@@ -148,10 +154,10 @@ public class L2BlockInstance extends L2MonsterInstance
 		eng.increasePlayerPoints(player, team);
 		
 		int timeLeft = (int) ((eng.getStarterTime() - System.currentTimeMillis()) / 1000);
-		boolean isRed = eng.getHolder().getRedPlayers().contains(player);
+//		boolean isRed = eng.getHolder().getRedPlayers().contains(player);
 		
 		ExCubeGameChangePoints changePoints = new ExCubeGameChangePoints(timeLeft, eng.getBluePoints(), eng.getRedPoints());
-		ExCubeGameExtendedChangePoints secretPoints = new ExCubeGameExtendedChangePoints(timeLeft, eng.getBluePoints(), eng.getRedPoints(), isRed, player, eng.getPlayerPoints(player, isRed));
+		ExCubeGameExtendedChangePoints secretPoints = new ExCubeGameExtendedChangePoints(timeLeft, eng.getBluePoints(), eng.getRedPoints(), team, player, eng.getPlayerPoints(player, team));
 		
 		eng.getHolder().broadCastPacketToTeam(changePoints);
 		eng.getHolder().broadCastPacketToTeam(secretPoints);

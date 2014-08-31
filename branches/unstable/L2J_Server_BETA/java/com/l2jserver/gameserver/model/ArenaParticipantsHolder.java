@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.model;
 
+import static com.l2jserver.gameserver.instancemanager.HandysBlockChecker.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +68,7 @@ public final class ArenaParticipantsHolder
 	
 	public void addPlayer(L2PcInstance player, int team)
 	{
-		if (team == 0)
+		if (team == TEAM_RED)
 		{
 			_redPlayers.add(player);
 		}
@@ -78,7 +80,7 @@ public final class ArenaParticipantsHolder
 	
 	public void removePlayer(L2PcInstance player, int team)
 	{
-		if (team == 0)
+		if (team == TEAM_RED)
 		{
 			_redPlayers.remove(player);
 		}
@@ -92,15 +94,15 @@ public final class ArenaParticipantsHolder
 	{
 		if (_redPlayers.contains(player))
 		{
-			return 0;
+			return TEAM_RED;
 		}
 		else if (_bluePlayers.contains(player))
 		{
-			return 1;
+			return TEAM_BLUE;
 		}
 		else
 		{
-			return -1;
+			return TEAM_NON;
 		}
 	}
 	
@@ -112,6 +114,17 @@ public final class ArenaParticipantsHolder
 	public int getBlueTeamSize()
 	{
 		return _bluePlayers.size();
+	}
+	
+	public int getAllPlayerSize()
+	{
+		return _redPlayers.size() + _bluePlayers.size();
+	}
+	
+	public boolean contains(L2PcInstance player)
+	{
+		return _redPlayers.contains(player)
+		    || _bluePlayers.contains(player);
 	}
 	
 	public void broadCastPacketToTeam(L2GameServerPacket packet)
@@ -144,35 +157,16 @@ public final class ArenaParticipantsHolder
 	
 	public void checkAndShuffle()
 	{
-		final int redSize = _redPlayers.size();
-		final int blueSize = _bluePlayers.size();
-		if (redSize > (blueSize + 1))
-		{
-			broadCastPacketToTeam(SystemMessage.getSystemMessage(SystemMessageId.TEAM_ADJUSTED_BECAUSE_WRONG_POPULATION_RATIO));
-			final int needed = redSize - (blueSize + 1);
-			for (int i = 0; i < (needed + 1); i++)
-			{
-				final L2PcInstance plr = _redPlayers.get(i);
-				if (plr == null)
-				{
-					continue;
-				}
-				HandysBlockCheckerManager.getInstance().changePlayerToTeam(plr, _arena, 1);
-			}
+		boolean changed = false;
+		while (_redPlayers.size() - _bluePlayers.size() >= 2) {
+			HandysBlockCheckerManager.getInstance().changePlayerToTeam(_redPlayers.get(0), _arena, TEAM_BLUE);
+			changed = true;
 		}
-		else if (blueSize > (redSize + 1))
-		{
-			broadCastPacketToTeam(SystemMessage.getSystemMessage(SystemMessageId.TEAM_ADJUSTED_BECAUSE_WRONG_POPULATION_RATIO));
-			final int needed = blueSize - (redSize + 1);
-			for (int i = 0; i < (needed + 1); i++)
-			{
-				final L2PcInstance plr = _bluePlayers.get(i);
-				if (plr == null)
-				{
-					continue;
-				}
-				HandysBlockCheckerManager.getInstance().changePlayerToTeam(plr, _arena, 0);
-			}
+		while (_bluePlayers.size() - _redPlayers.size() >= 2) {
+			HandysBlockCheckerManager.getInstance().changePlayerToTeam(_bluePlayers.get(0), _arena, TEAM_RED);
+			changed = true;
 		}
+		if (changed)
+			broadCastPacketToTeam(SystemMessage.getSystemMessage(SystemMessageId.TEAM_ADJUSTED_BECAUSE_WRONG_POPULATION_RATIO));
 	}
 }
