@@ -20,8 +20,6 @@ package com.l2jserver.gameserver.instancemanager;
 
 import static com.l2jserver.gameserver.instancemanager.HandysBlockChecker.*;
 
-import java.util.Arrays;
-
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.enums.Team;
@@ -107,11 +105,17 @@ public final class HandysBlockCheckerManager
 	
 	protected HandysBlockCheckerManager()
 	{
-		// Initialize arena status
-		Arrays.fill(_arenaStatus, false);
-		
-		// Initialize arena votes
-		Arrays.fill(_arenaVotes, 0);
+		for (int i = 0; i < 4; ++i)
+		{
+			// Initialize arena status
+			//_arenaStatus[i] = false;
+			
+			// Initialize arena votes
+			//_arenaVotes[i] = 0;
+			
+			// Initializes the participants holder
+			_arenaPlayers[i] = new ArenaParticipantsHolder(i);
+		}
 	}
 	
 	/**
@@ -122,17 +126,6 @@ public final class HandysBlockCheckerManager
 	public ArenaParticipantsHolder getHolder(int arena)
 	{
 		return _arenaPlayers[arena];
-	}
-	
-	/**
-	 * Initializes the participants holder
-	 */
-	public void startUpParticipantsQueue()
-	{
-		for (int i = 0; i < 4; ++i)
-		{
-			_arenaPlayers[i] = new ArenaParticipantsHolder(i);
-		}
 	}
 	
 	/**
