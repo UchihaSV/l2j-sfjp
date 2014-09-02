@@ -123,19 +123,7 @@ public final class BlockCheckerEngine
 	public BlockCheckerEngine(ArenaParticipantsHolder holder, int arena)
 	{
 		_holder = holder;
-		if (arena >= 0 && arena <= 3)
-		{
-			_arena = arena;
-		}
-		
-		for (L2PcInstance player : holder.getRedPlayers())
-		{
-			_redTeamPoints.put(player, new PlayerPoint());
-		}
-		for (L2PcInstance player : holder.getBluePlayers())
-		{
-			_blueTeamPoints.put(player, new PlayerPoint());
-		}
+		_arena = arena;
 	}
 	
 	/**
