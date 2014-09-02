@@ -84,39 +84,27 @@ public final class BlockCheckerEngine
 	{
 		// Arena 0 - Team 1 XY, Team 2 XY - CENTER XY
 		{
-			-58368,
-			-62745,
-			-57751,
-			-62131,
-			-58053,
-			-62417
+			-58368, -62745,
+			-57751, -62131,
+			-58053, -62417
 		},
 		// Arena 1 - Team 1 XY, Team 2 XY - CENTER XY
 		{
-			-58350,
-			-63853,
-			-57756,
-			-63266,
-			-58053,
-			-63551
+			-58350, -63853,
+			-57756, -63266,
+			-58053, -63551
 		},
 		// Arena 2 - Team 1 XY, Team 2 XY - CENTER XY
 		{
-			-57194,
-			-63861,
-			-56580,
-			-63249,
-			-56886,
-			-63551
+			-57194, -63861,
+			-56580, -63249,
+			-56886, -63551
 		},
 		// Arena 3 - Team 1 XY, Team 2 XY - CENTER XY
 		{
-			-57200,
-			-62727,
-			-56584,
-			-62115,
-			-56850,
-			-62391
+			-57200, -62727,
+			-56584, -62115,
+			-56850, -62391
 		}
 	};
 	// Common z coordinate
@@ -631,25 +619,18 @@ public final class BlockCheckerEngine
 				_winnerTeam = TEAM_RED;
 				rewardAsWinner(TEAM_RED);
 				rewardAsLooser(TEAM_BLUE);
-				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.TEAM_C1_WON);
-				msg.addString("Red");
-				_holder.broadCastPacketToTeam(msg);
+				_holder.broadCastPacketToTeam(SystemMessage.getSystemMessage(SystemMessageId.TEAM_C1_WON).addString("Red"));
 			}
 			else if (_bluePoints > _redPoints)
 			{
 				_winnerTeam = TEAM_BLUE;
 				rewardAsWinner(TEAM_BLUE);
 				rewardAsLooser(TEAM_RED);
-				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.TEAM_C1_WON);
-				msg.addString("Blue");
-				_holder.broadCastPacketToTeam(msg);
+				_holder.broadCastPacketToTeam(SystemMessage.getSystemMessage(SystemMessageId.TEAM_C1_WON).addString("Blue"));
 			}
 			else // Tie
 			{
 				_winnerTeam = TEAM_NON;
-				// No Reward
-			//	rewardAsLooser(TEAM_RED);
-			//	rewardAsLooser(TEAM_BLUE);
 			}
 		}
 		
