@@ -429,10 +429,10 @@ public final class BlockCheckerEngine
 				return;
 			}
 			_isStarted = true;
-			// Spawn the blocks
-			ThreadPoolManager.getInstance().executeTask(new SpawnRound(16, 1));
 			// Set the started time
 			_startedTime = System.currentTimeMillis() + 300000;
+			// Spawn the blocks
+			new SpawnRound(16, 1).run();	// -ThreadPoolManager.getInstance().executeTask(new SpawnRound(16, 1))
 			// Start up player parameters
 			setUpPlayers();
 		}
