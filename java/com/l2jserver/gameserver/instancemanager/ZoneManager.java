@@ -487,15 +487,23 @@ public final class ZoneManager extends DocumentParser
 	 */
 	public L2ZoneType getZoneById(int id)
 	{
+		L2ZoneType z;
 		for (Map<Integer, ? extends L2ZoneType> map : _classZones.values())
-		{
-			if (map.containsKey(id))
-			{
-				return map.get(id);
-			}
-		}
+			if ((z = map.get(id)) != null)
+				return z;
 		return null;
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public L2ZoneType getZoneByName(String name)
+	{
+		for (Map<Integer, ? extends L2ZoneType> map : _classZones.values())
+			for (L2ZoneType z : map.values())
+				if (z.getName().equals(name))
+					return z;
+		return null;
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * Get zone by ID and zone class.
@@ -607,7 +615,7 @@ public final class ZoneManager extends DocumentParser
 	 */
 	public NpcSpawnTerritory getSpawnTerritory(String name)
 	{
-		return _spawnTerritories.containsKey(name) ? _spawnTerritories.get(name) : null;
+		return _spawnTerritories.get(name);	//[JOJO] -return _spawnTerritories.containsKey(name) ? _spawnTerritories.get(name) : null
 	}
 	
 	/**
