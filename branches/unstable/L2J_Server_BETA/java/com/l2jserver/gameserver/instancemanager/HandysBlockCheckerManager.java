@@ -299,10 +299,6 @@ public final class HandysBlockCheckerManager
 	 */
 	public boolean arenaIsBeingUsed(int arena)
 	{
-	//	if (arena < 0 || arena > 3)
-	//	{
-	//		return false;
-	//	}
 		return _arenaStatus[arena];
 	}
 	
