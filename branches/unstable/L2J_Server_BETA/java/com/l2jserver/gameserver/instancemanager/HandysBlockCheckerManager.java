@@ -359,8 +359,9 @@ public final class HandysBlockCheckerManager
 		player.stopSkillEffects(true, 6034);
 		player.stopSkillEffects(true, 6035);
 		player.stopSkillEffects(true, 6036);
-		// Remove team aura
-		player.setTeam(Team.NONE);
+		
+	//	// Remove team aura
+	//	player.setTeam(Team.NONE);
 		
 		// Remove the event items
 		PcInventory inv = player.getInventory();
