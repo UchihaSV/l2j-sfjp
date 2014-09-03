@@ -89,8 +89,7 @@ public class MacroList implements IRestorable
 			deleteMacroFromDb(removed);
 		}
 		
-		final L2ShortCut[] allShortCuts = _owner.getAllShortCuts();
-		for (L2ShortCut sc : allShortCuts)
+		for (L2ShortCut sc : _owner.getAllShortCuts())
 		{
 			if ((sc.getId() == id) && (sc.getType() == L2ShortCut.TYPE_MACRO))
 			{

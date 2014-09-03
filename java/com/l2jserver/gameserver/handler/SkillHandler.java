@@ -18,8 +18,7 @@
  */
 package com.l2jserver.gameserver.handler;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 
 import com.l2jserver.gameserver.model.skills.L2SkillType;
 
@@ -28,11 +27,11 @@ import com.l2jserver.gameserver.model.skills.L2SkillType;
  */
 public class SkillHandler implements IHandler<ISkillHandler, L2SkillType>
 {
-	private final Map<Integer, ISkillHandler> _datatable;
+	private final EnumMap<L2SkillType, ISkillHandler> _datatable;	//[JOJO] -HashMap
 	
 	protected SkillHandler()
 	{
-		_datatable = new HashMap<>();
+		_datatable = new EnumMap<>(L2SkillType.class);
 	}
 	
 	@Override
@@ -41,7 +40,7 @@ public class SkillHandler implements IHandler<ISkillHandler, L2SkillType>
 		L2SkillType[] types = handler.getSkillIds();
 		for (L2SkillType t : types)
 		{
-			_datatable.put(t.ordinal(), handler);
+			_datatable.put(t, handler);
 		}
 	}
 	
@@ -51,14 +50,14 @@ public class SkillHandler implements IHandler<ISkillHandler, L2SkillType>
 		L2SkillType[] types = handler.getSkillIds();
 		for (L2SkillType t : types)
 		{
-			_datatable.remove(t.ordinal());
+			_datatable.remove(t);
 		}
 	}
 	
 	@Override
 	public ISkillHandler getHandler(L2SkillType skillType)
 	{
-		return _datatable.get(skillType.ordinal());
+		return _datatable.get(skillType);
 	}
 	
 	@Override
