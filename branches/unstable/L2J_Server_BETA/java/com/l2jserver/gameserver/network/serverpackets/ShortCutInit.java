@@ -18,12 +18,14 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import java.util.Collection;
+
 import com.l2jserver.gameserver.model.L2ShortCut;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 public final class ShortCutInit extends L2GameServerPacket
 {
-	private L2ShortCut[] _shortCuts;
+	private Collection<L2ShortCut> _shortCuts;
 	private L2PcInstance _activeChar;
 	
 	public ShortCutInit(L2PcInstance activeChar)
@@ -42,7 +44,7 @@ public final class ShortCutInit extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0x45);
-		writeD(_shortCuts.length);
+		writeD(_shortCuts.size());
 		
 		for (L2ShortCut sc : _shortCuts)
 		{
@@ -78,6 +80,7 @@ public final class ShortCutInit extends L2GameServerPacket
 					writeD(sc.getId());
 					writeD(0x01); // C6
 					break;
+				case L2ShortCut.TYPE_TPBOOKMARK:	// 6
 				default:
 					writeD(sc.getId());
 					writeD(0x01); // C6

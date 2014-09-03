@@ -21,10 +21,11 @@ package com.l2jserver.gameserver.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -40,16 +41,16 @@ public class ShortCuts implements IRestorable
 	private static Logger _log = Logger.getLogger(ShortCuts.class.getName());
 	private static final int MAX_SHORTCUTS_PER_BAR = 12;
 	private final L2PcInstance _owner;
-	private final Map<Integer, L2ShortCut> _shortCuts = new TreeMap<>();
+	private final FastIntObjectMap<L2ShortCut> _shortCuts = new FastIntObjectMap<>();	//[JOJO] -TreeMap
 	
 	public ShortCuts(L2PcInstance owner)
 	{
 		_owner = owner;
 	}
 	
-	public L2ShortCut[] getAllShortCuts()
+	public Collection<L2ShortCut> getAllShortCuts()
 	{
-		return _shortCuts.values().toArray(new L2ShortCut[_shortCuts.values().size()]);
+		return _shortCuts.values();	//[JOJO] -_shortCuts.values().toArray(new L2ShortCut[_shortCuts.values().size()])
 	}
 	
 	public L2ShortCut getShortCut(int slot, int page)

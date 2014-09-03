@@ -21,13 +21,12 @@ package com.l2jserver.gameserver.instancemanager;
 import java.util.Map;
 
 import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.interfaces.IProcedure;
 import com.l2jserver.gameserver.network.L2GameClient;
-import com.l2jserver.util.L2HashMap;
 
 public final class AntiFeedManager
 {
@@ -36,8 +35,8 @@ public final class AntiFeedManager
 	public static final int TVT_ID = 2;
 	public static final int L2EVENT_ID = 3;
 	
-	private final FastMap<Integer, Long> _lastDeathTimes = new FastMap/*L2FastMap*/<Integer, Long>().shared();
-	private final L2HashMap<Integer, FastMap<Integer, Connections>> _eventIPs = new L2HashMap<>();
+	private final FastIntObjectMap<Long> _lastDeathTimes = new FastIntObjectMap<Long>().shared();	//[JOJO] -L2FastMap(true)
+	private final FastIntObjectMap<FastMap<Integer, Connections>> _eventIPs = new FastIntObjectMap<>();	//[JOJO] -L2HashMap()
 	
 	protected AntiFeedManager()
 	{
@@ -229,7 +228,8 @@ public final class AntiFeedManager
 		}
 		
 		final Integer addrHash = Integer.valueOf(client.getConnectionAddress().hashCode());
-		_eventIPs.executeForEachValue(new DisconnectProcedure(addrHash));
+		for (FastMap<Integer, Connections> v : _eventIPs.values())
+			disconnectProcedure(v, addrHash);
 	}
 	
 	/**
@@ -309,18 +309,8 @@ public final class AntiFeedManager
 		}
 	}
 	
-	private static final class DisconnectProcedure implements IProcedure<FastMap<Integer, Connections>, Boolean>
+	private final void disconnectProcedure(FastMap<Integer, Connections> event, Integer _addrHash)
 	{
-		private final Integer _addrHash;
-		
-		public DisconnectProcedure(Integer addrHash)
-		{
-			_addrHash = addrHash;
-		}
-		
-		@Override
-		public final boolean execute(FastMap<Integer, Connections> event)
-		{
 			final Connections conns = event.get(_addrHash);
 			if (conns != null)
 			{
@@ -332,8 +322,6 @@ public final class AntiFeedManager
 					}
 				}
 			}
-			return true;
-		}
 	}
 	
 	public static final AntiFeedManager getInstance()

@@ -1780,7 +1780,7 @@ public final class L2PcInstance extends L2Playable
 	/**
 	 * @return a table containing all L2ShortCut of the L2PcInstance.
 	 */
-	public L2ShortCut[] getAllShortCuts()
+	public Collection<L2ShortCut> getAllShortCuts()
 	{
 		return _shortCuts.getAllShortCuts();
 	}
@@ -7972,8 +7972,7 @@ public final class L2PcInstance extends L2Playable
 			return oldSkill;
 		}
 		
-		final L2ShortCut[] allShortCuts = getAllShortCuts();
-		for (L2ShortCut sc : allShortCuts)
+		for (L2ShortCut sc : getAllShortCuts())
 		{
 			if ((sc != null) && (skill != null) && (sc.getId() == skill.getId()) && (sc.getType() == L2ShortCut.TYPE_SKILL) && !((skill.getId() >= 3080) && (skill.getId() <= 3259)))
 			{

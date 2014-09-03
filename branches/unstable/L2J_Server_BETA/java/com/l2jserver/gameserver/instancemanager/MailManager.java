@@ -29,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -47,7 +47,7 @@ public final class MailManager
 {
 	private static final Logger _log = Logger.getLogger(MailManager.class.getName());
 	
-	private final FastMap<Integer, Message> _messages = new FastMap/*L2FastMap*/<Integer, Message>().shared();
+	private final FastIntObjectMap<Message> _messages = new FastIntObjectMap<Message>().shared();	//[JOJO] -L2FastMap(true)
 	
 	protected MailManager()
 	{
