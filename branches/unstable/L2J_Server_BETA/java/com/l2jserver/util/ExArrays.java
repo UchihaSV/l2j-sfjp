@@ -66,52 +66,52 @@ public class ExArrays
 		return push(array, value);
 	}
 	
-	public static boolean[] put(boolean[] array, int index, boolean value) /* throws IndexOutOfBoundsException */
+	public static boolean[] put(boolean[] array, int index, boolean value) /* throws NullPointerException, IndexOutOfBoundsException */
 	{
-		if (array == null || index == array.length) array = push(array, value);
-		else array[index] = value;
+		if (array == null) { if (index == 0)            array = push(array, value); else throw new NullPointerException(); }
+		else               { if (index == array.length) array = push(array, value); else array[index] = value;             }
 		return array;
 	}
 	
-	public static short[] put(short[] array, int index, short value) /* throws IndexOutOfBoundsException */
+	public static short[] put(short[] array, int index, short value) /* throws NullPointerException, IndexOutOfBoundsException */
 	{
-		if (array == null || index == array.length) array = push(array, value);
-		else array[index] = value;
+		if (array == null) { if (index == 0)            array = push(array, value); else throw new NullPointerException(); }
+		else               { if (index == array.length) array = push(array, value); else array[index] = value;             }
 		return array;
 	}
 	
-	public static int[] put(int[] array, int index, int value) /* throws IndexOutOfBoundsException */
+	public static int[] put(int[] array, int index, int value) /* throws NullPointerException, IndexOutOfBoundsException */
 	{
-		if (array == null || index == array.length) array = push(array, value);
-		else array[index] = value;
+		if (array == null) { if (index == 0)            array = push(array, value); else throw new NullPointerException(); }
+		else               { if (index == array.length) array = push(array, value); else array[index] = value;             }
 		return array;
 	}
 	
-	public static long[] put(long[] array, int index, long value) /* throws IndexOutOfBoundsException */
+	public static long[] put(long[] array, int index, long value) /* throws NullPointerException, IndexOutOfBoundsException */
 	{
-		if (array == null || index == array.length) array = push(array, value);
-		else array[index] = value;
+		if (array == null) { if (index == 0)            array = push(array, value); else throw new NullPointerException(); }
+		else               { if (index == array.length) array = push(array, value); else array[index] = value;             }
 		return array;
 	}
 	
-	public static float[] put(float[] array, int index, float value) /* throws IndexOutOfBoundsException */
+	public static float[] put(float[] array, int index, float value) /* throws NullPointerException, IndexOutOfBoundsException */
 	{
-		if (array == null || index == array.length) array = push(array, value);
-		else array[index] = value;
+		if (array == null) { if (index == 0)            array = push(array, value); else throw new NullPointerException(); }
+		else               { if (index == array.length) array = push(array, value); else array[index] = value;             }
 		return array;
 	}
 	
-	public static double[] put(double[] array, int index, double value) /* throws IndexOutOfBoundsException */
+	public static double[] put(double[] array, int index, double value) /* throws NullPointerException, IndexOutOfBoundsException */
 	{
-		if (array == null || index == array.length) array = push(array, value);
-		else array[index] = value;
+		if (array == null) { if (index == 0)            array = push(array, value); else throw new NullPointerException(); }
+		else               { if (index == array.length) array = push(array, value); else array[index] = value;             }
 		return array;
 	}
 	
-	public static <E> E[] put(E[] array, int index, E value) /* throws IndexOutOfBoundsException */
+	public static <E> E[] put(E[] array, int index, E value) /* throws NullPointerException, IndexOutOfBoundsException */
 	{
-		if (array == null || index == array.length) array = push(array, value);
-		else array[index] = value;
+		if (array == null) { if (index == 0)            array = push(array, value); else throw new NullPointerException(); }
+		else               { if (index == array.length) array = push(array, value); else array[index] = value;             }
 		return array;
 	}
 	
@@ -152,37 +152,37 @@ public class ExArrays
 	
 	public static boolean get(boolean[] array, int index, boolean defaultValue)
 	{
-		return index >= 0 && index < array.length ? array[index] : defaultValue;
+		return array != null && index >= 0 && index < array.length ? array[index] : defaultValue;
 	}
 	
 	public static short get(short[] array, int index, short defaultValue)
 	{
-		return index >= 0 && index < array.length ? array[index] : defaultValue;
+		return array != null && index >= 0 && index < array.length ? array[index] : defaultValue;
 	}
 	
 	public static int get(int[] array, int index, int defaultValue)
 	{
-		return index >= 0 && index < array.length ? array[index] : defaultValue;
+		return array != null && index >= 0 && index < array.length ? array[index] : defaultValue;
 	}
 	
 	public static long get(long[] array, int index, long defaultValue)
 	{
-		return index >= 0 && index < array.length ? array[index] : defaultValue;
+		return array != null && index >= 0 && index < array.length ? array[index] : defaultValue;
 	}
 	
 	public static float get(float[] array, int index, float defaultValue)
 	{
-		return index >= 0 && index < array.length ? array[index] : defaultValue;
+		return array != null && index >= 0 && index < array.length ? array[index] : defaultValue;
 	}
 	
 	public static double get(double[] array, int index, double defaultValue)
 	{
-		return index >= 0 && index < array.length ? array[index] : defaultValue;
+		return array != null && index >= 0 && index < array.length ? array[index] : defaultValue;
 	}
 	
 	public static <E> E get(E[] array, int index, E defaultValue)
 	{
-		return index >= 0 && index < array.length ? array[index] : defaultValue;
+		return array != null && index >= 0 && index < array.length ? array[index] : defaultValue;
 	}
 	
 	public static boolean[] push(boolean[] array, boolean value)
@@ -260,9 +260,9 @@ public class ExArrays
 	public static <E> E[] push(E[] array, E value)
 	{
 		if (array == null) {
-			@SuppressWarnings("unchecked") E[] copy = (E[]) Array.newInstance(value.getClass(), 1);
-			copy[0] = value;
-			return copy;
+			@SuppressWarnings("unchecked") E[] a = (E[]) Array.newInstance(value.getClass(), 1);
+			a[0] = value;
+			return a;
 		} else {
 			final int index = array.length;
 			array = Arrays.copyOf(array, index + 1);
