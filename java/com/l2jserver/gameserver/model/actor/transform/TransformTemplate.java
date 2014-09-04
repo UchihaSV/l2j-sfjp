@@ -20,10 +20,12 @@ package com.l2jserver.gameserver.model.actor.transform;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+
+import jp.sf.l2j.arrayMaps.SortedIntDoubleArrayMap;
+import jp.sf.l2j.arrayMaps.SortedIntFloatArrayMap;
+import jp.sf.l2j.arrayMaps.SortedIntIntArrayMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.holders.AdditionalItemHolder;
@@ -48,12 +50,12 @@ public final class TransformTemplate
 	private List<SkillHolder> _skills;
 	private List<AdditionalSkillHolder> _additionalSkills;
 	private List<AdditionalItemHolder> _additionalItems;
-	private Map<Integer, Integer> _baseDefense;
-	private Map<Integer, Double> _baseStats;
-	private Map<Integer, Float> _baseSpeed;
+	private SortedIntIntArrayMap _baseDefense;	//[JOJO] -HashMap
+	private SortedIntDoubleArrayMap _baseStats;	//[JOJO] -HashMap
+	private SortedIntFloatArrayMap _baseSpeed;	//[JOJO] -HashMap
 	
 	private ExBasicActionList _list;
-	private final Map<Integer, TransformLevelData> _data = new LinkedHashMap<>(100);
+	private final FastIntObjectMap<TransformLevelData> _data = new FastIntObjectMap<>(100);	//[JOJO] -LinkedHashMap
 	
 	public TransformTemplate(StatsSet set)
 	{
@@ -100,7 +102,7 @@ public final class TransformTemplate
 	{
 		if (_baseSpeed == null)
 		{
-			_baseSpeed = new HashMap<>();
+			_baseSpeed = new SortedIntFloatArrayMap();
 		}
 		_baseSpeed.put(type.ordinal(), val);
 	}
@@ -118,7 +120,7 @@ public final class TransformTemplate
 	{
 		if (_baseDefense == null)
 		{
-			_baseDefense = new HashMap<>();
+			_baseDefense = new SortedIntIntArrayMap();
 		}
 		_baseDefense.put(type, val);
 	}
@@ -136,7 +138,7 @@ public final class TransformTemplate
 	{
 		if (_baseStats == null)
 		{
-			_baseStats = new HashMap<>();
+			_baseStats = new SortedIntDoubleArrayMap();
 		}
 		_baseStats.put(stats.ordinal(), val);
 	}

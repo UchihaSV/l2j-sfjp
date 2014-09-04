@@ -43,7 +43,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExBasicActionList;
  */
 public final class TransformData extends DocumentParser
 {
-	private final SortedIntObjectArrayMap<Transform> _transformData = new SortedIntObjectArrayMap<>();
+	private final SortedIntObjectArrayMap<Transform> _transformData = new SortedIntObjectArrayMap<>();	//[JOJO] -HashMap
 	
 	protected TransformData()
 	{
