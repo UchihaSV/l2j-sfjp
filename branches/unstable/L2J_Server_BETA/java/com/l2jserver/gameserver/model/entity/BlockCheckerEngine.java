@@ -370,6 +370,14 @@ public final class BlockCheckerEngine
 				{
 					player.getSummon().unSummon(player);
 				}
+				if (player.isSitting())
+				{
+					player.standUp();
+				}
+				if (player.isTransformed() || player.isInStance())
+				{
+					player.untransform();
+				}
 				
 				// Give the player start up effects
 				// Freeze
@@ -393,6 +401,10 @@ public final class BlockCheckerEngine
 				player.sendPacket(ExBasicActionList.STATIC_PACKET);
 				broadcastRelationChanged(player);
 			}
+			for (L2PcInstance player : _holder.getAllPlayers())
+				if (player.getEffectList().getBuffInfoBySkillId(6035) == null
+				 && player.getEffectList().getBuffInfoBySkillId(6036) == null)
+					HandysBlockCheckerManager.getInstance().onDisconnect(player);
 		}
 		
 		@Override
