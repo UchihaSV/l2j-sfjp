@@ -18,8 +18,7 @@
  */
 package com.l2jserver.gameserver.model.actor.transform;
 
-import java.util.HashMap;
-import java.util.Map;
+import jp.sf.l2j.arrayMaps.SortedIntDoubleArrayMap;
 
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.stats.Stats;
@@ -31,7 +30,7 @@ public final class TransformLevelData
 {
 	private final int _level;
 	private final double _levelMod;
-	private Map<Integer, Double> _stats;
+	private SortedIntDoubleArrayMap _stats;	//[JOJO] -HashMap
 	
 	public TransformLevelData(StatsSet set)
 	{
@@ -49,7 +48,7 @@ public final class TransformLevelData
 	{
 		if (_stats == null)
 		{
-			_stats = new HashMap<>();
+			_stats = new SortedIntDoubleArrayMap();
 		}
 		_stats.put(stat.ordinal(), val);
 	}
