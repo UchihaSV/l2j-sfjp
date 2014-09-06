@@ -25,6 +25,6 @@ public class HandysBlockChecker
 {
 	public static final int ARENA_NONE = -1;
 	public static final int TEAM_NON = -1, TEAM_BLUE = 0, TEAM_RED = 1;
-	//TODO: public static final int COLOR_BLUE = 0x00;
-	//TODO: public static final int COLOR_RED = 0x53;
+	public static final int COLOR_EFFECT_BLUE = 0x00;
+	public static final int COLOR_EFFECT_RED = 0x53;
 }

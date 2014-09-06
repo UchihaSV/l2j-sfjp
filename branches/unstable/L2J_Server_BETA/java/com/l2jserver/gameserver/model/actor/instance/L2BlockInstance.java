@@ -21,15 +21,20 @@ package com.l2jserver.gameserver.model.actor.instance;
 import static com.l2jserver.gameserver.instancemanager.HandysBlockChecker.*;
 
 import com.l2jserver.gameserver.datatables.ItemTable;
+import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.instancemanager.HandysBlockCheckerManager;
 import com.l2jserver.gameserver.model.ArenaParticipantsHolder;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.entity.BlockCheckerEngine;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
+import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.ExCubeGameChangePoints;
 import com.l2jserver.gameserver.network.serverpackets.ExCubeGameExtendedChangePoints;
+import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.util.Rnd;
 
 /**
@@ -54,39 +59,100 @@ public class L2BlockInstance extends L2MonsterInstance
 	 * @param holder
 	 * @param team
 	 */
-	public void changeColor(L2PcInstance attacker, ArenaParticipantsHolder holder, int team)
+	private final void changeColor(L2PcInstance attacker, ArenaParticipantsHolder holder, int team, int color)
 	{
 		// Do not update color while sending old info
 		synchronized (this)
 		{
-			final BlockCheckerEngine event = holder.getEvent();
-			if (_colorEffect == 0x53/*COLOR_RED*/)
+			if (_colorEffect != color)
 			{
 				// Change color
-				_colorEffect = 0x00/*COLOR_BLUE*/;
+				_colorEffect = color;
 				// BroadCast to all known players
 				this.broadcastPacket(new AbstractNpcInfo.NpcInfo(this, attacker));
-				increaseTeamPointsAndSend(attacker, team, event);
-			}
-			else
-			{
-				// Change color
-				_colorEffect = 0x53/*COLOR_RED*/;
-				// BroadCast to all known players
-				this.broadcastPacket(new AbstractNpcInfo.NpcInfo(this, attacker));
-				increaseTeamPointsAndSend(attacker, team, event);
+				increaseTeamPointsAndSend(attacker, team, holder.getEvent());
 			}
 			// 30% chance to drop the event items
 			int random = Rnd.get(100);
 			// Bond
-			if (random > 84)	// 99 - 84 = 15%
+			if ((random -= 15)  < 0)	// 15%
 			{
-				dropItem(13788, event, attacker);
+				dropItem(13787, holder.getEvent(), attacker);	// 接着剤
 			}
-			else if (random > 69/* && random <= 84*/)	// 84 - 69 = 15%
+			else if ((random -= 15)  < 0)	// 15%
 			{
-				dropItem(13787, event, attacker);
+				dropItem(13788, holder.getEvent(), attacker);	// 地雷
 			}
+		}
+	}
+	
+	/*
+	 * スキル 5852-1 ブロック返し	(ブロックをひっくり返す。)
+	 * スキル 5853-1 ブロック返し	(ブロックをひっくり返す。)
+	 * アイテム 13787 接着剤 → スキル 2616-1 接着固定 abnormalType=INVINCIBILITY ... setIsInvul(true)
+	 * アイテム 13788 地雷   → スキル 2617-1 地雷埋設 ┬→ スキル 5848-1 ブロック トリガー スロー ⇒ 5849-1 移動速度の低下
+	 *                                                 └→ スキル 5850-1 ブロック トリガースタン  ⇒ 5851-1 ショック
+	 */
+	public final void blockCheckerSkill(L2PcInstance caster, L2Skill skill)	//+[JOJO] Dummy.java#useBlockCheckerSkill() から引越し
+	{
+		final int arena = caster.getBlockCheckerArena();
+		if (arena == ARENA_NONE)
+		{
+			return;
+		}
+		final ArenaParticipantsHolder holder = HandysBlockCheckerManager.getInstance().getHolder(arena);
+		if (holder == null)
+		{
+			return;
+		}
+		if (isInvul())	// スキル 2616-1 接着固定
+		{
+			caster.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ATTACK_WAS_BLOCKED));
+			return;
+		}
+		
+		switch (skill.getId())
+		{
+			case 5852:	// ブロック返し
+			case 5853:	// ブロック返し
+				final int team = holder.getPlayerTeam(caster);
+				if (team == TEAM_RED && _colorEffect != COLOR_EFFECT_RED)
+				{
+					changeColor(caster, holder, team, COLOR_EFFECT_RED);
+				}
+				else if (team == TEAM_BLUE && _colorEffect != COLOR_EFFECT_BLUE)
+				{
+					changeColor(caster, holder, team, COLOR_EFFECT_BLUE);
+				}
+				
+				if (getKnownSkill(5848) != null)	// ブロック トリガー スロー
+				{
+					SkillTable.getInstance().getInfo(5849, 1).applyEffects(this, caster);	// 移動速度の低下
+				}
+				if (getKnownSkill(5850) != null)	// ブロック トリガースタン
+				{
+					SkillTable.getInstance().getInfo(5851, 1).applyEffects(this, caster);	// ショック
+				}
+				break;
+				
+			case 2616:	// 接着固定
+				skill.applyEffects(caster, this);
+			//	if (getEffectList().getBuffInfoBySkillId(skill.getId()) == null)
+			//		caster.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.C1_RESISTED_YOUR_S2)
+			//			.addCharName(this)
+			//			.addSkillName(skill));
+			//	else
+			//		caster.sendMessage(getName() + "が" + skill.getName() + "にかかりました。");	//仮
+				break;
+				
+			case 2617:	// 地雷埋設
+				if (!(getKnownSkill(5848) != null || getKnownSkill(5850) != null))
+				{
+					L2Skill s = SkillTable.getInstance().getInfo(Rnd.nextBoolean() ? 5848 : 5850, 1);	// ? ブロック トリガー スロー : ブロック トリガースタン
+					addSkill(s);
+			//		caster.sendMessage(getName() + "が" + skill.getName() + "にかかりました。");	//仮
+				}
+				break;
 		}
 	}
 	
@@ -96,11 +162,11 @@ public class L2BlockInstance extends L2MonsterInstance
 	 */
 	public void setRed()
 	{
-		_colorEffect = 0x53/*COLOR_RED*/;
+		_colorEffect = COLOR_EFFECT_RED;
 	}
 	public void setBlue()
 	{
-		_colorEffect = 0x00/*COLOR_BLUE*/;
+		_colorEffect = COLOR_EFFECT_BLUE;
 	}
 	
 	/**
