@@ -125,24 +125,24 @@ public class L2BlockInstance extends L2MonsterInstance
 					changeColor(caster, holder, team, COLOR_EFFECT_BLUE);
 				}
 				
-				if (getKnownSkill(5848) != null)	// ブロック トリガー スロー
+				if (getKnownSkill(5848) != null)	// (地雷)ブロック トリガー スロー
 				{
-					SkillTable.getInstance().getInfo(5849, 1).applyEffects(this, caster);	// 移動速度の低下
+					final L2Skill debuf = SkillTable.getInstance().getInfo(5849, 1);
+					debuf.applyEffects(this, caster);	// (地雷)移動速度の低下
+					if (caster.isAffectedBySkill(debuf.getId()))
+						removeSkill(5848, false);
 				}
-				if (getKnownSkill(5850) != null)	// ブロック トリガースタン
+				if (getKnownSkill(5850) != null)	// (地雷)ブロック トリガースタン
 				{
-					SkillTable.getInstance().getInfo(5851, 1).applyEffects(this, caster);	// ショック
+					final L2Skill debuf = SkillTable.getInstance().getInfo(5851, 1);
+					debuf.applyEffects(this, caster);	// (地雷)ショック
+					if (caster.isAffectedBySkill(debuf.getId()))
+						removeSkill(5850, false);
 				}
 				break;
 				
 			case 2616:	// 接着固定
 				skill.applyEffects(caster, this);
-			//	if (getEffectList().getBuffInfoBySkillId(skill.getId()) == null)
-			//		caster.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.C1_RESISTED_YOUR_S2)
-			//			.addCharName(this)
-			//			.addSkillName(skill));
-			//	else
-			//		caster.sendMessage(getName() + "が" + skill.getName() + "にかかりました。");	//仮
 				break;
 				
 			case 2617:	// 地雷埋設
@@ -150,7 +150,6 @@ public class L2BlockInstance extends L2MonsterInstance
 				{
 					L2Skill s = SkillTable.getInstance().getInfo(Rnd.nextBoolean() ? 5848 : 5850, 1);	// ? ブロック トリガー スロー : ブロック トリガースタン
 					addSkill(s);
-			//		caster.sendMessage(getName() + "が" + skill.getName() + "にかかりました。");	//仮
 				}
 				break;
 		}
