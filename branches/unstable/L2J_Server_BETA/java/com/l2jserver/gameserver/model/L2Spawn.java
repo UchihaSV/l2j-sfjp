@@ -19,7 +19,6 @@
 package com.l2jserver.gameserver.model;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
