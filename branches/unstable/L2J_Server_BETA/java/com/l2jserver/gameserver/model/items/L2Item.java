@@ -789,6 +789,11 @@ public abstract class L2Item implements IIdentifiable
 		return (getItemType() == L2EtcItemType.ELIXIR);
 	}
 	
+	public boolean isScroll()
+	{
+		return (getItemType() == L2EtcItemType.SCROLL);
+	}
+	
 	/**
 	 * Get the functions used by this item.
 	 * @param item : L2ItemInstance pointing out the item

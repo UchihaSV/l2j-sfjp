@@ -845,6 +845,11 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		return _item.isElixir();
 	}
 	
+	public boolean isScroll()
+	{
+		return _item.isScroll();
+	}
+	
 	public boolean isHeroItem()
 	{
 		return _item.isHeroItem();
