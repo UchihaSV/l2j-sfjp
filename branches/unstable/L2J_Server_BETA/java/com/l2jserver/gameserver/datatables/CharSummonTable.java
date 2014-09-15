@@ -34,7 +34,6 @@ import com.l2jserver.gameserver.model.L2PetData;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2ServitorInstance;
-import com.l2jserver.gameserver.model.actor.instance.L2SiegeSummonInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.skills.l2skills.L2SkillSummon;
@@ -216,15 +215,8 @@ public class CharSummonTable
 					}
 					
 					final int id = IdFactory.getInstance().getNextId();
-					L2ServitorInstance summon;
-					if (summonTemplate.isType("L2SiegeSummon"))
-					{
-						summon = new L2SiegeSummonInstance(id, summonTemplate, activeChar, skill);
-					}
-					else
-					{
-						summon = new L2ServitorInstance(id, summonTemplate, activeChar, skill);
-					}
+					
+					L2ServitorInstance summon = new L2ServitorInstance(id, summonTemplate, activeChar, skill);
 					
 					summon.setName(summonTemplate.getName());
 					summon.setTitle(activeChar.getName());
