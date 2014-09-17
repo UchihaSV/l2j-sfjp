@@ -655,6 +655,7 @@ public abstract class L2Summon extends L2Playable
 			case BEHIND_AURA:
 			case SELF:
 			case AURA_CORPSE_MOB:
+			case COMMAND_CHANNEL:
 				target = this;
 				break;
 			default:

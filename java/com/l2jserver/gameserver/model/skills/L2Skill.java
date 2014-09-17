@@ -1404,6 +1404,12 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			return;
 		}
 		
+		if (effected.isInvulAgainst(getId(), getLevel()))
+		{
+			effected.sendDebugMessage("Skill " + toString() + " has been ignored (invul against)");
+			return;
+		}
+		
 		final Env env = new Env();
 		env.setSkillMastery(Formulas.calcSkillMastery(effector, this));
 		env.setCharacter(effector);

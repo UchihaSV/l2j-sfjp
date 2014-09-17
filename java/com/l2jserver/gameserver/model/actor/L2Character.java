@@ -94,6 +94,7 @@ import com.l2jserver.gameserver.model.effects.AbstractEffect;
 import com.l2jserver.gameserver.model.effects.EffectFlag;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.entity.Instance;
+import com.l2jserver.gameserver.model.holders.InvulSkillHolder;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.holders.SkillUseHolder;
 import com.l2jserver.gameserver.model.interfaces.IChanceSkillTrigger;
@@ -231,6 +232,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	private boolean _lethalable = true;
 	
 	private volatile Map<Integer, OptionsSkillHolder> _triggerSkills;
+	
+	private volatile Map<Integer, InvulSkillHolder> _invulAgainst;
 	
 	private final CharEffectList _effectList = new CharEffectList(this);
 	
@@ -1670,6 +1673,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			case PARTY:
 			case CLAN:
 			case PARTY_CLAN:
+			case COMMAND_CHANNEL:
 				doit = true;
 			default:
 				if (targets.length == 0)
@@ -6397,7 +6401,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 					// EVT_ATTACKED and PvPStatus
 					if (target instanceof L2Character)
 					{
-						if (skill.getEffectPoint() <= 0)
+						if (skill.isBad())
 						{
 							if (target.isPlayer() || target.isSummon() || target.isTrap())
 							{
@@ -6405,21 +6409,19 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 								if (!target.equals(this))
 								{
 									// Combat-mode check
-									if (skill.getEffectPoint() != 0)
+									if (target.isPlayer())
 									{
-										if (target.isPlayer())
+										target.getActingPlayer().getAI().clientStartAutoAttack();
+									}
+									else if (target.isSummon() && ((L2Character) target).hasAI())
+									{
+										L2PcInstance owner = ((L2Summon) target).getOwner();
+										if (owner != null)
 										{
-											target.getActingPlayer().getAI().clientStartAutoAttack();
-										}
-										else if (target.isSummon() && ((L2Character) target).hasAI())
-										{
-											L2PcInstance owner = ((L2Summon) target).getOwner();
-											if (owner != null)
-											{
-												owner.getAI().clientStartAutoAttack();
-											}
+											owner.getAI().clientStartAutoAttack();
 										}
 									}
+									
 									// attack of the own pet does not flag player
 									// triggering trap not flag trap owner
 									if ((player.getSummon() != target) && !isTrap() && !((skill.getEffectPoint() == 0) && (skill.getAffectRange() > 0)))
@@ -7341,6 +7343,51 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			_channelized = new SkillChannelized();
 		}
 		return _channelized;
+	}
+	
+	public void addInvulAgainst(SkillHolder holder)
+	{
+		final InvulSkillHolder invulHolder = getInvulAgainstSkills().get(holder.getSkillId());
+		if (invulHolder != null)
+		{
+			invulHolder.increaseInstances();
+			return;
+		}
+		getInvulAgainstSkills().put(holder.getSkillId(), new InvulSkillHolder(holder));
+	}
+	
+	public void removeInvulAgainst(SkillHolder holder)
+	{
+		final InvulSkillHolder invulHolder = getInvulAgainstSkills().get(holder.getSkillId());
+		if ((invulHolder != null) && (invulHolder.decreaseInstances() < 1))
+		{
+			getInvulAgainstSkills().remove(holder.getSkillId());
+		}
+	}
+	
+	public boolean isInvulAgainst(int skillId, int skillLvl)
+	{
+		if (_invulAgainst != null)
+		{
+			final SkillHolder holder = getInvulAgainstSkills().get(skillId);
+			return ((holder != null) && ((holder.getSkillLvl() < 1) || (holder.getSkillLvl() == skillLvl)));
+		}
+		return false;
+	}
+	
+	private Map<Integer, InvulSkillHolder> getInvulAgainstSkills()
+	{
+		if (_invulAgainst == null)
+		{
+			synchronized (this)
+			{
+				if (_invulAgainst == null)
+				{
+					return _invulAgainst = new ConcurrentHashMap<>();
+				}
+			}
+		}
+		return _invulAgainst;
 	}
 }
 
