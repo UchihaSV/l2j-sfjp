@@ -8726,6 +8726,7 @@ public final class L2PcInstance extends L2Playable
 			case GROUND:
 			case SELF:
 			case AURA_CORPSE_MOB:
+			case COMMAND_CHANNEL:
 				target = this;
 				break;
 			default:
@@ -8830,6 +8831,7 @@ public final class L2PcInstance extends L2Playable
 			case SELF:
 			case AREA_SUMMON:
 			case AURA_CORPSE_MOB:
+			case COMMAND_CHANNEL:
 				target = this;
 				break;
 			case PET:
