@@ -47,7 +47,7 @@ public enum L2SkillType
 	// Summons
 	SUMMON(L2SkillSummon.class),
 	
-	BEAST_SKILLS,		//[JOJO]
+	BEAST,		//[JOJO]
 	DETECT_TRAP,
 	REMOVE_TRAP,
 	
