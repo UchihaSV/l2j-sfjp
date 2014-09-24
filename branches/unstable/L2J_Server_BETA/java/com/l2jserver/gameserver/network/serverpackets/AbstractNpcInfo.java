@@ -139,7 +139,7 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 			{
 if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 				StringBuilder t = new StringBuilder(32).append("Lv ").append(cha.getLevel());
-				if (cha.getAggroRange() > 0)
+				if (cha.isAggressive())
 					t.append('*');
 				if (_title != null)
 					t.append(' ').append(_title);
