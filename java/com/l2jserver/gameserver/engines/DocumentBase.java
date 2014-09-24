@@ -510,8 +510,8 @@ public abstract class DocumentBase
 				if (range.length == 2)
 				{
 					int[] lvlRange = new int[2];
-					lvlRange[0] = Integer.decode(getValue(a.getNodeValue(), template).split(";")[0]);
-					lvlRange[1] = Integer.decode(getValue(a.getNodeValue(), template).split(";")[1]);
+					lvlRange[0] = Integer.decode(range[0]);
+					lvlRange[1] = Integer.decode(range[1]);
 					cond = joinAnd(cond, new ConditionPlayerLevelRange(lvlRange));
 				}
 			}
@@ -688,9 +688,9 @@ public abstract class DocumentBase
 			}
 			else if ("active_effect_id_lvl".equalsIgnoreCase(a.getNodeName()))
 			{
-				String val = getValue(a.getNodeValue(), template);
-				int effect_id = Integer.decode(getValue(val.split(",")[0], template));
-				int effect_lvl = Integer.decode(getValue(val.split(",")[1], template));
+				String[] values = getValue(a.getNodeValue(), template).split(",");
+				int effect_id = Integer.decode(getValue(values[0], template));
+				int effect_lvl = Integer.decode(getValue(values[1], template));
 				cond = joinAnd(cond, new ConditionPlayerActiveEffectId(effect_id, effect_lvl));
 			}
 			else if ("active_skill_id".equalsIgnoreCase(a.getNodeName()))
@@ -700,9 +700,9 @@ public abstract class DocumentBase
 			}
 			else if ("active_skill_id_lvl".equalsIgnoreCase(a.getNodeName()))
 			{
-				String val = getValue(a.getNodeValue(), template);
-				int skill_id = Integer.decode(getValue(val.split(",")[0], template));
-				int skill_lvl = Integer.decode(getValue(val.split(",")[1], template));
+				String[] v = getValue(a.getNodeValue(), template).split(",");
+				int skill_id = Integer.decode(getValue(v[0], template));
+				int skill_lvl = Integer.decode(getValue(v[1], template));
 				cond = joinAnd(cond, new ConditionPlayerActiveSkillId(skill_id, skill_lvl));
 			}
 			else if ("class_id_restriction".equalsIgnoreCase(a.getNodeName()))
@@ -860,8 +860,8 @@ public abstract class DocumentBase
 				if (range.length == 2)
 				{
 					int[] lvlRange = new int[2];
-					lvlRange[0] = Integer.decode(getValue(a.getNodeValue(), template).split(";")[0]);
-					lvlRange[1] = Integer.decode(getValue(a.getNodeValue(), template).split(";")[1]);
+					lvlRange[0] = Integer.decode(range[0]);
+					lvlRange[1] = Integer.decode(range[1]);
 					cond = joinAnd(cond, new ConditionTargetLevelRange(lvlRange));
 				}
 			}
@@ -891,9 +891,9 @@ public abstract class DocumentBase
 			}
 			else if ("active_effect_id_lvl".equalsIgnoreCase(a.getNodeName()))
 			{
-				String val = getValue(a.getNodeValue(), template);
-				int effect_id = Integer.decode(getValue(val.split(",")[0], template));
-				int effect_lvl = Integer.decode(getValue(val.split(",")[1], template));
+				String[] values = getValue(a.getNodeValue(), template).split(",");
+				int effect_id = Integer.decode(getValue(values[0], template));
+				int effect_lvl = Integer.decode(getValue(values[1], template));
 				cond = joinAnd(cond, new ConditionTargetActiveEffectId(effect_id, effect_lvl));
 			}
 			else if ("active_skill_id".equalsIgnoreCase(a.getNodeName()))
@@ -903,9 +903,9 @@ public abstract class DocumentBase
 			}
 			else if ("active_skill_id_lvl".equalsIgnoreCase(a.getNodeName()))
 			{
-				String val = getValue(a.getNodeValue(), template);
-				int skill_id = Integer.decode(getValue(val.split(",")[0], template));
-				int skill_lvl = Integer.decode(getValue(val.split(",")[1], template));
+				String[] values = getValue(a.getNodeValue(), template).split(",");
+				int skill_id = Integer.decode(getValue(values[0], template));
+				int skill_lvl = Integer.decode(getValue(values[1], template));
 				cond = joinAnd(cond, new ConditionTargetActiveSkillId(skill_id, skill_lvl));
 			}
 			else if ("abnormal".equalsIgnoreCase(a.getNodeName()))
