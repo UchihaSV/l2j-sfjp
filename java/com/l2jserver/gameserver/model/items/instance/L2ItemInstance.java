@@ -2209,7 +2209,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 	{
 		final NpcHtmlMessage html = new NpcHtmlMessage(0, getId());
 		html.setHtml(content);
-		html.replace("%itemId%", String.valueOf(getObjectId()));
+		html.replace("%itemId%", getObjectId());
 		activeChar.sendPacket(html);
 	}
 	
