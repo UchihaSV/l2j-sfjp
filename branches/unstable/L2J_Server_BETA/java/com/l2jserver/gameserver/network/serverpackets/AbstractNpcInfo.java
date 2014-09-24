@@ -148,7 +148,7 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 				
 				_title = t.toString();
 }} else {{
-				String t = "Lv " + cha.getLevel() + (cha.getAggroRange() > 0 ? "*" : "");
+				String t = "Lv " + cha.getLevel() + (cha.isAggressive() ? "*" : "");
 				if (_title != null)
 				{
 					t += " " + _title;
