@@ -18,9 +18,10 @@
  */
 package com.l2jserver.gameserver.model.conditions;
 
-import java.util.Set;
+import java.util.EnumSet;
 
 import com.l2jserver.gameserver.enums.NpcRace;
+import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.stats.Env;
 
@@ -30,13 +31,13 @@ import com.l2jserver.gameserver.model.stats.Env;
  */
 public class ConditionTargetNpcRace extends Condition
 {
-	private final Set<NpcRace> _races;
+	private final EnumSet<NpcRace> _races;	//[JOJO] -HashSet
 	
 	/**
 	 * Instantiates a new condition target NPC race
 	 * @param races the races
 	 */
-	public ConditionTargetNpcRace(Set<NpcRace> races)
+	public ConditionTargetNpcRace(EnumSet<NpcRace> races)
 	{
 		_races = races;
 	}
@@ -44,7 +45,7 @@ public class ConditionTargetNpcRace extends Condition
 	@Override
 	public boolean testImpl(Env env)
 	{
-		final L2Npc npc = env.getTarget() instanceof L2Npc ? (L2Npc) env.getTarget() : null;
-		return (npc != null) && _races.contains(npc.getTemplate().getRace());
+		final L2Character o = env.getTarget();
+		return o instanceof L2Npc && _races.contains(((L2Npc) o).getTemplate().getRace());
 	}
 }

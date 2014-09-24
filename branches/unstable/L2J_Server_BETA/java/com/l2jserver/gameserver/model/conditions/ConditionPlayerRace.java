@@ -18,9 +18,11 @@
  */
 package com.l2jserver.gameserver.model.conditions;
 
+import java.util.EnumSet;
+
 import com.l2jserver.gameserver.enums.PcRace;
+import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.stats.Env;
-import com.l2jserver.gameserver.util.Util;
 
 /**
  * The Class ConditionPlayerRace.
@@ -28,13 +30,13 @@ import com.l2jserver.gameserver.util.Util;
  */
 public class ConditionPlayerRace extends Condition
 {
-	private final PcRace[] _races;
+	private final EnumSet<PcRace> _races;	//[JOJO] -PcRace[]
 	
 	/**
 	 * Instantiates a new condition player race.
 	 * @param races the list containing the allowed races.
 	 */
-	public ConditionPlayerRace(PcRace[] races)
+	public ConditionPlayerRace(EnumSet<PcRace> races)
 	{
 		_races = races;
 	}
@@ -42,10 +44,7 @@ public class ConditionPlayerRace extends Condition
 	@Override
 	public boolean testImpl(Env env)
 	{
-		if ((env.getCharacter() == null) || !env.getCharacter().isPlayer())
-		{
-			return false;
-		}
-		return Util.contains(_races, env.getPlayer().getRace());
+		final L2Character o = env.getCharacter();
+		return o != null && o.isPlayer() && _races.contains(env.getPlayer().getRace());
 	}
 }

@@ -18,14 +18,13 @@
  */
 package com.l2jserver.gameserver.engines;
 
-import static com.l2jserver.gameserver.datatables.StringIntern.intern;
+import static com.l2jserver.gameserver.datatables.StringIntern.*;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -492,14 +491,11 @@ public abstract class DocumentBase
 			Node a = attrs.item(i);
 			if ("races".equalsIgnoreCase(a.getNodeName()))
 			{
-				final String[] racesVal = a.getNodeValue().split(",");
-				final PcRace[] races = new PcRace[racesVal.length];
-				for (int r = 0; r < racesVal.length; r++)
+				final String[] values = a.getNodeValue().split(",");
+				final EnumSet<PcRace> races = EnumSet.noneOf(PcRace.class);	//[JOJO] -PcRace[]
+				for (String value : values)
 				{
-					if (racesVal[r] != null)
-					{
-						races[r] = PcRace.valueOf(racesVal[r]);
-					}
+					races.add(PcRace.valueOf(value));
 				}
 				cond = joinAnd(cond, new ConditionPlayerRace(races));
 			}
@@ -926,24 +922,21 @@ public abstract class DocumentBase
 			else if ("npcRace".equalsIgnoreCase(a.getNodeName()))
 			{
 				final String[] values = a.getNodeValue().split(",");
-				final Set<NpcRace> array = new HashSet<>(values.length);
+				final EnumSet<NpcRace> races = EnumSet.noneOf(NpcRace.class);	//[JOJO] -HashSet
 				for (String value : values)
 				{
-					array.add(NpcRace.valueOf(getValue(value, null)));
+					races.add(NpcRace.valueOf(getValue(value, null)));
 				}
-				cond = joinAnd(cond, new ConditionTargetNpcRace(array));
+				cond = joinAnd(cond, new ConditionTargetNpcRace(races));
 			}
 			// used for pc race
 			else if ("races".equalsIgnoreCase(a.getNodeName()))
 			{
-				final String[] racesVal = a.getNodeValue().split(",");
-				final PcRace[] races = new PcRace[racesVal.length];
-				for (int r = 0; r < racesVal.length; r++)
+				final String[] values = a.getNodeValue().split(",");
+				final EnumSet<PcRace> races = EnumSet.noneOf(PcRace.class);	//[JOJO] -PcRace[]
+				for (String value : values)
 				{
-					if (racesVal[r] != null)
-					{
-						races[r] = PcRace.valueOf(racesVal[r]);
-					}
+					races.add(PcRace.valueOf(value));
 				}
 				cond = joinAnd(cond, new ConditionTargetRace(races));
 			}
