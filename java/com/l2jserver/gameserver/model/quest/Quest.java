@@ -59,6 +59,7 @@ import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.L2Playable;
+import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2DoorInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -1517,6 +1518,14 @@ public class Quest extends ManagedScript implements IIdentifiable
 	}
 	
 	/**
+	 * @param summon
+	 */
+	public void onSummon(L2Summon summon)
+	{
+		
+	}
+	
+	/**
 	 * Show an error message to the specified player.
 	 * @param player the player to whom to send the error (must be a GM)
 	 * @param t the {@link Throwable} to get the message/stacktrace from
@@ -2510,6 +2519,24 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 	public void addNpcHateId(Collection<Integer> npcIds)
 	{
 		addEventId(QuestEventType.ON_NPC_HATE, npcIds);
+	}
+	
+	/**
+	 * Register onSummon trigger when summon is spawned.
+	 * @param npcIds
+	 */
+	public void addSummonId(int... npcIds)
+	{
+		addEventId(QuestEventType.ON_SUMMON, npcIds);
+	}
+	
+	/**
+	 * Register onSummon trigger when summon is spawned.
+	 * @param npcIds
+	 */
+	public void addSummonId(Collection<Integer> npcIds)
+	{
+		addEventId(QuestEventType.ON_SUMMON, npcIds);
 	}
 	
 	/**
