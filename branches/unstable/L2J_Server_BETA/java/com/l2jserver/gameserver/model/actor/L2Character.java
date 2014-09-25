@@ -117,7 +117,6 @@ import com.l2jserver.gameserver.model.skills.L2SkillType;
 import com.l2jserver.gameserver.model.skills.SkillChannelized;
 import com.l2jserver.gameserver.model.skills.SkillChannelizer;
 import com.l2jserver.gameserver.model.skills.funcs.Func;
-import com.l2jserver.gameserver.model.skills.l2skills.L2SkillSummon;
 import com.l2jserver.gameserver.model.skills.targets.L2TargetType;
 import com.l2jserver.gameserver.model.stats.BaseStats;
 import com.l2jserver.gameserver.model.stats.Calculator;
@@ -5737,15 +5736,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			{
 				removeStatsOwner(oldSkill);
 				stopSkillEffects(true, oldSkill.getId());
-			}
-			
-			if (isPlayer())
-			{
-				// TODO: Unhardcode it!
-				if ((oldSkill instanceof L2SkillSummon) && (oldSkill.getId() == 710) && hasSummon() && (getSummon().getId() == 14870))
-				{
-					getActingPlayer().getSummon().unSummon(getActingPlayer());
-				}
 			}
 			
 			if (oldSkill.isChance() && (_chanceSkills != null))
