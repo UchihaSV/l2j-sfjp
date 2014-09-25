@@ -29,7 +29,6 @@ import com.l2jserver.gameserver.ai.CtrlEvent;
 import com.l2jserver.gameserver.ai.L2CharacterAI;
 import com.l2jserver.gameserver.instancemanager.DayNightSpawnManager;
 import com.l2jserver.gameserver.model.actor.L2Character;
-import com.l2jserver.util.StackTrace;
 
 /**
  * Game Time controller class.
@@ -201,7 +200,7 @@ public final class GameTimeController extends Thread
 				}
 				catch (final Throwable e)
 				{
-					StackTrace.displayStackTraceInformation(e);
+					_log.log(Level.WARNING, "", e);
 				}
 			}
 		});
@@ -261,7 +260,7 @@ public final class GameTimeController extends Thread
 			}
 			catch (final Throwable e)
 			{
-				StackTrace.displayStackTraceInformation(e);
+				_log.log(Level.WARNING, "", e);
 			}
 		}
 	}
