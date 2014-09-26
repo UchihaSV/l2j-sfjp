@@ -110,6 +110,11 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 		return _expMultiplier;
 	}
 	
+	/*@Deprecated*/ public void setExpPenalty(float expPenalty)	//+[JOJO]
+	{
+		setExpMultiplier(expPenalty);
+	}
+	
 	// ************************************/
 	
 	public void setItemConsume(ItemHolder item)
@@ -146,6 +151,11 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 		return _lifeTime;
 	}
 	
+	/*@Deprecated*/ public int getTotalLifeTime()	//+[JOJO]
+	{
+		return getLifeTime();
+	}
+	
 	// ************************************/
 	
 	public void setLifeTimeRemaining(int time)
@@ -156,6 +166,16 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 	public int getLifeTimeRemaining()
 	{
 		return _lifeTimeRemaining;
+	}
+	
+	/*@Deprecated*/ public int getTimeRemaining()	//+[JOJO]
+	{
+		return getLifeTimeRemaining();
+	}
+	
+	/*@Deprecated*/ public void decTimeRemaining(int value)	//+[JOJO]
+	{
+		_lifeTimeRemaining -= value;
 	}
 	
 	// ************************************/
