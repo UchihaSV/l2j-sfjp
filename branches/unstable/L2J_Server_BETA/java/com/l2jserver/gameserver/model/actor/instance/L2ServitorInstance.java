@@ -54,7 +54,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 /**
  * @author UnAfraid
  */
-public class L2ServitorInstance extends L2Summon implements Runnable
+public final class L2ServitorInstance extends L2Summon implements Runnable
 {
 	protected static final Logger log = Logger.getLogger(L2ServitorInstance.class.getName());
 	
@@ -84,6 +84,12 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 	{
 		super.onSpawn();
 		_summonLifeTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(this, 0, 5000);
+	}
+	
+	public void cancelLifeTask()	//+[JOJO]
+	{
+		_summonLifeTask.cancel(false);
+		_summonLifeTask = null;
 	}
 	
 	@Override
