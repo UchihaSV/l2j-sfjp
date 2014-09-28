@@ -224,8 +224,6 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	
 	private L2ExtractableSkill _extractableItems = null;
 	
-	private int _npcId = 0;
-	
 	private final String _icon;
 	
 	private byte[] _effectTypes;
@@ -391,7 +389,6 @@ public abstract class L2Skill implements IChanceSkillTrigger, IIdentifiable
 			
 			_extractableItems = parseExtractableSkill(_id, _level, capsuled_items);
 		}
-		_npcId = set.getInt("npcId", 0);
 		_icon = intern(set.getString("icon", "icon.skill0000"));
 		
 		_channelingSkillId = set.getInt("channelingSkillId", 0);
@@ -1740,14 +1737,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	public L2ExtractableSkill getExtractableSkill()
 	{
 		return _extractableItems;
-	}
-	
-	/**
-	 * @return the _npcId
-	 */
-	public int getNpcId()
-	{
-		return _npcId;
 	}
 	
 	private byte[] effectTypes()
