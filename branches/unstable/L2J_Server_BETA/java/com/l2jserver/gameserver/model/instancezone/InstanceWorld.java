@@ -101,6 +101,11 @@ public class InstanceWorld
 		return status;
 	}
 	
+	public boolean isStatus(int status)
+	{
+		return this.status == status;
+	}
+	
 	public void setStatus(int status)
 	{
 		this.status = status;
