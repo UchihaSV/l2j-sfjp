@@ -204,7 +204,6 @@ public enum Stats
 	
 	public static Stats valueOfXml(String name)
 	{
-		name = name.intern();
 		for (Stats s : values())
 		{
 			if (s.getValue().equals(name))

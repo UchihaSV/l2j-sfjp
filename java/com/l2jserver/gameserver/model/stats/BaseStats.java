@@ -58,7 +58,7 @@ public enum BaseStats
 	
 	private final BaseStat _stat;
 	
-	public final String getValue()
+	@Deprecated public final String getValue()
 	{
 		return _stat.getClass().getSimpleName();
 	}
@@ -78,7 +78,7 @@ public enum BaseStats
 		return 1;
 	}
 	
-	public static final BaseStats valueOfXml(String name)
+	@Deprecated public static final BaseStats valueOfXml(String name)
 	{
 		name = name.intern();
 		for (BaseStats s : values())

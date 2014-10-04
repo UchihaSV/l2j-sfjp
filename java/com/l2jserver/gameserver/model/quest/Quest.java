@@ -468,6 +468,30 @@ public class Quest extends ManagedScript implements IIdentifiable
 			_writeLock.unlock();
 		}
 	}
+	
+	public void cancelQuestTimers(L2Npc npc)
+	{
+		for (List<QuestTimer> timers : _allEventTimers.values())
+		{
+			_writeLock.lock();
+			try
+			{
+				for (Iterator<QuestTimer> it = timers.iterator(); it.hasNext(); )
+				{
+					QuestTimer timer = it.next();
+					if (timer != null && timer.getNpc() == npc)	// <--
+					{
+						timer.cancel();
+						it.remove();
+					}
+				}
+			}
+			finally
+			{
+				_writeLock.unlock();
+			}
+		}
+	}
 	//-------------------------------------------------------
 	
 	/**
