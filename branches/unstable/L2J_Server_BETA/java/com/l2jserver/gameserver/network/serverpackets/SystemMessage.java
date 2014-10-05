@@ -339,23 +339,25 @@ public final class SystemMessage extends L2GameServerPacket
 	
 	public final SystemMessage addItemName(final L2ItemInstance item)
 	{
-		return addItemName(item.getId());
+		return addItemName(item.getItem());
 	}
 	
 	public final SystemMessage addItemName(final L2Item item)
 	{
-		return addItemName(item.getId());
-	}
-	
-	public final SystemMessage addItemName(final int id)
-	{
-		L2Item item = ItemTable.getInstance().getTemplate(id);
+		int id = item.getId();
 		if (item.getDisplayId() != id)
 		{
 			return addString(item.getName());
 		}
-		
-		return append(new SMParam(TYPE_ITEM_NAME, id));
+		else
+		{
+			return append(new SMParam(TYPE_ITEM_NAME, id));
+		}
+	}
+	
+	public final SystemMessage addItemName(final int id)
+	{
+		return addItemName(ItemTable.getInstance().getTemplate(id));
 	}
 	
 	public final SystemMessage addZoneName(final int x, final int y, final int z)
