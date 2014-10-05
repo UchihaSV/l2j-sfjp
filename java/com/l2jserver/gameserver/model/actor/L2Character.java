@@ -6393,10 +6393,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			{
 				handler.useSkill(this, skill, targets);
 			}
-			else
-			{
-				skill.useSkill(this, targets);
-			}
 			
 			L2PcInstance player = getActingPlayer();
 			if (player != null)
@@ -7183,10 +7179,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				if (handler != null)
 				{
 					handler.useSkill(this, skill, targets);
-				}
-				else
-				{
-					skill.useSkill(this, targets);
 				}
 			}
 		}
