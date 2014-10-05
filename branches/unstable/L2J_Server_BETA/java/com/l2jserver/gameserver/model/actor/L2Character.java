@@ -235,7 +235,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	
 	private volatile Map<Integer, OptionsSkillHolder> _triggerSkills;
 	
-	private volatile Map<Integer, InvulSkillHolder> _invulAgainst;
+	private volatile FastIntObjectMap<InvulSkillHolder> _invulAgainst;
 	
 	private final CharEffectList _effectList = new CharEffectList(this);
 	
@@ -7342,49 +7342,54 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		return _channelized;
 	}
 	
-	public void addInvulAgainst(SkillHolder holder)
+	public void addInvulAgainst(int skillId, int skillLvl)
 	{
-		final InvulSkillHolder invulHolder = getInvulAgainstSkills().get(holder.getSkillId());
+		InvulSkillHolder invulHolder = getInvulAgainstSkill(skillId);
 		if (invulHolder != null)
 		{
 			invulHolder.increaseInstances();
 			return;
 		}
-		getInvulAgainstSkills().put(holder.getSkillId(), new InvulSkillHolder(holder));
-	}
-	
-	public void removeInvulAgainst(SkillHolder holder)
-	{
-		final InvulSkillHolder invulHolder = getInvulAgainstSkills().get(holder.getSkillId());
-		if ((invulHolder != null) && (invulHolder.decreaseInstances() < 1))
-		{
-			getInvulAgainstSkills().remove(holder.getSkillId());
-		}
-	}
-	
-	public boolean isInvulAgainst(int skillId, int skillLvl)
-	{
-		if (_invulAgainst != null)
-		{
-			final SkillHolder holder = getInvulAgainstSkills().get(skillId);
-			return ((holder != null) && ((holder.getSkillLvl() < 1) || (holder.getSkillLvl() == skillLvl)));
-		}
-		return false;
-	}
-	
-	private Map<Integer, InvulSkillHolder> getInvulAgainstSkills()
-	{
+		
+		invulHolder = new InvulSkillHolder(skillId, skillLvl);
 		if (_invulAgainst == null)
 		{
 			synchronized (this)
 			{
 				if (_invulAgainst == null)
 				{
-					return _invulAgainst = new ConcurrentHashMap<>();
+					_invulAgainst = new FastIntObjectMap<InvulSkillHolder>().shared();	//[JOJO] -ConcurrentHashMap
 				}
 			}
 		}
-		return _invulAgainst;
+		_invulAgainst.put(invulHolder.getSkillId(), invulHolder);
+	}
+	
+	public void removeInvulAgainst(int skillId, int skillLvl)
+	{
+		InvulSkillHolder invulHolder = getInvulAgainstSkill(skillId);
+		if (invulHolder != null)
+		{
+			if (invulHolder.decreaseInstances() < 1)
+			{
+				_invulAgainst.remove(skillId);
+			}
+		}
+	}
+	
+	public boolean isInvulAgainst(int skillId, int skillLvl)
+	{
+		InvulSkillHolder invulHolder = getInvulAgainstSkill(skillId);
+		if (invulHolder != null)
+		{
+			return invulHolder.getSkillLvl() < 1 || invulHolder.getSkillLvl() == skillLvl;
+		}
+		return false;
+	}
+	
+	private InvulSkillHolder getInvulAgainstSkill(int skillId)
+	{
+		return _invulAgainst != null ? _invulAgainst.get(skillId) : null;
 	}
 }
 
