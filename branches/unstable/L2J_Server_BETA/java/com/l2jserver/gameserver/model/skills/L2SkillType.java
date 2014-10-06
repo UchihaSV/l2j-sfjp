@@ -33,8 +33,6 @@ public enum L2SkillType
 	DUMMY,
 	
 	BEAST,		//[JOJO]
-	DETECT_TRAP,
-	REMOVE_TRAP,
 	
 	// Skill is done within the core.
 	COREDONE,
