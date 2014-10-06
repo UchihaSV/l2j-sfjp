@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.model.actor;
 
+import java.util.List;
+
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.ai.CtrlIntention;
@@ -152,9 +154,10 @@ public abstract class L2Summon extends L2Playable
 		_restoreSummon = false;
 		
 		// Notify DP scripts.
-		if (getTemplate().getEventQuests(QuestEventType.ON_SUMMON) != null)
+		List<Quest> eventQuests;
+		if ((eventQuests = getTemplate().getEventQuests(QuestEventType.ON_SUMMON)) != null)
 		{
-			for (Quest quest : getTemplate().getEventQuests(QuestEventType.ON_SUMMON))
+			for (Quest quest : eventQuests)
 			{
 				quest.onSummon(this);
 			}
