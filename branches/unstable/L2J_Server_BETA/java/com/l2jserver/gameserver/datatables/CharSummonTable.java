@@ -35,7 +35,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2ServitorInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.serverpackets.PetItemList;
 
 /**
@@ -199,7 +199,7 @@ public class CharSummonTable
 					int curMp = rs.getInt("curMp");
 					int time = rs.getInt("time");
 					
-					L2Skill skill = SkillTable.getInstance().getInfo(skillId, activeChar.getSkillLevel(skillId));
+					Skill skill = SkillData.getInstance().getSkill(skillId, activeChar.getSkillLevel(skillId));
 					if (skill == null)
 					{
 						removeServitor(activeChar);

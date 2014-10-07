@@ -18,23 +18,26 @@
  */
 package com.l2jserver.gameserver.model.skills;
 
-import static com.l2jserver.gameserver.datatables.StringIntern.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GeoData;
-import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
+import com.l2jserver.gameserver.enums.ShotType;
 import com.l2jserver.gameserver.handler.ITargetTypeHandler;
 import com.l2jserver.gameserver.handler.TargetHandler;
+import com.l2jserver.gameserver.instancemanager.HandysBlockCheckerManager;
+import com.l2jserver.gameserver.model.ArenaParticipantsHolder;
 import com.l2jserver.gameserver.model.ChanceCondition;
 import com.l2jserver.gameserver.model.L2ExtractableProductItem;
 import com.l2jserver.gameserver.model.L2ExtractableSkill;
@@ -45,6 +48,7 @@ import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Playable;
 import com.l2jserver.gameserver.model.actor.L2Summon;
+import com.l2jserver.gameserver.model.actor.instance.L2BlockInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2CubicInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.conditions.Condition;
@@ -67,11 +71,10 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
 
-public class L2Skill implements IChanceSkillTrigger, IIdentifiable
+public final class Skill implements IChanceSkillTrigger, IIdentifiable
 {
-	protected static final Logger _log = Logger.getLogger(L2Skill.class.getName());
+	protected static final Logger _log = Logger.getLogger(Skill.class.getName());
 	
-	public static final L2Skill[] EMPTY_SKILL_LIST = new L2Skill[0];
 	private static final L2Object[] EMPTY_TARGET_LIST = new L2Object[0];
 	
 	public static final int SKILL_CUBIC_MASTERY = 143;
@@ -98,7 +101,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/** Skill client's name. */
 	private final String _name;
 	/** Operative type: passive, active, toggle. */
-	private final L2SkillOpType _operateType;
+	private final SkillOperateType _operateType;
 	private final int _magic;
 	private final TraitType _traitType;
 	private final boolean _staticReuse;
@@ -162,10 +165,8 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	// The radius center varies according to the _targetType:
 	// "caster" if targetType = AURA/PARTY/CLAN or "target" if targetType = AREA
 	private final int _affectRange;
-	private final int[] _affectLimit;
-	private static final int[] DEFAULT_AFFECT_LIMIT = new int[2];	//[JOJO] <set name="affectLimit" val="0-0" />
+	private final int[] _affectLimit = new int[2];
 	
-	private final L2SkillType _skillType;
 	private final boolean _nextActionIsAttack;
 	
 	private final boolean _removedOnAnyActionExceptMove;
@@ -226,14 +227,14 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	
 	private final String _icon;
 	
-	private byte[] _effectTypes;
+	private Byte[] _effectTypes;
 	
 	// Channeling data
 	private final int _channelingSkillId;
 	private final int _channelingTickInitialDelay;
 	private final int _channelingTickInterval;
 	
-	public L2Skill(StatsSet set)
+	public Skill(StatsSet set)
 	{
 		_id = set.getInt("skill_id");
 		_level = set.getInt("level");
@@ -241,7 +242,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		_displayId = set.getInt("displayId", _id);
 		_displayLevel = set.getInt("displayLevel", _level);
 		_name = set.getString("name", "");
-		_operateType = set.getEnum("operateType", L2SkillOpType.class);
+		_operateType = set.getEnum("operateType", SkillOperateType.class);
 		_magic = set.getInt("isMagic", 0);
 		_traitType = set.getEnum("trait", TraitType.class, TraitType.NONE);
 		_staticReuse = set.getBoolean("staticReuse", false);
@@ -274,7 +275,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		_isAbnormalInstant = set.getBoolean("abnormalInstant", false);
 		parseAbnormalVisualEffect(set.getString("abnormalVisualEffect", null));
 		
-		_attribute = intern(set.getString("attribute", ""));
+		_attribute = set.getString("attribute", "");
 		
 		_stayAfterDeath = set.getBoolean("stayAfterDeath", false);
 		_stayOnSubclassChange = set.getBoolean("stayOnSubclassChange", true);
@@ -283,7 +284,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		_coolTime = set.getInt("coolTime", 0);
 		_isDebuff = set.getBoolean("isDebuff", false);
 		_feed = set.getInt("feed", 0);
-		_reuseHashCode = SkillTable.getSkillHashCode(_id, _level);
+		_reuseHashCode = SkillData.getSkillHashCode(_id, _level);
 		
 		if (Config.ENABLE_MODIFY_SKILL_REUSE && Config.SKILL_REUSE_LIST.containsKey(_id))
 		{
@@ -306,7 +307,6 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 			try
 			{
 				String[] valuesSplit = affectLimit.split("-");
-				_affectLimit = new int[2];	//[JOJO]
 				_affectLimit[0] = Integer.parseInt(valuesSplit[0]);
 				_affectLimit[1] = Integer.parseInt(valuesSplit[1]);
 			}
@@ -314,11 +314,6 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 			{
 				throw new IllegalArgumentException("SkillId: " + _id + " invalid affectLimit value: " + affectLimit + ", \"percent-percent\" required");
 			}
-		}
-		else
-		{
-			_affectLimit = DEFAULT_AFFECT_LIMIT;	//[JOJO]
-
 		}
 		
 		_targetType = set.getEnum("targetType", L2TargetType.class);
@@ -331,7 +326,6 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		_minChance = set.getInt("minChance", Config.MIN_ABNORMAL_STATE_SUCCESS_RATE);
 		_maxChance = set.getInt("maxChance", Config.MAX_ABNORMAL_STATE_SUCCESS_RATE);
 		_ignoreShield = set.getBoolean("ignoreShld", false);
-		_skillType = set.getEnum("skillType", L2SkillType.class, L2SkillType.DUMMY);
 		
 		_nextActionIsAttack = set.getBoolean("nextActionAttack", false);
 		
@@ -350,7 +344,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		_chargeConsume = set.getInt("chargeConsume", 0);
 		_triggeredId = set.getInt("triggeredId", 0);
 		_triggeredLevel = set.getInt("triggeredLevel", 1);
-		_chanceType = intern(set.getString("chanceType", ""));
+		_chanceType = set.getString("chanceType", "");
 		if (!_chanceType.isEmpty())
 		{
 			_chanceCondition = ChanceCondition.parse(set);
@@ -389,29 +383,25 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 			
 			_extractableItems = parseExtractableSkill(_id, _level, capsuled_items);
 		}
-		_icon = intern(set.getString("icon", "icon.skill0000"));
+		
+		_icon = set.getString("icon", "icon.skill0000");
 		
 		_channelingSkillId = set.getInt("channelingSkillId", 0);
 		_channelingTickInterval = set.getInt("channelingTickInterval", 2) * 1000;
 		_channelingTickInitialDelay = set.getInt("channelingTickInitialDelay", _channelingTickInterval / 1000) * 1000;
 	}
 	
-	public final L2SkillType getSkillType()
-	{
-		return _skillType;
-	}
-	
-	public final TraitType getTraitType()
+	public TraitType getTraitType()
 	{
 		return _traitType;
 	}
 	
-	public final byte getElement()
+	public byte getElement()
 	{
 		return _element;
 	}
 	
-	public final int getElementPower()
+	public int getElementPower()
 	{
 		return _elementPower;
 	}
@@ -420,22 +410,22 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Return the target type of the skill : SELF, PARTY, CLAN, PET...
 	 * @return
 	 */
-	public final L2TargetType getTargetType()
+	public L2TargetType getTargetType()
 	{
 		return _targetType;
 	}
 	
-	public final boolean isOverhit()
+	public boolean isOverhit()
 	{
 		return _overhit;
 	}
 	
-	public final boolean isSuicideAttack()
+	public boolean isSuicideAttack()
 	{
 		return _isSuicideAttack;
 	}
 	
-	public final boolean allowOnTransform()
+	public boolean allowOnTransform()
 	{
 		return isPassive();
 	}
@@ -448,7 +438,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * @param isPvE
 	 * @return
 	 */
-	public final double getPower(L2Character activeChar, L2Character target, boolean isPvP, boolean isPvE)
+	public double getPower(L2Character activeChar, L2Character target, boolean isPvP, boolean isPvE)
 	{
 		if (activeChar == null)
 		{
@@ -467,12 +457,12 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		return getPower(isPvP, isPvE);
 	}
 	
-	public final double getPower()
+	public double getPower()
 	{
 		return _power;
 	}
 	
-	public final double getPower(boolean isPvP, boolean isPvE)
+	public double getPower(boolean isPvP, boolean isPvE)
 	{
 		return isPvE ? _pvePower : isPvP ? _pvpPower : _power;
 	}
@@ -482,7 +472,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Herb buff skills yield {@code true} for this check.
 	 * @return {@code true} if the skill is abnormal instant, {@code false} otherwise
 	 */
-	public final boolean isAbnormalInstant()
+	public boolean isAbnormalInstant()
 	{
 		return _isAbnormalInstant;
 	}
@@ -491,7 +481,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Gets the skill abnormal type.
 	 * @return the abnormal type
 	 */
-	public final AbnormalType getAbnormalType()
+	public AbnormalType getAbnormalType()
 	{
 		return _abnormalType;
 	}
@@ -500,7 +490,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Gets the skill abnormal level.
 	 * @return the skill abnormal level
 	 */
-	public final int getAbnormalLvl()
+	public int getAbnormalLvl()
 	{
 		return _abnormalLvl;
 	}
@@ -510,7 +500,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Is the base to calculate the duration of the continuous effects of this skill.
 	 * @return the abnormal time
 	 */
-	public final int getAbnormalTime()
+	public int getAbnormalTime()
 	{
 		return _abnormalTime;
 	}
@@ -573,17 +563,17 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Gets the skill magic level.
 	 * @return the skill magic level
 	 */
-	public final int getMagicLevel()
+	public int getMagicLevel()
 	{
 		return _magicLevel;
 	}
 	
-	public final int getLvlBonusRate()
+	public int getLvlBonusRate()
 	{
 		return _lvlBonusRate;
 	}
 	
-	public final int getActivateRate()
+	public int getActivateRate()
 	{
 		return _activateRate;
 	}
@@ -592,7 +582,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Return custom minimum skill/effect chance.
 	 * @return
 	 */
-	public final int getMinChance()
+	public int getMinChance()
 	{
 		return _minChance;
 	}
@@ -601,7 +591,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Return custom maximum skill/effect chance.
 	 * @return
 	 */
-	public final int getMaxChance()
+	public int getMaxChance()
 	{
 		return _maxChance;
 	}
@@ -610,7 +600,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Return true if skill effects should be removed on any action except movement
 	 * @return
 	 */
-	public final boolean isRemovedOnAnyActionExceptMove()
+	public boolean isRemovedOnAnyActionExceptMove()
 	{
 		return _removedOnAnyActionExceptMove;
 	}
@@ -618,7 +608,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return {@code true} if skill effects should be removed on damage
 	 */
-	public final boolean isRemovedOnDamage()
+	public boolean isRemovedOnDamage()
 	{
 		return _removedOnDamage;
 	}
@@ -627,7 +617,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Return the additional effect Id.
 	 * @return
 	 */
-	public final int getChannelingSkillId()
+	public int getChannelingSkillId()
 	{
 		return _channelingSkillId;
 	}
@@ -636,7 +626,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Return true if character should attack target after skill
 	 * @return
 	 */
-	public final boolean nextActionIsAttack()
+	public boolean nextActionIsAttack()
 	{
 		return _nextActionIsAttack;
 	}
@@ -644,7 +634,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns the castRange.
 	 */
-	public final int getCastRange()
+	public int getCastRange()
 	{
 		return _castRange;
 	}
@@ -652,7 +642,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns the effectRange.
 	 */
-	public final int getEffectRange()
+	public int getEffectRange()
 	{
 		return _effectRange;
 	}
@@ -660,7 +650,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns the hpConsume.
 	 */
-	public final int getHpConsume()
+	public int getHpConsume()
 	{
 		return _hpConsume;
 	}
@@ -670,7 +660,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * @return the skill ID
 	 */
 	@Override
-	public final int getId()
+	public int getId()
 	{
 		return _id;
 	}
@@ -679,16 +669,10 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Verify if this skill is a debuff.
 	 * @return {@code true} if this skill is a debuff, {@code false} otherwise
 	 */
-	public final boolean isDebuff()
+	public boolean isDebuff()
 	{
 		return _isDebuff;
 	}
-	//[JOJO]-------------------------------------------------
-	public final boolean isBuff()
-	{
-		return isContinuous() && !isDebuff();
-	}
-	//-------------------------------------------------------
 	
 	public int getDisplayId()
 	{
@@ -719,7 +703,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Return skill basicProperty base stat (STR, INT ...).
 	 * @return
 	 */
-	public final BaseStats getBasicProperty()
+	public BaseStats getBasicProperty()
 	{
 		return _basicProperty;
 	}
@@ -727,7 +711,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns the itemConsume.
 	 */
-	public final int getItemConsume()
+	public int getItemConsume()
 	{
 		return _itemConsumeCount;
 	}
@@ -735,7 +719,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns the itemConsumeId.
 	 */
-	public final int getItemConsumeId()
+	public int getItemConsumeId()
 	{
 		return _itemConsumeId;
 	}
@@ -743,7 +727,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns the level.
 	 */
-	public final int getLevel()
+	public int getLevel()
 	{
 		return _level;
 	}
@@ -751,7 +735,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns true to set physical skills.
 	 */
-	public final boolean isPhysical()
+	public boolean isPhysical()
 	{
 		return _magic == 0;
 	}
@@ -759,7 +743,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns true to set magic skills.
 	 */
-	public final boolean isMagic()
+	public boolean isMagic()
 	{
 		return _magic == 1;
 	}
@@ -767,7 +751,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns true to set static skills.
 	 */
-	public final boolean isStatic()
+	public boolean isStatic()
 	{
 		return _magic == 2;
 	}
@@ -775,7 +759,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns true to set dance skills.
 	 */
-	public final boolean isDance()
+	public boolean isDance()
 	{
 		return _magic == 3;
 	}
@@ -783,7 +767,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns true to set static reuse.
 	 */
-	public final boolean isStaticReuse()
+	public boolean isStaticReuse()
 	{
 		return _staticReuse;
 	}
@@ -791,7 +775,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns the mpConsume.
 	 */
-	public final int getMpConsume()
+	public int getMpConsume()
 	{
 		return _mpConsume;
 	}
@@ -799,7 +783,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Returns the mpInitialConsume.
 	 */
-	public final int getMpInitialConsume()
+	public int getMpInitialConsume()
 	{
 		return _mpInitialConsume;
 	}
@@ -807,7 +791,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return Mana consumption per channeling tick.
 	 */
-	public final int getMpPerChanneling()
+	public int getMpPerChanneling()
 	{
 		return _mpPerChanneling;
 	}
@@ -815,7 +799,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return the skill name
 	 */
-	public final String getName()
+	public String getName()
 	{
 		return _name;
 	}
@@ -823,17 +807,17 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return the reuse delay
 	 */
-	public final int getReuseDelay()
+	public int getReuseDelay()
 	{
 		return _reuseDelay;
 	}
 	
-	public final int getReuseHashCode()
+	public int getReuseHashCode()
 	{
 		return _reuseHashCode;
 	}
 	
-	public final int getHitTime()
+	public int getHitTime()
 	{
 		return _hitTime;
 	}
@@ -841,52 +825,52 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	/**
 	 * @return the cool time
 	 */
-	public final int getCoolTime()
+	public int getCoolTime()
 	{
 		return _coolTime;
 	}
 	
-	public final int getAffectRange()
+	public int getAffectRange()
 	{
 		return _affectRange;
 	}
 	
-	public final int getAffectLimit()
+	public int getAffectLimit()
 	{
 		return (_affectLimit[0] + Rnd.get(_affectLimit[1]));
 	}
 	
-	public final boolean isActive()
+	public boolean isActive()
 	{
 		return (_operateType != null) && _operateType.isActive();
 	}
 	
-	public final boolean isPassive()
+	public boolean isPassive()
 	{
 		return (_operateType != null) && _operateType.isPassive();
 	}
 	
-	public final boolean isToggle()
+	public boolean isToggle()
 	{
 		return (_operateType != null) && _operateType.isToggle();
 	}
 	
-	public final boolean isContinuous()
+	public boolean isContinuous()
 	{
 		return (_operateType != null) && _operateType.isContinuous();
 	}
 	
-	public final boolean isChance()
+	public boolean isChance()
 	{
 		return (_chanceCondition != null) && isPassive();
 	}
 	
-	public final boolean isChanneling()
+	public boolean isChanneling()
 	{
 		return (_operateType != null) && _operateType.isChanneling();
 	}
 	
-	public final boolean isTriggeredSkill()
+	public boolean isTriggeredSkill()
 	{
 		return _isTriggeredSkill;
 	}
@@ -900,22 +884,22 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		return _abnormalType == AbnormalType.TRANSFORM;
 	}
 	
-	public final int getEffectPoint()
+	public int getEffectPoint()
 	{
 		return _effectPoint;
 	}
 	
-	public final boolean useSoulShot()
+	public boolean useSoulShot()
 	{
 		return (hasEffectType(L2EffectType.PHYSICAL_ATTACK, L2EffectType.PHYSICAL_ATTACK_HP_LINK, L2EffectType.FATAL_BLOW, L2EffectType.ENERGY_ATTACK));
 	}
 	
-	public final boolean useSpiritShot()
+	public boolean useSpiritShot()
 	{
 		return _magic == 1;
 	}
 	
-	public final boolean useFishShot()
+	public boolean useFishShot()
 	{
 		return hasEffectType(L2EffectType.FISHING);
 	}
@@ -925,17 +909,17 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		return _minPledgeClass;
 	}
 	
-	public final boolean isHeroSkill()
+	public boolean isHeroSkill()
 	{
 		return _isHeroSkill;
 	}
 	
-	public final boolean isGMSkill()
+	public boolean isGMSkill()
 	{
 		return _isGMSkill;
 	}
 	
-	public final boolean is7Signs()
+	public boolean is7Signs()
 	{
 		return _isSevenSigns;
 	}
@@ -944,7 +928,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * Verify if this is a healing potion skill.
 	 * @return {@code true} if this is a healing potion skill, {@code false} otherwise
 	 */
-	public final boolean isHealingPotionSkill()
+	public boolean isHealingPotionSkill()
 	{
 		switch (getId())
 		{
@@ -961,52 +945,52 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		return false;
 	}
 	
-	public final int getChargeConsume()
+	public int getChargeConsume()
 	{
 		return _chargeConsume;
 	}
 	
-	public final int getMaxSoulConsumeCount()
+	public int getMaxSoulConsumeCount()
 	{
 		return _soulMaxConsume;
 	}
 	
-	public final int getBaseCritRate()
+	public int getBaseCritRate()
 	{
 		return _baseCritRate;
 	}
 	
-	public final boolean getDmgDirectlyToHP()
+	public boolean getDmgDirectlyToHP()
 	{
 		return _directHpDmg;
 	}
 	
-	public final FlyType getFlyType()
+	public FlyType getFlyType()
 	{
 		return _flyType;
 	}
 	
-	public final int getFlyRadius()
+	public int getFlyRadius()
 	{
 		return _flyRadius;
 	}
 	
-	public final float getFlyCourse()
+	public float getFlyCourse()
 	{
 		return _flyCourse;
 	}
 	
-	public final boolean isStayAfterDeath()
+	public boolean isStayAfterDeath()
 	{
 		return _stayAfterDeath;
 	}
 	
-	public final boolean isStayOnSubclassChange()
+	public boolean isStayOnSubclassChange()
 	{
 		return _stayOnSubclassChange;
 	}
 	
-	public final boolean isBad()
+	public boolean isBad()
 	{
 		return _effectPoint < 0;
 	}
@@ -1057,7 +1041,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		return true;
 	}
 	
-	public final L2Object[] getTargetList(L2Character activeChar, boolean onlyFirst)
+	public L2Object[] getTargetList(L2Character activeChar, boolean onlyFirst)
 	{
 		// Init to null the target of the skill
 		L2Character target = null;
@@ -1094,7 +1078,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * @param target
 	 * @return
 	 */
-	public final L2Object[] getTargetList(L2Character activeChar, boolean onlyFirst, L2Character target)
+	public L2Object[] getTargetList(L2Character activeChar, boolean onlyFirst, L2Character target)
 	{
 		final ITargetTypeHandler handler = TargetHandler.getInstance().getHandler(getTargetType());
 		if (handler != null)
@@ -1112,12 +1096,12 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 		return EMPTY_TARGET_LIST;
 	}
 	
-	public final L2Object[] getTargetList(L2Character activeChar)
+	public L2Object[] getTargetList(L2Character activeChar)
 	{
 		return getTargetList(activeChar, false);
 	}
 	
-	public final L2Object getFirstOfTargetList(L2Character activeChar)
+	public L2Object getFirstOfTargetList(L2Character activeChar)
 	{
 		L2Object[] targets = getTargetList(activeChar, true);
 		if (targets.length == 0)
@@ -1137,7 +1121,7 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 	 * @param sourceInArena
 	 * @return
 	 */
-	public static final boolean checkForAreaOffensiveSkills(L2Character caster, L2Character target, L2Skill skill, boolean sourceInArena)
+	public static final boolean checkForAreaOffensiveSkills(L2Character caster, L2Character target, Skill skill, boolean sourceInArena)
 	{
 		if ((target == null) || target.isDead() || (target == caster))
 		{
@@ -1208,21 +1192,13 @@ public class L2Skill implements IChanceSkillTrigger, IIdentifiable
 					}
 				}
 			}
-			else
-			{
-				// target is mob
-if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
-				if (skill.isBad() && target instanceof com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance)
-					return false;
-}}
-			}
 		}
 		else
 		{
 			// target is mob
 			if ((targetPlayer == null) && (target instanceof L2Attackable) && (caster instanceof L2Attackable))
 			{
-				if (!((L2Attackable) caster).isInEnemyClan((L2Attackable) target))
+				if (((L2Attackable) caster).isInEnemyClan((L2Attackable) target))
 				{
 					return false;
 				}
@@ -1259,7 +1235,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return true;
 	}
 	
-	public final List<Func> getStatFuncs(AbstractEffect effect, L2Character player)
+	public List<Func> getStatFuncs(AbstractEffect effect, L2Character player)
 	{
 		if (_funcTemplates == null)
 		{
@@ -1342,7 +1318,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	}
 	
 	/**
-	 * Method overload for {@link L2Skill#applyEffects(L2Character, L2CubicInstance, L2Character, boolean, boolean, boolean, int)}.<br>
+	 * Method overload for {@link Skill#applyEffects(L2Character, L2CubicInstance, L2Character, boolean, boolean, boolean, int)}.<br>
 	 * Simplify the calls.
 	 * @param effector the caster of the skill
 	 * @param effected the target of the effect
@@ -1351,19 +1327,9 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	{
 		applyEffects(effector, null, effected, false, false, true, 0);
 	}
-	//[JOJO]-------------------------------------------------
-	public void applyEffects(L2Character character)
-	{
-		applyEffects(character, null, character, false, false, true, 0);
-	}
-	@Deprecated public final void getEffects(L2Character effector, L2Character effected)
-	{
-		applyEffects(effector, effected);
-	}
-	//-------------------------------------------------------
 	
 	/**
-	 * Method overload for {@link L2Skill#applyEffects(L2Character, L2CubicInstance, L2Character, boolean, boolean, boolean, int)}.<br>
+	 * Method overload for {@link Skill#applyEffects(L2Character, L2CubicInstance, L2Character, boolean, boolean, boolean, int)}.<br>
 	 * Simplify the calls, allowing abnormal time time customization.
 	 * @param effector the caster of the skill
 	 * @param effected the target of the effect
@@ -1472,7 +1438,86 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		}
 	}
 	
-	public final void attach(FuncTemplate f)
+	/**
+	 * Activates the skill to the targets.
+	 * @param caster the caster
+	 * @param targets the targets
+	 */
+	public void activateSkill(L2Character caster, L2Object[] targets)
+	{
+		switch (getId())
+		{
+		// TODO: replace with AI
+			case 5852:
+			case 5853:
+			{
+				final L2BlockInstance block = targets[0] instanceof L2BlockInstance ? (L2BlockInstance) targets[0] : null;
+				final L2PcInstance player = caster.isPlayer() ? (L2PcInstance) caster : null;
+				if ((block == null) || (player == null))
+				{
+					return;
+				}
+				
+				final int arena = player.getBlockCheckerArena();
+				if (arena != -1)
+				{
+					final ArenaParticipantsHolder holder = HandysBlockCheckerManager.getInstance().getHolder(arena);
+					if (holder == null)
+					{
+						return;
+					}
+					
+					final int team = holder.getPlayerTeam(player);
+					final int color = block.getColorEffect();
+					if ((team == 0) && (color == 0x00))
+					{
+						block.changeColor(player, holder, team);
+					}
+					else if ((team == 1) && (color == 0x53))
+					{
+						block.changeColor(player, holder, team);
+					}
+				}
+				break;
+			}
+			default:
+			{
+				for (L2Character target : (L2Character[]) targets)
+				{
+					if (Formulas.calcBuffDebuffReflection(target, this))
+					{
+						applyEffects(target, caster);
+					}
+					else
+					{
+						applyEffects(caster, target);
+					}
+				}
+				break;
+			}
+		}
+		
+		// Self Effect
+		if (hasEffects(EffectScope.SELF))
+		{
+			if (caster.isAffectedBySkill(getId()))
+			{
+				caster.stopSkillEffects(true, getId());
+			}
+			applyEffects(caster, null, caster, true, false, true, 0);
+		}
+		
+		if (useSpiritShot())
+		{
+			caster.setChargedShot(caster.isChargedShot(ShotType.BLESSED_SPIRITSHOTS) ? ShotType.BLESSED_SPIRITSHOTS : ShotType.SPIRITSHOTS, false);
+		}
+		else
+		{
+			caster.setChargedShot(ShotType.SOULSHOTS, false);
+		}
+	}
+	
+	public void attach(FuncTemplate f)
 	{
 		if (_funcTemplates == null)
 		{
@@ -1486,7 +1531,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	 * @param effectScope the effect scope
 	 * @param effect the effect to add
 	 */
-	public final void addEffect(EffectScope effectScope, AbstractEffect effect)
+	public void addEffect(EffectScope effectScope, AbstractEffect effect)
 	{
 		List<AbstractEffect> effects = _effectLists.get(effectScope);
 		if (effects == null)
@@ -1497,7 +1542,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		effects.add(effect);
 	}
 	
-	public final void attach(Condition c, boolean itemOrWeapon)
+	public void attach(Condition c, boolean itemOrWeapon)
 	{
 		if (itemOrWeapon)
 		{
@@ -1667,7 +1712,7 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		{
 			_log.warning("Extractable skills data: Error in Skill Id: " + skillId + " Level: " + skillLvl + " -> There are no production items!");
 		}
-		return new L2ExtractableSkill(SkillTable.getSkillHashCode(skillId, skillLvl), products);
+		return new L2ExtractableSkill(SkillData.getSkillHashCode(skillId, skillLvl), products);
 	}
 	
 	/**
@@ -1737,7 +1782,12 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 		return _extractableItems;
 	}
 	
-	private byte[] effectTypes()
+	/**
+	 * @param effectType Effect type to check if its present on this skill effects.
+	 * @param effectTypes Effect types to check if are present on this skill effects.
+	 * @return {@code true} if at least one of specified {@link L2EffectType} types is present on this skill effects, {@code false} otherwise.
+	 */
+	public boolean hasEffectType(L2EffectType effectType, L2EffectType... effectTypes)
 	{
 		if (_effectTypes == null)
 		{
@@ -1745,76 +1795,42 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			{
 				if (_effectTypes == null)
 				{
-					final List<AbstractEffect> _effects = getEffects(EffectScope.GENERAL);
-					byte[] effectTypes = new byte[_effects.size()];
-					
-					final Env env = new Env();
-					env.setSkill(this);
-					
-					int i = 0;
-					for (AbstractEffect effect : _effects)
+					Set<Byte> effectTypesSet = new HashSet<>();
+					for (List<AbstractEffect> effectList : _effectLists.values())
 					{
-						if (effect == null)
+						if (effectList != null)
 						{
-							continue;
+							for (AbstractEffect effect : effectList)
+							{
+								if (effect == null)
+								{
+									continue;
+								}
+								effectTypesSet.add((byte) effect.getEffectType().ordinal());
+							}
 						}
-						effectTypes[i++] = (byte) effect.getEffectType().ordinal();
 					}
-					if (i != effectTypes.length) effectTypes = Arrays.copyOf(effectTypes, i);
-					Arrays.sort(effectTypes);
-					_effectTypes = effectTypes;
+					
+					Byte[] effectTypesArray = effectTypesSet.toArray(new Byte[effectTypesSet.size()]);
+					Arrays.sort(effectTypesArray);
+					_effectTypes = effectTypesArray;
 				}
 			}
 		}
-		return _effectTypes;
-	}
-	/**
-	 * @param effectType Effect type to check if its present on this skill effects.
-	 * @param effectTypes Effect types to check if are present on this skill effects.
-	 * @return {@code true} if at least one of specified {@link L2EffectType} types is present on this skill effects, {@code false} otherwise.
-	 */
-	@Deprecated public boolean hasEffectType(L2EffectType... types)
-	{
-		if (hasEffects(EffectScope.GENERAL) && (types != null) && (types.length > 0))
+		
+		if (Arrays.binarySearch(_effectTypes, (byte) effectType.ordinal()) >= 0)
 		{
-			final byte[] effectTypes = effectTypes();
-			for (L2EffectType type : types)
+			return true;
+		}
+		
+		for (L2EffectType type : effectTypes)
+		{
+			if (Arrays.binarySearch(_effectTypes, (byte) type.ordinal()) >= 0)
 			{
-				if (Arrays.binarySearch(effectTypes, (byte) type.ordinal()) >= 0)
-				{
-					return true;
-				}
+				return true;
 			}
 		}
 		return false;
-	}
-	private boolean hasEffect(L2EffectType type)
-	{
-		return Arrays.binarySearch(effectTypes(), (byte) type.ordinal()) >= 0;
-	}
-	public boolean hasEffectType(L2EffectType type1)
-	{
-		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1));
-	}
-	public boolean hasEffectType(L2EffectType type1, L2EffectType type2)
-	{
-		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2));
-	}
-	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3)
-	{
-		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3));
-	}
-	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4)
-	{
-		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4));
-	}
-	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4, L2EffectType type5)
-	{
-		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4) || hasEffect(type5));
-	}
-	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4, L2EffectType type5, L2EffectType type6, L2EffectType type7, L2EffectType type8)
-	{
-		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4) || hasEffect(type5) || hasEffect(type6) || hasEffect(type7) || hasEffect(type8));
 	}
 	
 	/**

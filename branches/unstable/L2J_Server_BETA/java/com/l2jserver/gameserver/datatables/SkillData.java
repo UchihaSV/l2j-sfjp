@@ -18,14 +18,15 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import jp.sf.l2j.troja.FastIntObjectMap;
-
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.engines.DocumentEngine;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.holders.SkillHolder;
+import com.l2jserver.gameserver.model.skills.Skill;
 
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntIntHashMap;
@@ -33,15 +34,15 @@ import gnu.trove.map.hash.TIntIntHashMap;
 /**
  * Skill table.
  */
-public final class SkillTable
+public final class SkillData
 {
-	private static Logger _log = Logger.getLogger(SkillTable.class.getName());
+	private static Logger _log = Logger.getLogger(SkillData.class.getName());
 	
-	private FastIntObjectMap<L2Skill> _skills;
-	private TIntIntHashMap _skillMaxLevel;
-	private TIntArrayList _enchantable;	//TODO: int[] _enchantable;
+	private final Map<Integer, Skill> _skills = new HashMap<>();
+	private final TIntIntHashMap _skillMaxLevel = new TIntIntHashMap();
+	private final TIntArrayList _enchantable = new TIntArrayList();
 	
-	protected SkillTable()
+	protected SkillData()
 	{
 		load();
 	}
@@ -55,17 +56,11 @@ public final class SkillTable
 	
 	private void load()
 	{
-		//[JOJO]-------------------------------------------------
-		final FastIntObjectMap<L2Skill> _skills = new FastIntObjectMap<>();
-		final TIntIntHashMap _skillMaxLevel = new TIntIntHashMap();
-		final TIntArrayList _enchantable = new TIntArrayList();
-		//-------------------------------------------------------
-		
 		_skills.clear();
 		DocumentEngine.getInstance().loadAllSkills(_skills);
 		
 		_skillMaxLevel.clear();
-		for (L2Skill skill : _skills.values())
+		for (Skill skill : _skills.values())
 		{
 			final int skillId = skill.getId();
 			final int skillLvl = skill.getLevel();
@@ -88,14 +83,6 @@ public final class SkillTable
 		
 		// Sorting for binarySearch
 		_enchantable.sort();
-		
-		//[JOJO]-------------------------------------------------
-		_skillMaxLevel.trimToSize();
-		_enchantable.trimToSize();
-		this._skills = _skills; 
-		this._skillMaxLevel = _skillMaxLevel; 
-		this._enchantable = _enchantable; 
-		//-------------------------------------------------------
 	}
 	
 	/**
@@ -103,7 +90,7 @@ public final class SkillTable
 	 * @param skill The L2Skill to be hashed
 	 * @return getSkillHashCode(skill.getId(), skill.getLevel())
 	 */
-	public static int getSkillHashCode(L2Skill skill)
+	public static int getSkillHashCode(Skill skill)
 	{
 		return getSkillHashCode(skill.getId(), skill.getLevel());
 	}
@@ -116,49 +103,12 @@ public final class SkillTable
 	 */
 	public static int getSkillHashCode(int skillId, int skillLevel)
 	{
-		return (skillId * PRIME) + skillLevel;
+		return (skillId * 1021) + skillLevel;
 	}
 	
-	//[JOJO]-------------------------------------------------
-	/**
-	 * @param skillHashCode The Skill hash number
-	 * @return The Skill Id
-	 */
-	public static int getSkillId(int skillHashCode)
+	public Skill getSkill(int skillId, int level)
 	{
-		return skillHashCode / PRIME;
-	}
-	
-	/**
-	 * @param skillHashCode The Skill hash number
-	 * @return The Skill Level
-	 */
-	public static int getSkillLevel(int skillHashCode)
-	{
-		return skillHashCode % PRIME;
-	}
-	
-	public static final int PRIME = 1021;
-	
-	/**
-	 * @param skillHashCode The Skill hash number
-	 * @return The Skill
-	 */
-	public static L2Skill getSkill(int skillHashCode)
-	{
-		return SkillTable.getInstance()._skills.get(skillHashCode);
-	}
-	
-	@Deprecated
-	public final L2Skill getInfo(final int skillHashCode)
-	{
-		return _skills.get(skillHashCode);
-	}
-	//-------------------------------------------------------
-	
-	public L2Skill getInfo(int skillId, int level)
-	{
-		final L2Skill result = _skills.get(getSkillHashCode(skillId, level));
+		final Skill result = _skills.get(getSkillHashCode(skillId, level));
 		if (result != null)
 		{
 			return result;
@@ -195,21 +145,21 @@ public final class SkillTable
 	 * @param hasCastle
 	 * @return an array with siege skills. If addNoble == true, will add also Advanced headquarters.
 	 */
-	public L2Skill[] getSiegeSkills(boolean addNoble, boolean hasCastle)
+	public Skill[] getSiegeSkills(boolean addNoble, boolean hasCastle)
 	{
-		L2Skill[] temp = new L2Skill[2 + (addNoble ? 1 : 0) + (hasCastle ? 2 : 0)];
+		Skill[] temp = new Skill[2 + (addNoble ? 1 : 0) + (hasCastle ? 2 : 0)];
 		int i = 0;
-		temp[i++] = _skills.get(SkillTable.getSkillHashCode(246, 1));
-		temp[i++] = _skills.get(SkillTable.getSkillHashCode(247, 1));
+		temp[i++] = _skills.get(SkillData.getSkillHashCode(246, 1));
+		temp[i++] = _skills.get(SkillData.getSkillHashCode(247, 1));
 		
 		if (addNoble)
 		{
-			temp[i++] = _skills.get(SkillTable.getSkillHashCode(326, 1));
+			temp[i++] = _skills.get(SkillData.getSkillHashCode(326, 1));
 		}
 		if (hasCastle)
 		{
-			temp[i++] = _skills.get(SkillTable.getSkillHashCode(844, 1));
-			temp[i++] = _skills.get(SkillTable.getSkillHashCode(845, 1));
+			temp[i++] = _skills.get(SkillData.getSkillHashCode(844, 1));
+			temp[i++] = _skills.get(SkillData.getSkillHashCode(845, 1));
 		}
 		return temp;
 	}
@@ -237,36 +187,36 @@ public final class SkillTable
 		WEAPON_GRADE_PENALTY(6209, 1),
 		ARMOR_GRADE_PENALTY(6213, 1);
 		
-		private final int _skillHashCode;
+		private final SkillHolder _holder;
 		
 		private FrequentSkill(int id, int level)
 		{
-			_skillHashCode = SkillTable.getSkillHashCode(id, level);
+			_holder = new SkillHolder(id, level);
 		}
 		
 		public int getId()
 		{
-			return SkillTable.getSkillId(_skillHashCode);
+			return _holder.getSkillId();
 		}
 		
 		public int getLevel()
 		{
-			return SkillTable.getSkillLevel(_skillHashCode);
+			return _holder.getSkillLvl();
 		}
 		
-		public L2Skill getSkill()
+		public Skill getSkill()
 		{
-			return SkillTable.getSkill(_skillHashCode);
+			return _holder.getSkill();
 		}
 	}
 	
-	public static SkillTable getInstance()
+	public static SkillData getInstance()
 	{
 		return SingletonHolder._instance;
 	}
 	
 	private static class SingletonHolder
 	{
-		protected static final SkillTable _instance = new SkillTable();
+		protected static final SkillData _instance = new SkillData();
 	}
 }

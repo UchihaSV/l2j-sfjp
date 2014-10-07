@@ -22,7 +22,7 @@ public class debug
 	public static String STR(com.l2jserver.gameserver.model.actor.L2Npc npc) { return npc == null ? "NULL" : npc.getId() + npc.getName(); }
 	public static String STR(com.l2jserver.gameserver.model.items.instance.L2ItemInstance item) { return item == null ? "NULL" : item.getId() + item.getName(); }
 	public static String STR(com.l2jserver.gameserver.model.L2Object obj) { return obj == null ? "NULL" : obj instanceof L2Npc ? ((L2Npc)obj).getId() + obj.getName() : obj.getName(); }
-	public static String STR(com.l2jserver.gameserver.model.skills.L2Skill skill) { return skill == null ? "NULL" : (skill.getId()+"-"+skill.getLevel()+" "+skill.getName()); }
+	public static String STR(com.l2jserver.gameserver.model.skills.Skill skill) { return skill == null ? "NULL" : (skill.getId()+"-"+skill.getLevel()+" "+skill.getName()); }
 	public static String STR(com.l2jserver.gameserver.model.L2Object[] targets) {
 		if (targets == null) return "NULL";
 		if (targets.length == 0) return "EMPTY";

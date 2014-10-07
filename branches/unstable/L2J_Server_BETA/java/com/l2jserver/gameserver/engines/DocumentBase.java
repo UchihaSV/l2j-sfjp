@@ -128,7 +128,7 @@ import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.type.L2ArmorType;
 import com.l2jserver.gameserver.model.items.type.L2WeaponType;
 import com.l2jserver.gameserver.model.skills.EffectScope;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.skills.funcs.FuncTemplate;
 import com.l2jserver.gameserver.model.skills.funcs.Lambda;
 import com.l2jserver.gameserver.model.skills.funcs.LambdaCalc;
@@ -302,9 +302,9 @@ public abstract class DocumentBase
 		{
 			((L2Item) template).attach(ft);
 		}
-		else if (template instanceof L2Skill)
+		else if (template instanceof Skill)
 		{
-			((L2Skill) template).attach(ft);
+			((Skill) template).attach(ft);
 		}
 		else if (template instanceof AbstractEffect)
 		{
@@ -352,9 +352,9 @@ public abstract class DocumentBase
 		{
 			((L2Item) template).attach(effect);
 		}
-		else if (template instanceof L2Skill)
+		else if (template instanceof Skill)
 		{
-			final L2Skill skill = (L2Skill) template;
+			final Skill skill = (Skill) template;
 			if (effectScope != null)
 			{
 				skill.addEffect(effectScope, effect);
@@ -1341,7 +1341,7 @@ public abstract class DocumentBase
 		// is it a table?
 		if (value.charAt(0) == '#')
 		{
-			if (template instanceof L2Skill)
+			if (template instanceof Skill)
 			{
 				return getTableValue(value);
 			}

@@ -53,8 +53,7 @@ import com.l2jserver.gameserver.model.drops.GroupedGeneralDropItem;
 import com.l2jserver.gameserver.model.drops.IDropItem;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
-import com.l2jserver.gameserver.model.skills.L2Skill;
-import com.l2jserver.gameserver.model.skills.L2SkillType;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.util.UnmodifiableArrayList;
 
 import gnu.trove.list.array.TIntArrayList;
@@ -132,8 +131,8 @@ public class NpcData extends DocumentParser
 						final StatsSet set = new StatsSet();
 						final int npcId = parseInt(attrs, "id");
 						Map<String, Object> parameters = null;
-						ArrayList<L2Skill> skills = null;	//[JOJO] -Map<Integer, L2Skill>
-						EnumMap<AISkillScope, List<L2Skill>> aiSkillLists = null;
+						ArrayList<Skill> skills = null;	//[JOJO] -Map<Integer, Skill>
+						EnumMap<AISkillScope, List<Skill>> aiSkillLists = null;
 						TIntArrayList clans = null;
 						TIntArrayList enemyClans = null;
 						EnumMap<DropListScope, List<IDropItem>> dropLists = null;
@@ -381,7 +380,7 @@ public class NpcData extends DocumentParser
 											attrs = skill_list_node.getAttributes();
 											final int skillId = parseInt(attrs, "id");
 											final int skillLevel = parseInt(attrs, "level");
-											final L2Skill skill = SkillTable.getInstance().getInfo(skillId, skillLevel);
+											final Skill skill = SkillData.getInstance().getSkill(skillId, skillLevel);
 											if (skill != null)
 											{
 												skills.add(skill);
@@ -553,7 +552,7 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 						
 						if (skills != null)
 						{
-							for (L2Skill skill : skills)
+							for (Skill skill : skills)
 							{
 								if (!skill.isPassive())
 								{
@@ -580,7 +579,7 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 												aiSkillScopes.add(shortOrLongRangeScope);
 											}
 										}
-										else if (skill.getSkillType() == L2SkillType.DUMMY)
+										else
 										{
 											if (skill.hasEffectType(L2EffectType.DISPEL, L2EffectType.DISPEL_BY_SLOT))
 											{
@@ -638,7 +637,7 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 											aiSkillLists = new EnumMap<>(AISkillScope.class);
 										}
 										
-										List<L2Skill> aiSkills = aiSkillLists.get(aiSkillScope);
+										List<Skill> aiSkills = aiSkillLists.get(aiSkillScope);
 										if (aiSkills == null)
 										{
 											aiSkills = new ArrayList<>();

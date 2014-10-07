@@ -79,7 +79,7 @@ import com.l2jserver.gameserver.model.olympiad.CompetitionType;
 import com.l2jserver.gameserver.model.quest.AITasks.AggroRangeEnter;
 import com.l2jserver.gameserver.model.quest.AITasks.SeeCreature;
 import com.l2jserver.gameserver.model.quest.AITasks.SkillSee;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.stats.Stats;
 import com.l2jserver.gameserver.model.zone.L2ZoneType;
 import com.l2jserver.gameserver.network.NpcStringId;
@@ -548,7 +548,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param isSummon if {@code true}, the attack was actually made by the player's summon
 	 * @param skill the skill used to attack the NPC (can be null)
 	 */
-	public final void notifyAttack(L2Npc npc, L2PcInstance attacker, int damage, boolean isSummon, L2Skill skill)
+	public final void notifyAttack(L2Npc npc, L2PcInstance attacker, int damage, boolean isSummon, Skill skill)
 	{
 		String res;
 		try
@@ -607,7 +607,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param player
 	 * @param skill
 	 */
-	public final void notifySpellFinished(L2Npc instance, L2PcInstance player, L2Skill skill)
+	public final void notifySpellFinished(L2Npc instance, L2PcInstance player, Skill skill)
 	{
 		String res;
 		try
@@ -789,7 +789,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param player the player
 	 * @param skill the skill
 	 */
-	public final void notifyAcquireSkillInfo(L2Npc npc, L2PcInstance player, L2Skill skill)
+	public final void notifyAcquireSkillInfo(L2Npc npc, L2PcInstance player, Skill skill)
 	{
 		String res;
 		try
@@ -811,7 +811,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param skill the skill
 	 * @param type the skill learn type
 	 */
-	public final void notifyAcquireSkill(L2Npc npc, L2PcInstance player, L2Skill skill, AcquireSkillType type)
+	public final void notifyAcquireSkill(L2Npc npc, L2PcInstance player, Skill skill, AcquireSkillType type)
 	{
 		String res;
 		try
@@ -904,7 +904,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param targets
 	 * @param isSummon
 	 */
-	public final void notifySkillSee(L2Npc npc, L2PcInstance caster, L2Skill skill, L2Object[] targets, boolean isSummon)
+	public final void notifySkillSee(L2Npc npc, L2PcInstance caster, Skill skill, L2Object[] targets, boolean isSummon)
 	{
 		ThreadPoolManager.getInstance().executeAi(new SkillSee(this, npc, caster, skill, targets, isSummon));
 	}
@@ -1128,8 +1128,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	// These are methods that java calls to invoke scripts.
 	
 	/**
-	 * This function is called in place of {@link #onAttack(L2Npc, L2PcInstance, int, boolean, L2Skill)} if the former is not implemented.<br>
-	 * If a script contains both onAttack(..) implementations, then this method will never be called unless the script's {@link #onAttack(L2Npc, L2PcInstance, int, boolean, L2Skill)} explicitly calls this method.
+	 * This function is called in place of {@link #onAttack(L2Npc, L2PcInstance, int, boolean, Skill)} if the former is not implemented.<br>
+	 * If a script contains both onAttack(..) implementations, then this method will never be called unless the script's {@link #onAttack(L2Npc, L2PcInstance, int, boolean, Skill)} explicitly calls this method.
 	 * @param npc this parameter contains a reference to the exact instance of the NPC that got attacked the NPC.
 	 * @param attacker this parameter contains a reference to the exact instance of the player who attacked.
 	 * @param damage this parameter represents the total damage that this attack has inflicted to the NPC.
@@ -1151,7 +1151,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param skill parameter is the skill that player used to attack NPC.
 	 * @return
 	 */
-	public String onAttack(L2Npc npc, L2PcInstance attacker, int damage, boolean isSummon, L2Skill skill)
+	public String onAttack(L2Npc npc, L2PcInstance attacker, int damage, boolean isSummon, Skill skill)
 	{
 		return onAttack(npc, attacker, damage, isSummon);
 	}
@@ -1299,7 +1299,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param skill this parameter contains a reference to the skill that the player requested its info.
 	 * @return
 	 */
-	public String onAcquireSkillInfo(L2Npc npc, L2PcInstance player, L2Skill skill)
+	public String onAcquireSkillInfo(L2Npc npc, L2PcInstance player, Skill skill)
 	{
 		return null;
 	}
@@ -1313,7 +1313,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param type the skill learn type
 	 * @return
 	 */
-	public String onAcquireSkill(L2Npc npc, L2PcInstance player, L2Skill skill, AcquireSkillType type)
+	public String onAcquireSkill(L2Npc npc, L2PcInstance player, Skill skill, AcquireSkillType type)
 	{
 		return null;
 	}
@@ -1344,7 +1344,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param isSummon if {@code true}, the skill was actually cast by the player's summon, not the player himself
 	 * @return
 	 */
-	public String onSkillSee(L2Npc npc, L2PcInstance caster, L2Skill skill, L2Object[] targets, boolean isSummon)
+	public String onSkillSee(L2Npc npc, L2PcInstance caster, Skill skill, L2Object[] targets, boolean isSummon)
 	{
 		return null;
 	}
@@ -1356,7 +1356,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 * @param skill the actual skill that was used by the NPC.
 	 * @return
 	 */
-	public String onSpellFinished(L2Npc npc, L2PcInstance player, L2Skill skill)
+	public String onSpellFinished(L2Npc npc, L2PcInstance player, Skill skill)
 	{
 		return null;
 	}
@@ -3200,7 +3200,7 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 	 * @param instanceId
 	 * @return
 	 */
-	public L2TrapInstance addTrap(int trapId, int x, int y, int z, int heading, L2Skill skill, int instanceId)
+	public L2TrapInstance addTrap(int trapId, int x, int y, int z, int heading, Skill skill, int instanceId)
 	{
 		final L2NpcTemplate npcTemplate = NpcData.getInstance().getTemplate(trapId);
 		L2TrapInstance trap = new L2TrapInstance(IdFactory.getInstance().getNextId(), npcTemplate, instanceId, -1);
