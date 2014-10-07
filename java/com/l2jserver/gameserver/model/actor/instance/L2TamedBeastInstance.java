@@ -28,14 +28,14 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlIntention;
 import com.l2jserver.gameserver.ai.L2AttackableAI;
 import com.l2jserver.gameserver.ai.L2CharacterAI;
-import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
@@ -242,7 +242,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	{
 		if (canAutoDeBuff())
 		{
-			for (L2Skill skill : getSkills().values())
+			for (Skill skill : getSkills().values())
 				if (isDeBuffSkill(skill))
 					return true;
 		}
@@ -253,24 +253,24 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	{
 		if (canAutoHeal())
 		{
-			for (L2Skill skill : getSkills().values())
+			for (Skill skill : getSkills().values())
 				if (isHealSkill(skill))
 					return true;
 		}
 		return false;
 	}
 	
-	protected static boolean isBuffSkill(L2Skill skill)
+	protected static boolean isBuffSkill(Skill skill)
 	{
 		return skill.isBuff();
 	}
 	
-	protected static boolean isDeBuffSkill(L2Skill skill)
+	protected static boolean isDeBuffSkill(Skill skill)
 	{
 		return skill.isDebuff();
 	}
 	
-	protected static boolean isHealSkill(L2Skill skill)
+	protected static boolean isHealSkill(Skill skill)
 	{
 		return skill.hasEffectType(L2EffectType.CPHEAL,
 			L2EffectType.HEAL,
@@ -280,9 +280,9 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	}
 	
 	@Override
-	public L2Skill addSkill(L2Skill newSkill)
+	public Skill addSkill(Skill newSkill)
 	{
-		L2Skill oldSkill = super.addSkill(newSkill);
+		Skill oldSkill = super.addSkill(newSkill);
 		_hasDeBuffSkill = hasDeBuffSkill();
 		_hasHealSkill = hasHealSkill();
 		return oldSkill;
@@ -290,7 +290,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	
 	public void removeBuffSkills()
 	{
-		for (L2Skill skill : getSkills().values())
+		for (Skill skill : getSkills().values())
 			if (isBuffSkill(skill))
 				removeSkill(skill.getId());
 	}
@@ -305,11 +305,11 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		}
 		int delay = 100;
 		boolean done = false;
-		for (L2Skill skill : getSkills().values())
+		for (Skill skill : getSkills().values())
 		{
 			if (isBuffSkill(skill) && !isSkillDisabled(skill))
 			{
-				final L2Skill _skill = skill;
+				final Skill _skill = skill;
 				ThreadPoolManager.getInstance().scheduleGeneral(new Runnable(){
 					@Override public void run()
 					{
@@ -437,9 +437,9 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		if (HPRatio >= 0.8)
 		{
 		  if (attacker != null && getCurrentHp() == getMaxHp())
-			for (L2Skill skill : /*getTemplate().*/getSkills().values())
+			for (Skill skill : /*getTemplate().*/getSkills().values())
 			{
-				// if the skill is a debuff, check if the attacker has it already [ attacker.getEffect(L2Skill skill) ]
+				// if the skill is a debuff, check if the attacker has it already [ attacker.getEffect(Skill skill) ]
 				if (isDeBuffSkill(skill) && !isSkillDisabled(skill) && Rnd.get(3) < 1 && !attacker.isAffectedBySkill(skill.getId()))
 				{
 					sitCastAndFollow(skill, attacker);
@@ -458,9 +458,9 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 			}
 			
 			// if the owner has a lot of HP, then debuff the enemy with a random debuff among the available skills
-			for (L2Skill skill : /*getTemplate().*/getSkills().values())
+			for (Skill skill : /*getTemplate().*/getSkills().values())
 			{
-				// if the skill is a buff, check if the owner has it already [ owner.getEffect(L2Skill skill) ]
+				// if the skill is a buff, check if the owner has it already [ owner.getEffect(Skill skill) ]
 				if (Rnd.get(5) < chance && isHealSkill(skill) && !isSkillDisabled(skill))
 				{
 					sitCastAndFollow(skill, _owner);
@@ -478,7 +478,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	 * @param skill
 	 * @param target
 	 */
-	protected void sitCastAndFollow(L2Skill skill, L2Character target)
+	protected void sitCastAndFollow(Skill skill, L2Character target)
 	{
 		stopMove(null);
  //		broadcastPacket(new StopMove(this));	//-[JOJO]
@@ -539,7 +539,7 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 					
 					// emulate a call to the owner using food, but bypass all checks for range, etc
 					// this also causes a call to the AI tasks handling feeding, which may call onReceiveFood as required.
-					owner.callSkill(SkillTable.getInstance().getInfo(foodTypeSkillId, 1), targets);
+					owner.callSkill(SkillData.getInstance().getSkill(foodTypeSkillId, 1), targets);
 					owner.setTarget(oldTarget);
 				}
 				else
@@ -585,9 +585,9 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		{
 			// instead of calculating this value each time, let's get this now and pass it on
 			int totalBuffsAvailable = 0;
-			for (L2Skill skill : getSkills().values())
+			for (Skill skill : getSkills().values())
 			{
-				// if the skill is a buff, check if the owner has it already [ owner.getEffect(L2Skill skill) ]
+				// if the skill is a buff, check if the owner has it already [ owner.getEffect(Skill skill) ]
 				if (isBuffSkill(skill))
 					++totalBuffsAvailable;
 			}
@@ -627,12 +627,12 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 			int totalBuffsOnOwner = 0;
 			int i = 0;
 			int rand = Rnd.get(_numBuffs);
-			L2Skill buffToGive = null;
+			Skill buffToGive = null;
 			
 			// get this npc's skills: getSkills()
-			for (L2Skill skill : getSkills().values())
+			for (Skill skill : getSkills().values())
 			{
-				// if the skill is a buff, check if the owner has it already [ owner.getEffect(L2Skill skill) ]
+				// if the skill is a buff, check if the owner has it already [ owner.getEffect(Skill skill) ]
 				if (isBuffSkill(skill))
 				{
 					if (owner.isAffectedBySkill(skill.getId()))

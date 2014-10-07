@@ -53,7 +53,7 @@ import com.l2jserver.gameserver.model.drops.IDropItem;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
 import com.l2jserver.gameserver.model.quest.Quest;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.stats.MoveType;
 import com.l2jserver.gameserver.util.UnmodifiableArrayList;
 
@@ -113,8 +113,8 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	private int _shortRangeSkillChance;
 	private int _longRangeSkillId;
 	private int _longRangeSkillChance;
-	private L2Skill[] _skills;	//[JOJO] -Map<Integer, L2Skill>
-	private Map<AISkillScope, List<L2Skill>> _aiSkillLists;	//[JOJO] -Map<AISkillScope, List<L2Skill>>
+	private Skill[] _skills;	//[JOJO] -Map<Integer, Skill>
+	private Map<AISkillScope, List<Skill>> _aiSkillLists;	//[JOJO] -Map<AISkillScope, List<Skill>>
 	private int[] _clans;		//[JOJO] -Set<Integer>
 	private int[] _enemyClans;	//[JOJO] -Set<Integer>
 	private Map<DropListScope, List<IDropItem>> _dropLists;
@@ -515,28 +515,28 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 	}
 	
 	@Override
-	public L2Skill[] getSkills()	//[JOJO] -Map<Integer, L2Skill>
+	public Skill[] getSkills()	//[JOJO] -Map<Integer, Skill>
 	{
 		return _skills;
 	}
 	
-	public void setSkills(ArrayList<L2Skill> skills)
+	public void setSkills(ArrayList<Skill> skills)
 	{
-		_skills = skills != null && skills.size() > 0 ? skills.toArray(L2Skill.EMPTY_SKILL_LIST) : L2Skill.EMPTY_SKILL_LIST;
+		_skills = skills != null && skills.size() > 0 ? skills.toArray(Skill.EMPTY_SKILL_LIST) : Skill.EMPTY_SKILL_LIST;
 	}
 	
-	public List<L2Skill> getAISkills(AISkillScope aiSkillScope)	//[JOJO] -List<L2Skill>
+	public List<Skill> getAISkills(AISkillScope aiSkillScope)	//[JOJO] -List<Skill>
 	{
-		final List<L2Skill> aiSkills = _aiSkillLists.get(aiSkillScope);
-		return aiSkills != null ? aiSkills : Collections.<L2Skill> emptyList();
+		final List<Skill> aiSkills = _aiSkillLists.get(aiSkillScope);
+		return aiSkills != null ? aiSkills : Collections.<Skill> emptyList();
 	}
 	
-	public void setAISkillLists(EnumMap<AISkillScope, List<L2Skill>> aiSkillLists)
+	public void setAISkillLists(EnumMap<AISkillScope, List<Skill>> aiSkillLists)
 	{
-		_aiSkillLists = aiSkillLists != null && !aiSkillLists.isEmpty() ? Collections.unmodifiableMap(aiSkillLists) : Collections.<AISkillScope, List<L2Skill>> emptyMap();
+		_aiSkillLists = aiSkillLists != null && !aiSkillLists.isEmpty() ? Collections.unmodifiableMap(aiSkillLists) : Collections.<AISkillScope, List<Skill>> emptyMap();
 		
 		if (aiSkillLists != null)
-			for (Entry<AISkillScope, List<L2Skill>> e : aiSkillLists.entrySet())
+			for (Entry<AISkillScope, List<Skill>> e : aiSkillLists.entrySet())
 				e.setValue(new UnmodifiableArrayList<>(e.getValue()));
 	}
 	

@@ -33,7 +33,7 @@ import com.l2jserver.gameserver.model.L2EnchantSkillGroup.EnchantSkillHolder;
 import com.l2jserver.gameserver.model.L2EnchantSkillLearn;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 
 /**
  * This class holds the Enchant Groups information.
@@ -150,7 +150,7 @@ public class EnchantSkillGroupsData extends DocumentParser
 	 * @param skill the skill
 	 * @return the skill enchantment for skill
 	 */
-	public L2EnchantSkillLearn getSkillEnchantmentForSkill(L2Skill skill)
+	public L2EnchantSkillLearn getSkillEnchantmentForSkill(Skill skill)
 	{
 		// there is enchantment for this skill and we have the required level of it
 		final L2EnchantSkillLearn esl = getSkillEnchantmentBySkillId(skill.getId());
@@ -186,7 +186,7 @@ public class EnchantSkillGroupsData extends DocumentParser
 	 * @param skill the skill
 	 * @return the enchant skill sp cost
 	 */
-	public int getEnchantSkillSpCost(L2Skill skill)
+	public int getEnchantSkillSpCost(Skill skill)
 	{
 		final L2EnchantSkillLearn enchantSkillLearn = _enchantSkillTrees.get(skill.getId());
 		if (enchantSkillLearn != null)
@@ -205,7 +205,7 @@ public class EnchantSkillGroupsData extends DocumentParser
 	 * @param skill the skill
 	 * @return the enchant skill Adena cost
 	 */
-	public int getEnchantSkillAdenaCost(L2Skill skill)
+	public int getEnchantSkillAdenaCost(Skill skill)
 	{
 		final L2EnchantSkillLearn enchantSkillLearn = _enchantSkillTrees.get(skill.getId());
 		if (enchantSkillLearn != null)
@@ -225,7 +225,7 @@ public class EnchantSkillGroupsData extends DocumentParser
 	 * @param skill the skill
 	 * @return the enchant skill rate
 	 */
-	public byte getEnchantSkillRate(L2PcInstance player, L2Skill skill)
+	public byte getEnchantSkillRate(L2PcInstance player, Skill skill)
 	{
 		final L2EnchantSkillLearn enchantSkillLearn = _enchantSkillTrees.get(skill.getId());
 		if (enchantSkillLearn != null)

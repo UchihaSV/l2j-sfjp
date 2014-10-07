@@ -30,12 +30,12 @@ import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.ItemTable;
-import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.datatables.StringIntern;
 import com.l2jserver.gameserver.engines.items.DocumentItem;
 import com.l2jserver.gameserver.engines.skills.DocumentSkill;
 import com.l2jserver.gameserver.model.items.L2Item;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.util.file.filter.XMLFilter;
 
 /**
@@ -68,7 +68,7 @@ public class DocumentEngine
 		}
 	}
 	
-	private/*public*/ List<L2Skill> loadSkills(File file)
+	private/*public*/ List<Skill> loadSkills(File file)
 	{
 		if (file == null)
 		{
@@ -80,7 +80,7 @@ public class DocumentEngine
 		return doc.getSkills();
 	}
 	
-	public void loadAllSkills(final FastIntObjectMap<L2Skill> allSkills)
+	public void loadAllSkills(final FastIntObjectMap<Skill> allSkills)
 	{
 		long started = System.currentTimeMillis();
 		int count = 0;
@@ -89,27 +89,27 @@ public class DocumentEngine
 		if (Config.CUSTOM_SKILLS_LOAD)
 			hashFiles("data/stats/skills/custom", files);
 		
-		StringIntern.begin(SkillTable.class.getSimpleName());
+		StringIntern.begin(SkillData.class.getSimpleName());
 		StringIntern.intern("icon.skill0000");
 		for (File file : files)
 		{
-			List<L2Skill> s = loadSkills(file);
+			List<Skill> s = loadSkills(file);
 			if (s == null)
 			{
 				continue;
 			}
-			for (L2Skill skill : s)
+			for (Skill skill : s)
 			{
 				//[JOJO]-------------------------------------------------
-				if (allSkills.put(SkillTable.getSkillHashCode(skill), skill) != null)
-					_log.log(Level.INFO, "<!>" + SkillTable.class.getSimpleName() + ": file '" + file.getPath() + "' override the skill " + skill.getSkillType() + " " + skill.getId() + " " + skill.getName());	//[JOJO]
+				if (allSkills.put(SkillData.getSkillHashCode(skill), skill) != null)
+					_log.log(Level.INFO, "<!>" + SkillData.class.getSimpleName() + ": file '" + file.getPath() + "' override the skill " + skill.getSkillType() + " " + skill.getId() + " " + skill.getName());	//[JOJO]
 				//-------------------------------------------------------
-			//	allSkills.put(SkillTable.getSkillHashCode(skill), skill);
+			//	allSkills.put(SkillData.getSkillHashCode(skill), skill);
 				count++;
 			}
 		}
 		StringIntern.end();
-		_log.info("SkillTable"/*getClass().getSimpleName()*/ + ": Loaded " + count + " Skill templates from XML files. (" + strMillTime(System.currentTimeMillis() - started) + ")");
+		_log.info("SkillData"/*getClass().getSimpleName()*/ + ": Loaded " + count + " Skill templates from XML files. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 	}
 	
 	/**

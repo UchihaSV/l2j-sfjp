@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.items.type.L2WeaponType;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.stats.MoveType;
 
 /**
@@ -623,8 +623,8 @@ public class L2CharTemplate
 	 * Overridden in L2NpcTemplate
 	 * @return the characters skills
 	 */
-	public L2Skill[] getSkills()	//[JOJO] -Map<Integer, L2Skill>
+	public Skill[] getSkills()	//[JOJO] -Map<Integer, Skill>
 	{
-		return L2Skill.EMPTY_SKILL_LIST;
+		return Skill.EMPTY_SKILL_LIST;
 	}
 }

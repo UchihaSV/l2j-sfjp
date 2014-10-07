@@ -27,7 +27,7 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.items.L2Weapon;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.stats.Calculator;
 import com.l2jserver.gameserver.model.stats.Env;
 import com.l2jserver.gameserver.model.stats.MoveType;
@@ -73,7 +73,7 @@ public class CharStat
 	 * @param skill The L2Skill whose properties will be used in the calculation (ex : Level...)
 	 * @return
 	 */
-	public final double calcStat(Stats stat, double init, L2Character target, L2Skill skill)
+	public final double calcStat(Stats stat, double init, L2Character target, Skill skill)
 	{
 		if (stat == null)
 		{
@@ -181,7 +181,7 @@ public class CharStat
 	 * @param skill
 	 * @return the Critical Hit rate (base+modifier) of the L2Character.
 	 */
-	public int getCriticalHit(L2Character target, L2Skill skill)
+	public int getCriticalHit(L2Character target, Skill skill)
 	{
 		int val = (int) calcStat(Stats.CRITICAL_RATE, _activeChar.getTemplate().getBaseCritRate(), target, skill);
 		
@@ -249,7 +249,7 @@ public class CharStat
 	 * @param skill
 	 * @return the Magical Attack range (base+modifier) of the L2Character.
 	 */
-	public final int getMagicalAttackRange(L2Skill skill)
+	public final int getMagicalAttackRange(Skill skill)
 	{
 		if (skill != null)
 		{
@@ -296,7 +296,7 @@ public class CharStat
 	 * @param skill The L2Skill used against the target
 	 * @return
 	 */
-	public int getMAtk(L2Character target, L2Skill skill)
+	public int getMAtk(L2Character target, Skill skill)
 	{
 		float bonusAtk = 1;
 		if (Config.L2JMOD_CHAMPION_ENABLE && _activeChar.isChampion())
@@ -342,7 +342,7 @@ public class CharStat
 	 * @param skill
 	 * @return the Magic Critical Hit rate (base+modifier) of the L2Character.
 	 */
-	public final int getMCriticalHit(L2Character target, L2Skill skill)
+	public final int getMCriticalHit(L2Character target, Skill skill)
 	{
 		int val = (int) calcStat(Stats.MCRITICAL_RATE, 1, target, skill) * 10;
 		
@@ -360,7 +360,7 @@ public class CharStat
 	 * @param skill The L2Skill used against the target
 	 * @return the MDef (base+modifier) of the L2Character against a skill in function of abnormal effects in progress.
 	 */
-	public int getMDef(L2Character target, L2Skill skill)
+	public int getMDef(L2Character target, Skill skill)
 	{
 		// Get the base MDef of the L2Character
 		double defence = _activeChar.getTemplate().getBaseMDef();
@@ -429,7 +429,7 @@ public class CharStat
 	 * @param skill
 	 * @return the MReuse rate (base+modifier) of the L2Character.
 	 */
-	public final double getMReuseRate(L2Skill skill)
+	public final double getMReuseRate(Skill skill)
 	{
 		return calcStat(Stats.MAGIC_REUSE_RATE, 1, null, skill);
 	}
@@ -615,7 +615,7 @@ public class CharStat
 	 * @param skill
 	 * @return the mpConsume.
 	 */
-	public final int getMpConsume(L2Skill skill)
+	public final int getMpConsume(Skill skill)
 	{
 		if (skill == null)
 		{
@@ -651,7 +651,7 @@ public class CharStat
 	 * @param skill
 	 * @return the mpInitialConsume.
 	 */
-	public final int getMpInitialConsume(L2Skill skill)
+	public final int getMpInitialConsume(Skill skill)
 	{
 		if (skill == null)
 		{

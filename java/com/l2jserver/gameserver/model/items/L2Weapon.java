@@ -22,8 +22,6 @@ import java.util.Collection;
 import java.util.List;
 
 import com.l2jserver.gameserver.enums.QuestEventType;
-import com.l2jserver.gameserver.handler.ISkillHandler;
-import com.l2jserver.gameserver.handler.SkillHandler;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -34,7 +32,7 @@ import com.l2jserver.gameserver.model.conditions.ConditionGameChance;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.items.type.L2WeaponType;
 import com.l2jserver.gameserver.model.quest.Quest;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.stats.Env;
 import com.l2jserver.gameserver.model.stats.Formulas;
 import com.l2jserver.gameserver.util.Util;
@@ -300,7 +298,7 @@ public final class L2Weapon extends L2Item
 	 * @return the skill that player get when has equipped weapon +4 or more (for duals SA).
 	 */
 	@Override
-	public L2Skill getEnchant4Skill()
+	public Skill getEnchant4Skill()
 	{
 		if (_enchant4Skill == null)
 		{
@@ -353,7 +351,7 @@ public final class L2Weapon extends L2Item
 			return;
 		}
 		
-		final L2Skill onCritSkill = _skillsOnCrit.getSkill();
+		final Skill onCritSkill = _skillsOnCrit.getSkill();
 		if (_skillsOnCritCondition != null)
 		{
 			Env env = new Env();
@@ -378,11 +376,7 @@ public final class L2Weapon extends L2Item
 			target
 		};
 		
-		final ISkillHandler handler = SkillHandler.getInstance().getHandler(onCritSkill.getSkillType());
-		if (handler != null)
-		{
-			handler.useSkill(caster, onCritSkill, targets);
-		}
+		onCritSkill.activateSkill(caster, targets);
 	}
 	
 	/**
@@ -391,14 +385,14 @@ public final class L2Weapon extends L2Item
 	 * @param trigger the L2Skill pointing out the skill triggering this action
 	 * @return the effects of skills associated with the item to be triggered onMagic.
 	 */
-	public boolean getSkillEffects(L2Character caster, L2Character target, L2Skill trigger)
+	public boolean getSkillEffects(L2Character caster, L2Character target, Skill trigger)
 	{
 		if (_skillsOnMagic == null)
 		{
 			return false;
 		}
 		
-		final L2Skill onMagicSkill = _skillsOnMagic.getSkill();
+		final Skill onMagicSkill = _skillsOnMagic.getSkill();
 		
 		// Trigger only if both are good or bad magic.
 		if (trigger.isBad() != onMagicSkill.isBad())
@@ -443,11 +437,7 @@ public final class L2Weapon extends L2Item
 		
 		// Launch the magic skill and calculate its effects
 		// Get the skill handler corresponding to the skill type
-		final ISkillHandler handler = SkillHandler.getInstance().getHandler(onMagicSkill.getSkillType());
-		if (handler != null)
-		{
-			handler.useSkill(caster, onMagicSkill, targets);
-		}
+		onMagicSkill.activateSkill(caster, targets);
 		
 		// notify quests of a skill use
 		if (caster instanceof L2PcInstance)

@@ -22,18 +22,18 @@ import java.util.concurrent.Future;
 import java.util.logging.Level;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Decoy;
 import com.l2jserver.gameserver.model.actor.knownlist.DecoyKnownList;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.taskmanager.DecayTaskManager;
 
 public class L2DecoyInstance extends L2Decoy
 {
-	protected L2Skill _hateSpamSkill;
+	protected Skill _hateSpamSkill;
 	private Future<?> _despawnTask;
 	private Future<?> _hateSpamTask;
 	
@@ -42,7 +42,7 @@ public class L2DecoyInstance extends L2Decoy
 		super(objectId, template, owner);
 		setInstanceType(InstanceType.L2DecoyInstance);
 		int skillLevel = getTemplate().getDisplayId() - 13070;
-		_hateSpamSkill = SkillTable.getInstance().getInfo(5272, skillLevel);
+		_hateSpamSkill = SkillData.getInstance().getSkill(5272, skillLevel);
 		_despawnTask = ThreadPoolManager.getInstance().scheduleGeneral(new DespawnTask(), despawnDelay);
 		_hateSpamTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new HateSpam(), 2000, 5000);
 	}
