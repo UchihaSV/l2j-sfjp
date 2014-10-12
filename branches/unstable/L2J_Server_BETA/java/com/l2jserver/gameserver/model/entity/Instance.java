@@ -890,6 +890,7 @@ public final class Instance
 			final L2PcInstance player = L2World.getInstance().getPlayer(objectId);
 			if ((player != null) && (player.getInstanceId() == getId()))
 			{
+				if (isShowTimer()) player.hideInstanceTimer();	//[JOJO]
 				player.setInstanceId(0);
 				if (getSpawnLoc() != null)
 				{
