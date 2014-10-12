@@ -94,7 +94,14 @@ public class L2BlockInstance extends L2MonsterInstance
 	 * アイテム 13788 地雷   → スキル 2617-1 地雷埋設 ┬→ スキル 5848-1 ブロック トリガー スロー ⇒ 5849-1 移動速度の低下
 	 *                                                 └→ スキル 5850-1 ブロック トリガースタン  ⇒ 5851-1 ショック
 	 */
-	public final void blockCheckerSkill(L2PcInstance caster, L2Skill skill)	//+[JOJO] Dummy.java#useBlockCheckerSkill() から引越し
+	public static void useSkill(L2Character activeChar, Skill skill, L2Object[] targets)
+	{
+		final L2Object obj = targets[0];
+		if (obj instanceof L2BlockInstance)
+			((L2BlockInstance) obj).blockCheckerSkill(activeChar.getActingPlayer(), skill);
+	}
+	
+	public final void blockCheckerSkill(L2PcInstance caster, Skill skill)	//+[JOJO] Dummy.java#useBlockCheckerSkill() から引越し
 	{
 		final int arena = caster.getBlockCheckerArena();
 		if (arena == ARENA_NONE)
