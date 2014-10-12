@@ -296,8 +296,99 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	}
 	
 	//-------------------------------------------------------
+	// handlers/skillhandlers/BeastSkills.java から引越し
 	
-	public void castBeastSkills()
+	public static void useSkill(L2Character activeChar, Skill skill, L2Object[] targets)
+	{
+		if (!activeChar.isPlayer())
+		{
+			return;
+		}
+		
+		final L2PcInstance player = activeChar.getActingPlayer();
+		final L2Object target = player.getTarget();
+		
+		switch (skill.getId())
+		{
+			case 2188:	// ゴールデン スパイス targetType=ONE
+			case 2189:	// クリスタル スパイス targetType=ONE
+				// @see ai.group_template.FeedableBeasts#onSkillSee()
+				// This is just a dummy skill handler for the golden food and crystal food skills,
+				// since the AI responce onSkillUse handles the rest.
+				break;
+			
+			case 8362:	// 猛獣訓練：解き放つ - 猛獣を1頭放ちます。targetType=ONE
+			{
+				final L2TamedBeastInstance beast;
+				if (target instanceof L2TamedBeastInstance && (beast = (L2TamedBeastInstance) target).getOwner() == player)
+				{
+					beast.deleteMe();
+				}
+				break;
+			}
+			
+			case 8378:	// 猛獣訓練：すべて解き放つ - 猛獣をすべて放ちます。targetType=SELF
+			{
+				final java.util.List<L2TamedBeastInstance> trainedBeasts;
+				if ((trainedBeasts = player.getTrainedBeasts()) != null)
+				{
+					for (L2TamedBeastInstance beast : trainedBeasts)
+					{
+						beast.deleteMe();
+					}
+				}
+				break;
+			}
+			
+			case 8363:	// 猛獣訓練：ついて来る - 猛獣について来るよう命令します。targetType=ONE
+			{
+				//[JOJO]-------------------------------------------------
+				// 8363 猛獣訓練：ついて来る - 猛獣について来るよう命令します。
+				// →仕様変更･･･2匹以上いるときは、プレヤーのまわりに整列する。
+				/*private static*/final double AVOID_RADIUS = 64.0;/*仮*/
+				/*private static*/final double AVOID_ANGLE = Math.PI / 6;
+				final java.util.List<L2TamedBeastInstance> trainedBeasts;
+				final int size;
+				if ((trainedBeasts = player.getTrainedBeasts()) != null && (size = trainedBeasts.size()) >= 2 && trainedBeasts.contains(target))
+				{
+					final int ownerX = player.getX(), ownerY = player.getY(), ownerZ = player.getZ();
+					double angle = target == player ? com.l2jserver.gameserver.util.Util.convertHeadingToRadian(player.getHeading()) : Math.atan2(target.getY() - ownerY, target.getX() - ownerX);
+					angle -= AVOID_ANGLE * size / 2;
+					for (L2TamedBeastInstance beast : trainedBeasts)
+					{
+						if (!beast.isVisible() || beast.isDead() || beast.isMovementDisabled() || beast.isMoving())
+							continue;
+						int x = ownerX + (int)(AVOID_RADIUS * Math.cos(angle));
+						int y = ownerY + (int)(AVOID_RADIUS * Math.sin(angle));
+						int z = ownerZ;
+						if (x != beast.getX() && y != beast.getY() /*&& z != beast.getZ()*/)
+						{
+							beast.setXYZ(x, y, z);
+							player.sendPacket(new com.l2jserver.gameserver.network.serverpackets.ValidateLocation(beast));
+						}
+						beast.getAI().setIntention(com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_FOLLOW, player);
+						angle += AVOID_ANGLE;
+					}
+				}
+				//-------------------------------------------------------
+				break;
+			}
+			
+			case 8364:	// 猛獣訓練：特殊能力使用 - 猛獣に特殊能力を使うよう命令します。targetType=ONE
+			{
+				final L2TamedBeastInstance beast;
+				if (target instanceof L2TamedBeastInstance && (beast = (L2TamedBeastInstance) target).getOwner() == player)
+				{
+					beast.castBeastSkills();
+				}
+				break;
+			}
+			
+			default: throw new RuntimeException("useSkill(" + activeChar + "," + skill + "," + (targets.length == 0 ? "EMPTY" : targets[0]) + ")");
+		}
+	}
+	
+	private void castBeastSkills()
 	{
 		if (_owner == null)
 		{
@@ -329,6 +420,8 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		if (!done)
 			_owner.sendMessage("条件が合わないため、能力は使用できません。");
 	}
+	
+	//-------------------------------------------------------
 	
 	public L2PcInstance getOwner()
 	{
