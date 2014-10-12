@@ -102,7 +102,7 @@ public class DocumentEngine
 			{
 				//[JOJO]-------------------------------------------------
 				if (allSkills.put(SkillData.getSkillHashCode(skill), skill) != null)
-					_log.log(Level.INFO, "<!>" + SkillData.class.getSimpleName() + ": file '" + file.getPath() + "' override the skill " + skill.getSkillType() + " " + skill.getId() + " " + skill.getName());	//[JOJO]
+					_log.log(Level.INFO, "<!>" + SkillData.class.getSimpleName() + ": file '" + file.getPath() + "' override the skill id=" + skill.getId() + " name=\"" + skill.getName() + "\" targetType=" + skill.getTargetType().name() + " abnormalType=" + skill.getAbnormalType().name());	//[JOJO]
 				//-------------------------------------------------------
 			//	allSkills.put(SkillData.getSkillHashCode(skill), skill);
 				count++;
