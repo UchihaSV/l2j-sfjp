@@ -21,11 +21,11 @@ package com.l2jserver.gameserver.model.actor.instance;
 import java.util.Collection;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
@@ -146,7 +146,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 					if (_bonus)
 					{
 						L2EventChestInstance me = L2EventChestInstance.this;
-						L2Skill firework = SkillTable.FrequentSkill.FIREWORK.getSkill();
+						Skill firework = SkillData.FrequentSkill.FIREWORK.getSkill();
 						broadcastPacket(new MagicSkillUse(me, me, firework.getId(), firework.getLevel(), firework.getHitTime(), firework.getReuseDelay()));
 					}
 					autoChat(TRIGGERE_SAY, Say2.ALL);

@@ -101,7 +101,7 @@ public class Options
 		return _activeSkill != 0;
 	}
 	
-	public L2Skill getActiveSkill()
+	public Skill getActiveSkill()
 	{
 		return getSkill(_activeSkill);
 	}
@@ -116,7 +116,7 @@ public class Options
 		return _passiveSkill != 0;
 	}
 	
-	public L2Skill getPassiveSkill()
+	public Skill getPassiveSkill()
 	{
 		return getSkill(_passiveSkill);
 	}
