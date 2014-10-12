@@ -18,7 +18,7 @@
  */
 package com.l2jserver.gameserver.model.options;
 
-import static com.l2jserver.gameserver.datatables.SkillTable.*;
+import static com.l2jserver.gameserver.datatables.SkillData.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
