@@ -18,14 +18,13 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jp.sf.l2j.troja.FastIntObjectMap;
+
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.engines.DocumentEngine;
-import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.skills.Skill;
 
 import gnu.trove.list.array.TIntArrayList;
@@ -38,9 +37,9 @@ public final class SkillData
 {
 	private static Logger _log = Logger.getLogger(SkillData.class.getName());
 	
-	private final Map<Integer, Skill> _skills = new HashMap<>();
-	private final TIntIntHashMap _skillMaxLevel = new TIntIntHashMap();
-	private final TIntArrayList _enchantable = new TIntArrayList();
+	private FastIntObjectMap<Skill> _skills;
+	private TIntIntHashMap _skillMaxLevel;
+	private TIntArrayList _enchantable;	//TODO: int[] _enchantable;
 	
 	protected SkillData()
 	{
@@ -56,6 +55,12 @@ public final class SkillData
 	
 	private void load()
 	{
+		//[JOJO]-------------------------------------------------
+		final FastIntObjectMap<Skill> _skills = new FastIntObjectMap<>();
+		final TIntIntHashMap _skillMaxLevel = new TIntIntHashMap();
+		final TIntArrayList _enchantable = new TIntArrayList();
+		//-------------------------------------------------------
+		
 		_skills.clear();
 		DocumentEngine.getInstance().loadAllSkills(_skills);
 		
@@ -83,6 +88,14 @@ public final class SkillData
 		
 		// Sorting for binarySearch
 		_enchantable.sort();
+		
+		//[JOJO]-------------------------------------------------
+		_skillMaxLevel.trimToSize();
+		_enchantable.trimToSize();
+		this._skills = _skills; 
+		this._skillMaxLevel = _skillMaxLevel; 
+		this._enchantable = _enchantable; 
+		//-------------------------------------------------------
 	}
 	
 	/**
@@ -103,8 +116,51 @@ public final class SkillData
 	 */
 	public static int getSkillHashCode(int skillId, int skillLevel)
 	{
-		return (skillId * 1021) + skillLevel;
+		return (skillId * PRIME) + skillLevel;
 	}
+	
+	//[JOJO]-------------------------------------------------
+	/**
+	 * @param skillHashCode The Skill hash number
+	 * @return The Skill Id
+	 */
+	public static int getSkillId(int skillHashCode)
+	{
+		return skillHashCode / PRIME;
+	}
+	
+	/**
+	 * @param skillHashCode The Skill hash number
+	 * @return The Skill Level
+	 */
+	public static int getSkillLevel(int skillHashCode)
+	{
+		return skillHashCode % PRIME;
+	}
+	
+	public static final int PRIME = 1021;
+	
+	/**
+	 * @param skillHashCode The Skill hash number
+	 * @return The Skill
+	 */
+	public static Skill getSkill(int skillHashCode)
+	{
+		return SkillData.getInstance()._skills.get(skillHashCode);
+	}
+	
+	@Deprecated
+	public final Skill getInfo(final int skillHashCode)
+	{
+		return _skills.get(skillHashCode);
+	}
+	
+	@Deprecated
+	public final Skill getInfo(int skillId, int level)
+	{
+		return getSkill(skillId, level);
+	}
+	//-------------------------------------------------------
 	
 	public Skill getSkill(int skillId, int level)
 	{
@@ -187,26 +243,26 @@ public final class SkillData
 		WEAPON_GRADE_PENALTY(6209, 1),
 		ARMOR_GRADE_PENALTY(6213, 1);
 		
-		private final SkillHolder _holder;
+		private final int _skillHashCode;
 		
 		private FrequentSkill(int id, int level)
 		{
-			_holder = new SkillHolder(id, level);
+			_skillHashCode = SkillData.getSkillHashCode(id, level);
 		}
 		
 		public int getId()
 		{
-			return _holder.getSkillId();
+			return SkillData.getSkillId(_skillHashCode);
 		}
 		
 		public int getLevel()
 		{
-			return _holder.getSkillLvl();
+			return SkillData.getSkillLevel(_skillHashCode);
 		}
 		
 		public Skill getSkill()
 		{
-			return _holder.getSkill();
+			return SkillData.getSkill(_skillHashCode);
 		}
 	}
 	

@@ -18,14 +18,13 @@
  */
 package com.l2jserver.gameserver.model.skills;
 
+import static com.l2jserver.gameserver.datatables.StringIntern.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,8 +35,6 @@ import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.enums.ShotType;
 import com.l2jserver.gameserver.handler.ITargetTypeHandler;
 import com.l2jserver.gameserver.handler.TargetHandler;
-import com.l2jserver.gameserver.instancemanager.HandysBlockCheckerManager;
-import com.l2jserver.gameserver.model.ArenaParticipantsHolder;
 import com.l2jserver.gameserver.model.ChanceCondition;
 import com.l2jserver.gameserver.model.L2ExtractableProductItem;
 import com.l2jserver.gameserver.model.L2ExtractableSkill;
@@ -51,6 +48,7 @@ import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2BlockInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2CubicInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance;
 import com.l2jserver.gameserver.model.conditions.Condition;
 import com.l2jserver.gameserver.model.effects.AbstractEffect;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
@@ -75,6 +73,7 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 {
 	protected static final Logger _log = Logger.getLogger(Skill.class.getName());
 	
+	public static final Skill[] EMPTY_SKILL_LIST = new Skill[0];
 	private static final L2Object[] EMPTY_TARGET_LIST = new L2Object[0];
 	
 	public static final int SKILL_CUBIC_MASTERY = 143;
@@ -165,7 +164,8 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 	// The radius center varies according to the _targetType:
 	// "caster" if targetType = AURA/PARTY/CLAN or "target" if targetType = AREA
 	private final int _affectRange;
-	private final int[] _affectLimit = new int[2];
+	private final int[] _affectLimit;
+	private static final int[] DEFAULT_AFFECT_LIMIT = new int[2];	//[JOJO] <set name="affectLimit" val="0-0" />
 	
 	private final boolean _nextActionIsAttack;
 	
@@ -201,7 +201,7 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 	// Function lists
 	private List<FuncTemplate> _funcTemplates;
 	
-	private final Map<EffectScope, List<AbstractEffect>> _effectLists = new EnumMap<>(EffectScope.class);
+	private final EnumMap<EffectScope, List<AbstractEffect>> _effectLists = new EnumMap<>(EffectScope.class);
 	
 	protected ChanceCondition _chanceCondition = null;
 	
@@ -227,7 +227,7 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 	
 	private final String _icon;
 	
-	private Byte[] _effectTypes;
+	private byte[] _effectTypes;
 	
 	// Channeling data
 	private final int _channelingSkillId;
@@ -275,7 +275,7 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 		_isAbnormalInstant = set.getBoolean("abnormalInstant", false);
 		parseAbnormalVisualEffect(set.getString("abnormalVisualEffect", null));
 		
-		_attribute = set.getString("attribute", "");
+		_attribute = intern(set.getString("attribute", ""));
 		
 		_stayAfterDeath = set.getBoolean("stayAfterDeath", false);
 		_stayOnSubclassChange = set.getBoolean("stayOnSubclassChange", true);
@@ -307,6 +307,7 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 			try
 			{
 				String[] valuesSplit = affectLimit.split("-");
+				_affectLimit = new int[2];	//[JOJO]
 				_affectLimit[0] = Integer.parseInt(valuesSplit[0]);
 				_affectLimit[1] = Integer.parseInt(valuesSplit[1]);
 			}
@@ -314,6 +315,11 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 			{
 				throw new IllegalArgumentException("SkillId: " + _id + " invalid affectLimit value: " + affectLimit + ", \"percent-percent\" required");
 			}
+		}
+		else
+		{
+			_affectLimit = DEFAULT_AFFECT_LIMIT;	//[JOJO]
+
 		}
 		
 		_targetType = set.getEnum("targetType", L2TargetType.class);
@@ -344,7 +350,7 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 		_chargeConsume = set.getInt("chargeConsume", 0);
 		_triggeredId = set.getInt("triggeredId", 0);
 		_triggeredLevel = set.getInt("triggeredLevel", 1);
-		_chanceType = set.getString("chanceType", "");
+		_chanceType = intern(set.getString("chanceType", ""));
 		if (!_chanceType.isEmpty())
 		{
 			_chanceCondition = ChanceCondition.parse(set);
@@ -383,8 +389,7 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 			
 			_extractableItems = parseExtractableSkill(_id, _level, capsuled_items);
 		}
-		
-		_icon = set.getString("icon", "icon.skill0000");
+		_icon = intern(set.getString("icon", "icon.skill0000"));
 		
 		_channelingSkillId = set.getInt("channelingSkillId", 0);
 		_channelingTickInterval = set.getInt("channelingTickInterval", 2) * 1000;
@@ -673,6 +678,12 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 	{
 		return _isDebuff;
 	}
+	//[JOJO]-------------------------------------------------
+	public final boolean isBuff()
+	{
+		return isContinuous() && !isDebuff();
+	}
+	//-------------------------------------------------------
 	
 	public int getDisplayId()
 	{
@@ -1192,13 +1203,21 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 					}
 				}
 			}
+			else
+			{
+				// target is mob
+if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
+				if (skill.isBad() && target instanceof com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance)
+					return false;
+}}
+			}
 		}
 		else
 		{
 			// target is mob
 			if ((targetPlayer == null) && (target instanceof L2Attackable) && (caster instanceof L2Attackable))
 			{
-				if (((L2Attackable) caster).isInEnemyClan((L2Attackable) target))
+				if (!((L2Attackable) caster).isInEnemyClan((L2Attackable) target))
 				{
 					return false;
 				}
@@ -1327,6 +1346,16 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 	{
 		applyEffects(effector, null, effected, false, false, true, 0);
 	}
+	//[JOJO]-------------------------------------------------
+	public void applyEffects(L2Character character)
+	{
+		applyEffects(character, null, character, false, false, true, 0);
+	}
+	@Deprecated public final void getEffects(L2Character effector, L2Character effected)
+	{
+		applyEffects(effector, effected);
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * Method overload for {@link Skill#applyEffects(L2Character, L2CubicInstance, L2Character, boolean, boolean, boolean, int)}.<br>
@@ -1448,38 +1477,25 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 		switch (getId())
 		{
 		// TODO: replace with AI
-			case 5852:
-			case 5853:
-			{
-				final L2BlockInstance block = targets[0] instanceof L2BlockInstance ? (L2BlockInstance) targets[0] : null;
-				final L2PcInstance player = caster.isPlayer() ? (L2PcInstance) caster : null;
-				if ((block == null) || (player == null))
-				{
-					return;
-				}
-				
-				final int arena = player.getBlockCheckerArena();
-				if (arena != -1)
-				{
-					final ArenaParticipantsHolder holder = HandysBlockCheckerManager.getInstance().getHolder(arena);
-					if (holder == null)
-					{
-						return;
-					}
-					
-					final int team = holder.getPlayerTeam(player);
-					final int color = block.getColorEffect();
-					if ((team == 0) && (color == 0x00))
-					{
-						block.changeColor(player, holder, team);
-					}
-					else if ((team == 1) && (color == 0x53))
-					{
-						block.changeColor(player, holder, team);
-					}
-				}
+			//-------------------------------------------------------
+			//+[JOJO] Dummy.java#useBlockCheckerSkill() から引越し
+			case 5852:	// ブロック返し
+			case 5853:	// ブロック返し
+			case 2616:	// 接着固定
+			case 2617:	// 地雷埋設
+				L2BlockInstance.useSkill(caster, this, targets);
 				break;
-			}
+			//-------------------------------------------------------
+			//+[JOJO] BeastSkills.java から引越し
+			case 2188: // ゴールデン スパイス targetType=ONE
+			case 2189: // クリスタル スパイス targetType=ONE
+			case 8362: // 猛獣訓練：解き放つ - 猛獣を1頭放ちます。targetType=ONE
+			case 8363: // 猛獣訓練：ついて来る - 猛獣について来るよう命令します。targetType=ONE
+			case 8364: // 猛獣訓練：特殊能力使用 - 猛獣に特殊能力を使うよう命令します。targetType=ONE
+			case 8378: // 猛獣訓練：すべて解き放つ - 猛獣をすべて放ちます。targetType=SELF
+				L2TamedBeastInstance.useSkill(caster, this, targets);
+				break;
+			//-------------------------------------------------------
 			default:
 			{
 				for (L2Character target : (L2Character[]) targets)
@@ -1782,12 +1798,7 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 		return _extractableItems;
 	}
 	
-	/**
-	 * @param effectType Effect type to check if its present on this skill effects.
-	 * @param effectTypes Effect types to check if are present on this skill effects.
-	 * @return {@code true} if at least one of specified {@link L2EffectType} types is present on this skill effects, {@code false} otherwise.
-	 */
-	public boolean hasEffectType(L2EffectType effectType, L2EffectType... effectTypes)
+	private byte[] effectTypes()
 	{
 		if (_effectTypes == null)
 		{
@@ -1795,42 +1806,76 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 			{
 				if (_effectTypes == null)
 				{
-					Set<Byte> effectTypesSet = new HashSet<>();
-					for (List<AbstractEffect> effectList : _effectLists.values())
-					{
-						if (effectList != null)
-						{
-							for (AbstractEffect effect : effectList)
-							{
-								if (effect == null)
-								{
-									continue;
-								}
-								effectTypesSet.add((byte) effect.getEffectType().ordinal());
-							}
-						}
-					}
+					final List<AbstractEffect> _effects = getEffects(EffectScope.GENERAL);
+					byte[] effectTypes = new byte[_effects.size()];
 					
-					Byte[] effectTypesArray = effectTypesSet.toArray(new Byte[effectTypesSet.size()]);
-					Arrays.sort(effectTypesArray);
-					_effectTypes = effectTypesArray;
+					final Env env = new Env();
+					env.setSkill(this);
+					
+					int i = 0;
+					for (AbstractEffect effect : _effects)
+					{
+						if (effect == null)
+						{
+							continue;
+						}
+						effectTypes[i++] = (byte) effect.getEffectType().ordinal();
+					}
+					if (i != effectTypes.length) effectTypes = Arrays.copyOf(effectTypes, i);
+					Arrays.sort(effectTypes);
+					_effectTypes = effectTypes;
 				}
 			}
 		}
-		
-		if (Arrays.binarySearch(_effectTypes, (byte) effectType.ordinal()) >= 0)
+		return _effectTypes;
+	}
+	/**
+	 * @param effectType Effect type to check if its present on this skill effects.
+	 * @param effectTypes Effect types to check if are present on this skill effects.
+	 * @return {@code true} if at least one of specified {@link L2EffectType} types is present on this skill effects, {@code false} otherwise.
+	 */
+	@Deprecated public boolean hasEffectType(L2EffectType... types)
+	{
+		if (hasEffects(EffectScope.GENERAL) && (types != null) && (types.length > 0))
 		{
-			return true;
-		}
-		
-		for (L2EffectType type : effectTypes)
-		{
-			if (Arrays.binarySearch(_effectTypes, (byte) type.ordinal()) >= 0)
+			final byte[] effectTypes = effectTypes();
+			for (L2EffectType type : types)
 			{
-				return true;
+				if (Arrays.binarySearch(effectTypes, (byte) type.ordinal()) >= 0)
+				{
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+	private boolean hasEffect(L2EffectType type)
+	{
+		return Arrays.binarySearch(effectTypes(), (byte) type.ordinal()) >= 0;
+	}
+	public boolean hasEffectType(L2EffectType type1)
+	{
+		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1));
+	}
+	public boolean hasEffectType(L2EffectType type1, L2EffectType type2)
+	{
+		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2));
+	}
+	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3)
+	{
+		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3));
+	}
+	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4)
+	{
+		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4));
+	}
+	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4, L2EffectType type5)
+	{
+		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4) || hasEffect(type5));
+	}
+	public boolean hasEffectType(L2EffectType type1, L2EffectType type2, L2EffectType type3, L2EffectType type4, L2EffectType type5, L2EffectType type6, L2EffectType type7, L2EffectType type8)
+	{
+		return hasEffects(EffectScope.GENERAL) && (hasEffect(type1) || hasEffect(type2) || hasEffect(type3) || hasEffect(type4) || hasEffect(type5) || hasEffect(type6) || hasEffect(type7) || hasEffect(type8));
 	}
 	
 	/**

@@ -23,7 +23,7 @@ import java.util.concurrent.Future;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlIntention;
-import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
 import com.l2jserver.gameserver.model.L2Object;
@@ -31,7 +31,7 @@ import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.quest.QuestState;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo.NpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillUse;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
@@ -165,7 +165,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			case 18243:
 				getSpawn().setIsNoRndWalk(true);
 				setIsNoRndWalk(true);
-				SkillTable.getInstance().getInfo(4616, 1).applyEffects(this, this);	// Fake Petrification
+				SkillData.getInstance().getSkill(4616, 1).applyEffects(this, this);	// Fake Petrification
 				break;
 			
 			case 18256:
@@ -567,7 +567,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				{
 					if (player == null || player.isDead()) continue;
 					int skillId = Rnd.get(4384, 4387), skillLevel = 1;
-					L2Skill skill = SkillTable.getInstance().getInfo(skillId, skillLevel);
+					Skill skill = SkillData.getInstance().getSkill(skillId, skillLevel);
 					setTarget(player);
 					doCast(skill);
 					broadcastPacket(new MagicSkillUse(activeChar, player, skillId, skillLevel, 0, 0));

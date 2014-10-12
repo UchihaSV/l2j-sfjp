@@ -8,7 +8,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2TrapInstance;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.enums.TrapAction;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.zone.L2ZoneType;
 
 /**
@@ -218,8 +218,8 @@ public class VerifyQuestEvent
 	public static boolean hasOnSkillSee(Quest q)
 	{
 		try {
-			// onSkillSee(L2Npc npc, L2PcInstance caster, L2Skill skill, L2Object[] targets, boolean isPet)
-			q.getClass().getDeclaredMethod("onSkillSee", L2Npc.class, L2PcInstance.class, L2Skill.class, L2Object[].class, boolean.class);
+			// onSkillSee(L2Npc npc, L2PcInstance caster, Skill skill, L2Object[] targets, boolean isPet)
+			q.getClass().getDeclaredMethod("onSkillSee", L2Npc.class, L2PcInstance.class, Skill.class, L2Object[].class, boolean.class);
 			return true;
 		}
 		catch (NoSuchMethodException | SecurityException e) {
@@ -254,8 +254,8 @@ public class VerifyQuestEvent
 	public static boolean hasOnSpellFinished(Quest q)
 	{
 		try {
-			// onSpellFinished(L2Npc npc, L2PcInstance player, L2Skill skill)
-			q.getClass().getDeclaredMethod("onSpellFinished", L2Npc.class, L2PcInstance.class, L2Skill.class);
+			// onSpellFinished(L2Npc npc, L2PcInstance player, Skill skill)
+			q.getClass().getDeclaredMethod("onSpellFinished", L2Npc.class, L2PcInstance.class, Skill.class);
 			return true;
 		}
 		catch (NoSuchMethodException | SecurityException e) {

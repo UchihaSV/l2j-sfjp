@@ -21,14 +21,15 @@ package com.l2jserver.gameserver.model.actor.instance;
 import static com.l2jserver.gameserver.instancemanager.HandysBlockChecker.*;
 
 import com.l2jserver.gameserver.datatables.ItemTable;
-import com.l2jserver.gameserver.datatables.SkillTable;
+import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.instancemanager.HandysBlockCheckerManager;
 import com.l2jserver.gameserver.model.ArenaParticipantsHolder;
+import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.entity.BlockCheckerEngine;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
-import com.l2jserver.gameserver.model.skills.L2Skill;
+import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
@@ -127,14 +128,14 @@ public class L2BlockInstance extends L2MonsterInstance
 				
 				if (getKnownSkill(5848) != null)	// (地雷)ブロック トリガー スロー
 				{
-					final L2Skill debuf = SkillTable.getInstance().getInfo(5849, 1);
+					final Skill debuf = SkillData.getInstance().getSkill(5849, 1);
 					debuf.applyEffects(this, caster);	// (地雷)移動速度の低下
 					if (caster.isAffectedBySkill(debuf.getId()))
 						removeSkill(5848, false);
 				}
 				if (getKnownSkill(5850) != null)	// (地雷)ブロック トリガースタン
 				{
-					final L2Skill debuf = SkillTable.getInstance().getInfo(5851, 1);
+					final Skill debuf = SkillData.getInstance().getSkill(5851, 1);
 					debuf.applyEffects(this, caster);	// (地雷)ショック
 					if (caster.isAffectedBySkill(debuf.getId()))
 						removeSkill(5850, false);
@@ -148,7 +149,7 @@ public class L2BlockInstance extends L2MonsterInstance
 			case 2617:	// 地雷埋設
 				if (!(getKnownSkill(5848) != null || getKnownSkill(5850) != null))
 				{
-					L2Skill s = SkillTable.getInstance().getInfo(Rnd.nextBoolean() ? 5848 : 5850, 1);	// ? ブロック トリガー スロー : ブロック トリガースタン
+					Skill s = SkillData.getInstance().getSkill(Rnd.nextBoolean() ? 5848 : 5850, 1);	// ? ブロック トリガー スロー : ブロック トリガースタン
 					addSkill(s);
 				}
 				break;
