@@ -31,15 +31,15 @@ import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntIntHashMap;
 
 /**
- * Skill table.
+ * Skill data.
  */
 public final class SkillData
 {
 	private static Logger _log = Logger.getLogger(SkillData.class.getName());
 	
-	private FastIntObjectMap<Skill> _skills;
-	private TIntIntHashMap _skillMaxLevel;
-	private TIntArrayList _enchantable;	//TODO: int[] _enchantable;
+	private FastIntObjectMap<Skill> _skills;	//[JOJO] -HashMap
+	private TIntIntHashMap _skillMaxLevel;		//[JOJO] -HashMap
+	private TIntArrayList _enchantable;	//TODO: int[] _enchantable;	//[JOJO] -ArrayList
 	
 	protected SkillData()
 	{
@@ -86,7 +86,7 @@ public final class SkillData
 			}
 		}
 		
-		// Sorting for binarySearch
+		// Sorting for binary-search.
 		_enchantable.sort();
 		
 		//[JOJO]-------------------------------------------------
@@ -191,6 +191,11 @@ public final class SkillData
 		return _skillMaxLevel.get(skillId);
 	}
 	
+	/**
+	 * Verifies if the given skill ID correspond to an enchantable skill.
+	 * @param skillId the skill ID
+	 * @return {@code true} if the skill is enchantable, {@code false} otherwise
+	 */
 	public boolean isEnchantable(int skillId)
 	{
 		return _enchantable.binarySearch(skillId) >= 0;
