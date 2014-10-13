@@ -18,6 +18,7 @@
  */
 package com.l2jserver.gameserver.datatables;
 
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +29,7 @@ import com.l2jserver.gameserver.engines.DocumentEngine;
 import com.l2jserver.gameserver.model.skills.Skill;
 
 import gnu.trove.list.array.TIntArrayList;
-import gnu.trove.map.hash.TIntIntHashMap;
+import gnu.trove.map.hash.TIntByteHashMap;
 
 /**
  * Skill data.
@@ -38,8 +39,8 @@ public final class SkillData
 	private static Logger _log = Logger.getLogger(SkillData.class.getName());
 	
 	private FastIntObjectMap<Skill> _skills;	//[JOJO] -HashMap
-	private TIntIntHashMap _skillMaxLevel;		//[JOJO] -HashMap
-	private TIntArrayList _enchantable;	//TODO: int[] _enchantable;	//[JOJO] -ArrayList
+	private TIntByteHashMap _skillMaxLevel;		//[JOJO] -HashMap
+	private int[] _enchantable;					//[JOJO] -ArrayList
 	
 	protected SkillData()
 	{
@@ -56,45 +57,42 @@ public final class SkillData
 	private void load()
 	{
 		//[JOJO]-------------------------------------------------
-		final FastIntObjectMap<Skill> _skills = new FastIntObjectMap<>();
-		final TIntIntHashMap _skillMaxLevel = new TIntIntHashMap();
-		final TIntArrayList _enchantable = new TIntArrayList();
+		final FastIntObjectMap<Skill> skills = new FastIntObjectMap<>();
+		final TIntByteHashMap skillMaxLevel = new TIntByteHashMap();
+		final TIntArrayList enchantable = new TIntArrayList();
 		//-------------------------------------------------------
 		
-		_skills.clear();
-		DocumentEngine.getInstance().loadAllSkills(_skills);
+		DocumentEngine.getInstance().loadAllSkills(skills);
 		
-		_skillMaxLevel.clear();
-		for (Skill skill : _skills.values())
+		for (Skill skill : skills.values())
 		{
 			final int skillId = skill.getId();
 			final int skillLvl = skill.getLevel();
 			if (skillLvl > 99)
 			{
-				if (!_enchantable.contains(skillId))
+				if (!enchantable.contains(skillId))
 				{
-					_enchantable.add(skillId);
+					enchantable.add(skillId);
 				}
 				continue;
 			}
 			
 			// only non-enchanted skills
-			final int maxLvl = getMaxLevel(skillId);
-			if ((maxLvl > 0) || (skillLvl > maxLvl))
+			final int maxLvl = skillMaxLevel.get(skillId);
+			if (skillLvl > maxLvl)
 			{
-				_skillMaxLevel.put(skillId, skillLvl);
+				skillMaxLevel.put(skillId, (byte) skillLvl);
 			}
 		}
 		
 		// Sorting for binary-search.
-		_enchantable.sort();
+		enchantable.sort();
 		
 		//[JOJO]-------------------------------------------------
-		_skillMaxLevel.trimToSize();
-		_enchantable.trimToSize();
-		this._skills = _skills; 
-		this._skillMaxLevel = _skillMaxLevel; 
-		this._enchantable = _enchantable; 
+		skillMaxLevel.trimToSize();
+		_skills = skills;
+		_skillMaxLevel = skillMaxLevel;
+		_enchantable = enchantable.toArray();
 		//-------------------------------------------------------
 	}
 	
@@ -188,8 +186,7 @@ public final class SkillData
 	
 	public int getMaxLevel(int skillId)
 	{
-		final Integer maxLevel = _skillMaxLevel.get(skillId);
-		return maxLevel != null ? maxLevel : 0;
+		return _skillMaxLevel.get(skillId);	// return 0 if not exist.
 	}
 	
 	/**
@@ -199,7 +196,7 @@ public final class SkillData
 	 */
 	public boolean isEnchantable(int skillId)
 	{
-		return _enchantable.binarySearch(skillId) >= 0;
+		return Arrays.binarySearch(_enchantable, skillId) >= 0;
 	}
 	
 	/**
