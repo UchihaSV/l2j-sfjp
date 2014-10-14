@@ -299,7 +299,7 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 			return;
 		}
 		
-		if (getOwner().isInOlympiadMode())
+		if ((getOwner() == null) || getOwner().isInOlympiadMode())
 		{
 			return;
 		}
