@@ -228,7 +228,7 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 	
 	private final String _icon;
 	
-	private byte[] _effectTypes;
+	private volatile byte[] _effectTypes;
 	
 	// Channeling data
 	private final int _channelingSkillId;
