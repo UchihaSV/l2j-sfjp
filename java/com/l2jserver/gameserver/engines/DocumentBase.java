@@ -920,7 +920,7 @@ public abstract class DocumentBase
 					cond = joinAnd(cond, new ConditionPlayerInsideZoneId(array));
 					break;
 				}
-				case "checkAbnormal":
+				case "checkabnormal":
 				{
 					final String value = a.getNodeValue();
 					if (value.contains(","))
