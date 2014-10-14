@@ -22,7 +22,8 @@ import com.l2jserver.gameserver.enums.HtmlActionScope;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 
 /**
- * @author Unknown, FBIagent
+ * NpcHtmlMessage server packet implementation.
+ * @author FBIagent
  */
 public final class NpcHtmlMessage extends AbstractHtmlPacket
 {

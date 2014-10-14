@@ -20,9 +20,6 @@ package com.l2jserver.gameserver.enums;
 
 import javolution.util.FastMap;
 
-/**
- * @author unknown
- */
 public enum InstanceType
 {
 	L2Object(null),
