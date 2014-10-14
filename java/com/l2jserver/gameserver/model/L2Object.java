@@ -929,7 +929,7 @@ if (com.l2jserver.Config.FIX_GETLOCATION) {{
 	 */
 	public final double calculateDirectionTo(ILocational target)
 	{
-		int heading = (Util.calculateHeadingFrom(this, target) - this.getHeading()) & 0x0000FFFF;
+		int heading = (Util.calculateHeadingFrom(this, target) - getHeading()) & 0x0000FFFF;
 		return Util.convertHeadingToDegree(heading);
 	}
 	
