@@ -68,6 +68,7 @@ import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanTakeFort;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanTransform;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanUntransform;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCharges;
+import com.l2jserver.gameserver.model.conditions.ConditionPlayerCheckAbnormal;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerClassIdRestriction;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCloakStatus;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCp;
@@ -127,6 +128,7 @@ import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.type.L2ArmorType;
 import com.l2jserver.gameserver.model.items.type.L2WeaponType;
+import com.l2jserver.gameserver.model.skills.AbnormalType;
 import com.l2jserver.gameserver.model.skills.EffectScope;
 import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.skills.funcs.FuncTemplate;
@@ -916,6 +918,20 @@ public abstract class DocumentBase
 						array.add(Integer.decode(getValue(item, null)));
 					}
 					cond = joinAnd(cond, new ConditionPlayerInsideZoneId(array));
+					break;
+				}
+				case "checkAbnormal":
+				{
+					final String value = a.getNodeValue();
+					if (value.contains(","))
+					{
+						final String[] values = value.split(",");
+						cond = joinAnd(cond, new ConditionPlayerCheckAbnormal(AbnormalType.valueOf(values[0]), Integer.decode(getValue(values[1], template))));
+					}
+					else
+					{
+						cond = joinAnd(cond, new ConditionPlayerCheckAbnormal(AbnormalType.valueOf(value)));
+					}
 					break;
 				}
 			}
