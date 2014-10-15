@@ -21,9 +21,10 @@ package com.l2jserver.gameserver.instancemanager;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javolution.util.FastMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.quest.Quest;
@@ -40,9 +41,9 @@ public final class QuestManager extends ScriptManager<Quest>
 	protected static final Logger _log = Logger.getLogger(QuestManager.class.getName());
 	
 	/** Map containing all the quests. */
-	private final Map<String, Quest> _quests = new ConcurrentHashMap<>();
+	private final FastMap<String, Quest> _quests = new FastMap<String, Quest>().shared();	//[JOJO] -ConcurrentHashMap
 	/** Map containing all the scripts. */
-	private final Map<String, Quest> _scripts = new ConcurrentHashMap<>();
+	private final FastMap<String, Quest> _scripts = new FastMap<String, Quest>().shared();	//[JOJO] -ConcurrentHashMap
 	
 	protected QuestManager()
 	{
@@ -148,9 +149,10 @@ public final class QuestManager extends ScriptManager<Quest>
 	 */
 	public Quest getQuest(String name)
 	{
-		if (_quests.containsKey(name))
+		Quest q;
+		if ((q = _quests.get(name)) != null)
 		{
-			return _quests.get(name);
+			return q;
 		}
 		return _scripts.get(name);
 	}
@@ -214,17 +216,8 @@ public final class QuestManager extends ScriptManager<Quest>
 	 */
 	public boolean removeScript(Quest script)
 	{
-		if (_quests.containsKey(script.getName()))
-		{
-			_quests.remove(script.getName());
-			return true;
-		}
-		else if (_scripts.containsKey(script.getName()))
-		{
-			_scripts.remove(script.getName());
-			return true;
-		}
-		return false;
+		return _quests.remove(script.getName()) != null
+		   || _scripts.remove(script.getName()) != null;
 	}
 	
 	@Override
