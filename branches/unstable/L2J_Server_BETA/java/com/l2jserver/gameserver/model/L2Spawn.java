@@ -66,13 +66,14 @@ public class L2Spawn extends Location implements IIdentifiable, INamable	//[JOJO
 	protected int _scheduledCount;
 	/** The identifier of the location area where L2NpcInstance can be spwaned */
 	private int _locationId;
+ //	/** The Location of this NPC spawn. */
+ //	private Location _location = new Location(0, 0, 0, 0, 0);	//[JOJO] --> super
 	/** Link to NPC spawn territory */
 	private NpcSpawnTerritory _spawnTerritory = null;
 	/** Minimum respawn delay */
 	private int _respawnMinDelay;
 	/** Maximum respawn delay */
 	private int _respawnMaxDelay;
- //	private int _instanceId = 0;	//[JOJO] --> super.getInstanceId()
 	/** The generic constructor of L2NpcInstance managed by this L2Spawn */
 	private Constructor<? extends L2Npc> _constructor;
 	/** If True a L2NpcInstance is respawned each time that another is killed */
@@ -710,7 +711,7 @@ if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 	@Override
 	public String toString()
 	{
-		return "L2Spawn [_template=" + getId() + ", _locX=" + getX() + ", _locY=" + getY() + ", _locZ=" + getZ() + ", _heading=" + getHeading() + "]";
+		return "L2Spawn ID: " + getId() + " " + getLocation();
 	}
 	
 	public final boolean isNoRndWalk()
