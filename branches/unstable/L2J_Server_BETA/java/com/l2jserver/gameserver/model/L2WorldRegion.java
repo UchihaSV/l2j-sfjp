@@ -510,6 +510,6 @@ if (com.l2jserver.Config.KNOWN_FULL_UPDATE_IF_REGION_ACTIVATE) {{
 				_log.finest("Removed NPC " + target.getObjectId());
 			}
 		}
-		_log.info("All visible NPC's deleted in Region: " + getName());
+	//	_log.info("All visible NPC's deleted in Region: " + getName());	//-[JOJO]
 	}
 }
