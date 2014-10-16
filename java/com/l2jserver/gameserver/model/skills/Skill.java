@@ -1503,7 +1503,22 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 				{
 					if (Formulas.calcBuffDebuffReflection(target, this))
 					{
-						applyEffects(target, caster);
+						// if skill is reflected instant effects should be casted on target
+						// and continuous effects on caster
+						applyEffects(target, caster, false, 0);
+						
+						final Env env = new Env();
+						env.setCharacter(caster);
+						env.setTarget(target);
+						env.setSkill(this);
+						
+						final BuffInfo info = new BuffInfo(env);
+						applyEffectScope(EffectScope.GENERAL, info, true, false);
+						
+						EffectScope pvpOrPveEffectScope = caster.isPlayable() && target.isAttackable() ? EffectScope.PVE : caster.isPlayable() && target.isPlayable() ? EffectScope.PVP : null;
+						applyEffectScope(pvpOrPveEffectScope, info, true, false);
+						
+						applyEffectScope(EffectScope.CHANNELING, info, true, false);
 					}
 					else
 					{
