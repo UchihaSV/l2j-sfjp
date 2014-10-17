@@ -40,7 +40,7 @@ public final class SkillData
 	
 	private FastIntObjectMap<Skill> _skills;	//[JOJO] -HashMap
 	private TIntByteHashMap _skillMaxLevel;		//[JOJO] -HashMap
-	private int[] _enchantable;					//[JOJO] -ArrayList
+	private int[] _enchantable;					//[JOJO] -HashSet
 	
 	protected SkillData()
 	{
@@ -85,11 +85,9 @@ public final class SkillData
 			}
 		}
 		
-		// Sorting for binary-search.
-		enchantable.sort();
-		
 		//[JOJO]-------------------------------------------------
 		skillMaxLevel.trimToSize();
+		enchantable.sort();	// Sorting for binary-search.
 		_skills = skills;
 		_skillMaxLevel = skillMaxLevel;
 		_enchantable = enchantable.toArray();
@@ -223,51 +221,6 @@ public final class SkillData
 		return temp;
 	}
 	
-	/**
-	 * Enum to hold some important references to frequently used (hardcoded) skills in core
-	 * @author DrHouse
-	 */
-	public static enum FrequentSkill
-	{
-		RAID_CURSE(4215, 1),
-		RAID_CURSE2(4515, 1),
-		SEAL_OF_RULER(246, 1),
-		BUILD_HEADQUARTERS(247, 1),
-		WYVERN_BREATH(4289, 1),
-		STRIDER_SIEGE_ASSAULT(325, 1),
-		FIREWORK(5965, 1),
-		LARGE_FIREWORK(2025, 1),
-		BLESSING_OF_PROTECTION(5182, 1),
-		VOID_BURST(3630, 1),
-		VOID_FLOW(3631, 1),
-		THE_VICTOR_OF_WAR(5074, 1),
-		THE_VANQUISHED_OF_WAR(5075, 1),
-		SPECIAL_TREE_RECOVERY_BONUS(2139, 1),
-		WEAPON_GRADE_PENALTY(6209, 1),
-		ARMOR_GRADE_PENALTY(6213, 1);
-		
-		private final int _skillHashCode;
-		
-		private FrequentSkill(int id, int level)
-		{
-			_skillHashCode = SkillData.getSkillHashCode(id, level);
-		}
-		
-		public int getId()
-		{
-			return SkillData.getSkillId(_skillHashCode);
-		}
-		
-		public int getLevel()
-		{
-			return SkillData.getSkillLevel(_skillHashCode);
-		}
-		
-		public Skill getSkill()
-		{
-			return SkillData.getSkill(_skillHashCode);
-		}
-	}
 	
 	public static SkillData getInstance()
 	{
