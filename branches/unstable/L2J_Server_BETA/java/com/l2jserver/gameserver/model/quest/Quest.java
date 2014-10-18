@@ -170,7 +170,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 		{
 			QuestManager.getInstance().addScript(this);
 		}
- 		
+		
 		loadGlobalData();
 	}
 	
