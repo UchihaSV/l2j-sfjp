@@ -31,6 +31,8 @@ import java.util.logging.Logger;
 import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
+import com.l2jserver.gameserver.enums.MacroType;
+import com.l2jserver.gameserver.enums.ShortcutType;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.interfaces.IRestorable;
 import com.l2jserver.gameserver.network.serverpackets.SendMacroList;
@@ -89,9 +91,9 @@ public class MacroList implements IRestorable
 			deleteMacroFromDb(removed);
 		}
 		
-		for (L2ShortCut sc : _owner.getAllShortCuts())
+		for (Shortcut sc : _owner.getAllShortCuts())
 		{
-			if ((sc.getId() == id) && (sc.getType() == L2ShortCut.TYPE_MACRO))
+			if ((sc.getId() == id) && (sc.getType() == ShortcutType.MACRO))
 			{
 				_owner.deleteShortCut(sc.getSlot(), sc.getPage());
 			}
@@ -134,7 +136,7 @@ public class MacroList implements IRestorable
 			final StringBuilder sb = new StringBuilder(300);
 			for (MacroCmd cmd : macro.getCommands())
 			{
-				StringUtil.append(sb, String.valueOf(cmd.getType()), ",", String.valueOf(cmd.getD1()), ",", String.valueOf(cmd.getD2()));
+				StringUtil.append(sb, String.valueOf(cmd.getType().ordinal()), ",", String.valueOf(cmd.getD1()), ",", String.valueOf(cmd.getD2()));
 				if ((cmd.getCmd() != null) && (cmd.getCmd().length() > 0))
 				{
 					StringUtil.append(sb, ",", cmd.getCmd());
@@ -197,7 +199,7 @@ public class MacroList implements IRestorable
 						{
 							continue;
 						}
-						int type = Integer.parseInt(st.nextToken());
+						MacroType type = MacroType.values()[Integer.parseInt(st.nextToken())];
 						int d1 = Integer.parseInt(st.nextToken());
 						int d2 = Integer.parseInt(st.nextToken());
 						String cmd = "";
