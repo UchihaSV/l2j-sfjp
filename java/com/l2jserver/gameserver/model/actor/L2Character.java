@@ -1055,9 +1055,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			setCurrentCp(getCurrentCp() - 10);
 		}
 		
-		// Recharge any active auto soulshot tasks for current L2Character instance.
-		rechargeShots(true, false);
-		
 		// Verify if soulshots are charged.
 		final boolean wasSSCharged = isChargedShot(ShotType.SOULSHOTS);
 		// Get the Attack Speed of the L2Character (delay (in milliseconds) before next attack)
@@ -1642,8 +1639,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		}
 		
 		stopEffectsOnAction();
-		
-		rechargeShots(skill.useSoulShot(), skill.useSpiritShot());
 		
 		// Set the target of the skill in function of Skill Type and Target Type
 		L2Character target = null;
@@ -5386,6 +5381,9 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		{
 			activeWeapon.getSkillEffects(this, target, crit);
 		}
+		
+		// Recharge any active auto-soulshot tasks for current creature.
+		rechargeShots(true, false);
 	}
 	
 	/**
@@ -6070,6 +6068,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				}
 			}
 			
+			rechargeShots(skill.useSoulShot(), skill.useSpiritShot());
+			
 			final StatusUpdate su = new StatusUpdate(this);
 			boolean isSendStatus = false;
 			
@@ -6133,12 +6133,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				}
 			}
 			
-			// On each repeat restore shots before cast
-			if (mut.getCount() > 0)
-			{
-				rechargeShots(mut.getSkill().useSoulShot(), mut.getSkill().useSpiritShot());
-			}
-			
 			// Launch the magic skill in order to calculate its effects
 			callSkill(mut.getSkill(), mut.getTargets());
 		}
@@ -6189,6 +6183,12 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		
 		final Skill skill = mut.getSkill();
 		final L2Object target = mut.getTargets().length > 0 ? mut.getTargets()[0] : null;
+		
+		// On each repeat recharge shots before cast.
+		if (mut.getCount() > 0)
+		{
+			rechargeShots(mut.getSkill().useSoulShot(), mut.getSkill().useSpiritShot());
+		}
 		
 		// Attack target after skill use
 		if ((skill.nextActionIsAttack()) && (getTarget() instanceof L2Character) && (getTarget() != this) && (target != null) && (getTarget() == target) && target.canBeAttacked())
