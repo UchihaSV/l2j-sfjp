@@ -232,7 +232,7 @@ public class EnterWorld extends L2GameClientPacket
 		// Clan related checks are here
 		if (activeChar.getClan() != null)
 		{
-			activeChar.sendPacket(new PledgeSkillList(activeChar.getClan()));
+			sendPacket(new PledgeSkillList(activeChar.getClan()));
 			
 			notifyClanMembers(activeChar);
 			
@@ -245,7 +245,7 @@ public class EnterWorld extends L2GameClientPacket
 				if (!clanHall.getPaid())
 				{
 					//[JOJO]-------------------------------------------------
-					activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PAYMENT_FOR_YOUR_CLAN_HALL_HAS_NOT_BEEN_MADE_PLEASE_MAKE_PAYMENT_TO_YOUR_CLAN_WAREHOUSE_BY_S1_TOMORROW)
+					sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PAYMENT_FOR_YOUR_CLAN_HALL_HAS_NOT_BEEN_MADE_PLEASE_MAKE_PAYMENT_TO_YOUR_CLAN_WAREHOUSE_BY_S1_TOMORROW)
 						.addNumber(clanHall.getPaidTomorrow().get(java.util.Calendar.HOUR_OF_DAY)));
 					//-------------------------------------------------------
 				}
@@ -392,13 +392,13 @@ public class EnterWorld extends L2GameClientPacket
 		sendPacket(new ShortCutInit(activeChar));
 		
 		// Send Action list
-		activeChar.sendPacket(ExBasicActionList.STATIC_PACKET);
+		sendPacket(ExBasicActionList.STATIC_PACKET);
 		
 		// Send Skill list
 		activeChar.sendSkillList();
 		
 		// Send Dye Information
-		activeChar.sendPacket(new HennaInfo(activeChar));
+		sendPacket(new HennaInfo(activeChar));
 		
 		Quest.playerEnter(activeChar);
 		
@@ -414,7 +414,7 @@ public class EnterWorld extends L2GameClientPacket
 				quest.notifyEnterWorld(activeChar);
 			}
 		}
-		activeChar.sendPacket(new QuestList());
+		sendPacket(new QuestList());
 		
 		if (Config.PLAYER_SPAWN_PROTECTION > 0)
 		{
@@ -444,10 +444,10 @@ public class EnterWorld extends L2GameClientPacket
 		
 		activeChar.updateEffectIcons();
 		
-		activeChar.sendPacket(new EtcStatusUpdate(activeChar));
+		sendPacket(new EtcStatusUpdate(activeChar));
 		
 		// Expand Skill
-		activeChar.sendPacket(new ExStorageMaxCount(activeChar));
+		sendPacket(new ExStorageMaxCount(activeChar));
 		
 		sendPacket(new FriendList(activeChar));
 		
@@ -462,10 +462,10 @@ public class EnterWorld extends L2GameClientPacket
 			}
 		}
 		
-		activeChar.sendPacket(SystemMessageId.WELCOME_TO_LINEAGE);
+		sendPacket(SystemMessageId.WELCOME_TO_LINEAGE);
 		
-		activeChar.sendMessage(getText("VGhpcyBTZXJ2ZXIgdXNlcyBMMkosIGEgUHJvamVjdCBmb3VuZGVkIGJ5IEwyQ2hlZg=="/* + Config.EOL*/));	//[JOJO]/*テスト済*/
-		activeChar.sendMessage(getText("YW5kIGRldmVsb3BlZCBieSBMMkogVGVhbSBhdCB3d3cubDJqc2VydmVyLmNvbQ=="/* + Config.EOL*/));	//[JOJO]/*テスト済*/
+		activeChar.sendMessage(getText("VGhpcyBTZXJ2ZXIgdXNlcyBMMkosIGEgUHJvamVjdCBmb3VuZGVkIGJ5IEwyQ2hlZg=="));
+		activeChar.sendMessage(getText("YW5kIGRldmVsb3BlZCBieSBMMkogVGVhbSBhdCB3d3cubDJqc2VydmVyLmNvbQ=="));
 		
 		if (Config.DISPLAY_SERVER_VERSION)
 		{
@@ -479,8 +479,8 @@ public class EnterWorld extends L2GameClientPacket
 				activeChar.sendMessage(getText("TDJKIERhdGFQYWNrIFZlcnNpb246") + " " + Config.DATAPACK_VERSION);
 			}
 		}
-		activeChar.sendMessage(getText("Q29weXJpZ2h0IDIwMDQtMjAxNA=="/* + Config.EOL*/));	//[JOJO]/*テスト済*/
-		activeChar.sendMessage(getText("VGhhbmsgeW91IGZvciAxMCB5ZWFycyE=" + Config.EOL));
+		activeChar.sendMessage(getText("Q29weXJpZ2h0IDIwMDQtMjAxNA=="));
+		activeChar.sendMessage(getText("VGhhbmsgeW91IGZvciAxMCB5ZWFycyE="));
 		
 		SevenSigns.getInstance().sendCurrentPeriodMsg(activeChar);
 		Announcements.getInstance().showAnnouncements(activeChar);
@@ -567,7 +567,7 @@ if (ClanBBSManager.L2J_JP_CLAN_BBS) {{
 		
 		if (activeChar.getClanJoinExpiryTime() > System.currentTimeMillis())
 		{
-			activeChar.sendPacket(SystemMessageId.CLAN_MEMBERSHIP_TERMINATED);
+			sendPacket(SystemMessageId.CLAN_MEMBERSHIP_TERMINATED);
 		}
 		
 		// remove combat flag before teleporting
@@ -619,7 +619,7 @@ if (ClanBBSManager.L2J_JP_CLAN_BBS) {{
 		
 		if (Config.WELCOME_MESSAGE_ENABLED)
 		{
-			activeChar.sendPacket(new ExShowScreenMessage(Config.WELCOME_MESSAGE_TEXT, Config.WELCOME_MESSAGE_TIME));
+			sendPacket(new ExShowScreenMessage(Config.WELCOME_MESSAGE_TEXT, Config.WELCOME_MESSAGE_TIME));
 		}
 		
 		L2ClassMasterInstance.showQuestionMark(activeChar);
@@ -627,17 +627,17 @@ if (ClanBBSManager.L2J_JP_CLAN_BBS) {{
 		int birthday = activeChar.checkBirthDay();
 		if (birthday == 0)
 		{
-			activeChar.sendPacket(SystemMessageId.YOUR_BIRTHDAY_GIFT_HAS_ARRIVED);
-			// activeChar.sendPacket(new ExBirthdayPopup()); Removed in H5?
+			sendPacket(SystemMessageId.YOUR_BIRTHDAY_GIFT_HAS_ARRIVED);
+			// sendPacket(new ExBirthdayPopup()); Removed in H5?
 		}
 		else if (birthday != -1)
 		{
-			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.THERE_ARE_S1_DAYS_UNTIL_YOUR_CHARACTERS_BIRTHDAY).addNumber(birthday));
+			sendPacket(SystemMessage.getSystemMessage(SystemMessageId.THERE_ARE_S1_DAYS_UNTIL_YOUR_CHARACTERS_BIRTHDAY).addNumber(birthday));
 		}
 		
 		if (!activeChar.getPremiumItemList().isEmpty())
 		{
-			activeChar.sendPacket(ExNotifyPremiumItem.STATIC_PACKET);
+			sendPacket(ExNotifyPremiumItem.STATIC_PACKET);
 		}
 	}
 	
