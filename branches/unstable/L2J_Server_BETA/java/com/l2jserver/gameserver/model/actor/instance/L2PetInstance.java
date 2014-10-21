@@ -1047,7 +1047,7 @@ public class L2PetInstance extends L2Summon
 		}
 		
 		// Clear list for overwrite
-		if (SummonEffectsTable.getInstance().getPetEffects().contains(getControlObjectId()))
+		if (SummonEffectsTable.getInstance().getPetEffects().containsKey(getControlObjectId()))
 		{
 			SummonEffectsTable.getInstance().getPetEffects().get(getControlObjectId()).clear();
 		}
@@ -1106,7 +1106,7 @@ public class L2PetInstance extends L2Summon
 					ps2.setInt(5, ++buff_index);
 					ps2.execute();
 					
-					if (!SummonEffectsTable.getInstance().getPetEffects().contains(getControlObjectId()))
+					if (!SummonEffectsTable.getInstance().getPetEffects().containsKey(getControlObjectId()))
 					{
 						SummonEffectsTable.getInstance().getPetEffects().put(getControlObjectId(), new FastList<SummonEffect>());
 					}
@@ -1128,7 +1128,7 @@ public class L2PetInstance extends L2Summon
 			PreparedStatement ps1 = con.prepareStatement(RESTORE_SKILL_SAVE);
 			PreparedStatement ps2 = con.prepareStatement(DELETE_SKILL_SAVE))
 		{
-			if (!SummonEffectsTable.getInstance().getPetEffects().contains(getControlObjectId()))
+			if (!SummonEffectsTable.getInstance().getPetEffects().containsKey(getControlObjectId()))
 			{
 				ps1.setInt(1, getControlObjectId());
 				try (ResultSet rset = ps1.executeQuery())
@@ -1145,7 +1145,7 @@ public class L2PetInstance extends L2Summon
 						
 						if (skill.hasEffects(EffectScope.GENERAL))
 						{
-							if (!SummonEffectsTable.getInstance().getPetEffects().contains(getControlObjectId()))
+							if (!SummonEffectsTable.getInstance().getPetEffects().containsKey(getControlObjectId()))
 							{
 								SummonEffectsTable.getInstance().getPetEffects().put(getControlObjectId(), new FastList<SummonEffect>());
 							}
