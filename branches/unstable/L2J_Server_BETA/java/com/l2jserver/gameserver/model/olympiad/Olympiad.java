@@ -25,9 +25,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
@@ -35,7 +32,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -57,9 +54,9 @@ public class Olympiad
 	protected static final Logger _log = Logger.getLogger(Olympiad.class.getName());
 	protected static final Logger _logResults = Logger.getLogger("olympiad");
 	
-	private static final Map<Integer, StatsSet> _nobles = new FastMap<>();
-	protected static FastList/*L2FastList*/<StatsSet> _heroesToBe;
-	private static final Map<Integer, Integer> _noblesRank = new HashMap<>();
+	private static final FastIntObjectMap<StatsSet> _nobles = new FastIntObjectMap<>();	//[JOJO] -FastMap
+	protected static FastList<StatsSet> _heroesToBe;	//[JOJO] -L2FastList
+	private static final FastIntObjectMap<Integer> _noblesRank = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	public static final String OLYMPIAD_HTML_PATH = "data/html/olympiad/";
 	private static final String OLYMPIAD_LOAD_DATA = "SELECT current_cycle, period, olympiad_end, validation_end, " + "next_weekly_change FROM olympiad_data WHERE id = 0";
@@ -317,7 +314,7 @@ public class Olympiad
 	public void loadNoblesRank()
 	{
 		_noblesRank.clear();
-		Map<Integer, Integer> tmpPlace = new HashMap<>();
+		FastIntObjectMap<Integer> tmpPlace = new FastIntObjectMap<>();
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement(GET_ALL_CLASSIFIED_NOBLESS);
 			ResultSet rset = statement.executeQuery())
@@ -344,7 +341,7 @@ public class Olympiad
 			rank3++;
 			rank4++;
 		}
-		for (Entry<Integer, Integer> chr : tmpPlace.entrySet())
+		for (jp.sf.l2j.troja.IntObjectMap.Entry<Integer> chr : tmpPlace.entrySet())
 		{
 			if (chr.getValue() <= rank1)
 			{
@@ -449,6 +446,12 @@ public class Olympiad
 		return _nobles.get(playerId);
 	}
 	
+	private static int getNobleIntValue(int objId, String key)	//+[JOJO]
+	{
+		StatsSet ss = _nobles.get(objId);
+		return ss == null ? 0 : ss.getInt(key);
+	}
+	
 	private void updateCompStatus()
 	{
 		// _compStarted = false;
@@ -457,14 +460,8 @@ public class Olympiad
 		{
 			long milliToStart = getMillisToCompBegin();
 			
-			double numSecs = (milliToStart / 1000) % 60;
-			double countDown = ((milliToStart / 1000.) - numSecs) / 60;
-			int numMins = (int) Math.floor(countDown % 60);
-			countDown = (countDown - numMins) / 60;
-			int numHours = (int) Math.floor(countDown % 24);
-			int numDays = (int) Math.floor((countDown - numHours) / 24);
-			
-			_log.info("Olympiad System: Competition Period Starts in " + numDays + " days, " + numHours + " hours and " + numMins + " mins.");
+			_log.info("Olympiad System: Competition Period Starts in " + com.l2jserver.util.Util.strMillTime(milliToStart));
+		//	_log.info("Olympiad System: Competition Period Starts in " + numDays + " days, " + numHours + " hours and " + numMins + " mins.");
 			
 			_log.info("Olympiad System: Event starts/started : " + com.l2jserver.util.Util.dateFormat(_compStart));
 		//	_log.info("Olympiad System: Event starts/started : " + _compStart.getTime());
@@ -727,7 +724,7 @@ public class Olympiad
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			for (Entry<Integer, StatsSet> entry : _nobles.entrySet())
+			for (jp.sf.l2j.troja.IntObjectMap.Entry<StatsSet> entry : _nobles.entrySet())
 			{
 				StatsSet nobleInfo = entry.getValue();
 				
@@ -863,7 +860,7 @@ public class Olympiad
 		{
 			_logResults.info("Noble,charid,classid,compDone,points");
 			StatsSet nobleInfo;
-			for (Entry<Integer, StatsSet> entry : _nobles.entrySet())
+			for (jp.sf.l2j.troja.IntObjectMap.Entry<StatsSet> entry : _nobles.entrySet())
 			{
 				nobleInfo = entry.getValue();
 				if (nobleInfo == null)
@@ -889,14 +886,14 @@ public class Olympiad
 			}
 		}
 		
-		_heroesToBe = new FastList/*L2FastList*/<>();
+		_heroesToBe = new FastList<>();	//[JOJO] -L2FastList
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement(OLYMPIAD_GET_HEROS))
 		{
 			ResultSet rset;
 			StatsSet hero;
-			FastList/*L2FastList*/<StatsSet> soulHounds = new FastList/*L2FastList*/<>();
+			FastList<StatsSet> soulHounds = new FastList<>();	//[JOJO] -L2FastList
 			for (int element : HERO_IDS)
 			{
 				statement.setInt(1, element);
@@ -1021,10 +1018,10 @@ public class Olympiad
 		}
 	}
 	
-	public FastList/*L2FastList*/<String> getClassLeaderBoard(int classId)
+	public FastList<String> getClassLeaderBoard(int classId)	//[JOJO] -L2FastList
 	{
 		// if (_period != 1) return;
-		final FastList/*L2FastList*/<String> names = new FastList/*L2FastList*/<>();
+		final FastList<String> names = new FastList<>();	//[JOJO] -L2FastList
 		String query = Config.ALT_OLY_SHOW_MONTHLY_WINNERS ? ((classId == 132) ? GET_EACH_CLASS_LEADER_SOULHOUND : GET_EACH_CLASS_LEADER) : ((classId == 132) ? GET_EACH_CLASS_LEADER_CURRENT_SOULHOUND : GET_EACH_CLASS_LEADER_CURRENT);
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(query))
@@ -1047,26 +1044,26 @@ public class Olympiad
 	
 	public int getNoblessePasses(L2PcInstance player, boolean clear)
 	{
-		if ((player == null) || (_period != 1) || _noblesRank.isEmpty())
+		if (player == null || _period != 1 || _noblesRank.isEmpty())
 		{
 			return 0;
 		}
 		
 		final int objId = player.getObjectId();
-		if (!_noblesRank.containsKey(objId))
+		final Integer rank = _noblesRank.get(objId);
+		if (rank == null)
 		{
 			return 0;
 		}
 		
 		final StatsSet noble = _nobles.get(objId);
-		if ((noble == null) || (noble.getInt(POINTS) == 0))
+		if (noble == null || noble.getInt(POINTS) == 0)
 		{
 			return 0;
 		}
 		
-		final int rank = _noblesRank.get(objId);
-		int points = (player.isHero() ? Config.ALT_OLY_HERO_POINTS : 0);
-		switch (rank)
+		int points = player.isHero() ? Config.ALT_OLY_HERO_POINTS : 0;
+		switch (rank.intValue())
 		{
 			case 1:
 				points += Config.ALT_OLY_RANK1_POINTS;
@@ -1094,11 +1091,7 @@ public class Olympiad
 	
 	public int getNoblePoints(int objId)
 	{
-		if ((_nobles == null) || !_nobles.containsKey(objId))
-		{
-			return 0;
-		}
-		return _nobles.get(objId).getInt(POINTS);
+		return getNobleIntValue(objId, POINTS);
 	}
 	
 	public int getLastNobleOlympiadPoints(int objId)
@@ -1125,29 +1118,17 @@ public class Olympiad
 	
 	public int getCompetitionDone(int objId)
 	{
-		if ((_nobles == null) || !_nobles.containsKey(objId))
-		{
-			return 0;
-		}
-		return _nobles.get(objId).getInt(COMP_DONE);
+		return getNobleIntValue(objId, COMP_DONE);
 	}
 	
 	public int getCompetitionWon(int objId)
 	{
-		if ((_nobles == null) || !_nobles.containsKey(objId))
-		{
-			return 0;
-		}
-		return _nobles.get(objId).getInt(COMP_WON);
+		return getNobleIntValue(objId, COMP_WON);
 	}
 	
 	public int getCompetitionLost(int objId)
 	{
-		if ((_nobles == null) || !_nobles.containsKey(objId))
-		{
-			return 0;
-		}
-		return _nobles.get(objId).getInt(COMP_LOST);
+		return getNobleIntValue(objId, COMP_LOST);
 	}
 	
 	/**
@@ -1157,11 +1138,7 @@ public class Olympiad
 	 */
 	public int getCompetitionDoneWeek(int objId)
 	{
-		if ((_nobles == null) || !_nobles.containsKey(objId))
-		{
-			return 0;
-		}
-		return _nobles.get(objId).getInt(COMP_DONE_WEEK);
+		return getNobleIntValue(objId, COMP_DONE_WEEK);
 	}
 	
 	/**
@@ -1171,11 +1148,7 @@ public class Olympiad
 	 */
 	public int getCompetitionDoneWeekClassed(int objId)
 	{
-		if ((_nobles == null) || !_nobles.containsKey(objId))
-		{
-			return 0;
-		}
-		return _nobles.get(objId).getInt(COMP_DONE_WEEK_CLASSED);
+		return getNobleIntValue(objId, COMP_DONE_WEEK_CLASSED);
 	}
 	
 	/**
@@ -1185,11 +1158,7 @@ public class Olympiad
 	 */
 	public int getCompetitionDoneWeekNonClassed(int objId)
 	{
-		if ((_nobles == null) || !_nobles.containsKey(objId))
-		{
-			return 0;
-		}
-		return _nobles.get(objId).getInt(COMP_DONE_WEEK_NON_CLASSED);
+		return getNobleIntValue(objId, COMP_DONE_WEEK_NON_CLASSED);
 	}
 	
 	/**
@@ -1199,11 +1168,7 @@ public class Olympiad
 	 */
 	public int getCompetitionDoneWeekTeam(int objId)
 	{
-		if ((_nobles == null) || !_nobles.containsKey(objId))
-		{
-			return 0;
-		}
-		return _nobles.get(objId).getInt(COMP_DONE_WEEK_TEAM);
+		return getNobleIntValue(objId, COMP_DONE_WEEK_TEAM);
 	}
 	
 	/**
@@ -1267,7 +1232,7 @@ public class Olympiad
 	 */
 	protected static StatsSet addNobleStats(int charId, StatsSet data)
 	{
-		return _nobles.put(Integer.valueOf(charId), data);
+		return _nobles.put(charId, data);
 	}
 	
 	public static Olympiad getInstance()

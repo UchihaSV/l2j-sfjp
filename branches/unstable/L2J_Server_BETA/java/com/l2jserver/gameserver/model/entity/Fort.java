@@ -23,10 +23,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +33,7 @@ import java.util.logging.Logger;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -92,7 +91,7 @@ public final class Fort extends AbstractResidence
 	private final FastList<L2Spawn> _npcCommanders = new FastList<>();
 	private final FastList<L2Spawn> _specialEnvoys = new FastList<>();
 	
-	private final Map<Integer, Integer> _envoyCastles = new HashMap<>(2);
+	private final FastIntObjectMap<Integer> _envoyCastles = new FastIntObjectMap<>(2);	//[JOJO] -HashMap
 	private final Set<Integer> _availableCastles = new HashSet<>(1);
 	
 	/** Fortress Functions */

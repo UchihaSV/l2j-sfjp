@@ -21,14 +21,13 @@ package com.l2jserver.gameserver.model.actor.instance;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -50,6 +49,8 @@ import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.SetSummonRemainTime;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+
+import gnu.trove.list.array.TIntArrayList;
 
 /**
  * @author UnAfraid
@@ -83,13 +84,19 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 	public void onSpawn()
 	{
 		super.onSpawn();
-		_summonLifeTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(this, 0, 5000);
+		if (_summonLifeTask == null)
+		{
+			_summonLifeTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(this, 0, 5000);
+		}
 	}
 	
-	public void cancelLifeTask()	//+[JOJO]
+	public final void cancelLifeTask()	//+[JOJO]
 	{
-		_summonLifeTask.cancel(false);
-		_summonLifeTask = null;
+		if (_summonLifeTask != null)
+		{
+			_summonLifeTask.cancel(false);
+			_summonLifeTask = null;
+		}
 	}
 	
 	@Override
@@ -204,11 +211,7 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 			return false;
 		}
 		
-		if (_summonLifeTask != null)
-		{
-			_summonLifeTask.cancel(false);
-			_summonLifeTask = null;
-		}
+		cancelLifeTask();
 		
 		CharSummonTable.getInstance().removeServitor(getOwner());
 		return true;
@@ -259,7 +262,7 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 	public final void stopSkillEffects(boolean removed, int skillId)
 	{
 		super.stopSkillEffects(removed, skillId);
-		final Map<Integer, List<SummonEffect>> servitorEffects = SummonEffectsTable.getInstance().getServitorEffects(getOwner());
+		final FastIntObjectMap<List<SummonEffect>> servitorEffects = SummonEffectsTable.getInstance().getServitorEffects(getOwner());
 		if (servitorEffects != null)
 		{
 			final List<SummonEffect> effects = servitorEffects.get(getReferenceSkill());
@@ -304,10 +307,14 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 			return;
 		}
 		
+		
+		FastIntObjectMap<FastIntObjectMap<List<SummonEffect>>> servitorEffectsOwner;
+		List<SummonEffect> servitorEffects = null;
 		// Clear list for overwrite
-		if (SummonEffectsTable.getInstance().getServitorEffectsOwner().containsKey(getOwner().getObjectId()) && SummonEffectsTable.getInstance().getServitorEffectsOwner().get(getOwner().getObjectId()).containsKey(getOwner().getClassIndex()) && SummonEffectsTable.getInstance().getServitorEffects(getOwner()).containsKey(getReferenceSkill()))
+		if ((servitorEffectsOwner = SummonEffectsTable.getInstance().getServitorEffectsOwner().get(getOwner().getObjectId())) != null && servitorEffectsOwner.containsKey(getOwner().getClassIndex())
+		 && (servitorEffects = SummonEffectsTable.getInstance().getServitorEffects(getOwner()).get(getReferenceSkill())) != null)
 		{
-			SummonEffectsTable.getInstance().getServitorEffects(getOwner()).get(getReferenceSkill()).clear();
+			servitorEffects.clear();
 		}
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
@@ -321,7 +328,7 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 			
 			int buff_index = 0;
 			
-			final List<Integer> storedSkills = new FastList<>();
+			final TIntArrayList storedSkills = new TIntArrayList();	//[JOJO] -FastList
 			
 			// Store all effect data along with calculated remaining
 			if (storeEffects)
@@ -370,20 +377,22 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 						ps2.execute();
 						
 						// XXX: Rework me!
-						if (!SummonEffectsTable.getInstance().getServitorEffectsOwner().containsKey(getOwner().getObjectId()))
+						if (servitorEffectsOwner == null)
 						{
-							SummonEffectsTable.getInstance().getServitorEffectsOwner().put(getOwner().getObjectId(), new HashMap<Integer, Map<Integer, List<SummonEffect>>>());
+							servitorEffectsOwner = new FastIntObjectMap<>();
+							SummonEffectsTable.getInstance().getServitorEffectsOwner().put(getOwner().getObjectId(), servitorEffectsOwner);
 						}
-						if (!SummonEffectsTable.getInstance().getServitorEffectsOwner().get(getOwner().getObjectId()).containsKey(getOwner().getClassIndex()))
+						if (!servitorEffectsOwner.containsKey(getOwner().getClassIndex()))
 						{
-							SummonEffectsTable.getInstance().getServitorEffectsOwner().get(getOwner().getObjectId()).put(getOwner().getClassIndex(), new HashMap<Integer, List<SummonEffect>>());
-						}
-						if (!SummonEffectsTable.getInstance().getServitorEffects(getOwner()).containsKey(getReferenceSkill()))
-						{
-							SummonEffectsTable.getInstance().getServitorEffects(getOwner()).put(getReferenceSkill(), new FastList<SummonEffect>());
+							servitorEffectsOwner.put(getOwner().getClassIndex(), new FastIntObjectMap<List<SummonEffect>>());
 						}
 						
-						SummonEffectsTable.getInstance().getServitorEffects(getOwner()).get(getReferenceSkill()).add(SummonEffectsTable.getInstance().new SummonEffect(skill, info.getTime()));
+						if (servitorEffects == null)
+						{
+							servitorEffects = new FastList<>();
+							SummonEffectsTable.getInstance().getServitorEffects(getOwner()).put(getReferenceSkill(), servitorEffects);
+						}
+						servitorEffects.add(SummonEffectsTable.getInstance().new SummonEffect(skill, info.getTime()));
 					}
 				}
 			}
@@ -404,7 +413,10 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			if (!SummonEffectsTable.getInstance().getServitorEffectsOwner().containsKey(getOwner().getObjectId()) || !SummonEffectsTable.getInstance().getServitorEffectsOwner().get(getOwner().getObjectId()).containsKey(getOwner().getClassIndex()) || !SummonEffectsTable.getInstance().getServitorEffects(getOwner()).containsKey(getReferenceSkill()))
+			FastIntObjectMap<FastIntObjectMap<List<SummonEffect>>> servitorEffectsOwner;
+			List<SummonEffect> servitorEffects = null;
+			if ((servitorEffectsOwner = SummonEffectsTable.getInstance().getServitorEffectsOwner().get(getOwner().getObjectId())) == null || !servitorEffectsOwner.containsKey(getOwner().getClassIndex())
+			 || (servitorEffects = SummonEffectsTable.getInstance().getServitorEffects(getOwner()).get(getReferenceSkill())) == null)
 			{
 				try (PreparedStatement statement = con.prepareStatement(RESTORE_SKILL_SAVE))
 				{
@@ -426,20 +438,22 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 							// XXX: Rework me!
 							if (skill.hasEffects(EffectScope.GENERAL))
 							{
-								if (!SummonEffectsTable.getInstance().getServitorEffectsOwner().containsKey(getOwner().getObjectId()))
+								if (servitorEffectsOwner == null)
 								{
-									SummonEffectsTable.getInstance().getServitorEffectsOwner().put(getOwner().getObjectId(), new HashMap<Integer, Map<Integer, List<SummonEffect>>>());
+									servitorEffectsOwner = new FastIntObjectMap<>();
+									SummonEffectsTable.getInstance().getServitorEffectsOwner().put(getOwner().getObjectId(), servitorEffectsOwner);
 								}
-								if (!SummonEffectsTable.getInstance().getServitorEffectsOwner().get(getOwner().getObjectId()).containsKey(getOwner().getClassIndex()))
+								if (!servitorEffectsOwner.containsKey(getOwner().getClassIndex()))
 								{
-									SummonEffectsTable.getInstance().getServitorEffectsOwner().get(getOwner().getObjectId()).put(getOwner().getClassIndex(), new HashMap<Integer, List<SummonEffect>>());
-								}
-								if (!SummonEffectsTable.getInstance().getServitorEffects(getOwner()).containsKey(getReferenceSkill()))
-								{
-									SummonEffectsTable.getInstance().getServitorEffects(getOwner()).put(getReferenceSkill(), new FastList<SummonEffect>());
+									servitorEffectsOwner.put(getOwner().getClassIndex(), new FastIntObjectMap<List<SummonEffect>>());
 								}
 								
-								SummonEffectsTable.getInstance().getServitorEffects(getOwner()).get(getReferenceSkill()).add(SummonEffectsTable.getInstance().new SummonEffect(skill, effectCurTime));
+								if (servitorEffects == null)
+								{
+									servitorEffects = new FastList<>();
+									SummonEffectsTable.getInstance().getServitorEffects(getOwner()).put(getReferenceSkill(), servitorEffects);
+								}
+								servitorEffects.add(SummonEffectsTable.getInstance().new SummonEffect(skill, effectCurTime));
 							}
 						}
 					}
@@ -460,16 +474,17 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 		}
 		finally
 		{
-			if (!SummonEffectsTable.getInstance().getServitorEffectsOwner().containsKey(getOwner().getObjectId()) || !SummonEffectsTable.getInstance().getServitorEffectsOwner().get(getOwner().getObjectId()).containsKey(getOwner().getClassIndex()) || !SummonEffectsTable.getInstance().getServitorEffects(getOwner()).containsKey(getReferenceSkill()))
+			FastIntObjectMap<FastIntObjectMap<List<SummonEffect>>> servitorEffectsOwner;
+			List<SummonEffect> servitorEffects;
+			if ((servitorEffectsOwner = SummonEffectsTable.getInstance().getServitorEffectsOwner().get(getOwner().getObjectId())) != null && servitorEffectsOwner.containsKey(getOwner().getClassIndex())
+			 && (servitorEffects = SummonEffectsTable.getInstance().getServitorEffects(getOwner()).get(getReferenceSkill())) != null)
 			{
-				return;
-			}
-			
-			for (SummonEffect se : SummonEffectsTable.getInstance().getServitorEffects(getOwner()).get(getReferenceSkill()))
-			{
-				if (se != null)
+				for (SummonEffect se : servitorEffects)
 				{
-					se.getSkill().applyEffects(this, this, false, se.getEffectCurTime());
+					if (se != null)
+					{
+						se.getSkill().applyEffects(this, this, false, se.getEffectCurTime());
+					}
 				}
 			}
 		}
@@ -478,12 +493,7 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 	@Override
 	public void unSummon(L2PcInstance owner)
 	{
-		if (_summonLifeTask != null)
-		{
-			_summonLifeTask.cancel(false);
-			_summonLifeTask = null;
-		}
-		
+		cancelLifeTask();
 		super.unSummon(owner);
 		
 		if (!_restoreSummon)
@@ -548,11 +558,7 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 		
 		if (isDead() || !isVisible())
 		{
-			if (_summonLifeTask != null)
-			{
-				_summonLifeTask.cancel(false);
-				_summonLifeTask = null;
-			}
+			cancelLifeTask();
 			return;
 		}
 		

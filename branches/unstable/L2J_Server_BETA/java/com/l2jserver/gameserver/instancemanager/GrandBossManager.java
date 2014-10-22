@@ -23,8 +23,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -97,9 +95,9 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	protected static FastIntObjectMap<L2GrandBossInstance> _bosses = new FastIntObjectMap<>();	//[JOJO] -FastMap
 	
-	protected static Map<Integer, StatsSet> _storedInfo = new HashMap<>();
+	protected static FastIntObjectMap<StatsSet> _storedInfo = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
-	private final Map<Integer, Integer> _bossStatus = new HashMap<>();
+	private final FastIntObjectMap<Integer> _bossStatus = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	private FastList<L2BossZone> _zones = new FastList<>();	//[JOJO] -L2FastList
 	
@@ -158,7 +156,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	 */
 	public void initZones()
 	{
-		FastIntObjectMap<FastIntSet> zones = new FastIntObjectMap<>();	//[JOJO] -L2FastList
+		FastIntObjectMap<FastIntSet> zones = new FastIntObjectMap<>();	//[JOJO] -FastMap
 		
 		if (_zones == null)
 		{
@@ -370,7 +368,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			     PreparedStatement update_grand_boss_data3 = con.prepareStatement(UPDATE_GRAND_BOSS_DATA3);
 			     PreparedStatement update_grand_boss_data1 = con.prepareStatement(UPDATE_GRAND_BOSS_DATA) )
 			{
-				for (java.util.Map.Entry<Integer, StatsSet> e : _storedInfo.entrySet())
+				for (jp.sf.l2j.troja.IntObjectMap.Entry<StatsSet> e : _storedInfo.entrySet())
 				{
 					final int bossId = e.getKey();
 					final StatsSet info = e.getValue();

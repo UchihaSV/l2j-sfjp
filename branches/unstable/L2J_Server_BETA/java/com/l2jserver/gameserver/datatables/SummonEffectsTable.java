@@ -18,9 +18,9 @@
  */
 package com.l2jserver.gameserver.datatables;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.skills.Skill;
@@ -35,16 +35,16 @@ public class SummonEffectsTable
 	// -> key: charObjectId, value: classIndex Map
 	// --> key: classIndex, value: servitors Map
 	// ---> key: servitorSkillId, value: Effects list
-	private final Map<Integer, Map<Integer, Map<Integer, List<SummonEffect>>>> _servitorEffects = new HashMap<>();
+	private final FastIntObjectMap<FastIntObjectMap<FastIntObjectMap<List<SummonEffect>>>> _servitorEffects = new FastIntObjectMap<>();
 	
-	public Map<Integer, Map<Integer, Map<Integer, List<SummonEffect>>>> getServitorEffectsOwner()
+	public FastIntObjectMap<FastIntObjectMap<FastIntObjectMap<List<SummonEffect>>>> getServitorEffectsOwner()
 	{
 		return _servitorEffects;
 	}
 	
-	public Map<Integer, List<SummonEffect>> getServitorEffects(L2PcInstance owner)
+	public FastIntObjectMap<List<SummonEffect>> getServitorEffects(L2PcInstance owner)
 	{
-		final Map<Integer, Map<Integer, List<SummonEffect>>> servitorMap = _servitorEffects.get(owner.getObjectId());
+		final FastIntObjectMap<FastIntObjectMap<List<SummonEffect>>> servitorMap = _servitorEffects.get(owner.getObjectId());
 		if (servitorMap == null)
 		{
 			return null;
@@ -53,9 +53,9 @@ public class SummonEffectsTable
 	}
 	
 	/** Pets **/
-	private final Map<Integer, List<SummonEffect>> _petEffects = new HashMap<>(); // key: petItemObjectId, value: Effects list
+	private final FastIntObjectMap<List<SummonEffect>> _petEffects = new FastIntObjectMap<>(); // key: petItemObjectId, value: Effects list
 	
-	public Map<Integer, List<SummonEffect>> getPetEffects()
+	public FastIntObjectMap<List<SummonEffect>> getPetEffects()
 	{
 		return _petEffects;
 	}

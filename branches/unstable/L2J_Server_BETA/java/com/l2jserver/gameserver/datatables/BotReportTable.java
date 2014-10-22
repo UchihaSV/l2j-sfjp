@@ -6,8 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,7 +50,7 @@ public final class BotReportTable
 	private static final String SQL_INSERT_REPORTED_CHAR_DATA = "INSERT INTO bot_reported_char_data VALUES (?,?,?)";
 	private static final String SQL_CLEAR_REPORTED_CHAR_DATA = "DELETE FROM bot_reported_char_data";
 	
-	private Map<Integer, Long> _ipRegistry;
+	private FastIntObjectMap<Long> _ipRegistry;	//[JOJO] -HashMap
 	private FastIntObjectMap<ReporterCharData> _charRegistry;
 	private FastIntObjectMap<ReportedCharData> _reports;
 	private FastIntObjectMap<PunishHolder> _punishments;
@@ -61,7 +59,7 @@ public final class BotReportTable
 	{
 		if (Config.BOTREPORT_ENABLE)
 		{
-			_ipRegistry = new HashMap<>();
+			_ipRegistry = new FastIntObjectMap<>();
 			_charRegistry = new FastIntObjectMap<ReporterCharData>().shared();
 			_reports = new FastIntObjectMap<ReportedCharData>().shared();
 			_punishments = new FastIntObjectMap<PunishHolder>().shared();
@@ -104,6 +102,8 @@ public final class BotReportTable
 				Calendar c = Calendar.getInstance();
 				c.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour[0]));
 				c.set(Calendar.MINUTE, Integer.parseInt(hour[1]));
+				c.set(Calendar.SECOND, 0);		//+[JOJO]
+				c.set(Calendar.MILLISECOND, 0);	//+[JOJO]
 				
 				if (System.currentTimeMillis() < c.getTimeInMillis())
 				{
@@ -119,23 +119,28 @@ public final class BotReportTable
 			
 			while (rset.next())
 			{
-				int botId = rset.getInt(COLUMN_BOT_ID);
-				int reporter = rset.getInt(COLUMN_REPORTER_ID);
-				long date = rset.getLong(COLUMN_REPORT_TIME);
-				if (_reports.containsKey(botId))
+				final int botId = rset.getInt(COLUMN_BOT_ID);
+				final int reporter = rset.getInt(COLUMN_REPORTER_ID);
+				final long date = rset.getLong(COLUMN_REPORT_TIME);
+				
+				if (true)
 				{
-					_reports.get(botId).addReporter(reporter, date);
-				}
-				else
-				{
-					ReportedCharData rcd = new ReportedCharData();
-					rcd.addReporter(reporter, date);
-					_reports.put(rset.getInt(COLUMN_BOT_ID), rcd);
+					ReportedCharData bcd;
+					if ((bcd = _reports.get(botId)) != null)
+					{
+						bcd.addReporter(reporter, date);
+					}
+					else
+					{
+						bcd = new ReportedCharData();
+						bcd.addReporter(reporter, date);
+						_reports.put(botId, bcd);
+					}
 				}
 				
 				if (date > lastResetTime)
 				{
-					ReporterCharData rcd = null;
+					ReporterCharData rcd;
 					if ((rcd = _charRegistry.get(reporter)) != null)
 					{
 						rcd.setPoints(rcd.getPointsLeft() - 1);
@@ -172,14 +177,16 @@ public final class BotReportTable
 			st.execute();
 			
 			st = con.prepareStatement(SQL_INSERT_REPORTED_CHAR_DATA);
-			for (IntObjectMap.Entry<ReportedCharData> entry : _reports.entrySet())
+			for (IntObjectMap.Entry<ReportedCharData> entrySet : _reports.entrySet())
 			{
-				Map<Integer, Long> reportTable = entry.getValue()._reporters;
-				for (int reporterId : reportTable.keySet())
+				FastIntObjectMap<Long> reportTable = entrySet.getValue()._reporters;
+				for (IntObjectMap.Entry<Long> reporter : reportTable.entrySet())
 				{
-					st.setInt(1, entry.getKey());
+					int reporterId = reporter.getKey();
+					long reportDate = reporter.getValue();
+					st.setInt(1, entrySet.getKey());
 					st.setInt(2, reporterId);
-					st.setLong(3, reportTable.get(reporterId));
+					st.setLong(3, reportDate);
 					st.execute();
 					st.clearParameters();
 				}
@@ -327,12 +334,12 @@ public final class BotReportTable
 		punishBot(bot, _punishments.get(rcd.getReportCount()));
 		
 		// Range punishments
-		for (IntObjectMap.Entry<PunishHolder> entry : _punishments.entrySet())
+		for (IntObjectMap.Entry<PunishHolder> e : _punishments.entrySet())
 		{
-			int key = entry.getKey();
-			if ((key < 0) && (Math.abs(key) <= rcd.getReportCount()))
+			int key = e.getKey();
+			if (key < 0 && Math.abs(key) <= rcd.getReportCount())
 			{
-				punishBot(bot, entry.getValue());
+				punishBot(bot, e.getValue());
 			}
 		}
 	}
@@ -440,14 +447,15 @@ public final class BotReportTable
 	/**
 	 * Checks and return if the abstrat barrier specified by an integer (map key) has accomplished the waiting time
 	 * @param map (a Map to study (Int = barrier, Long = fully qualified unix time)
-	 * @param objectId (an existent map key)
+	 * @param ip (an existent map key)
 	 * @return true if the time has passed.
 	 */
-	private static boolean timeHasPassed(Map<Integer, Long> map, int objectId)
+	private final boolean timeHasPassed(FastIntObjectMap<Long> map, int ip)
 	{
-		if (map.containsKey(objectId))
+		Long time;
+		if ((time = map.get(ip)) != null)
 		{
-			return (System.currentTimeMillis() - map.get(objectId)) > Config.BOTREPORT_REPORT_DELAY;
+			return System.currentTimeMillis() - time > Config.BOTREPORT_REPORT_DELAY;
 		}
 		return true;
 	}
@@ -493,11 +501,11 @@ public final class BotReportTable
 	 */
 	private final class ReportedCharData
 	{
-		Map<Integer, Long> _reporters;
+		FastIntObjectMap<Long> _reporters;	//[JOJO] -HashMap
 		
 		ReportedCharData()
 		{
-			_reporters = new HashMap<>();
+			_reporters = new FastIntObjectMap<>();
 		}
 		
 		int getReportCount()
@@ -522,8 +530,9 @@ public final class BotReportTable
 				return false;
 			}
 			
-			for (int reporterId : _reporters.keySet())
+			for (IntObjectMap.Entry<Long> e : _reporters.entrySet())
 			{
+				int reporterId = e.getKey();
 				if (clan.isMember(reporterId))
 				{
 					return true;

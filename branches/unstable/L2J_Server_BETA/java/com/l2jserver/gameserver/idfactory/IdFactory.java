@@ -23,14 +23,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
+
+import gnu.trove.list.array.TIntArrayList;
 
 /**
  * This class ...
@@ -343,22 +342,22 @@ public abstract class IdFactory
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	protected final Integer[] extractUsedObjectIDTable() throws Exception
+	protected final int[] extractUsedObjectIDTable() throws Exception	//[JOJO] -Integer[]
 	{
-		final List<Integer> temp = new ArrayList<>();
+		final TIntArrayList temp = new TIntArrayList();	//[JOJO] -ArrayList
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			Statement s = con.createStatement())
 		{
 			
-			String extractUsedObjectIdsQuery = "";
+			StringBuilder extractUsedObjectIdsQuery = new StringBuilder();
 			
 			for (String[] tblClmn : ID_EXTRACTS)
 			{
-				extractUsedObjectIdsQuery += "SELECT " + tblClmn[1] + " FROM " + tblClmn[0] + " UNION ";
+				extractUsedObjectIdsQuery.append(" UNION ").append("SELECT ").append(tblClmn[1]).append(" FROM ").append(tblClmn[0]);
 			}
 			
-			extractUsedObjectIdsQuery = extractUsedObjectIdsQuery.substring(0, extractUsedObjectIdsQuery.length() - 7); // Remove the last " UNION "
-			try (ResultSet rs = s.executeQuery(extractUsedObjectIdsQuery))
+			extractUsedObjectIdsQuery.delete(0, 7); // Remove the first " UNION "
+			try (ResultSet rs = s.executeQuery(extractUsedObjectIdsQuery.toString()))
 			{
 				while (rs.next())
 				{
@@ -366,8 +365,8 @@ public abstract class IdFactory
 				}
 			}
 		}
-		Collections.sort(temp);
-		return temp.toArray(new Integer[temp.size()]);
+		temp.sort();
+		return temp.toArray();
 	}
 	
 	public boolean isInitialized()

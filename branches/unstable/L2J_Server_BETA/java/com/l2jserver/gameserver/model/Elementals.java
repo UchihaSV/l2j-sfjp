@@ -18,8 +18,7 @@
  */
 package com.l2jserver.gameserver.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
 
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.skills.funcs.FuncAdd;
@@ -28,13 +27,13 @@ import com.l2jserver.gameserver.model.stats.Stats;
 
 public final class Elementals
 {
-	private static final Map<Integer, ElementalItems> TABLE = new HashMap<>();
+	private static final SortedIntObjectArrayMap<ElementalItems> TABLE = new SortedIntObjectArrayMap<>();	//[JOJO] -HashMap
 	
 	static
 	{
 		for (ElementalItems item : ElementalItems.values())
 		{
-			TABLE.put(item._itemId, item);
+			TABLE.append(item._itemId, item);
 		}
 	}
 	

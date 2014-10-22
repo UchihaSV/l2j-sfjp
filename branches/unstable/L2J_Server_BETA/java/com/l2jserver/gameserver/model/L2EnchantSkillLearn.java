@@ -94,37 +94,38 @@ public final class L2EnchantSkillLearn
 	public boolean isMaxEnchant(int level)
 	{
 		int enchantType = getEnchantRoute(level);
-		if ((enchantType < 1) || !_enchantRoutes.containsKey(enchantType))
+		Integer enchantRoute;
+		if (enchantType < 1 || (enchantRoute = _enchantRoutes.get(enchantType)) == null)
 		{
 			return false;
 		}
+		L2EnchantSkillGroup group = EnchantSkillGroupsData.getInstance().getEnchantSkillGroupById(enchantRoute);
+		int max = group.getEnchantGroupDetails().size() - 1;
 		int index = getEnchantIndex(level);
 		
-		if ((index + 1) >= EnchantSkillGroupsData.getInstance().getEnchantSkillGroupById(_enchantRoutes.get(enchantType)).getEnchantGroupDetails().size())
-		{
-			return true;
-		}
-		return false;
+		return index >= max;
 	}
 	
 	public EnchantSkillHolder getEnchantSkillHolder(int level)
 	{
 		int enchantType = getEnchantRoute(level);
-		if ((enchantType < 1) || !_enchantRoutes.containsKey(enchantType))
+		Integer enchantRoute;
+		if (enchantType < 1 || (enchantRoute = _enchantRoutes.get(enchantType)) == null)
 		{
 			return null;
 		}
+		L2EnchantSkillGroup group = EnchantSkillGroupsData.getInstance().getEnchantSkillGroupById(enchantRoute);
+		int max = group.getEnchantGroupDetails().size() - 1;
 		int index = getEnchantIndex(level);
-		L2EnchantSkillGroup group = EnchantSkillGroupsData.getInstance().getEnchantSkillGroupById(_enchantRoutes.get(enchantType));
 		
 		if (index < 0)
 		{
-			return group.getEnchantGroupDetails().get(0);
+			index = 0;
 		}
-		else if (index >= group.getEnchantGroupDetails().size())
+		else if (index > max)
 		{
-			return group.getEnchantGroupDetails().get(EnchantSkillGroupsData.getInstance().getEnchantSkillGroupById(_enchantRoutes.get(enchantType)).getEnchantGroupDetails().size() - 1);
+			index = max;
 		}
-		return group.getEnchantGroupDetails().get(index);
+		return group.getEnchantGroupDetails().get(index);	// ArrayList
 	}
 }
