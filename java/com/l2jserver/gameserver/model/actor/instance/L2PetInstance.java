@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.model.actor.instance;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
@@ -74,6 +75,8 @@ import com.l2jserver.gameserver.network.serverpackets.StopMove;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.taskmanager.DecayTaskManager;
 import com.l2jserver.util.Rnd;
+
+import gnu.trove.list.array.TIntArrayList;
 
 public class L2PetInstance extends L2Summon
 {
@@ -962,14 +965,14 @@ public class L2PetInstance extends L2Summon
 	public final void stopSkillEffects(boolean removed, int skillId)
 	{
 		super.stopSkillEffects(removed, skillId);
-		List<SummonEffect> effects = SummonEffectsTable.getInstance().getPetEffects().get(getControlObjectId());
-		if ((effects != null) && !effects.isEmpty())
+		List<SummonEffect> effects;
+		if ((effects = SummonEffectsTable.getInstance().getPetEffects().get(getControlObjectId())) != null)
 		{
-			for (SummonEffect effect : effects)
+			for (Iterator<SummonEffect> it = effects.iterator(); it.hasNext(); )
 			{
-				if (effect.getSkill().getId() == skillId)
+				if (it.next().getSkill().getId() == skillId)
 				{
-					SummonEffectsTable.getInstance().getPetEffects().get(getControlObjectId()).remove(effect);
+					it.remove();
 				}
 			}
 		}
@@ -1046,10 +1049,11 @@ public class L2PetInstance extends L2Summon
 			return;
 		}
 		
+		List<SummonEffect> petEffects = SummonEffectsTable.getInstance().getPetEffects().get(getControlObjectId());
 		// Clear list for overwrite
-		if (SummonEffectsTable.getInstance().getPetEffects().containsKey(getControlObjectId()))
+		if (petEffects != null)
 		{
-			SummonEffectsTable.getInstance().getPetEffects().get(getControlObjectId()).clear();
+			petEffects.clear();
 		}
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
@@ -1062,7 +1066,7 @@ public class L2PetInstance extends L2Summon
 			
 			int buff_index = 0;
 			
-			final List<Integer> storedSkills = new FastList<>();
+			final TIntArrayList storedSkills = new TIntArrayList();	//[JOJO] -FastList
 			
 			// Store all effect data along with calculated remaining
 			if (storeEffects)
@@ -1106,12 +1110,13 @@ public class L2PetInstance extends L2Summon
 					ps2.setInt(5, ++buff_index);
 					ps2.execute();
 					
-					if (!SummonEffectsTable.getInstance().getPetEffects().containsKey(getControlObjectId()))
+					if (petEffects == null)
 					{
-						SummonEffectsTable.getInstance().getPetEffects().put(getControlObjectId(), new FastList<SummonEffect>());
+						petEffects = new FastList<>();
+						SummonEffectsTable.getInstance().getPetEffects().put(getControlObjectId(), petEffects);
 					}
 					
-					SummonEffectsTable.getInstance().getPetEffects().get(getControlObjectId()).add(SummonEffectsTable.getInstance().new SummonEffect(skill, info.getTime()));
+					petEffects.add(SummonEffectsTable.getInstance().new SummonEffect(skill, info.getTime()));
 				}
 			}
 		}
@@ -1128,7 +1133,8 @@ public class L2PetInstance extends L2Summon
 			PreparedStatement ps1 = con.prepareStatement(RESTORE_SKILL_SAVE);
 			PreparedStatement ps2 = con.prepareStatement(DELETE_SKILL_SAVE))
 		{
-			if (!SummonEffectsTable.getInstance().getPetEffects().containsKey(getControlObjectId()))
+			List<SummonEffect> petEffects;
+			if ((petEffects = SummonEffectsTable.getInstance().getPetEffects().get(getControlObjectId())) == null)
 			{
 				ps1.setInt(1, getControlObjectId());
 				try (ResultSet rset = ps1.executeQuery())
@@ -1145,12 +1151,13 @@ public class L2PetInstance extends L2Summon
 						
 						if (skill.hasEffects(EffectScope.GENERAL))
 						{
-							if (!SummonEffectsTable.getInstance().getPetEffects().containsKey(getControlObjectId()))
+							if (petEffects == null)
 							{
-								SummonEffectsTable.getInstance().getPetEffects().put(getControlObjectId(), new FastList<SummonEffect>());
+								petEffects = new FastList<>();
+								SummonEffectsTable.getInstance().getPetEffects().put(getControlObjectId(), petEffects);
 							}
 							
-							SummonEffectsTable.getInstance().getPetEffects().get(getControlObjectId()).add(SummonEffectsTable.getInstance().new SummonEffect(skill, effectCurTime));
+							petEffects.add(SummonEffectsTable.getInstance().new SummonEffect(skill, effectCurTime));
 						}
 					}
 				}
@@ -1165,16 +1172,15 @@ public class L2PetInstance extends L2Summon
 		}
 		finally
 		{
-			if (SummonEffectsTable.getInstance().getPetEffects().get(getControlObjectId()) == null)
+			List<SummonEffect> petEffects;
+			if ((petEffects = SummonEffectsTable.getInstance().getPetEffects().get(getControlObjectId())) != null)
 			{
-				return;
-			}
-			
-			for (SummonEffect se : SummonEffectsTable.getInstance().getPetEffects().get(getControlObjectId()))
-			{
-				if (se != null)
+				for (SummonEffect se : petEffects)
 				{
-					se.getSkill().applyEffects(this, this, false, se.getEffectCurTime());
+					if (se != null)
+					{
+						se.getSkill().applyEffects(this, this, false, se.getEffectCurTime());
+					}
 				}
 			}
 		}

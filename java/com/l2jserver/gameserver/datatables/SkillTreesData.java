@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import jp.sf.l2j.troja.FastIntObjectMap;
+
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -90,8 +92,8 @@ public final class SkillTreesData extends DocumentParser
 	private static final Map<Integer, L2SkillLearn> _gameMasterAuraSkillTree = new HashMap<>();
 	
 	// Checker, sorted arrays of hash codes
-	private Map<Integer, int[]> _skillsByClassIdHashCodes; // Occupation skills
-	private Map<Integer, int[]> _skillsByRaceHashCodes; // Race-specific Transformations
+	private FastIntObjectMap<int[]> _skillsByClassIdHashCodes; // Occupation skills				//[JOJO] -HashMap
+	private FastIntObjectMap<int[]> _skillsByRaceHashCodes; // Race-specific Transformations	//[JOJO] -HashMap
 	private int[] _allSkillsHashCodes; // Fishing, Collection, Transformations, Common Skills.
 	
 	private boolean _loading = true;
@@ -1087,7 +1089,7 @@ public final class SkillTreesData extends DocumentParser
 	{
 		// Class specific skills:
 		final Set<ClassId> keySet = _classSkillTrees.keySet();
-		_skillsByClassIdHashCodes = new HashMap<>(keySet.size());
+		_skillsByClassIdHashCodes = new FastIntObjectMap<>(keySet.size());
 		for (ClassId cls : keySet)
 		{
 			int i = 0;
@@ -1104,7 +1106,7 @@ public final class SkillTreesData extends DocumentParser
 		
 		// Race specific skills from Fishing and Transformation skill trees.
 		final List<Integer> list = new ArrayList<>();
-		_skillsByRaceHashCodes = new HashMap<>(PcRace.values().length);
+		_skillsByRaceHashCodes = new FastIntObjectMap<>(PcRace.values().length);
 		for (PcRace r : PcRace.values())
 		{
 			for (L2SkillLearn s : _fishingSkillTree.values())

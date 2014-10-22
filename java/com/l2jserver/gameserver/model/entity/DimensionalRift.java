@@ -36,6 +36,8 @@ import com.l2jserver.gameserver.model.quest.QuestState;
 import com.l2jserver.gameserver.network.serverpackets.Earthquake;
 import com.l2jserver.util.Rnd;
 
+import gnu.trove.list.array.TByteArrayList;
+
 /**
  * Thanks to L2Fortress and balancer.ru - kombat
  */
@@ -308,7 +310,7 @@ public class DimensionalRift
 		
 		if (_choosenRoom == -1)
 		{
-			FastList<Byte> emptyRooms;
+			TByteArrayList emptyRooms;
 			do
 			{
 				emptyRooms = DimensionalRiftManager.getInstance().getFreeRooms(_type);
