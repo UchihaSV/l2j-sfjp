@@ -2640,7 +2640,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public final L2CharacterAI getAI()
 	{
-		if (_ai == null)
+		L2CharacterAI ai = _ai; // copy handle
+		if (ai == null)
 		{
 			synchronized (this)
 			{
@@ -2648,9 +2649,10 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				{
 					_ai = initAI();
 				}
+				return _ai;
 			}
 		}
-		return _ai;
+		return ai;
 	}
 	
 	/**

@@ -131,21 +131,9 @@ public class L2GuardInstance extends L2Attackable
 	}
 	
 	@Override
-	public L2CharacterAI getAI()
+	protected L2CharacterAI initAI()
 	{
-		L2CharacterAI ai = _ai; // copy handle
-		if (ai == null)
-		{
-			synchronized (this)
-			{
-				if (_ai == null)
-				{
-					_ai = new L2GuardAI(new AIAccessor());
-				}
-				return _ai;
-			}
-		}
-		return ai;
+		return new L2GuardAI(new AIAccessor());
 	}
 	//-------------------------------------------------------
 	

@@ -776,25 +776,14 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 	}
 	
 	//[JOJO]-------------------------------------------------
+	
 	@Override
-	public L2CharacterAI getAI()
+	protected L2CharacterAI initAI()
 	{
 if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
-		L2CharacterAI ai = _ai; // copy handle
-		if (ai == null)
-		{
-			synchronized (this)
-			{
-				if (_ai == null)
-				{
-					_ai = new L2TamedBeastAI(new AIAccessor());
-				}
-				return _ai;
-			}
-		}
-		return ai;
+		return new L2TamedBeastAI(new AIAccessor());
 }} else {{
-		return super.getAI();
+		return super.initAI();
 }}
 	}
 	
