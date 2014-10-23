@@ -251,6 +251,29 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	/** Map 32 bits, containing all event abnormal visual effects in progress. */
 	private int _abnormalVisualEffectsEvent;
 	
+	/** Movement data of this L2Character */
+	protected MoveData _move;
+	
+	/** This creature's target. */
+	private L2Object _target;
+	
+	// set by the start of attack, in game ticks
+	private int _attackEndTime;
+	private int _disableBowAttackEndTime;
+	private int _disableCrossBowAttackEndTime;
+	
+	private int _castEndTime; //[L2J_JP]
+	private int _castInterruptTime;
+	
+	/** Table of calculators containing all standard NPC calculator (ex : ACCURACY_COMBAT, EVASION_RATE) */
+	private static final Calculator[] NPC_STD_CALCULATOR = Formulas.getStdNPCCalculators();
+	
+	private volatile L2CharacterAI _ai = null;
+	
+	/** Future Skill Cast */
+	protected Future<?> _skillCast;
+	protected Future<?> _skillCast2;
+	
 	public final CharEffectList getEffectList()
 	{
 		return _effectList;
@@ -1608,9 +1631,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		}
 		stopEffectsOnAction();
 		
-		// Recharge AutoSoulShot
-		// this method should not used with L2Playable
-		
 		beginCast(skill, true, target, targets);
 	}
 	
@@ -2615,37 +2635,47 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	}
 	
 	/**
-	 * @return the L2CharacterAI of the L2Character and if its null create a new one.
+	 * Gets this creature's AI.
+	 * @return the AI
 	 */
-	public L2CharacterAI getAI()
+	public final L2CharacterAI getAI()
 	{
-		L2CharacterAI ai = _ai; // copy handle
-		if (ai == null)
+		if (_ai == null)
 		{
 			synchronized (this)
 			{
 				if (_ai == null)
 				{
-					_ai = new L2CharacterAI(new AIAccessor());
+					_ai = initAI();
 				}
-				return _ai;
 			}
 		}
-		return ai;
+		return _ai;
+	}
+	
+	/**
+	 * Initialize this creature's AI.<br>
+	 * OOP approach to be overridden in child classes.
+	 * @return the new AI
+	 */
+	protected L2CharacterAI initAI()
+	{
+		return new L2CharacterAI(new AIAccessor());
 	}
 	
 	public void setAI(L2CharacterAI newAI)
 	{
-		L2CharacterAI oldAI = _ai;		//[JOJO] SYNC:L2Character.java@6473 getAI() --> _ai
-		_ai = newAI;
+		L2CharacterAI oldAI = _ai;
 		if ((oldAI != null) && (oldAI != newAI) && (oldAI instanceof L2AttackableAI))
 		{
 			((L2AttackableAI) oldAI).stopAITask();
 		}
+		_ai = newAI;
 	}
 	
 	/**
-	 * @return True if the L2Character has a L2CharacterAI.
+	 * Verifies if this creature has an AI,
+	 * @return {@code true} if this creature has an AI, {@code false} otherwise
 	 */
 	public boolean hasAI()
 	{
@@ -3664,7 +3694,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				return;
 			}
 			
-			setAI(null);		//[JOJO] SYNC:L2Character.java@6473 null --> setAI(null)
+			setAI(null);
 		}
 	}
 	
@@ -3704,29 +3734,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		public int geoPathGty;
 	}
 	
-	/** Movement data of this L2Character */
-	protected MoveData _move;
-	
-	/** This creature's target. */
-	private L2Object _target;
-	
-	// set by the start of attack, in game ticks
-	private int _attackEndTime;
-	private int _disableBowAttackEndTime;
-	private int _disableCrossBowAttackEndTime;
-	
-	private int _castEndTime; //[L2J_JP]
-	private int _castInterruptTime;
-	
-	/** Table of calculators containing all standard NPC calculator (ex : ACCURACY_COMBAT, EVASION_RATE) */
-	private static final Calculator[] NPC_STD_CALCULATOR = Formulas.getStdNPCCalculators();
-	
-	protected volatile L2CharacterAI _ai;
-	
-	/** Future Skill Cast */
-	protected Future<?> _skillCast;
-	protected Future<?> _skillCast2;
-	
 	/**
 	 * Add a Func to the Calculator set of the L2Character.<br>
 	 * <b><u>Concept</u>:</b> A L2Character owns a table of Calculators called <b>_calculators</b>.<br>
@@ -3748,7 +3755,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			return;
 		}
 		
-		synchronized (_calculators)
+		synchronized (this)
 		{
 			// Check if Calculator set is linked to the standard Calculator set of NPC
 			if (_calculators == NPC_STD_CALCULATOR)
@@ -3830,7 +3837,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		// Select the Calculator of the affected state in the Calculator set
 		int stat = f.stat.ordinal();
 		
-		synchronized (_calculators)
+		synchronized (this)
 		{
 			if (_calculators[stat] == null)
 			{
@@ -3917,7 +3924,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		List<Stats> modifiedStats = null;
 		int i = 0;
 		// Go through the Calculator set
-		synchronized (_calculators)
+		synchronized (this)
 		{
 			for (Calculator calc : _calculators)
 			{
@@ -5025,82 +5032,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		return (strictCheck) ? (distance < (radius * radius)) : (distance <= (radius * radius));
 	}
 	
-	// /**
-	// * event that is called when the destination coordinates are reached
-	// */
-	// public void onTargetReached()
-	// {
-	// L2Character pawn = getPawnTarget();
-	//
-	// if (pawn != null)
-	// {
-	// int x = pawn.getX(), y=pawn.getY(),z = pawn.getZ();
-	//
-	// double distance = getDistance(x,y);
-	// if (getCurrentState() == STATE_FOLLOW)
-	// {
-	// calculateMovement(x,y,z,distance);
-	// return;
-	// }
-	//
-	// // takes care of moving away but distance is 0 so i won't follow problem
-	//
-	//
-	// if (((distance > getAttackRange()) && (getCurrentState() == STATE_ATTACKING)) || (pawn.isMoving() && getCurrentState() != STATE_ATTACKING))
-	// {
-	// calculateMovement(x,y,z,distance);
-	// return;
-	// }
-	//
-	// }
-	// // update x,y,z with the current calculated position
-	// stopMove();
-	//
-	//
-	// if (getPawnTarget() != null)
-	// {
-	//
-	// setPawnTarget(null);
-	// setMovingToPawn(false);
-	// }
-	// }
-	//
-	// public void setTo(int x, int y, int z, int heading)
-	// {
-	// setX(x);
-	// setY(y);
-	// setZ(z);
-	// setHeading(heading);
-	// updateCurrentWorldRegion(); //TODO: maybe not needed here
-	// if (isMoving())
-	// {
-	// setCurrentState(STATE_IDLE);
-	// StopMove setto = new StopMove(this);
-	// broadcastPacket(setto);
-	// }
-	// else
-	// {
-	// ValidateLocation setto = new ValidateLocation(this);
-	// broadcastPacket(setto);
-	// }
-	//
-	// FinishRotation fr = new FinishRotation(this);
-	// broadcastPacket(fr);
-	// }
-	
-	// protected void startCombat()
-	// {
-	// if (_currentAttackTask == null )//&& !isInCombat())
-	// {
-	// _currentAttackTask = ThreadPoolManager.getInstance().scheduleMed(new AttackTask(), 0);
-	// }
-	// else
-	// {
-	// _log.info("multiple attacks want to start in parallel. prevented.");
-	// }
-	// }
-	//
-	
 	/**
 	 * <B><U> Overridden in </U> :</B> <li>L2PcInstance</li>
 	 * @return True if arrows are available.
@@ -5237,11 +5168,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		{
 			L2PcInstance enemy = target.getActingPlayer();
 			enemy.getAI().clientStartAutoAttack();
-			
-			/*
-			 * if (shld && 100 - Config.ALT_PERFECT_SHLD_BLOCK < Rnd.get(100)) { if (100 - Config.ALT_PERFECT_SHLD_BLOCK < Rnd.get(100)) { damage = 1; enemy.sendPacket(SystemMessageId.YOUR_EXCELLENT_SHIELD_DEFENSE_WAS_A_SUCCESS); //SHIELD_DEFENCE faultless } else
-			 * enemy.sendPacket(SystemMessageId.SHIELD_DEFENCE_SUCCESSFULL); }
-			 */
 		}
 		
 		if (!miss && (damage > 0))

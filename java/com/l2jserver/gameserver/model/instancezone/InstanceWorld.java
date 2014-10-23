@@ -19,6 +19,7 @@
 package com.l2jserver.gameserver.model.instancezone;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
@@ -39,7 +40,7 @@ public class InstanceWorld
 	public int instanceId;
 	public int templateId = -1;
 	public final List<Integer> allowed = new FastList<>();
-	public volatile int status;
+	private final AtomicInteger _status = new AtomicInteger();
 	
 	public List<Integer> getAllowed()
 	{
@@ -98,22 +99,22 @@ public class InstanceWorld
 	
 	public int getStatus()
 	{
-		return status;
+		return _status.get();
 	}
 	
 	public boolean isStatus(int status)
 	{
-		return this.status == status;
+		return _status.get() == status;
 	}
 	
 	public void setStatus(int status)
 	{
-		this.status = status;
+		_status.set(status);
 	}
 	
-	public int incStatus()
+	public void incStatus()
 	{
-		return ++status;
+		_status.incrementAndGet();
 	}
 	
 	/**

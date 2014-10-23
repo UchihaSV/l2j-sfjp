@@ -525,13 +525,16 @@ if (TEST1) {{
 					}
 				}
 				
-				// Announce to all players that the spawn has taken place, with the nearest town location.
-				if (spawnInst.isBroadcasting() && (npcInst != null))
+				if (npcInst != null)
 				{
-					Announcements.getInstance().announceToAll( SystemMessage.getSystemMessage(SystemMessageId.S2_S1)
-								.addString("Ç…" + npcInst.getName() + "Ç™Ç‚Ç¡ÇƒÇ‹Ç¢ÇËÇ‹ÇµÇΩÅI")
-								.addZoneName(x, y, z) );	//[JOJO]
-				//	Announcements.getInstance().announceToAll("The " + npcInst.getName() + " has spawned near " + nearestTown + "!");
+					// Announce to all players that the spawn has taken place, with the nearest town location.
+					if (spawnInst.isBroadcasting())
+					{
+						Announcements.getInstance().announceToAll( SystemMessage.getSystemMessage(SystemMessageId.S2_S1)
+									.addString("Ç…" + npcInst.getName() + "Ç™Ç‚Ç¡ÇƒÇ‹Ç¢ÇËÇ‹ÇµÇΩÅI")
+									.addZoneName(x, y, z) );	//[JOJO]
+					//	Announcements.getInstance().announceToAll("The " + npcInst.getName() + " has spawned near " + nearestTown + "!");
+					}
 				}
 				
 				// If there is no despawn time, do not create a despawn task.
