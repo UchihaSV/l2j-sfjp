@@ -19,14 +19,12 @@
 package com.l2jserver.gameserver.model.instancezone;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 import javolution.util.FastList;
 
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.model.actor.L2Character;
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.entity.Instance;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
@@ -40,7 +38,7 @@ public class InstanceWorld
 	public int instanceId;
 	public int templateId = -1;
 	public final List<Integer> allowed = new FastList<>();
-	private final AtomicInteger _status = new AtomicInteger();
+	public volatile int status = 0;	//[JOJO] -AtomicInteger
 	
 	public List<Integer> getAllowed()
 	{
@@ -99,22 +97,22 @@ public class InstanceWorld
 	
 	public int getStatus()
 	{
-		return _status.get();
+		return this.status;
 	}
 	
 	public boolean isStatus(int status)
 	{
-		return _status.get() == status;
+		return this.status == status;
 	}
 	
 	public void setStatus(int status)
 	{
-		_status.set(status);
+		this.status = status;
 	}
 	
-	public void incStatus()
+	/*@Deprecated*/ public synchronized void incStatus()
 	{
-		_status.incrementAndGet();
+		++this.status;
 	}
 	
 	/**
