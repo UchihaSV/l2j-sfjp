@@ -337,7 +337,7 @@ public class L2Npc extends L2Character
 				{
 					return; // Shouldn't happen, but who knows... just to make sure every active npc has only one timer.
 				}
-				else if (!isInActiveRegion() || isDead() || !isVisible() || !isRandomAnimationEnabled())
+				else if (!isInActiveRegion() || isDead() || !isVisible() || isInCombat() || !isRandomAnimationEnabled())
 				{
 					_rAniTask = null;
 					return;
@@ -390,7 +390,7 @@ public class L2Npc extends L2Character
 	}
 	void startRandomAnimationTimer(RandomAnimationTask task)
 	{
-		if (!isInActiveRegion() || isDead() || !isVisible() || !hasRandomAnimation())
+		if (!isInActiveRegion() || isDead() || !isVisible() || isInCombat() || !isRandomAnimationEnabled())
 		{
 			_rAniTask = null;	//+[JOJO]
 			return;
