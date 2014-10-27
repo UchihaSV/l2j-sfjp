@@ -94,9 +94,6 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 	{
 		super(objectId, template);
 		setInstanceType(InstanceType.L2TamedBeastInstance);
-if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
-		setAI(new L2TamedBeastAI(new AIAccessor()));
-}}
 	}
 	
 	public L2TamedBeastInstance(int objectId, L2NpcTemplate template, L2PcInstance owner, int foodSkillId, int x, int y, int z) // FeedableBeasts
@@ -108,9 +105,6 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setCurrentMp(getMaxMp());
 		setFoodType(foodSkillId);
 		spawnMe(x, y, z);
-if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
-		setAI(new L2TamedBeastAI(new AIAccessor()));
-}}
 		setOwner(owner);
 		startOwnerBuffs();
 	}
@@ -124,9 +118,6 @@ if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
 		setCurrentMp(getMaxMp());
 		setFoodType(food);
 		spawnMe(x, y, z);
-if (com.l2jserver.Config.TAMED_BEAST_ALLIVE_SORT) {{
-		setAI(new L2TamedBeastAI(new AIAccessor()));
-}}
 		setOwner(owner);
 		if (isFreyaBeast)
 		{

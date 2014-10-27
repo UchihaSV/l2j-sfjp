@@ -75,6 +75,7 @@ import com.l2jserver.gameserver.model.actor.events.CharEvents;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2RiftInvaderInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance;
 import com.l2jserver.gameserver.model.actor.knownlist.CharKnownList;
 import com.l2jserver.gameserver.model.actor.stat.CharStat;
 import com.l2jserver.gameserver.model.actor.status.CharStatus;
@@ -6298,6 +6299,10 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				for (L2Object target : targets)
 				{
 					// EVT_ATTACKED and PvPStatus
+					//[JOJO]-------------------------------------------------
+					if (target instanceof L2TamedBeastInstance && ((L2TamedBeastInstance) target).getOwner() == this)
+						continue;
+					//-------------------------------------------------------
 					if (target instanceof L2Character)
 					{
 						if (skill.getEffectPoint() <= 0)
