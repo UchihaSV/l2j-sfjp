@@ -1,0 +1,31 @@
+# 散歩しないモンスター
+#
+# @author JOJO
+#
+# data/spawnlist/*.xml
+#	<AIData>
+#		<disableRandomWalk>true</disableRandomWalk>
+#	</AIData>
+#
+# L2Spawn
+#	setIsNoRndWalk(true)
+
+18119	# 亡者の死体
+18344	# 古代の卵
+22138	# チャペル ガード
+29006	# コア
+29045	# フリンテッサ
+29052	# <FinalEmperialTomb>
+29053	# <FinalEmperialTomb>
+32051	# 祭壇の門番
+32058	# トリオルの啓示
+32059	# トリオルの啓示
+32060	# トリオルの啓示
+32061	# トリオルの啓示
+32062	# トリオルの啓示
+32063	# トリオルの啓示
+32064	# トリオルの啓示
+32065	# トリオルの啓示
+32066	# トリオルの啓示
+32067	# トリオルの啓示
+32068	# トリオルの啓示

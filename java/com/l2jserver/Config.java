@@ -23,6 +23,7 @@ import info.tak11.subnet.Subnet;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -59,6 +60,8 @@ import com.l2jserver.gameserver.util.FloodProtectorConfig;
 import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.PropertiesParser;
 import com.l2jserver.util.StringUtil;
+
+import gnu.trove.list.array.TIntArrayList;
 
 /**
  * This class loads all the game server related configurations from files.<br>
@@ -1121,7 +1124,17 @@ public final class Config
 	
 	//////////////////////////////////////////////////////////////////////////
 	// [L2J_JP][l2jfree][JOJO]
-
+	
+	//--------------------------------------------------
+	// NPC Settings [JOJO]
+	//--------------------------------------------------
+	/** Non move monsters */
+	public static int[] NON_MOVE_MONSTERS;	// config/NonMoveMonsters.txt
+	/** Non random walk monsters */
+	public static int[] NON_RANDOM_WALK_MONSTERS;	// config/NonRandomWalkMonsters.txt
+	/** Non random animation npc list */
+	public static int[] NON_RANDOM_ANIMATION_NPCS;	// config/NonRandomAnimationNpcs.txt
+	
 	//--------------------------------------------------
 	// JP Custom CONFIG [L2J_JP]
 	//--------------------------------------------------
@@ -1255,6 +1268,44 @@ public final class Config
 			FLOOD_PROTECTOR_CHARACTER_SELECT = new FloodProtectorConfig("CharacterSelectFloodProtector");
 			FLOOD_PROTECTOR_ITEM_AUCTION = new FloodProtectorConfig("ItemAuctionFloodProtector");
 		  }
+		  //[JOJO]-------------------------------------------------
+		  // Load non move monsters
+		  try
+		  {
+			NON_MOVE_MONSTERS = loadIntArray("./config/NonMoveMonsters.txt");
+			Arrays.sort(NON_MOVE_MONSTERS);
+			_log.info("Loaded " + NON_MOVE_MONSTERS.length + " non move monsters.");
+		  }
+		  catch (IOException e)
+		  {
+			NON_MOVE_MONSTERS = new int[0];
+			_log.log(Level.WARNING, "Error while loading non move monsters!", e);
+		  }
+		  // Load non random walk monsters
+		  try
+		  {
+			NON_RANDOM_WALK_MONSTERS = loadIntArray("./config/NonRandomWalkMonsters.txt");
+			Arrays.sort(NON_RANDOM_WALK_MONSTERS);
+			_log.info("Loaded " + NON_RANDOM_WALK_MONSTERS.length + " non random walk monsters.");
+		  }
+		  catch (Exception e)
+		  {
+			NON_RANDOM_WALK_MONSTERS = new int[0];
+			_log.log(Level.WARNING, "Error while loading non non random walk monsters!", e);
+		  }
+		  // Load non random animation npcs
+		  try
+		  {
+			NON_RANDOM_ANIMATION_NPCS = loadIntArray("./config/NonRandomAnimationNpcs.txt");
+			Arrays.sort(NON_RANDOM_ANIMATION_NPCS);
+			_log.info("Loaded " + NON_RANDOM_ANIMATION_NPCS.length + " non random animation npcs.");
+		  }
+		  catch (Exception e)
+		  {
+			NON_RANDOM_ANIMATION_NPCS = new int[0];
+			_log.log(Level.WARNING, "Error while loading non random animation npcs!", e);
+		  }
+		  //-------------------------------------------------------
 		  // Load Game server Properties file
 		  {
 			final PropertiesParser serverSettings = new PropertiesParser(CONFIGURATION_FILE);
@@ -2951,12 +3002,12 @@ public final class Config
 				String line = null;
 				while ((line = lnr.readLine()) != null)
 				{
-					if (line.trim().isEmpty() || (line.charAt(0) == '#'))
+					if ((line = line.trim()).isEmpty() || (line.charAt(0) == '#'))
 					{
 						continue;
 					}
 					
-					FILTER_LIST.add(line.trim());
+					FILTER_LIST.add(line);
 				}
 				_log.info("Loaded " + FILTER_LIST.size() + " Filter Words.");
 			}
@@ -4032,8 +4083,27 @@ public final class Config
 		config.PUNISHMENT_TYPE = properties.getString(StringUtil.concat("FloodProtector", configString, "PunishmentType"), "none");
 		config.PUNISHMENT_TIME = properties.getInt(StringUtil.concat("FloodProtector", configString, "PunishmentTime"), 0);
 	}
-
+	
 	//[JOJO]///////////////////////////////////////////////////////////////////
+	private static int[] loadIntArray(String path) throws FileNotFoundException, IOException
+	{
+		try (BufferedReader lnr = com.l2jserver.util.Util.utf8BufferedReader(path))
+		{
+			TIntArrayList list = new TIntArrayList();
+			String line;
+			while ((line = lnr.readLine()) != null)
+			{
+				int i;
+				if ((i = line.indexOf('#')) >= 0)
+					line = line.substring(0, i);
+				if ((line = line.trim()).isEmpty())
+					continue;
+				list.add(Integer.parseInt(line));
+			}
+			return list.toArray();
+		}
+	}
+	
 	private static int minMax(int value, int mini, int max)
 	{
 		return value < mini ? mini : value > max ? max : value;
