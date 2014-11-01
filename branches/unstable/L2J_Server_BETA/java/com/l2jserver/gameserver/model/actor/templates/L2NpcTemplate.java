@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.model.actor.templates;
 import static com.l2jserver.gameserver.datatables.StringIntern.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Iterator;
@@ -214,6 +215,8 @@ if (com.l2jserver.Config.FIX_NPC_XML_CANMOVE) {{
 			_canMove = false;
 		}
 }}
+		if (Arrays.binarySearch(Config.NON_MOVE_MONSTERS, _id) >= 0)
+			_canMove = false;	//+[JOJO]
 	}
 	
 	//[JOJO]-------------------------------------------------

@@ -19,6 +19,7 @@
 package com.l2jserver.gameserver.model;
 
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -83,7 +84,7 @@ public class L2Spawn extends Location implements IIdentifiable, INamable	//[JOJO
 	private static List<SpawnListener> _spawnListeners = new FastList<>();
 	private LinkedList<L2Npc> _spawnedNpcs;	//[JOJO] -final FastList
 	private FastIntObjectMap<Location> _lastSpawnPoints;	//[JOJO] -ConcurrentHashMap
-	private boolean _isNoRndWalk = false; // Is no random walk/*TODO:Arrays.binarySearch(Config.NON_RANDOM_WALK_NPCS, getNpcid()) >= 0;*/
+	private boolean _isNoRndWalk = false; // Is no random walk
 	
 	/** The task launching the function doSpawn() */
 	class SpawnTask implements Runnable
@@ -159,6 +160,8 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 			_isNoRndWalk = true;
 		}
 }}
+		if (Arrays.binarySearch(Config.NON_RANDOM_WALK_MONSTERS, getNpcid()) >= 0)
+			_isNoRndWalk = true;	//+[JOJO]
 	}
 	
 	/**

@@ -129,9 +129,7 @@ public class L2Npc extends L2Character
 	/** Minimum interval between social packets */
 	private final int _minimalSocialInterval = 6000;
 	/** Support for random animation switching */
-	private boolean _isRandomAnimationEnabled = Arrays.binarySearch(NON_RANDOM_ANIMATION_NPCS, getNpcId()) < 0;
-	/** Non random animation npc list */
-	public static int[] NON_RANDOM_ANIMATION_NPCS = new int[0];	//[JOJO]
+	private boolean _isRandomAnimationEnabled = true;
 	
 	protected RandomAnimationTask _rAniTask = null;
 	private int _currentLHandId; // normally this shouldn't change from the template, but there exist exceptions
@@ -476,6 +474,8 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 			_isRandomAnimationEnabled = false;
 		}
 }}
+		if (Arrays.binarySearch(Config.NON_RANDOM_ANIMATION_NPCS, getNpcId()) >= 0)
+			_isRandomAnimationEnabled = false;	//+[JOJO]
 	}
 	
 	@Override
