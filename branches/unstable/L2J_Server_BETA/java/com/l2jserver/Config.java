@@ -1126,6 +1126,11 @@ public final class Config
 	// [L2J_JP][l2jfree][JOJO]
 	
 	//--------------------------------------------------
+	// Dynamic DNS Settings [JOJO]
+	//--------------------------------------------------
+	public static String DYNAMIC_DNS;	//+[JOJO]
+	
+	//--------------------------------------------------
 	// NPC Settings [JOJO]
 	//--------------------------------------------------
 	/** Non move monsters */
@@ -3115,6 +3120,12 @@ public final class Config
 			EMAIL_SYS_ADDRESS = emailSettings.getString("EmailSystemAddress", "noreply@myl2jserver.com");
 			EMAIL_SYS_SELECTQUERY = emailSettings.getString("EmailDBSelectQuery", "SELECT value FROM account_data WHERE account_name=? AND var='email_addr'");
 			EMAIL_SYS_DBFIELD = emailSettings.getString("EmailDBField", "value");
+		  }
+		  // Dynamic DNS
+		  {
+			final PropertiesParser ddnsSettings = new PropertiesParser("./config/DynamicDNS.properties");
+			
+			DYNAMIC_DNS = ddnsSettings.getString("DynamicDNS", null);
 		  }
 		}
 		else
