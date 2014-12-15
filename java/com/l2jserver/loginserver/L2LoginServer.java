@@ -200,6 +200,15 @@ public final class L2LoginServer
 		}
 		
 		UPnPService.getInstance();
+		
+		switch (Config.DYNAMIC_DNS)
+		{
+			case "no-ip":
+				Thread ddnsThread = new com.l2jserver.loginserver.ddns.NoIpUpdater();
+				ddnsThread.setDaemon(true);
+				ddnsThread.start();
+				break;
+		}
 	}
 	
 	public Status getStatusServer()
