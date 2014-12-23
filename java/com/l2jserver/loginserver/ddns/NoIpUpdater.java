@@ -148,7 +148,7 @@ public class NoIpUpdater extends Thread
 		File cacheFile = new File(CACHE_FILE);
 		if (todo) {
 			if (cacheFile.exists()) {
-				int dd = (int) ((cacheFile.lastModified() - System.currentTimeMillis()) / 86400000);
+				int dd = (int) ((System.currentTimeMillis() - cacheFile.lastModified()) / 86400000);
 				if (dd > PERIOD) {
 					if (DEBUG) System.out.println(TITLE + ": " + "Last updated " + dd + " days ago. Refresh...");
 				}
