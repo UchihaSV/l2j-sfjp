@@ -109,7 +109,8 @@ public class NoIpUpdater extends Thread
 			}
 		}
 		catch (MalformedURLException e) {
-			_log.log(Level.WARNING, "", e);
+			_log.log(Level.WARNING, e.getMessage(), e);
+			interrupt();
 			return;
 		}
 		
@@ -175,7 +176,8 @@ public class NoIpUpdater extends Thread
 				}
 			}
 			catch (MalformedURLException e) {
-				_log.log(Level.WARNING, "", e);
+				_log.log(Level.WARNING, e.getMessage(), e);
+				interrupt();
 				return;
 			}
 			
@@ -200,7 +202,8 @@ public class NoIpUpdater extends Thread
 				}
 			}
 			catch (MalformedURLException e) {
-				_log.log(Level.WARNING, "", e);
+				_log.log(Level.WARNING, e.getMessage(), e);
+				interrupt();
 				return;
 			}
 			if (DEBUG) System.out.println(TITLE + ": " + "Done.");
@@ -212,7 +215,7 @@ public class NoIpUpdater extends Thread
 				cacheFile.createNewFile();
 			}
 			catch (IOException e) {
-				_log.log(Level.SEVERE, "", e);
+				_log.log(Level.SEVERE, e.getMessage(), e);
 			}
 		} else {
 			cacheFile.setLastModified(System.currentTimeMillis());
@@ -235,7 +238,8 @@ public class NoIpUpdater extends Thread
 				}
 			}
 			catch (MalformedURLException e) {
-				_log.log(Level.WARNING, "", e);
+				_log.log(Level.WARNING, e.getMessage(), e);
+				interrupt();
 				return;
 			}
 			_log.info(TITLE + ": " + "New IP " + ip);
