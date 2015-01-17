@@ -77,7 +77,7 @@
 		<copy file="dist/game/config/l2j-version.txt" tofile="${build.dist.game}/config/l2j-version.properties" overwrite="true"/><!--[JOJO]-->
 		<concat destfile="${build.dist.game}/config/l2j-version.properties" append="true">revision=${l2j.version}${line.separator}builddate=${build.tstamp}${line.separator}</concat>
 		<!-- [JOJO] -->
-		<exec executable="perl" dir="${basedir}" os="Windows XP:Windows Vista:Windows 7" failonerror="true">
+		<exec executable="perl" dir="${basedir}" os="Windows XP:Windows Vista:Windows 7:Windows 8:Windows 8.1" failonerror="true">
 			<arg line="build_ja/build_custom_ja.pl"/>
 		</exec>
 		<!-- [JOJO] -->
