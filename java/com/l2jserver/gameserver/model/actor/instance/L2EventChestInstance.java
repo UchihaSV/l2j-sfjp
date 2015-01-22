@@ -168,7 +168,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 				}
 			}
 		};
-		ThreadPoolManager.getInstance().executeTask(_hideTask);
+		ThreadPoolManager.getInstance().executeGeneral(_hideTask);
 		//-------------------------------------------------------
 	}
 	

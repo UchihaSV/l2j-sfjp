@@ -250,7 +250,7 @@ public class CharStatus
 				final L2Npc npc = (L2Npc) getActiveChar();
 				final List<Quest> eventQuests;
 				if ((eventQuests = npc.getTemplate().getEventQuests(QuestEventType.ON_REGENERATE)) != null) {
-					ThreadPoolManager.getInstance().executeTask(new Runnable() {
+					ThreadPoolManager.getInstance().executeGeneral(new Runnable() {
 						@Override public void run() {
 							for (Quest quest : eventQuests)
 								quest.notifyRegenerate(npc);
