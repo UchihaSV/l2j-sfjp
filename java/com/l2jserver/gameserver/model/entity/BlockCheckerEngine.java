@@ -286,7 +286,7 @@ public final class BlockCheckerEngine
 				
 				_abnormalEnd = true;
 				
-				ThreadPoolManager.getInstance().executeTask(new EndEvent());
+				ThreadPoolManager.getInstance().executeGeneral(new EndEvent());
 				
 				if (Config.DEBUG)
 				{
@@ -420,7 +420,7 @@ public final class BlockCheckerEngine
 			// Set the started time
 			_startedTime = System.currentTimeMillis() + 300000;
 			// Spawn the blocks
-			new SpawnRound(16, 1).run();	// -ThreadPoolManager.getInstance().executeTask(new SpawnRound(16, 1))
+			new SpawnRound(16, 1).run();	// -ThreadPoolManager.getInstance().executeGeneral(new SpawnRound(16, 1))
 			// Start up player parameters
 			setUpPlayers();
 		}
