@@ -184,7 +184,7 @@ public final class GameTimeController extends Thread
 			return;
 		}
 		
-		ThreadPoolManager.getInstance().executeTask(new Runnable()
+		ThreadPoolManager.getInstance().executeGeneral(new Runnable()
 		{
 			@Override
 			public final void run()
@@ -236,7 +236,7 @@ public final class GameTimeController extends Thread
 				{
 					_isNight = isNight;
 					
-					ThreadPoolManager.getInstance().executeTask(new Runnable()
+					ThreadPoolManager.getInstance().executeGeneral(new Runnable()
 					{
 						@Override
 						public final void run()
