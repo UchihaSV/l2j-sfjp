@@ -86,7 +86,7 @@ public final class HandysBlockCheckerManager
 			{
 				holder.checkAndShuffle();
 			}
-			ThreadPoolManager.getInstance().executeTask(holder.getEvent().new StartEvent());
+			ThreadPoolManager.getInstance().executeGeneral(holder.getEvent().new StartEvent());
 		}
 		else
 		{

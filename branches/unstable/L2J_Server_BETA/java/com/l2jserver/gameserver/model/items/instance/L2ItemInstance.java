@@ -1637,7 +1637,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		{
 			return;
 		}
-		ThreadPoolManager.getInstance().executeTask(new ItemDropTask(this, dropper, x, y, z));
+		ThreadPoolManager.getInstance().executeGeneral(new ItemDropTask(this, dropper, x, y, z));
 	}
 	
 	/**
