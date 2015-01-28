@@ -1722,7 +1722,7 @@ public final class TerritoryWarManager implements Siegable
 			return ret;
 		}
 		
-		public boolean getIsInProgress()
+		public boolean isInProgress()
 		{
 			return _isInProgress;
 		}

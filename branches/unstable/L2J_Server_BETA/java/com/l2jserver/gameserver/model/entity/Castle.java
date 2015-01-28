@@ -541,7 +541,7 @@ public final class Castle extends AbstractResidence
 			FortManager.getInstance().getFortByOwner(clan).removeOwner(true);
 		}
 		
-		if (getSiege().getIsInProgress())
+		if (getSiege().isInProgress())
 		{
 			getSiege().midVictory(); // Mid victory phase of siege
 		}
@@ -577,7 +577,7 @@ public final class Castle extends AbstractResidence
 		}
 		
 		updateOwnerInDB(null);
-		if (getSiege().getIsInProgress())
+		if (getSiege().isInProgress())
 		{
 			getSiege().midVictory();
 		}

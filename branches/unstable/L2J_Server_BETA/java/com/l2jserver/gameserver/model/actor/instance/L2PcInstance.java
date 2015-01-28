@@ -8840,14 +8840,14 @@ public final class L2PcInstance extends L2Playable
 			Fort doorFort;
 			if (((doorCastle = door.getCastle()) != null) && (doorCastle.getResidenceId() > 0)) // If its castle door
 			{
-				if (!doorCastle.getSiege().getIsInProgress()) // Skills can be used on castle doors only during siege.
+				if (!doorCastle.getSiege().isInProgress()) // Skills can be used on castle doors only during siege.
 				{
 					return false;
 				}
 			}
 			else if (((doorFort = door.getFort()) != null) && (doorFort.getResidenceId() > 0 && !door.getIsShowHp())) // If its fort door
 			{
-				if (!doorFort.getSiege().getIsInProgress()) // Skills can be used on fort doors only during siege.
+				if (!doorFort.getSiege().isInProgress()) // Skills can be used on fort doors only during siege.
 				{
 					return false;
 				}
