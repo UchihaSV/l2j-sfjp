@@ -144,7 +144,7 @@ public class RestartServer extends BaseFavoriteManager
 
 		// 攻城戦中かどうかチェック
 		for (Castle castle : CastleManager.getInstance().getCastles()) {
-			if (castle.getSiege().getIsInProgress()) {
+			if (castle.getSiege().isInProgress()) {
 				showMessage(activeChar, "攻城戦中はサーバー再起動を申請することができません。");
 				return;
 			}
