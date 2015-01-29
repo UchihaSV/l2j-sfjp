@@ -26,7 +26,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
-import com.l2jserver.gameserver.model.items.type.L2EtcItemType;
+import com.l2jserver.gameserver.model.items.type.EtcItemType;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
@@ -89,7 +89,7 @@ public final class RequestDropItem extends L2GameClientPacket
 			activeChar.sendPacket(SystemMessageId.CANT_DISCARD_HERE);
 			return;
 		}
-		if ((item.getItemType() == L2EtcItemType.PET_COLLAR) && (activeChar.havePetInvItems()))
+		if ((item.getItemType() == EtcItemType.PET_COLLAR) && (activeChar.havePetInvItems()))
 		{
 			activeChar.sendPacket(SystemMessageId.CANNOT_DISCARD_EXCHANGE_ITEM);
 		//	activeChar.sendPacket(SystemMessageId.ITEM_NOT_DISCARDED);

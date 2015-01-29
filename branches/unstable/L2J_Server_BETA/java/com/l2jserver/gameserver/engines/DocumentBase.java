@@ -128,8 +128,8 @@ import com.l2jserver.gameserver.model.conditions.ConditionWithSkill;
 import com.l2jserver.gameserver.model.effects.AbstractEffect;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
 import com.l2jserver.gameserver.model.items.L2Item;
-import com.l2jserver.gameserver.model.items.type.L2ArmorType;
-import com.l2jserver.gameserver.model.items.type.L2WeaponType;
+import com.l2jserver.gameserver.model.items.type.ArmorType;
+import com.l2jserver.gameserver.model.items.type.WeaponType;
 import com.l2jserver.gameserver.model.skills.AbnormalType;
 import com.l2jserver.gameserver.model.skills.EffectScope;
 import com.l2jserver.gameserver.model.skills.Skill;
@@ -1089,7 +1089,7 @@ public abstract class DocumentBase
 					while (st.hasMoreTokens())
 					{
 						String item = st.nextToken().trim();
-						for (L2WeaponType wt : L2WeaponType.values())
+						for (WeaponType wt : WeaponType.values())
 						{
 							if (wt.getName().equals(item))
 							{
@@ -1097,7 +1097,7 @@ public abstract class DocumentBase
 								break;
 							}
 						}
-						for (L2ArmorType at : L2ArmorType.values())
+						for (ArmorType at : ArmorType.values())
 						{
 							if (at.getName().equals(item))
 							{
