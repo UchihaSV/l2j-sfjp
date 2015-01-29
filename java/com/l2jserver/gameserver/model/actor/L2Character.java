@@ -104,7 +104,7 @@ import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.L2Weapon;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
-import com.l2jserver.gameserver.model.items.type.L2WeaponType;
+import com.l2jserver.gameserver.model.items.type.WeaponType;
 import com.l2jserver.gameserver.model.options.OptionsSkillHolder;
 import com.l2jserver.gameserver.model.options.OptionsSkillType;
 import com.l2jserver.gameserver.model.quest.Quest;
@@ -870,7 +870,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			L2Weapon wpn = getActiveWeaponItem();
 			if (!wpn.isAttackWeapon() && !isGM())
 			{
-				if (wpn.getItemType() == L2WeaponType.FISHINGROD)
+				if (wpn.getItemType() == WeaponType.FISHINGROD)
 				{
 					sendPacket(SystemMessageId.CANNOT_ATTACK_WITH_FISHING_POLE);
 				}
@@ -938,7 +938,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		// BOW and CROSSBOW checks
 		if ((weaponItem != null) && !isTransformed())
 		{
-			if (weaponItem.getItemType() == L2WeaponType.BOW)
+			if (weaponItem.getItemType() == WeaponType.BOW)
 			{
 				// Check for arrows and MP
 				if (isPlayer())
@@ -1000,7 +1000,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 					}
 				}
 			}
-			if (weaponItem.getItemType() == L2WeaponType.CROSSBOW)
+			if (weaponItem.getItemType() == WeaponType.CROSSBOW)
 			{
 				// Check for bolts
 				if (isPlayer())
@@ -1087,7 +1087,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		// the hit is calculated to happen halfway to the animation - might need further tuning e.g. in bow case
 		final int timeToHit = timeAtk / 2;
 		_attackEndTime = (GameTimeController.getInstance().getGameTicks() + (timeAtk / GameTimeController.MILLIS_IN_TICK)) - 1;
-		final int ssGrade = (weaponItem != null) ? weaponItem.getItemGradeSPlus() : 0;
+		final int ssGrade = (weaponItem != null) ? weaponItem.getItemGradeSPlus().getId() : 0;
 		// Create a Server->Client packet Attack
 		Attack attack = new Attack(this, target, wasSSCharged, ssGrade);
 		
@@ -5196,7 +5196,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		if (!miss && (damage > 0))
 		{
 			L2Weapon weapon = getActiveWeaponItem();
-			boolean isBow = ((weapon != null) && ((weapon.getItemType() == L2WeaponType.BOW) || (weapon.getItemType() == L2WeaponType.CROSSBOW)));
+			boolean isBow = ((weapon != null) && ((weapon.getItemType() == WeaponType.BOW) || (weapon.getItemType() == WeaponType.CROSSBOW)));
 			int reflectedDamage = 0;
 			
 			if (!isBow && !target.isInvul()) // Do not reflect if weapon is of type bow or target is invunlerable
@@ -7179,9 +7179,9 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	}
 	
 	/**
-	 * @return {@link L2WeaponType} of current character's weapon or basic weapon type.
+	 * @return {@link WeaponType} of current character's weapon or basic weapon type.
 	 */
-	public final L2WeaponType getAttackType()
+	public final WeaponType getAttackType()
 	{
 		final L2Weapon weapon = getActiveWeaponItem();
 		if (weapon != null)

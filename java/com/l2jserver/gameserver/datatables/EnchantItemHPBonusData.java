@@ -29,6 +29,7 @@ import com.l2jserver.gameserver.model.items.L2Armor;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.L2Weapon;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
+import com.l2jserver.gameserver.model.items.type.CrystalType;
 import com.l2jserver.gameserver.model.skills.funcs.FuncTemplate;
 import com.l2jserver.gameserver.model.skills.funcs.LambdaConst;
 import com.l2jserver.gameserver.model.stats.Stats;
@@ -82,7 +83,7 @@ public class EnchantItemHPBonusData extends DocumentParser
 			// Armors
 			for (L2Armor item : it.getAllArmors())
 			{
-				if ((item != null) && (item.getCrystalType() != L2Item.CRYSTAL_NONE))
+				if ((item != null) && (item.getCrystalType() != CrystalType.NONE))
 				{
 					switch (item.getBodyPart())
 					{
@@ -106,7 +107,7 @@ public class EnchantItemHPBonusData extends DocumentParser
 			// Shields
 			for (L2Weapon item : it.getAllWeapons())
 			{
-				if ((item != null) && (item.getCrystalType() != L2Item.CRYSTAL_NONE))
+				if ((item != null) && (item.getCrystalType() != CrystalType.NONE))
 				{
 					switch (item.getBodyPart())
 					{
