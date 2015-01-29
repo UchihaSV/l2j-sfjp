@@ -23,10 +23,8 @@ import static com.l2jserver.gameserver.datatables.StringIntern.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -941,10 +939,10 @@ public abstract class DocumentBase
 				case "categorytype":
 				{
 					final String[] values = a.getNodeValue().split(",");
-					final Set<CategoryType> array = new HashSet<>(values.length);
-					for (String value : values)
+					final CategoryType[] array = new CategoryType[values.length];
+					for (int v = 0; v < values.length; ++v)
 					{
-						array.add(CategoryType.valueOf(getValue(value, null)));
+						array[v] = CategoryType.valueOf(getValue(values[v], null));
 					}
 					cond = joinAnd(cond, new ConditionCategoryType(array));
 					break;
