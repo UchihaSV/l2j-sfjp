@@ -44,17 +44,10 @@ public class PetNameTable
 	{
 		boolean result = true;
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement ps = con.prepareStatement("SELECT name FROM pets p, items i WHERE p.item_obj_id = i.object_id AND name=? AND i.item_id IN (?)"))
+			PreparedStatement ps = con.prepareStatement("SELECT name FROM pets p, items i WHERE p.item_obj_id = i.object_id AND name=? AND i.item_id=?"))
 		{
 			ps.setString(1, name);
-			StringBuilder cond = new StringBuilder();
-			if (!cond.toString().isEmpty())
-			{
-				cond.append(", ");
-			}
-			
-			cond.append(PetDataTable.getPetItemsByNpc(petNpcId));
-			ps.setString(2, cond.toString());
+			ps.setInt(2, PetDataTable.getPetItemsByNpc(petNpcId));
 			try (ResultSet rs = ps.executeQuery())
 			{
 				result = rs.next();

@@ -18,8 +18,6 @@
  */
 package com.l2jserver.gameserver.model.conditions;
 
-import java.util.Set;
-
 import com.l2jserver.gameserver.datatables.CategoryData;
 import com.l2jserver.gameserver.enums.CategoryType;
 import com.l2jserver.gameserver.model.stats.Env;
@@ -30,9 +28,9 @@ import com.l2jserver.gameserver.model.stats.Env;
  */
 public class ConditionCategoryType extends Condition
 {
-	private final Set<CategoryType> _categoryTypes;
+	private final CategoryType[] _categoryTypes;
 	
-	public ConditionCategoryType(Set<CategoryType> categoryTypes)
+	public ConditionCategoryType(CategoryType[] categoryTypes)
 	{
 		_categoryTypes = categoryTypes;
 	}
