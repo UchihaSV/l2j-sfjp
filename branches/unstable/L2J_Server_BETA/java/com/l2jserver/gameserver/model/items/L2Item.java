@@ -671,7 +671,7 @@ public abstract class L2Item implements IIdentifiable
 	
 	public boolean isScroll()
 	{
-		return (getItemType() == L2EtcItemType.SCROLL);
+		return (getItemType() == EtcItemType.SCROLL);
 	}
 	
 	/**

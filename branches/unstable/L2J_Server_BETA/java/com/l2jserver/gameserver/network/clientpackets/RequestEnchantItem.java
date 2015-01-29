@@ -32,7 +32,7 @@ import com.l2jserver.gameserver.model.items.enchant.EnchantResultType;
 import com.l2jserver.gameserver.model.items.enchant.EnchantScroll;
 import com.l2jserver.gameserver.model.items.enchant.EnchantSupportItem;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
-import com.l2jserver.gameserver.model.items.type.L2WeaponType;
+import com.l2jserver.gameserver.model.items.type.WeaponType;
 import com.l2jserver.gameserver.model.skills.CommonSkill;
 import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.SystemMessageId;
@@ -124,7 +124,7 @@ public final class RequestEnchantItem extends L2GameClientPacket
 		// [L2J_JP ADD SANDMAN]
 		else if (item.getItem().getType2() == L2Item.TYPE2_WEAPON)
 		{
-			if (item.getItemType() == L2WeaponType.FISHINGROD)
+			if (item.getItemType() == WeaponType.FISHINGROD)
 			{
 				activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
 				return;
