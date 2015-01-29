@@ -23,8 +23,10 @@ import static com.l2jserver.gameserver.datatables.StringIntern.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,12 +40,14 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import com.l2jserver.gameserver.datatables.ItemTable;
+import com.l2jserver.gameserver.enums.CategoryType;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.NpcRace;
 import com.l2jserver.gameserver.enums.PcRace;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.base.PlayerState;
 import com.l2jserver.gameserver.model.conditions.Condition;
+import com.l2jserver.gameserver.model.conditions.ConditionCategoryType;
 import com.l2jserver.gameserver.model.conditions.ConditionChangeWeapon;
 import com.l2jserver.gameserver.model.conditions.ConditionGameChance;
 import com.l2jserver.gameserver.model.conditions.ConditionGameTime;
@@ -932,6 +936,17 @@ public abstract class DocumentBase
 					{
 						cond = joinAnd(cond, new ConditionPlayerCheckAbnormal(AbnormalType.valueOf(value)));
 					}
+					break;
+				}
+				case "categorytype":
+				{
+					final String[] values = a.getNodeValue().split(",");
+					final Set<CategoryType> array = new HashSet<>(values.length);
+					for (String value : values)
+					{
+						array.add(CategoryType.valueOf(getValue(value, null)));
+					}
+					cond = joinAnd(cond, new ConditionCategoryType(array));
 					break;
 				}
 			}
