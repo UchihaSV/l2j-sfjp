@@ -130,7 +130,6 @@ import com.l2jserver.gameserver.model.effects.AbstractEffect;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.type.ArmorType;
-import com.l2jserver.gameserver.model.items.type.ItemType;
 import com.l2jserver.gameserver.model.items.type.WeaponType;
 import com.l2jserver.gameserver.model.skills.AbnormalType;
 import com.l2jserver.gameserver.model.skills.EffectScope;
@@ -1093,7 +1092,7 @@ public abstract class DocumentBase
 						String item = st.nextToken().trim();
 						for (WeaponType wt : WeaponType.values())
 						{
-							if (wt.getName().equals(item))
+							if (wt.name().equals(item))
 							{
 								mask |= wt.mask();
 								break;
@@ -1101,7 +1100,7 @@ public abstract class DocumentBase
 						}
 						for (ArmorType at : ArmorType.values())
 						{
-							if (at.getName().equals(item))
+							if (at.name().equals(item))
 							{
 								mask |= at.mask();
 								break;
@@ -1183,15 +1182,20 @@ public abstract class DocumentBase
 					{
 						int old = mask;
 						String item = st.nextToken().trim();
-						ItemType type;
-						if ((type = ItemTable._weaponTypes.get(item)) != null)
+						for (WeaponType wt : WeaponType.values())
 						{
-							mask |= type.mask();
+							if (wt.name().equals(item))
+							{
+								mask |= wt.mask();
+							}
 						}
 						
-						if ((type = ItemTable._armorTypes.get(item)) != null)
+						for (ArmorType at : ArmorType.values())
 						{
-							mask |= type.mask();
+							if (at.name().equals(item))
+							{
+								mask |= at.mask();
+							}
 						}
 						
 						if (old == mask)
