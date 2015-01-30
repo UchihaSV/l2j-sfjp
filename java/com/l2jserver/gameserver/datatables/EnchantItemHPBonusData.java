@@ -19,8 +19,8 @@
 package com.l2jserver.gameserver.datatables;
 
 import java.util.ArrayList;
-
-import jp.sf.l2j.arrayMaps.SortedIntObjectArrayMap;
+import java.util.EnumMap;
+import java.util.Map;
 
 import org.w3c.dom.Node;
 
@@ -40,7 +40,7 @@ import com.l2jserver.gameserver.model.stats.Stats;
  */
 public class EnchantItemHPBonusData extends DocumentParser
 {
-	@SuppressWarnings("unchecked") private final SortedIntObjectArrayMap<ArrayList<Integer>> _armorHPBonuses = new SortedIntObjectArrayMap<>();
+	private final Map<CrystalType, ArrayList<Integer>> _armorHPBonuses = new EnumMap<>(CrystalType.class);
 	
 	private static final float fullArmorModifier = 1.5f; // TODO: Move it to config!
 	
@@ -57,21 +57,21 @@ public class EnchantItemHPBonusData extends DocumentParser
 	{
 		for (Node n = getCurrentDocument().getFirstChild(); n != null; n = n.getNextSibling())
 		{
-			if ("list".equals(n.getNodeName()))
+			if ("list".equalsIgnoreCase(n.getNodeName()))
 			{
 				for (Node d = n.getFirstChild(); d != null; d = d.getNextSibling())
 				{
-					if ("enchantHP".equals(d.getNodeName()))
+					if ("enchantHP".equalsIgnoreCase(d.getNodeName()))
 					{
 						ArrayList<Integer> bonuses = new ArrayList<>();
 						for (Node e = d.getFirstChild(); e != null; e = e.getNextSibling())
 						{
-							if ("bonus".equals(e.getNodeName()))
+							if ("bonus".equalsIgnoreCase(e.getNodeName()))
 							{
 								bonuses.add(Integer.valueOf(e.getTextContent()));
 							}
 						}
-						_armorHPBonuses.put(parseInt(d.getAttributes(), "grade"), bonuses);
+						_armorHPBonuses.put(parseEnum(d.getAttributes(), CrystalType.class, "grade"), bonuses);
 					}
 				}
 			}
@@ -137,7 +137,7 @@ public class EnchantItemHPBonusData extends DocumentParser
 	 */
 	public final int getHPBonus(L2ItemInstance item)
 	{
-		final ArrayList<Integer> values = _armorHPBonuses.get(item.getItem().getItemGradeSPlus().getId());
+		final ArrayList<Integer> values = _armorHPBonuses.get(item.getItem().getItemGradeSPlus());
 		if ((values == null) || values.isEmpty() || (item.getOlyEnchantLevel() <= 0))
 		{
 			return 0;
