@@ -130,6 +130,7 @@ import com.l2jserver.gameserver.model.effects.AbstractEffect;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.type.ArmorType;
+import com.l2jserver.gameserver.model.items.type.ItemType;
 import com.l2jserver.gameserver.model.items.type.WeaponType;
 import com.l2jserver.gameserver.model.skills.AbnormalType;
 import com.l2jserver.gameserver.model.skills.EffectScope;
@@ -1182,14 +1183,15 @@ public abstract class DocumentBase
 					{
 						int old = mask;
 						String item = st.nextToken().trim();
-						if (ItemTable._weaponTypes.containsKey(item))
+						ItemType type;
+						if ((type = ItemTable._weaponTypes.get(item)) != null)
 						{
-							mask |= ItemTable._weaponTypes.get(item).mask();
+							mask |= type.mask();
 						}
 						
-						if (ItemTable._armorTypes.containsKey(item))
+						if ((type = ItemTable._armorTypes.get(item)) != null)
 						{
-							mask |= ItemTable._armorTypes.get(item).mask();
+							mask |= type.mask();
 						}
 						
 						if (old == mask)
@@ -1208,9 +1210,10 @@ public abstract class DocumentBase
 					{
 						int old = mask;
 						String item = st.nextToken().trim();
-						if (ItemTable._slots.containsKey(item))
+						Integer slot;
+						if ((slot = ItemTable._slots.get(item)) != null)
 						{
-							mask |= ItemTable._slots.get(item);
+							mask |= slot;
 						}
 						
 						if (old == mask)
