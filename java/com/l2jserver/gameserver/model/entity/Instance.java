@@ -404,7 +404,7 @@ public final class Instance
 	public void cancelQuestTimers()
 	{
 		int instanceId = getId();
-		for (Quest quest : QuestManager.getInstance().getAllManagedScripts())
+		for (Quest quest : QuestManager.getInstance().getScripts().values())
 		{
 			if (quest == null) continue;
 			for (List<QuestTimer> timers : quest.getQuestTimers().values())
