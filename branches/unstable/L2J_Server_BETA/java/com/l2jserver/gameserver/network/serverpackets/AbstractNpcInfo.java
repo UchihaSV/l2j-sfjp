@@ -113,7 +113,11 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 				_name = cha.getName();// On every subclass
 			}
 			
-			if (Config.L2JMOD_CHAMPION_ENABLE && cha.isChampion())
+			if (_npc.isInvisible())
+			{
+				_title = "Invisible";
+			}
+			else if (Config.L2JMOD_CHAMPION_ENABLE && cha.isChampion())
 			{
 				_title = (Config.L2JMOD_CHAMP_TITLE); // On every subclass
 			}
@@ -217,7 +221,7 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 			writeD(0x00); // pvp flag
 			writeD(0x00); // karma
 			
-			writeD(_npc.getAbnormalVisualEffects()); // C2
+			writeD(_npc.isInvisible() ? _npc.getAbnormalVisualEffects() | AbnormalVisualEffect.STEALTH.getMask() : _npc.getAbnormalVisualEffects());
 			writeD(_clanId); // clan id
 			writeD(_clanCrest); // crest id
 			writeD(_allyId); // ally id
@@ -304,7 +308,7 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 			writeD(_trap.getPvpFlag());
 			writeD(_trap.getKarma());
 			
-			writeD(_trap.getAbnormalVisualEffects()); // C2
+			writeD(_trap.isInvisible() ? _trap.getAbnormalVisualEffects() | AbnormalVisualEffect.STEALTH.getMask() : _trap.getAbnormalVisualEffects());
 			writeD(0x00); // clan id
 			writeD(0x00); // crest id
 			writeD(0000); // C2
@@ -388,7 +392,7 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 			_idTemplate = cha.getTemplate().getDisplayId();
 			_collisionHeight = cha.getTemplate().getfCollisionHeight();
 			_collisionRadius = cha.getTemplate().getfCollisionRadius();
-			_invisible = cha.getOwner() != null ? cha.getOwner().getAppearance().getInvisible() : false;
+			_invisible = cha.isInvisible();
 		}
 		
 		@Override
@@ -397,8 +401,8 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 			boolean gmSeeInvis = false;
 			if (_invisible)
 			{
-				L2PcInstance tmp = getClient().getActiveChar();
-				if ((tmp != null) && tmp.canOverrideCond(PcCondOverride.SEE_ALL_PLAYERS))
+				final L2PcInstance activeChar = getClient().getActiveChar();
+				if ((activeChar != null) && activeChar.canOverrideCond(PcCondOverride.SEE_ALL_PLAYERS))
 				{
 					gmSeeInvis = true;
 				}

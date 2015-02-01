@@ -766,17 +766,20 @@ if (com.l2jserver.Config.TAMED_BEAST_FOLLOW_RANDOM) {{
 	 */
 	public void describeStateToPlayer(L2PcInstance player)
 	{
-		if (_clientMoving)
+		if (getActor().isVisibleFor(player))
 		{
-			if ((_clientMovingToPawnOffset != 0) && (_followTarget != null))
+			if (_clientMoving)
 			{
-				// Send a Server->Client packet MoveToPawn to the actor and all L2PcInstance in its _knownPlayers
-				player.sendPacket(new MoveToPawn(_actor, _followTarget, _clientMovingToPawnOffset));
-			}
-			else
-			{
-				// Send a Server->Client packet CharMoveToLocation to the actor and all L2PcInstance in its _knownPlayers
-				player.sendPacket(new MoveToLocation(_actor));
+				if ((_clientMovingToPawnOffset != 0) && (_followTarget != null))
+				{
+					// Send a Server->Client packet MoveToPawn to the actor and all L2PcInstance in its _knownPlayers
+					player.sendPacket(new MoveToPawn(_actor, _followTarget, _clientMovingToPawnOffset));
+				}
+				else
+				{
+					// Send a Server->Client packet CharMoveToLocation to the actor and all L2PcInstance in its _knownPlayers
+					player.sendPacket(new MoveToLocation(_actor));
+				}
 			}
 		}
 	}

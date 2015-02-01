@@ -896,7 +896,7 @@ public abstract class L2Summon extends L2Playable
 	{
 		if (getOwner() != null)
 		{
-			mov.setInvisible(getOwner().getAppearance().getInvisible());
+			mov.setInvisible(getOwner().isInvisible());
 		}
 		super.broadcastPacket(mov);
 	}
@@ -906,7 +906,7 @@ public abstract class L2Summon extends L2Playable
 	{
 		if (getOwner() != null)
 		{
-			mov.setInvisible(getOwner().getAppearance().getInvisible());
+			mov.setInvisible(getOwner().isInvisible());
 		}
 		super.broadcastPacket(mov, radiusInKnownlist);
 	}

@@ -595,7 +595,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 		Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
 		for (L2PcInstance player : plrs)
 		{
-			if (player == null)
+			if ((player == null) || !isVisibleFor(player))
 			{
 				continue;
 			}
@@ -1657,18 +1657,21 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 	@Override
 	public void sendInfo(L2PcInstance activeChar)
 	{
-		if (Config.CHECK_KNOWN && activeChar.isGM())
+		if (isVisibleFor(activeChar))
 		{
-			activeChar.sendMessage("Added NPC: " + getName());
-		}
-		
-		if (getRunSpeed() == 0)
-		{
-			activeChar.sendPacket(new ServerObjectInfo(this, activeChar));
-		}
-		else
-		{
-			activeChar.sendPacket(new AbstractNpcInfo.NpcInfo(this, activeChar));
+			if (Config.CHECK_KNOWN && activeChar.isGM())
+			{
+				activeChar.sendMessage("Added NPC: " + getName());
+			}
+			
+			if (getRunSpeed() == 0)
+			{
+				activeChar.sendPacket(new ServerObjectInfo(this, activeChar));
+			}
+			else
+			{
+				activeChar.sendPacket(new AbstractNpcInfo.NpcInfo(this, activeChar));
+			}
 		}
 	}
 	
@@ -1788,10 +1791,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 	public void setTeam(Team team)
 	{
 		super.setTeam(team);
-		for (L2PcInstance player : getKnownList().getKnownPlayers().values())
-		{
-			player.sendPacket(new AbstractNpcInfo.NpcInfo(this, player));
-		}
+		broadcastInfo();
 	}
 	
 	/**
@@ -2104,6 +2104,19 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 }} else {{
 		return getTemplate().getName();
 }}
+	}
+	
+	@Override
+	public boolean isVisibleFor(L2PcInstance player)
+	{
+		if (getTemplate().getEventQuests(QuestEventType.ON_CAN_SEE_ME) != null)
+		{
+			for (Quest quest : getTemplate().getEventQuests(QuestEventType.ON_CAN_SEE_ME))
+			{
+				return quest.notifyOnCanSeeMe(this, player);
+			}
+		}
+		return super.isVisibleFor(player);
 	}
 }
 

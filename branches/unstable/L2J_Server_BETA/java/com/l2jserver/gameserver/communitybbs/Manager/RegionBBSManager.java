@@ -327,7 +327,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 	private void addOnlinePlayer(L2PcInstance player)
 	{
 		++_onlineCounts[FOR_GM];
-		if (!player.getAppearance().getInvisible())
+		if (!player.isInvisible())
 		{
 			++_onlineCounts[FOR_PLAYER];
 		}
@@ -427,7 +427,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 				
 				for (L2PcInstance player : sortedPlayers)
 				{
-					if ((type == FOR_PLAYER) && player.getAppearance().getInvisible())
+					if ((type == FOR_PLAYER) && player.isInvisible())
 					{
 						continue; // Go to next
 					}
