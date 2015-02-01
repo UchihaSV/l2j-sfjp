@@ -18,7 +18,6 @@
  */
 package com.l2jserver.gameserver.model.conditions;
 
-import com.l2jserver.gameserver.datatables.CategoryData;
 import com.l2jserver.gameserver.enums.CategoryType;
 import com.l2jserver.gameserver.model.stats.Env;
 
@@ -38,10 +37,9 @@ public class ConditionCategoryType extends Condition
 	@Override
 	public boolean testImpl(Env env)
 	{
-		final int id = env.getCharacter().isPlayer() ? env.getPlayer().getClassId().getId() : env.getCharacter().getId();
 		for (CategoryType type : _categoryTypes)
 		{
-			if (CategoryData.getInstance().isInCategory(type, id))
+			if (env.getCharacter().isInCategory(type))
 			{
 				return true;
 			}
