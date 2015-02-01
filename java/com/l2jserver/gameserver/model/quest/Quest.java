@@ -1114,6 +1114,24 @@ public class Quest extends ManagedScript implements IIdentifiable
 		}
 	}
 	
+	/**
+	 * @param npc
+	 * @param player
+	 * @return {@code true} if player can see this npc, {@code false} otherwise.
+	 */
+	public final boolean notifyOnCanSeeMe(L2Npc npc, L2PcInstance player)
+	{
+		try
+		{
+			return onCanSeeMe(npc, player);
+		}
+		catch (Exception e)
+		{
+			_log.log(Level.WARNING, "Exception on onCanSeeMe() in notifyOnCanSeeMe(): " + e.getMessage(), e);
+		}
+		return false;
+	}
+	
 	// These are methods that java calls to invoke scripts.
 	
 	/**
@@ -1536,6 +1554,16 @@ public class Quest extends ManagedScript implements IIdentifiable
 	public void onSummon(L2Summon summon)
 	{
 		
+	}
+	
+	/**
+	 * @param npc
+	 * @param player
+	 * @return {@code true} if player can see this npc, {@code false} otherwise.
+	 */
+	public boolean onCanSeeMe(L2Npc npc, L2PcInstance player)
+	{
+		return false;
 	}
 	
 	/**
@@ -2550,6 +2578,24 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 	public void addSummonId(Collection<Integer> npcIds)
 	{
 		addEventId(QuestEventType.ON_SUMMON, npcIds);
+	}
+	
+	/**
+	 * Registers onCanSeeMe trigger whenever an npc info must be sent to player.
+	 * @param npcIds
+	 */
+	public void addCanSeeMeId(int... npcIds)
+	{
+		addEventId(QuestEventType.ON_CAN_SEE_ME, npcIds);
+	}
+	
+	/**
+	 * Registers onCanSeeMe trigger whenever an npc info must be sent to player.
+	 * @param npcIds
+	 */
+	public void addCanSeeMeId(Collection<Integer> npcIds)
+	{
+		addEventId(QuestEventType.ON_CAN_SEE_ME, npcIds);
 	}
 	
 	/**

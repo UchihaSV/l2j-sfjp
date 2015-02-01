@@ -45,6 +45,7 @@ import com.l2jserver.gameserver.model.interfaces.IUniqueId;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
+import com.l2jserver.gameserver.network.serverpackets.DeleteObject;
 import com.l2jserver.gameserver.network.serverpackets.ExSendUIEvent;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.util.Util;
@@ -74,6 +75,7 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	/** Instance id of object. 0 - Global */
 	private int _instanceId;
 	private boolean _isVisible;
+	private boolean _isInvisible;
 	private ObjectKnownList _knownList;
 	
 	public L2Object(int objectId)
@@ -978,6 +980,64 @@ if (com.l2jserver.Config.FIX_GETLOCATION) {{
 		sendPacket(new ExSendUIEvent(getActingPlayer(), true, true, 0, 0, -1));
 	}
 	//-------------------------------------------------------
+	
+	/**
+	 * @return {@code true} if this object is invisible, {@code false} otherwise.
+	 */
+	public boolean isInvisible()
+	{
+		return _isInvisible;
+	}
+	
+	/**
+	 * Sets this object as invisible or not
+	 * @param invis
+	 */
+	public void setInvisible(boolean invis)
+	{
+		_isInvisible = invis;
+		if (invis)
+		{
+			final DeleteObject deletePacket = new DeleteObject(this);
+			for (L2Object obj : getKnownList().getKnownObjects().values())
+			{
+				if ((obj != null) && obj.isPlayer())
+				{
+					final L2PcInstance player = obj.getActingPlayer();
+					if (!isVisibleFor(player))
+					{
+						obj.sendPacket(deletePacket);
+					}
+				}
+			}
+		}
+		
+		// Broadcast information regarding the object to those which are suppose to see.
+		broadcastInfo();
+	}
+	
+	/**
+	 * @param player
+	 * @return {@code true} if player can see an invisible object if it's invisible, {@code false} otherwise.
+	 */
+	public boolean isVisibleFor(L2PcInstance player)
+	{
+		return !isInvisible() || player.canOverrideCond(PcCondOverride.SEE_ALL_PLAYERS);
+	}
+	
+	/**
+	 * Broadcasts describing info to known players.
+	 */
+	public void broadcastInfo()
+	{
+		for (L2Object obj : getKnownList().getKnownObjects().values())
+		{
+			if ((obj != null) && obj.isPlayer() && isVisibleFor(obj.getActingPlayer()))
+			{
+				sendInfo(obj.getActingPlayer());
+			}
+		}
+	}
 	
 	@Override
 	public boolean equals(Object obj)
