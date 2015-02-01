@@ -24,7 +24,6 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.Announcements;
 import com.l2jserver.gameserver.LoginServerThread;
 import com.l2jserver.gameserver.SevenSigns;
-import com.l2jserver.gameserver.TaskPriority;
 import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.communitybbs.Manager.ClanBBSManager;
 import com.l2jserver.gameserver.communitybbs.Manager.CustomBBSManager;
@@ -109,11 +108,6 @@ public class EnterWorld extends L2GameClientPacket
 	private static final String _C__11_ENTERWORLD = "[C] 11 EnterWorld";
 	
 	private final int[][] tracert = new int[5][4];
-	
-	public TaskPriority getPriority()
-	{
-		return TaskPriority.PR_URGENT;
-	}
 	
 	@Override
 	protected void readImpl()
