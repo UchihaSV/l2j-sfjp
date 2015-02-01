@@ -9281,7 +9281,7 @@ public final class L2PcInstance extends L2Playable
 			}
 		}
 		
-		if ((targetPlayer != null) && (target != this) && !(isInDuel() && (targetPlayer.getDuelId() == getDuelId())) && !isInsideZone(ZoneId.PVP) && !targetPlayer.isInsideZone(ZoneId.PVP))
+		if (!(target instanceof L2EventChestInstance) && (targetPlayer != null) && (target != this) && !(isInDuel() && (targetPlayer.getDuelId() == getDuelId())) && !isInsideZone(ZoneId.PVP) && !targetPlayer.isInsideZone(ZoneId.PVP))
 		{
 			SkillUseHolder skilldat = getCurrentSkill();
 			SkillUseHolder skilldatpet = getCurrentPetSkill();

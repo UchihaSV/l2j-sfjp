@@ -98,7 +98,7 @@ public final class Transform implements IIdentifiable
 	}
 	
 	/**
-	 * @return name that's going to be set to the player while is transformed with current transformation.
+	 * @return name that's going to be set to the player while is transformed with current transformation
 	 */
 	public String getName()
 	{
@@ -106,7 +106,7 @@ public final class Transform implements IIdentifiable
 	}
 	
 	/**
-	 * @return title that's going to be set to the player while is transformed with current transformation.
+	 * @return title that's going to be set to the player while is transformed with current transformation
 	 */
 	public String getTitle()
 	{
@@ -135,7 +135,7 @@ public final class Transform implements IIdentifiable
 	}
 	
 	/**
-	 * @return {@code true} if transform type is mode change, {@code false} otherwise.
+	 * @return {@code true} if transform type is mode change, {@code false} otherwise
 	 */
 	public boolean isStance()
 	{
@@ -143,7 +143,7 @@ public final class Transform implements IIdentifiable
 	}
 	
 	/**
-	 * @return {@code true} if transform type is combat, {@code false} otherwise.
+	 * @return {@code true} if transform type is combat, {@code false} otherwise
 	 */
 	public boolean isCombat()
 	{
@@ -151,7 +151,7 @@ public final class Transform implements IIdentifiable
 	}
 	
 	/**
-	 * @return {@code true} if transform type is non combat, {@code false} otherwise.
+	 * @return {@code true} if transform type is non combat, {@code false} otherwise
 	 */
 	public boolean isNonCombat()
 	{
@@ -159,7 +159,7 @@ public final class Transform implements IIdentifiable
 	}
 	
 	/**
-	 * @return {@code true} if transform type is flying, {@code false} otherwise.
+	 * @return {@code true} if transform type is flying, {@code false} otherwise
 	 */
 	public boolean isFlying()
 	{
@@ -167,7 +167,7 @@ public final class Transform implements IIdentifiable
 	}
 	
 	/**
-	 * @return {@code true} if transform type is cursed, {@code false} otherwise.
+	 * @return {@code true} if transform type is cursed, {@code false} otherwise
 	 */
 	public boolean isCursed()
 	{
@@ -175,7 +175,7 @@ public final class Transform implements IIdentifiable
 	}
 	
 	/**
-	 * @return {@code true} if transform type is raiding, {@code false} otherwise.
+	 * @return {@code true} if transform type is raiding, {@code false} otherwise
 	 */
 	public boolean isRiding()
 	{
@@ -183,7 +183,7 @@ public final class Transform implements IIdentifiable
 	}
 	
 	/**
-	 * @return {@code true} if transform type is pure stat, {@code false} otherwise.
+	 * @return {@code true} if transform type is pure stat, {@code false} otherwise
 	 */
 	public boolean isPureStats()
 	{
@@ -229,31 +229,25 @@ public final class Transform implements IIdentifiable
 			}
 			
 			// Add common skills.
-			if (!template.getSkills().isEmpty())
+			for (SkillHolder holder : template.getSkills())
 			{
-				for (SkillHolder holder : template.getSkills())
+				if (player.getSkillLevel(holder.getSkillId()) < holder.getSkillLvl())
+				{
+					player.addSkill(holder.getSkill(), false);
+				}
+				player.addTransformSkill(holder.getSkillId());
+			}
+			
+			// Add skills depending on level.
+			for (AdditionalSkillHolder holder : template.getAdditionalSkills())
+			{
+				if (player.getLevel() >= holder.getMinLevel())
 				{
 					if (player.getSkillLevel(holder.getSkillId()) < holder.getSkillLvl())
 					{
 						player.addSkill(holder.getSkill(), false);
 					}
 					player.addTransformSkill(holder.getSkillId());
-				}
-			}
-			
-			// Add skills depending on level.
-			if (!template.getAdditionalSkills().isEmpty())
-			{
-				for (AdditionalSkillHolder holder : template.getAdditionalSkills())
-				{
-					if (player.getLevel() >= holder.getMinLevel())
-					{
-						if (player.getSkillLevel(holder.getSkillId()) < holder.getSkillLvl())
-						{
-							player.addSkill(holder.getSkill(), false);
-						}
-						player.addTransformSkill(holder.getSkillId());
-					}
 				}
 			}
 			
