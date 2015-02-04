@@ -18,8 +18,6 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
-import java.util.Collection;
-
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -38,8 +36,6 @@ import com.l2jserver.util.Rnd;
  */
 public final class L2EventChestInstance extends L2EventMonsterInstance
 {
-	boolean _isTriggered = false;
-	
 	//[JOJO]-------------------------------------------------
 	private static final int TRANSFORMATION_ID = 105;	//skill 2428 "Scroll of Transformation - Rabbit"
 	private static final int BONUS_RATE = 20;
@@ -84,7 +80,8 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 				player.sendPacket(packet);
 	}
 	
-	public boolean isTriggered() { return _isTriggered; }
+	public boolean isTriggered() { return !isInvisible(); }
+	protected void setTriggerd(boolean value) { setInvisible(!value); }
 	public boolean hasBonus() { return _bonus; }
 	//-------------------------------------------------------
 	
@@ -92,6 +89,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 	{
 		super(objectId, template);
 		
+		setTriggerd(false);
 	//	setIsNoRndWalk(true);	//-[JOJO] --> onSpawn()
 		disableCoreAI(true);
 		
@@ -107,15 +105,10 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 		setIsNoRndWalk(true);	//+[JOJO]
 	}
 	
-	public boolean canSee(L2Character cha)
-	{
-		return (cha != null) && (cha.isGM() || !isInvisible());
-	}
-	
 	public void trigger()
 	{
-		if (_isTriggered) return;	//+[JOJO]
-		_isTriggered = true;
+		if (isTriggered()) return;	//+[JOJO]
+		setTriggerd(true);
 		broadcastPacket(new AbstractNpcInfo.NpcInfo(this, null));
 		//[JOJO]-------------------------------------------------
 		_hideTask = new Runnable(){
@@ -125,7 +118,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 			{
 				if (_hideTask != this)
 					return;
-				if (!_isTriggered || isDecayed() || isDead())
+				if (!isTriggered() || isDecayed() || isDead())
 				{
 					_hideTask = null;
 					return;
@@ -152,7 +145,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 					return;
 				case 3:
 					decayMe();
-					_isTriggered = false;
+					setTriggerd(false);
 					spawnMe();
 					_hideTask = null;
 					return;
@@ -167,7 +160,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 	@Override
 	public void onRandomAnimation(int animationId)
 	{
-		if (!_isTriggered || isDecayed() || isDead())
+		if (!isTriggered() || isDecayed() || isDead())
 			stopRandomAnimationTimer();
 		else
 		{
@@ -184,7 +177,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 	@Override
 	public boolean hasRandomAnimation()
 	{
-		return _isTriggered;
+		return isTriggered();
 	}
 	
 	public void stopRandomAnimationTimer()
@@ -196,7 +189,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 	@Override
 	public void sendInfo(L2PcInstance activeChar)
 	{
-		if (_isTriggered || canSee(activeChar))
+		if (isTriggered())
 		{
 			activeChar.sendPacket(new AbstractNpcInfo.NpcInfo(this, activeChar));
 		}
@@ -205,43 +198,25 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 	@Override
 	public void broadcastPacket(L2GameServerPacket mov)
 	{
-		mov.setInvisible(isInvisible());
-		Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
-		for (L2PcInstance player : plrs)
+		if (isTriggered())
 		{
-			if ((player != null) && (_isTriggered || canSee(player)))
-			{
-				player.sendPacket(mov);
-			}
+			super.broadcastPacket(mov);
 		}
 	}
 	
 	@Override
 	public void broadcastPacket(L2GameServerPacket mov, int radiusInKnownlist)
 	{
-		mov.setInvisible(isInvisible());
-		Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
-		for (L2PcInstance player : plrs)
+		if (isTriggered())
 		{
-			if (player == null)
-			{
-				continue;
-			}
-			if (isInsideRadius(player, radiusInKnownlist, false, false))
-			{
-				if (_isTriggered || canSee(player))
-				{
-					player.sendPacket(mov);
-				}
-			}
+			super.broadcastPacket(mov, radiusInKnownlist);
 		}
 	}
 	
 	@Override
 	public boolean isAutoAttackable(L2Character attacker)
 	{
-		return false;				//[JOJO]
-	//	return !canSee(attacker);
+		return false;
 	}
 	
 	@Override
