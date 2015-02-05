@@ -68,6 +68,11 @@ public enum CommonSkill
 		return _id;
 	}
 	
+	public int getLevel()
+	{
+		return SkillData.getSkillLevel(_skillHashCode);
+	}
+	
 	public Skill getSkill()
 	{
 		return SkillData.getSkill(_skillHashCode);
