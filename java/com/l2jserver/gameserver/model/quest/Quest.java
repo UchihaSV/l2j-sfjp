@@ -2564,6 +2564,15 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 	
 	/**
 	 * Register onSummon trigger when summon is spawned.
+	 * @param npcId
+	 */
+	public void addSummonId(int npcId)
+	{
+		addEventId(QuestEventType.ON_SUMMON, npcId);
+	}
+	
+	/**
+	 * Register onSummon trigger when summon is spawned.
 	 * @param npcIds
 	 */
 	public void addSummonId(int... npcIds)
@@ -2578,6 +2587,15 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 	public void addSummonId(Collection<Integer> npcIds)
 	{
 		addEventId(QuestEventType.ON_SUMMON, npcIds);
+	}
+	
+	/**
+	 * Registers onCanSeeMe trigger whenever an npc info must be sent to player.
+	 * @param npcId
+	 */
+	public void addCanSeeMeId(int npcId)
+	{
+		addEventId(QuestEventType.ON_CAN_SEE_ME, npcId);
 	}
 	
 	/**
