@@ -26,7 +26,6 @@ import com.l2jserver.gameserver.model.skills.CommonSkill;
 import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
-import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillUse;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.util.Rnd;
@@ -80,8 +79,6 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 				player.sendPacket(packet);
 	}
 	
-	public boolean isTriggered() { return !isInvisible(); }
-	protected void setTriggerd(boolean value) { setInvisible(!value); }
 	public boolean hasBonus() { return _bonus; }
 	//-------------------------------------------------------
 	
@@ -89,7 +86,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 	{
 		super(objectId, template);
 		
-		setTriggerd(false);
+		hideMe();
 	//	setIsNoRndWalk(true);	//-[JOJO] --> onSpawn()
 		disableCoreAI(true);
 		
@@ -105,10 +102,25 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 		setIsNoRndWalk(true);	//+[JOJO]
 	}
 	
+	public boolean canSeeMe()
+	{
+		return !isInvisible();
+	}
+	
+	protected void hideMe()
+	{
+		setInvisible(true);
+	}
+	
+	protected void showMe()
+	{
+		setInvisible(false);
+	}
+	
 	public void trigger()
 	{
-		if (isTriggered()) return;	//+[JOJO]
-		setTriggerd(true);
+		if (canSeeMe()) return;	//+[JOJO]
+		showMe();
 		broadcastPacket(new AbstractNpcInfo.NpcInfo(this, null));
 		//[JOJO]-------------------------------------------------
 		_hideTask = new Runnable(){
@@ -118,7 +130,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 			{
 				if (_hideTask != this)
 					return;
-				if (!isTriggered() || isDecayed() || isDead())
+				if (!canSeeMe() || isDecayed() || isDead())
 				{
 					_hideTask = null;
 					return;
@@ -145,7 +157,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 					return;
 				case 3:
 					decayMe();
-					setTriggerd(false);
+					hideMe();
 					spawnMe();
 					_hideTask = null;
 					return;
@@ -160,7 +172,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 	@Override
 	public void onRandomAnimation(int animationId)
 	{
-		if (!isTriggered() || isDecayed() || isDead())
+		if (!canSeeMe() || isDecayed() || isDead())
 			stopRandomAnimationTimer();
 		else
 		{
@@ -177,7 +189,7 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 	@Override
 	public boolean hasRandomAnimation()
 	{
-		return isTriggered();
+		return canSeeMe();
 	}
 	
 	public void stopRandomAnimationTimer()
@@ -185,33 +197,6 @@ public final class L2EventChestInstance extends L2EventMonsterInstance
 		_rAniTask = null;
 	}
 	//-------------------------------------------------------
-	
-	@Override
-	public void sendInfo(L2PcInstance activeChar)
-	{
-		if (isTriggered())
-		{
-			activeChar.sendPacket(new AbstractNpcInfo.NpcInfo(this, activeChar));
-		}
-	}
-	
-	@Override
-	public void broadcastPacket(L2GameServerPacket mov)
-	{
-		if (isTriggered())
-		{
-			super.broadcastPacket(mov);
-		}
-	}
-	
-	@Override
-	public void broadcastPacket(L2GameServerPacket mov, int radiusInKnownlist)
-	{
-		if (isTriggered())
-		{
-			super.broadcastPacket(mov, radiusInKnownlist);
-		}
-	}
 	
 	@Override
 	public boolean isAutoAttackable(L2Character attacker)

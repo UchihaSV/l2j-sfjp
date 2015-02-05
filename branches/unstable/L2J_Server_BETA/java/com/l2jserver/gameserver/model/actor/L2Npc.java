@@ -2109,9 +2109,10 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 	@Override
 	public boolean isVisibleFor(L2PcInstance player)
 	{
-		if (getTemplate().getEventQuests(QuestEventType.ON_CAN_SEE_ME) != null)
+		List<Quest> eventQuests;
+		if ((eventQuests = getTemplate().getEventQuests(QuestEventType.ON_CAN_SEE_ME)) != null)
 		{
-			for (Quest quest : getTemplate().getEventQuests(QuestEventType.ON_CAN_SEE_ME))
+			for (Quest quest : eventQuests)
 			{
 				return quest.notifyOnCanSeeMe(this, player);
 			}
