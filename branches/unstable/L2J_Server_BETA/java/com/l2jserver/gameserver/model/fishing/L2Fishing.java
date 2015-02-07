@@ -27,6 +27,7 @@ import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExFishingHpRegen;
 import com.l2jserver.gameserver.network.serverpackets.ExFishingStartCombat;
 import com.l2jserver.gameserver.network.serverpackets.PlaySound;
@@ -154,8 +155,7 @@ public class L2Fishing implements Runnable
 				if (Rnd.get(100) <= fishingMonster.getProbability())
 				{
 					_fisher.sendPacket(SystemMessageId.YOU_CAUGHT_SOMETHING_SMELLY_THROW_IT_BACK);
-					final L2Npc monster = Quest.addSpawn(fishingMonster.getFishingMonsterId(), _fisher);
-					monster.setTarget(_fisher);
+					spawnMonster(fishingMonster.getFishingMonsterId(), _fisher);
 				}
 				else
 				{
@@ -377,6 +377,17 @@ public class L2Fishing implements Runnable
 	{
 		spawnListeners.add(quest);
 		spawnListeners.trimToSize();
+	}
+	
+	public static void spawnMonster(int npcId, L2PcInstance fisher)
+	{
+		final L2Npc monster = Quest.addSpawn(npcId, fisher);
+		monster.setTarget(fisher);
+		monster.setTitle(fisher.getName());
+		monster.broadcastPacket(new AbstractNpcInfo.NpcInfo(monster, null));
+		
+		for (Quest quest : spawnListeners)
+			quest.onSpawn(monster);	// --> CALL WarriorFishingBlock#onSpawn
 	}
 	//-------------------------------------------------------
 }
