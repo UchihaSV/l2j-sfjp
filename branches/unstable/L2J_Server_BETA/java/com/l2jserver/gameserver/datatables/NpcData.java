@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import jp.sf.l2j.troja.FastIntObjectMap;
 import jp.sf.l2j.troja.IntObjectMap;
@@ -59,19 +58,17 @@ import com.l2jserver.gameserver.util.UnmodifiableArrayList;
 import gnu.trove.list.array.TIntArrayList;
 
 /**
+ * NPC data parser.
  * @author Nos
  */
 public class NpcData extends DocumentParser
 {
-	private static final Logger _log = Logger.getLogger(NpcData.class.getName());
-	
 	private final FastIntObjectMap<L2NpcTemplate> _npcs = new FastIntObjectMap<>();	//[JOJO] -ConcurrentHashMap
 	private final HashMap<String, Integer> _clans = new HashMap<>();	//[JOJO] -ConcurrentHashMap
 	public static final int CLAN_ALL = 0;	//+[JOJO]
 	{
 		_clans.put("ALL", CLAN_ALL);
 	}
-	
 	// SQL Queries
 	private static final String SELECT_MINION_ALL = "SELECT * FROM minions ORDER BY boss_id";
 	
