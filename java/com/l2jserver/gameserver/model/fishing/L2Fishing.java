@@ -385,9 +385,6 @@ public class L2Fishing implements Runnable
 		monster.setTarget(fisher);
 		monster.setTitle(fisher.getName());
 		monster.broadcastPacket(new AbstractNpcInfo.NpcInfo(monster, null));
-		
-		for (Quest quest : spawnListeners)
-			quest.onSpawn(monster);	// --> CALL WarriorFishingBlock#onSpawn
 	}
 	//-------------------------------------------------------
 }
