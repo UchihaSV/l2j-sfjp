@@ -18,8 +18,6 @@
  */
 package com.l2jserver.gameserver.model.actor.stat;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.ExperienceTable;
 import com.l2jserver.gameserver.datatables.PetDataTable;
@@ -57,7 +55,7 @@ public class PcStat extends PlayableStat
 	/** Player's maximum cubic count. */
 	private int _maxCubicCount = 1;
 	/** Player's maximum talisman count. */
-	private final AtomicInteger _talismanSlots = new AtomicInteger();
+	private int _talismanSlots = 0;	//[JOJO] -AtomicInteger
 	private boolean _cloakSlot = false;
 	
 	public static final int VITALITY_LEVELS[] =
@@ -427,12 +425,12 @@ public class PcStat extends PlayableStat
 	 */
 	public int getTalismanSlots()
 	{
-		return _talismanSlots.get();
+		return _talismanSlots;
 	}
 	
 	public void addTalismanSlots(int count)
 	{
-		_talismanSlots.addAndGet(count);
+		synchronized (this) { _talismanSlots += count; }
 	}
 	
 	public boolean canEquipCloak()
