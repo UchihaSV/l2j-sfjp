@@ -245,19 +245,14 @@ public class MultisellData extends DocumentParser
 		// Pass through this only when multipliers are different from 1
 		if ((productMultiplier != 1) || (ingredientMultiplier != 1))
 		{
-			for (Entry entry : list.getEntries())
+			list.getEntries().forEach(entry ->
 			{
-				for (Ingredient product : entry.getProducts())
-				{
-					// Math.max used here to avoid dropping count to 0
-					product.setItemCount((long) Math.max(product.getItemCount() * productMultiplier, 1));
-				}
-				for (Ingredient ingredient : entry.getIngredients())
-				{
-					// Math.max used here to avoid dropping count to 0
-					ingredient.setItemCount((long) Math.max(ingredient.getItemCount() * ingredientMultiplier, 1));
-				}
-			}
+				// Math.max used here to avoid dropping count to 0
+				entry.getProducts().forEach(product -> product.setItemCount((long) Math.max(product.getItemCount() * productMultiplier, 1)));
+				
+				// Math.max used here to avoid dropping count to 0
+				entry.getIngredients().forEach(ingredient -> ingredient.setItemCount((long) Math.max(ingredient.getItemCount() * ingredientMultiplier, 1)));
+			});
 		}
 		int index = 0;
 		do
@@ -276,7 +271,7 @@ public class MultisellData extends DocumentParser
 		separateAndSend(listId, player, npc, inventoryOnly, 1, 1);
 	}
 	
-	public static final boolean checkSpecialIngredient(int id, long amount, L2PcInstance player)
+	public static final boolean hasSpecialIngredient(int id, long amount, L2PcInstance player)
 	{
 		switch (id)
 		{
@@ -308,7 +303,7 @@ public class MultisellData extends DocumentParser
 		return false;
 	}
 	
-	public static final boolean getSpecialIngredient(int id, long amount, L2PcInstance player)
+	public static final boolean takeSpecialIngredient(int id, long amount, L2PcInstance player)
 	{
 		switch (id)
 		{
@@ -327,7 +322,7 @@ public class MultisellData extends DocumentParser
 		return false;
 	}
 	
-	public static final void addSpecialProduct(int id, long amount, L2PcInstance player)
+	public static final void giveSpecialProduct(int id, long amount, L2PcInstance player)
 	{
 		switch (id)
 		{
