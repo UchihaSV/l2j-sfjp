@@ -389,7 +389,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 					+ colSpacer
 					+ tdOpen, "スポイル倍率: ", String.valueOf(Config.RATE_CORPSE_DROP_CHANCE_MULTIPLIER), tdClose
 					+ colSpacer
-					+ tdOpen, "アデナ倍率: ", String.valueOf(Config.RATE_DROP_AMOUNT_MULTIPLIER.containsKey(Inventory.ADENA_ID) ? Config.RATE_DROP_AMOUNT_MULTIPLIER.get(Inventory.ADENA_ID) : 1), tdClose
+					+ tdOpen, "アデナ倍率: ", String.valueOf(Config.RATE_DROP_AMOUNT_MULTIPLIER.containsKey(Inventory.ADENA_ID) ? Config.RATE_DROP_AMOUNT_MULTIPLIER.get(Inventory.ADENA_ID).floatValue() : 1f), tdClose
 					+ trClose
 			
 					+ "</table>"
