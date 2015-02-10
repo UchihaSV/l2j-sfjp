@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,7 +84,7 @@ public final class Instance
 	private boolean _allowRandomWalk = true;
 	private final FastList<Integer> _players = new FastList/*L2FastList*/<Integer>().shared();
 	private final FastList<L2Npc> _npcs = new FastList/*L2FastList*/<L2Npc>().shared();
-	private final FastIntObjectMap<L2DoorInstance> _doors = new FastIntObjectMap/*L2FastMap*/<L2DoorInstance>().shared();
+	private final Map<Integer, L2DoorInstance> _doors = new ConcurrentHashMap<>();
 	private final Map<String, List<L2Spawn>> _manualSpawn = new HashMap<>();
 	private Location _spawnLoc = null;
 	private boolean _allowSummon = true;

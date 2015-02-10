@@ -25,11 +25,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -47,7 +48,7 @@ public final class MailManager
 {
 	private static final Logger _log = Logger.getLogger(MailManager.class.getName());
 	
-	private final FastIntObjectMap<Message> _messages = new FastIntObjectMap<Message>().shared();	//[JOJO] -L2FastMap(true)
+	private final Map<Integer, Message> _messages = new ConcurrentHashMap<>();
 	
 	protected MailManager()
 	{
