@@ -216,7 +216,7 @@ public class ObjectKnownList
 	{
 		if (_knownObjects == null)
 		{
-			_knownObjects = new FastIntObjectMap/*L2FastMap*/<L2Object>().shared();
+			_knownObjects = new FastIntObjectMap/*ConcurrentHashMap*/<L2Object>().shared();
 		}
 		return _knownObjects;
 	}

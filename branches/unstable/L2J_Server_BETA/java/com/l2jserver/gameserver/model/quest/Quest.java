@@ -26,13 +26,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javolution.util.FastMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -69,7 +68,6 @@ import com.l2jserver.gameserver.model.entity.Instance;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
 import com.l2jserver.gameserver.model.interfaces.ILocational;
-import com.l2jserver.gameserver.model.interfaces.IProcedure;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
 import com.l2jserver.gameserver.model.items.L2Item;
@@ -109,8 +107,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	private static final boolean CHECK_TAKEITEMS = true;	//[JOJO]
 	
 	/** Map containing lists of timers from the name of the timer. */
-	private final FastMap<String, List<QuestTimer>> _allEventTimers = new FastMap<String, List<QuestTimer>>().shared();
 	private final TIntHashSet _questInvolvedNpcs = new TIntHashSet();	//[JOJO] HashSet --> TIntHashSet
+	private final Map<String, List<QuestTimer>> _allEventTimers = new ConcurrentHashMap<>();
 	
 	private final ReentrantReadWriteLock _rwLock = new ReentrantReadWriteLock();
 	private final WriteLock _writeLock = _rwLock.writeLock();
@@ -317,30 +315,19 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	private void startQuestTimer(String name, long time, L2Npc npc, L2PcInstance player, boolean repeating, boolean withFixedDelay)
 	{
-		List<QuestTimer> timers = _allEventTimers.get(name);
-		// Add quest timer if timer doesn't already exist
-		if (timers == null)
+		final List<QuestTimer> timers = _allEventTimers.computeIfAbsent(name, k -> new ArrayList<>());
+		// if there exists a timer with this name, allow the timer only if the [npc, player] set is unique
+		// nulls act as wildcards
+		if (getQuestTimer(name, npc, player) == null)
 		{
-			timers = new ArrayList<>();
-			timers.add(new QuestTimer(this, name, time, npc, player, repeating, withFixedDelay));
-			_allEventTimers.put(name, timers);
-		}
-		// a timer with this name exists, but may not be for the same set of npc and player
-		else
-		{
-			// if there exists a timer with this name, allow the timer only if the [npc, player] set is unique
-			// nulls act as wildcards
-			if (getQuestTimer(name, npc, player) == null)
+			_writeLock.lock();
+			try
 			{
-				_writeLock.lock();
-				try
-				{
-					timers.add(new QuestTimer(this, name, time, npc, player, repeating, withFixedDelay));
-				}
-				finally
-				{
-					_writeLock.unlock();
-				}
+				timers.add(new QuestTimer(this, name, time, npc, player, repeating, withFixedDelay));
+			}
+			finally
+			{
+				_writeLock.unlock();
 			}
 		}
 	}
@@ -4162,26 +4149,18 @@ if (CHECK_TAKEITEMS) {{
 		{
 			if (includeCommandChannel && player.getParty().isInCommandChannel())
 			{
-				player.getParty().getCommandChannel().forEachMember(new IProcedure<L2PcInstance, Boolean>()
+				player.getParty().getCommandChannel().forEachMember(member ->
 				{
-					@Override
-					public boolean execute(L2PcInstance member)
-					{
-						actionForEachPlayer(member, npc, isSummon);
-						return true;
-					}
+					actionForEachPlayer(member, npc, isSummon);
+					return true;
 				});
 			}
 			else if (includeParty)
 			{
-				player.getParty().forEachMember(new IProcedure<L2PcInstance, Boolean>()
+				player.getParty().forEachMember(member ->
 				{
-					@Override
-					public boolean execute(L2PcInstance member)
-					{
-						actionForEachPlayer(member, npc, isSummon);
-						return true;
-					}
+					actionForEachPlayer(member, npc, isSummon);
+					return true;
 				});
 			}
 		}

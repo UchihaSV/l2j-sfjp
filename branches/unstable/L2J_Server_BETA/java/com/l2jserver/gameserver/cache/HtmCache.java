@@ -19,7 +19,7 @@
 package com.l2jserver.gameserver.cache;
 
 import static com.l2jserver.util.Util.*;
-import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.charset.StandardCharsets.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -183,7 +183,7 @@ if (CHECK_HASH_COLLISION) {{
 				content = removeBlank(content);
 			content = content.replaceAll("<!--.*?-->", ""); // Remove html comments
 			
-			String oldContent = checked ? null : _cache_get(relpath);
+			String oldContent = checked ? null : _cache_put(relpath, content);
 			if (oldContent == null)
 			{
 				_bytesBuffLen += content.length() * 2;	// unicode (16 bit) = 2 bytes.
@@ -193,7 +193,6 @@ if (CHECK_HASH_COLLISION) {{
 			{
 				_bytesBuffLen = _bytesBuffLen - oldContent.length() * 2 + content.length() * 2;
 			}
-			_cache_put(relpath, content);
 		}
 		catch (IOException e)
 		{
@@ -304,7 +303,7 @@ if (CHECK_HASH_COLLISION) {{
 		}
 	}
 	
-	private void _cache_put(String path, String content)
+	private String _cache_put(String path, String content)
 	{
 		if (TIMED_CACHE)
 		{
@@ -315,11 +314,12 @@ if (CHECK_HASH_COLLISION) {{
 			else
 				item.lastAccessTime = GameTimeController.getInstance().getGameTime();
 			item.content = content;
-			_timedCache.put(path.hashCode(), item);
+			TimedCache oldVal = _timedCache.put(path.hashCode(), item);
+			return oldVal == null ? null : oldVal.content;
 		}
 		else
 		{
-			_cache.put(path, content);
+			return _cache.put(path, content);
 		}
 	}
 	

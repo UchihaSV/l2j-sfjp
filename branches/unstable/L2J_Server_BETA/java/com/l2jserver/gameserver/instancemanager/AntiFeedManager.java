@@ -19,9 +19,8 @@
 package com.l2jserver.gameserver.instancemanager;
 
 import java.util.Map;
-
-import javolution.util.FastMap;
-import jp.sf.l2j.troja.FastIntObjectMap;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -35,8 +34,8 @@ public final class AntiFeedManager
 	public static final int TVT_ID = 2;
 	public static final int L2EVENT_ID = 3;
 	
-	private final FastIntObjectMap<Long> _lastDeathTimes = new FastIntObjectMap<Long>().shared();	//[JOJO] -L2FastMap(true)
-	private final FastIntObjectMap<FastMap<Integer, Connections>> _eventIPs = new FastIntObjectMap<>();	//[JOJO] -L2HashMap()
+	private final Map<Integer, Long> _lastDeathTimes = new ConcurrentHashMap<>();
+	private final Map<Integer, Map<Integer, AtomicInteger>> _eventIPs = new ConcurrentHashMap<>();
 	
 	protected AntiFeedManager()
 	{
@@ -119,10 +118,7 @@ public final class AntiFeedManager
 	 */
 	public final void registerEvent(int eventId)
 	{
-		if (!_eventIPs.containsKey(eventId))
-		{
-			_eventIPs.put(eventId, new FastMap<Integer, Connections>());
-		}
+		_eventIPs.putIfAbsent(eventId, new ConcurrentHashMap<Integer, AtomicInteger>());
 	}
 	
 	/**
@@ -151,7 +147,7 @@ public final class AntiFeedManager
 			return false; // unable to determine IP address
 		}
 		
-		final Map<Integer, Connections> event = _eventIPs.get(eventId);
+		final Map<Integer, AtomicInteger> event = _eventIPs.get(eventId);
 		if (event == null)
 		{
 			return false; // no such event registered
@@ -164,18 +160,9 @@ public final class AntiFeedManager
 			limit += Config.L2JMOD_DUALBOX_CHECK_WHITELIST.get(addrHash);
 		}
 		
-		Connections conns;
-		synchronized (event)
-		{
-			conns = event.get(addrHash);
-			if (conns == null)
-			{
-				conns = new Connections();
-				event.put(addrHash, conns);
-			}
-		}
+		final AtomicInteger connectionCount = event.computeIfAbsent(addrHash, k -> new AtomicInteger());
 		
-		return conns.testAndIncrement(limit);
+		return connectionCount.getAndIncrement() < limit;
 	}
 	
 	/**
@@ -186,34 +173,38 @@ public final class AntiFeedManager
 	 */
 	public final boolean removePlayer(int eventId, L2PcInstance player)
 	{
-		final L2GameClient client = player.getClient();
+		return removeClient(eventId, player.getClient());
+	}
+	
+	/**
+	 * Decreasing number of active connection from player's IP address
+	 * @param eventId
+	 * @param client
+	 * @return true if success and false if any problem detected.
+	 */
+	public final boolean removeClient(int eventId, L2GameClient client)
+	{
 		if (client == null)
 		{
 			return false; // unable to determine IP address
 		}
 		
-		final Map<Integer, Connections> event = _eventIPs.get(eventId);
+		final Map<Integer, AtomicInteger> event = _eventIPs.get(eventId);
 		if (event == null)
 		{
 			return false; // no such event registered
 		}
 		
 		final Integer addrHash = Integer.valueOf(client.getConnectionAddress().hashCode());
-		Connections conns = event.get(addrHash);
-		if (conns == null)
-		{
-			return false; // address not registered
-		}
 		
-		synchronized (event)
+		return event.computeIfPresent(addrHash, (k, v) ->
 		{
-			if (conns.testAndDecrement())
+			if ((v == null) || (v.decrementAndGet() == 0))
 			{
-				event.remove(addrHash);
+				return null;
 			}
-		}
-		
-		return true;
+			return v;
+		}) != null;
 	}
 	
 	/**
@@ -227,9 +218,10 @@ public final class AntiFeedManager
 			return;
 		}
 		
-		final Integer addrHash = Integer.valueOf(client.getConnectionAddress().hashCode());
-		for (FastMap<Integer, Connections> v : _eventIPs.values())
-			disconnectProcedure(v, addrHash);
+		_eventIPs.forEach((k, v) ->
+		{
+			removeClient(k, client);
+		});
 	}
 	
 	/**
@@ -238,7 +230,7 @@ public final class AntiFeedManager
 	 */
 	public final void clear(int eventId)
 	{
-		final Map<Integer, Connections> event = _eventIPs.get(eventId);
+		final Map<Integer, AtomicInteger> event = _eventIPs.get(eventId);
 		if (event != null)
 		{
 			event.clear();
@@ -274,54 +266,6 @@ public final class AntiFeedManager
 			limit += Config.L2JMOD_DUALBOX_CHECK_WHITELIST.get(addrHash);
 		}
 		return limit;
-	}
-	
-	protected static final class Connections
-	{
-		private int _num = 0;
-		
-		/**
-		 * and false if maximum number is reached.
-		 * @param max
-		 * @return true if successfully incremented number of connections
-		 */
-		public final synchronized boolean testAndIncrement(int max)
-		{
-			if (_num < max)
-			{
-				_num++;
-				return true;
-			}
-			return false;
-		}
-		
-		/**
-		 * @return true if all connections are removed
-		 */
-		public final synchronized boolean testAndDecrement()
-		{
-			if (_num > 0)
-			{
-				_num--;
-			}
-			
-			return _num == 0;
-		}
-	}
-	
-	private final void disconnectProcedure(FastMap<Integer, Connections> event, Integer _addrHash)
-	{
-			final Connections conns = event.get(_addrHash);
-			if (conns != null)
-			{
-				synchronized (event)
-				{
-					if (conns.testAndDecrement())
-					{
-						event.remove(_addrHash);
-					}
-				}
-			}
 	}
 	
 	public static final AntiFeedManager getInstance()

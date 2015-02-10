@@ -27,12 +27,13 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -57,7 +58,7 @@ public final class TaskManager
 {
 	protected static final Logger _log = Logger.getLogger(TaskManager.class.getName());
 	
-	private final FastIntObjectMap<Task> _tasks = new FastIntObjectMap/*L2FastMap*/<Task>().shared(); 
+	private final Map<Integer, Task> _tasks = new ConcurrentHashMap<>();
 	protected final FastList<ExecutedTask> _currentTasks = new FastList/*L2FastList*/<ExecutedTask>().shared();
 	
 	private static final String
@@ -198,19 +199,11 @@ public final class TaskManager
 	public void registerTask(Task task)
 	{
 		int key = task.getName().hashCode();
-		Task z = _tasks.get(key);
-		if (z != null)
+		_tasks.computeIfAbsent(key, k ->
 		{
-			System.err.printf("TaskManager#registerTask(%X %s) >>WARINING<< key conflict with %s\n"
-				, key
-				, task.getName()
-				, z.getName());
-		}
-		else
-		{
-			_tasks.put(key, task);
 			task.initializate();
-		}
+			return task;
+		});
 	}
 	
 	private void startAllTasks()

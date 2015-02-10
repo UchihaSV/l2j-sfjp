@@ -255,7 +255,7 @@ public class CharKnownList extends ObjectKnownList
 	{
 		if (_knownPlayers == null)
 		{
-			_knownPlayers = new FastIntObjectMap/*L2FastMap*/<L2PcInstance>().shared();
+			_knownPlayers = new FastIntObjectMap/*ConcurrentHashMap*/<L2PcInstance>().shared();
 		}
 		return _knownPlayers;
 	}
@@ -264,7 +264,7 @@ public class CharKnownList extends ObjectKnownList
 	{
 		if (_knownRelations == null)
 		{
-			_knownRelations = new FastIntObjectMap/*L2FastMap*/<Integer>().shared();
+			_knownRelations = new FastIntObjectMap/*ConcurrentHashMap*/<Integer>().shared();
 		}
 		return _knownRelations;
 	}
@@ -273,7 +273,7 @@ public class CharKnownList extends ObjectKnownList
 	{
 		if (_knownSummons == null)
 		{
-			_knownSummons = new FastIntObjectMap/*L2FastMap*/<L2Summon>().shared();
+			_knownSummons = new FastIntObjectMap/*ConcurrentHashMap*/<L2Summon>().shared();
 		}
 		return _knownSummons;
 	}
