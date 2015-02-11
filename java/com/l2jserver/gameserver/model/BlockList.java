@@ -41,7 +41,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 public class BlockList
 {
 	private static Logger _log = Logger.getLogger(BlockList.class.getName());
-	private static FastIntObjectMap<List<Integer>> _offlineList = new FastIntObjectMap<List<Integer>>().shared();
+	private static FastIntObjectMap<List<Integer>> _offlineList = new FastIntObjectMap<List<Integer>>().shared();	//[JOJO] -FastMap.shared
 	
 	private final L2PcInstance _owner;
 	private List<Integer> _blockList;
