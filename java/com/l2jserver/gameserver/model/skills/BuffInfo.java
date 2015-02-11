@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
 import com.l2jserver.Config;
@@ -37,6 +36,7 @@ import com.l2jserver.gameserver.model.stats.Env;
 import com.l2jserver.gameserver.model.stats.Formulas;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+import com.l2jserver.util.ConcurrentFastMap;
 
 /**
  * Buff Info.<br>
@@ -111,7 +111,7 @@ public final class BuffInfo
 			{
 				if (_tasks == null)
 				{
-					_tasks = new ConcurrentHashMap<>();
+					_tasks = new ConcurrentFastMap<>();	//[JOJO] -ConcurrentHashMap
 				}
 			}
 		}

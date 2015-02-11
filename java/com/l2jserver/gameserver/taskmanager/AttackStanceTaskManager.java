@@ -23,13 +23,12 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javolution.util.FastMap;
-
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2CubicInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.AutoAttackStop;
+import com.l2jserver.util.ConcurrentFastMap;
 
 /**
  * Attack stance task manager.
@@ -39,7 +38,7 @@ public class AttackStanceTaskManager
 {
 	protected static final Logger _log = Logger.getLogger(AttackStanceTaskManager.class.getName());
 	
-	protected static final FastMap<L2Character, Long> _attackStanceTasks = new FastMap<L2Character, Long>().shared();	//[JOJO] -ConcurrentHashMap
+	protected static final ConcurrentFastMap<L2Character, Long> _attackStanceTasks = new ConcurrentFastMap<>();	//[JOJO] -ConcurrentHashMap
 	
 	/**
 	 * Instantiates a new attack stance task manager.

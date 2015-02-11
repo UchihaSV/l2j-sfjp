@@ -42,7 +42,6 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -73,6 +72,7 @@ import com.l2jserver.gameserver.network.loginserverpackets.RequestCharacters;
 import com.l2jserver.gameserver.network.serverpackets.CharSelectionInfo;
 import com.l2jserver.gameserver.network.serverpackets.LoginFail;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+import com.l2jserver.util.ConcurrentFastMap;
 import com.l2jserver.util.Util;
 import com.l2jserver.util.crypt.NewCrypt;
 import com.l2jserver.util.network.BaseSendablePacket;
@@ -110,7 +110,7 @@ public class LoginServerThread extends Thread
 	private final boolean _reserveHost;
 	private int _maxPlayer;
 	private final List<WaitingClient> _waitingClients;
-	private final FastMap<String, L2GameClient> _accountsInGameServer = new FastMap<String, L2GameClient>().shared();
+	private final ConcurrentFastMap<String, L2GameClient> _accountsInGameServer = new ConcurrentFastMap<>();	//[JOJO] -FastMap
 	private int _status;
 	private String _serverName;
 	private final List<String> _subnets;

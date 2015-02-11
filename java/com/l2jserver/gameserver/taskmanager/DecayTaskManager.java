@@ -20,7 +20,6 @@ package com.l2jserver.gameserver.taskmanager;
 
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -30,6 +29,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
+import com.l2jserver.util.ConcurrentFastMap;
 
 /**
  * @author Nos
@@ -38,7 +38,7 @@ public final class DecayTaskManager
 {
 	private final ScheduledExecutorService _decayExecutor = Executors.newSingleThreadScheduledExecutor();
 	
-	protected final Map<L2Character, ScheduledFuture<?>> _decayTasks = new ConcurrentHashMap<>();
+	protected final Map<L2Character, ScheduledFuture<?>> _decayTasks = new ConcurrentFastMap<>();	//[JOJO] -ConcurrentHashMap
 	
 	/**
 	 * Adds a decay task for the specified character.<br>

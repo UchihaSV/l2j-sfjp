@@ -18,9 +18,9 @@
  */
 package com.l2jserver.gameserver.instancemanager;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -34,8 +34,8 @@ public final class AntiFeedManager
 	public static final int TVT_ID = 2;
 	public static final int L2EVENT_ID = 3;
 	
-	private final Map<Integer, Long> _lastDeathTimes = new ConcurrentHashMap<>();
-	private final Map<Integer, Map<Integer, AtomicInteger>> _eventIPs = new ConcurrentHashMap<>();
+	private final FastIntObjectMap<Long> _lastDeathTimes = new FastIntObjectMap<Long>().shared();	//[JOJO] -ConcurrentHashMap
+	private final FastIntObjectMap<FastIntObjectMap<AtomicInteger>> _eventIPs = new FastIntObjectMap<FastIntObjectMap<AtomicInteger>>().shared();	//[JOJO] -ConcurrentHashMap
 	
 	protected AntiFeedManager()
 	{
@@ -118,7 +118,7 @@ public final class AntiFeedManager
 	 */
 	public final void registerEvent(int eventId)
 	{
-		_eventIPs.putIfAbsent(eventId, new ConcurrentHashMap<Integer, AtomicInteger>());
+		_eventIPs.computeIfAbsent(eventId, v -> new FastIntObjectMap<AtomicInteger>().shared());	//[JOJO] -ConcurrentHashMap
 	}
 	
 	/**
@@ -147,7 +147,7 @@ public final class AntiFeedManager
 			return false; // unable to determine IP address
 		}
 		
-		final Map<Integer, AtomicInteger> event = _eventIPs.get(eventId);
+		final FastIntObjectMap<AtomicInteger> event = _eventIPs.get(eventId);
 		if (event == null)
 		{
 			return false; // no such event registered
@@ -189,7 +189,7 @@ public final class AntiFeedManager
 			return false; // unable to determine IP address
 		}
 		
-		final Map<Integer, AtomicInteger> event = _eventIPs.get(eventId);
+		final FastIntObjectMap<AtomicInteger> event = _eventIPs.get(eventId);
 		if (event == null)
 		{
 			return false; // no such event registered
@@ -230,7 +230,7 @@ public final class AntiFeedManager
 	 */
 	public final void clear(int eventId)
 	{
-		final Map<Integer, AtomicInteger> event = _eventIPs.get(eventId);
+		final FastIntObjectMap<AtomicInteger> event = _eventIPs.get(eventId);
 		if (event != null)
 		{
 			event.clear();

@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.QuestEventType;
@@ -47,7 +47,7 @@ public abstract class L2ZoneType
 	
 	private final int _id;
 	protected L2ZoneForm _zone;
-	protected final FastMap<Integer, L2Character> _characterList = new FastMap<Integer, L2Character>().shared();
+	protected final FastIntObjectMap<L2Character> _characterList = new FastIntObjectMap<L2Character>().shared();	//[JOJO] -FastMap
 	
 	/** Parameters to affect specific characters */
 	private boolean _checkAffected = false;
@@ -531,7 +531,7 @@ public abstract class L2ZoneType
 	{
 	}
 	
-	public Map<Integer, L2Character> getCharacters()
+	public FastIntObjectMap<L2Character> getCharacters()
 	{
 		return _characterList;
 	}

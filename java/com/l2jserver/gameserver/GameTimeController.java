@@ -51,8 +51,7 @@ public final class GameTimeController extends Thread
 	
 	private static GameTimeController _instance;
 	
-	private final FastIntObjectMap<L2Character> _movingObjects = new FastIntObjectMap<L2Character>().shared();	//[JOJO]
- //	private final FastMap<Integer, L2Character> _movingObjects = new FastMap<Integer, L2Character>().shared();
+	private final FastIntObjectMap<L2Character> _movingObjects = new FastIntObjectMap<L2Character>().shared();	//[JOJO] -FastMap.shared
 	private final long _referenceTime;
 	private boolean _isNight;	//[JOJO]
 	

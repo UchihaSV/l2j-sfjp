@@ -19,17 +19,17 @@
 package com.l2jserver.gameserver.model.holders;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import com.l2jserver.gameserver.model.punishment.PunishmentTask;
 import com.l2jserver.gameserver.model.punishment.PunishmentType;
+import com.l2jserver.util.ConcurrentFastMap;
 
 /**
  * @author UnAfraid
  */
 public final class PunishmentHolder
 {
-	private final Map<String, Map<PunishmentType, PunishmentTask>> _holder = new ConcurrentHashMap<>();
+	private final Map<String, Map<PunishmentType, PunishmentTask>> _holder = new ConcurrentFastMap<>();	//[JOJO] -ConcurrentHashMap
 	
 	/**
 	 * Stores the punishment task in the Map.
@@ -42,7 +42,7 @@ public final class PunishmentHolder
 			String key = String.valueOf(task.getKey());
 			if (!_holder.containsKey(key))
 			{
-				_holder.put(key, new ConcurrentHashMap<PunishmentType, PunishmentTask>());
+				_holder.put(key, new ConcurrentFastMap<PunishmentType, PunishmentTask>());	//[JOJO] -ConcurrentHashMap
 			}
 			_holder.get(key).put(task.getType(), task);
 		}

@@ -26,7 +26,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
@@ -91,6 +90,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.scripting.ManagedScript;
 import com.l2jserver.gameserver.scripting.ScriptManager;
 import com.l2jserver.gameserver.util.MinionList;
+import com.l2jserver.util.ConcurrentFastMap;
 import com.l2jserver.util.Rnd;
 import com.l2jserver.util.Util;
 
@@ -107,8 +107,8 @@ public class Quest extends ManagedScript implements IIdentifiable
 	private static final boolean CHECK_TAKEITEMS = true;	//[JOJO]
 	
 	/** Map containing lists of timers from the name of the timer. */
-	private final TIntHashSet _questInvolvedNpcs = new TIntHashSet();	//[JOJO] HashSet --> TIntHashSet
-	private final Map<String, List<QuestTimer>> _allEventTimers = new ConcurrentHashMap<>();
+	private final ConcurrentFastMap<String, ArrayList<QuestTimer>> _allEventTimers = new ConcurrentFastMap<>();	//[JOJO] -ConcurrentHashMap
+	private final TIntHashSet _questInvolvedNpcs = new TIntHashSet();	//[JOJO] -HashSet
 	
 	private final ReentrantReadWriteLock _rwLock = new ReentrantReadWriteLock();
 	private final WriteLock _writeLock = _rwLock.writeLock();
@@ -315,11 +315,11 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	private void startQuestTimer(String name, long time, L2Npc npc, L2PcInstance player, boolean repeating, boolean withFixedDelay)
 	{
-		final List<QuestTimer> timers = _allEventTimers.computeIfAbsent(name, k -> new ArrayList<>());
 		// if there exists a timer with this name, allow the timer only if the [npc, player] set is unique
 		// nulls act as wildcards
 		if (getQuestTimer(name, npc, player) == null)
 		{
+			ArrayList<QuestTimer> timers = _allEventTimers.computeIfAbsent(name, k -> new ArrayList<>());
 			_writeLock.lock();
 			try
 			{
@@ -365,7 +365,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 */
 	public QuestTimer getQuestTimer(String name, L2Npc npc, L2PcInstance player)
 	{
-		final List<QuestTimer> timers = _allEventTimers.get(name);
+		final ArrayList<QuestTimer> timers = _allEventTimers.get(name);
 		if (timers != null)
 		{
 			_readLock.lock();
@@ -396,7 +396,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	 */
 	public void cancelQuestTimers(String name)
 	{
-		final List<QuestTimer> timers = _allEventTimers.get(name);
+		final ArrayList<QuestTimer> timers = _allEventTimers.get(name);
 		if (timers != null)
 		{
 			_writeLock.lock();
@@ -421,7 +421,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	//[JOJO]-------------------------------------------------
 	public void cancelQuestTimers(String name, int instanceId)
 	{
-		List<QuestTimer> timers = _allEventTimers.get(name);
+		ArrayList<QuestTimer> timers = _allEventTimers.get(name);
 		if (timers == null)
 			return;
 		_writeLock.lock();
@@ -447,7 +447,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	
 	public void cancelQuestTimers(L2Npc npc)
 	{
-		for (List<QuestTimer> timers : _allEventTimers.values())
+		for (ArrayList<QuestTimer> timers : _allEventTimers.values())
 		{
 			_writeLock.lock();
 			try
@@ -494,7 +494,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 	{
 		if (timer != null)
 		{
-			final List<QuestTimer> timers = _allEventTimers.get(timer.getName());
+			final ArrayList<QuestTimer> timers = _allEventTimers.get(timer.getName());
 			if (timers != null)
 			{
 				_writeLock.lock();
@@ -510,7 +510,7 @@ public class Quest extends ManagedScript implements IIdentifiable
 		}
 	}
 	
-	public Map<String, List<QuestTimer>> getQuestTimers()
+	public Map<String, ArrayList<QuestTimer>> getQuestTimers()
 	{
 		return _allEventTimers;
 	}
@@ -2685,7 +2685,7 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 		}
 		
 		// if the player is in a party, gather a list of all matching party members (possibly including this player)
-		List<L2PcInstance> candidates = new ArrayList<>();
+		ArrayList<L2PcInstance> candidates = new ArrayList<>();
 		// get the target for enforcing distance limitations.
 		L2Object target = player.getTarget();
 		if (target == null)
@@ -2747,7 +2747,7 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 		
 		// if the player is in a party, gather a list of all matching party members (possibly
 		// including this player)
-		List<L2PcInstance> candidates = new ArrayList<>();
+		ArrayList<L2PcInstance> candidates = new ArrayList<>();
 		
 		// get the target for enforcing distance limitations.
 		L2Object target = player.getTarget();
@@ -2867,7 +2867,7 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 			return qs;
 		}
 		
-		final List<QuestState> candidates = new ArrayList<>();
+		final ArrayList<QuestState> candidates = new ArrayList<>();
 		if (checkPartyMemberConditions(qs, condition, target) && (playerChance > 0))
 		{
 			for (int i = 0; i < playerChance; i++)
@@ -3316,7 +3316,7 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 		// cancel all pending timers before reloading.
 		// if timers ought to be restarted, the quest can take care of it
 		// with its code (example: save global data indicating what timer must be restarted).
-		for (List<QuestTimer> timers : _allEventTimers.values())
+		for (ArrayList<QuestTimer> timers : _allEventTimers.values())
 		{
 			_readLock.lock();
 			try
@@ -3346,7 +3346,7 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 		// cancel all pending timers before reloading.
 		// if timers ought to be restarted, the quest can take care of it
 		// with its code (example: save global data indicating what timer must be restarted).
-		for (List<QuestTimer> timers : _allEventTimers.values())
+		for (ArrayList<QuestTimer> timers : _allEventTimers.values())
 		{
 			_readLock.lock();
 			try

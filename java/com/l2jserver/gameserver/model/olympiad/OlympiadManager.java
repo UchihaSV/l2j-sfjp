@@ -20,10 +20,10 @@ package com.l2jserver.gameserver.model.olympiad;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -42,13 +42,13 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 public class OlympiadManager
 {
 	private final List<Integer> _nonClassBasedRegisters;
-	private final Map<Integer, List<Integer>> _classBasedRegisters;
+	private final FastIntObjectMap<List<Integer>> _classBasedRegisters;
 	private final List<List<Integer>> _teamsBasedRegisters;
 	
 	protected OlympiadManager()
 	{
 		_nonClassBasedRegisters = new FastList<Integer>().shared();
-		_classBasedRegisters = new FastMap<Integer, List<Integer>>().shared();
+		_classBasedRegisters = new FastIntObjectMap<List<Integer>>().shared();	//-FastMap.shared
 		_teamsBasedRegisters = new FastList<List<Integer>>().shared();
 	}
 	
@@ -62,7 +62,7 @@ public class OlympiadManager
 		return _nonClassBasedRegisters;
 	}
 	
-	public final Map<Integer, List<Integer>> getRegisteredClassBased()
+	public final FastIntObjectMap<List<Integer>> getRegisteredClassBased()
 	{
 		return _classBasedRegisters;
 	}
@@ -75,7 +75,7 @@ public class OlympiadManager
 	protected final List<List<Integer>> hasEnoughRegisteredClassed()
 	{
 		List<List<Integer>> result = null;
-		for (Map.Entry<Integer, List<Integer>> classList : _classBasedRegisters.entrySet())
+		for (IntObjectMap.Entry<List<Integer>> classList : _classBasedRegisters.entrySet())
 		{
 			if ((classList.getValue() != null) && (classList.getValue().size() >= Config.ALT_OLY_CLASSED))
 			{

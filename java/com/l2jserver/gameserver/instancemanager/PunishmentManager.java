@@ -22,7 +22,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +30,7 @@ import com.l2jserver.gameserver.model.holders.PunishmentHolder;
 import com.l2jserver.gameserver.model.punishment.PunishmentAffect;
 import com.l2jserver.gameserver.model.punishment.PunishmentTask;
 import com.l2jserver.gameserver.model.punishment.PunishmentType;
+import com.l2jserver.util.ConcurrentFastMap;
 
 /**
  * @author UnAfraid
@@ -39,7 +39,7 @@ public final class PunishmentManager
 {
 	private static final Logger _log = Logger.getLogger(PunishmentManager.class.getName());
 	
-	private final Map<PunishmentAffect, PunishmentHolder> _tasks = new ConcurrentHashMap<>();
+	private final Map<PunishmentAffect, PunishmentHolder> _tasks = new ConcurrentFastMap<>();	//[JOJO] -ConcurrentHashMap
 	
 	protected PunishmentManager()
 	{

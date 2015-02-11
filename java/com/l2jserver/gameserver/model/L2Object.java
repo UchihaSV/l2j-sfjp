@@ -18,10 +18,6 @@
  */
 package com.l2jserver.gameserver.model;
 
-import java.util.Map;
-
-import javolution.util.FastMap;
-
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.ShotType;
 import com.l2jserver.gameserver.handler.ActionHandler;
@@ -49,6 +45,7 @@ import com.l2jserver.gameserver.network.serverpackets.DeleteObject;
 import com.l2jserver.gameserver.network.serverpackets.ExSendUIEvent;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.util.Util;
+import com.l2jserver.util.ConcurrentFastMap;
 
 /**
  * Base class for all interactive objects.
@@ -63,7 +60,7 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 	private L2WorldRegion _worldRegion;
 	/** Instance type */
 	private InstanceType _instanceType = null;
-	private volatile Map<String, Object> _scripts;
+	private volatile ConcurrentFastMap<String, Object> _scripts;
 	/** X coordinate */
 	private int _x;
 	/** Y coordinate */
@@ -525,7 +522,7 @@ public abstract class L2Object implements IIdentifiable, INamable, ISpawnable, I
 			{
 				if (_scripts == null)
 				{
-					_scripts = new FastMap<String, Object>().shared();
+					_scripts = new ConcurrentFastMap<>();	//[JOJO] -FastMap.shared
 				}
 			}
 		}
