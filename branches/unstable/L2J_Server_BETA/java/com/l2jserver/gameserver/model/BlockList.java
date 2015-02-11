@@ -23,11 +23,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.datatables.CharNameTable;
@@ -42,7 +41,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 public class BlockList
 {
 	private static Logger _log = Logger.getLogger(BlockList.class.getName());
-	private static Map<Integer, List<Integer>> _offlineList = new FastMap<Integer, List<Integer>>().shared();
+	private static FastIntObjectMap<List<Integer>> _offlineList = new FastIntObjectMap<List<Integer>>().shared();
 	
 	private final L2PcInstance _owner;
 	private List<Integer> _blockList;

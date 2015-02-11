@@ -27,13 +27,12 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -58,8 +57,8 @@ public final class TaskManager
 {
 	protected static final Logger _log = Logger.getLogger(TaskManager.class.getName());
 	
-	private final Map<Integer, Task> _tasks = new ConcurrentHashMap<>();
-	protected final FastList<ExecutedTask> _currentTasks = new FastList/*L2FastList*/<ExecutedTask>().shared();
+	private final FastIntObjectMap<Task> _tasks = new FastIntObjectMap<Task>().shared();	//[JOJO] -ConcurrentHashMap
+	protected final FastList<ExecutedTask> _currentTasks = new FastList<ExecutedTask>().shared();	//[JOJO] -L2FastList.shared
 	
 	private static final String
 		SQL_STATEMENT_0 = "SELECT id,task,type,last_activation,param1,param2,param3 FROM global_tasks",

@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 
-import javolution.util.FastMap;
 import jp.sf.l2j.troja.FastIntObjectMap;
 
 import org.w3c.dom.NamedNodeMap;
@@ -38,6 +37,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+import com.l2jserver.util.ConcurrentFastMap;
 
 /**
  * @author UnAfraid
@@ -46,7 +46,7 @@ public class AdminTable extends DocumentParser
 {
 	private static final FastIntObjectMap<L2AccessLevel> _accessLevels = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	private static final HashMap<String, L2AdminCommandAccessRight> _adminCommandAccessRights = new HashMap<>();
-	private static final FastMap<L2PcInstance, Boolean> _gmList = new FastMap<L2PcInstance, Boolean>().shared();
+	private static final ConcurrentFastMap<L2PcInstance, Boolean> _gmList = new ConcurrentFastMap<>();	//[JOJO] -FastMap.shared
 	private int _highestLevel = 0;
 	
 	protected AdminTable()

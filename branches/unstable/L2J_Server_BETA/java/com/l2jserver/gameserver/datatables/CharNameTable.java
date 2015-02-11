@@ -23,11 +23,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -41,8 +41,8 @@ public class CharNameTable
 {
 	private static Logger _log = Logger.getLogger(CharNameTable.class.getName());
 	
-	private final Map<Integer, String> _chars = new ConcurrentHashMap<>();
-	private final Map<Integer, Integer> _accessLevels = new ConcurrentHashMap<>();
+	private final FastIntObjectMap<String> _chars = new FastIntObjectMap<String>().shared();	//[JOJO] -ConcurrentHashMap
+	private final FastIntObjectMap<Integer> _accessLevels = new FastIntObjectMap<Integer>().shared();	//[JOJO] -ConcurrentHashMap
 	
 	protected CharNameTable()
 	{
@@ -85,7 +85,7 @@ public class CharNameTable
 			return -1;
 		}
 		
-		for (Entry<Integer, String> entry : _chars.entrySet())
+		for (IntObjectMap.Entry<String> entry : _chars.entrySet())
 		{
 			if (entry.getValue().equalsIgnoreCase(name))
 			{

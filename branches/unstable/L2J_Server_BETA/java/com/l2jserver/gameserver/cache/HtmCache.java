@@ -34,6 +34,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.util.Util;
+import com.l2jserver.util.ConcurrentFastMap;
 import com.l2jserver.util.file.filter.HTMLFilter;
 
 /**
@@ -70,7 +71,7 @@ if (CHECK_HASH_COLLISION) {{
 		else if (Config.LAZY_CACHE)
 		{
 			_timedCache = null;
-			_cache = new FastMap<String, String>().shared();
+			_cache = new ConcurrentFastMap<>();
 		}
 		else
 		{

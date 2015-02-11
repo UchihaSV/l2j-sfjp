@@ -844,7 +844,7 @@ public final class L2PcInstance extends L2Playable
 	private long _notMoveUntil = 0;
 	
 	/** Map containing all custom skills of this player. */
-	private Map<Integer, Skill> _customSkills = null;
+	private FastIntObjectMap<Skill> _customSkills = null;
 	
 	private boolean _canRevive = true;
 	
@@ -14383,7 +14383,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			if (_customSkills == null)
 			{
-				_customSkills = new FastMap<Integer, Skill>().shared();
+				_customSkills = new FastIntObjectMap<Skill>().shared();	//[JOJO] -FastMap.shared
 			}
 			_customSkills.put(skill.getDisplayId(), skill);
 		}

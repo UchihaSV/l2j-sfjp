@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
@@ -49,6 +48,7 @@ import com.l2jserver.gameserver.network.serverpackets.AbnormalStatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.ExOlympiadSpelledInfo;
 import com.l2jserver.gameserver.network.serverpackets.PartySpelled;
 import com.l2jserver.gameserver.network.serverpackets.ShortBuffStatusUpdate;
+import com.l2jserver.util.ConcurrentFastMap;
 
 /**
  * Effect lists.<br>
@@ -1456,7 +1456,7 @@ public final class CharEffectList
 				{
 					if (_stackedEffects == null)
 					{
-						_stackedEffects = new ConcurrentHashMap<>();
+						_stackedEffects = new ConcurrentFastMap<>();	//[JOJO] -ConcurrentHashMap
 					}
 				}
 			}

@@ -30,9 +30,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
 import jp.sf.l2j.arrayMaps.SortedIntIntArrayMap;
 import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap.Entry;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -64,6 +64,7 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.Util;
+import com.l2jserver.util.ConcurrentFastMap;
 import com.l2jserver.util.PropertiesParser;
 
 public final class TerritoryWarManager implements Siegable
@@ -89,13 +90,13 @@ public final class TerritoryWarManager implements Siegable
 	public final SortedIntIntArrayMap TERRITORY_ITEM_IDS = new SortedIntIntArrayMap();
 	
 	// Territory War settings
-	private final FastMap<Integer, FastList<L2Clan>> _registeredClans = new FastMap<Integer, FastList<L2Clan>>().shared();
-	private final FastMap<Integer, FastList<Integer>> _registeredMercenaries = new FastMap<Integer, FastList<Integer>>().shared();
-	private final FastIntObjectMap<Territory> _territoryList = new FastIntObjectMap<TerritoryWarManager.Territory>().shared();
+	private final FastIntObjectMap<FastList<L2Clan>> _registeredClans = new FastIntObjectMap<FastList<L2Clan>>().shared();	//[JOJO] -FastMap.shared
+	private final FastIntObjectMap<FastList<Integer>> _registeredMercenaries = new FastIntObjectMap<FastList<Integer>>().shared();	//[JOJO] -FastMap.shared
+	private final FastIntObjectMap<Territory> _territoryList = new FastIntObjectMap<TerritoryWarManager.Territory>().shared();	//[JOJO] -FastMap.shared
 	protected final FastList<Integer> _disguisedPlayers = new FastList<Integer>().shared();
 	private final FastList<TerritoryWard> _territoryWards = new FastList<TerritoryWard>().shared();
-	private final FastMap<L2Clan, L2SiegeFlagInstance> _clanFlags = new FastMap<L2Clan, L2SiegeFlagInstance>().shared();
-	private final FastIntObjectMap<int[]> _participantPoints = new FastIntObjectMap<>();
+	private final ConcurrentFastMap<L2Clan, L2SiegeFlagInstance> _clanFlags = new ConcurrentFastMap<>();	//[JOJO] -FastMap.shared
+	private final FastIntObjectMap<int[]> _participantPoints = new FastIntObjectMap<>();	//[JOJO] -FastMap
 	protected Calendar _startTWDate = Calendar.getInstance();
 	protected boolean _isRegistrationOver = true;
 	protected boolean _isTWChannelOpen = false;
@@ -133,19 +134,19 @@ public final class TerritoryWarManager implements Siegable
 			{
 				return player.getClan().getCastleId() + 80;
 			}
-			for (int cId : _registeredClans.keySet())
+			for (Entry<FastList<L2Clan>> e : _registeredClans.entrySet())
 			{
-				if (_registeredClans.get(cId).contains(player.getClan()))
+				if (e.getValue().contains(player.getClan()))
 				{
-					return cId + 80;
+					return e.getKey() + 80;
 				}
 			}
 		}
-		for (int cId : _registeredMercenaries.keySet())
+		for (Entry<FastList<Integer>> e : _registeredMercenaries.entrySet())
 		{
-			if (_registeredMercenaries.get(cId).contains(player.getObjectId()))
+			if (e.getValue().contains(player.getObjectId()))
 			{
-				return cId + 80;
+				return e.getKey() + 80;
 			}
 		}
 		return 0;
@@ -188,9 +189,9 @@ public final class TerritoryWarManager implements Siegable
 		
 		if (castleId == -1)
 		{
-			for (int cId : _registeredClans.keySet())
+			for (Entry<FastList<L2Clan>> e : _registeredClans.entrySet())
 			{
-				if (_registeredClans.get(cId).contains(clan))
+				if (e.getValue().contains(clan))
 				{
 					return true;
 				}
@@ -209,9 +210,9 @@ public final class TerritoryWarManager implements Siegable
 	{
 		if (castleId == -1)
 		{
-			for (int cId : _registeredMercenaries.keySet())
+			for (Entry<FastList<Integer>> e : _registeredMercenaries.entrySet())
 			{
-				if (_registeredMercenaries.get(cId).contains(objId))
+				if (e.getValue().contains(objId))
 				{
 					return true;
 				}
@@ -1138,16 +1139,18 @@ public final class TerritoryWarManager implements Siegable
 		}
 		_clanFlags.clear();
 		
-		for (Integer castleId : _registeredClans.keySet())
+		for (Entry<FastList<L2Clan>> e : _registeredClans.entrySet())
 		{
-			for (L2Clan clan : _registeredClans.get(castleId))
+			final int castleId = e.getKey();
+			for (L2Clan clan : e.getValue())
 			{
 				changeRegistration(castleId, clan.getId(), true);
 			}
 		}
-		for (Integer castleId : _registeredMercenaries.keySet())
+		for (Entry<FastList<Integer>> e : _registeredMercenaries.entrySet())
 		{
-			for (Integer pl_objId : _registeredMercenaries.get(castleId))
+			final int castleId = e.getKey();
+			for (Integer pl_objId : e.getValue())
 			{
 				changeRegistration(castleId, pl_objId, true);
 			}
@@ -1165,9 +1168,10 @@ public final class TerritoryWarManager implements Siegable
 			_log.warning(getClass().getSimpleName() + ": missing main Quest!");
 			return false;
 		}
-		for (int castleId : _registeredClans.keySet())
+		for (Entry<FastList<L2Clan>> e : _registeredClans.entrySet())
 		{
-			for (L2Clan clan : _registeredClans.get(castleId))
+			final int castleId = e.getKey();
+			for (L2Clan clan : e.getValue())
 			{
 				for (L2PcInstance player : clan.getOnlineMembers(0))
 				{
@@ -1199,9 +1203,10 @@ public final class TerritoryWarManager implements Siegable
 				}
 			}
 		}
-		for (int castleId : _registeredMercenaries.keySet())
+		for (Entry<FastList<Integer>> e : _registeredMercenaries.entrySet())
 		{
-			for (int objId : _registeredMercenaries.get(castleId))
+			final int castleId = e.getKey();
+			for (int objId : e.getValue())
 			{
 				L2PcInstance player = L2World.getInstance().getPlayer(objId);
 				if (player == null)

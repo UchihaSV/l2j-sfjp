@@ -21,10 +21,10 @@ package com.l2jserver.gameserver.model.actor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -72,6 +72,7 @@ import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.taskmanager.DecayTaskManager;
 import com.l2jserver.gameserver.util.Util;
+import com.l2jserver.util.ConcurrentFastMap;
 import com.l2jserver.util.Rnd;
 
 public class L2Attackable extends L2Npc
@@ -79,7 +80,7 @@ public class L2Attackable extends L2Npc
 	private boolean _isRaid = false;
 	private boolean _isRaidMinion = false;
 	private boolean _champion = false;
-	private final Map<L2Character, AggroInfo> _aggroList = new ConcurrentHashMap<>();
+	private final Map<L2Character, AggroInfo> _aggroList = new ConcurrentFastMap<>();	//[JOJO] -ConcurrentHashMap
 	private boolean _isReturningToSpawnPoint = false;
 	private boolean _canReturnToSpawnPoint = true;
 	private boolean _seeThroughSilentMove = false;
@@ -101,7 +102,7 @@ public class L2Attackable extends L2Npc
 	
 	private boolean _absorbed;
 	
-	private final Map<Integer, AbsorberInfo> _absorbersList = new ConcurrentHashMap<>();
+	private final FastIntObjectMap<AbsorberInfo> _absorbersList = new FastIntObjectMap<AbsorberInfo>().shared();	//[JOJO] -ConcurrentHashMap
 	
 	private boolean _mustGiveExpSp;
 	
@@ -1348,7 +1349,7 @@ if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
 		_absorbersList.clear();
 	}
 	
-	public Map<Integer, AbsorberInfo> getAbsorbersList()
+	public FastIntObjectMap<AbsorberInfo> getAbsorbersList()
 	{
 		return _absorbersList;
 	}

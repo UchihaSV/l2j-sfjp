@@ -24,12 +24,11 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javolution.util.FastMap;
-
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.scripting.L2ScriptEngineManager;
 import com.l2jserver.gameserver.scripting.ScriptManager;
+import com.l2jserver.util.ConcurrentFastMap;
 import com.l2jserver.util.Util;
 
 /**
@@ -41,9 +40,9 @@ public final class QuestManager extends ScriptManager<Quest>
 	protected static final Logger _log = Logger.getLogger(QuestManager.class.getName());
 	
 	/** Map containing all the quests. */
-	private final FastMap<String, Quest> _quests = new FastMap<String, Quest>().shared();	//[JOJO] -ConcurrentHashMap
+	private final ConcurrentFastMap<String, Quest> _quests = new ConcurrentFastMap<>();	//[JOJO] -ConcurrentHashMap
 	/** Map containing all the scripts. */
-	private final FastMap<String, Quest> _scripts = new FastMap<String, Quest>().shared();	//[JOJO] -ConcurrentHashMap
+	private final ConcurrentFastMap<String, Quest> _scripts = new ConcurrentFastMap<>();	//[JOJO] -ConcurrentHashMap
 	
 	protected QuestManager()
 	{

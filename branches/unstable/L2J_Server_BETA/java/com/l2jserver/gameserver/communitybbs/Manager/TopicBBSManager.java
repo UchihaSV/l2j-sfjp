@@ -22,11 +22,9 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
 
 import com.l2jserver.gameserver.communitybbs.BB.Forum;
 import com.l2jserver.gameserver.communitybbs.BB.Post;
@@ -34,17 +32,18 @@ import com.l2jserver.gameserver.communitybbs.BB.Topic;
 import com.l2jserver.gameserver.datatables.ClanTable;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.ShowBoard;
+import com.l2jserver.util.ConcurrentFastMap;
 import com.l2jserver.util.StringUtil;
 
 public class TopicBBSManager extends BaseBBSManager
 {
 	private final List<Topic> _table;
-	private final Map<Forum, Integer> _maxId;
+	private final ConcurrentFastMap<Forum, Integer> _maxId;
 	
 	protected TopicBBSManager()
 	{
 		_table = new FastList<>();
-		_maxId = new FastMap<Forum, Integer>().shared();
+		_maxId = new ConcurrentFastMap<>();	//[JOJO] -FastMap.shared
 	}
 	
 	public void addTopic(Topic tt)

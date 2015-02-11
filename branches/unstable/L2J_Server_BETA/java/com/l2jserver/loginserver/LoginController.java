@@ -18,7 +18,7 @@
  */
 package com.l2jserver.loginserver;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.charset.StandardCharsets.*;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -52,6 +52,7 @@ import com.l2jserver.loginserver.network.L2LoginClient;
 import com.l2jserver.loginserver.network.gameserverpackets.ServerStatus;
 import com.l2jserver.loginserver.network.serverpackets.LoginFail.LoginFailReason;
 import com.l2jserver.util.Base64;
+import com.l2jserver.util.ConcurrentFastMap;
 import com.l2jserver.util.Rnd;
 import com.l2jserver.util.crypt.ScrambledKeyPair;
 import com.l2jserver.util.lib.Log;
@@ -70,11 +71,11 @@ public class LoginController
 	public static final int LOGIN_TIMEOUT = 60 * 1000;
 	
 	/** Authed Clients on LoginServer */
-	protected FastMap<String, L2LoginClient> _loginServerClients = new FastMap<String, L2LoginClient>().shared();
+	protected ConcurrentFastMap<String, L2LoginClient> _loginServerClients = new ConcurrentFastMap<>();	//[JOJO] +FastMap.shared
 	
-	protected FastMap<String, String> _loginServerIpAddrs = new FastMap<String, String>().shared();	// [L2J_JP - TSL]
+	protected ConcurrentFastMap<String, String> _loginServerIpAddrs = new ConcurrentFastMap<>();	// [L2J_JP - TSL]
 	
-	private final Map<String, BanInfo> _bannedIps = new FastMap<String, BanInfo>().shared();
+	private final ConcurrentFastMap<String, BanInfo> _bannedIps = new ConcurrentFastMap<>();	//[JOJO] -FastMap.shared
 	
 	private final Map<InetAddress, FailedLoginAttempt> _hackProtection;
 	
