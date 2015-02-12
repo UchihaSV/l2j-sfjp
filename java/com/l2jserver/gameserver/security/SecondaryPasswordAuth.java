@@ -25,6 +25,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +37,6 @@ import com.l2jserver.gameserver.network.serverpackets.Ex2ndPasswordAck;
 import com.l2jserver.gameserver.network.serverpackets.Ex2ndPasswordCheck;
 import com.l2jserver.gameserver.network.serverpackets.Ex2ndPasswordVerify;
 import com.l2jserver.gameserver.util.Util;
-import com.l2jserver.util.Base64;
 
 /**
  * @author mrTJO
@@ -256,7 +256,7 @@ public class SecondaryPasswordAuth
 			MessageDigest md = MessageDigest.getInstance("SHA");
 			byte[] raw = password.getBytes(UTF_8);
 			byte[] hash = md.digest(raw);
-			return Base64.encodeBytes(hash);
+			return Base64.getEncoder().encodeToString(hash);
 		}
 		catch (NoSuchAlgorithmException e)
 		{

@@ -20,6 +20,8 @@ package com.l2jserver.gameserver.network.clientpackets;
 
 import static java.nio.charset.StandardCharsets.*;
 
+import java.util.Base64;
+
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.Announcements;
 import com.l2jserver.gameserver.LoginServerThread;
@@ -92,7 +94,6 @@ import com.l2jserver.gameserver.network.serverpackets.QuestList;
 import com.l2jserver.gameserver.network.serverpackets.ShortCutInit;
 import com.l2jserver.gameserver.network.serverpackets.SkillCoolTime;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
-import com.l2jserver.util.Base64;
 
 /**
  * Enter World Packet Handler
@@ -742,7 +743,7 @@ if (ClanBBSManager.L2J_JP_CLAN_BBS) {{
 	 */
 	private String getText(String string)
 	{
-		return new String(Base64.decode(string), UTF_8);
+		return new String(Base64.getDecoder().decode(string), UTF_8);
 	}
 	
 	private void loadTutorial(L2PcInstance player)
