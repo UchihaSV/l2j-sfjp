@@ -18,7 +18,7 @@
  */
 package com.l2jserver.loginserver.network.gameserverpackets;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.charset.StandardCharsets.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -26,6 +26,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +35,6 @@ import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.loginserver.GameServerTable;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
 import com.l2jserver.loginserver.GameServerThread;
-import com.l2jserver.util.Base64;
 import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
@@ -81,7 +81,7 @@ public class ChangePassword extends BaseRecievePacket
 				
 				byte[] raw = curpass.getBytes(UTF_8);
 				raw = md.digest(raw);
-				String curpassEnc = Base64.encodeBytes(raw);
+				String curpassEnc = Base64.getEncoder().encodeToString(raw);
 				String pass = null;
 				int passUpdated = 0;
 				
@@ -108,12 +108,12 @@ public class ChangePassword extends BaseRecievePacket
 					try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 						PreparedStatement ps = con.prepareStatement("UPDATE accounts SET password=? WHERE login=?"))
 					{
-						ps.setString(1, Base64.encodeBytes(password));
+						ps.setString(1, Base64.getEncoder().encodeToString(password));
 						ps.setString(2, accountName);
 						passUpdated = ps.executeUpdate();
 					}
 					
-					_log.log(Level.INFO, "The password for account " + accountName + " has been changed from " + curpassEnc + " to " + Base64.encodeBytes(password));
+					_log.log(Level.INFO, "The password for account " + accountName + " has been changed from " + curpassEnc + " to " + Base64.getEncoder().encodeToString(password));
 					if (passUpdated > 0)
 					{
 						gst.ChangePasswordResponse((byte) 1, characterName, "You have successfully changed your password!");
