@@ -4,6 +4,7 @@
  */
 package com.l2jserver.util;
 
+import java.util.concurrent.ConcurrentMap;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -12,10 +13,29 @@ import javolution.util.FastMap;
 
 @SuppressWarnings("serial")
 public class ConcurrentFastMap<K, V> extends FastMap<K, V>
+	implements ConcurrentMap<K, V>
 {
 	public ConcurrentFastMap()
 	{
 		shared();
+	}
+
+	@Override
+	public boolean remove(Object key, Object value)
+	{
+		throw new UnsupportedOperationException();	// TODO:
+	}
+
+	@Override
+	public boolean replace(K key, V oldValue, V newValue)
+	{
+		throw new UnsupportedOperationException();	// TODO:
+	}
+
+	@Override
+	public V replace(K key, V value)
+	{
+		throw new UnsupportedOperationException();	// TODO:
 	}
 	
 	@Override
