@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import jp.sf.l2j.troja.FastIntObjectMap;
 import jp.sf.l2j.troja.IntObjectMap;
@@ -54,6 +55,7 @@ import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.util.UnmodifiableArrayList;
+import com.l2jserver.gameserver.util.Util;
 
 import gnu.trove.list.array.TIntArrayList;
 
@@ -815,18 +817,11 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 	 */
 	public List<L2NpcTemplate> getAllOfLevel(int... lvls)
 	{
-		final List<L2NpcTemplate> list = new ArrayList<>();
-		for (int lvl : lvls)
-		{
-			for (L2NpcTemplate t : _npcs.values())
-			{
-				if (t.getLevel() == lvl)
-				{
-					list.add(t);
-				}
-			}
-		}
-		return list;
+		//@formatter:off
+		return _npcs.values().stream()
+			.filter(template -> Util.contains(lvls, template.getLevel()))
+			.collect(Collectors.toList());
+		//@formatter:on
 	}
 	
 	/**
@@ -836,18 +831,12 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 	 */
 	public List<L2NpcTemplate> getAllMonstersOfLevel(int... lvls)
 	{
-		final List<L2NpcTemplate> list = new ArrayList<>();
-		for (int lvl : lvls)
-		{
-			for (L2NpcTemplate t : _npcs.values())
-			{
-				if ((t.getLevel() == lvl) && t.isType("L2Monster"))
-				{
-					list.add(t);
-				}
-			}
-		}
-		return list;
+		//@formatter:off
+		return _npcs.values().stream()
+			.filter(template -> Util.contains(lvls, template.getLevel()))
+			.filter(template -> template.isType("L2Monster"))
+			.collect(Collectors.toList());
+		//@formatter:on
 	}
 	
 	/**
@@ -857,18 +846,12 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 	 */
 	public List<L2NpcTemplate> getAllNpcStartingWith(String... letters)
 	{
-		final List<L2NpcTemplate> list = new ArrayList<>();
-		for (String letter : letters)
-		{
-			for (L2NpcTemplate t : _npcs.values())
-			{
-				if (t.getName().startsWith(letter) && t.isType("L2Npc"))
-				{
-					list.add(t);
-				}
-			}
-		}
-		return list;
+		//@formatter:off
+		return _npcs.values().stream()
+			.filter(template -> Util.startsWith(letters, template.getName()))
+			.filter(template -> template.isType("L2Npc"))
+			.collect(Collectors.toList());
+		//@formatter:on
 	}
 	
 	/**
@@ -878,30 +861,23 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 	 */
 	public List<L2NpcTemplate> getAllNpcOfClassType(String... classTypes)
 	{
-		final List<L2NpcTemplate> list = new ArrayList<>();
-		for (String classType : classTypes)
-		{
-			for (L2NpcTemplate t : _npcs.values())
-			{
-				if (t.isType(classType))
-				{
-					list.add(t);
-				}
-			}
-		}
-		return list;
+		//@formatter:off
+		return _npcs.values().stream()
+			.filter(template -> Util.contains(classTypes, template.getType(), true))
+			.collect(Collectors.toList());
+		//@formatter:on
 	}
 	
 	public void loadNpcsSkillLearn()
 	{
-		for (L2NpcTemplate template : _npcs.values())
+		_npcs.values().forEach(template ->
 		{
 			final List<ClassId> teachInfo = SkillLearnData.getInstance().getSkillLearnData(template.getId());
 			if (teachInfo != null)
 			{
 				template.setTeachInfo(teachInfo);
 			}
-		}
+		});
 	}
 	
 	public void loadMinions()
