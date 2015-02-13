@@ -23,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -99,7 +100,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	
 	private final FastIntObjectMap<Integer> _bossStatus = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
-	private FastList<L2BossZone> _zones = new FastList<>();	//[JOJO] -L2FastList
+	private final FastList<L2BossZone> _zones = new FastList<>();
 	
 	protected GrandBossManager()
 	{
@@ -156,7 +157,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 	 */
 	public void initZones()
 	{
-		FastIntObjectMap<FastIntSet> zones = new FastIntObjectMap<>();	//[JOJO] -FastMap
+		FastIntObjectMap<FastIntSet> zones = new FastIntObjectMap<>();	//[JOJO] -HashMap<Integer, List<Integer>>
 		
 		if (_zones == null)
 		{
@@ -170,7 +171,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			{
 				continue;
 			}
-			zones.put(zone.getId(), new FastIntSet());	//[JOJO] -L2FastList
+			zones.put(zone.getId(), new FastIntSet());	//[JOJO] -ArrayList
 		}
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
@@ -504,7 +505,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 		_zones.clear();
 	}
 	
-	public FastList<L2BossZone> getZones()	//[JOJO] -L2FastList
+	public List<L2BossZone> getZones()
 	{
 		return _zones;
 	}
