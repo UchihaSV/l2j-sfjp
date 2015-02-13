@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.model.zone.type;
 
+import java.util.List;
+
 import javolution.util.FastList;
 import jp.sf.l2j.troja.FastIntObjectMap;
 
@@ -62,32 +64,29 @@ public class L2BossZone extends L2ZoneType
 		// track the times that players got disconnected. Players are allowed
 		// to log back into the zone as long as their log-out was within _timeInvade time...
 		// <player objectId, expiration time in milliseconds>
-		private final FastIntObjectMap<Long> _playerAllowedReEntryTimes;	//[JOJO] -FastMap
+		private final FastIntObjectMap<Long> _playerAllowedReEntryTimes = new FastIntObjectMap<>();	//[JOJO] -FastMap
 		
 		// track the players admitted to the zone who should be allowed back in
 		// after reboot/server downtime (outside of their control), within 30 of server restart
-		private final FastIntSet _playersAllowed;		//[JOJO] -L2FastList
+		private final FastIntSet _playersAllowed = new FastIntSet();	//[JOJO] -FastList
 		
-		private final FastList<L2Character> _raidList;	//[JOJO] -L2FastList
+		private final FastList<L2Character> _raidList = new FastList<>();
 		
 		public Settings()
 		{
-			_playerAllowedReEntryTimes = new FastIntObjectMap<>();	//[JOJO] -FastMap
-			_playersAllowed = new FastIntSet();	//[JOJO] -L2FastList
-			_raidList = new FastList<>();	//[JOJO] -L2FastList
 		}
 		
-		public FastIntObjectMap<Long> getPlayerAllowedReEntryTimes()	//[JOJO] -FastMap
+		public FastIntObjectMap<Long> getPlayerAllowedReEntryTimes()	//[JOJO] -Map
 		{
 			return _playerAllowedReEntryTimes;
 		}
 		
-		public FastIntSet getPlayersAllowed()	//[JOJO] -L2FastList
+		public FastIntSet getPlayersAllowed()	//[JOJO] -List
 		{
 			return _playersAllowed;
 		}
 		
-		public FastList<L2Character> getRaidList()	//[JOJO] -L2FastList
+		public List<L2Character> getRaidList()
 		{
 			return _raidList;
 		}
@@ -314,7 +313,7 @@ public class L2BossZone extends L2ZoneType
 		super.setEnabled(flag);
 	}
 	
-	public void setAllowedPlayers(FastIntSet players)
+	public void setAllowedPlayers(FastIntSet players)	//[JOJO] -List
 	{
 		if (players != null)
 		{
@@ -323,7 +322,7 @@ public class L2BossZone extends L2ZoneType
 		}
 	}
 	
-	public FastIntSet getAllowedPlayers()	//[JOJO] -L2FastList
+	public FastIntSet getAllowedPlayers()	//[JOJO] -List
 	{
 		return getSettings().getPlayersAllowed();
 	}

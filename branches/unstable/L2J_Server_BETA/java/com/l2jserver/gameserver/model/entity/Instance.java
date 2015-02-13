@@ -80,8 +80,8 @@ public final class Instance
 	private int _ejectTime = Config.EJECT_DEAD_PLAYER_TIME;
 	/** Allow random walk for NPCs, global parameter. */
 	private boolean _allowRandomWalk = true;
-	private final FastList<Integer> _players = new FastList<Integer>().shared();	//[JOJO] -L2FastList.shared
-	private final FastList<L2Npc> _npcs = new FastList<L2Npc>().shared();	//[JOJO] -L2FastList.shared
+	private final FastList<Integer> _players = new FastList<Integer>().shared();
+	private final FastList<L2Npc> _npcs = new FastList<L2Npc>().shared();
 	private final FastIntObjectMap<L2DoorInstance> _doors = new FastIntObjectMap<L2DoorInstance>().shared();	//[JOJO] -ConcurrentHashMap
 	private final Map<String, List<L2Spawn>> _manualSpawn = new HashMap<>();
 	private Location _spawnLoc = null;
@@ -96,7 +96,7 @@ public final class Instance
 	private String _timerText = "";
 	
 	protected ScheduledFuture<?> _checkTimeUpTask = null;
-	protected final FastIntObjectMap<ScheduledFuture<?>> _ejectDeadTasks = new FastIntObjectMap<>();
+	protected final FastIntObjectMap<ScheduledFuture<?>> _ejectDeadTasks = new FastIntObjectMap<>();	//[JOJO] -FastMap
 	
 	public Instance(int id)
 	{

@@ -71,7 +71,7 @@ public class ClanTable
 {
 	private static final Logger _log = Logger.getLogger(ClanTable.class.getName());
 	
-	private static FastList<ClanWarListener> clanWarListeners = new FastList/*L2FastList*/<ClanWarListener>().shared();
+	private static FastList<ClanWarListener> clanWarListeners = new FastList<ClanWarListener>().shared();
 	
 	private final FastIntObjectMap<L2Clan> _clans = new FastIntObjectMap<>();
 	
@@ -352,19 +352,15 @@ public class ClanTable
 	
 	public void scheduleRemoveClan(final int clanId)
 	{
-		ThreadPoolManager.getInstance().scheduleGeneral(new Runnable()
+		ThreadPoolManager.getInstance().scheduleGeneral(() ->
 		{
-			@Override
-			public void run()
+			if (getClan(clanId) == null)
 			{
-				if (getClan(clanId) == null)
-				{
-					return;
-				}
-				if (getClan(clanId).getDissolvingExpiryTime() != 0)
-				{
-					destroyClan(clanId);
-				}
+				return;
+			}
+			if (getClan(clanId).getDissolvingExpiryTime() != 0)
+			{
+				destroyClan(clanId);
 			}
 		}, Math.max(getClan(clanId).getDissolvingExpiryTime() - System.currentTimeMillis(), 300000));
 	}
