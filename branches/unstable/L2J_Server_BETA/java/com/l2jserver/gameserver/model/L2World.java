@@ -36,7 +36,6 @@ import com.l2jserver.gameserver.model.actor.L2Playable;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 import com.l2jserver.gameserver.model.interfaces.ILocational;
-import com.l2jserver.gameserver.model.interfaces.IProcedure;
 import com.l2jserver.util.StringUtil;
 
 public final class L2World
@@ -186,18 +185,6 @@ if (com.l2jserver.Config.DEBUG_object_already_exist_in_OID_map) {{
 		final L2PcInstance[] players = _allPlayers.values().toArray(new L2PcInstance[_allPlayers.values().size()]);
 		Arrays.sort(players, comparator);
 		return players;
-	}
-	
-	public boolean forEachPlayer(IProcedure<L2PcInstance, Boolean> procedure)
-	{
-		for (L2PcInstance player : _allPlayers.values())
-		{
-			if (!procedure.execute(player))
-			{
-				return false;
-			}
-		}
-		return true;
 	}
 	
 	/**

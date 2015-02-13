@@ -65,7 +65,6 @@ import com.l2jserver.gameserver.model.quest.QuestTimer;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
-import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
@@ -358,7 +357,14 @@ public final class Instance
 	
 	public void removePlayers()
 	{
-		for (Integer objectId : _players) ejectProcedure(objectId);
+		for (Integer objectId : _players)
+		{
+			final L2PcInstance player = L2World.getInstance().getPlayer(objectId);
+			if ((player != null) && (player.getInstanceId() == getId()))
+			{
+				ejectPlayer(player);
+			}
+		}
 		_players.clear();
 	}
 	
@@ -781,7 +787,14 @@ public final class Instance
 		}
 		if (cs != null)
 		{
-			for (Integer objectId : _players) broadcastPacket(objectId, cs);
+			for (Integer objectId : _players)
+			{
+				final L2PcInstance player = L2World.getInstance().getPlayer(objectId);
+				if ((player != null) && (player.getInstanceId() == getId()))
+				{
+					player.sendPacket(cs);
+				}
+			}
 		}
 		cancelTimer();
 		if (remaining >= 10000)
@@ -815,7 +828,13 @@ public final class Instance
 	{
 		if ((player != null))
 		{
-			_ejectDeadTasks.put(player.getObjectId(), ThreadPoolManager.getInstance().scheduleGeneral(new EjectPlayer(player), _ejectTime));
+			_ejectDeadTasks.put(player.getObjectId(), ThreadPoolManager.getInstance().scheduleGeneral(() ->
+			{
+				if (player.isDead() && (player.getInstanceId() == getId()))
+				{
+					ejectPlayer(player);
+				}
+			}, _ejectTime));
 		}
 	}
 	
@@ -857,58 +876,17 @@ public final class Instance
 		}
 	}
 	
-	protected class EjectPlayer implements Runnable
+	private void ejectPlayer(L2PcInstance player)
 	{
-		private final L2PcInstance _player;
-		
-		public EjectPlayer(L2PcInstance player)
+		if (isShowTimer()) player.hideInstanceTimer();	//[JOJO]
+		player.setInstanceId(0);
+		if (getSpawnLoc() != null)
 		{
-			_player = player;
+			player.teleToLocation(getSpawnLoc(), true);
 		}
-		
-		@Override
-		public void run()
+		else
 		{
-//TODO:[JOJO] _ejectDeadTasks.remove(_player.getObjectId());
-			if ((_player != null) && _player.isDead() && (_player.getInstanceId() == getId()))
-			{
-				_player.setInstanceId(0);
-				if (getSpawnLoc() != null)
-				{
-					_player.teleToLocation(getSpawnLoc(), true);
-				}
-				else
-				{
-					_player.teleToLocation(TeleportWhereType.TOWN);
-				}
-			}
+			player.teleToLocation(TeleportWhereType.TOWN);
 		}
-	}
-	
-	private void ejectProcedure(int objectId)
-	{
-			final L2PcInstance player = L2World.getInstance().getPlayer(objectId);
-			if ((player != null) && (player.getInstanceId() == getId()))
-			{
-				if (isShowTimer()) player.hideInstanceTimer();	//[JOJO]
-				player.setInstanceId(0);
-				if (getSpawnLoc() != null)
-				{
-					player.teleToLocation(getSpawnLoc(), true);
-				}
-				else
-				{
-					player.teleToLocation(TeleportWhereType.TOWN);
-				}
-			}
-	}
-	
-	private void broadcastPacket(int objectId, L2GameServerPacket _packet)
-	{
-			final L2PcInstance player = L2World.getInstance().getPlayer(objectId);
-			if ((player != null) && (player.getInstanceId() == getId()))
-			{
-				player.sendPacket(_packet);
-			}
 	}
 }
