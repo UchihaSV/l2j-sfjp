@@ -114,7 +114,7 @@ public final class RequestJoinParty extends L2GameClientPacket
 			// GM は1人でパーティー可能(自分自身をタゲ /invite)
 			if (requestor.isGM())
 			{
-				requestor.setParty(new L2Party(requestor, _itemDistribution));
+				requestor.setParty(new L2Party(requestor, PartyDistributionType.findById(_partyDistributionTypeId)));
 				requestor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_JOINED_S1_PARTY).addString(requestor.getName()));
 				return;
 			}
