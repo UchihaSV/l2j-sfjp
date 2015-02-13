@@ -259,7 +259,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	private L2Object _target;
 	
 	// set by the start of attack, in game ticks
-	private int _attackEndTime;
+	private volatile long _attackEndTime;
 	private int _disableBowAttackEndTime;
 	private int _disableCrossBowAttackEndTime;
 	
@@ -833,7 +833,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 * </ul>
 	 * @param target The L2Character targeted
 	 */
-	protected void doAttack(L2Character target)
+	protected synchronized void doAttack(L2Character target)
 	{
 		if ((target == null) || isAttackingDisabled() || !getEvents().onAttack(target))
 		{
@@ -1088,7 +1088,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		final int timeAtk = calculateTimeBetweenAttacks(target, weaponItem);
 		// the hit is calculated to happen halfway to the animation - might need further tuning e.g. in bow case
 		final int timeToHit = timeAtk / 2;
-		_attackEndTime = (GameTimeController.getInstance().getGameTicks() + (timeAtk / GameTimeController.MILLIS_IN_TICK)) - 1;
+		_attackEndTime = System.currentTimeMillis() + timeAtk;
 		final int ssGrade = (weaponItem != null) ? weaponItem.getItemGradeSPlus().getId() : 0;
 		// Create a Server->Client packet Attack
 		Attack attack = new Attack(this, target, wasSSCharged, ssGrade);
@@ -2781,7 +2781,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public boolean isAttackingDisabled()
 	{
-		return isFlying() || isStunned() || isSleeping() || (_attackEndTime > GameTimeController.getInstance().getGameTicks()) || isAlikeDead() || isParalyzed() || isPhysicalAttackMuted() || isCoreAIDisabled() /*[L2J_JP]*/|| isFallsdown()/**/;
+		return isFlying() || isStunned() || isSleeping() || isAttackingNow() || isAlikeDead() || isParalyzed() || isPhysicalAttackMuted() || isCoreAIDisabled() /*[L2J_JP]*/|| isFallsdown()/**/;
 	}
 	
 	public final Calculator[] getCalculators()
@@ -4207,7 +4207,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public boolean isAttackingNow()
 	{
-		return _attackEndTime > GameTimeController.getInstance().getGameTicks();
+		return _attackEndTime > System.currentTimeMillis();
 	}
 	
 	/**
@@ -6572,7 +6572,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		return (1 + ((double) Rnd.get(0 - random, random) / 100));
 	}
 	
-	public int getAttackEndTime()
+	public final long getAttackEndTime()
 	{
 		return _attackEndTime;
 	}
