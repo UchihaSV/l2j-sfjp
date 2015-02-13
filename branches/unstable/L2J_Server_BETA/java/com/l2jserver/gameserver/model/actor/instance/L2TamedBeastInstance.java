@@ -265,7 +265,6 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 	{
 		return skill.hasEffectType(L2EffectType.CPHEAL,
 			L2EffectType.HEAL,
-			L2EffectType.HEAL_PERCENT,
 			L2EffectType.MANAHEAL_BY_LEVEL,
 			L2EffectType.MANAHEAL_PERCENT);
 	}
