@@ -23,6 +23,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -44,7 +45,6 @@ import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.ShowBoard;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
-import com.l2jserver.gameserver.util.Comparators;
 import com.l2jserver.util.StringUtil;
 
 public class RegionBBSManager extends BaseBBSManager
@@ -308,7 +308,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 		_onlineCounts[FOR_PLAYER] = 0;
 		_onlineCounts[FOR_GM] = 0;
 		
-		final L2PcInstance[] sortedPlayers = L2World.getInstance().getPlayersSortedBy(Comparators.PLAYER_NAME_COMPARATOR);
+		final L2PcInstance[] sortedPlayers = L2World.getInstance().getPlayersSortedBy(Comparator.comparing(L2PcInstance::getName, String::compareToIgnoreCase));
 		for (L2PcInstance player : sortedPlayers)
 		{
 			addOnlinePlayer(player);
