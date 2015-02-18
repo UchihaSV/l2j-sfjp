@@ -24,36 +24,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.logging.Logger;
-
-import javolution.util.FastMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.NpcData;
-import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.enums.AISkillScope;
 import com.l2jserver.gameserver.enums.AIType;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.NpcRace;
-import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.enums.Sex;
 import com.l2jserver.gameserver.model.L2MinionData;
-import com.l2jserver.gameserver.model.L2Object;
-import com.l2jserver.gameserver.model.L2Spawn;
-import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Character;
-import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.base.ClassId;
 import com.l2jserver.gameserver.model.drops.DropListScope;
 import com.l2jserver.gameserver.model.drops.IDropItem;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
-import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.stats.MoveType;
 import com.l2jserver.gameserver.util.UnmodifiableArrayList;
@@ -64,8 +52,6 @@ import com.l2jserver.gameserver.util.UnmodifiableArrayList;
  */
 public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 {
-	private static final Logger _log = Logger.getLogger(L2NpcTemplate.class.getName());
-	
 	private int _id;
 	private int _displayId;
 	private byte _level;
@@ -124,7 +110,6 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	
 	private List<L2MinionData> _minions = emptyArrayList();
 	private List<ClassId> _teachInfo = emptyArrayList();
-	private final FastMap<QuestEventType, List<Quest>> _questEvents = new FastMap<>();	//[JOJO] -ConcurrentHashMap
 	
 	/**
 	 * Constructor of L2Character.
@@ -539,7 +524,7 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 		_aiSkillLists = aiSkillLists != null && !aiSkillLists.isEmpty() ? Collections.unmodifiableMap(aiSkillLists) : Collections.<AISkillScope, List<Skill>> emptyMap();
 		
 		if (aiSkillLists != null)
-			for (Entry<AISkillScope, List<Skill>> e : aiSkillLists.entrySet())
+			for (Map.Entry<AISkillScope, List<Skill>> e : aiSkillLists.entrySet())
 				e.setValue(new UnmodifiableArrayList<>(e.getValue()));
 	}
 	
@@ -743,81 +728,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	}
 	//-------------------------------------------------------
 	
-	public void addQuestEvent(QuestEventType eventType, Quest q)
-	{
-		List<Quest> quests;
-		if ((quests = _questEvents.get(eventType)) == null)
-		{
-			quests = new ArrayList<>();
-			_questEvents.put(eventType, quests);
-		}
-		
-		if (!eventType.isMultipleRegistrationAllowed() && !quests.isEmpty())
-		{
-			_log.warning("Quest event not allowed in multiple quests.  Skipped addition of Event Type \"" + eventType + "\" for NPC \"" + _name + "\" and quest \"" + q.getName() + "\".");
-		}
-		else
-		{
-			quests.add(q);
-		}
-if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
-		// L2AttackableAIScript#onXXX ‚ÍÅŒã‚ÉŒÄ‚Î‚ê‚é‚æ‚¤‡”Ô‚ð•Ï‚¦‚é.
-		for (int i = quests.size() - 1; --i >= 0; )
-			if (quests.get(i).getName().equals("L2AttackableAIScript"))
-				quests.add(quests.remove(i));
-}}
-if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
-		if (eventType == QuestEventType.ON_SPAWN && !q.getName().equals("L2AttackableAIScript")) {
-			boolean hasOnSpawn;
-			try {
-				q.getClass().getDeclaredMethod("onSpawn", L2Npc.class);	// @Override public String onSpawn(L2Npc npc)
-				hasOnSpawn = true;
-			}
-			catch (NoSuchMethodException | SecurityException e) {
-				hasOnSpawn = false;
-			}
-			if (hasOnSpawn) {
-				boolean done = false;
-				for (L2Spawn spawn : SpawnTable.getInstance().getSpawns(_id)) {
-					L2Npc npc;
-					if ((npc = spawn.getLastSpawn()) != null && npc.isVisible()) {
-						done = true;
-						q.onSpawn(npc);
-					}
-				}
-				if (!done)
-					for (L2Object o :  L2World.getInstance().getVisibleObjects())
-						if (o.isNpc() && o.getId() == _id)
-							q.onSpawn((L2Npc) o);
-			}
-		}
-}}
-	}
-	
-	public void removeQuest(Quest q)
-	{
-		for (Entry<QuestEventType, List<Quest>> entry : _questEvents.entrySet())
-		{
-			if (entry.getValue().contains(q))
-			{
-				Iterator<Quest> it = entry.getValue().iterator();
-				while (it.hasNext())
-				{
-					Quest q1 = it.next();
-					if (q1 == q)
-					{
-						it.remove();
-					}
-				}
-				
-				if (entry.getValue().isEmpty())
-				{
-					_questEvents.remove(entry.getKey());
-				}
-			}
-		}
-	}
-	
 	public void addMinionData(L2MinionData minion)
 	{
 if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
@@ -835,16 +745,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			return _teachInfo.contains(classId.getParent());
 		}
 		return _teachInfo.contains(classId);
-	}
-	
-	public Map<QuestEventType, List<Quest>> getEventQuests()
-	{
-		return _questEvents;
-	}
-	
-	public List<Quest> getEventQuests(QuestEventType EventType)
-	{
-		return _questEvents.get(EventType);
 	}
 	
 	/**

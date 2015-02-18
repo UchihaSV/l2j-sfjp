@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.ai;
 import static com.l2jserver.gameserver.ai.CtrlIntention.*;
 
 import java.util.List;
+import java.util.Queue;
 
 import javolution.util.FastList;
 
@@ -29,7 +30,6 @@ import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.GeoData;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.enums.ItemLocation;
-import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.instancemanager.WalkingManager;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.Location;
@@ -41,11 +41,14 @@ import com.l2jserver.gameserver.model.actor.instance.L2DoorInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
+import com.l2jserver.gameserver.model.events.EventDispatcher;
+import com.l2jserver.gameserver.model.events.EventType;
+import com.l2jserver.gameserver.model.events.impl.character.npc.OnNpcMoveFinished;
+import com.l2jserver.gameserver.model.events.listeners.AbstractEventListener;
 import com.l2jserver.gameserver.model.interfaces.ILocational;
 import com.l2jserver.gameserver.model.items.L2Weapon;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.items.type.WeaponType;
-import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.skills.targets.L2TargetType;
 import com.l2jserver.gameserver.network.SystemMessageId;
@@ -740,17 +743,8 @@ public class L2CharacterAI extends AbstractAI
 			L2Npc npc = (L2Npc) _actor;
 			override |= WalkingManager.getInstance().onArrived(npc); // Walking Manager support
 			
-			// Notify quest
-			List<Quest> eventQuests;
-			if ((eventQuests = npc.getTemplate().getEventQuests(QuestEventType.ON_MOVE_FINISHED)) != null)
-			{
-				for (Quest quest : eventQuests)
-				{
-					override |= quest.notifyMoveFinished(npc);
-				}
-			}
-			if (override)
-				return;
+			// Notify to scripts
+			EventDispatcher.getInstance().notifyEventAsync(new OnNpcMoveFinished(npc), npc);
 		}
 		
 		// If the Intention was AI_INTENTION_MOVE_TO, set the Intention to AI_INTENTION_ACTIVE
