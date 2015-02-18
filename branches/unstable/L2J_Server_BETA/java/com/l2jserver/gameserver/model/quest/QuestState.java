@@ -35,6 +35,7 @@ import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.events.AbstractScript;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.network.serverpackets.ExShowQuestMark;
@@ -582,7 +583,7 @@ public final class QuestState
 		
 		if (playQuestMiddle)
 		{
-			Quest.playSound(_player, QuestSound.ITEMSOUND_QUEST_MIDDLE);
+			AbstractScript.playSound(_player, QuestSound.ITEMSOUND_QUEST_MIDDLE);
 		}
 		return this;
 	}
@@ -633,7 +634,7 @@ public final class QuestState
 	 */
 	public long getQuestItemsCount(int itemId)
 	{
-		return Quest.getQuestItemsCount(_player, itemId);
+		return AbstractScript.getQuestItemsCount(_player, itemId);
 	}
 	
 	/**
@@ -642,7 +643,7 @@ public final class QuestState
 	 */
 	public boolean hasQuestItems(int itemId)
 	{
-		return Quest.hasQuestItems(_player, itemId);
+		return AbstractScript.hasQuestItems(_player, itemId);
 	}
 	
 	/**
@@ -651,7 +652,7 @@ public final class QuestState
 	 */
 	public boolean hasQuestItems(int... itemIds)
 	{
-		return Quest.hasQuestItems(_player, itemIds);
+		return AbstractScript.hasQuestItems(_player, itemIds);
 	}
 	
 	/**
@@ -661,7 +662,7 @@ public final class QuestState
 	 */
 	public int getEnchantLevel(int itemId)
 	{
-		return Quest.getEnchantLevel(_player, itemId);
+		return AbstractScript.getEnchantLevel(_player, itemId);
 	}
 	
 	/**
@@ -680,7 +681,7 @@ public final class QuestState
 	 */
 	public void rewardItems(ItemHolder item)
 	{
-		Quest.rewardItems(_player, item);
+		AbstractScript.rewardItems(_player, item);
 	}
 	
 	/**
@@ -690,7 +691,7 @@ public final class QuestState
 	 */
 	public void rewardItems(int itemId, long count)
 	{
-		Quest.rewardItems(_player, itemId, count);
+		AbstractScript.rewardItems(_player, itemId, count);
 	}
 	
 	/**
@@ -700,37 +701,37 @@ public final class QuestState
 	 */
 	public void giveItems(int itemId, long count)
 	{
-		Quest.giveItems(_player, itemId, count, 0);
+		AbstractScript.giveItems(_player, itemId, count, 0);
 	}
 	
 	public void giveItems(ItemHolder holder)
 	{
-		Quest.giveItems(_player, holder.getId(), holder.getCount(), 0);
+		AbstractScript.giveItems(_player, holder.getId(), holder.getCount(), 0);
 	}
 	
 	public void giveItems(int itemId, long count, int enchantlevel)
 	{
-		Quest.giveItems(_player, itemId, count, enchantlevel);
+		AbstractScript.giveItems(_player, itemId, count, enchantlevel);
 	}
 	
 	public void giveItems(int itemId, long count, byte attributeId, int attributeLevel)
 	{
-		Quest.giveItems(_player, itemId, count, attributeId, attributeLevel);
+		AbstractScript.giveItems(_player, itemId, count, attributeId, attributeLevel);
 	}
 	
 	public boolean giveItemRandomly(int itemId, long amount, long limit, double dropChance, boolean playSound)
 	{
-		return Quest.giveItemRandomly(_player, null, itemId, amount, amount, limit, dropChance, playSound);
+		return AbstractScript.giveItemRandomly(_player, null, itemId, amount, amount, limit, dropChance, playSound);
 	}
 	
 	public boolean giveItemRandomly(L2Npc npc, int itemId, long amount, long limit, double dropChance, boolean playSound)
 	{
-		return Quest.giveItemRandomly(_player, npc, itemId, amount, amount, limit, dropChance, playSound);
+		return AbstractScript.giveItemRandomly(_player, npc, itemId, amount, amount, limit, dropChance, playSound);
 	}
 	
 	public boolean giveItemRandomly(L2Npc npc, int itemId, long minAmount, long maxAmount, long limit, double dropChance, boolean playSound)
 	{
-		return Quest.giveItemRandomly(_player, npc, itemId, minAmount, maxAmount, limit, dropChance, playSound);
+		return AbstractScript.giveItemRandomly(_player, npc, itemId, minAmount, maxAmount, limit, dropChance, playSound);
 	}
 	
  //	// TODO: More radar functions need to be added when the radar class is complete.
@@ -764,7 +765,7 @@ public final class QuestState
 	 */
 	public void takeItems(int itemId, long count)
 	{
-		Quest.takeItems(_player, itemId, count);
+		AbstractScript.takeItems(_player, itemId, count);
 	}
 	
 	/**
@@ -773,7 +774,7 @@ public final class QuestState
 	 */
 	public void playSound(String sound)
 	{
-		Quest.playSound(_player, sound);
+		AbstractScript.playSound(_player, sound);
 	}
 	
 	/**
@@ -782,7 +783,7 @@ public final class QuestState
 	 */
 	public void playSound(QuestSound sound)
 	{
-		Quest.playSound(_player, sound);
+		AbstractScript.playSound(_player, sound);
 	}
 	
 	/**
@@ -792,7 +793,7 @@ public final class QuestState
 	 */
 	public void addExpAndSp(int exp, int sp)
 	{
-		Quest.addExpAndSp(_player, exp, sp);
+		AbstractScript.addExpAndSp(_player, exp, sp);
 	}
 	
 	/**
@@ -811,7 +812,7 @@ public final class QuestState
 	 */
 	public int getItemEquipped(int loc)
 	{
-		return Quest.getItemEquipped(_player, loc);
+		return AbstractScript.getItemEquipped(_player, loc);
 	}
 	
 	/**
@@ -1019,7 +1020,7 @@ public final class QuestState
 	 */
 	public L2Npc addSpawn(int npcId, int x, int y, int z, int heading, boolean randomOffset, int despawnDelay, boolean isSummonSpawn)
 	{
-		return Quest.addSpawn(npcId, x, y, z, heading, randomOffset, despawnDelay, isSummonSpawn);
+		return AbstractScript.addSpawn(npcId, x, y, z, heading, randomOffset, despawnDelay, isSummonSpawn);
 	}
 	
 	/**

@@ -25,8 +25,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +52,6 @@ import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.enums.CategoryType;
 import com.l2jserver.gameserver.enums.InstanceType;
-import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.enums.ShotType;
 import com.l2jserver.gameserver.enums.Team;
 import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
@@ -71,7 +72,6 @@ import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.TeleportWhereType;
 import com.l2jserver.gameserver.model.TimeStamp;
-import com.l2jserver.gameserver.model.actor.events.CharEvents;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2RiftInvaderInstance;
@@ -93,6 +93,16 @@ import com.l2jserver.gameserver.model.effects.AbstractEffect;
 import com.l2jserver.gameserver.model.effects.EffectFlag;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.entity.Instance;
+import com.l2jserver.gameserver.model.events.EventDispatcher;
+import com.l2jserver.gameserver.model.events.EventType;
+import com.l2jserver.gameserver.model.events.impl.character.OnCreatureAttack;
+import com.l2jserver.gameserver.model.events.impl.character.OnCreatureDamage;
+import com.l2jserver.gameserver.model.events.impl.character.OnCreatureKill;
+import com.l2jserver.gameserver.model.events.impl.character.OnCreatureSkillUse;
+import com.l2jserver.gameserver.model.events.impl.character.OnCreatureTeleported;
+import com.l2jserver.gameserver.model.events.impl.character.npc.OnNpcSkillSee;
+import com.l2jserver.gameserver.model.events.listeners.AbstractEventListener;
+import com.l2jserver.gameserver.model.events.returns.TerminateReturn;
 import com.l2jserver.gameserver.model.holders.InvulSkillHolder;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.holders.SkillUseHolder;
@@ -107,7 +117,6 @@ import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.items.type.WeaponType;
 import com.l2jserver.gameserver.model.options.OptionsSkillHolder;
 import com.l2jserver.gameserver.model.options.OptionsSkillType;
-import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.skills.AbnormalType;
 import com.l2jserver.gameserver.model.skills.AbnormalVisualEffect;
 import com.l2jserver.gameserver.model.skills.BuffInfo;
@@ -197,7 +206,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	
 	private CharStat _stat;
 	private CharStatus _status;
-	private CharEvents _events;
 	private L2CharTemplate _template; // The link on the L2CharTemplate object containing generic and static properties of this L2Character type (ex : Max HP, Speed...)
 	private String _title;
 	
@@ -464,7 +472,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		setInstanceType(InstanceType.L2Character);
 		initCharStat();
 		initCharStatus();
-		initCharEvents();
 		
 		// Set its template to the new L2Character
 		_template = template;
@@ -556,7 +563,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			}
 			spawnMe(getX(), getY(), getZ());
 			setIsTeleporting(false);
-			getEvents().onTeleported();
+			EventDispatcher.getInstance().notifyEventAsync(new OnCreatureTeleported(this), this);
 		}
 		finally
 		{
@@ -835,10 +842,13 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	protected synchronized void doAttack(L2Character target)
 	{
-		if ((target == null) || isAttackingDisabled() || !getEvents().onAttack(target))
+		if ((target == null) || isAttackingDisabled())
 		{
 			return;
 		}
+		
+		// Notify to scripts
+		EventDispatcher.getInstance().notifyEventAsync(new OnCreatureAttack(this, target), this);
 		
 		if (!isAlikeDead())
 		{
@@ -1733,7 +1743,26 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	
 	private void beginCast(Skill skill, boolean simultaneously, L2Character target, L2Object[] targets)
 	{
-		if ((target == null) || !getEvents().onMagic(skill, simultaneously, target, targets))
+		if (target == null)
+		{
+			if (simultaneously)
+			{
+				setIsCastingSimultaneouslyNow(false);
+			}
+			else
+			{
+				setIsCastingNow(false);
+			}
+			if (isPlayer())
+			{
+				sendPacket(ActionFailed.STATIC_PACKET);
+				getAI().setIntention(AI_INTENTION_ACTIVE);
+			}
+			return;
+		}
+		
+		final TerminateReturn term = EventDispatcher.getInstance().notifyEvent(new OnCreatureSkillUse(this, skill, simultaneously, target, targets), this, TerminateReturn.class);
+		if ((term != null) && term.terminate())
 		{
 			if (simultaneously)
 			{
@@ -2461,6 +2490,12 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public boolean doDie(L2Character killer)
 	{
+		final TerminateReturn returnBack = EventDispatcher.getInstance().notifyEvent(new OnCreatureKill(killer, this), this, TerminateReturn.class);
+		if ((returnBack != null) && returnBack.terminate())
+		{
+			return false;
+		}
+		
 		// killing is only possible one time
 		synchronized (this)
 		{
@@ -2468,13 +2503,10 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			{
 				return false;
 			}
+			
 			// now reset currentHp to zero
 			setCurrentHp(0);
 			setIsDead(true);
-		}
-		if (!getEvents().onDeath(killer))
-		{
-			return false;
 		}
 		
 		// Set target to null and cancel Attack or Cast
@@ -3111,21 +3143,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	public final void setStatus(CharStatus value)
 	{
 		_status = value;
-	}
-	
-	public void initCharEvents()
-	{
-		_events = new CharEvents(this);
-	}
-	
-	public void setCharEvents(CharEvents events)
-	{
-		_events = events;
-	}
-	
-	public CharEvents getEvents()
-	{
-		return _events;
 	}
 	
 	public L2CharTemplate getTemplate()
@@ -6386,15 +6403,10 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				{
 					if ((spMob != null) && spMob.isNpc())
 					{
-						L2Npc npcMob = (L2Npc) spMob;
-						
-						List<Quest> eventQuests;
-						if (npcMob.isInsideRadius(player, 1000, true, true) && (eventQuests = npcMob.getTemplate().getEventQuests(QuestEventType.ON_SKILL_SEE)) != null)
+						final L2Npc npcMob = (L2Npc) spMob;
+						if ((npcMob.isInsideRadius(player, 1000, true, true)))
 						{
-							for (Quest quest : eventQuests)
-							{
-								quest.notifySkillSee(npcMob, player, skill, targets, isSummon());
-							}
+							EventDispatcher.getInstance().notifyEventAsync(new OnNpcSkillSee(npcMob, player, skill, targets, isSummon()), npcMob);
 						}
 					}
 				}
@@ -7146,8 +7158,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public void notifyDamageReceived(double damage, L2Character attacker, Skill skill, boolean critical, boolean damageOverTime)
 	{
-		getEvents().onDamageReceived(damage, attacker, skill, critical, damageOverTime);
-		attacker.getEvents().onDamageDealt(damage, this, skill, critical, damageOverTime);
+		EventDispatcher.getInstance().notifyEventAsync(new OnCreatureDamage(attacker, this, damage, skill, critical, damageOverTime), this, attacker);
 	}
 	
 	/**
@@ -7280,6 +7291,26 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	private InvulSkillHolder getInvulAgainstSkill(int skillId)
 	{
 		return _invulAgainst != null ? _invulAgainst.get(skillId) : null;
+	}
+	
+	@Override
+	public Queue<AbstractEventListener> getListeners(EventType type)
+	{
+		final Queue<AbstractEventListener> objectListenres = super.getListeners(type);
+		final Queue<AbstractEventListener> templateListeners = getTemplate().getListeners(type);
+		if (objectListenres.isEmpty())
+		{
+			return templateListeners;
+		}
+		else if (templateListeners.isEmpty())
+		{
+			return objectListenres;
+		}
+		
+		final Queue<AbstractEventListener> both = new LinkedBlockingDeque<>(objectListenres.size() + templateListeners.size());
+		both.addAll(objectListenres);
+		both.addAll(templateListeners);
+		return both;
 	}
 }
 

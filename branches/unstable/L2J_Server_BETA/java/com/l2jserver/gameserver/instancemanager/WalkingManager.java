@@ -25,6 +25,7 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
@@ -38,7 +39,6 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlIntention;
 import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.engines.DocumentParser;
-import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.model.L2NpcWalkerNode;
 import com.l2jserver.gameserver.model.L2Spawn;
@@ -52,9 +52,12 @@ import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
+import com.l2jserver.gameserver.model.events.EventDispatcher;
+import com.l2jserver.gameserver.model.events.EventType;
+import com.l2jserver.gameserver.model.events.impl.character.npc.OnNpcMoveNodeArrived;
+import com.l2jserver.gameserver.model.events.listeners.AbstractEventListener;
 import com.l2jserver.gameserver.model.holders.NpcRoutesHolder;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
-import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.network.NpcStringId;
 import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
@@ -493,18 +496,7 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 				final L2NpcWalkerNode nextNode = walk.getCurrentNode();
 				
 				// Notify quest
-				boolean override = false;	//+[JOJO]
-				List<Quest> eventQuests;
-				if ((eventQuests = npc.getTemplate().getEventQuests(QuestEventType.ON_NODE_ARRIVED)) != null)
-				{
-					for (Quest quest : eventQuests)
-						override |= quest.notifyNodeArrived(npc);
-				}
-				if (override)
-				{
-					walk.setBlocked(false);
-					return true;
-				}
+				EventDispatcher.getInstance().notifyEventAsync(new OnNpcMoveNodeArrived(npc), npc);
 				
 				NpcStringId npcString;
 				String chatText;

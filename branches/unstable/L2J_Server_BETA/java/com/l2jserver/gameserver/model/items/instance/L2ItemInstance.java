@@ -18,8 +18,7 @@
  */
 package com.l2jserver.gameserver.model.items.instance;
 
-import static com.l2jserver.gameserver.model.itemcontainer.Inventory.ADENA_ID;
-import static com.l2jserver.gameserver.model.itemcontainer.Inventory.MAX_ADENA;
+import static com.l2jserver.gameserver.model.itemcontainer.Inventory.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,13 +32,10 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import javolution.util.FastList;
-
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.GeoData;
 import com.l2jserver.gameserver.ThreadPoolManager;
-import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.datatables.EnchantItemOptionsData;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.OptionsData;
@@ -49,7 +45,6 @@ import com.l2jserver.gameserver.enums.ShotType;
 import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.ItemsOnGroundManager;
 import com.l2jserver.gameserver.instancemanager.MercTicketManager;
-import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.model.DropProtection;
 import com.l2jserver.gameserver.model.Elementals;
 import com.l2jserver.gameserver.model.L2Augmentation;
@@ -60,6 +55,12 @@ import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.knownlist.NullKnownList;
+import com.l2jserver.gameserver.model.events.EventDispatcher;
+import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerAugment;
+import com.l2jserver.gameserver.model.events.impl.character.player.inventory.OnPlayerItemDrop;
+import com.l2jserver.gameserver.model.events.impl.character.player.inventory.OnPlayerItemPickup;
+import com.l2jserver.gameserver.model.events.impl.item.OnItemBypassEvent;
+import com.l2jserver.gameserver.model.events.impl.item.OnItemTalk;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.items.L2Armor;
@@ -70,24 +71,15 @@ import com.l2jserver.gameserver.model.items.type.EtcItemType;
 import com.l2jserver.gameserver.model.items.type.ItemType;
 import com.l2jserver.gameserver.model.options.EnchantOptions;
 import com.l2jserver.gameserver.model.options.Options;
-import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.quest.QuestState;
-import com.l2jserver.gameserver.model.quest.State;
 import com.l2jserver.gameserver.model.skills.funcs.Func;
 import com.l2jserver.gameserver.network.SystemMessageId;
-import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.DropItem;
 import com.l2jserver.gameserver.network.serverpackets.GetItem;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
-import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.network.serverpackets.SpawnItem;
 import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
-import com.l2jserver.gameserver.scripting.scriptengine.events.AugmentEvent;
-import com.l2jserver.gameserver.scripting.scriptengine.events.ItemDropEvent;
-import com.l2jserver.gameserver.scripting.scriptengine.events.ItemPickupEvent;
-import com.l2jserver.gameserver.scripting.scriptengine.listeners.player.AugmentListener;
-import com.l2jserver.gameserver.scripting.scriptengine.listeners.player.DropListener;
 import com.l2jserver.gameserver.util.GMAudit;
 
 /**
@@ -98,9 +90,6 @@ public final class L2ItemInstance extends L2Object
 {
 	private static final Logger _log = Logger.getLogger(L2ItemInstance.class.getName());
 	private static final Logger _logItems = Logger.getLogger("item");
-	
-	private static FastList<AugmentListener> augmentListeners = new FastList<AugmentListener>().shared();
-	private static FastList<DropListener> dropListeners = new FastList<DropListener>().shared();
 	
 	/** ID of the owner */
 	private int _ownerId;
@@ -271,10 +260,6 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 	 */
 	public final void pickupMe(L2Character player)
 	{
-		if (!firePickupListeners(player.getActingPlayer()))
-		{
-			return;
-		}
 		assert getWorldRegion() != null;
 		
 		L2WorldRegion oldregion = getWorldRegion();
@@ -314,6 +299,12 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		// outside of synchronized to avoid deadlocks
 		// Remove the L2ItemInstance from the world
 		L2World.getInstance().removeVisibleObject(this, oldregion);
+		
+		if (player.isPlayer())
+		{
+			// Notify to scripts
+			EventDispatcher.getInstance().notifyEventAsync(new OnPlayerItemPickup(player.getActingPlayer(), this), getItem());
+		}
 	}
 	
 	/**
@@ -948,10 +939,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 			_log.info("Warning: Augment set for (" + getObjectId() + ") " + getName() + " owner: " + getOwnerId());
 			return false;
 		}
-		if (!fireAugmentListeners(true, augmentation))
-		{
-			return false;
-		}
+		
 		_augmentation = augmentation;
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
@@ -961,6 +949,7 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		{
 			_log.log(Level.SEVERE, "Could not update atributes for item: " + this + " from DB:", e);
 		}
+		EventDispatcher.getInstance().notifyEventAsync(new OnPlayerAugment(getActingPlayer(), this, augmentation, true), getItem());
 		return true;
 	}
 	
@@ -973,10 +962,9 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		{
 			return;
 		}
-		if (!fireAugmentListeners(true, _augmentation))
-		{
-			return;
-		}
+		
+		// Copy augmentation before removing it.
+		final L2Augmentation augment = _augmentation;
 		_augmentation = null;
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
@@ -989,6 +977,9 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		{
 			_log.log(Level.SEVERE, "Could not remove augmentation for item: " + this + " from DB:", e);
 		}
+		
+		// Notify to scripts.
+		EventDispatcher.getInstance().notifyEventAsync(new OnPlayerAugment(getActingPlayer(), this, augment, false), getItem());
 	}
 	
 	public void restoreAttributes()
@@ -1633,11 +1624,12 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 	
 	public final void dropMe(L2Character dropper, int x, int y, int z)
 	{
-		if (!fireDropListeners(dropper, new Location(x, y, z)))
-		{
-			return;
-		}
 		ThreadPoolManager.getInstance().executeGeneral(new ItemDropTask(this, dropper, x, y, z));
+		if ((dropper != null) && dropper.isPlayer())
+		{
+			// Notify to scripts
+			EventDispatcher.getInstance().notifyEventAsync(new OnPlayerItemDrop(dropper.getActingPlayer(), this, new Location(x, y, z)), getItem());
+		}
 	}
 	
 	/**
@@ -2135,82 +2127,22 @@ if (!com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 		if (command.startsWith("Quest"))
 		{
 			String questName = command.substring(6);
-			String content = null;
-			
 			String event = null;
 			int idx = questName.indexOf(' ');
 			if (idx > 0)
 			{
 				event = questName.substring(idx).trim();
-				questName = questName.substring(0, idx);
 			}
 			
-			Quest q = QuestManager.getInstance().getQuest(questName);
-			QuestState qs = activeChar.getQuestState(questName);
-			
-			if (q != null)
+			if (event != null)
 			{
-				if (((q.getId() >= 1) && (q.getId() < 20000)) && ((activeChar.getWeightPenalty() >= 3) || !activeChar.isInventoryUnder90(true)))
-				{
-					activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INVENTORY_LESS_THAN_80_PERCENT));
-					return;
-				}
-				
-				if (qs == null)
-				{
-					if ((q.getId() >= 1) && (q.getId() < 20000))
-					{
-						if (activeChar.getAllActiveQuests().length > 40)
-						{
-							activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.TOO_MANY_QUESTS));
-							return;
-						}
-					}
-					qs = q.newQuestState(activeChar);
-				}
+				EventDispatcher.getInstance().notifyEventAsync(new OnItemBypassEvent(this, activeChar, event), getItem());
 			}
 			else
 			{
-				content = Quest.getNoQuestMsg(activeChar);
+				EventDispatcher.getInstance().notifyEventAsync(new OnItemTalk(this, activeChar), getItem());
 			}
-			
-			if (qs != null)
-			{
-				if ((event != null) && !qs.getQuest().notifyItemEvent(this, activeChar, event))
-				{
-					return;
-				}
-				else if (!qs.getQuest().notifyItemTalk(this, activeChar))
-				{
-					return;
-				}
-				
-				questName = qs.getQuest().getName();
-				String stateId = State.getStateName(qs.getState());
-				String path = "data/scripts/quests/" + questName + "/" + stateId + ".htm";
-				content = HtmCache.getInstance().getHtm(activeChar.getHtmlPrefix(), path);
-			}
-			
-			if (content != null)
-			{
-				showChatWindow(activeChar, content);
-			}
-			
-			// Send a Server->Client ActionFailed to the L2PcInstance in order to avoid that the client wait another packet
-			activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 		}
-	}
-	
-	/**
-	 * @param activeChar
-	 * @param content
-	 */
-	public void showChatWindow(L2PcInstance activeChar, String content)
-	{
-		final NpcHtmlMessage html = new NpcHtmlMessage(0, getId());
-		html.setHtml(content);
-		html.replace("%itemId%", getObjectId());
-		activeChar.sendPacket(html);
 	}
 	
 	@Override
@@ -2301,127 +2233,6 @@ if (com.l2jserver.Config.LAZY_INITIALIZE_ITEM_ENCHANT_OPTIONS) {{
 				_log.log(Level.INFO, "applyEnchantStats: Couldn't find option: " + id);
 			}
 		}
-	}
-	
-	// LISTENERS
-	/**
-	 * Fires all the DropListener.onPickup() methods, if any
-	 * @param actor
-	 * @return false if the item cannot be picked up by the given player
-	 */
-	private boolean firePickupListeners(L2PcInstance actor)
-	{
-		if (!dropListeners.isEmpty() && (actor != null))
-		{
-			ItemPickupEvent event = new ItemPickupEvent();
-			event.setItem(this);
-			event.setPicker(actor);
-			event.setLocation(new Location(getX(), getY(), getZ()));
-			for (DropListener listener : dropListeners)
-			{
-				if (!listener.onPickup(event))
-				{
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Fires all the AugmentListener.onAugment() methods, if any
-	 * @param isAugment
-	 * @param augmentation
-	 * @return false if the operation is not allowed
-	 */
-	private boolean fireAugmentListeners(boolean isAugment, L2Augmentation augmentation)
-	{
-		if (!augmentListeners.isEmpty() && (augmentation != null))
-		{
-			AugmentEvent event = new AugmentEvent();
-			event.setAugmentation(augmentation);
-			event.setIsAugment(isAugment);
-			event.setItem(this);
-			for (AugmentListener listener : augmentListeners)
-			{
-				if (isAugment)
-				{
-					if (!listener.onAugment(event))
-					{
-						return false;
-					}
-				}
-				else
-				{
-					if (!listener.onRemoveAugment(event))
-					{
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
-	
-	private boolean fireDropListeners(L2Character dropper, Location loc)
-	{
-		if (!dropListeners.isEmpty() && (dropper != null))
-		{
-			ItemDropEvent event = new ItemDropEvent();
-			event.setDropper(dropper);
-			event.setItem(this);
-			event.setLocation(loc);
-			for (DropListener listener : dropListeners)
-			{
-				if (!listener.onDrop(event))
-				{
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Adds an augmentation listener
-	 * @param listener
-	 */
-	public static void addAugmentListener(AugmentListener listener)
-	{
-		if (!augmentListeners.contains(listener))
-		{
-			augmentListeners.add(listener);
-		}
-	}
-	
-	/**
-	 * Removes an augmentation listener
-	 * @param listener
-	 */
-	public static void removeAugmentListener(AugmentListener listener)
-	{
-		augmentListeners.remove(listener);
-	}
-	
-	/**
-	 * Adds a drop / pickup listener
-	 * @param listener
-	 */
-	public static void addDropListener(DropListener listener)
-	{
-		if (!dropListeners.contains(listener))
-		{
-			dropListeners.add(listener);
-		}
-	}
-	
-	/**
-	 * Removes a drop / pickup listener
-	 * @param listener
-	 */
-	public static void removeDropListener(DropListener listener)
-	{
-		dropListeners.remove(listener);
 	}
 	
 	@Override
