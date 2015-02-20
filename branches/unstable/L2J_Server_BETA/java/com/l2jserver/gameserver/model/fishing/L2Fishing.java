@@ -18,7 +18,6 @@
  */
 package com.l2jserver.gameserver.model.fishing;
 
-import java.util.ArrayList;
 import java.util.concurrent.Future;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -26,7 +25,6 @@ import com.l2jserver.gameserver.datatables.FishingMonstersData;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.events.AbstractScript;
-import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExFishingHpRegen;
@@ -372,14 +370,6 @@ public class L2Fishing implements Runnable
 	}
 	
 	//[JOJO]-------------------------------------------------
-	private static final ArrayList<Quest> spawnListeners = new ArrayList<>();
-	
-	public static void addSpawnListener(Quest quest)
-	{
-		spawnListeners.add(quest);
-		spawnListeners.trimToSize();
-	}
-	
 	public static void spawnMonster(int npcId, L2PcInstance fisher)
 	{
 		final L2Npc monster = AbstractScript.addSpawn(npcId, fisher);

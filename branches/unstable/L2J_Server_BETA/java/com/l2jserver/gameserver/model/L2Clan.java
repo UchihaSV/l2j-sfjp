@@ -2834,12 +2834,12 @@ public class L2Clan implements IIdentifiable, INamable
 		if (getLeader().isOnline())
 		{
 			L2PcInstance leader = getLeader().getPlayerInstance();
-			if (level > 4)
+			if (level >= 5)
 			{
 				SiegeManager.getInstance().addSiegeSkills(leader);
 				leader.sendPacket(SystemMessageId.CLAN_CAN_ACCUMULATE_CLAN_REPUTATION_POINTS);
 			}
-			else if (level < 5)
+			else
 			{
 				SiegeManager.getInstance().removeSiegeSkills(leader);
 			}
