@@ -433,14 +433,10 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 					getAI().setIntention(CtrlIntention.AI_INTENTION_INTERACT, player);
 					setCanReturnToSpawnPoint(false);
 					setIsNoRndWalk(true);
-					ThreadPoolManager.getInstance().scheduleEffect(new Runnable() {
-						@Override
-						public void run()
-						{
-							if (getAI().getIntention() == CtrlIntention.AI_INTENTION_INTERACT)
-								getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
-						}
-					}, 5000);
+					ThreadPoolManager.getInstance().scheduleEffect(() -> {
+						if (getAI().getIntention() == CtrlIntention.AI_INTENTION_INTERACT)
+							getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
+					}, 5000L);
 				}
 				else if ((player = getRandomPlayer(true)) != null)
 				{
