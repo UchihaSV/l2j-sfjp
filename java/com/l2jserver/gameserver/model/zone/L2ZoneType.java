@@ -21,7 +21,6 @@ package com.l2jserver.gameserver.model.zone;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import jp.sf.l2j.troja.FastIntObjectMap;
