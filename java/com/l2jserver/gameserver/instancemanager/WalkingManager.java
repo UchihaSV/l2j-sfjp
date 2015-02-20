@@ -52,9 +52,7 @@ import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
-import com.l2jserver.gameserver.model.events.EventDispatcher;
 import com.l2jserver.gameserver.model.events.EventType;
-import com.l2jserver.gameserver.model.events.impl.character.npc.OnNpcMoveNodeArrived;
 import com.l2jserver.gameserver.model.events.listeners.AbstractEventListener;
 import com.l2jserver.gameserver.model.holders.NpcRoutesHolder;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
@@ -496,7 +494,16 @@ if (com.l2jserver.Config.FIX_WALKER_ATTACK) {{
 				final L2NpcWalkerNode nextNode = walk.getCurrentNode();
 				
 				// Notify quest
-				EventDispatcher.getInstance().notifyEventAsync(new OnNpcMoveNodeArrived(npc), npc);
+				boolean override = false;	//+[JOJO]
+				Queue<AbstractEventListener> eventQuests;
+				if ((eventQuests = npc.getTemplate().getListeners(EventType.ON_NPC_MOVE_NODE_ARRIVED)) != null)
+					for (AbstractEventListener quest : eventQuests)
+						override |= quest.getQuest().notifyNodeArrived(npc);
+				if (override)
+				{
+					walk.setBlocked(false);
+					return true;
+				}
 				
 				NpcStringId npcString;
 				String chatText;

@@ -18,7 +18,6 @@
  */
 package com.l2jserver.gameserver.model.actor.tasks.attackable;
 
-import com.l2jserver.gameserver.enums.QuestEventType;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
@@ -44,16 +43,9 @@ public final class OnKillNotifyTask implements Runnable
 	@Override
 	public void run()
 	{
-if (com.l2jserver.Config.FIX_OnKillNotifyTask_THREAD) {{
-		for (Quest quest : _attackable.getTemplate().getEventQuests(QuestEventType.ON_KILL))
-		{
-			quest.notifyKill(_attackable, _killer, _isSummon);
-		}
-}} else {{
 		if ((_quest != null) && (_attackable != null) && (_killer != null))
 		{
 			_quest.notifyKill(_attackable, _killer, _isSummon);
 		}
-}}
 	}
 }
