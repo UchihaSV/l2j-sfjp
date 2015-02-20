@@ -391,22 +391,12 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 			if (isBuffSkill(skill) && !isSkillDisabled(skill))
 			{
 				final Skill _skill = skill;
-				ThreadPoolManager.getInstance().scheduleGeneral(new Runnable(){
-					@Override public void run()
-					{
-						sitCastAndFollow(_skill, _owner);
-					}
-				}, delay);
+				ThreadPoolManager.getInstance().scheduleGeneral(() -> sitCastAndFollow(_skill, _owner), delay);
 				delay += (100 + skill.getHitTime());
 				done = true;
 			}
 		}
-		ThreadPoolManager.getInstance().scheduleGeneral(new Runnable(){
-			@Override public void run()
-			{
-				getAI().setIntention(CtrlIntention.AI_INTENTION_FOLLOW, _owner);
-			}
-		}, delay);
+		ThreadPoolManager.getInstance().scheduleGeneral(() -> getAI().setIntention(CtrlIntention.AI_INTENTION_FOLLOW, _owner), delay);
 		if (!done)
 			_owner.sendMessage("条件が合わないため、能力は使用できません。");
 	}

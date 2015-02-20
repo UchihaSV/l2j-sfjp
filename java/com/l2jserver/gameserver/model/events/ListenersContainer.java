@@ -55,6 +55,7 @@ public class ListenersContainer
 	 */
 	public AbstractEventListener removeListener(AbstractEventListener listener)
 	{
+		Queue<AbstractEventListener> eventQuests;
 		if ((listener == null))
 		{
 			throw new NullPointerException("Listener cannot be null!");
@@ -63,12 +64,12 @@ public class ListenersContainer
 		{
 			throw new NullPointerException("Listeners container is not initialized!");
 		}
-		else if (!_listeners.containsKey(listener.getType()))
+		else if ((eventQuests = _listeners.get(listener.getType())) == null)
 		{
 			throw new IllegalAccessError("Listeners container doesn't had " + listener.getType() + " event type added!");
 		}
 		
-		_listeners.get(listener.getType()).remove(listener);
+		eventQuests.remove(listener);
 		return listener;
 	}
 	
@@ -78,7 +79,8 @@ public class ListenersContainer
 	 */
 	public Queue<AbstractEventListener> getListeners(EventType type)
 	{
-		return (_listeners != null) && _listeners.containsKey(type) ? _listeners.get(type) : EmptyQueue.emptyQueue();
+		Queue<AbstractEventListener> eventQuests;
+		return (_listeners != null) && (eventQuests = _listeners.get(type)) != null ? eventQuests : EmptyQueue.emptyQueue();
 	}
 	
 	public boolean hasListener(EventType type)

@@ -447,13 +447,7 @@ public class L2BossZone extends L2ZoneType
 			return;
 		if (isPlayersAnnihilated())
 		{
-			ThreadPoolManager.getInstance().scheduleGeneral(new Runnable() {
-				@Override
-				public void run()
-				{
-					oustAllPlayers();
-				}
-			}, 10000);
+			ThreadPoolManager.getInstance().scheduleGeneral(() -> oustAllPlayers(), 10000);
 		}
 	}
 	private synchronized boolean isPlayersAnnihilated()

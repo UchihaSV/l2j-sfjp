@@ -195,11 +195,7 @@ public abstract class AbstractScript extends ManagedScript
 				
 				if (!npcIds.isEmpty())
 				{
-					if (!_registeredIds.containsKey(ListenerRegisterType.NPC))
-					{
-						_registeredIds.put(ListenerRegisterType.NPC, new FastList<Integer>().shared());
-					}
-					_registeredIds.get(ListenerRegisterType.NPC).addAll(npcIds);
+					_registeredIds.computeIfAbsent(ListenerRegisterType.NPC, v -> new FastList<Integer>().shared()).addAll(npcIds);
 				}
 				
 				registerAnnotation(method, eventType, ListenerRegisterType.NPC, npcIds);
@@ -1256,11 +1252,7 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 					}
 				}
 				
-				if (!_registeredIds.containsKey(registerType))
-				{
-					_registeredIds.put(registerType, new FastList<Integer>().shared());
-				}
-				_registeredIds.get(registerType).add(id);
+				_registeredIds.computeIfAbsent(registerType, v -> new FastList<Integer>().shared()).add(id);
 			}
 		}
 		else
@@ -1352,11 +1344,7 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 					}
 				}
 			}
-			if (!_registeredIds.containsKey(registerType))
-			{
-				_registeredIds.put(registerType, new FastList<Integer>().shared());
-			}
-			_registeredIds.get(registerType).addAll(ids);
+			_registeredIds.computeIfAbsent(registerType, v -> new FastList<Integer>().shared()).addAll(ids);
 		}
 		else
 		{
