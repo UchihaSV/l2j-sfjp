@@ -26,18 +26,18 @@ import java.util.logging.LogManager;
  */
 public class L2LogManager extends LogManager
 {
-	public L2LogManager()
-	{
-	}
-	
-	@Override
-	public void reset()
-	{
-		// do nothing
-	}
-	
-	public void doReset()
-	{
-		super.reset();
-	}
+//	public L2LogManager()
+//	{
+//	}
+//	
+//	@Override
+//	public void reset()
+//	{
+//		// do nothing
+//	}
+//	
+//	public void doReset()
+//	{
+//		super.reset();
+//	}
 }
