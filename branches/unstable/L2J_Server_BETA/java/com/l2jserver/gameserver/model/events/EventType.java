@@ -147,6 +147,7 @@ public enum EventType
 	ON_NPC_MOVE_NODE_ARRIVED(OnNpcMoveNodeArrived.class, void.class),
 	ON_NPC_MOVE_ROUTE_FINISHED(OnNpcMoveRouteFinished.class, void.class),
 	ON_NPC_QUEST_START(null, void.class),
+	ON_NPC_REGENERATE(null, void.class),	//+[JOJO] when HP regenerated in 100%
 	ON_NPC_SKILL_FINISHED(OnNpcSkillFinished.class, void.class),
 	ON_NPC_SKILL_SEE(OnNpcSkillSee.class, void.class),
 	ON_NPC_SPAWN(OnNpcSpawn.class, void.class),

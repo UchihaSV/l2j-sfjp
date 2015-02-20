@@ -29,6 +29,7 @@ import java.util.Queue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,6 +52,8 @@ import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.base.AcquireSkillType;
 import com.l2jserver.gameserver.model.events.AbstractScript;
 import com.l2jserver.gameserver.model.events.EventType;
+import com.l2jserver.gameserver.model.events.ListenerRegisterType;
+import com.l2jserver.gameserver.model.events.impl.IBaseEvent;
 import com.l2jserver.gameserver.model.events.listeners.AbstractEventListener;
 import com.l2jserver.gameserver.model.events.listeners.DummyEventListener;
 import com.l2jserver.gameserver.model.events.returns.TerminateReturn;
@@ -818,6 +821,7 @@ public class Quest extends AbstractScript implements IIdentifiable
 		catch (Exception e)
 		{
 			showError(caster, e);
+			return;	//[JOJO]
 		}
 		showResult(caster, res);
 	}
@@ -858,6 +862,7 @@ public class Quest extends AbstractScript implements IIdentifiable
 		catch (Exception e)
 		{
 			showError(player, e);
+			return;	//[JOJO]
 		}
 		showResult(player, res);
 	}
@@ -874,19 +879,20 @@ public class Quest extends AbstractScript implements IIdentifiable
 		{
 			player = creature.getActingPlayer();
 		}
-		String res = null;
+		String res;
 		try
 		{
 			res = onSeeCreature(npc, creature, isSummon);
 		}
 		catch (Exception e)
 		{
-			if (player != null)
+	//		if (player != null)	//-[JOJO]
 			{
 				showError(player, e);
+				return;	//+[JOJO]
 			}
 		}
-		if (player != null)
+	//	if (player != null)	//-[JOJO]
 		{
 			showResult(player, res);
 		}
@@ -1459,6 +1465,22 @@ public class Quest extends AbstractScript implements IIdentifiable
 		
 	}
 	
+	//[JOJO]-------------------------------------------------
+	/**
+	 * event ON_NPC_REGENERATE
+	 */
+	protected static class OnNpcRegenerate implements IBaseEvent
+	{
+		final L2Npc npc;
+		public OnNpcRegenerate(L2Npc npc) { this.npc = npc; }
+		@Override public EventType getType() { return EventType.ON_NPC_REGENERATE; }
+	}
+	public void addRegenerateId(int npcId) { addRegenerateId(new int[]{npcId}); }
+	public void addRegenerateId(int... npcIds) { registerConsumer((Consumer<OnNpcRegenerate>) event -> notifyRegenerate(event.npc), EventType.ON_NPC_REGENERATE, ListenerRegisterType.NPC, npcIds); }
+	public void addRegenerateId(Collection<Integer> npcIds) { registerConsumer((Consumer<OnNpcRegenerate>) event -> notifyRegenerate(event.npc), EventType.ON_NPC_REGENERATE, ListenerRegisterType.NPC, npcIds); }
+	public final void notifyRegenerate(L2Npc npc) { onRegenerate(npc); }
+	public String onRegenerate(L2Npc npc) { return null; }
+	//-------------------------------------------------------
 	
 	/**
 	 * @param mob
@@ -1982,6 +2004,15 @@ public class Quest extends AbstractScript implements IIdentifiable
 	
 	/**
 	 * Add the Item to the notify when player speaks with it.
+	 * @param itemId the ID of the Item to register
+	 */
+	public void addItemTalkId(int itemId)
+	{
+		addItemTalkId(new int[]{itemId});
+	}
+	
+	/**
+	 * Add the Item to the notify when player speaks with it.
 	 * @param itemIds the IDs of the Item to register
 	 */
 	public void addItemTalkId(int... itemIds)
@@ -2342,7 +2373,9 @@ public class Quest extends AbstractScript implements IIdentifiable
 	 */
 	public void addMoveFinishedId(int npcId)
 	{
-		addMoveFinishedId(new int[]{npcId});
+		//[JOJO]
+		final L2NpcTemplate npcTemplate = NpcData.getInstance().getTemplate(npcId);
+		npcTemplate.addListener(new DummyEventListener(npcTemplate, EventType.ON_NPC_MOVE_FINISHED, Quest.this));
 	}
 	
 	/**
@@ -2351,7 +2384,8 @@ public class Quest extends AbstractScript implements IIdentifiable
 	 */
 	public void addMoveFinishedId(int... npcIds)
 	{
-		setNpcMoveFinishedId(event -> notifyMoveFinished(event.getNpc()), npcIds);
+		//[JOJO]
+		for (int npcId : npcIds) addMoveFinishedId(npcId);
 	}
 	
 	/**
@@ -2360,7 +2394,8 @@ public class Quest extends AbstractScript implements IIdentifiable
 	 */
 	public void addMoveFinishedId(Collection<Integer> npcIds)
 	{
-		setNpcMoveFinishedId(event -> notifyMoveFinished(event.getNpc()), npcIds);
+		//[JOJO]
+		for (int npcId : npcIds) addMoveFinishedId(npcId);
 	}
 	
 	/**
@@ -2369,7 +2404,9 @@ public class Quest extends AbstractScript implements IIdentifiable
 	 */
 	public void addNodeArrivedId(int npcId)
 	{
-		addNodeArrivedId(new int[]{npcId});
+		//[JOJO]
+		final L2NpcTemplate npcTemplate = NpcData.getInstance().getTemplate(npcId);
+		npcTemplate.addListener(new DummyEventListener(npcTemplate, EventType.ON_NPC_MOVE_NODE_ARRIVED, Quest.this));
 	}
 	
 	/**
@@ -2378,7 +2415,8 @@ public class Quest extends AbstractScript implements IIdentifiable
 	 */
 	public void addNodeArrivedId(int... npcIds)
 	{
-		setNpcMoveNodeArrivedId(event -> notifyNodeArrived(event.getNpc()), npcIds);
+		//[JOJO]
+		for (int npcId : npcIds) addNodeArrivedId(npcId);
 	}
 	
 	/**
@@ -2387,7 +2425,8 @@ public class Quest extends AbstractScript implements IIdentifiable
 	 */
 	public void addNodeArrivedId(Collection<Integer> npcIds)
 	{
-		setNpcMoveNodeArrivedId(event -> notifyNodeArrived(event.getNpc()), npcIds);
+		//[JOJO]
+		for (int npcId : npcIds) addNodeArrivedId(npcId);
 	}
 	
 	/**

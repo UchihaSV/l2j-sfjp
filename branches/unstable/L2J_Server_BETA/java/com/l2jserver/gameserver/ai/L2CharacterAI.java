@@ -41,9 +41,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2DoorInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
-import com.l2jserver.gameserver.model.events.EventDispatcher;
 import com.l2jserver.gameserver.model.events.EventType;
-import com.l2jserver.gameserver.model.events.impl.character.npc.OnNpcMoveFinished;
 import com.l2jserver.gameserver.model.events.listeners.AbstractEventListener;
 import com.l2jserver.gameserver.model.interfaces.ILocational;
 import com.l2jserver.gameserver.model.items.L2Weapon;
@@ -744,7 +742,14 @@ public class L2CharacterAI extends AbstractAI
 			override |= WalkingManager.getInstance().onArrived(npc); // Walking Manager support
 			
 			// Notify to scripts
-			EventDispatcher.getInstance().notifyEventAsync(new OnNpcMoveFinished(npc), npc);
+			//[JOJO]-------------------------------------------------
+			final Queue<AbstractEventListener> eventQuests;
+			if ((eventQuests = npc.getTemplate().getListeners(EventType.ON_NPC_MOVE_FINISHED)) != null)
+				for (AbstractEventListener quest : eventQuests)
+					override |= quest.getQuest().notifyMoveFinished(npc);
+			if (override)
+				return;
+			//-------------------------------------------------------
 		}
 		
 		// If the Intention was AI_INTENTION_MOVE_TO, set the Intention to AI_INTENTION_ACTIVE

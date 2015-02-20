@@ -18,10 +18,12 @@
  */
 package com.l2jserver.gameserver.model.events.listeners;
 
+import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.model.events.EventType;
 import com.l2jserver.gameserver.model.events.ListenersContainer;
 import com.l2jserver.gameserver.model.events.impl.IBaseEvent;
 import com.l2jserver.gameserver.model.events.returns.AbstractEventReturn;
+import com.l2jserver.gameserver.model.quest.Quest;
 
 /**
  * @author UnAfraid
@@ -63,6 +65,23 @@ public abstract class AbstractEventListener implements Comparable<AbstractEventL
 	{
 		return _owner;
 	}
+	
+	//[JOJO]-------------------------------------------------
+	/**
+	 * @return the owner of the Quest, the Quest that registered this listener.
+	 */
+	public Quest getQuest()
+	{
+		return _owner instanceof Quest ? (Quest) _owner : Q00000_EmptyQuest;
+	}
+	
+	private static final Quest Q00000_EmptyQuest;
+	static {
+		Q00000_EmptyQuest = new Quest(0, null, null);
+		QuestManager.getInstance().getQuests().remove(Q00000_EmptyQuest.getClass().getSimpleName(), Q00000_EmptyQuest);
+		QuestManager.getInstance().getScripts().remove(Q00000_EmptyQuest.getClass().getSimpleName(), Q00000_EmptyQuest);
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * @return priority of execution (Higher the sooner)

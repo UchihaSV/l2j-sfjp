@@ -24,8 +24,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -39,15 +40,17 @@ import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.datatables.DoorTable;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.NpcData;
+import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.enums.QuestSound;
 import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
+import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2Spawn;
+import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.Location;
-import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2DoorInstance;
@@ -101,12 +104,13 @@ import com.l2jserver.gameserver.model.events.listeners.RunnableEventListener;
 import com.l2jserver.gameserver.model.events.returns.AbstractEventReturn;
 import com.l2jserver.gameserver.model.events.returns.TerminateReturn;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
-import com.l2jserver.gameserver.model.interfaces.IPositionable;
+import com.l2jserver.gameserver.model.interfaces.ILocational;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.olympiad.Olympiad;
+import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.stats.Stats;
 import com.l2jserver.gameserver.model.zone.L2ZoneType;
@@ -126,9 +130,11 @@ import com.l2jserver.util.Rnd;
  */
 public abstract class AbstractScript extends ManagedScript
 {
+	private static final boolean CHECK_TAKEITEMS = true;	//[JOJO]
+	
 	protected static final Logger _log = Logger.getLogger(AbstractScript.class.getName());
-	private final Map<ListenerRegisterType, List<Integer>> _registeredIds = new ConcurrentHashMap<>();
-	private final List<AbstractEventListener> _listeners = new FastList<AbstractEventListener>().shared();
+	private final ConcurrentHashMap<ListenerRegisterType, List<Integer>> _registeredIds = new ConcurrentHashMap<>();
+	private final FastList<AbstractEventListener> _listeners = new FastList<AbstractEventListener>().shared();
 	
 	public AbstractScript()
 	{
@@ -137,7 +143,7 @@ public abstract class AbstractScript extends ManagedScript
 	
 	private void initializeAnnotationListeners()
 	{
-		final List<Integer> npcIds = new ArrayList<>();
+		final ArrayList<Integer> npcIds = new ArrayList<>();
 		for (Method method : getClass().getMethods())
 		{
 			if (method.isAnnotationPresent(RegisterEvent.class))
@@ -397,7 +403,14 @@ public abstract class AbstractScript extends ManagedScript
 	 */
 	protected final List<AbstractEventListener> setNpcSpawnId(Consumer<OnNpcSpawn> callback, int... npcIds)
 	{
+if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
+		List<AbstractEventListener> r = registerConsumer(callback, EventType.ON_NPC_SPAWN, ListenerRegisterType.NPC, npcIds);
+		for (int npcId : npcIds)
+			fix_onSpawn_for_SpawnTable(npcId);
+		return r;
+}} else {{
 		return registerConsumer(callback, EventType.ON_NPC_SPAWN, ListenerRegisterType.NPC, npcIds);
+}}
 	}
 	
 	/**
@@ -408,8 +421,48 @@ public abstract class AbstractScript extends ManagedScript
 	 */
 	protected final List<AbstractEventListener> setNpcSpawnId(Consumer<OnNpcSpawn> callback, Collection<Integer> npcIds)
 	{
+if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
+		List<AbstractEventListener> r = registerConsumer(callback, EventType.ON_NPC_SPAWN, ListenerRegisterType.NPC, npcIds);
+		for (Integer npcId : npcIds)
+			fix_onSpawn_for_SpawnTable(npcId.intValue());
+		return r;
+}} else {{
 		return registerConsumer(callback, EventType.ON_NPC_SPAWN, ListenerRegisterType.NPC, npcIds);
+}}
 	}
+	
+	//[JOJO]-------------------------------------------------
+	private final void fix_onSpawn_for_SpawnTable(int npcId)
+	{
+if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
+		if (this instanceof Quest && !this.getScriptName().equals("L2AttackableAIScript")) {
+			final Quest q = (Quest) this;
+			boolean hasOnSpawn;
+			try {
+				q.getClass().getDeclaredMethod("onSpawn", L2Npc.class);	// @Override public String onSpawn(L2Npc npc)
+				hasOnSpawn = true;
+			}
+			catch (NoSuchMethodException | SecurityException e) {
+				hasOnSpawn = false;
+			}
+			if (hasOnSpawn) {
+				boolean done = false;
+				for (L2Spawn spawn : SpawnTable.getInstance().getSpawns(npcId)) {
+					L2Npc npc;
+					if ((npc = spawn.getLastSpawn()) != null && npc.isVisible()) {
+						done = true;
+						q.onSpawn(npc);
+					}
+				}
+				if (!done)
+					for (L2Object o :  L2World.getInstance().getVisibleObjects())
+						if (o.isNpc() && o.getId() == npcId)
+							q.onSpawn((L2Npc) o);
+			}
+		}
+}}
+	}
+	//-------------------------------------------------------
 	
 	// ---------------------------------------------------------------------------------------------------------------------------
 	
@@ -681,6 +734,17 @@ public abstract class AbstractScript extends ManagedScript
 	 */
 	protected final List<AbstractEventListener> setAttackableAggroRangeEnterId(Consumer<OnAttackableAggroRangeEnter> callback, int... npcIds)
 	{
+if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
+		for (int i = 0; i < npcIds.length; ++i)
+		{
+			int npcId = npcIds[i];
+			L2NpcTemplate t = NpcData.getInstance().getTemplate(npcId);
+			if (t.getAggroRange() == 0) {
+				_log.log(Level.WARNING, getScriptName() + ".addAggroRangeEnterId(" + npcId + ") - " + t.getName() + " aggro range is 0");
+				npcIds[i] = 0;
+			}
+		}
+}}
 		return registerConsumer(callback, EventType.ON_ATTACKABLE_AGGRO_RANGE_ENTER, ListenerRegisterType.NPC, npcIds);
 	}
 	
@@ -692,9 +756,15 @@ public abstract class AbstractScript extends ManagedScript
 	 */
 	protected final List<AbstractEventListener> setAttackableAggroRangeEnterId(Consumer<OnAttackableAggroRangeEnter> callback, Collection<Integer> npcIds)
 	{
+if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
+		int[] a = new int[npcIds.size()];
+		int i = 0;
+		for (Integer npcId : npcIds)
+			a[i] = npcId.intValue();
+		return setAttackableAggroRangeEnterId(callback, a);
+}}
 		return registerConsumer(callback, EventType.ON_ATTACKABLE_AGGRO_RANGE_ENTER, ListenerRegisterType.NPC, npcIds);
 	}
-	
 	// ---------------------------------------------------------------------------------------------------------------------------
 	
 	/**
@@ -1128,7 +1198,7 @@ public abstract class AbstractScript extends ManagedScript
 	 */
 	protected final List<AbstractEventListener> registerListener(Function<ListenersContainer, AbstractEventListener> action, ListenerRegisterType registerType, int... ids)
 	{
-		final List<AbstractEventListener> listeners = new ArrayList<>(ids.length > 0 ? ids.length : 1);
+		final ArrayList<AbstractEventListener> listeners = new ArrayList<>(ids.length > 0 ? ids.length : 1);
 		if (ids.length > 0)
 		{
 			for (int id : ids)
@@ -1224,7 +1294,7 @@ public abstract class AbstractScript extends ManagedScript
 	 */
 	protected final List<AbstractEventListener> registerListener(Function<ListenersContainer, AbstractEventListener> action, ListenerRegisterType registerType, Collection<Integer> ids)
 	{
-		final List<AbstractEventListener> listeners = new ArrayList<>(!ids.isEmpty() ? ids.size() : 1);
+		final ArrayList<AbstractEventListener> listeners = new ArrayList<>(!ids.isEmpty() ? ids.size() : 1);
 		if (!ids.isEmpty())
 		{
 			for (int id : ids)
@@ -1311,13 +1381,34 @@ public abstract class AbstractScript extends ManagedScript
 	
 	public List<Integer> getRegisteredIds(ListenerRegisterType type)
 	{
-		return _registeredIds.containsKey(type) ? _registeredIds.get(type) : Collections.emptyList();
+		final List<Integer> list;
+		return (list = _registeredIds.get(type)) != null ? list : Collections.emptyList();
 	}
 	
 	public List<AbstractEventListener> getListeners()
 	{
 		return _listeners;
 	}
+	
+	//[JOJO]-------------------------------------------------
+	public void removeListener(int npcId)
+	{
+		final L2NpcTemplate template = NpcData.getInstance().getTemplate(npcId);
+		
+		for (Iterator<AbstractEventListener> it = _listeners.iterator(); it.hasNext();)
+		{
+			final AbstractEventListener listener = it.next();
+			final Queue<AbstractEventListener> eventQuests;
+			if ((eventQuests = template.getListeners(listener.getType())) != null && !eventQuests.isEmpty()) // && eventQuest != EmptyQueue.emptyQueue()
+				if (eventQuests.remove(listener))
+					it.remove();
+		}
+		
+		final List<Integer> list;
+		if ((list = _registeredIds.get(ListenerRegisterType.NPC)) != null)
+			for (Integer obj = Integer.valueOf(npcId); list.remove(obj); ) {/*pass*/}
+	}
+	//-------------------------------------------------------
 	
 	/**
 	 * -------------------------------------------------------------------------------------------------------
@@ -1368,7 +1459,7 @@ public abstract class AbstractScript extends ManagedScript
 	 * @see #addSpawn(int, IPositionable, boolean, long, boolean, int)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean, int)
 	 */
-	public static L2Npc addSpawn(int npcId, IPositionable pos)
+	public static L2Npc addSpawn(int npcId, ILocational pos)	//[JOJO] -IPositionable
 	{
 		return addSpawn(npcId, pos.getX(), pos.getY(), pos.getZ(), pos.getHeading(), false, 0, false, 0);
 	}
@@ -1382,7 +1473,7 @@ public abstract class AbstractScript extends ManagedScript
 	 * @see #addSpawn(int, IPositionable, boolean, long, boolean, int)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean, int)
 	 */
-	public static L2Npc addSpawn(int npcId, IPositionable pos, boolean isSummonSpawn)
+	public static L2Npc addSpawn(int npcId, ILocational pos, boolean isSummonSpawn)	//[JOJO] -IPositionable
 	{
 		return addSpawn(npcId, pos.getX(), pos.getY(), pos.getZ(), pos.getHeading(), false, 0, isSummonSpawn, 0);
 	}
@@ -1397,7 +1488,7 @@ public abstract class AbstractScript extends ManagedScript
 	 * @see #addSpawn(int, IPositionable, boolean, long, boolean, int)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean, int)
 	 */
-	public static L2Npc addSpawn(int npcId, IPositionable pos, boolean randomOffset, long despawnDelay)
+	public static L2Npc addSpawn(int npcId, ILocational pos, boolean randomOffset, long despawnDelay)	//[JOJO] -IPositionable
 	{
 		return addSpawn(npcId, pos.getX(), pos.getY(), pos.getZ(), pos.getHeading(), randomOffset, despawnDelay, false, 0);
 	}
@@ -1413,7 +1504,7 @@ public abstract class AbstractScript extends ManagedScript
 	 * @see #addSpawn(int, IPositionable, boolean, long, boolean, int)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean, int)
 	 */
-	public static L2Npc addSpawn(int npcId, IPositionable pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn)
+	public static L2Npc addSpawn(int npcId, ILocational pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn)	//[JOJO] -IPositionable
 	{
 		return addSpawn(npcId, pos.getX(), pos.getY(), pos.getZ(), pos.getHeading(), randomOffset, despawnDelay, isSummonSpawn, 0);
 	}
@@ -1433,7 +1524,7 @@ public abstract class AbstractScript extends ManagedScript
 	 * @see #addSpawn(int, IPositionable, boolean, long, boolean)
 	 * @see #addSpawn(int, int, int, int, int, boolean, long, boolean, int)
 	 */
-	public static L2Npc addSpawn(int npcId, IPositionable pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn, int instanceId)
+	public static L2Npc addSpawn(int npcId, ILocational pos, boolean randomOffset, long despawnDelay, boolean isSummonSpawn, int instanceId)	//[JOJO] -IPositionable
 	{
 		return addSpawn(npcId, pos.getX(), pos.getY(), pos.getZ(), pos.getHeading(), randomOffset, despawnDelay, isSummonSpawn, instanceId);
 	}
@@ -1500,28 +1591,18 @@ public abstract class AbstractScript extends ManagedScript
 			{
 				_log.log(Level.SEVERE, "addSpawn(): no NPC template found for NPC #" + npcId + "!");
 			}
+			else if ((x == 0) && (y == 0))
+			{
+				_log.log(Level.SEVERE, "addSpawn(): invalid spawn coordinates for NPC #" + npcId + "!");
+			}
 			else
 			{
-				if ((x == 0) && (y == 0))
-				{
-					_log.log(Level.SEVERE, "addSpawn(): invalid spawn coordinates for NPC #" + npcId + "!");
-					return null;
-				}
 				if (randomOffset)
 				{
-					int offset = Rnd.get(50, 100);
-					if (Rnd.nextBoolean())
-					{
-						offset *= -1;
-					}
-					x += offset;
-					
-					offset = Rnd.get(50, 100);
-					if (Rnd.nextBoolean())
-					{
-						offset *= -1;
-					}
-					y += offset;
+					double radius = 50.0 + 50.0 * Rnd.nextDouble();
+					double angle = javolution.lang.MathLib.TWO_PI * Rnd.nextDouble();
+					x += radius * Math.cos(angle);
+					y += radius * Math.sin(angle);
 				}
 				L2Spawn spawn = new L2Spawn(template);
 				spawn.setInstanceId(instanceId);
@@ -2095,6 +2176,10 @@ public abstract class AbstractScript extends ManagedScript
 		final L2ItemInstance item = player.getInventory().getItemByItemId(itemId);
 		if (item == null)
 		{
+if (CHECK_TAKEITEMS) {{
+			if (itemId == -1)
+				_log.log(Level.WARNING, "takeItems(player," + itemId + "," + amount + ")");
+}}
 			return false;
 		}
 		
@@ -2171,6 +2256,18 @@ public abstract class AbstractScript extends ManagedScript
 	 */
 	public static boolean takeItems(L2PcInstance player, int amount, int... itemIds)
 	{
+if (CHECK_TAKEITEMS) {{
+		if (amount != -1)
+		{
+			StringBuilder sb = new StringBuilder("takeItems(player,").append(amount);
+			if (itemIds == null)
+				sb.append("NULL");
+			else
+				for (int item : itemIds) sb.append(',').append(item);
+			sb.append(')');
+			_log.log(Level.WARNING, sb.toString());
+		}
+}}
 		boolean check = true;
 		if (itemIds != null)
 		{
@@ -2413,7 +2510,7 @@ public abstract class AbstractScript extends ManagedScript
 	 */
 	public static final void specialCamera(L2PcInstance player, L2Character creature, int force, int angle1, int angle2, int time, int range, int duration, int relYaw, int relPitch, int isWide, int relAngle)
 	{
-		player.sendPacket(new SpecialCamera(creature, force, angle1, angle2, time, range, duration, relYaw, relPitch, isWide, relAngle));
+		player.sendPacket(new SpecialCamera(creature, force, angle1, angle2, time, range, duration, relYaw, relPitch, isWide, relAngle, 0));
 	}
 	
 	/**
@@ -2432,7 +2529,7 @@ public abstract class AbstractScript extends ManagedScript
 	 */
 	public static final void specialCameraEx(L2PcInstance player, L2Character creature, int force, int angle1, int angle2, int time, int duration, int relYaw, int relPitch, int isWide, int relAngle)
 	{
-		player.sendPacket(new SpecialCamera(creature, player, force, angle1, angle2, time, duration, relYaw, relPitch, isWide, relAngle));
+		player.sendPacket(new SpecialCamera(creature, force, angle1, angle2, time, 0, duration, relYaw, relPitch, isWide, relAngle, 0));
 	}
 	
 	/**

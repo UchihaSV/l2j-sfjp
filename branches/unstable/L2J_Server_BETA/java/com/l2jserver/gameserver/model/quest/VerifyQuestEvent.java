@@ -6,7 +6,7 @@ import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2TrapInstance;
 import com.l2jserver.gameserver.model.items.L2Item;
-import com.l2jserver.gameserver.enums.QuestEventType;
+import com.l2jserver.gameserver.model.events.EventType;
 import com.l2jserver.gameserver.enums.TrapAction;
 import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.zone.L2ZoneType;
@@ -16,9 +16,10 @@ import com.l2jserver.gameserver.model.zone.L2ZoneType;
  */
 public class VerifyQuestEvent
 {
-	public static boolean hasMethod(QuestEventType EventType, Quest q)
+	public static boolean hasMethod(EventType EventType, Quest q)
 	{
 		switch (EventType) {
+/** TODO
 			case ON_FIRST_TALK:
 				return hasOnFirstTalk(q);
 		//	case QUEST_START:
@@ -59,15 +60,17 @@ public class VerifyQuestEvent
 				return hasOnSeeCreature(q);
 			case ON_ROUTE_FINISHED:
 				return hasOnRouteFinished(q);
+**/
 			default:
 				return true;
 		//		throw new RuntimeException();
 		}
 	}
 	
-	public static String checkMethod(QuestEventType EventType, Quest q)
+	public static String checkMethod(EventType EventType, Quest q)
 	{
 		String result = null;
+/** TODO
 		switch (EventType) {
 			case ON_FIRST_TALK:
 				if (!hasOnFirstTalk(q))
@@ -152,6 +155,7 @@ public class VerifyQuestEvent
 			default:
 		//		throw new RuntimeException();
 		}
+**/
 		return result;
 	}
 	
