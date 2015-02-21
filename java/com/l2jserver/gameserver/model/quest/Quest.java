@@ -3067,7 +3067,7 @@ public class Quest extends AbstractScript implements IIdentifiable
 		
 		if (removeFromList)
 		{
-			return QuestManager.getInstance().removeScript(this);
+			return QuestManager.getInstance().removeScript(this) && super.unload();
 		}
 		return super.unload();
 	}
