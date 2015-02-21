@@ -43,6 +43,7 @@ import com.l2jserver.loginserver.mail.MailSystem;
 import com.l2jserver.loginserver.network.L2LoginClient;
 import com.l2jserver.loginserver.network.L2LoginPacketHandler;
 import com.l2jserver.status.Status;
+import com.l2jserver.util.JavaTea;
 
 /**
  * @author KenM
@@ -80,6 +81,8 @@ public final class L2LoginServer
 		// Create log folder
 		File logFolder = new File(Config.DATAPACK_ROOT, LOG_FOLDER);
 		logFolder.mkdir();
+		
+		JavaTea.redirect(System.getProperty("tee"));	//[JOJO] java -Dtee=log/stdout.log
 		
 		// Create input stream for log file -- or store file data into memory
 		
