@@ -148,6 +148,7 @@ import com.l2jserver.gameserver.taskmanager.TaskManager;
 import com.l2jserver.status.Status;
 import com.l2jserver.util.DeadLockDetector;
 import com.l2jserver.util.IPv4Filter;
+import com.l2jserver.util.JavaTea;
 
 public class GameServer
 {
@@ -524,6 +525,8 @@ public class GameServer
 		// Create log folder
 		File logFolder = new File(Config.DATAPACK_ROOT, LOG_FOLDER);
 		logFolder.mkdir();
+		
+		JavaTea.redirect(System.getProperty("tee"));	//[JOJO] java -Dtee=log/stdout.log
 		
 		// Create input stream for log file -- or store file data into memory
 		try (InputStream is = new FileInputStream(new File(LOG_NAME)))
