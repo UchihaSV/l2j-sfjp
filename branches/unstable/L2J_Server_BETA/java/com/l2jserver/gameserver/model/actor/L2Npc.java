@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Queue;
 import java.util.logging.Level;
 
 import com.l2jserver.Config;
@@ -75,7 +76,7 @@ import com.l2jserver.gameserver.model.events.EventType;
 import com.l2jserver.gameserver.model.events.impl.character.npc.OnNpcCanBeSeen;
 import com.l2jserver.gameserver.model.events.impl.character.npc.OnNpcEventReceived;
 import com.l2jserver.gameserver.model.events.impl.character.npc.OnNpcSkillFinished;
-import com.l2jserver.gameserver.model.events.impl.character.npc.OnNpcSpawn;
+import com.l2jserver.gameserver.model.events.listeners.AbstractEventListener;
 import com.l2jserver.gameserver.model.events.returns.TerminateReturn;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
 import com.l2jserver.gameserver.model.interfaces.ILocational;
@@ -1459,7 +1460,12 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 		_soulshotamount = getTemplate().getSoulShot();
 		_spiritshotamount = getTemplate().getSpiritShot();
 		
-		EventDispatcher.getInstance().notifyEventAsync(new OnNpcSpawn(this, isTeleporting()), this);
+		//[JOJO]-------------------------------------------------
+		final Queue<AbstractEventListener> eventQuests;
+		if ((eventQuests = getListeners(EventType.ON_NPC_SPAWN)) != null)
+			for (AbstractEventListener quest : eventQuests)
+				quest.getQuest().notifySpawn(this);
+		//-------------------------------------------------------
 		
 		if (!isTeleporting())
 		{
