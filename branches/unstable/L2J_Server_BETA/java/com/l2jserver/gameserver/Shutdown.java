@@ -19,6 +19,7 @@
 package com.l2jserver.gameserver;
 
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import com.l2jserver.Config;
@@ -47,6 +48,7 @@ import com.l2jserver.gameserver.network.gameserverpackets.ServerStatus;
 import com.l2jserver.gameserver.network.serverpackets.ServerClose;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.Broadcast;
+import com.l2jserver.util.L2LogManager;
 
 /**
  * This class provides the functions for shutting down and restarting the server.<br>
@@ -295,6 +297,12 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 			}
 			
 			_log.info("The server has been successfully shut down in " + (tc1.getEstimatedTime() / 1000) + "seconds.");
+			
+			//[JOJO]-------------------------------------------------
+			LogManager logManager = LogManager.getLogManager();
+			if (logManager instanceof L2LogManager) ((L2LogManager) logManager).doReset();
+			logManager = null;
+			//-------------------------------------------------------
 			
 			// server will quit, when this function ends.
 			if (getInstance()._shutdownMode == GM_RESTART)
