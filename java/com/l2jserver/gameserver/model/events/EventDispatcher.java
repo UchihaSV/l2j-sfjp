@@ -35,6 +35,8 @@ public final class EventDispatcher extends ListenersContainer
 {
 	private static final Logger _log = Logger.getLogger(EventDispatcher.class.getName());
 	
+	private static ListenersContainer[] EMPTY_LISTENERS_CONTAINER = new ListenersContainer[0];	//[JOJO]
+	
 	protected EventDispatcher()
 	{
 	}
@@ -197,7 +199,7 @@ public final class EventDispatcher extends ListenersContainer
 	 */
 	public void notifyEventAsync(IBaseEvent event)
 	{
-		notifyEventAsync(event, new ListenersContainer[0]);
+		notifyEventAsync(event, EMPTY_LISTENERS_CONTAINER);
 	}
 	
 	/**
