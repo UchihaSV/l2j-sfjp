@@ -35,8 +35,6 @@ public final class EventDispatcher extends ListenersContainer
 {
 	private static final Logger _log = Logger.getLogger(EventDispatcher.class.getName());
 	
-	private static ListenersContainer[] EMPTY_LISTENERS_CONTAINER = new ListenersContainer[0];	//[JOJO]
-	
 	protected EventDispatcher()
 	{
 	}
@@ -80,6 +78,66 @@ public final class EventDispatcher extends ListenersContainer
 			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't notify event " + event.getClass().getSimpleName(), e);
 		}
 		return null;
+	}
+	
+	/**
+	 * Executing current listener notification asynchronously
+	 * @param event
+	 * @param containers
+	 */
+	public void notifyEventAsync(IBaseEvent event, ListenersContainer... containers)
+	{
+		if (event == null)
+		{
+			throw new NullPointerException("Event cannot be null!");
+		}
+		
+		boolean hasListeners = hasListener(event.getType());
+		if (!hasListeners)
+		{
+			for (ListenersContainer container : containers)
+			{
+				if (container.hasListener(event.getType()))
+				{
+					hasListeners = true;
+					break;
+				}
+			}
+		}
+		
+		if (hasListeners)
+		{
+			ThreadPoolManager.getInstance().executeEvent(() -> notifyEventToMultipleContainers(event, containers, null));
+		}
+	}
+	
+	/**
+	 * Scheduling current listener notification asynchronously after specified delay.
+	 * @param event
+	 * @param container
+	 * @param delay
+	 */
+	public void notifyEventAsyncDelayed(IBaseEvent event, ListenersContainer container, long delay)
+	{
+		if (hasListener(event.getType()) || container.hasListener(event.getType()))
+		{
+			ThreadPoolManager.getInstance().scheduleEvent(() -> notifyEvent(event, container, null), delay);
+		}
+	}
+	
+	/**
+	 * Scheduling current listener notification asynchronously after specified delay.
+	 * @param event
+	 * @param container
+	 * @param delay
+	 * @param unit
+	 */
+	public void notifyEventAsyncDelayed(IBaseEvent event, ListenersContainer container, long delay, TimeUnit unit)
+	{
+		if (hasListener(event.getType()) || container.hasListener(event.getType()))
+		{
+			ThreadPoolManager.getInstance().scheduleEvent(() -> notifyEvent(event, container, null), delay, unit);
+		}
 	}
 	
 	/**
@@ -191,75 +249,6 @@ public final class EventDispatcher extends ListenersContainer
 		}
 		
 		return callback;
-	}
-	
-	/**
-	 * Executing global listener notification asynchronously
-	 * @param event
-	 */
-	public void notifyEventAsync(IBaseEvent event)
-	{
-		notifyEventAsync(event, EMPTY_LISTENERS_CONTAINER);
-	}
-	
-	/**
-	 * Executing current listener notification asynchronously
-	 * @param event
-	 * @param containers
-	 */
-	public void notifyEventAsync(IBaseEvent event, ListenersContainer... containers)
-	{
-		if (event == null)
-		{
-			throw new NullPointerException("Event cannot be null!");
-		}
-		
-		boolean hasListeners = hasListener(event.getType());
-		if (!hasListeners)
-		{
-			for (ListenersContainer container : containers)
-			{
-				if (container.hasListener(event.getType()))
-				{
-					hasListeners = true;
-					break;
-				}
-			}
-		}
-		
-		if (hasListeners)
-		{
-			ThreadPoolManager.getInstance().executeEvent(() -> notifyEventToMultipleContainers(event, containers, null));
-		}
-	}
-	
-	/**
-	 * Scheduling current listener notification asynchronously after specified delay.
-	 * @param event
-	 * @param container
-	 * @param delay
-	 */
-	public void notifyEventAsyncDelayed(IBaseEvent event, ListenersContainer container, long delay)
-	{
-		if (hasListener(event.getType()) || container.hasListener(event.getType()))
-		{
-			ThreadPoolManager.getInstance().scheduleEvent(() -> notifyEvent(event, container, null), delay);
-		}
-	}
-	
-	/**
-	 * Scheduling current listener notification asynchronously after specified delay.
-	 * @param event
-	 * @param container
-	 * @param delay
-	 * @param unit
-	 */
-	public void notifyEventAsyncDelayed(IBaseEvent event, ListenersContainer container, long delay, TimeUnit unit)
-	{
-		if (hasListener(event.getType()) || container.hasListener(event.getType()))
-		{
-			ThreadPoolManager.getInstance().scheduleEvent(() -> notifyEvent(event, container, null), delay, unit);
-		}
 	}
 	
 	public static EventDispatcher getInstance()
