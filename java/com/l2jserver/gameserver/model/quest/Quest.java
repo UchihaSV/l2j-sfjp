@@ -1994,6 +1994,15 @@ public class Quest extends AbstractScript implements IIdentifiable
 	
 	/**
 	 * Add the Item to the notify when player speaks with it.
+	 * @param itemId the ID of the Item to register
+	 */
+	public void addItemBypassEventId(int itemId)
+	{
+		addItemBypassEventId(new int[]{itemId});
+	}
+	
+	/**
+	 * Add the Item to the notify when player speaks with it.
 	 * @param itemIds the IDs of the Item to register
 	 */
 	public void addItemBypassEventId(int... itemIds)
@@ -2520,6 +2529,15 @@ public class Quest extends AbstractScript implements IIdentifiable
 	
 	/**
 	 * Register onSummonTalk trigger when master talked to summon.
+	 * @param npcId
+	 */
+	public void addSummonTalkId(int npcId)
+	{
+		addSummonTalkId(new int[]{npcId});
+	}
+	
+	/**
+	 * Register onSummonTalk trigger when master talked to summon.
 	 * @param npcIds
 	 */
 	public void addSummonTalkId(int... npcIds)
@@ -2986,6 +3004,15 @@ public class Quest extends AbstractScript implements IIdentifiable
 	public int[] getRegisteredItemIds()
 	{
 		return questItemIds;
+	}
+	
+	/**
+	 * Registers item that have to be destroyed in case player abort the quest or finish it.
+	 * @param item
+	 */
+	public void registerQuestItems(int item)
+	{
+		registerQuestItems(new int[]{item});
 	}
 	
 	/**
