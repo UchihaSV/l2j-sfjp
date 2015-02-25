@@ -2495,9 +2495,9 @@ public class Quest extends AbstractScript implements IIdentifiable
 	 * Register onSummonSpawn trigger when summon is spawned.
 	 * @param npcId
 	 */
-	public void addSummonId(int npcId)
+	public void addSummonSpawnId(int npcId)
 	{
-		addSummonId(new int[]{npcId});
+		addSummonSpawnId(new int[]{npcId});
 	}
 	
 	/**
