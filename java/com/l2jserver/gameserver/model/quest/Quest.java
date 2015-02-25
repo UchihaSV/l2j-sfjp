@@ -1496,7 +1496,15 @@ public class Quest extends AbstractScript implements IIdentifiable
 	/**
 	 * @param summon
 	 */
-	public void onSummon(L2Summon summon)
+	public void onSummonSpawn(L2Summon summon)
+	{
+		
+	}
+	
+	/**
+	 * @param summon
+	 */
+	public void onSummonTalk(L2Summon summon)
 	{
 		
 	}
@@ -2484,7 +2492,7 @@ public class Quest extends AbstractScript implements IIdentifiable
 	}
 	
 	/**
-	 * Register onSummon trigger when summon is spawned.
+	 * Register onSummonSpawn trigger when summon is spawned.
 	 * @param npcId
 	 */
 	public void addSummonId(int npcId)
@@ -2496,18 +2504,36 @@ public class Quest extends AbstractScript implements IIdentifiable
 	 * Register onSummon trigger when summon is spawned.
 	 * @param npcIds
 	 */
-	public void addSummonId(int... npcIds)
+	public void addSummonSpawnId(int... npcIds)
 	{
-		setPlayerSummonSpawnId(event -> onSummon(event.getSummon()), npcIds);
+		setPlayerSummonSpawnId(event -> onSummonSpawn(event.getSummon()), npcIds);
 	}
 	
 	/**
-	 * Register onSummon trigger when summon is spawned.
+	 * Register onSummonSpawn trigger when summon is spawned.
 	 * @param npcIds
 	 */
-	public void addSummonId(Collection<Integer> npcIds)
+	public void addSummonSpawnId(Collection<Integer> npcIds)
 	{
-		setPlayerSummonSpawnId(event -> onSummon(event.getSummon()), npcIds);
+		setPlayerSummonSpawnId(event -> onSummonSpawn(event.getSummon()), npcIds);
+	}
+	
+	/**
+	 * Register onSummonTalk trigger when master talked to summon.
+	 * @param npcIds
+	 */
+	public void addSummonTalkId(int... npcIds)
+	{
+		setPlayerSummonTalkId(event -> onSummonTalk(event.getSummon()), npcIds);
+	}
+	
+	/**
+	 * Register onSummonTalk trigger when summon is spawned.
+	 * @param npcIds
+	 */
+	public void addSummonTalkId(Collection<Integer> npcIds)
+	{
+		setPlayerSummonTalkId(event -> onSummonTalk(event.getSummon()), npcIds);
 	}
 	
 	/**
@@ -3086,13 +3112,7 @@ public class Quest extends AbstractScript implements IIdentifiable
 		}
 		else
 		{
-			for (AbstractEventListener listener : getListeners())
-			{
-				if (listener.getType() == EventType.ON_PLAYER_LOGIN)
-				{
-					listener.unregisterMe();
-				}
-			}
+			getListeners().stream().filter(listener -> listener.getType() == EventType.ON_PLAYER_LOGIN).forEach(AbstractEventListener::unregisterMe);
 		}
 	}
 }
