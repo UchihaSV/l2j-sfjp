@@ -515,7 +515,7 @@ if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 	private final void fix_onSpawn_for_SpawnTable(int npcId)
 	{
 if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
-		if (this instanceof Quest && !this.getScriptName().equals("L2AttackableAIScript")) {
+		if (this instanceof Quest) {
 			final Quest q = (Quest) this;
 			boolean hasOnSpawn;
 			try {
