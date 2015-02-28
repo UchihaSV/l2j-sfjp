@@ -516,7 +516,7 @@ public abstract class DocumentBase
 					final Race[] races = new Race[racesVal.length];
 					for (int r = 0; r < racesVal.length; r++)
 					{
-						if (racesVal[r] != null)
+	//					if (racesVal[r] != null)
 						{
 							races[r] = Race.valueOf(racesVal[r]);
 						}
