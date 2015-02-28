@@ -6442,15 +6442,11 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 							{
 								final L2Attackable attackable = (L2Attackable) npcMob;
 								
-								int skillEffectPoint = skill.getEffectPoint();
-								
-								if (player.hasSummon())
-								{
-									if ((targets.length == 1) && Util.contains(targets, player.getSummon()))
-									{
-										skillEffectPoint = 0;
-									}
-								}
+								final int skillEffectPoint;
+								if (targets.length == 1 && targets[0] == player.getSummon())
+									skillEffectPoint = 0;
+								else
+									skillEffectPoint = skill.getEffectPoint();
 								
 								if (skillEffectPoint > 0)
 								{
