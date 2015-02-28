@@ -18,34 +18,29 @@
  */
 package com.l2jserver.gameserver.model.conditions;
 
-import java.util.EnumSet;
-
-import com.l2jserver.gameserver.enums.PcRace;
-import com.l2jserver.gameserver.model.actor.L2Character;
-import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.model.stats.Env;
 
 /**
  * The Class ConditionTargetRace.
- * @author mkizub, Zoey76
+ * @author Zealar
  */
 public class ConditionTargetRace extends Condition
 {
-	private final EnumSet<PcRace> _races;	//[JOJO] -PcRace[]
+	private final Race _race;
 	
 	/**
 	 * Instantiates a new condition target race.
-	 * @param races the list containing the allowed races.
+	 * @param race containing the allowed race.
 	 */
-	public ConditionTargetRace(EnumSet<PcRace> races)
+	public ConditionTargetRace(Race race)
 	{
-		_races = races;
+		_race = race;
 	}
 	
 	@Override
 	public boolean testImpl(Env env)
 	{
-		final L2Character o = env.getTarget();
-		return o instanceof L2PcInstance && _races.contains(o.getActingPlayer().getRace());
+		return _race == env.getTarget().getRace();
 	}
 }

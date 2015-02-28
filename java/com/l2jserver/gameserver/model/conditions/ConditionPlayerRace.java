@@ -20,7 +20,7 @@ package com.l2jserver.gameserver.model.conditions;
 
 import java.util.EnumSet;
 
-import com.l2jserver.gameserver.enums.PcRace;
+import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.stats.Env;
 
@@ -30,13 +30,13 @@ import com.l2jserver.gameserver.model.stats.Env;
  */
 public class ConditionPlayerRace extends Condition
 {
-	private final EnumSet<PcRace> _races;	//[JOJO] -PcRace[]
+	private final EnumSet<Race> _races;	//[JOJO] -Race[]
 	
 	/**
 	 * Instantiates a new condition player race.
 	 * @param races the list containing the allowed races.
 	 */
-	public ConditionPlayerRace(EnumSet<PcRace> races)
+	public ConditionPlayerRace(EnumSet<Race> races)
 	{
 		_races = races;
 	}

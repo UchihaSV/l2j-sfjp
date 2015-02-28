@@ -32,7 +32,7 @@ import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.enums.AISkillScope;
 import com.l2jserver.gameserver.enums.AIType;
 import com.l2jserver.gameserver.enums.InstanceType;
-import com.l2jserver.gameserver.enums.NpcRace;
+import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.enums.Sex;
 import com.l2jserver.gameserver.model.L2MinionData;
 import com.l2jserver.gameserver.model.StatsSet;
@@ -61,7 +61,6 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	private String _title;
 	private boolean _usingServerSideTitle;
 	private StatsSet _parameters;
-	private NpcRace _race;
 	private Sex _sex;
 	private int _chestId;
 	private int _rhandId;
@@ -132,7 +131,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		_usingServerSideName = set.getBoolean("usingServerSideName", false);
 		_title = intern(set.getString("title", ""));
 		_usingServerSideTitle = set.getBoolean("usingServerSideTitle", false);
-		_race = set.getEnum("race", NpcRace.class, NpcRace.ETC);
+		setRace(set.getEnum("race", Race.class, Race.NONE));
 		_sex = set.getEnum("sex", Sex.class, Sex.ETC);
 		
 		_chestId = set.getInt("chestId", 0);
@@ -196,7 +195,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		//-------------------------------------------------------
 if (com.l2jserver.Config.FIX_NPC_XML_CANMOVE) {{
 		if (InstanceType.isType(_type, InstanceType.L2Attackable) && !canMove(this)) {
-			if (com.l2jserver.Config.FIX_NPC_XML_CANMOVE_LOG) if (_canMove) System.out.println("__BASENAME__:__LINE__:(NonMoveMonsters) canMove=" + _canMove + " baseWalkSpd=" + getBaseMoveSpeed(MoveType.WALK) + " baseRunSpd=" + getBaseMoveSpeed(MoveType.RUN) + " " + _race.name() + " " + _aiType.name() + " " + _type + " " + _id + " " + com.l2jserver.util.Util.concat_ws(" ", _title, _name));
+			if (com.l2jserver.Config.FIX_NPC_XML_CANMOVE_LOG) if (_canMove) System.out.println("__BASENAME__:__LINE__:(NonMoveMonsters) canMove=" + _canMove + " baseWalkSpd=" + getBaseMoveSpeed(MoveType.WALK) + " baseRunSpd=" + getBaseMoveSpeed(MoveType.RUN) + " " + getRace().name() + " " + _aiType.name() + " " + _type + " " + _id + " " + com.l2jserver.util.Util.concat_ws(" ", _title, _name));
 			_canMove = false;
 		}
 }}
@@ -297,11 +296,6 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 	public void setParameters(StatsSet set)
 	{
 		_parameters = set;
-	}
-	
-	public NpcRace getRace()
-	{
-		return _race;
 	}
 	
 	public Sex getSex()

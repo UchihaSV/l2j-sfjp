@@ -38,8 +38,8 @@ import com.l2jserver.gameserver.datatables.NpcPersonalAIData;
 import com.l2jserver.gameserver.enums.AISkillScope;
 import com.l2jserver.gameserver.enums.AIType;
 import com.l2jserver.gameserver.enums.InstanceType;
-import com.l2jserver.gameserver.enums.NpcRace;
 import com.l2jserver.gameserver.enums.PrivateStoreType;
+import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.enums.ShotType;
 import com.l2jserver.gameserver.enums.Team;
 import com.l2jserver.gameserver.handler.BypassHandler;
@@ -589,7 +589,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 	@Override
 	public boolean isUndead()
 	{
-		return getTemplate().getRace() == NpcRace.UNDEAD;
+		return getTemplate().getRace() == Race.UNDEAD;
 	}
 	
 	/**
