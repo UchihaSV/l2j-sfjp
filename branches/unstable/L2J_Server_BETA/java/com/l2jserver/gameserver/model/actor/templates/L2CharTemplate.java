@@ -20,6 +20,7 @@ package com.l2jserver.gameserver.model.actor.templates;
 
 import java.util.Arrays;
 
+import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.events.ListenersContainer;
 import com.l2jserver.gameserver.model.items.type.WeaponType;
@@ -72,20 +73,17 @@ public class L2CharTemplate extends ListenersContainer
 	private double _baseHolyRes;
 	private double _baseDarkRes;
 	private double _baseElementRes;
-	/**
-	 * For client info use {@link #_fCollisionRadius}
-	 */
+	/** For client info use {@link #_fCollisionRadius} */
 	private int _collisionRadius;
-	
-	/**
-	 * For client info use {@link #_fCollisionHeight}
-	 */
+	/** For client info use {@link #_fCollisionHeight} */
 	private int _collisionHeight;
 	
 	private double _fCollisionRadius;
 	private double _fCollisionHeight;
 	
 	private final float[] _moveType = new float[MoveType.values().length];
+	/** The creature's race. */
+	private Race _race;
 	
 	public L2CharTemplate(StatsSet set)
 	{
@@ -627,5 +625,23 @@ public class L2CharTemplate extends ListenersContainer
 	public Skill[] getSkills()	//[JOJO] -Map<Integer, Skill>
 	{
 		return Skill.EMPTY_SKILL_LIST;
+	}
+	
+	/**
+	 * Gets the craeture's race.
+	 * @return the race
+	 */
+	public Race getRace()
+	{
+		return _race;
+	}
+	
+	/**
+	 * Sets the creature's race.
+	 * @param race the race
+	 */
+	public void setRace(Race race)
+	{
+		_race = race;
 	}
 }
