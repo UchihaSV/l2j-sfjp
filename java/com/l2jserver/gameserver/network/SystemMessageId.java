@@ -20075,12 +20075,16 @@ public final class SystemMessageId
 	
 	/**
 	 * ID: 3212<br>
+	 * Message: ペットの空腹感ゲージが0になると、ペットを操れなくなります。<br>
+	 * Message: &#23541;&#29289;&#30340;&#39165;&#39135;&#24230;&#33509;&#38477;&#33267;&#48;&#37;&#30340;&#35441;&#65292;&#23601;&#28961;&#27861;&#25805;&#20316;&#23541;&#29289;&#12290;<br>
 	 * Message: When your pet's hunger gauge is at 0%, you cannot use your pet.
 	 */
 	public static final SystemMessageId WHEN_YOUR_PETS_HUNGER_GAUGE_IS_AT_0_YOU_CANNOT_USE_YOUR_PET;
 	
 	/**
 	 * ID: 3213<br>
+	 * Message: ペットはお腹をすかせているため、飼い主の言うことを聞きません。エサをあげましょう！<br>
+	 * Message: &#23541;&#29289;&#34389;&#26044;&#39138;&#39187;&#29376;&#24907;&#65292;&#22240;&#27492;&#19981;&#32893;&#24478;&#20027;&#20154;&#30340;&#35441;&#12290;&#35531;&#39221;&#39135;&#23541;&#29289;&#65281;<br>
 	 * Message: Your pet is starving and will not obey until it gets it's food. Feed your pet!
 	 */
 	public static final SystemMessageId YOUR_PET_IS_STARVING_AND_WILL_NOT_OBEY_UNTIL_IT_GETS_ITS_FOOD_FEED_YOUR_PET;
