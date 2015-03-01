@@ -385,7 +385,7 @@ public class CharStat
 		return (int) calcStat(Stats.STAT_MEN, _activeChar.getTemplate().getBaseMEN());
 	}
 	
-	public final float getMovementSpeedMultiplier()
+	public float getMovementSpeedMultiplier()
 	{
 		float baseSpeed;
 		if (_activeChar.isInsideZone(ZoneId.WATER))
