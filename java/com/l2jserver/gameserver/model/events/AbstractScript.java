@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -34,6 +35,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
+import javolution.util.FastSet;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
@@ -139,7 +141,7 @@ public abstract class AbstractScript extends ManagedScript
 	private static final boolean CHECK_TAKEITEMS = true;	//[JOJO]
 	
 	protected static final Logger _log = Logger.getLogger(AbstractScript.class.getName());
-	private final ConcurrentHashMap<ListenerRegisterType, List<Integer>> _registeredIds = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<ListenerRegisterType, FastSet<Integer>> _registeredIds = new ConcurrentHashMap<>();
 	private final FastList<AbstractEventListener> _listeners = new FastList<AbstractEventListener>().shared();
 	
 	public AbstractScript()
@@ -279,7 +281,7 @@ public abstract class AbstractScript extends ManagedScript
 				
 				if (!ids.isEmpty())
 				{
-					_registeredIds.computeIfAbsent(ListenerRegisterType.NPC, v -> new FastList<Integer>().shared()).addAll(ids);
+					_registeredIds.computeIfAbsent(ListenerRegisterType.NPC, v -> new FastSet<Integer>().shared()).addAll(ids);
 				}
 				
 				registerAnnotation(method, eventType, type, ids);
@@ -1360,7 +1362,7 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 					}
 				}
 				
-				_registeredIds.computeIfAbsent(registerType, v -> new FastList<Integer>().shared()).add(id);
+				_registeredIds.computeIfAbsent(registerType, v -> new FastSet<Integer>().shared()).add(id);
 			}
 		}
 		else
@@ -1452,7 +1454,7 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 					}
 				}
 			}
-			_registeredIds.computeIfAbsent(registerType, v -> new FastList<Integer>().shared()).addAll(ids);
+			_registeredIds.computeIfAbsent(registerType, v -> new FastSet<Integer>().shared()).addAll(ids);
 		}
 		else
 		{
@@ -1475,10 +1477,10 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 		return listeners;
 	}
 	
-	public List<Integer> getRegisteredIds(ListenerRegisterType type)
+	public Set<Integer> getRegisteredIds(ListenerRegisterType type)
 	{
-		final List<Integer> list;
-		return (list = _registeredIds.get(type)) != null ? list : Collections.emptyList();
+		final FastSet<Integer> set;
+		return (set = _registeredIds.get(type)) != null ? set : Collections.emptySet();
 	}
 	
 	public List<AbstractEventListener> getListeners()
@@ -1500,9 +1502,9 @@ if (com.l2jserver.Config.NEVER_addAggroRangeEnterId_IF_0) {{
 					it.remove();
 		}
 		
-		final List<Integer> list;
-		if ((list = _registeredIds.get(ListenerRegisterType.NPC)) != null)
-			for (Integer obj = Integer.valueOf(npcId); list.remove(obj); ) {/*pass*/}
+		final FastSet<Integer> set;
+		if ((set = _registeredIds.get(ListenerRegisterType.NPC)) != null)
+			for (Integer obj = Integer.valueOf(npcId); set.remove(obj); ) {/*pass*/}
 	}
 	//-------------------------------------------------------
 	
