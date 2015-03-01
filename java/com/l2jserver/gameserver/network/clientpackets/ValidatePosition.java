@@ -23,6 +23,7 @@ import com.l2jserver.gameserver.enums.MountType;
 import com.l2jserver.gameserver.geoeditorcon.GeoEditorListener;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.model.L2Clan;
+import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.TeleportWhereType;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.zone.ZoneId;
@@ -139,6 +140,12 @@ public class ValidatePosition extends L2GameClientPacket
 			{
 				GeoEditorListener.getInstance().getThread().sendGmPosition(_x, _y, (short) _z);
 			}
+		}
+		
+		// Don't allow flying transformations outside gracia area!
+		if (activeChar.isFlyingMounted() && (_x > L2World.GRACIA_MAX_X))
+		{
+			activeChar.untransform();
 		}
 		
 		if (activeChar.isFlying() || activeChar.isInsideZone(ZoneId.WATER))
