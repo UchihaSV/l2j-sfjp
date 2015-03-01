@@ -48,7 +48,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
  */
 public class L2OlympiadStadiumZone extends L2ZoneRespawn
 {
-	private List<Location> _spectatorLocations;
+	private ArrayList<Location> _spectatorLocations;
 	
 	public L2OlympiadStadiumZone(int id)
 	{
