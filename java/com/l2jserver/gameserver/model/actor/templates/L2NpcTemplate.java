@@ -581,7 +581,7 @@ if (com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 		return NpcData.getInstance().toClanNames(_clans);
 	}
 	
-	public String getEnemyClanNames()
+	public String getIgnoreClanNames()
 	{
 		return NpcData.getInstance().toClanNames(_ignoreClanNpcIds);
 	}
