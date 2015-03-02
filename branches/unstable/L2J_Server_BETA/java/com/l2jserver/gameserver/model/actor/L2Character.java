@@ -3016,7 +3016,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	public final void setIsRunning(boolean value)
 	{
 		_isRunning = value;
-		final int runSpeed = getRunSpeed();
+		final double runSpeed = getRunSpeed();
 		if (runSpeed != 0)
 		{
 			broadcastPacket(new ChangeMoveType(this));
