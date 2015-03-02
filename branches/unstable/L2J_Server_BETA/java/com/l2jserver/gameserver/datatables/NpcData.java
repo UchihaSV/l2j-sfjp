@@ -827,12 +827,32 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 	
 	/**
 	 * Gets the all of level.
+	 * @param lvl of all the templates to get.
+	 * @return the template list for the given level.
+	 */
+	public List<L2NpcTemplate> getAllOfLevel(int lvl)
+	{
+		return getTemplates(template -> lvl == template.getLevel());
+	}
+	
+	/**
+	 * Gets the all of level.
 	 * @param lvls of all the templates to get.
 	 * @return the template list for the given level.
 	 */
 	public List<L2NpcTemplate> getAllOfLevel(int... lvls)
 	{
 		return getTemplates(template -> Util.contains(lvls, template.getLevel()));
+	}
+	
+	/**
+	 * Gets the all monsters of level.
+	 * @param lvl of all the monster templates to get.
+	 * @return the template list for the given level.
+	 */
+	public List<L2NpcTemplate> getAllMonstersOfLevel(int lvl)
+	{
+		return getTemplates(template -> lvl == template.getLevel() && template.isType("L2Monster"));
 	}
 	
 	/**
@@ -853,6 +873,16 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 	public List<L2NpcTemplate> getAllNpcStartingWith(String text)
 	{
 		return getTemplates(template -> template.isType("L2Npc") && template.getName().startsWith(text));
+	}
+	
+	/**
+	 * Gets the all npc of class type.
+	 * @param classType of all the templates to get.
+	 * @return the template list for the given class type.
+	 */
+	public List<L2NpcTemplate> getAllNpcOfClassType(String classType)
+	{
+		return getTemplates(template -> classType.equalsIgnoreCase(template.getType()));
 	}
 	
 	/**
