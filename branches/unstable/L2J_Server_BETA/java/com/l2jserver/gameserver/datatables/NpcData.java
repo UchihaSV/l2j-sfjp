@@ -134,7 +134,7 @@ public class NpcData extends DocumentParser
 						ArrayList<Skill> skills = null;	//[JOJO] -Map<Integer, Skill>
 						EnumMap<AISkillScope, List<Skill>> aiSkillLists = null;
 						TIntArrayList clans = null;
-						TIntArrayList enemyClans = null;
+						TIntArrayList ignoreClanNpcIds = null;
 						EnumMap<DropListScope, List<IDropItem>> dropLists = null;
 						
 						set.set("id", npcId);
@@ -454,17 +454,17 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 															clans.add(getOrCreateClanId(clan_list_node.getTextContent()));
 															break;
 														}
-														case "enemy_clan":
+														case "ignore_npc_id":
 														{
 if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 															if (clan_list_node.getTextContent().equals("ALL"))
 																break;
 }}
-															if (enemyClans == null)
+															if (ignoreClanNpcIds == null)
 															{
-																enemyClans = new TIntArrayList();
+																ignoreClanNpcIds = new TIntArrayList();
 															}
-															enemyClans.add(getOrCreateClanId(clan_list_node.getTextContent()));
+															ignoreClanNpcIds.add(Integer.parseInt(clan_list_node.getTextContent()));
 															break;
 														}
 													}
@@ -654,7 +654,7 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 						template.setAISkillLists(aiSkillLists);
 						
 						template.setClans(clans == null ? null : findClans(clans.toArray()));
-						template.setEnemyClans(enemyClans == null ? null : findClans(enemyClans.toArray()));
+						template.setIgnoreClanNpcIds(ignoreClanNpcIds == null ? null : findClans(ignoreClanNpcIds.toArray()));
 						
 						template.setDropLists(dropLists);
 					}
@@ -743,7 +743,7 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 	{
 		int[] result;
 		for (L2NpcTemplate t : _npcs.values())
-			if (Arrays.equals(clans, result = t.getClans()) || Arrays.equals(clans, result = t.getEnemyClans()))
+			if (Arrays.equals(clans, result = t.getClans()) || Arrays.equals(clans, result = t.getIgnoreClanNpcIds()))
 				return result;
 		return clans;
 	}
