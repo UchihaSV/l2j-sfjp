@@ -13628,14 +13628,14 @@ public final class L2PcInstance extends L2Playable
 				
 				try (PreparedStatement st = con.prepareStatement(INSERT_CHAR_RECIPE_SHOP))
 				{
-					AtomicInteger slot = new AtomicInteger(1);
+					int slot = 1;
 					con.setAutoCommit(false);
 					for (L2ManufactureItem item : _manufactureItems.values())
 					{
 						st.setInt(1, getObjectId());
 						st.setInt(2, item.getRecipeId());
 						st.setLong(3, item.getCost());
-						st.setInt(4, slot.getAndIncrement());
+						st.setInt(4, slot++);
 						st.addBatch();
 					}
 					st.executeBatch();
