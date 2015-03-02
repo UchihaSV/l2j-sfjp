@@ -4416,7 +4416,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		double distFraction = Double.MAX_VALUE;
 		if (delta > 1)
 		{
-			final double distPassed = (getStat().getMoveSpeed() * (gameTicks - m._moveTimestamp)) / GameTimeController.TICKS_PER_SECOND;
+			final double distPassed = (getMoveSpeed() * (gameTicks - m._moveTimestamp)) / GameTimeController.TICKS_PER_SECOND;
 			distFraction = distPassed / delta;
 		}
 		
@@ -4606,7 +4606,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	protected void moveToLocation(int x, int y, int z, int offset)
 	{
 		// Get the Move Speed of the L2Charcater
-		float speed = getStat().getMoveSpeed();
+		double speed = getMoveSpeed();
 		if ((speed <= 0) || isMovementDisabled())
 		{
 			return;
@@ -4888,7 +4888,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		}
 		
 		// Get the Move Speed of the L2Charcater
-		float speed = getStat().getMoveSpeed();
+		double speed = getMoveSpeed();
 		if ((speed <= 0) || isMovementDisabled())
 		{
 			// Cancel the move action
@@ -6685,16 +6685,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		return getStat().getAttackSpeedMultiplier();
 	}
 	
-	public int getCON()
-	{
-		return getStat().getCON();
-	}
-	
-	public int getDEX()
-	{
-		return getStat().getDEX();
-	}
-	
 	public final double getCriticalDmg(L2Character target, double init)
 	{
 		return getStat().getCriticalDmg(target, init);
@@ -6708,11 +6698,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	public int getEvasionRate(L2Character target)
 	{
 		return getStat().getEvasionRate(target);
-	}
-	
-	public int getINT()
-	{
-		return getStat().getINT();
 	}
 	
 	public final int getMagicalAttackRange(Skill skill)
@@ -6770,19 +6755,9 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		return getStat().getMDef(target, skill);
 	}
 	
-	public int getMEN()
-	{
-		return getStat().getMEN();
-	}
-	
 	public double getMReuseRate(Skill skill)
 	{
 		return getStat().getMReuseRate(skill);
-	}
-	
-	public float getMovementSpeedMultiplier()
-	{
-		return getStat().getMovementSpeedMultiplier();
 	}
 	
 	public int getPAtk(L2Character target)
@@ -6805,14 +6780,34 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		return getStat().getPhysicalAttackRange();
 	}
 	
-	public int getRunSpeed()
+	public double getMovementSpeedMultiplier()
+	{
+		return getStat().getMovementSpeedMultiplier();
+	}
+	
+	public double getRunSpeed()
 	{
 		return getStat().getRunSpeed();
 	}
 	
-	public int getSwimRunSpeed()
+	public double getWalkSpeed()
+	{
+		return getStat().getWalkSpeed();
+	}
+	
+	public final double getSwimRunSpeed()
 	{
 		return getStat().getSwimRunSpeed();
+	}
+	
+	public final double getSwimWalkSpeed()
+	{
+		return getStat().getSwimWalkSpeed();
+	}
+	
+	public double getMoveSpeed()
+	{
+		return getStat().getMoveSpeed();
 	}
 	
 	public final int getShldDef()
@@ -6825,19 +6820,29 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		return getStat().getSTR();
 	}
 	
-	public final int getWalkSpeed()
+	public int getDEX()
 	{
-		return getStat().getWalkSpeed();
+		return getStat().getDEX();
 	}
 	
-	public final int getSwimWalkSpeed()
+	public int getCON()
 	{
-		return getStat().getSwimWalkSpeed();
+		return getStat().getCON();
+	}
+	
+	public int getINT()
+	{
+		return getStat().getINT();
 	}
 	
 	public int getWIT()
 	{
 		return getStat().getWIT();
+	}
+	
+	public int getMEN()
+	{
+		return getStat().getMEN();
 	}
 	
 	// Status - NEED TO REMOVE ONCE L2CHARTATUS IS COMPLETE
