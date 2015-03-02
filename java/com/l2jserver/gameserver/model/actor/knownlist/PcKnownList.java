@@ -162,7 +162,7 @@ if (com.l2jserver.Config.FIX_DISTANCE_TO_WATCH_OBJECT) {{
 		if (object.isNpc() && (distance = ((L2Npc) object).getKnownList().distanceToForgetObject) > 0)
 			return distance;
 		
-		if (object.isWalker())
+		if (object.isVehicle())
 		{
 			return 10000;
 		}
@@ -197,7 +197,7 @@ if (com.l2jserver.Config.FIX_DISTANCE_TO_WATCH_OBJECT) {{
 		if (object.isNpc() && (distance = ((L2Npc) object).getKnownList().distanceToWatchObject) > 0)
 			return distance;
 		
-		if (object.isWalker())
+		if (object.isVehicle())
 		{
 			return 9000;
 		}
