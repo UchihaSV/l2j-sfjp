@@ -581,9 +581,19 @@ if (com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 		return NpcData.getInstance().toClanNames(_clans);
 	}
 	
-	public String getIgnoreClanNames()
+	public String getIgnoreClanNpcIdsString()
 	{
-		return NpcData.getInstance().toClanNames(_ignoreClanNpcIds);
+		final int[] ignoreClanNpcIds = _ignoreClanNpcIds;
+		if (ignoreClanNpcIds == null || ignoreClanNpcIds.length == 0)
+			return null;
+		else if (ignoreClanNpcIds.length == 1)
+			return String.valueOf(ignoreClanNpcIds[0]);
+		else {
+			StringBuilder sb = new StringBuilder();
+			for (int id : ignoreClanNpcIds)
+				sb.append(id).append(';');
+			return sb.deleteCharAt(sb.length() - 1).toString();
+		}
 	}
 	//-------------------------------------------------------
 	
