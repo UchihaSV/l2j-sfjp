@@ -102,7 +102,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	private Skill[] _skills;	//[JOJO] -Map<Integer, Skill>
 	private Map<AISkillScope, List<Skill>> _aiSkillLists;	//[JOJO] -Map<AISkillScope, List<Skill>>
 	private int[] _clans;		//[JOJO] -Set<Integer>
-	private int[] _enemyClans;	//[JOJO] -Set<Integer>
+	private int[] _ignoreClanNpcIds;	//[JOJO] -Set<Integer>
 	private Map<DropListScope, List<IDropItem>> _dropLists;
 	private double _collisionRadiusGrown;
 	private double _collisionHeightGrown;
@@ -562,44 +562,17 @@ if (com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 		return false;
 	}
 	
-	public int[] getEnemyClans()
+	public int[] getIgnoreClanNpcIds()
 	{
-		return _enemyClans;
+		return _ignoreClanNpcIds;
 	}
 	
 	/**
-	 * @param enemyClans A sorted array of enemy clan ids
+	 * @param ignoreClanNpcIds the sorted array of ignore clan npc ids
 	 */
-	public void setEnemyClans(int[] enemyClans)
+	public void setIgnoreClanNpcIds(int[] ignoreClanNpcIds)
 	{
-		_enemyClans = enemyClans;
-	}
-	
-	/**
-	 * @param clans A set of clan names to check if they belong to this NPC template enemy clans.
-	 * @return {@code true} if at least one of the clan names belong to this NPC template enemy clans, {@code false} otherwise.
-	 */
-	public boolean isEnemyClan(int[] clans)
-	{
-		// Using local variable for the sake of reloading since it can be turned to null.
-		final int[] enemyClans = _enemyClans;
-		
-		if (enemyClans == null || clans == null)
-			return false;
-		
-		if (enemyClans == clans)
-			return true;
-		
-if (com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
-		if (enemyClans[0] == NpcData.CLAN_ALL)	// <clan>ALL</clan>
-			return true;
-}}
-		
-		for (int clanId : clans)
-			if (com.l2jserver.gameserver.util.Util.contains(enemyClans, clanId))
-				return true;
-		
-		return false;
+		_ignoreClanNpcIds = ignoreClanNpcIds;
 	}
 	
 	//[JOJO]-------------------------------------------------
@@ -610,7 +583,7 @@ if (com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 	
 	public String getEnemyClanNames()
 	{
-		return NpcData.getInstance().toClanNames(_enemyClans);
+		return NpcData.getInstance().toClanNames(_ignoreClanNpcIds);
 	}
 	//-------------------------------------------------------
 	

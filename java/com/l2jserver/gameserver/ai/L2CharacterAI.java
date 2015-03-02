@@ -1486,10 +1486,9 @@ public class L2CharacterAI extends AbstractAI
 					}
 					if (target instanceof L2Attackable)
 					{
-						L2Npc targets = ((L2Npc) target);
 						L2Npc actors = ((L2Npc) _actor);
 						
-						if (!targets.isInEnemyClan(actors) && !actors.isChaos())
+						if (!actors.isChaos())
 						{
 							continue;
 						}
@@ -1516,10 +1515,9 @@ public class L2CharacterAI extends AbstractAI
 					}
 					if (target instanceof L2Attackable)
 					{
-						L2Npc targets = ((L2Npc) target);
 						L2Npc actors = ((L2Npc) _actor);
 						
-						if (!targets.isInEnemyClan(actors) && !actors.isChaos())
+						if (!actors.isChaos())
 						{
 							continue;
 						}
@@ -1549,10 +1547,9 @@ public class L2CharacterAI extends AbstractAI
 					}
 					if (target instanceof L2Attackable)
 					{
-						L2Npc targets = ((L2Npc) target);
 						L2Npc actors = ((L2Npc) _actor);
 						
-						if (!targets.isInEnemyClan(actors) && !actors.isChaos())
+						if (!actors.isChaos())
 						{
 							continue;
 						}
@@ -1580,9 +1577,8 @@ public class L2CharacterAI extends AbstractAI
 					
 					if (target instanceof L2Attackable)
 					{
-						L2Npc targets = ((L2Npc) target);
 						L2Npc actors = ((L2Npc) _actor);
-						if (!targets.isInEnemyClan(actors) && !actors.isChaos())
+						if (!actors.isChaos())
 						{
 							continue;
 						}
