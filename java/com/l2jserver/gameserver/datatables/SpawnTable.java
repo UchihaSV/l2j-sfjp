@@ -28,6 +28,7 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.logging.Level;
@@ -319,7 +320,7 @@ public final class SpawnTable extends DocumentParser
 		int ret = 0;
 		try
 		{
-			spawnDat = new L2Spawn(NpcData.getInstance().getTemplate(spawnInfo.getInt("npcTemplateid")));
+			spawnDat = new L2Spawn(Objects.requireNonNull(NpcData.getInstance().getTemplate(spawnInfo.getInt("npcTemplateid"))));
 			spawnDat.setAmount(spawnInfo.getInt("count", 1));
 			spawnDat.setX(spawnInfo.getInt("x", 0));
 			spawnDat.setY(spawnInfo.getInt("y", 0));
@@ -361,6 +362,7 @@ public final class SpawnTable extends DocumentParser
 		{
 			// problem with initializing spawn, go to next one
 			_log.log(Level.WARNING, "Spawn could not be initialized: " + e.getMessage(), e);
+			spawnInfo.getSet().entrySet().forEach(t -> System.err.println("\t" + t.getKey() + " => "+ t.getValue()));
 		}
 		
 		return ret;
