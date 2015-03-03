@@ -6894,11 +6894,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		return getStatus().getCurrentCp();
 	}
 	
-	public final void setCurrentCp(Double newCp)
-	{
-		setCurrentCp((double) newCp);
-	}
-	
 	public final void setCurrentCp(double newCp)
 	{
 		getStatus().setCurrentCp(newCp);
@@ -6922,11 +6917,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	public final double getCurrentMp()
 	{
 		return getStatus().getCurrentMp();
-	}
-	
-	public final void setCurrentMp(Double newMp)
-	{
-		setCurrentMp((double) newMp);
 	}
 	
 	public final void setCurrentMp(double newMp)
