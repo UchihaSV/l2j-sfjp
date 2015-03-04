@@ -1309,9 +1309,9 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 				}
 				break;
 			case 36402:
-				if (player.olyBuff > 0)
+				if (player.getOlympiadBuffCount() > 0)
 				{
-					filename = (player.olyBuff == 5 ? Olympiad.OLYMPIAD_HTML_PATH + "olympiad_buffs.htm" : Olympiad.OLYMPIAD_HTML_PATH + "olympiad_5buffs.htm");
+					filename = (player.getOlympiadBuffCount() == Config.ALT_OLY_MAX_BUFFS ? Olympiad.OLYMPIAD_HTML_PATH + "olympiad_buffs.htm" : Olympiad.OLYMPIAD_HTML_PATH + "olympiad_5buffs.htm");
 				}
 				else
 				{
