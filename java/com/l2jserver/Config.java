@@ -1205,7 +1205,6 @@ public final class Config
 	public static final boolean FIX_GETLOCATION = true;					//[JOJO]過剰な new Location() の抑止.
 	public static final boolean CHECK_DYNAMIC_IP_ADDRESS_TASK = true;	//[JOJO]IPアドレスを定期的に検査して変化していればログインサーバに接続しなおす.
 	public static final boolean ADMIN_MENU_AUTO_RETURN = true;			//[JOJO]adminメニューを開いたままにする.
-	public static final boolean NEVER_EVT_AGGRESSION_IF_DEAD = true;	//[JOJO]槍・範囲狩対策 - 死体にはEVT_AGGRESSIONを発行しない.
 	public static final boolean NEVER_WALKER_RndWalk = true;			//[JOJO]WalkingManager対策 - 散歩させない.
 	public static final boolean NEVER_WALKER_ReturnToSpawnPoint = true;	//[JOJO]WalkingManager対策 - 帰巣させない.
 	public static final boolean NEVER_WALKER_RandomAnimation = true;	//[JOJO]WalkingManager対策 - あくびさせない.
