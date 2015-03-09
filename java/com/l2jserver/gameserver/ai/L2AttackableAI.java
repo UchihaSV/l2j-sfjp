@@ -2711,10 +2711,10 @@ if (com.l2jserver.Config.FIX_ATTACKABLE_AI_FACTION_CALL) {{
 	@Override
 	protected void onEvtAggression(L2Character target, int aggro)
 	{
-		L2Attackable me = getActiveChar();
-		if (com.l2jserver.Config.NEVER_EVT_AGGRESSION_IF_DEAD) {
-			if (me.isDead()/* && aggro == 1*/)
-				return;
+		final L2Attackable me = getActiveChar();
+		if (me.isDead())
+		{
+			return;
 		}
 		
 		if (target != null)
