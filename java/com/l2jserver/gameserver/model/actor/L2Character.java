@@ -1960,7 +1960,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		{
 			if (skill.getItemConsumeId() > 0)
 			{
-				if (!destroyItemByItemId("Consume", skill.getItemConsumeId(), skill.getItemConsume(), null, true))
+				if (!destroyItemByItemId("Consume", skill.getItemConsumeId(), skill.getItemConsumeCount(), null, true))
 				{
 					getActingPlayer().sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
 					abortCast();
@@ -2206,8 +2206,9 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			L2ItemInstance requiredItems = getInventory().getItemByItemId(skill.getItemConsumeId());
 			
 			// Check if the caster owns enough consumed Item to cast
-			if ((requiredItems == null) || (requiredItems.getCount() < skill.getItemConsume()))
+			if ((requiredItems == null) || (requiredItems.getCount() < skill.getItemConsumeCount()))
 			{
+				// Checked: when a summon skill failed, server show required consume item count
 				{
 					// Send a System Message to the caster
 					sendPacket(SystemMessageId.THERE_ARE_NOT_ENOUGH_NECESSARY_ITEMS_TO_USE_THE_SKILL);
