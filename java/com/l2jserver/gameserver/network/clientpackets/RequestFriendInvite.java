@@ -72,37 +72,32 @@ public final class RequestFriendInvite extends L2GameClientPacket
 			activeChar.sendMessage("You are in target's block list.");
 			return;
 		}
-		SystemMessage sm;
 		// Target is blocked.
 		if (BlockList.isBlocked(activeChar, friend))
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.BLOCKED_C1);
-			sm.addCharName(friend);
-			activeChar.sendPacket(sm);
+			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.BLOCKED_C1)
+				.addPcName(friend));
 			return;
 		}
 		// Target already in friend list.
 		if (activeChar.getFriendList().contains(friend.getObjectId()))
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_ALREADY_IN_FRIENDS_LIST);
-			sm.addString(_name);
-			activeChar.sendPacket(sm);
+			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_ALREADY_IN_FRIENDS_LIST)
+				.addString(_name));
 			return;
 		}
 		// Target is busy.
 		if (friend.isProcessingRequest())
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_BUSY_TRY_LATER);
-			sm.addString(_name);
-			activeChar.sendPacket(sm);
+			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.C1_IS_BUSY_TRY_LATER)
+				.addString(_name));
 			return;
 		}
 		// Friend request sent.
 		activeChar.onTransactionRequest(friend);
 		friend.sendPacket(new FriendAddRequest(activeChar.getName()));
-		sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_REQUESTED_C1_TO_BE_FRIEND);
-		sm.addString(_name);
-		activeChar.sendPacket(sm);
+		activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_REQUESTED_C1_TO_BE_FRIEND)
+			.addString(_name));
 	}
 	
 	@Override
