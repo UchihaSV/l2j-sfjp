@@ -57,14 +57,7 @@ public class FaenorEventParser extends FaenorParser
 		if (_eventDates.getStartDate().after(currentDate))
 		{
 			_log.info("Event ID: (" + ID + ") Date: " + com.l2jserver.util.Util.dateFormat(_eventDates.getStartDate()) + " is not active yet... Scheduled.");
-			ThreadPoolManager.getInstance().scheduleGeneral(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					parseEventDropAndMessage(eventNode);
-				}
-			}, _eventDates.getStartDate().getTime() - currentDate.getTime());
+			ThreadPoolManager.getInstance().scheduleGeneral(() -> parseEventDropAndMessage(eventNode), _eventDates.getStartDate().getTime() - currentDate.getTime());
 			return;
 		}
 		

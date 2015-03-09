@@ -235,14 +235,9 @@ public final class GameTimeController extends Thread
 				{
 					_isNight = isNight;
 					
-					ThreadPoolManager.getInstance().executeGeneral(new Runnable()
-					{
-						@Override
-						public final void run()
-						{
-							DayNightSpawnManager.getInstance().notifyChangeMode();
-						}
-					});
+					ThreadPoolManager.getInstance().executeGeneral(() ->
+							DayNightSpawnManager.getInstance().notifyChangeMode()
+					);
 				}
 				
 				long sleepTime = nextTickTime - System.currentTimeMillis();
