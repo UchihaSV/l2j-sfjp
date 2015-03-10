@@ -183,24 +183,20 @@ public final class GameTimeController extends Thread
 			return;
 		}
 		
-		ThreadPoolManager.getInstance().executeGeneral(new Runnable()
+		ThreadPoolManager.getInstance().executeAi(() ->
 		{
-			@Override
-			public final void run()
+			try
 			{
-				try
+				if (Config.MOVE_BASED_KNOWNLIST)
 				{
-					if (Config.MOVE_BASED_KNOWNLIST)
-					{
-						character.getKnownList().findObjects();
-					}
-					
-					ai.notifyEvent(CtrlEvent.EVT_ARRIVED);
+					character.getKnownList().findObjects();
 				}
-				catch (final Throwable e)
-				{
-					_log.log(Level.WARNING, "", e);
-				}
+				
+				ai.notifyEvent(CtrlEvent.EVT_ARRIVED);
+			}
+			catch (final Throwable e)
+			{
+				_log.log(Level.WARNING, "", e);
 			}
 		});
 	}
