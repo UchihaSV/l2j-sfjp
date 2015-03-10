@@ -148,6 +148,7 @@ public class L2Npc extends L2Character
 	private int _displayEffect = 0;
 	
 	private int _shotsMask = 0;
+	private int _killingBlowWeaponId;
 	
 	public int getSoulShotChance()
 	{
@@ -1433,6 +1434,10 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 		_currentRHandId = getTemplate().getRHandId();
 		_currentCollisionHeight = getTemplate().getfCollisionHeight();
 		_currentCollisionRadius = getTemplate().getfCollisionRadius();
+		
+		final L2Weapon weapon = (killer != null) ? killer.getActiveWeaponItem() : null;
+		_killingBlowWeaponId = (weapon != null) ? weapon.getId() : 0;
+		
 		DecayTaskManager.getInstance().add(this);
 		return true;
 	}
@@ -1454,6 +1459,7 @@ if (com.l2jserver.Config.NEVER_RandomAnimation_IF_CORPSE) {{
 		// Recharge shots
 		_soulshotamount = getTemplate().getSoulShot();
 		_spiritshotamount = getTemplate().getSpiritShot();
+		_killingBlowWeaponId = 0;
 		
 		//[JOJO]-------------------------------------------------
 		final Queue<AbstractEventListener> eventQuests;
@@ -2116,6 +2122,23 @@ if (com.l2jserver.Config.FIX_NPC_NAME_AND_TITLE) {{
 	public boolean isTalking()
 	{
 		return _isTalking;
+	}
+	
+	/**
+	 * Sets the weapon id with which this npc was killed.
+	 * @param weaponId
+	 */
+	public void setKillingBlowWeapon(int weaponId)
+	{
+		_killingBlowWeaponId = weaponId;
+	}
+	
+	/**
+	 * @return the id of the weapon with which player killed this npc.
+	 */
+	public int getKillingBlowWeapon()
+	{
+		return _killingBlowWeaponId;
 	}
 }
 
