@@ -308,9 +308,10 @@ public final class InitialShortcutData extends DocumentParser
 		}
 		
 		// Register class specific shortcuts.
-		if (_initialShortcutData.containsKey(player.getClassId()))
+		final List<Shortcut> v;
+		if ((v = _initialShortcutData.get(player.getClassId())) != null)
 		{
-			for (Shortcut shortcut : _initialShortcutData.get(player.getClassId()))
+			for (Shortcut shortcut : v)
 			{
 				int shortcutId = shortcut.getId();
 				switch (shortcut.getType())

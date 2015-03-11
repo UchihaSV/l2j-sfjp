@@ -354,7 +354,8 @@ public class L2Attackable extends L2Npc
 			final L2MonsterInstance mob = (L2MonsterInstance) this;
 			if ((mob.getLeader() != null) && mob.getLeader().hasMinions())
 			{
-				final int respawnTime = Config.MINIONS_RESPAWN_TIME.containsKey(getId()) ? Config.MINIONS_RESPAWN_TIME.get(getId()) * 1000 : -1;
+				final Integer v;
+				final int respawnTime = (v = Config.MINIONS_RESPAWN_TIME.get(getId())) != null ? v.intValue() * 1000 : -1;
 				mob.getLeader().getMinionList().onMinionDie(mob, respawnTime);
 			}
 			

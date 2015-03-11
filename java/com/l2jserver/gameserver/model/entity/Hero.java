@@ -933,7 +933,8 @@ public class Hero
 	 */
 	public boolean isHero(int objectId)
 	{
-		return _heroes.containsKey(objectId) && _heroes.get(objectId).getBoolean(CLAIMED);
+		final StatsSet v;
+		return (v = _heroes.get(objectId)) != null && v.getBoolean(CLAIMED);
 	}
 	
 	/**
@@ -943,7 +944,8 @@ public class Hero
 	 */
 	public boolean isClaimed(int objectId)
 	{
-		return _heroes.containsKey(objectId) && _heroes.get(objectId).getBoolean(CLAIMED);
+		final StatsSet v;
+		return (v = _heroes.get(objectId)) != null && v.getBoolean(CLAIMED);
 	}
 	
 	/**

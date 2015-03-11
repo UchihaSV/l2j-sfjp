@@ -209,7 +209,8 @@ public class L2PcTemplate extends L2CharTemplate
 	 */
 	public int getBaseDefBySlot(int slotId)
 	{
-		return _baseSlotDef.containsKey(slotId) ? _baseSlotDef.get(slotId) : 0;
+		final Integer v;
+		return (v = _baseSlotDef.get(slotId)) != null ? v.intValue() : 0;
 	}
 	
 	/**

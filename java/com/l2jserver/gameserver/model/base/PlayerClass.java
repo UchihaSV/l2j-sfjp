@@ -292,7 +292,8 @@ public enum PlayerClass
 						subclasses.removeAll(EnumSet.of(maleSoulbreaker));
 					}
 				}
-				if (!player.getSubClasses().containsKey(2) || (player.getSubClasses().get(2).getLevel() < 75))
+				final SubClass v;
+				if ((v = player.getSubClasses().get(2)) == null || v.getLevel() < 75)
 				{
 					subclasses.removeAll(EnumSet.of(inspector));
 				}
