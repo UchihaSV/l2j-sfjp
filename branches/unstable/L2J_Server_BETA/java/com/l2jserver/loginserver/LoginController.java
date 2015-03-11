@@ -351,8 +351,7 @@ public class LoginController
 				{
 					if (!isIpAddrInGameServer(info.getLogin(), ip))
 					{
-						if (!_loginServerIpAddrs.containsKey(info.getLogin()))
-							_loginServerIpAddrs.put(info.getLogin(), ip);
+						_loginServerIpAddrs.putIfAbsent(info.getLogin(), ip);
 					}
 					else
 						return ret;

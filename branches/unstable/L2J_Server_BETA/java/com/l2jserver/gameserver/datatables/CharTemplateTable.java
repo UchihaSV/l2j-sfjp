@@ -159,9 +159,10 @@ public final class CharTemplateTable extends DocumentParser
 								{
 									String nodeName = valNode.getNodeName();
 									
-									if ((nodeName.startsWith("hp") || nodeName.startsWith("mp") || nodeName.startsWith("cp")) && _charTemplates.containsKey(ClassId.getClassId(classId)))
+									final L2PcTemplate v;
+									if ((nodeName.startsWith("hp") || nodeName.startsWith("mp") || nodeName.startsWith("cp")) && (v = _charTemplates.get(ClassId.getClassId(classId))) != null)
 									{
-										_charTemplates.get(ClassId.getClassId(classId)).setUpgainValue(nodeName, level, Double.parseDouble(valNode.getTextContent()));
+										v.setUpgainValue(nodeName, level, Double.parseDouble(valNode.getTextContent()));
 										_dataCount++;
 									}
 								}

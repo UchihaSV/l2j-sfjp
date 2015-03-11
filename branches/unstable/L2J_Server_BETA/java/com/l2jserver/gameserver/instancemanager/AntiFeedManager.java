@@ -74,9 +74,10 @@ public final class AntiFeedManager
 			return false;
 		}
 		
-		if ((Config.L2JMOD_ANTIFEED_INTERVAL > 0) && _lastDeathTimes.containsKey(targetPlayer.getObjectId()))
+		final Long v;
+		if ((Config.L2JMOD_ANTIFEED_INTERVAL > 0) && (v = _lastDeathTimes.get(targetPlayer.getObjectId())) != null)
 		{
-			if ((System.currentTimeMillis() - _lastDeathTimes.get(targetPlayer.getObjectId())) < Config.L2JMOD_ANTIFEED_INTERVAL)
+			if ((System.currentTimeMillis() - v.longValue()) < Config.L2JMOD_ANTIFEED_INTERVAL)
 			{
 				return false;
 			}

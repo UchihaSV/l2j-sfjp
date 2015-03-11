@@ -250,15 +250,16 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 		_abnormalType = set.getEnum("abnormalType", AbnormalType.class, AbnormalType.NONE);
 		
 		int abnormalTime = set.getInt("abnormalTime", 0);
-		if (Config.ENABLE_MODIFY_SKILL_DURATION && Config.SKILL_DURATION_LIST.containsKey(getId()))
+		final Integer v;
+		if (Config.ENABLE_MODIFY_SKILL_DURATION && (v = Config.SKILL_DURATION_LIST.get(getId())) != null)
 		{
 			if ((getLevel() < 100) || (getLevel() > 140))
 			{
-				abnormalTime = Config.SKILL_DURATION_LIST.get(getId());
+				abnormalTime = v.intValue();
 			}
 			else if ((getLevel() >= 100) && (getLevel() < 140))
 			{
-				abnormalTime += Config.SKILL_DURATION_LIST.get(getId());
+				abnormalTime += v.intValue();
 			}
 		}
 		

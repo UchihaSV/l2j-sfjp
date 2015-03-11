@@ -24,7 +24,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,13 +78,13 @@ public class SummonSkillsTable
 	public int getAvailableLevel(L2Summon cha, int skillId)
 	{
 		int lvl = 0;
-		if (!_skillTrees.containsKey(cha.getId()))
+		final FastIntObjectMap<L2PetSkillLearn> v;
+		if ((v = _skillTrees.get(cha.getId())) == null)
 		{
 			_log.warning(getClass().getSimpleName() + ": Pet id " + cha.getId() + " does not have any skills assigned.");
 			return lvl;
 		}
-		Collection<L2PetSkillLearn> skills = _skillTrees.get(cha.getId()).values();
-		for (L2PetSkillLearn temp : skills)
+		for (L2PetSkillLearn temp : v.values())
 		{
 			if (temp.getId() != skillId)
 			{
@@ -128,13 +127,13 @@ public class SummonSkillsTable
 	public List<Integer> getAvailableSkills(L2Summon cha)
 	{
 		List<Integer> skillIds = new ArrayList<>();
-		if (!_skillTrees.containsKey(cha.getId()))
+		final FastIntObjectMap<L2PetSkillLearn> v;
+		if ((v = _skillTrees.get(cha.getId())) == null)
 		{
 			_log.warning(getClass().getSimpleName() + ": Pet id " + cha.getId() + " does not have any skills assigned.");
 			return skillIds;
 		}
-		Collection<L2PetSkillLearn> skills = _skillTrees.get(cha.getId()).values();
-		for (L2PetSkillLearn temp : skills)
+		for (L2PetSkillLearn temp : v.values())
 		{
 			if (skillIds.contains(temp.getId()))
 			{

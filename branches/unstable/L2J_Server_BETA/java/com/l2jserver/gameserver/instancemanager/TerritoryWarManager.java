@@ -155,6 +155,7 @@ public final class TerritoryWarManager implements Siegable
 	
 	public boolean isAllyField(L2PcInstance player, int fieldId)
 	{
+		final Territory v;
 		if ((player == null) || (player.getSiegeSide() == 0))
 		{
 			return false;
@@ -163,7 +164,7 @@ public final class TerritoryWarManager implements Siegable
 		{
 			return true;
 		}
-		else if ((fieldId > 100) && _territoryList.containsKey((player.getSiegeSide() - 80)) && (_territoryList.get((player.getSiegeSide() - 80)).getFortId() == fieldId))
+		else if (fieldId > 100 && (v = _territoryList.get(player.getSiegeSide() - 80)) != null && v.getFortId() == fieldId)
 		{
 			return true;
 		}
@@ -674,10 +675,10 @@ public final class TerritoryWarManager implements Siegable
 	
 	public int[] calcReward(L2PcInstance player)
 	{
-		if (_participantPoints.containsKey(player.getObjectId()))
+		int[] temp;
+		if ((temp = _participantPoints.get(player.getObjectId())) != null)
 		{
 			int[] reward = new int[2];
-			int[] temp = _participantPoints.get(player.getObjectId());
 			reward[0] = temp[0];
 			reward[1] = 0;
 			// badges for being online. if char was not online at least 10 mins
@@ -724,9 +725,9 @@ public final class TerritoryWarManager implements Siegable
 	public void debugReward(L2PcInstance player)
 	{
 		player.sendMessage("Registred TerrId: " + player.getSiegeSide());
-		if (_participantPoints.containsKey(player.getObjectId()))
+		int[] temp;
+		if ((temp = _participantPoints.get(player.getObjectId())) != null)
 		{
-			int[] temp = _participantPoints.get(player.getObjectId());
 			player.sendMessage("TerrId: " + temp[0]);
 			player.sendMessage("PcKill: " + temp[1]);
 			player.sendMessage("PcQuests: " + temp[2]);
@@ -739,19 +740,21 @@ public final class TerritoryWarManager implements Siegable
 		{
 			player.sendMessage("No points for you!");
 		}
-		if (_territoryList.containsKey(player.getSiegeSide() - 80))
+		final Territory v;
+		if ((v = _territoryList.get(player.getSiegeSide() - 80)) != null)
 		{
 			player.sendMessage("Your Territory's jobs:");
-			player.sendMessage("npcKill: " + _territoryList.get(player.getSiegeSide() - 80).getQuestDone()[0]);
-			player.sendMessage("WardCaptured: " + _territoryList.get(player.getSiegeSide() - 80).getQuestDone()[1]);
+			player.sendMessage("npcKill: " + v.getQuestDone()[0]);
+			player.sendMessage("WardCaptured: " + v.getQuestDone()[1]);
 		}
 	}
 	
 	public void resetReward(L2PcInstance player)
 	{
-		if (_participantPoints.containsKey(player.getObjectId()))
+		final int[] v;
+		if ((v = _participantPoints.get(player.getObjectId())) != null)
 		{
-			_participantPoints.get(player.getObjectId())[6] = 0;
+			v[6] = 0;
 		}
 	}
 	

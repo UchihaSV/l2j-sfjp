@@ -1467,11 +1467,11 @@ public final class CharEffectList
 				}
 			}
 			
-			if (_stackedEffects.containsKey(skill.getAbnormalType()))
+			BuffInfo stackedInfo;
+			if ((stackedInfo = _stackedEffects.get(skill.getAbnormalType())) != null)
 			{
-				BuffInfo stackedInfo = _stackedEffects.get(skill.getAbnormalType());
 				// Skills are only replaced if the incoming buff has greater or equal abnormal level.
-				if ((stackedInfo != null) && (skill.getAbnormalLvl() >= stackedInfo.getSkill().getAbnormalLvl()))
+				if (skill.getAbnormalLvl() >= stackedInfo.getSkill().getAbnormalLvl())
 				{
 					// If it is an herb, set as not in use the lesser buff.
 					// Effect will be present in the effect list.

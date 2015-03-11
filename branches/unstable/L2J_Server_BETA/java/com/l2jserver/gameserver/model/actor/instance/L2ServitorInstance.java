@@ -443,10 +443,7 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 									servitorEffectsOwner = new FastIntObjectMap<>();
 									SummonEffectsTable.getInstance().getServitorEffectsOwner().put(getOwner().getObjectId(), servitorEffectsOwner);
 								}
-								if (!servitorEffectsOwner.containsKey(getOwner().getClassIndex()))
-								{
-									servitorEffectsOwner.put(getOwner().getClassIndex(), new FastIntObjectMap<List<SummonEffect>>());
-								}
+								servitorEffectsOwner.computeIfAbsent(getOwner().getClassIndex(), k -> new FastIntObjectMap<>());
 								
 								if (servitorEffects == null)
 								{
