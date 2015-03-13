@@ -652,7 +652,7 @@ public class Hero
 				}
 			}
 			
-			if (!iu.getItems().isEmpty())
+			if (!iu.isEmpty())
 			{
 				player.sendPacket(iu);
 			}
