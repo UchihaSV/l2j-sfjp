@@ -77,6 +77,11 @@ public abstract class AbstractInventoryUpdate extends AbstractItemPacket
 		}
 	}
 	
+	public final boolean isEmpty()
+	{
+		return _items.isEmpty();
+	}
+	
 	protected final void writeItems()
 	{
 		writeH(_items.size());
