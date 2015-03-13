@@ -8772,20 +8772,23 @@ public final class L2PcInstance extends L2Playable
 		// skills can be used on Walls and Doors only during siege
 		if (target.isDoor())
 		{
-			L2DoorInstance door = (L2DoorInstance) target;
+			final L2DoorInstance door = (L2DoorInstance) target;
 			Castle doorCastle;
 			Fort doorFort;
-			if (((doorCastle = door.getCastle()) != null) && (doorCastle.getResidenceId() > 0)) // If its castle door
+			
+			if ((doorCastle = door.getCastle()) != null && doorCastle.getResidenceId() > 0)
 			{
-				if (!doorCastle.getSiege().isInProgress()) // Skills can be used on castle doors only during siege.
+				if (!doorCastle.getSiege().isInProgress())
 				{
+					sendPacket(SystemMessageId.INCORRECT_TARGET);
 					return false;
 				}
 			}
-			else if (((doorFort = door.getFort()) != null) && (doorFort.getResidenceId() > 0 && !door.getIsShowHp())) // If its fort door
+			else if ((doorFort = door.getFort()) != null && doorFort.getResidenceId() > 0)
 			{
-				if (!doorFort.getSiege().isInProgress()) // Skills can be used on fort doors only during siege.
+				if (!doorFort.getSiege().isInProgress() || !door.getIsShowHp())
 				{
+					sendPacket(SystemMessageId.INCORRECT_TARGET);
 					return false;
 				}
 			}
