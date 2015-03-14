@@ -691,10 +691,10 @@ public class Olympiad extends ListenersContainer
 		return _currentCycle;
 	}
 	
-	public int getPeriod()
-	{
-		return _period;
-	}
+ //	public int getPeriod()
+ //	{
+ //		return _period;
+ //	}
 	
 	public boolean playerInStadia(L2PcInstance player)
 	{
