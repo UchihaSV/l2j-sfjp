@@ -1472,7 +1472,8 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 			
 			applyEffectScope(EffectScope.SELF, info, instant, addContinuousEffects);
 			
-			if (addContinuousEffects)
+			// TODO : Need to be done better after skill rework
+			if (addContinuousEffects && hasEffectType(L2EffectType.BUFF))
 			{
 				info.getEffector().getEffectList().add(info);
 			}
