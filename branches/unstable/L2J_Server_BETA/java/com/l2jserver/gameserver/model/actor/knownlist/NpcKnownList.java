@@ -168,7 +168,7 @@ if (com.l2jserver.Config.PC_PROTECT) {{
 if (com.l2jserver.Config.SILENT_MOVE_PROTECT) {{
 			// Check if the AI isn't a Raid Boss, can See Silent Moving players and the target isn't in silent move mode
 			final L2MonsterInstance me = (L2MonsterInstance) getActiveObject();
-			if (!me.isRaid() && !me.canSeeThroughSilentMove() && target.isSilentMoving()) return false;
+			if (!me.isRaid() && !me.canSeeThroughSilentMove() && target.isSilentMovingAffected()) return false;
 }}
 			return true;
 		}
