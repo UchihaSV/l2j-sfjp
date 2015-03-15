@@ -171,7 +171,7 @@ public class RequestExEnchantItemAttribute extends L2GameClientPacket
 		
 		if (!player.destroyItem("AttrEnchant", stone, 1, player, true))
 		{
-			player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
+			player.sendPacket(SystemMessageId.NOT_ENOUGH_REQUIRED_ITEMS);
 			Util.handleIllegalPlayerAction(player, "Player " + player.getName() + " tried to attribute enchant with a stone he doesn't have", Config.DEFAULT_PUNISH);
 			player.setActiveEnchantAttrItemId(L2PcInstance.ID_NONE);
 			return;

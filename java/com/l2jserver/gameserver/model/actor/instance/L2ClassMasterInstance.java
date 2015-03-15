@@ -368,7 +368,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 		{
 			if (player.getInventory().getInventoryItemCount(holder.getId(), -1) < holder.getCount())
 			{
-				player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
+				player.sendPacket(SystemMessageId.NOT_ENOUGH_REQUIRED_ITEMS);
 				return false;
 			}
 		}

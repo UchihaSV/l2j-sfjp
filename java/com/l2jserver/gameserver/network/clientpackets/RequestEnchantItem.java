@@ -144,7 +144,7 @@ public final class RequestEnchantItem extends L2GameClientPacket
 		scroll = activeChar.getInventory().destroyItem("Enchant", scroll.getObjectId(), 1, activeChar, item);
 		if (scroll == null)
 		{
-			activeChar.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
+			activeChar.sendPacket(SystemMessageId.NOT_ENOUGH_REQUIRED_ITEMS);
 			Util.handleIllegalPlayerAction(activeChar, "Player " + activeChar.getName() + " tried to enchant with a scroll he doesn't have", Config.DEFAULT_PUNISH);
 			activeChar.setActiveEnchantItemId(L2PcInstance.ID_NONE);
 			activeChar.sendPacket(new EnchantResult(2, 0, 0));
@@ -158,7 +158,7 @@ public final class RequestEnchantItem extends L2GameClientPacket
 			support = activeChar.getInventory().destroyItem("Enchant", support.getObjectId(), 1, activeChar, item);
 			if (support == null)
 			{
-				activeChar.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
+				activeChar.sendPacket(SystemMessageId.NOT_ENOUGH_REQUIRED_ITEMS);
 				Util.handleIllegalPlayerAction(activeChar, "Player " + activeChar.getName() + " tried to enchant with a support item he doesn't have", Config.DEFAULT_PUNISH);
 				activeChar.setActiveEnchantItemId(L2PcInstance.ID_NONE);
 				activeChar.sendPacket(new EnchantResult(2, 0, 0));
