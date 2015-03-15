@@ -344,7 +344,8 @@ if (TEST1) {{
 			return -1;
 		}
 		
-		return (_runningSpawns.containsKey(objectId)) ? _runningSpawns.get(objectId).getDelay(TimeUnit.MILLISECONDS) : 0;
+		final ScheduledFuture<?> v;
+		return (v = _runningSpawns.get(objectId)) != null ? v.getDelay(TimeUnit.MILLISECONDS) : 0;
 	}
 	
 	/**
