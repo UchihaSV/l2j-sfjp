@@ -344,7 +344,7 @@ if (TEST1) {{
 			return -1;
 		}
 		
-		return _runningSpawns.get(objectId).getDelay(TimeUnit.MILLISECONDS);
+		return (_runningSpawns.containsKey(objectId)) ? _runningSpawns.get(objectId).getDelay(TimeUnit.MILLISECONDS) : 0;
 	}
 	
 	/**
