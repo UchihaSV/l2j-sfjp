@@ -323,7 +323,7 @@ public class Hero
 					int charTwoClass = rset.getInt("charTwoClass");
 					int winner = rset.getInt("winner");
 					long start = rset.getLong("start");
-					int time = rset.getInt("time");
+					long time = rset.getLong("time");
 					int classed = rset.getInt("classed");
 					
 					if (charId == charOneId)
