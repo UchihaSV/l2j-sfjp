@@ -812,6 +812,7 @@ public final class L2PcInstance extends L2Playable
 	private int _cursedWeaponEquippedId = 0;
 	private boolean _combatFlagEquippedId = false;
 	
+	private boolean _canRevive = true;
 	private int _reviveRequested = 0;
 	private double _revivePower = 0;
 	private boolean _revivePet = false;
@@ -850,8 +851,6 @@ public final class L2PcInstance extends L2Playable
 	
 	/** Map containing all custom skills of this player. */
 	private FastIntObjectMap<Skill> _customSkills = null;
-	
-	private boolean _canRevive = true;
 	
 	private volatile int _actionMask;
 	
@@ -907,6 +906,8 @@ public final class L2PcInstance extends L2Playable
 	
 	// Save responder name for log it
 	private String _lastPetitionGmName = null;
+	
+	private boolean _hasCharmOfCourage = false;
 	
 	/**
 	 * Create a new L2PcInstance and add it in the characters table of the database.<br>
@@ -5237,24 +5238,6 @@ public final class L2PcInstance extends L2Playable
 	@Override
 	public boolean doDie(L2Character killer)
 	{
-		// Kill the L2PcInstance
-		if (!super.doDie(killer))
-		{
-			return false;
-		}
-		
-		if (isMounted())
-		{
-			stopFeed();
-		}
-		synchronized (this)
-		{
-			if (isFakeDeath())
-			{
-				stopFakeDeath(true);
-			}
-		}
-		
 		if (killer != null)
 		{
 			final L2PcInstance pk = killer.getActingPlayer();
@@ -5382,6 +5365,24 @@ public final class L2PcInstance extends L2Playable
 			}
 		}
 		
+		// Kill the L2PcInstance
+		if (!super.doDie(killer))
+		{
+			return false;
+		}
+		
+		if (isMounted())
+		{
+			stopFeed();
+		}
+		synchronized (this)
+		{
+			if (isFakeDeath())
+			{
+				stopFakeDeath(true);
+			}
+		}
+		
 		// Unsummon Cubics
 		if (!_cubics.isEmpty())
 		{
@@ -5416,10 +5417,6 @@ public final class L2PcInstance extends L2Playable
 		
 		AntiFeedManager.getInstance().setLastDeathTime(getObjectId());
 		
-		if (isPhoenixBlessed() || (isAffected(EffectFlag.CHARM_OF_COURAGE) && isInSiege()))
-		{
-			reviveRequest(this, null, false, 0);
-		}
 
 		//[JOJO]-------------------------------------------------
 		L2BossZone zone;
@@ -10753,7 +10750,6 @@ public final class L2PcInstance extends L2Playable
 	public void doRevive()
 	{
 		super.doRevive();
-		stopEffects(L2EffectType.CHARMOFCOURAGE);
 		updateEffectIcons();
 		sendPacket(new EtcStatusUpdate(this));
 		_reviveRequested = 0;
@@ -10825,28 +10821,16 @@ public final class L2PcInstance extends L2Playable
 			}
 			return;
 		}
-		if ((Pet && hasSummon() && getSummon().isDead()) || (!Pet && isDead()))
+		if ((Pet && hasPet() && getSummon().isDead()) || (!Pet && isDead()))
 		{
 			_reviveRequested = 1;
 			int restoreExp = 0;
-			if (isPhoenixBlessed())
-			{
-				_revivePower = 100;
-			}
-			else if (isAffected(EffectFlag.CHARM_OF_COURAGE))
-			{
-				_revivePower = 0;
-			}
-			else
-			{
-				_revivePower = Formulas.calculateSkillResurrectRestorePercent(power, reviver);
-			}
 			
+			_revivePower = Formulas.calculateSkillResurrectRestorePercent(power, reviver);
 			restoreExp = (int) Math.round(((getExpBeforeDeath() - getExp()) * _revivePower) / 100);
-			
 			_revivePet = Pet;
 			
-			if (isAffected(EffectFlag.CHARM_OF_COURAGE))
+			if (hasCharmOfCourage())
 			{
 				ConfirmDlg dlg = new ConfirmDlg(SystemMessageId.RESURRECT_USING_CHARM_OF_COURAGE.getId());
 				dlg.setTime(60000);
@@ -10862,16 +10846,11 @@ public final class L2PcInstance extends L2Playable
 	
 	public void reviveAnswer(int answer)
 	{
-		if ((_reviveRequested != 1) || (!isDead() && !_revivePet) || (_revivePet && hasSummon() && !getSummon().isDead()))
+		if ((_reviveRequested != 1) || (!isDead() && !_revivePet) || (_revivePet && hasPet() && !getSummon().isDead()))
 		{
 			return;
 		}
-		// If character refuses a PhoenixBless autoress, cancel all buffs he had
-		if ((answer == 0) && isPhoenixBlessed())
-		{
-			stopEffects(L2EffectType.PHOENIX_BLESSING);
-			stopAllEffectsExceptThoseThatLastThroughDeath();
-		}
+		
 		if (answer == 1)
 		{
 			if (!_revivePet)
@@ -10885,7 +10864,7 @@ public final class L2PcInstance extends L2Playable
 					doRevive();
 				}
 			}
-			else if (hasSummon())
+			else if (hasPet())
 			{
 				if (_revivePower != 0)
 				{
@@ -12600,9 +12579,15 @@ public final class L2PcInstance extends L2Playable
 	
 	public void calculateDeathPenaltyBuffLevel(L2Character killer)
 	{
-		if (((getKarma() > 0) || (Rnd.get(1, 100) <= Config.DEATH_PENALTY_CHANCE)) && !(killer instanceof L2PcInstance) && !(canOverrideCond(PcCondOverride.DEATH_PENALTY)) && !(isCharmOfLuckAffected() && killer.isRaid()) && !isPhoenixBlessed() && !isLucky() && !isBlockedFromDeathPenalty() && !(isInsideZone(ZoneId.PVP) || isInsideZone(ZoneId.SIEGE)))
+		if ((getKarma() > 0) || (Rnd.get(1, 100) <= Config.DEATH_PENALTY_CHANCE))
 		{
-			increaseDeathPenaltyBuffLevel();
+			if (!(killer.getActingPlayer() != null) && !(canOverrideCond(PcCondOverride.DEATH_PENALTY)))
+			{
+				if (!(isCharmOfLuckAffected() && killer.isRaid()) && !isResurrectSpecialAffected() && !isLucky() && !isBlockedFromDeathPenalty() && !(isInsideZone(ZoneId.PVP) || isInsideZone(ZoneId.SIEGE)))
+				{
+					increaseDeathPenaltyBuffLevel();
+				}
+			}
 		}
 	}
 	
@@ -14549,5 +14534,24 @@ public final class L2PcInstance extends L2Playable
 	public boolean hasAction(PlayerAction act)
 	{
 		return (_actionMask & act.getMask()) == act.getMask();
+	}
+	
+	/**
+	 * Set true/false if character got Charm of Courage
+	 * @param val true/false
+	 */
+	public void setCharmOfCourage(boolean val)
+	{
+		_hasCharmOfCourage = val;
+		
+	}
+	
+	/**
+	 * @return {@code true} if effect is present, {@code false} otherwise.
+	 */
+	public boolean hasCharmOfCourage()
+	{
+		return _hasCharmOfCourage;
+		
 	}
 }
