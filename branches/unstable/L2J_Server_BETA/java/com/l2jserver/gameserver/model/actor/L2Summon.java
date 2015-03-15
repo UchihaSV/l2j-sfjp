@@ -315,7 +315,7 @@ public abstract class L2Summon extends L2Playable
 	@Override
 	public boolean doDie(L2Character killer)
 	{
-		if (isNoblesseBlessed())
+		if (isNoblesseBlessedAffected())
 		{
 			stopEffects(L2EffectType.NOBLESSE_BLESSING);
 			storeEffect(true);
@@ -350,11 +350,6 @@ public abstract class L2Summon extends L2Playable
 					}
 				}
 			}
-		}
-		
-		if (isPhoenixBlessed() && (getOwner() != null))
-		{
-			getOwner().reviveRequest(getOwner(), null, true, 100);
 		}
 		
 		DecayTaskManager.getInstance().add(this);
