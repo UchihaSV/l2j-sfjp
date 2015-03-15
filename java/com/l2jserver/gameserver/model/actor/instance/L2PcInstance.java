@@ -824,6 +824,10 @@ public final class L2PcInstance extends L2Playable
 	private double _mpUpdateDecCheck = .0;
 	private double _mpUpdateInterval = .0;
 	
+	private double _originalCp = .0;
+	private double _originalHp = .0;
+	private double _originalMp = .0;
+	
 	/** Char Coords from Client */
 	private int _clientX;
 	private int _clientY;
@@ -7212,6 +7216,8 @@ public final class L2PcInstance extends L2Playable
 			player.setCurrentHp(currentHp);
 			player.setCurrentMp(currentMp);
 			
+			player.setOriginalCpHpMp(currentCp, currentHp, currentMp);
+			
 			if (currentHp < 0.5)
 			{
 				player.setIsDead(true);
@@ -10709,6 +10715,14 @@ public final class L2PcInstance extends L2Playable
 		if (Config.STORE_SKILL_COOLTIME)
 		{
 			restoreEffects();
+		}
+		
+		// TODO : Need to fix that hack!
+		if (!isDead())
+		{
+			setCurrentCp(_originalCp);
+			setCurrentHp(_originalHp);
+			setCurrentMp(_originalMp);
 		}
 		
 		revalidateZone(true);
@@ -14389,6 +14403,13 @@ public final class L2PcInstance extends L2Playable
 			}
 		}
 		return false;
+	}
+	
+	public void setOriginalCpHpMp(double cp, double hp, double mp)
+	{
+		_originalCp = cp;
+		_originalHp = hp;
+		_originalMp = mp;
 	}
 	
 	//[JOJO]-------------------------------------------------
