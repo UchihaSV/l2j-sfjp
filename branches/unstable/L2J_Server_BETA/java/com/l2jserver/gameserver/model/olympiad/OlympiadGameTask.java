@@ -86,7 +86,6 @@ public final class OlympiadGameTask implements Runnable
 	private final L2OlympiadStadiumZone _zone;
 	private AbstractOlympiadGame _game;
 	private GameState _state = GameState.IDLE;
-	private boolean _needAnnounce = false;
 	private int _countDown = 0;
 	
 	private static enum GameState
@@ -130,16 +129,6 @@ public final class OlympiadGameTask implements Runnable
 		return _state == GameState.TELEPORT_TO_TOWN;
 	}
 	
-	public final boolean needAnnounce()
-	{
-		if (_needAnnounce)
-		{
-			_needAnnounce = false;
-			return true;
-		}
-		return false;
-	}
-	
 	public final L2OlympiadStadiumZone getZone()
 	{
 		return _zone;
@@ -160,7 +149,6 @@ public final class OlympiadGameTask implements Runnable
 		
 		_game = game;
 		_state = GameState.BEGIN;
-		_needAnnounce = false;
 		ThreadPoolManager.getInstance().executeGeneral(this);
 	}
 	
@@ -379,8 +367,12 @@ public final class OlympiadGameTask implements Runnable
 			}
 			
 			_game.removals();
-			_needAnnounce = true;
 			OlympiadGameManager.getInstance().startBattle(); // inform manager
+			
+			if (Config.ALT_OLY_ANNOUNCE_GAMES)
+			{
+				OlympiadAnnouncer.announce(_game);
+			}
 			return true;
 		}
 		catch (Exception e)
