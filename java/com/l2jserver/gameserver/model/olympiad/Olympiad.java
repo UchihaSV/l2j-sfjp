@@ -378,6 +378,8 @@ public class Olympiad extends ListenersContainer
 		_compStart = Calendar.getInstance();
 		_compStart.set(Calendar.HOUR_OF_DAY, COMP_START);
 		_compStart.set(Calendar.MINUTE, COMP_MIN);
+		_compStart.set(Calendar.SECOND, 0);
+		_compStart.set(Calendar.MILLISECOND, 0);
 		_compEnd = _compStart.getTimeInMillis() + COMP_PERIOD;
 		
 		if (_scheduledOlympiadEnd != null)
@@ -417,7 +419,7 @@ public class Olympiad extends ListenersContainer
 			updateMonthlyData();
 			
 			Calendar validationEnd = Calendar.getInstance();
-			_validationEnd = validationEnd.getTimeInMillis() + VALIDATION_PERIOD;
+			_validationEnd = validationEnd.getTimeInMillis() + VALIDATION_PERIOD;	//TODO: 集計期間 毎月1日12:00～2日12:00 → 毎月1日00:00～1日12:00
 			
 			loadNoblesRank();
 			_scheduledValdationTask = ThreadPoolManager.getInstance().scheduleGeneral(new ValidationEndTask(), getMillisToValidationEnd());
@@ -566,10 +568,10 @@ public class Olympiad extends ListenersContainer
 		Calendar currentTime = Calendar.getInstance();
 		currentTime.add(Calendar.MONTH, 1);
 		currentTime.set(Calendar.DAY_OF_MONTH, 1);
-		currentTime.set(Calendar.AM_PM, Calendar.AM);
-		currentTime.set(Calendar.HOUR, 12);
+		currentTime.set(Calendar.HOUR_OF_DAY, 12);	//TODO: オリンピアード期間終了時刻 毎月1日12:00 → 毎月1日00:00
 		currentTime.set(Calendar.MINUTE, 0);
 		currentTime.set(Calendar.SECOND, 0);
+		currentTime.set(Calendar.MILLISECOND, 0);
 		_olympiadEnd = currentTime.getTimeInMillis();
 		
 		Calendar nextChange = Calendar.getInstance();
@@ -602,6 +604,8 @@ public class Olympiad extends ListenersContainer
 		_compStart = Calendar.getInstance();
 		_compStart.set(Calendar.HOUR_OF_DAY, COMP_START);
 		_compStart.set(Calendar.MINUTE, COMP_MIN);
+		_compStart.set(Calendar.SECOND, 0);
+		_compStart.set(Calendar.MILLISECOND, 0);
 		_compStart.add(Calendar.HOUR_OF_DAY, 24);
 		_compEnd = _compStart.getTimeInMillis() + COMP_PERIOD;
 		
