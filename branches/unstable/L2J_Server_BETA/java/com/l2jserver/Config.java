@@ -2935,13 +2935,6 @@ public final class Config
 		  {
 			final PropertiesParser bossSettings = new PropertiesParser(BOSS_FILE);
 			
-			// sailren -- 注意：単位は分
-			FWS_ENABLESINGLEPLAYER = bossSettings.getBoolean("EnableSinglePlayer", false);
-			FWS_FIXINTERVALOFSAILRENSPAWN = Util.constrain(bossSettings.getInt("FixIntervalOfSailrenSpawn", 1440), 5, 2880) * 60000;
-			FWS_RANDOMINTERVALOFSAILRENSPAWN = Util.constrain(bossSettings.getInt("RandomIntervalOfSailrenSpawn", 1440), 5, 2880) * 60000;
-			FWS_INTERVALOFNEXTMONSTER = Util.constrain(bossSettings.getInt("IntervalOfNextMonster", 1), 1, 10) * 60000;
-			FWS_ACTIVITYTIMEOFMOBS = Util.constrain(bossSettings.getInt("ActivityTimeOfMobs", 120), 1, 120) * 60000;
-			
 			// High Priestess van Halter -- 注意：単位は秒
 			HPH_FIXINTERVALOFHALTER = Util.constrain(bossSettings.getInt("FixIntervalOfHalter", 172800), 1200, 864000) * 1000;
 			HPH_RANDOMINTERVALOFHALTER = Util.constrain(bossSettings.getInt("RandomIntervalOfHalter", 86400), 300, 864000) * 1000;
