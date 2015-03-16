@@ -345,25 +345,27 @@ public class Olympiad extends ListenersContainer
 		}
 		for (jp.sf.l2j.troja.IntObjectMap.Entry<Integer> chr : tmpPlace.entrySet())
 		{
-			if (chr.getValue() <= rank1)
+			final int charId = chr.getKey();
+			final int place = chr.getValue().intValue();
+			if (place <= rank1)
 			{
-				_noblesRank.put(chr.getKey(), 1);
+				_noblesRank.put(charId, 1);
 			}
-			else if (tmpPlace.get(chr.getKey()) <= rank2)
+			else if (place <= rank2)
 			{
-				_noblesRank.put(chr.getKey(), 2);
+				_noblesRank.put(charId, 2);
 			}
-			else if (tmpPlace.get(chr.getKey()) <= rank3)
+			else if (place <= rank3)
 			{
-				_noblesRank.put(chr.getKey(), 3);
+				_noblesRank.put(charId, 3);
 			}
-			else if (tmpPlace.get(chr.getKey()) <= rank4)
+			else if (place <= rank4)
 			{
-				_noblesRank.put(chr.getKey(), 4);
+				_noblesRank.put(charId, 4);
 			}
 			else
 			{
-				_noblesRank.put(chr.getKey(), 5);
+				_noblesRank.put(charId, 5);
 			}
 		}
 	}
