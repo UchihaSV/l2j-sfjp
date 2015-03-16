@@ -18,8 +18,6 @@
  */
 package com.l2jserver.gameserver.model.olympiad;
 
-import java.util.Set;
-
 import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -30,61 +28,36 @@ import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 /**
  * @author DS
  */
-public final class OlympiadAnnouncer implements Runnable
+final class OlympiadAnnouncer
 {
 	private static final int OLY_MANAGER = 31688;
-	private final Set<L2Spawn> _managers;
-	private int _currentStadium = 0;
 	
-	public OlympiadAnnouncer()
+	public static void announce(AbstractOlympiadGame game)
 	{
-		_managers = SpawnTable.getInstance().getSpawns(OLY_MANAGER);
-	}
-	
-	@Override
-	public void run()
-	{
-		OlympiadGameTask task;
-		for (int i = OlympiadGameManager.getInstance().getNumberOfStadiums(); --i >= 0; _currentStadium++)
+		NpcStringId npcString;
+		final String arenaId = String.valueOf(game.getStadiumId() + 1);
+		switch (game.getType())
 		{
-			if (_currentStadium >= OlympiadGameManager.getInstance().getNumberOfStadiums())
-			{
-				_currentStadium = 0;
-			}
-			
-			task = OlympiadGameManager.getInstance().getOlympiadTask(_currentStadium);
-			if ((task != null) && (task.getGame() != null) && task.needAnnounce())
-			{
-				NpcStringId npcString;
-				final String arenaId = String.valueOf(task.getGame().getStadiumId() + 1);
-				switch (task.getGame().getType())
-				{
-					case NON_CLASSED:
-						npcString = NpcStringId.OLYMPIAD_CLASS_FREE_INDIVIDUAL_MATCH_IS_GOING_TO_BEGIN_IN_ARENA_S1_IN_A_MOMENT;
-						break;
-					case CLASSED:
-						npcString = NpcStringId.OLYMPIAD_CLASS_INDIVIDUAL_MATCH_IS_GOING_TO_BEGIN_IN_ARENA_S1_IN_A_MOMENT;
-						break;
-					case TEAMS:
-						npcString = NpcStringId.OLYMPIAD_CLASS_FREE_TEAM_MATCH_IS_GOING_TO_BEGIN_IN_ARENA_S1_IN_A_MOMENT;
-						break;
-					default:
-						continue;
-				}
-				
-				L2Npc manager;
-				NpcSay packet;
-				for (L2Spawn spawn : _managers)
-				{
-					manager = spawn.getLastSpawn();
-					if (manager != null)
-					{
-						packet = new NpcSay(manager.getObjectId(), Say2.NPC_SHOUT, manager.getId(), npcString);
-						packet.addStringParameter(arenaId);
-						manager.broadcastPacket(packet);
-					}
-				}
+			case NON_CLASSED:
+				npcString = NpcStringId.OLYMPIAD_CLASS_FREE_INDIVIDUAL_MATCH_IS_GOING_TO_BEGIN_IN_ARENA_S1_IN_A_MOMENT;
 				break;
+			case CLASSED:
+				npcString = NpcStringId.OLYMPIAD_CLASS_INDIVIDUAL_MATCH_IS_GOING_TO_BEGIN_IN_ARENA_S1_IN_A_MOMENT;
+				break;
+			case TEAMS:
+				npcString = NpcStringId.OLYMPIAD_CLASS_FREE_TEAM_MATCH_IS_GOING_TO_BEGIN_IN_ARENA_S1_IN_A_MOMENT;
+				break;
+			default:
+				return;
+		}
+		
+		for (L2Spawn spawn : SpawnTable.getInstance().getSpawns(OLY_MANAGER))
+		{
+			L2Npc manager = spawn.getLastSpawn();
+			if (manager != null)
+			{
+				manager.broadcastPacket( new NpcSay(manager.getObjectId(), Say2.NPC_SHOUT, manager.getId(), npcString)
+				.addStringParameter(arenaId) );
 			}
 		}
 	}
