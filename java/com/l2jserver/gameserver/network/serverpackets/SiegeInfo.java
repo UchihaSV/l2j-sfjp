@@ -153,7 +153,7 @@ public class SiegeInfo extends L2GameServerPacket
 				writeS(""); // Ally Name
 			}
 			
-			writeD((int) (Calendar.getInstance().getTimeInMillis() / 1000));
+			writeD((int) (System.currentTimeMillis() / 1000));
 			writeD((int) ((CHSiegeManager.getInstance().getSiegableHall(_hall.getId()).getNextSiegeTime()) / 1000));
 			writeD(0x00); // number of choices?
 		}
