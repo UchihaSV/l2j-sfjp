@@ -92,6 +92,7 @@ public class RequestSetCastleSiegeTime extends L2GameClientPacket
 		cal1.setTimeInMillis(siegeDate);
 		cal1.set(Calendar.MINUTE, 0);
 		cal1.set(Calendar.SECOND, 0);
+		cal1.set(Calendar.MILLISECOND, 0);
 		
 		Calendar cal2 = Calendar.getInstance();
 		cal2.setTimeInMillis(choosenDate);

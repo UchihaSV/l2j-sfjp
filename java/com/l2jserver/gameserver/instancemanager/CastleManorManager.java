@@ -259,6 +259,7 @@ public final class CastleManorManager
 		_manorRefresh.set(Calendar.HOUR_OF_DAY, MANOR_REFRESH);
 		_manorRefresh.set(Calendar.MINUTE, MANOR_REFRESH_MIN);
 		_manorRefresh.set(Calendar.SECOND, 0);
+		_manorRefresh.set(Calendar.MILLISECOND, 0);
 		_manorRefresh.add(Calendar.HOUR_OF_DAY, 24);
 	}
 	
@@ -282,6 +283,7 @@ public final class CastleManorManager
 		_periodApprove.set(Calendar.HOUR_OF_DAY, NEXT_PERIOD_APPROVE);
 		_periodApprove.set(Calendar.MINUTE, NEXT_PERIOD_APPROVE_MIN);
 		_periodApprove.set(Calendar.SECOND, 0);
+		_periodApprove.set(Calendar.MILLISECOND, 0);
 		_periodApprove.add(Calendar.HOUR_OF_DAY, 24);
 	}
 	

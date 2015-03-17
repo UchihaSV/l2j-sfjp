@@ -201,6 +201,7 @@ public final class SiegableHall extends ClanHall
 		c.set(Calendar.HOUR_OF_DAY, _scheduleConfig[3]);
 		c.set(Calendar.MINUTE, _scheduleConfig[4]);
 		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
 		setNextSiegeDate(c);
 		updateDb();
 	}
