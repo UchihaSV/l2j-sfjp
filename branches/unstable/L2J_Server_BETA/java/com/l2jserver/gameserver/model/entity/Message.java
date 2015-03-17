@@ -98,7 +98,7 @@ public class Message
 		_receiverId = receiverId;
 		_subject = subject;
 		_content = text;
-		_expiration = (isCod ? System.currentTimeMillis() + (COD_EXPIRATION * 3600000) : System.currentTimeMillis() + (EXPIRATION * 3600000));
+		_expiration = System.currentTimeMillis() + (isCod ? COD_EXPIRATION * 3600000 : EXPIRATION * 3600000);
 		_hasAttachments = false;
 		_unread = true;
 		_deletedBySender = false;

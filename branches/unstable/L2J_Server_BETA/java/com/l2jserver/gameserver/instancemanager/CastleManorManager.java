@@ -84,14 +84,15 @@ public final class CastleManorManager
 		_disabled = !Config.ALLOW_MANOR;
 		
 		boolean isApproved;
+		final long now = System.currentTimeMillis();
 		if (_periodApprove.getTimeInMillis() > _manorRefresh.getTimeInMillis())
 		{
 			// Next approve period already scheduled
-			isApproved = (_manorRefresh.getTimeInMillis() > System.currentTimeMillis());
+			isApproved = now < _manorRefresh.getTimeInMillis();
 		}
 		else
 		{
-			isApproved = ((_periodApprove.getTimeInMillis() < System.currentTimeMillis()) && (_manorRefresh.getTimeInMillis() > System.currentTimeMillis()));
+			isApproved = _periodApprove.getTimeInMillis() < now && now < _manorRefresh.getTimeInMillis();
 		}
 		
 		for (Castle c : CastleManager.getInstance().getCastles())
