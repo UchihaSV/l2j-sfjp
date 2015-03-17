@@ -291,14 +291,13 @@ public class Hero
 	
 	public void loadFights(int charId)
 	{
-		FastList<StatsSet> _fights = new FastList<>();
-		
+		final FastList<StatsSet> _fights = new FastList<>();
 		StatsSet _herocountdata = new StatsSet();
-		
 		Calendar _data = Calendar.getInstance();
 		_data.set(Calendar.DAY_OF_MONTH, 1);
 		_data.set(Calendar.HOUR_OF_DAY, 0);
 		_data.set(Calendar.MINUTE, 0);
+		_data.set(Calendar.SECOND, 0);
 		_data.set(Calendar.MILLISECOND, 0);
 		
 		long from = _data.getTimeInMillis();

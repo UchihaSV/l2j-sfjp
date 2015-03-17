@@ -103,8 +103,7 @@ public class SiegeInfo extends L2GameServerPacket
 			writeD((int) (System.currentTimeMillis() / 1000));
 			if (!_castle.getIsTimeRegistrationOver() && activeChar.isClanLeader() && (activeChar.getClanId() == _castle.getOwnerId()))
 			{
-				Calendar cal = Calendar.getInstance();
-				cal.setTimeInMillis(_castle.getSiegeDate().getTimeInMillis());
+				Calendar cal = (Calendar)_castle.getSiegeDate().clone();
 				cal.set(Calendar.MINUTE, 0);
 				cal.set(Calendar.SECOND, 0);
 				
