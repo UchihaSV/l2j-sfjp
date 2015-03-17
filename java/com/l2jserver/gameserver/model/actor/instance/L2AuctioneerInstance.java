@@ -188,7 +188,8 @@ public final class L2AuctioneerInstance extends L2Npc
 						html.replace("%AGIT_LEASE%", formatAdena(ClanHallManager.getInstance().getAuctionableHallById(a.getItemId()).getLease()));
 						html.replace("%AGIT_LOCATION%", ClanHallManager.getInstance().getAuctionableHallById(a.getItemId()).getLocNameHtm());
 						html.replace("%AGIT_AUCTION_END%", format.format(a.getEndDate()));
-						html.replace("%AGIT_AUCTION_REMAIN%", ((a.getEndDate()- System.currentTimeMillis()) / 3600000) + " hours " + (((a.getEndDate() - System.currentTimeMillis()) / 60000) % 60) + " minutes");
+						final long endDate = a.getEndDate() - System.currentTimeMillis();
+						html.replace("%AGIT_AUCTION_REMAIN%", (endDate / 3600000) + " hours " + (endDate / 60000 % 60) + " minutes");
 						html.replace("%AGIT_AUCTION_MINBID%", formatAdena(a.getStartingBid()));
 						html.replace("%AGIT_AUCTION_COUNT%", a.getBidders().size());
 						html.replace("%AGIT_AUCTION_DESC%", ClanHallManager.getInstance().getAuctionableHallById(a.getItemId()).getDesc());
@@ -444,7 +445,8 @@ public final class L2AuctioneerInstance extends L2Npc
 						html.replace("%AGIT_LEASE%", formatAdena(item.getLease()));
 						html.replace("%AGIT_LOCATION%", item.getLocNameHtm());
 						html.replace("%AGIT_AUCTION_END%", format.format(a.getEndDate()));
-						html.replace("%AGIT_AUCTION_REMAIN%", ((a.getEndDate() - System.currentTimeMillis()) / 3600000) + " hours " + (((a.getEndDate() - System.currentTimeMillis()) / 60000) % 60) + " minutes");
+						final long endDate = a.getEndDate() - System.currentTimeMillis();
+						html.replace("%AGIT_AUCTION_REMAIN%", (endDate / 3600000) + " hours " + (endDate / 60000 % 60) + " minutes");
 						html.replace("%AGIT_AUCTION_MINBID%", formatAdena(a.getStartingBid()));
 						html.replace("%AGIT_AUCTION_MYBID%", formatAdena(a.getBidders().get(player.getClanId()).getBid()));
 						html.replace("%AGIT_AUCTION_DESC%", item.getDesc());
@@ -477,7 +479,8 @@ public final class L2AuctioneerInstance extends L2Npc
 						html.replace("%AGIT_LEASE%", formatAdena(item.getLease()));
 						html.replace("%AGIT_LOCATION%", item.getLocNameHtm());
 						html.replace("%AGIT_AUCTION_END%", format.format(a.getEndDate()));
-						html.replace("%AGIT_AUCTION_REMAIN%", ((a.getEndDate() - System.currentTimeMillis()) / 3600000) + " hours " + (((a.getEndDate() - System.currentTimeMillis()) / 60000) % 60) + " minutes");
+						final long endDate = a.getEndDate() - System.currentTimeMillis();
+						html.replace("%AGIT_AUCTION_REMAIN%", (endDate / 3600000) + " hours " + (endDate / 60000 % 60) + " minutes");
 						html.replace("%AGIT_AUCTION_MINBID%", formatAdena(a.getStartingBid()));
 						html.replace("%AGIT_AUCTION_BIDCOUNT%", a.getBidders().size());
 						html.replace("%AGIT_AUCTION_DESC%", item.getDesc());
