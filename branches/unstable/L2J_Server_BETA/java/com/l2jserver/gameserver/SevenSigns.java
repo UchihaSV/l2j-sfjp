@@ -221,6 +221,7 @@ public class SevenSigns
 				lastPeriodChange.set(Calendar.HOUR_OF_DAY, PERIOD_START_HOUR);
 				lastPeriodChange.set(Calendar.MINUTE, PERIOD_START_MINS);
 				lastPeriodChange.set(Calendar.SECOND, 0);
+				lastPeriodChange.set(Calendar.MILLISECOND, 0);
 				// if we hit next week, just turn back 1 week
 				if (Calendar.getInstance().before(lastPeriodChange))
 				{

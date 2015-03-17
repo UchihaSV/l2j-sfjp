@@ -1484,6 +1484,7 @@ public class Siege implements Siegable
 			cal.set(Calendar.HOUR_OF_DAY, holder.getHour());
 			cal.set(Calendar.MINUTE, 0);
 			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
 			if (cal.before(Calendar.getInstance()))
 			{
 				cal.add(Calendar.WEEK_OF_YEAR, 2);
