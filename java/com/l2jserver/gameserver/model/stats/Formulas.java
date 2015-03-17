@@ -1474,7 +1474,7 @@ public final class Formulas
 		}
 		
 		// if target reflect this skill then the effect will fail
-		if (!calcBuffDebuffReflection(target, skill))
+		if (calcBuffDebuffReflection(target, skill))
 		{
 			return false;
 		}
