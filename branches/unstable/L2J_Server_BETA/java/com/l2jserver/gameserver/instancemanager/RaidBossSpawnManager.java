@@ -242,7 +242,7 @@ public class RaidBossSpawnManager
 		}
 		
 		final int bossId = spawnDat.getId();
-		final long time = Calendar.getInstance().getTimeInMillis();
+		final long time = System.currentTimeMillis();
 		
 		SpawnTable.getInstance().addNewSpawn(spawnDat, false);
 		
@@ -277,7 +277,7 @@ public class RaidBossSpawnManager
 		}
 		else
 		{
-			final long spawnTime = respawnTime - Calendar.getInstance().getTimeInMillis();
+			final long spawnTime = respawnTime - System.currentTimeMillis();
 			_schedules.put(bossId, ThreadPoolManager.getInstance().scheduleGeneral(new SpawnSchedule(bossId), spawnTime));
 		}
 		

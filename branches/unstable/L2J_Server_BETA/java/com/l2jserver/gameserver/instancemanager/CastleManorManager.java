@@ -87,11 +87,11 @@ public final class CastleManorManager
 		if (_periodApprove.getTimeInMillis() > _manorRefresh.getTimeInMillis())
 		{
 			// Next approve period already scheduled
-			isApproved = (_manorRefresh.getTimeInMillis() > Calendar.getInstance().getTimeInMillis());
+			isApproved = (_manorRefresh.getTimeInMillis() > System.currentTimeMillis());
 		}
 		else
 		{
-			isApproved = ((_periodApprove.getTimeInMillis() < Calendar.getInstance().getTimeInMillis()) && (_manorRefresh.getTimeInMillis() > Calendar.getInstance().getTimeInMillis()));
+			isApproved = ((_periodApprove.getTimeInMillis() < System.currentTimeMillis()) && (_manorRefresh.getTimeInMillis() > System.currentTimeMillis()));
 		}
 		
 		for (Castle c : CastleManager.getInstance().getCastles())
@@ -241,7 +241,7 @@ public final class CastleManorManager
 	public long getMillisToManorRefresh()
 	{
 		// use safe interval 120s to prevent double run
-		if ((_manorRefresh.getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) < 120000)
+		if ((_manorRefresh.getTimeInMillis() - System.currentTimeMillis()) < 120000)
 		{
 			setNewManorRefresh();
 		}
@@ -249,7 +249,7 @@ public final class CastleManorManager
 		_log.info("Manor System: New Schedule for manor refresh @ " + com.l2jserver.util.Util.dateFormat(_manorRefresh));
 	//	_log.info("Manor System: New Schedule for manor refresh @ " + _manorRefresh.getTime());
 		
-		return (_manorRefresh.getTimeInMillis() - Calendar.getInstance().getTimeInMillis());
+		return (_manorRefresh.getTimeInMillis() - System.currentTimeMillis());
 	}
 	
 	public void setNewManorRefresh()
@@ -264,7 +264,7 @@ public final class CastleManorManager
 	public long getMillisToNextPeriodApprove()
 	{
 		// use safe interval 120s to prevent double run
-		if ((_periodApprove.getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) < 120000)
+		if ((_periodApprove.getTimeInMillis() - System.currentTimeMillis()) < 120000)
 		{
 			setNewPeriodApprove();
 		}
@@ -272,7 +272,7 @@ public final class CastleManorManager
 		_log.info("Manor System: New Schedule for period approve @ " + com.l2jserver.util.Util.dateFormat(_periodApprove));
 	//	_log.info("Manor System: New Schedule for period approve @ " + _periodApprove.getTime());
 		
-		return (_periodApprove.getTimeInMillis() - Calendar.getInstance().getTimeInMillis());
+		return (_periodApprove.getTimeInMillis() - System.currentTimeMillis());
 	}
 	
 	public void setNewPeriodApprove()

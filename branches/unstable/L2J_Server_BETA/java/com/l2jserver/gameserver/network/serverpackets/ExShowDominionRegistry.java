@@ -38,8 +38,8 @@ public class ExShowDominionRegistry extends L2GameServerPacket
 	private int _mercReq = 0x00;
 	private int _isMercRegistered = 0x00;
 	private int _isClanRegistered = 0x00;
-	private int _warTime = (int) (Calendar.getInstance().getTimeInMillis() / 1000);
-	private final int _currentTime = (int) (Calendar.getInstance().getTimeInMillis() / 1000);
+	private int _warTime = (int) (System.currentTimeMillis() / 1000);
+	private final int _currentTime = (int) (System.currentTimeMillis() / 1000);
 	
 	public ExShowDominionRegistry(int castleId, L2PcInstance player)
 	{
