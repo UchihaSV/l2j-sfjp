@@ -82,10 +82,8 @@ public class Couple
 		_player2Id = _tempPlayer2Id;
 		
 		_affiancedDate = Calendar.getInstance();
-		_affiancedDate.setTimeInMillis(System.currentTimeMillis());
 		
 		_weddingDate = Calendar.getInstance();
-		_weddingDate.setTimeInMillis(System.currentTimeMillis());
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement("INSERT INTO mods_wedding (id, player1Id, player2Id, married, affianceDate, weddingDate) VALUES (?, ?, ?, ?, ?, ?)"))
