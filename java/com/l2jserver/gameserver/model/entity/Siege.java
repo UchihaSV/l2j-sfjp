@@ -1472,9 +1472,10 @@ public class Siege implements Siegable
 	private void setNextSiegeDate()
 	{
 		final Calendar cal = getCastle().getSiegeDate();
-		if (cal.getTimeInMillis() < System.currentTimeMillis())
+		final long now = System.currentTimeMillis();
+		if (cal.getTimeInMillis() < now)
 		{
-			cal.setTimeInMillis(System.currentTimeMillis());
+			cal.setTimeInMillis(now);
 		}
 		
 		for (SiegeScheduleDate holder : SiegeScheduleData.getInstance().getScheduleDates())
