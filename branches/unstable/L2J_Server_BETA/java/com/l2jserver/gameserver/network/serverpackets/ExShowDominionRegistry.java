@@ -18,8 +18,6 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.Calendar;
-
 import javolution.util.FastList;
 
 import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
