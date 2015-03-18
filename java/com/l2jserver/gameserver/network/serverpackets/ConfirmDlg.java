@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import java.io.PrintStream;
+
 import com.l2jserver.gameserver.network.SystemMessageId;
 
 /**
@@ -73,4 +75,11 @@ public class ConfirmDlg extends AbstractMessagePacket<ConfirmDlg>
 		writeD(_time);
 		writeD(_requesterId);
 	}
+	
+	@Override
+	public final void printMe(PrintStream out)
+	{
+		out.println(0xF3);
+		super.printMe(out);
+	} 
 }
