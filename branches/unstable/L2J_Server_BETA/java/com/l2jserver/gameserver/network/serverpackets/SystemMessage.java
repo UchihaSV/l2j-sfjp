@@ -18,6 +18,8 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import java.io.PrintStream;
+
 import com.l2jserver.gameserver.network.SystemMessageId;
 
 /**
@@ -86,4 +88,11 @@ public final class SystemMessage extends AbstractMessagePacket<SystemMessage>
 		writeC(0x62);
 		writeMe();
 	}
+	
+	@Override
+	public final void printMe(PrintStream out)
+	{
+		out.println(0x62);
+		super.printMe(out);
+	} 
 }

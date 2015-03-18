@@ -448,10 +448,8 @@ public abstract class AbstractMessagePacket<T extends AbstractMessagePacket<?>> 
 		}
 	}
 	
-	public final void printMe(PrintStream out)
+	void printMe(PrintStream out)
 	{
-		out.println(0x62);
-		
 		out.println(getId());
 		out.println(_params.length);
 		
