@@ -1,0 +1,8 @@
+use utf8;
+
+# sendMessage
+s{\Q"Your team must have at least (\d+) points in total."}
+ {"チームポイントが合計$1以上必要です。"};	#〓仮〓
+
+s{\Q"You can't join olympiad while participating on TvT Event."}
+ {"TvTイベント参加中のプレイヤーは、オリンピアードに参加できません。"};	#〓仮〓
