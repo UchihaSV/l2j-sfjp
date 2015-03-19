@@ -934,10 +934,15 @@ public class Hero
 	 * @param objectId the player's object ID to verify
 	 * @return {@code true} if the given object ID belongs to a claimed hero, {@code false} otherwise
 	 */
-	public boolean isClaimed(int objectId)
+	@Deprecated public boolean isClaimed(int objectId)	//-[JOJO]
 	{
 		final StatsSet v;
 		return (v = _heroes.get(objectId)) != null && v.getBoolean(CLAIMED);
+	}
+	public boolean canClaim(int objectId)	//+[JOJO]
+	{
+		final StatsSet v;
+		return (v = _heroes.get(objectId)) != null && !v.getBoolean(CLAIMED);
 	}
 	
 	/**
