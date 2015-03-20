@@ -67,7 +67,6 @@ public class NpcData extends DocumentParser
 	{
 		_clans.put("ALL", CLAN_ALL);
 	}
-	private FastIntObjectMap<MinionHolder[]> _tempMinions;
 	
 	protected NpcData()
 	{
@@ -83,7 +82,6 @@ public class NpcData extends DocumentParser
 		
 		long started;
 		started = System.currentTimeMillis();
-		_tempMinions = new MinionData().minionData;
 		
 		parseDatapackDirectory("data/stats/npcs", false);
 		_log.info(getClass().getSimpleName() + ": Loaded " + _npcs.size() + " NPCs. (" + strMillTime(System.currentTimeMillis() - started) + ")");
@@ -98,7 +96,6 @@ public class NpcData extends DocumentParser
 		
 		StringIntern.end();
 		
-		_tempMinions = null;
 		loadNpcsSkillLearn();
 	}
 	
@@ -114,6 +111,8 @@ public class NpcData extends DocumentParser
 	@Override
 	protected void parseDocument()
 	{
+		final FastIntObjectMap<MinionHolder[]> minionData = new MinionData().minionData;	//[JOJO]
+		
 		for (Node node = getCurrentDocument().getFirstChild(); node != null; node = node.getNextSibling())
 		{
 			if ("list".equalsIgnoreCase(node.getNodeName()))
@@ -551,7 +550,7 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 						}
 						
 						final MinionHolder[] minions;
-						if ((minions = _tempMinions.get(npcId)) != null)
+						if ((minions = minionData.get(npcId)) != null)
 						{
 							if (parameters == null)
 							{
