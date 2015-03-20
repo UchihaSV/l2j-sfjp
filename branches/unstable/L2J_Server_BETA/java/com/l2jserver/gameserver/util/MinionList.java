@@ -78,7 +78,7 @@ public class MinionList
 	 * <BR>
 	 * @param minions
 	 */
-	public final void spawnMinions(final List<MinionHolder> minions)
+	public final void spawnMinions(final MinionHolder[] minions)	//[JOJO] -List<MinionHolder>
 	{
 		if (_master.isAlikeDead())
 		{

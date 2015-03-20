@@ -600,16 +600,22 @@ public class StatsSet implements IParserAdvUtils
 		return (SkillHolder) obj;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<MinionHolder> getMinionList(String key)
+	public MinionHolder[] getMinionList(String key)	//[JOJO] -List<MinionHolder>
 	{
 		Object obj = _set.get(key);
-		if ((obj == null) || !(obj instanceof List<?>))
+		if ((obj == null) || !(obj instanceof MinionHolder[]))
 		{
 			return null;
 		}
 		
-		return (List<MinionHolder>) obj;
+		return (MinionHolder[]) obj;
+	}
+	
+	private final MinionHolder[] emptyMinions = new MinionHolder[0];	//+[JOJO]
+	public MinionHolder[] getMinionForEach(String key)	//+[JOJO]
+	{
+		final MinionHolder[] v = getMinionList(key);
+		return v != null ? v : emptyMinions;
 	}
 	
 	public void set(String name, Object value)
