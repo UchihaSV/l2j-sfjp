@@ -67,7 +67,7 @@ public class NpcData extends DocumentParser
 	{
 		_clans.put("ALL", CLAN_ALL);
 	}
-	private MinionData _minionData;
+	private FastIntObjectMap<MinionHolder[]> _tempMinions;
 	
 	protected NpcData()
 	{
@@ -83,7 +83,7 @@ public class NpcData extends DocumentParser
 		
 		long started;
 		started = System.currentTimeMillis();
-		_minionData = new MinionData();
+		_tempMinions = new MinionData().minionData;
 		
 		parseDatapackDirectory("data/stats/npcs", false);
 		_log.info(getClass().getSimpleName() + ": Loaded " + _npcs.size() + " NPCs. (" + strMillTime(System.currentTimeMillis() - started) + ")");
@@ -98,7 +98,7 @@ public class NpcData extends DocumentParser
 		
 		StringIntern.end();
 		
-		_minionData = null;
+		_tempMinions = null;
 		loadNpcsSkillLearn();
 	}
 	
@@ -200,19 +200,19 @@ public class NpcData extends DocumentParser
 											}
 											case "minions":
 											{
-												final List<MinionHolder> minions = new ArrayList<>(1);
+												final ArrayList<MinionHolder> minions = new ArrayList<>(1);
 												for (Node minions_node = parameters_node.getFirstChild(); minions_node != null; minions_node = minions_node.getNextSibling())
 												{
 													if (minions_node.getNodeName().equalsIgnoreCase("npc"))
 													{
 														attrs = minions_node.getAttributes();
-														minions.add(new MinionHolder(parseInteger(attrs, "id"), parseInteger(attrs, "count"), parseInteger(attrs, "respawnTime"), parseInteger(attrs, "weightPoint")));
+														minions.add(new MinionHolder(parseInt(attrs, "id"), parseInt(attrs, "count"), parseInt(attrs, "respawnTime"), parseInt(attrs, "weightPoint")));
 													}
 												}
 												
 												if (!minions.isEmpty())
 												{
-													parameters.put(parseString(parameters_node.getAttributes(), "name"), minions);
+													parameters.put(parseString(parameters_node.getAttributes(), "name"), minions.toArray(new MinionHolder[minions.size()]));
 												}
 												
 												break;
@@ -550,13 +550,14 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 							template.set(set);
 						}
 						
-						if (_minionData._tempMinions.containsKey(npcId))
+						final MinionHolder[] minions;
+						if ((minions = _tempMinions.get(npcId)) != null)
 						{
 							if (parameters == null)
 							{
 								parameters = new HashMap<>();
 							}
-							parameters.putIfAbsent("Privates", _minionData._tempMinions.get(npcId));
+							parameters.putIfAbsent("Privates", minions);
 						}
 						
 						if (parameters != null)
@@ -933,7 +934,7 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 	 */
 	private final class MinionData extends DocumentParser
 	{
-		public final Map<Integer, List<MinionHolder>> _tempMinions = new HashMap<>();
+		final FastIntObjectMap<MinionHolder[]> minionData = new FastIntObjectMap<>();
 		
 		protected MinionData()
 		{
@@ -944,14 +945,15 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 		public void load()
 		{
 			long started = System.currentTimeMillis();
-			_tempMinions.clear();
+			minionData.clear();
 			parseDatapackFile("data/minionData.xml");
-			_log.info(getClass().getSimpleName() + ": Loaded " + _tempMinions.size() + " minions data. (" + strMillTime(System.currentTimeMillis() - started) + ")");
+			_log.info(getClass().getSimpleName() + ": Loaded " + minionData.size() + " minions data. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		}
 		
 		@Override
 		protected void parseDocument()
 		{
+			final ArrayList<MinionHolder> minions = new ArrayList<>();
 			for (Node node = getCurrentDocument().getFirstChild(); node != null; node = node.getNextSibling())
 			{
 				if ("list".equals(node.getNodeName()))
@@ -960,18 +962,18 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 					{
 						if ("npc".equals(list_node.getNodeName()))
 						{
-							final List<MinionHolder> minions = new ArrayList<>(1);
+							minions.clear();
 							NamedNodeMap attrs = list_node.getAttributes();
-							int id = parseInteger(attrs, "id");
+							int id = parseInt(attrs, "id");
 							for (Node npc_node = list_node.getFirstChild(); npc_node != null; npc_node = npc_node.getNextSibling())
 							{
 								if ("minion".equals(npc_node.getNodeName()))
 								{
 									attrs = npc_node.getAttributes();
-									minions.add(new MinionHolder(parseInteger(attrs, "id"), parseInteger(attrs, "count"), parseInteger(attrs, "respawnTime"), 0));
+									minions.add(new MinionHolder(parseInt(attrs, "id"), parseInt(attrs, "count"), parseInt(attrs, "respawnTime"), 0));
 								}
 							}
-							_tempMinions.put(id, minions);
+							minionData.put(id, minions.toArray(new MinionHolder[minions.size()]));
 						}
 					}
 				}
