@@ -293,8 +293,6 @@ public class GameServer
 		CastleManager.getInstance().loadInstances();
 		FortManager.getInstance().loadInstances();
 		NpcBufferTable.getInstance();
-		SpawnTable.getInstance();
-		RaidBossSpawnManager.getInstance();
 		DayNightSpawnManager.getInstance().trim().notifyChangeMode();
 		GrandBossManager.getInstance().initZones();
 		FourSepulchersManager.getInstance().init();
@@ -375,6 +373,9 @@ public class GameServer
 			TelnetHandler.getInstance().registerHandler(
 					new com.l2jserver.gameserver.handlers.telnethandlers.ServerHandler() );
 		//-------------------------------------------------------
+		
+		SpawnTable.getInstance();
+		RaidBossSpawnManager.getInstance();
 		
 		QuestManager.getInstance().report();
 		
