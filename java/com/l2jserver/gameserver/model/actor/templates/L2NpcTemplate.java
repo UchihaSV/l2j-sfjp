@@ -34,7 +34,6 @@ import com.l2jserver.gameserver.enums.AIType;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.enums.Sex;
-import com.l2jserver.gameserver.model.L2MinionData;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.base.ClassId;
@@ -107,7 +106,6 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	private double _collisionRadiusGrown;
 	private double _collisionHeightGrown;
 	
-	private List<L2MinionData> _minions = emptyArrayList();
 	private List<ClassId> _teachInfo = emptyArrayList();
 	
 	/**
@@ -281,11 +279,6 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 	public boolean isUsingServerSideTitle()
 	{
 		return _usingServerSideTitle;
-	}
-	
-	public boolean hasParameters()
-	{
-		return _parameters != null;
 	}
 	
 	public StatsSet getParameters()
@@ -705,14 +698,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 	}
 	//-------------------------------------------------------
 	
-	public void addMinionData(L2MinionData minion)
-	{
-if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
-		if (_minions == Collections.EMPTY_LIST) _minions = new ArrayList<>();
-}}
-		_minions.add(minion);
-	}
-	
 	public boolean canTeach(ClassId classId)
 	{
 		// If the player is on a third class, fetch the class teacher
@@ -722,14 +707,6 @@ if (com.l2jserver.Config.INITIALIZE_EMPTY_COLLECTION) {{
 			return _teachInfo.contains(classId.getParent());
 		}
 		return _teachInfo.contains(classId);
-	}
-	
-	/**
-	 * @return the list of all Minions that must be spawn with the L2NpcInstance using this L2NpcTemplate.
-	 */
-	public List<L2MinionData> getMinionData()
-	{
-		return _minions;
 	}
 	
 	public int getNpcId()
