@@ -24,7 +24,9 @@ package com.l2jserver.gameserver.util;
  */
 public class NumberStringSortComparator implements java.util.Comparator<CharSequence>
 {
-	private final boolean isDigit(char c) { return '0' <= c && c <= '9'; }
+	protected final boolean isDigit(char c) { return '0' <= c && c <= '9'; }
+	protected final char toUpper(char c) { return (char) ('a' <= c && c <= 'z' ? c - 'a' + 'A' : c); }
+
 	@Override
 	public int compare(CharSequence s1, CharSequence s2)
 	{
