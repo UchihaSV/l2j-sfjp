@@ -23,6 +23,7 @@ import static com.l2jserver.gameserver.ai.CtrlIntention.*;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
@@ -62,6 +63,7 @@ import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.util.Broadcast;
+import com.l2jserver.gameserver.util.FilenameSortComparator;
 import com.l2jserver.util.Rnd;
 
 /**
@@ -94,9 +96,9 @@ public final class WalkingManager extends DocumentParser
 	{
 if (com.l2jserver.Config.CUSTOM_ROUTES_LOAD) {{
 		final Pattern pattern = Pattern.compile("Routes.*\\.xml");	// Routes*.xml
-		File[] walkerRoutesFiles = new File(Config.DATAPACK_ROOT, "data").listFiles(new FileFilter(){
-			@Override public boolean accept(File file) { return file.isFile() && pattern.matcher(file.getName()).matches(); }
-		});
+		File[] walkerRoutesFiles = new File(Config.DATAPACK_ROOT, "data").listFiles((FileFilter) file -> file.isFile() && pattern.matcher(file.getName()).matches());
+		final FilenameSortComparator c = new FilenameSortComparator();
+		Arrays.sort(walkerRoutesFiles, (a, b) -> c.compare(a.getName(), b.getName()));
 		for (File file : walkerRoutesFiles)
 		{
 			_log.info(getClass().getSimpleName() + ": Loading " + file.getName());
