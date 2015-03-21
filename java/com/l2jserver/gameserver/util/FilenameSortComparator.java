@@ -22,9 +22,11 @@ package com.l2jserver.gameserver.util;
  * @author JOJO
  *
  */
-public class NumberStringSortComparator implements java.util.Comparator<CharSequence>
+public class FilenameSortComparator implements java.util.Comparator<CharSequence>
 {
-	private final boolean isDigit(char c) { return '0' <= c && c <= '9'; }
+	
+	private static final boolean isDigit(char c) { return '0' <= c && c <= '9'; }
+	private static final char toUpper(char c) { return (char) ('a' <= c && c <= 'z' ? c - 'a' + 'A' : c); }
 	@Override
 	public int compare(CharSequence s1, CharSequence s2)
 	{
@@ -58,7 +60,8 @@ public class NumberStringSortComparator implements java.util.Comparator<CharSequ
 			else
 			{
 				if ((result = c1 - c2) != 0)
-					return result;
+					if ((result = toUpper(c1) - toUpper(c2)) != 0)
+						return c1 == '.' ? -1 : c2 == '.' ? 1 : result;
 				++a1;
 				++a2;
 			}

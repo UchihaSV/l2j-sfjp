@@ -20,6 +20,8 @@ package com.l2jserver.gameserver.datatables;
 
 import static com.l2jserver.util.Util.*;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import jp.sf.l2j.troja.FastIntObjectMap;
@@ -50,6 +53,7 @@ import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.holders.MinionHolder;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.skills.Skill;
+import com.l2jserver.gameserver.util.FilenameSortComparator;
 import com.l2jserver.gameserver.util.UnmodifiableArrayList;
 import com.l2jserver.gameserver.util.Util;
 
@@ -63,6 +67,8 @@ public class NpcData extends DocumentParser
 {
 	private final FastIntObjectMap<L2NpcTemplate> _npcs = new FastIntObjectMap<>();	//[JOJO] -ConcurrentHashMap
 	private final HashMap<String, Integer> _clans = new HashMap<>();	//[JOJO] -ConcurrentHashMap
+	FastIntObjectMap<MinionHolder[]> minionData;	//[JOJO]
+	
 	public static final int CLAN_ALL = 0;	//+[JOJO]
 	{
 		_clans.put("ALL", CLAN_ALL);
@@ -83,6 +89,8 @@ public class NpcData extends DocumentParser
 		long started;
 		started = System.currentTimeMillis();
 		
+		minionData = new MinionData().minionData;
+		
 		parseDatapackDirectory("data/stats/npcs", false);
 		_log.info(getClass().getSimpleName() + ": Loaded " + _npcs.size() + " NPCs. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		
@@ -96,6 +104,10 @@ public class NpcData extends DocumentParser
 		
 		StringIntern.end();
 		
+if (com.l2jserver.Config.CUSTOM_MINION_LOAD) {{
+}} else {{
+		minionData = null;
+}}
 		loadNpcsSkillLearn();
 	}
 	
@@ -111,8 +123,6 @@ public class NpcData extends DocumentParser
 	@Override
 	protected void parseDocument()
 	{
-		final FastIntObjectMap<MinionHolder[]> minionData = new MinionData().minionData;	//[JOJO]
-		
 		for (Node node = getCurrentDocument().getFirstChild(); node != null; node = node.getNextSibling())
 		{
 			if ("list".equalsIgnoreCase(node.getNodeName()))
@@ -945,7 +955,19 @@ if (!com.l2jserver.Config.NPCDATA_CLAN_ALL) {{
 		{
 			long started = System.currentTimeMillis();
 			minionData.clear();
+if (com.l2jserver.Config.CUSTOM_MINION_LOAD) {{
+			final Pattern pattern = Pattern.compile("minionData.*\\.xml");	// minionData*.xml
+			File[] minionDataFiles = new File(Config.DATAPACK_ROOT, "data").listFiles((FileFilter) file -> file.isFile() && pattern.matcher(file.getName()).matches());
+			final FilenameSortComparator c = new FilenameSortComparator();
+			Arrays.sort(minionDataFiles, (a, b) -> c.compare(a.getName(), b.getName()));
+			for (File file : minionDataFiles)
+			{
+				_log.info(getClass().getSimpleName() + ": Loading " + file.getName());
+				parseFile(file);
+			}
+}} else {{
 			parseDatapackFile("data/minionData.xml");
+}}
 			_log.info(getClass().getSimpleName() + ": Loaded " + minionData.size() + " minions data. (" + strMillTime(System.currentTimeMillis() - started) + ")");
 		}
 		

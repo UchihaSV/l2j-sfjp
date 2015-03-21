@@ -24,29 +24,33 @@ package com.l2jserver.gameserver.util;
  */
 public class QuestNameSortComparator implements java.util.Comparator<CharSequence>
 {
+	
+	private static final boolean isDigit(char c) { return '0' <= c && c <= '9'; }
+	private static final char toUpper(char c) { return (char) ('a' <= c && c <= 'z' ? c - 'a' + 'A' : c); }
+	
 	@Override
 	public int compare(CharSequence s1, CharSequence s2)
 	{
 		int result;
 		final int len1 = s1.length(), len2 = s2.length();
 		int a1 = 0, a2 = 0;
-		if (len1 > 2 && s1.charAt(0) == 'Q' && Character.isDigit(s1.charAt(1))) ++a1;
-		if (len2 > 2 && s2.charAt(0) == 'Q' && Character.isDigit(s2.charAt(1))) ++a2;
+		if (len1 > 2 && s1.charAt(0) == 'Q' && isDigit(s1.charAt(1))) ++a1;
+		if (len2 > 2 && s2.charAt(0) == 'Q' && isDigit(s2.charAt(1))) ++a2;
 		
 		while (a1 < len1 && a2 < len2)
 		{
 			char c1 = s1.charAt(a1);
 			char c2 = s2.charAt(a2);
-			if (Character.isDigit(c1) && Character.isDigit(c2))
+			if (isDigit(c1) && isDigit(c2))
 			{
 				while (a1 < len1 && s1.charAt(a1) == '0')
 					++a1;
 				while (a2 < len2 && s2.charAt(a2) == '0')
 					++a2;
 				int x1 = a1, x2 = a2;
-				while (a1 < len1 && Character.isDigit(s1.charAt(a1)))
+				while (a1 < len1 && isDigit(s1.charAt(a1)))
 					++a1;
-				while (a2 < len2 && Character.isDigit(s2.charAt(a2)))
+				while (a2 < len2 && isDigit(s2.charAt(a2)))
 					++a2;
 				if ((result = (a1 - x1) - (a2 - x2)) != 0)
 					return result;
@@ -59,7 +63,8 @@ public class QuestNameSortComparator implements java.util.Comparator<CharSequenc
 			else
 			{
 				if ((result = c1 - c2) != 0)
-					return result;
+					if ((result = toUpper(c1) - toUpper(c2)) != 0)
+						return c1 == '.' ? -1 : c2 == '.' ? 1 : result;
 				++a1;
 				++a2;
 			}
