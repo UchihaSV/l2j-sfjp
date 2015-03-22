@@ -605,7 +605,7 @@ public class StatsSet implements IParserAdvUtils
 		Object obj = _set.get(key);
 		if ((obj == null) || !(obj instanceof MinionHolder[]))
 		{
-			return null;
+			return Collections.EMPTY_LIST;
 		}
 		
 		return (MinionHolder[]) obj;
