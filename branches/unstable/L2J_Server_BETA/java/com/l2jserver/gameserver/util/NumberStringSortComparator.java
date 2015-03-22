@@ -28,43 +28,43 @@ public class NumberStringSortComparator implements java.util.Comparator<CharSequ
 	protected final char toUpper(char c) { return (char) ('a' <= c && c <= 'z' ? c - 'a' + 'A' : c); }
 
 	@Override
-	public int compare(CharSequence s1, CharSequence s2)
+	public int compare(CharSequence a, CharSequence b)
 	{
 		int result;
-		final int len1 = s1.length(), len2 = s2.length();
-		int a1 = 0, a2 = 0;
+		final int na = a.length(), nb = b.length();
+		int ia = 0, ib = 0;
 		
-		while (a1 < len1 && a2 < len2)
+		while (ia < na && ib < nb)
 		{
-			char c1 = s1.charAt(a1);
-			char c2 = s2.charAt(a2);
-			if (isDigit(c1) && isDigit(c2))
+			char ca = a.charAt(ia);
+			char cb = b.charAt(ib);
+			if (isDigit(ca) && isDigit(cb))
 			{
-				while (a1 < len1 && s1.charAt(a1) == '0')
-					++a1;
-				while (a2 < len2 && s2.charAt(a2) == '0')
-					++a2;
-				int x1 = a1, x2 = a2;
-				while (a1 < len1 && isDigit(s1.charAt(a1)))
-					++a1;
-				while (a2 < len2 && isDigit(s2.charAt(a2)))
-					++a2;
-				if ((result = (a1 - x1) - (a2 - x2)) != 0)
+				while (ia < na && a.charAt(ia) == '0')
+					++ia;
+				while (ib < nb && b.charAt(ib) == '0')
+					++ib;
+				int xa = ia, xb = ib;
+				while (ia < na && isDigit(a.charAt(ia)))
+					++ia;
+				while (ib < nb && isDigit(b.charAt(ib)))
+					++ib;
+				if ((result = (ia - xa) - (ib - xb)) != 0)
 					return result;
-				while (x1 < a1 /* && x2 < a2 */)
-					if ((result = s1.charAt(x1++) - s2.charAt(x2++)) != 0)
+				while (xa < ia)
+					if ((result = a.charAt(xa++) - b.charAt(xb++)) != 0)
 						return result;
-				if ((result = a1 - a2) != 0)
+				if ((result = ia - ib) != 0)
 					return result;
 			}
 			else
 			{
-				if ((result = c1 - c2) != 0)
+				if ((result = ca - cb) != 0)
 					return result;
-				++a1;
-				++a2;
+				++ia;
+				++ib;
 			}
 		}
-		return len1 - len2;
+		return na - nb;
 	}
 }
