@@ -84,7 +84,7 @@ public final class L2ServitorInstance extends L2Summon implements Runnable
 	public void onSpawn()
 	{
 		super.onSpawn();
-		if (!isTeleporting() && _summonLifeTask == null)
+		if (_summonLifeTask == null)
 		{
 			_summonLifeTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(this, 0, 5000);
 		}
