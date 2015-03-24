@@ -42,7 +42,6 @@ import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.datatables.DoorTable;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.NpcData;
-import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.enums.QuestSound;
 import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
@@ -550,31 +549,10 @@ if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
 	private final void fix_onSpawn_for_SpawnTable(int npcId)
 	{
 if (com.l2jserver.Config.FIX_onSpawn_for_SpawnTable) {{
-		if (this instanceof Quest) {
-			final Quest q = (Quest) this;
-			boolean hasOnSpawn;
-			try {
-				q.getClass().getDeclaredMethod("onSpawn", L2Npc.class);	// @Override public String onSpawn(L2Npc npc)
-				hasOnSpawn = true;
-			}
-			catch (NoSuchMethodException | SecurityException e) {
-				hasOnSpawn = false;
-			}
-			if (hasOnSpawn) {
-				boolean done = false;
-				for (L2Spawn spawn : SpawnTable.getInstance().getSpawns(npcId)) {
-					L2Npc npc;
-					if ((npc = spawn.getLastSpawn()) != null && npc.isVisible()) {
-						done = true;
-						q.onSpawn(npc);
-					}
-				}
-				if (!done)
-					for (L2Object o :  L2World.getInstance().getVisibleObjects())
-						if (o.isNpc() && o.getId() == npcId)
-							q.onSpawn((L2Npc) o);
-			}
-		}
+		final Quest q = (Quest) this;
+		for (L2Object o :  L2World.getInstance().getVisibleObjects())
+			if (o.isNpc() && o.getId() == npcId)
+				q.onSpawn((L2Npc) o);
 }}
 	}
 	//-------------------------------------------------------

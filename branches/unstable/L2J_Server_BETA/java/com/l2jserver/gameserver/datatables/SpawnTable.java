@@ -97,6 +97,7 @@ public final class SpawnTable extends DocumentParser
 	//[JOJO]-------------------------------------------------
 	public void load(String file)
 	{
+		_log.info(getClass().getSimpleName() + ": Loading " + file);
 		parseDatapackFile(file);	// Call this.parseDocument()
 	}
 	//-------------------------------------------------------
@@ -188,7 +189,7 @@ public final class SpawnTable extends DocumentParser
 							else if (npctag.getNodeName().equalsIgnoreCase("npc"))
 							{
 								// mandatory
-								final int templateId = parseInteger(attrs, "id");
+								final int templateId = parseInt(attrs, "id");
 								// coordinates are optional, if territory is specified; mandatory otherwise
 								int x = 0;
 								int y = 0;
@@ -196,9 +197,9 @@ public final class SpawnTable extends DocumentParser
 								
 								try
 								{
-									x = parseInteger(attrs, "x");
-									y = parseInteger(attrs, "y");
-									z = parseInteger(attrs, "z");
+									x = parseInt(attrs, "x");
+									y = parseInt(attrs, "y");
+									z = parseInt(attrs, "z");
 								}
 								catch (NullPointerException npe)
 								{

@@ -2148,6 +2148,15 @@ public class Quest extends AbstractScript implements IIdentifiable
 	
 	/**
 	 * Add this quest to the list of quests that the passed npc will respond to for Teleport Events.
+	 * @param npcId the IDs of the NPC to register
+	 */
+	public void addTeleportId(int npcId)
+	{
+		addTeleportId(new int[]{npcId});
+	}
+	
+	/**
+	 * Add this quest to the list of quests that the passed npc will respond to for Teleport Events.
 	 * @param npcIds the IDs of the NPCs to register
 	 */
 	public void addTeleportId(int... npcIds)
