@@ -35,7 +35,6 @@ import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.enums.ShotType;
 import com.l2jserver.gameserver.handler.ITargetTypeHandler;
 import com.l2jserver.gameserver.handler.TargetHandler;
-import com.l2jserver.gameserver.model.ChanceCondition;
 import com.l2jserver.gameserver.model.L2ExtractableProductItem;
 import com.l2jserver.gameserver.model.L2ExtractableSkill;
 import com.l2jserver.gameserver.model.L2Object;
@@ -53,7 +52,6 @@ import com.l2jserver.gameserver.model.effects.AbstractEffect;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.entity.TvTEvent;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
-import com.l2jserver.gameserver.model.interfaces.IChanceSkillTrigger;
 import com.l2jserver.gameserver.model.interfaces.IIdentifiable;
 import com.l2jserver.gameserver.model.skills.funcs.Func;
 import com.l2jserver.gameserver.model.skills.funcs.FuncTemplate;
@@ -68,7 +66,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.Util;
 import com.l2jserver.util.Rnd;
 
-public final class Skill implements IChanceSkillTrigger, IIdentifiable
+public final class Skill implements IIdentifiable
 {
 	private static final Logger _log = Logger.getLogger(Skill.class.getName());
 	
@@ -172,9 +170,6 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 	
 	private final int _minPledgeClass;
 	private final int _chargeConsume;
-	private final int _triggeredId;
-	private final int _triggeredLevel;
-	private final String _chanceType;
 	private final int _soulMaxConsume;
 	
 	private final boolean _isHeroSkill; // If true the skill is a Hero Skill
@@ -192,8 +187,6 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 	private List<FuncTemplate> _funcTemplates;
 	
 	private final EnumMap<EffectScope, List<AbstractEffect>> _effectLists = new EnumMap<>(EffectScope.class);
-	
-	protected ChanceCondition _chanceCondition = null;
 	
 	// Flying support
 	private final FlyType _flyType;
@@ -314,7 +307,7 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 
 		}
 		
-		_targetType = set.getEnum("targetType", L2TargetType.class);
+		_targetType = set.getEnum("targetType", L2TargetType.class, L2TargetType.SELF);
 		_power = set.getFloat("power", 0.f);
 		_pvpPower = set.getFloat("pvpPower", (float) getPower());
 		_pvePower = set.getFloat("pvePower", (float) getPower());
@@ -342,13 +335,6 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 		
 		_minPledgeClass = set.getInt("minPledgeClass", 0);
 		_chargeConsume = set.getInt("chargeConsume", 0);
-		_triggeredId = set.getInt("triggeredId", 0);
-		_triggeredLevel = set.getInt("triggeredLevel", 1);
-		_chanceType = intern(set.getString("chanceType", ""));
-		if (!_chanceType.isEmpty())
-		{
-			_chanceCondition = ChanceCondition.parse(set);
-		}
 		
 		_soulMaxConsume = set.getInt("soulMaxConsumeCount", 0);
 		_blowChance = set.getInt("blowChance", 0);
@@ -727,21 +713,6 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 		return _displayLevel;
 	}
 	
-	public int getTriggeredId()
-	{
-		return _triggeredId;
-	}
-	
-	public int getTriggeredLevel()
-	{
-		return _triggeredLevel;
-	}
-	
-	public boolean triggerAnotherSkill()
-	{
-		return _triggeredId > 1;
-	}
-	
 	/**
 	 * Return skill basicProperty base stat (STR, INT ...).
 	 * @return
@@ -906,11 +877,6 @@ public final class Skill implements IChanceSkillTrigger, IIdentifiable
 	public boolean isSelfContinuous()
 	{
 		return (_operateType != null) && _operateType.isSelfContinuous();
-	}
-	
-	public boolean isChance()
-	{
-		return (_chanceCondition != null) && isPassive();
 	}
 	
 	public boolean isChanneling()
@@ -1642,30 +1608,6 @@ if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
 	public int getReferenceItemId()
 	{
 		return _refId;
-	}
-	
-	@Override
-	public boolean triggersChanceSkill()
-	{
-		return (_triggeredId > 0) && isChance();
-	}
-	
-	@Override
-	public int getTriggeredChanceId()
-	{
-		return _triggeredId;
-	}
-	
-	@Override
-	public int getTriggeredChanceLevel()
-	{
-		return _triggeredLevel;
-	}
-	
-	@Override
-	public ChanceCondition getTriggeredChanceCondition()
-	{
-		return _chanceCondition;
 	}
 	
 	public String getAttributeName()
