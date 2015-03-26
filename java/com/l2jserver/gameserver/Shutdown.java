@@ -563,8 +563,11 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 		_log.info("Cursed Weapons Manager: Data saved(" + tc.getEstimatedTimeAndRestartCounter() + "ms).");
 		
 		// Save all manor data
-		CastleManorManager.getInstance().save();
-		_log.info("Castle Manor Manager: Data saved(" + tc.getEstimatedTimeAndRestartCounter() + "ms).");
+		if (!Config.ALT_MANOR_SAVE_ALL_ACTIONS)
+		{
+			CastleManorManager.getInstance().storeMe();
+			_log.info("Castle Manor Manager: Data saved(" + tc.getEstimatedTimeAndRestartCounter() + "ms).");
+		}
 		
 		CHSiegeManager.getInstance().onServerShutDown();
 		_log.info("CHSiegeManager: Siegable hall attacker lists saved!");
@@ -595,8 +598,7 @@ if (com.l2jserver.Config.FIX_DEADLOCK_ON_SHUTDOWN) {{
 		
 		try
 		{
-			int delay = 5000;
-			Thread.sleep(delay);
+			Thread.sleep(5000);
 		}
 		catch (InterruptedException e)
 		{
