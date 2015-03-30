@@ -18,9 +18,9 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.instancemanager.CastleManorManager;
 import com.l2jserver.gameserver.model.CropProcure;
@@ -32,9 +32,9 @@ import com.l2jserver.gameserver.model.L2Seed;
 public class ExShowCropSetting extends L2GameServerPacket
 {
 	private final int _manorId;
-	private final Set<L2Seed> _seeds;
-	private final Map<Integer, CropProcure> _current = new HashMap<>();
-	private final Map<Integer, CropProcure> _next = new HashMap<>();
+	private final ArrayList<L2Seed> _seeds;	//[JOJO] -Set
+	private final FastIntObjectMap<CropProcure> _current = new FastIntObjectMap<>();	//[JOJO] -HashMap
+	private final FastIntObjectMap<CropProcure> _next = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	public ExShowCropSetting(int manorId)
 	{
@@ -81,9 +81,8 @@ public class ExShowCropSetting extends L2GameServerPacket
 			writeD(s.getCropMinPrice()); // min crop price
 			writeD(s.getCropMaxPrice()); // max crop price
 			// Current period
-			if (_current.containsKey(s.getCropId()))
+			if ((cp = _current.get(s.getCropId())) != null)
 			{
-				cp = _current.get(s.getCropId());
 				writeQ(cp.getStartAmount()); // buy
 				writeQ(cp.getPrice()); // price
 				writeC(cp.getReward()); // reward
@@ -95,9 +94,8 @@ public class ExShowCropSetting extends L2GameServerPacket
 				writeC(0);
 			}
 			// Next period
-			if (_next.containsKey(s.getCropId()))
+			if ((cp = _next.get(s.getCropId())) != null)
 			{
-				cp = _next.get(s.getCropId());
 				writeQ(cp.getStartAmount()); // buy
 				writeQ(cp.getPrice()); // price
 				writeC(cp.getReward()); // reward

@@ -26,12 +26,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -68,12 +67,13 @@ public final class CastleManorManager extends DocumentParser implements IStorabl
 	// Temporary date
 	private Calendar _nextModeChange = null;
 	// Seeds holder
-	private static final Map<Integer, L2Seed> _seeds = new HashMap<>();
+	private static final FastIntObjectMap<L2Seed> _seeds = new FastIntObjectMap<>();	//[JOJO] -HashMap
+	private static final FastIntObjectMap<L2Seed> _crops = new FastIntObjectMap<>();	//+[JOJO]
 	// Manor period settings
-	private final Map<Integer, List<CropProcure>> _procure = new HashMap<>();
-	private final Map<Integer, List<CropProcure>> _procureNext = new HashMap<>();
-	private final Map<Integer, List<SeedProduction>> _production = new HashMap<>();
-	private final Map<Integer, List<SeedProduction>> _productionNext = new HashMap<>();
+	private final FastIntObjectMap<List<CropProcure>> _procure = new FastIntObjectMap<>();	//[JOJO] -HashMap
+	private final FastIntObjectMap<List<CropProcure>> _procureNext = new FastIntObjectMap<>();	//[JOJO] -HashMap
+	private final FastIntObjectMap<List<SeedProduction>> _production = new FastIntObjectMap<>();	//[JOJO] -HashMap
+	private final FastIntObjectMap<List<SeedProduction>> _productionNext = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	public CastleManorManager()
 	{
@@ -140,7 +140,7 @@ public final class CastleManorManager extends DocumentParser implements IStorabl
 				{
 					if ("castle".equalsIgnoreCase(d.getNodeName()))
 					{
-						final int castleId = parseInteger(d.getAttributes(), "id");
+						final int castleId = parseInt(d.getAttributes(), "id");
 						for (Node c = d.getFirstChild(); c != null; c = c.getNextSibling())
 						{
 							if ("crop".equalsIgnoreCase(c.getNodeName()))
@@ -154,7 +154,9 @@ public final class CastleManorManager extends DocumentParser implements IStorabl
 									att = attrs.item(i);
 									set.set(att.getNodeName(), att.getNodeValue());
 								}
-								_seeds.put(set.getInt("seedId"), new L2Seed(set));
+								L2Seed seed = new L2Seed(set);
+								_seeds.put(seed.getSeedId(), seed);
+								_crops.putIfAbsent(seed.getCropId(), seed);	//[JOJO]
 							}
 						}
 					}
@@ -213,11 +215,10 @@ public final class CastleManorManager extends DocumentParser implements IStorabl
 				stProcure.setInt(1, castleId);
 				try (ResultSet rs = stProcure.executeQuery())
 				{
-					final Set<Integer> cropIds = getCropIds();
 					while (rs.next())
 					{
 						final int cropId = rs.getInt("crop_id");
-						if (cropIds.contains(cropId)) // Don't load unknown crops
+						if (_crops.containsKey(cropId)) // Don't load unknown crops
 						{
 							final CropProcure cp = new CropProcure(cropId, rs.getLong("amount"), rs.getInt("reward_type"), rs.getLong("start_amount"), rs.getLong("price"));
 							if (rs.getBoolean("next_period"))
@@ -253,6 +254,7 @@ public final class CastleManorManager extends DocumentParser implements IStorabl
 	{
 		// Calculate next mode change
 		_nextModeChange = Calendar.getInstance();
+		_nextModeChange.set(Calendar.MILLISECOND, 0);
 		_nextModeChange.set(Calendar.SECOND, 0);
 		switch (_mode)
 		{
@@ -610,7 +612,7 @@ public final class CastleManorManager extends DocumentParser implements IStorabl
 			ds.executeUpdate();
 			
 			// Current production
-			for (Map.Entry<Integer, List<SeedProduction>> entry : _production.entrySet())
+			for (IntObjectMap.Entry<List<SeedProduction>> entry : _production.entrySet())
 			{
 				for (SeedProduction sp : entry.getValue())
 				{
@@ -625,7 +627,7 @@ public final class CastleManorManager extends DocumentParser implements IStorabl
 			}
 			
 			// Next production
-			for (Map.Entry<Integer, List<SeedProduction>> entry : _productionNext.entrySet())
+			for (IntObjectMap.Entry<List<SeedProduction>> entry : _productionNext.entrySet())
 			{
 				for (SeedProduction sp : entry.getValue())
 				{
@@ -646,7 +648,7 @@ public final class CastleManorManager extends DocumentParser implements IStorabl
 			dp.executeUpdate();
 			
 			// Current procure
-			for (Map.Entry<Integer, List<CropProcure>> entry : _procure.entrySet())
+			for (IntObjectMap.Entry<List<CropProcure>> entry : _procure.entrySet())
 			{
 				for (CropProcure cp : entry.getValue())
 				{
@@ -662,7 +664,7 @@ public final class CastleManorManager extends DocumentParser implements IStorabl
 			}
 			
 			// Next procure
-			for (Map.Entry<Integer, List<CropProcure>> entry : _procureNext.entrySet())
+			for (IntObjectMap.Entry<List<CropProcure>> entry : _procureNext.entrySet())
 			{
 				for (CropProcure cp : entry.getValue())
 				{
@@ -745,35 +747,22 @@ public final class CastleManorManager extends DocumentParser implements IStorabl
 	// -------------------------------------------------------
 	// Seed methods
 	// -------------------------------------------------------
-	public final List<L2Seed> getCrops()
+	public final Collection<L2Seed> getCrops()	//[JOJO] -List
 	{
-		final List<L2Seed> seeds = new ArrayList<>();
-		final List<Integer> cropIds = new ArrayList<>();
-		for (L2Seed seed : _seeds.values())
+		return _crops.values();
+	}
+	
+	public final ArrayList<L2Seed> getSeedsForCastle(int castleId)	//[JOJO] -Set
+	{
+		final ArrayList<L2Seed> seeds = new ArrayList<>();
+		for (L2Seed s : _seeds.values())
 		{
-			if (!cropIds.contains(seed.getCropId()))
+			if (s.getCastleId() == castleId)
 			{
-				seeds.add(seed);
-				cropIds.add(seed.getCropId());
+				seeds.add(s);
 			}
 		}
-		cropIds.clear();
 		return seeds;
-	}
-	
-	public final Set<L2Seed> getSeedsForCastle(int castleId)
-	{
-		return _seeds.values().stream().filter(s -> s.getCastleId() == castleId).collect(Collectors.toSet());
-	}
-	
-	public final Set<Integer> getSeedIds()
-	{
-		return _seeds.keySet();
-	}
-	
-	public final Set<Integer> getCropIds()
-	{
-		return _seeds.values().stream().map(L2Seed::getCropId).collect(Collectors.toSet());
 	}
 	
 	public final L2Seed getSeed(int seedId)
@@ -783,9 +772,9 @@ public final class CastleManorManager extends DocumentParser implements IStorabl
 	
 	public final L2Seed getSeedByCrop(int cropId, int castleId)
 	{
-		for (L2Seed s : getSeedsForCastle(castleId))
+		for (L2Seed s : _seeds.values())
 		{
-			if (s.getCropId() == cropId)
+			if (s.getCropId() == cropId && s.getCastleId() == castleId)
 			{
 				return s;
 			}
@@ -795,14 +784,7 @@ public final class CastleManorManager extends DocumentParser implements IStorabl
 	
 	public final L2Seed getSeedByCrop(int cropId)
 	{
-		for (L2Seed s : _seeds.values())
-		{
-			if (s.getCropId() == cropId)
-			{
-				return s;
-			}
-		}
-		return null;
+		return _crops.get(cropId);
 	}
 	
 	// -------------------------------------------------------
