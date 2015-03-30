@@ -2,9 +2,9 @@
 #P L2J_Server_BETA
 Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
 ===================================================================
---- java/com/l2jserver/gameserver/network/SystemMessageId.java	(revision 6162)
+--- java/com/l2jserver/gameserver/network/SystemMessageId.java	(revision 6668)
 +++ java/com/l2jserver/gameserver/network/SystemMessageId.java	(working copy)
-@@ -18,34 +18,23 @@
+@@ -18,26 +18,17 @@
   */
  package com.l2jserver.gameserver.network;
  
@@ -21,20 +21,21 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
  import java.util.logging.Logger;
  
 -import javax.xml.parsers.DocumentBuilderFactory;
--
++import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+ 
 -import org.w3c.dom.Document;
 -import org.w3c.dom.NamedNodeMap;
 -import org.w3c.dom.Node;
--
++import gnu.trove.map.hash.TIntObjectHashMap;
+ 
 -import com.l2jserver.Config;
 -import com.l2jserver.gameserver.model.clientstrings.Builder;
- import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
- 
-+import gnu.trove.map.hash.TIntObjectHashMap;
-+
+-import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+-
  /**
   * @author Noctarius, Nille02, crion, Forsaiken
   */
+@@ -44,8 +35,6 @@
  public final class SystemMessageId
  {
  	private static final Logger _log = Logger.getLogger(SystemMessageId.class.getName());
@@ -43,7 +44,7 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
  	
  	/**
  	 * ID: 0<br>
-@@ -15029,7 +15018,7 @@
+@@ -15221,7 +15210,7 @@
  	/**
  	 * Map containing all SystemMessageIds<br>
  	 */
@@ -52,7 +53,7 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
  	
  	static
  	{
-@@ -17526,17 +17515,14 @@
+@@ -17751,17 +17740,14 @@
  	{
  		final Field[] fields = SystemMessageId.class.getDeclaredFields();
  		
@@ -72,7 +73,7 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
  					smId.setParamCount(parseMessageParameters(field.getName()));
  					VALUES.put(smId.getId(), smId);
  				}
-@@ -17591,113 +17577,14 @@
+@@ -17816,113 +17802,14 @@
  		}
  	}
  	
@@ -186,7 +187,7 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
  	}
  	
  	public final int getId()
-@@ -17705,14 +17592,23 @@
+@@ -17930,16 +17817,25 @@
  		return _id;
  	}
  	
@@ -194,11 +195,6 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
 +	private final String getName()
  	{
 -		_name = name;
--	}
--	
--	public final String getName()
--	{
--		return _name;
 +		TRACE("[TRACE]__BASENAME__:__LINE__", "[pass]");/*@IF DEBUG@*/
 +		for (Field field : SystemMessageId.class.getDeclaredFields())
 +		{
@@ -216,8 +212,15 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
 +		return null;
  	}
  	
+-	public final String getName()
+-	{
+-		return _name;
+-	}
+-	
  	public final int getParamCount()
-@@ -17746,31 +17642,9 @@
+ 	{
+ 		return _params;
+@@ -17971,31 +17867,9 @@
  	
  	public final SMLocalisation getLocalisation(final String lang)
  	{
@@ -249,7 +252,7 @@ Index: java/com/l2jserver/gameserver/network/SystemMessageId.java
  	public final SystemMessage getStaticSystemMessage()
  	{
  		return _staticSystemMessage;
-@@ -17789,23 +17663,9 @@
+@@ -18014,23 +17888,9 @@
  	
  	public static final class SMLocalisation
  	{
