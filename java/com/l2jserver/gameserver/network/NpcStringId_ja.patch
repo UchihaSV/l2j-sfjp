@@ -2,7 +2,7 @@
 #P L2J_Server_BETA
 Index: java/com/l2jserver/gameserver/network/NpcStringId.java
 ===================================================================
---- java/com/l2jserver/gameserver/network/NpcStringId.java	(revision 6162)
+--- java/com/l2jserver/gameserver/network/NpcStringId.java	(revision 6668)
 +++ java/com/l2jserver/gameserver/network/NpcStringId.java	(working copy)
 @@ -18,26 +18,17 @@
   */
@@ -21,17 +21,17 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
  import java.util.logging.Logger;
  
 -import javax.xml.parsers.DocumentBuilderFactory;
--
++import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
+ 
 -import org.w3c.dom.Document;
 -import org.w3c.dom.NamedNodeMap;
 -import org.w3c.dom.Node;
--
++import gnu.trove.map.hash.TIntObjectHashMap;
+ 
 -import com.l2jserver.Config;
 -import com.l2jserver.gameserver.model.clientstrings.Builder;
- import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
- 
-+import gnu.trove.map.hash.TIntObjectHashMap;
-+
+-import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
+-
  /**
   * NpcStringId implementation, based on SystemMessageId class
   * @author mrTJO
@@ -189,19 +189,14 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
  	}
  	
  	public final int getId()
-@@ -25394,14 +25279,23 @@
+@@ -25394,16 +25279,25 @@
  		return _id;
  	}
  	
 -	private final void setName(final String name)
--	{
--		_name = name;
--	}
--	
--	public final String getName()
 +	private final String getName()
  	{
--		return _name;
+-		_name = name;
 +		TRACE("[TRACE]__BASENAME__:__LINE__", "[pass]");/*@IF DEBUG@*/
 +		for (Field field : NpcStringId.class.getDeclaredFields())
 +		{
@@ -219,7 +214,14 @@ Index: java/com/l2jserver/gameserver/network/NpcStringId.java
 +		return null;
  	}
  	
+-	public final String getName()
+-	{
+-		return _name;
+-	}
+-	
  	public final int getParamCount()
+ 	{
+ 		return _params;
 @@ -25435,31 +25329,9 @@
  	
  	public final NSLocalisation getLocalisation(final String lang)
