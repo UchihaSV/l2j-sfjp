@@ -18,12 +18,12 @@
  */
 package com.l2jserver.gameserver.network.clientpackets;
 
-import static com.l2jserver.gameserver.model.itemcontainer.Inventory.MAX_ADENA;
+import static com.l2jserver.gameserver.model.itemcontainer.Inventory.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.ItemTable;
@@ -117,7 +117,7 @@ public class RequestBuySeed extends L2GameClientPacket
 		int slots = 0;
 		int totalWeight = 0;
 		
-		final Map<Integer, SeedProduction> _productInfo = new HashMap<>();
+		final FastIntObjectMap<SeedProduction> productInfo = new FastIntObjectMap<>();	//[JOJO] -HashMap
 		for (ItemHolder ih : _items)
 		{
 			final SeedProduction sp = manor.getSeedProduct(_manorId, ih.getId(), false);
@@ -149,7 +149,7 @@ public class RequestBuySeed extends L2GameClientPacket
 			{
 				slots++;
 			}
-			_productInfo.put(ih.getId(), sp);
+			productInfo.put(ih.getId(), sp);
 		}
 		
 		if (!player.getInventory().validateWeight(totalWeight))
@@ -171,7 +171,7 @@ public class RequestBuySeed extends L2GameClientPacket
 		// Proceed the purchase
 		for (ItemHolder i : _items)
 		{
-			final SeedProduction sp = _productInfo.get(i.getId());
+			final SeedProduction sp = productInfo.get(i.getId());
 			final long price = sp.getPrice() * i.getCount();
 			
 			// Take Adena and decrease seed amount
@@ -197,7 +197,7 @@ public class RequestBuySeed extends L2GameClientPacket
 			
 			if (Config.ALT_MANOR_SAVE_ALL_ACTIONS)
 			{
-				manor.updateCurrentProduction(_manorId, _productInfo.values());
+				manor.updateCurrentProduction(_manorId, productInfo.values());
 			}
 		}
 	}

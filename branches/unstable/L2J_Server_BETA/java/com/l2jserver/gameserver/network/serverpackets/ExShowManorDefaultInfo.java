@@ -18,7 +18,7 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.l2jserver.gameserver.instancemanager.CastleManorManager;
 import com.l2jserver.gameserver.model.L2Seed;
@@ -28,7 +28,7 @@ import com.l2jserver.gameserver.model.L2Seed;
  */
 public final class ExShowManorDefaultInfo extends L2GameServerPacket
 {
-	private final List<L2Seed> _crops;
+	private final Collection<L2Seed> _crops;	//[JOJO] -List
 	private final boolean _hideButtons;
 	
 	public ExShowManorDefaultInfo(boolean hideButtons)

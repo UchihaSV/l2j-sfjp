@@ -18,9 +18,9 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList;
+
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.gameserver.instancemanager.CastleManorManager;
 import com.l2jserver.gameserver.model.L2Seed;
@@ -32,9 +32,9 @@ import com.l2jserver.gameserver.model.SeedProduction;
 public class ExShowSeedSetting extends L2GameServerPacket
 {
 	private final int _manorId;
-	private final Set<L2Seed> _seeds;
-	private final Map<Integer, SeedProduction> _current = new HashMap<>();
-	private final Map<Integer, SeedProduction> _next = new HashMap<>();
+	private final ArrayList<L2Seed> _seeds;	//[JOJO] -Set
+	private final FastIntObjectMap<SeedProduction> _current = new FastIntObjectMap<>();	//[JOJO] -HashMap
+	private final FastIntObjectMap<SeedProduction> _next = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	public ExShowSeedSetting(int manorId)
 	{
@@ -81,9 +81,8 @@ public class ExShowSeedSetting extends L2GameServerPacket
 			writeD(s.getSeedMinPrice()); // min seed price
 			writeD(s.getSeedMaxPrice()); // max seed price
 			// Current period
-			if (_current.containsKey(s.getSeedId()))
+			if ((sp = _current.get(s.getSeedId())) != null)
 			{
-				sp = _current.get(s.getSeedId());
 				writeQ(sp.getStartAmount()); // sales
 				writeQ(sp.getPrice()); // price
 			}
@@ -93,9 +92,8 @@ public class ExShowSeedSetting extends L2GameServerPacket
 				writeQ(0);
 			}
 			// Next period
-			if (_next.containsKey(s.getSeedId()))
+			if ((sp = _next.get(s.getSeedId())) != null)
 			{
-				sp = _next.get(s.getSeedId());
 				writeQ(sp.getStartAmount()); // sales
 				writeQ(sp.getPrice()); // price
 			}

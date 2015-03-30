@@ -18,8 +18,8 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.HashMap;
-import java.util.Map;
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.CastleManorManager;
@@ -32,7 +32,7 @@ import com.l2jserver.gameserver.model.entity.Castle;
 public class ExShowProcureCropDetail extends L2GameServerPacket
 {
 	private final int _cropId;
-	private final Map<Integer, CropProcure> _castleCrops = new HashMap<>();
+	private final FastIntObjectMap<CropProcure> _castleCrops = new FastIntObjectMap<>();	//[JOJO] -HashMap
 	
 	public ExShowProcureCropDetail(int cropId)
 	{
@@ -57,7 +57,7 @@ public class ExShowProcureCropDetail extends L2GameServerPacket
 		writeD(_cropId); // crop id
 		writeD(_castleCrops.size()); // size
 		
-		for (Map.Entry<Integer, CropProcure> entry : _castleCrops.entrySet())
+		for (IntObjectMap.Entry<CropProcure> entry : _castleCrops.entrySet())
 		{
 			final CropProcure crop = entry.getValue();
 			writeD(entry.getKey()); // manor name

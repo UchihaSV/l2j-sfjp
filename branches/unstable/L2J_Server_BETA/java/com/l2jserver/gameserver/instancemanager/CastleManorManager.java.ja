@@ -1,0 +1,3 @@
+use utf8;
+
+s{"dd/MM HH:mm:ss"}{"MM月dd日 HH:mm:ss"};
