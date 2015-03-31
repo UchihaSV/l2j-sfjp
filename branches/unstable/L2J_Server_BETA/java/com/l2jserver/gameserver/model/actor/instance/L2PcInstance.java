@@ -48,6 +48,7 @@ import javolution.util.FastList;
 import javolution.util.FastMap;
 import javolution.util.FastSet;
 import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -7707,7 +7708,7 @@ public final class L2PcInstance extends L2Playable
 			final FastIntObjectMap<TimeStamp> reuseTimeStamps = getSkillReuseTimeStamps();
 			if (reuseTimeStamps != null)
 			{
-				for (jp.sf.l2j.troja.IntObjectMap.Entry<TimeStamp> ts : reuseTimeStamps.entrySet())
+				for (IntObjectMap.Entry<TimeStamp> ts : reuseTimeStamps.entrySet())
 				{
 					final int hash = ts.getKey();
 					if (storedSkills.contains(hash))

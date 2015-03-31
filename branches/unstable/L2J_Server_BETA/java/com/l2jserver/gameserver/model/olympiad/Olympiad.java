@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 
 import javolution.util.FastList;
 import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -343,7 +344,7 @@ public class Olympiad extends ListenersContainer
 			rank3++;
 			rank4++;
 		}
-		for (jp.sf.l2j.troja.IntObjectMap.Entry<Integer> chr : tmpPlace.entrySet())
+		for (IntObjectMap.Entry<Integer> chr : tmpPlace.entrySet())
 		{
 			final int charId = chr.getKey();
 			final int place = chr.getValue().intValue();
@@ -711,7 +712,7 @@ public class Olympiad extends ListenersContainer
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection())
 		{
-			for (jp.sf.l2j.troja.IntObjectMap.Entry<StatsSet> entry : _nobles.entrySet())
+			for (IntObjectMap.Entry<StatsSet> entry : _nobles.entrySet())
 			{
 				StatsSet nobleInfo = entry.getValue();
 				
@@ -847,7 +848,7 @@ public class Olympiad extends ListenersContainer
 		{
 			_logResults.info("Noble,charid,classid,compDone,points");
 			StatsSet nobleInfo;
-			for (jp.sf.l2j.troja.IntObjectMap.Entry<StatsSet> entry : _nobles.entrySet())
+			for (IntObjectMap.Entry<StatsSet> entry : _nobles.entrySet())
 			{
 				nobleInfo = entry.getValue();
 				if (nobleInfo == null)

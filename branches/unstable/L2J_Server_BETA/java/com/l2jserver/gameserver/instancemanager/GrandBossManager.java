@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 import javolution.util.FastList;
 import jp.sf.l2j.troja.FastIntObjectMap;
 import jp.sf.l2j.troja.IntIterator;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -369,7 +370,7 @@ SELECT npc.name, grandboss_data.*, IF(grandboss_data.respawn_time > 0, FROM_UNIX
 			     PreparedStatement update_grand_boss_data3 = con.prepareStatement(UPDATE_GRAND_BOSS_DATA3);
 			     PreparedStatement update_grand_boss_data1 = con.prepareStatement(UPDATE_GRAND_BOSS_DATA) )
 			{
-				for (jp.sf.l2j.troja.IntObjectMap.Entry<StatsSet> e : _storedInfo.entrySet())
+				for (IntObjectMap.Entry<StatsSet> e : _storedInfo.entrySet())
 				{
 					final int bossId = e.getKey();
 					final StatsSet info = e.getValue();
