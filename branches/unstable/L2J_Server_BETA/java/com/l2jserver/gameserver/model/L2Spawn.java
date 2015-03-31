@@ -481,7 +481,9 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 	 */
 	private L2Npc initializeNpcInstance(L2Npc mob)
 	{
-		int newlocx, newlocy, newlocz;
+		int newlocx = 0;
+		int newlocy = 0;
+		int newlocz = 0;
 		
 		// If Locx and Locy are not defined, the L2NpcInstance must be spawned in an area defined by location or spawn territory
 		// New method
@@ -501,12 +503,15 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 			}
 			
 			// Calculate the random position in the location area
-			int p[] = TerritoryTable.getInstance().getRandomPoint(getLocationId());
+			final Location location = TerritoryTable.getInstance().getRandomPoint(getLocationId());
 			
 			// Set the calculated position of the L2NpcInstance
-			newlocx = p[0];
-			newlocy = p[1];
-			newlocz = p[3];
+			if (location != null)
+			{
+				newlocx = location.getX();
+				newlocy = location.getY();
+				newlocz = location.getZ();
+			}
 		}
 		else
 		{
@@ -519,7 +524,7 @@ if (com.l2jserver.Config.NEVER_RandomWalk_IF_CORPSE) {{
 		// don't correct z of flying npc's
 		if (!mob.isFlying())
 		{
-			newlocz = GeoData.getInstance().getSpawnHeight(newlocx, newlocy, newlocz, newlocz);
+			newlocz = GeoData.getInstance().getSpawnHeight(newlocx, newlocy, newlocz);
 		}
 		
 		mob.stopAllEffects();
