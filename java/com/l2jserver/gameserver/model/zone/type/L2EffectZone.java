@@ -18,9 +18,8 @@
  */
 package com.l2jserver.gameserver.model.zone.type;
 
-import java.util.Map.Entry;
-
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
+import jp.sf.l2j.troja.IntObjectMap;
 
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.SkillData;
@@ -47,7 +46,7 @@ public class L2EffectZone extends L2ZoneType
 	private int _reuse;
 	protected boolean _bypassConditions;
 	private boolean _isShowDangerIcon;
-	protected volatile FastMap<Integer, Integer> _skills;
+	protected volatile FastIntObjectMap<Integer> _skills;
 	
 	public L2EffectZone(int id)
 	{
@@ -93,12 +92,12 @@ public class L2EffectZone extends L2ZoneType
 		}
 		else if (name.equals("maxDynamicSkillCount"))
 		{
-			_skills = new FastMap<Integer, Integer>(Integer.parseInt(value)).shared();
+			_skills = new FastIntObjectMap<Integer>(Integer.parseInt(value)).shared();
 		}
 		else if (name.equals("skillIdLvl"))
 		{
 			String[] propertySplit = value.split(";");
-			_skills = new FastMap<>(propertySplit.length);
+			_skills = new FastIntObjectMap<>(propertySplit.length);
 			for (String skill : propertySplit)
 			{
 				String[] skillSplit = skill.split("-");
@@ -204,7 +203,7 @@ public class L2EffectZone extends L2ZoneType
 			{
 				if (_skills == null)
 				{
-					_skills = new FastMap<Integer, Integer>(3).shared();
+					_skills = new FastIntObjectMap<Integer>(3).shared();
 				}
 			}
 		}
@@ -257,7 +256,7 @@ public class L2EffectZone extends L2ZoneType
 					{
 						if (Rnd.get(100) < getChance())
 						{
-							for (Entry<Integer, Integer> e : _skills.entrySet())
+							for (IntObjectMap.Entry<Integer> e : _skills.entrySet())
 							{
 								Skill skill = getSkill(e.getKey(), e.getValue());
 								if ((skill != null) && (_bypassConditions || skill.checkCondition(temp, temp, false)))
