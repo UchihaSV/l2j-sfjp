@@ -252,7 +252,7 @@ public class L2EffectZone extends L2ZoneType
 			{
 				for (L2Character temp : getCharactersInside())
 				{
-					if ((temp != null) && !temp.isDead())
+					if (temp != null && !temp.isDead() && temp.isInActiveRegion())	//[JOJO] +isInActiveRegion()
 					{
 						if (Rnd.get(100) < getChance())
 						{
