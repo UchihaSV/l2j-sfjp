@@ -25,12 +25,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javolution.util.FastMap;
+import jp.sf.l2j.arrayMaps.SortedIntIntArrayMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -127,21 +126,21 @@ public class SevenSigns
 	protected int _previousWinner;
 	protected Calendar _lastSave = Calendar.getInstance();
 	
-	protected Map<Integer, StatsSet> _signsPlayerData;
+	protected FastIntObjectMap<StatsSet> _signsPlayerData;	//[JOJO] -FastMap
 	
-	private final Map<Integer, Integer> _signsSealOwners;
-	private final Map<Integer, Integer> _signsDuskSealTotals;
-	private final Map<Integer, Integer> _signsDawnSealTotals;
+	private final SortedIntIntArrayMap _signsSealOwners;	//[JOJO] -FastMap
+	private final SortedIntIntArrayMap _signsDuskSealTotals;	//[JOJO] -FastMap
+	private final SortedIntIntArrayMap _signsDawnSealTotals;	//[JOJO] -FastMap
 	
 	private AutoSpawnInstance _merchantSpawn;
 	private AutoSpawnInstance _blacksmithSpawn;
 	private AutoSpawnInstance _lilithSpawn;
 	private AutoSpawnInstance _anakimSpawn;
-	private Map<Integer, AutoSpawnInstance> _crestofdawnspawns;
-	private Map<Integer, AutoSpawnInstance> _crestofduskspawns;
-	private Map<Integer, AutoSpawnInstance> _oratorSpawns;
-	private Map<Integer, AutoSpawnInstance> _preacherSpawns;
-	private Map<Integer, AutoSpawnInstance> _marketeerSpawns;
+	private FastIntObjectMap<AutoSpawnInstance> _crestofdawnspawns;
+	private FastIntObjectMap<AutoSpawnInstance> _crestofduskspawns;
+	private FastIntObjectMap<AutoSpawnInstance> _oratorSpawns;
+	private FastIntObjectMap<AutoSpawnInstance> _preacherSpawns;
+	private FastIntObjectMap<AutoSpawnInstance> _marketeerSpawns;
 	
 	private static final String LOAD_DATA = "SELECT charId, cabal, seal, red_stones, green_stones, blue_stones, " + "ancient_adena_amount, contribution_score FROM seven_signs";
 	
@@ -155,10 +154,10 @@ public class SevenSigns
 	
 	protected SevenSigns()
 	{
-		_signsPlayerData = new FastMap<>();
-		_signsSealOwners = new FastMap<>();
-		_signsDuskSealTotals = new FastMap<>();
-		_signsDawnSealTotals = new FastMap<>();
+		_signsPlayerData = new FastIntObjectMap<>();
+		_signsSealOwners = new SortedIntIntArrayMap();
+		_signsDuskSealTotals = new SortedIntIntArrayMap();
+		_signsDawnSealTotals = new SortedIntIntArrayMap();
 		
 		try
 		{
@@ -1233,22 +1232,25 @@ public class SevenSigns
 	 */
 	protected void initializeSeals()
 	{
-		for (Entry<Integer, Integer> e : _signsSealOwners.entrySet())
+		final SortedIntIntArrayMap e = _signsSealOwners;
+		for (int index = 0; index < e.size(); ++index)
 		{
-			if (e.getValue() != CABAL_NULL)
+			final int seal = e.keyAt(index);
+			final int cabal = e.valueAt(index);
+			if (cabal != CABAL_NULL)
 			{
 				if (isSealValidationPeriod())
 				{
-					_log.info("SevenSigns: The " + getCabalName(e.getValue()) + " have won the " + getSealName(e.getKey(), false) + ".");
+					_log.info("SevenSigns: The " + getCabalName(cabal) + " have won the " + getSealName(seal, false) + ".");
 				}
 				else
 				{
-					_log.info("SevenSigns: The " + getSealName(e.getKey(), false) + " is currently owned by " + getCabalName(e.getValue()) + ".");
+					_log.info("SevenSigns: The " + getSealName(seal, false) + " is currently owned by " + getCabalName(cabal) + ".");
 				}
 			}
 			else
 			{
-				_log.info("SevenSigns: The " + getSealName(e.getKey(), false) + " remains unclaimed.");
+				_log.info("SevenSigns: The " + getSealName(seal, false) + " remains unclaimed.");
 			}
 		}
 	}
@@ -1273,7 +1275,7 @@ public class SevenSigns
 	 */
 	protected void calcNewSealOwners()
 	{
-		for (Integer currSeal : _signsDawnSealTotals.keySet())
+		for (int currSeal : _signsDawnSealTotals.keySet())
 		{
 			int prevSealOwner = _signsSealOwners.get(currSeal);
 			int newSealOwner = CABAL_NULL;
