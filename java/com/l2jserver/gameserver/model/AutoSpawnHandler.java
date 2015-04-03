@@ -23,14 +23,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javolution.util.FastList;
-import javolution.util.FastMap;
+import jp.sf.l2j.troja.FastIntObjectMap;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.Announcements;
@@ -70,15 +69,15 @@ public class AutoSpawnHandler
 	private static final int DEFAULT_RESPAWN = 3600000; // 1 hour in millisecs
 	private static final int DEFAULT_DESPAWN = 3600000; // 1 hour in millisecs
 	
-	protected Map<Integer, AutoSpawnInstance> _registeredSpawns;
-	protected Map<Integer, ScheduledFuture<?>> _runningSpawns;
+	protected FastIntObjectMap<AutoSpawnInstance> _registeredSpawns;	//[JOJO] -FastMap
+	protected FastIntObjectMap<ScheduledFuture<?>> _runningSpawns;	//[JOJO] -FastMap
 	
 	protected boolean _activeState = true;
 	
 	protected AutoSpawnHandler()
 	{
-		_registeredSpawns = new FastMap<>();
-		_runningSpawns = new FastMap<>();
+		_registeredSpawns = new FastIntObjectMap<>();
+		_runningSpawns = new FastIntObjectMap<>();
 		
 		restoreSpawnData();
 	}
@@ -113,8 +112,8 @@ public class AutoSpawnHandler
 		}
 		
 		// create clean list
-		_registeredSpawns = new FastMap<>();
-		_runningSpawns = new FastMap<>();
+		_registeredSpawns = new FastIntObjectMap<>();
+		_runningSpawns = new FastIntObjectMap<>();
 		
 		// load
 		restoreSpawnData();
@@ -377,9 +376,9 @@ if (TEST1) {{
 		return null;
 	}
 	
-	public Map<Integer, AutoSpawnInstance> getAutoSpawnInstances(int npcId)
+	public FastIntObjectMap<AutoSpawnInstance> getAutoSpawnInstances(int npcId)	//[JOJO] -Map
 	{
-		Map<Integer, AutoSpawnInstance> spawnInstList = new FastMap<>();
+		FastIntObjectMap<AutoSpawnInstance> spawnInstList = new FastIntObjectMap<>();
 		
 		for (AutoSpawnInstance spawnInst : _registeredSpawns.values())
 		{
