@@ -18,7 +18,6 @@
  */
 package com.l2jserver.gameserver.model;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -79,8 +78,8 @@ public class L2Party extends AbstractPlayerGroup
 	};
 	// @formatter:on
 	
-	private static final Duration PARTY_POSITION_BROADCAST_INTERVAL = Duration.ofSeconds(12);
-	private static final Duration PARTY_DISTRIBUTION_TYPE_REQUEST_TIMEOUT = Duration.ofSeconds(15);
+	private static final long PARTY_POSITION_BROADCAST_INTERVAL = 12000;
+	private static final long PARTY_DISTRIBUTION_TYPE_REQUEST_TIMEOUT = 15000;
 	
 	private final FastList<L2PcInstance> _members;
 	private boolean _pendingInvitation = false;
@@ -94,7 +93,6 @@ public class L2Party extends AbstractPlayerGroup
 	private L2CommandChannel _commandChannel = null;
 	private DimensionalRift _dr;
 	private Future<?> _positionBroadcastTask = null;
-	protected PartyMemberPosition _positionPacket;
 	private boolean _disbanding = false;
 	
 	/**
@@ -360,17 +358,8 @@ public class L2Party extends AbstractPlayerGroup
 		if (_positionBroadcastTask == null)
 		{
 			_positionBroadcastTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(() ->
-			{
-				if (_positionPacket == null)
-				{
-					_positionPacket = new PartyMemberPosition(this);
-				}
-				else
-				{
-					_positionPacket.reuse(this);
-				}
-				broadcastPacket(_positionPacket);
-			}, PARTY_POSITION_BROADCAST_INTERVAL.toMillis() / 2, PARTY_POSITION_BROADCAST_INTERVAL.toMillis());
+				broadcastPacket(new PartyMemberPosition(L2Party.this))
+				, PARTY_POSITION_BROADCAST_INTERVAL / 2, PARTY_POSITION_BROADCAST_INTERVAL);
 		}
 	}
 	
@@ -1000,7 +989,7 @@ public class L2Party extends AbstractPlayerGroup
 		}
 		_changeRequestDistributionType = partyDistributionType;
 		_changeDistributionTypeAnswers = new HashSet<>();
-		_changeDistributionTypeRequestTask = ThreadPoolManager.getInstance().scheduleGeneral(() -> finishLootRequest(false), PARTY_DISTRIBUTION_TYPE_REQUEST_TIMEOUT.toMillis());
+		_changeDistributionTypeRequestTask = ThreadPoolManager.getInstance().scheduleGeneral(() -> finishLootRequest(false), PARTY_DISTRIBUTION_TYPE_REQUEST_TIMEOUT);
 		
 		broadcastToPartyMembers(getLeader(), new ExAskModifyPartyLooting(getLeader().getName(), partyDistributionType));
 		
