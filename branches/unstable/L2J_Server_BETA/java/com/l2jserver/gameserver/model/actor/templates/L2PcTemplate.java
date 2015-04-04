@@ -64,19 +64,19 @@ public class L2PcTemplate extends L2CharTemplate
 		_baseMpReg = new double[ExperienceTable.getInstance().getMaxLevel()];
 		_baseCpReg = new double[ExperienceTable.getInstance().getMaxLevel()];
 		
-		_baseSlotDef = new SortedIntIntArrayMap();
-		_baseSlotDef.append(Inventory.PAPERDOLL_CHEST, set.getInt("basePDefchest", 0));
-		_baseSlotDef.append(Inventory.PAPERDOLL_LEGS, set.getInt("basePDeflegs", 0));
-		_baseSlotDef.append(Inventory.PAPERDOLL_HEAD, set.getInt("basePDefhead", 0));
-		_baseSlotDef.append(Inventory.PAPERDOLL_FEET, set.getInt("basePDeffeet", 0));
-		_baseSlotDef.append(Inventory.PAPERDOLL_GLOVES, set.getInt("basePDefgloves", 0));
-		_baseSlotDef.append(Inventory.PAPERDOLL_UNDER, set.getInt("basePDefunderwear", 0));
-		_baseSlotDef.append(Inventory.PAPERDOLL_CLOAK, set.getInt("basePDefcloak", 0));
-		_baseSlotDef.append(Inventory.PAPERDOLL_REAR, set.getInt("baseMDefrear", 0));
-		_baseSlotDef.append(Inventory.PAPERDOLL_LEAR, set.getInt("baseMDeflear", 0));
-		_baseSlotDef.append(Inventory.PAPERDOLL_RFINGER, set.getInt("baseMDefrfinger", 0));
-		_baseSlotDef.append(Inventory.PAPERDOLL_LFINGER, set.getInt("baseMDefrfinger", 0));
-		_baseSlotDef.append(Inventory.PAPERDOLL_NECK, set.getInt("baseMDefneck", 0));
+		_baseSlotDef = new SortedIntIntArrayMap()
+			.append(Inventory.PAPERDOLL_CHEST, set.getInt("basePDefchest", 0))
+			.append(Inventory.PAPERDOLL_LEGS, set.getInt("basePDeflegs", 0))
+			.append(Inventory.PAPERDOLL_HEAD, set.getInt("basePDefhead", 0))
+			.append(Inventory.PAPERDOLL_FEET, set.getInt("basePDeffeet", 0))
+			.append(Inventory.PAPERDOLL_GLOVES, set.getInt("basePDefgloves", 0))
+			.append(Inventory.PAPERDOLL_UNDER, set.getInt("basePDefunderwear", 0))
+			.append(Inventory.PAPERDOLL_CLOAK, set.getInt("basePDefcloak", 0))
+			.append(Inventory.PAPERDOLL_REAR, set.getInt("baseMDefrear", 0))
+			.append(Inventory.PAPERDOLL_LEAR, set.getInt("baseMDeflear", 0))
+			.append(Inventory.PAPERDOLL_RFINGER, set.getInt("baseMDefrfinger", 0))
+			.append(Inventory.PAPERDOLL_LFINGER, set.getInt("baseMDefrfinger", 0))
+			.append(Inventory.PAPERDOLL_NECK, set.getInt("baseMDefneck", 0));
 		
 		_fCollisionRadiusFemale = set.getDouble("collisionFemaleradius");
 		_fCollisionHeightFemale = set.getDouble("collisionFemaleheight");
