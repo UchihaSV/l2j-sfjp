@@ -18,9 +18,9 @@
  */
 package com.l2jserver.gameserver.model.actor.templates;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import jp.sf.l2j.arrayMaps.SortedIntIntArrayMap;
 
 import com.l2jserver.gameserver.datatables.ExperienceTable;
 import com.l2jserver.gameserver.model.Location;
@@ -50,7 +50,7 @@ public class L2PcTemplate extends L2CharTemplate
 	private final int _baseSafeFallHeight;
 	
 	private final List<Location> _creationPoints;
-	private final Map<Integer, Integer> _baseSlotDef;
+	private final SortedIntIntArrayMap _baseSlotDef;	//[JOJO] -HashMap
 	
 	public L2PcTemplate(StatsSet set, List<Location> creationPoints)
 	{
@@ -64,19 +64,19 @@ public class L2PcTemplate extends L2CharTemplate
 		_baseMpReg = new double[ExperienceTable.getInstance().getMaxLevel()];
 		_baseCpReg = new double[ExperienceTable.getInstance().getMaxLevel()];
 		
-		_baseSlotDef = new HashMap<>(12);
-		_baseSlotDef.put(Inventory.PAPERDOLL_CHEST, set.getInt("basePDefchest", 0));
-		_baseSlotDef.put(Inventory.PAPERDOLL_LEGS, set.getInt("basePDeflegs", 0));
-		_baseSlotDef.put(Inventory.PAPERDOLL_HEAD, set.getInt("basePDefhead", 0));
-		_baseSlotDef.put(Inventory.PAPERDOLL_FEET, set.getInt("basePDeffeet", 0));
-		_baseSlotDef.put(Inventory.PAPERDOLL_GLOVES, set.getInt("basePDefgloves", 0));
-		_baseSlotDef.put(Inventory.PAPERDOLL_UNDER, set.getInt("basePDefunderwear", 0));
-		_baseSlotDef.put(Inventory.PAPERDOLL_CLOAK, set.getInt("basePDefcloak", 0));
-		_baseSlotDef.put(Inventory.PAPERDOLL_REAR, set.getInt("baseMDefrear", 0));
-		_baseSlotDef.put(Inventory.PAPERDOLL_LEAR, set.getInt("baseMDeflear", 0));
-		_baseSlotDef.put(Inventory.PAPERDOLL_RFINGER, set.getInt("baseMDefrfinger", 0));
-		_baseSlotDef.put(Inventory.PAPERDOLL_LFINGER, set.getInt("baseMDefrfinger", 0));
-		_baseSlotDef.put(Inventory.PAPERDOLL_NECK, set.getInt("baseMDefneck", 0));
+		_baseSlotDef = new SortedIntIntArrayMap();
+		_baseSlotDef.append(Inventory.PAPERDOLL_CHEST, set.getInt("basePDefchest", 0));
+		_baseSlotDef.append(Inventory.PAPERDOLL_LEGS, set.getInt("basePDeflegs", 0));
+		_baseSlotDef.append(Inventory.PAPERDOLL_HEAD, set.getInt("basePDefhead", 0));
+		_baseSlotDef.append(Inventory.PAPERDOLL_FEET, set.getInt("basePDeffeet", 0));
+		_baseSlotDef.append(Inventory.PAPERDOLL_GLOVES, set.getInt("basePDefgloves", 0));
+		_baseSlotDef.append(Inventory.PAPERDOLL_UNDER, set.getInt("basePDefunderwear", 0));
+		_baseSlotDef.append(Inventory.PAPERDOLL_CLOAK, set.getInt("basePDefcloak", 0));
+		_baseSlotDef.append(Inventory.PAPERDOLL_REAR, set.getInt("baseMDefrear", 0));
+		_baseSlotDef.append(Inventory.PAPERDOLL_LEAR, set.getInt("baseMDeflear", 0));
+		_baseSlotDef.append(Inventory.PAPERDOLL_RFINGER, set.getInt("baseMDefrfinger", 0));
+		_baseSlotDef.append(Inventory.PAPERDOLL_LFINGER, set.getInt("baseMDefrfinger", 0));
+		_baseSlotDef.append(Inventory.PAPERDOLL_NECK, set.getInt("baseMDefneck", 0));
 		
 		_fCollisionRadiusFemale = set.getDouble("collisionFemaleradius");
 		_fCollisionHeightFemale = set.getDouble("collisionFemaleheight");
@@ -204,8 +204,7 @@ public class L2PcTemplate extends L2CharTemplate
 	 */
 	public int getBaseDefBySlot(int slotId)
 	{
-		final Integer v;
-		return (v = _baseSlotDef.get(slotId)) != null ? v.intValue() : 0;
+		return _baseSlotDef.getOrDefault(slotId, 0);
 	}
 	
 	/**
