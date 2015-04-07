@@ -45,8 +45,11 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Playable;
 import com.l2jserver.gameserver.model.actor.instance.L2BlockInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2CubicInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2FriendlyMobInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2GuardInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2TerritoryWardInstance;
 import com.l2jserver.gameserver.model.conditions.Condition;
 import com.l2jserver.gameserver.model.effects.AbstractEffect;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
@@ -1196,16 +1199,32 @@ public final class Skill implements IIdentifiable
 			}
 			else
 			{
-				// target is mob
-if (com.l2jserver.Config.NEVER_TARGET_TAMED) {{
-				if (skill.isBad() && target instanceof com.l2jserver.gameserver.model.actor.instance.L2TamedBeastInstance)
-					return false;
+if (Config.FIX_TARGET_AURA) {{
+				//[JOJO]槍・範囲攻撃をすると警備兵やテイミングモンスターが巻き添えになる不具合の修正.
+				if (skill.isBad()) {
+					if (target instanceof L2TamedBeastInstance) {		// 手なずけられた アルパイン猛獣
+						return false;
+					}
+					if (target instanceof L2GuardInstance				// 警備兵
+					 || target instanceof L2FriendlyMobInstance			// ピクシー、ティ ミ リラン...
+					 || target instanceof L2TerritoryWardInstance		// 守護物
+		//TODO:確認	 || target instanceof L2DefenderInstance			// 
+					) {
+						switch (skill.getTargetType()) {
+							case AURA:
+							case FRONT_AURA:
+							case BEHIND_AURA:
+								return false;
+						}
+					}
+				}
 }}
+				// target is mob
 			}
 		}
 		else
 		{
-			// target is mob
+			// caster is mob
 			if ((targetPlayer == null) && (target instanceof L2Attackable) && (caster instanceof L2Attackable))
 			{
 				return false;
